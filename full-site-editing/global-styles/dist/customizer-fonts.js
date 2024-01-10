@@ -1,4 +1,4 @@
-/******/ (function() { // webpackBootstrap
+/******/ (() => { // webpackBootstrap
 var __webpack_exports__ = {};
 function recordTracksEvent(tracksEventName) {
   window.parent.window._tkq = window.parent.window._tkq || [];

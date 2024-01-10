@@ -1,12 +1,12 @@
-/******/ (function() { // webpackBootstrap
+/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 266:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ compile; }
+/* harmony export */   Z: () => (/* binding */ compile)
 /* harmony export */ });
 /* harmony import */ var _tannin_postfix__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(854);
 /* harmony import */ var _tannin_evaluate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(730);
@@ -44,11 +44,11 @@ function compile( expression ) {
 /***/ }),
 
 /***/ 730:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ evaluate; }
+/* harmony export */   Z: () => (/* binding */ evaluate)
 /* harmony export */ });
 /**
  * Operator callback functions.
@@ -165,11 +165,11 @@ function evaluate( postfix, variables ) {
 /***/ }),
 
 /***/ 184:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ pluralForms; }
+/* harmony export */   Z: () => (/* binding */ pluralForms)
 /* harmony export */ });
 /* harmony import */ var _tannin_compile__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(266);
 
@@ -195,11 +195,11 @@ function pluralForms( expression ) {
 /***/ }),
 
 /***/ 854:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ postfix; }
+/* harmony export */   Z: () => (/* binding */ postfix)
 /* harmony export */ });
 var PRECEDENCE, OPENERS, TERMINATORS, PATTERN;
 
@@ -330,11 +330,11 @@ function postfix( expression ) {
 /***/ }),
 
 /***/ 668:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ sprintf; }
+/* harmony export */   Z: () => (/* binding */ sprintf)
 /* harmony export */ });
 /**
  * Regular expression matching format placeholder syntax.
@@ -474,7 +474,7 @@ function sprintf( string, args ) {
 /***/ }),
 
 /***/ 881:
-/***/ (function(module) {
+/***/ ((module) => {
 
 /**
  * Helpers.
@@ -643,7 +643,7 @@ function plural(ms, msAbs, n, name) {
 /***/ }),
 
 /***/ 699:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 // Copyright Joyent, Inc. and other Node contributors.
@@ -1148,7 +1148,7 @@ function eventTargetAgnosticAddListener(emitter, name, listener, flags) {
 /***/ }),
 
 /***/ 495:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
@@ -1248,7 +1248,7 @@ BlockHash.prototype._pad = function pad() {
 /***/ }),
 
 /***/ 79:
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -1330,7 +1330,7 @@ SHA1.prototype._digest = function digest(enc) {
 /***/ }),
 
 /***/ 713:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
@@ -1387,7 +1387,7 @@ exports.g1_256 = g1_256;
 /***/ }),
 
 /***/ 212:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
@@ -1673,7 +1673,7 @@ exports.shr64_lo = shr64_lo;
 /***/ }),
 
 /***/ 285:
-/***/ (function(module) {
+/***/ ((module) => {
 
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
@@ -1707,7 +1707,7 @@ if (typeof Object.create === 'function') {
 /***/ }),
 
 /***/ 839:
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var events = __webpack_require__(699)
 var inherits = __webpack_require__(285)
@@ -1859,7 +1859,7 @@ LRU.prototype.evict = function () {
 /***/ }),
 
 /***/ 731:
-/***/ (function() {
+/***/ (() => {
 
 "use strict";
 // extracted by mini-css-extract-plugin
@@ -1868,7 +1868,7 @@ LRU.prototype.evict = function () {
 /***/ }),
 
 /***/ 561:
-/***/ (function(module) {
+/***/ ((module) => {
 
 module.exports = assert;
 
@@ -1886,11 +1886,11 @@ assert.equal = function assertEqual(l, r, msg) {
 /***/ }),
 
 /***/ 830:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ Tannin; }
+/* harmony export */   Z: () => (/* binding */ Tannin)
 /* harmony export */ });
 /* harmony import */ var _tannin_plural_forms__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(184);
 
@@ -2111,7 +2111,7 @@ Tannin.prototype.dcnpgettext = function( domain, context, singular, plural, n ) 
 /***/ }),
 
 /***/ 6:
-/***/ (function(__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony import */ var _automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(498);
@@ -2163,19 +2163,25 @@ if (window?._currentSiteType === 'simple') {
 /***/ }),
 
 /***/ 724:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var _i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(914);
 
-/* harmony default export */ __webpack_exports__.Z = (new _i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z());
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new _i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z());
 
 /***/ }),
 
 /***/ 914:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(699);
 /* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(events__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _automattic_interpolate_components__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(594);
@@ -2220,7 +2226,7 @@ function warn() {
   if (!I18N.throwErrors) {
     return;
   }
-  if ('undefined' !== typeof window && window.console && window.console.warn) {
+  if ( true && window.console && window.console.warn) {
     window.console.warn.apply(window.console, arguments);
   }
 }
@@ -2323,14 +2329,14 @@ function I18N() {
   this.configure();
 }
 I18N.throwErrors = false;
-I18N.prototype.on = function () {
-  this.stateObserver.on(...arguments);
+I18N.prototype.on = function (...args) {
+  this.stateObserver.on(...args);
 };
-I18N.prototype.off = function () {
-  this.stateObserver.off(...arguments);
+I18N.prototype.off = function (...args) {
+  this.stateObserver.off(...args);
 };
-I18N.prototype.emit = function () {
-  this.stateObserver.emit(...arguments);
+I18N.prototype.emit = function (...args) {
+  this.stateObserver.emit(...args);
 };
 
 /**
@@ -2339,8 +2345,7 @@ I18N.prototype.emit = function () {
  * @param   {number | Object}  options  Number of decimal places or options object (optional)
  * @returns {string}         Formatted number as string
  */
-I18N.prototype.numberFormat = function (number) {
-  let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+I18N.prototype.numberFormat = function (number, options = {}) {
   const decimals = typeof options === 'number' ? options : options.decimals || 0;
   const decPoint = options.decPoint || this.state.numberFormatSettings.decimal_point || '.';
   const thousandsSep = options.thousandsSep || this.state.numberFormatSettings.thousands_sep || ',';
@@ -2556,16 +2561,16 @@ I18N.prototype.registerComponentUpdateHook = function (callback) {
 I18N.prototype.registerTranslateHook = function (callback) {
   this.translateHooks.push(callback);
 };
-/* harmony default export */ __webpack_exports__.Z = (I18N);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (I18N);
 
 /***/ }),
 
 /***/ 481:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Yj: function() { return /* binding */ getLocaleSlug; }
+/* harmony export */   Yj: () => (/* binding */ getLocaleSlug)
 /* harmony export */ });
 /* unused harmony exports numberFormat, translate, configure, setLocale, getLocale, getLocaleVariant, isRtl, addTranslations, reRenderTranslations, registerComponentUpdateHook, registerTranslateHook, state, stateObserver, on, off, emit */
 /* harmony import */ var _default_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(724);
@@ -2601,11 +2606,11 @@ const emit = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.emit
 /***/ }),
 
 /***/ 3:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ number_format; }
+/* harmony export */   Z: () => (/* binding */ number_format)
 /* harmony export */ });
 /*
  * Exposes number format capability
@@ -2640,11 +2645,11 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 /***/ }),
 
 /***/ 849:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   bU: function() { return /* binding */ useLocale; }
+/* harmony export */   bU: () => (/* binding */ useLocale)
 /* harmony export */ });
 /* unused harmony exports localeContext, LocaleProvider, withLocale, useIsEnglishLocale, useHasEnTranslation */
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(307);
@@ -2662,15 +2667,12 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 
 
 const localeContext = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_3__.createContext)(null);
-const LocaleProvider = _ref => {
-  let {
-    children,
-    localeSlug
-  } = _ref;
-  return createElement(localeContext.Provider, {
-    value: localeSlug
-  }, children);
-};
+const LocaleProvider = ({
+  children,
+  localeSlug
+}) => createElement(localeContext.Provider, {
+  value: localeSlug
+}, children);
 
 /**
  * Returns locale slug
@@ -2678,8 +2680,7 @@ const LocaleProvider = _ref => {
  * @param {string} locale locale to be converted e.g. "en_US".
  * @returns locale string e.g. "en"
  */
-function mapWpI18nLangToLocaleSlug() {
-  let locale = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+function mapWpI18nLangToLocaleSlug(locale = '') {
   if (!locale) {
     return '';
   }
@@ -2725,7 +2726,7 @@ function useLocale() {
       setWpLocale(getWpI18nLocaleSlug());
     });
   }, [providerHasLocale]);
-  return fromProvider || fromWpI18n || typeof window !== 'undefined' && window._currentUserLocale || 'en';
+  return fromProvider || fromWpI18n ||  true && window._currentUserLocale || 'en';
 }
 
 /**
@@ -2769,28 +2770,26 @@ function useIsEnglishLocale() {
 }
 function useHasEnTranslation() {
   const isEnglishLocale = useIsEnglishLocale();
-  return useCallback(function () {
-    return isEnglishLocale || i18n.hasTranslation(...arguments);
-  }, [isEnglishLocale]);
+  return useCallback((...args) => isEnglishLocale || i18n.hasTranslation(...args), [isEnglishLocale]);
 }
 
 /***/ }),
 
 /***/ 655:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   GG: function() { return /* binding */ localesWithBlog; },
-/* harmony export */   Xb: function() { return /* binding */ localesToSubdomains; },
-/* harmony export */   _r: function() { return /* binding */ jetpackComLocales; },
-/* harmony export */   dH: function() { return /* binding */ localesWithGoBlog; },
-/* harmony export */   hI: function() { return /* binding */ supportSiteLocales; },
-/* harmony export */   iT: function() { return /* binding */ localesWithPrivacyPolicy; },
-/* harmony export */   mL: function() { return /* binding */ forumLocales; },
-/* harmony export */   vS: function() { return /* binding */ magnificentNonEnLocales; },
-/* harmony export */   xh: function() { return /* binding */ localesForPricePlans; },
-/* harmony export */   xn: function() { return /* binding */ localesWithCookiePolicy; }
+/* harmony export */   GG: () => (/* binding */ localesWithBlog),
+/* harmony export */   Xb: () => (/* binding */ localesToSubdomains),
+/* harmony export */   _r: () => (/* binding */ jetpackComLocales),
+/* harmony export */   dH: () => (/* binding */ localesWithGoBlog),
+/* harmony export */   hI: () => (/* binding */ supportSiteLocales),
+/* harmony export */   iT: () => (/* binding */ localesWithPrivacyPolicy),
+/* harmony export */   mL: () => (/* binding */ forumLocales),
+/* harmony export */   vS: () => (/* binding */ magnificentNonEnLocales),
+/* harmony export */   xh: () => (/* binding */ localesForPricePlans),
+/* harmony export */   xn: () => (/* binding */ localesWithCookiePolicy)
 /* harmony export */ });
 /* unused harmony exports i18nDefaultLocaleSlug, englishLocales, livechatSupportLocales */
 /**
@@ -2836,11 +2835,11 @@ const jetpackComLocales = ['en', 'ar', 'de', 'es', 'fr', 'he', 'id', 'it', 'ja',
 /***/ }),
 
 /***/ 498:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   aq: function() { return /* binding */ localizeUrl; }
+/* harmony export */   aq: () => (/* binding */ localizeUrl)
 /* harmony export */ });
 /* unused harmony exports urlLocalizationMapping, useLocalizeUrl, withLocalizeUrl */
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(307);
@@ -2862,73 +2861,53 @@ const INVALID_URL = `http://__domain__.invalid`;
 function getDefaultLocale() {
   return (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_3__/* .getLocaleSlug */ .Yj)?.() ?? 'en';
 }
-const setLocalizedUrlHost = function (hostname) {
-  let validLocales = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-  return (url, locale) => {
-    if (validLocales.includes(locale) && locale !== 'en') {
-      // Avoid changing the hostname when the locale is set via the path.
-      if (url.pathname.substr(0, locale.length + 2) !== '/' + locale + '/') {
-        url.host = `${_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesToSubdomains */ .Xb[locale] || locale}.${hostname}`;
-      }
+const setLocalizedUrlHost = (hostname, validLocales = []) => (url, locale) => {
+  if (validLocales.includes(locale) && locale !== 'en') {
+    // Avoid changing the hostname when the locale is set via the path.
+    if (url.pathname.substr(0, locale.length + 2) !== '/' + locale + '/') {
+      url.host = `${_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesToSubdomains */ .Xb[locale] || locale}.${hostname}`;
     }
+  }
+  return url;
+};
+const setLocalizedWpComPath = (prefix, validLocales = [], limitPathMatch = null) => (url, localeSlug) => {
+  url.host = 'wordpress.com';
+  if (typeof limitPathMatch === 'object' && limitPathMatch instanceof RegExp && !limitPathMatch.test(url.pathname)) {
+    validLocales = []; // only rewrite to English.
+  }
+  url.pathname = prefix + url.pathname;
+  if (validLocales.includes(localeSlug) && localeSlug !== 'en') {
+    url.pathname = localeSlug + url.pathname;
+  }
+  return url;
+};
+const prefixOrSuffixLocalizedUrlPath = (validLocales = [], limitPathMatch = null, prefixOrSuffix) => (url, localeSlug) => {
+  if (typeof limitPathMatch === 'object' && limitPathMatch instanceof RegExp) {
+    if (!limitPathMatch.test(url.pathname)) {
+      return url; // No rewriting if not matches the path.
+    }
+  }
+  if (!validLocales.includes(localeSlug) || localeSlug === 'en') {
     return url;
-  };
+  }
+  if (prefixOrSuffix === 'prefix') {
+    url.pathname = localeSlug + url.pathname;
+  } else if (prefixOrSuffix === 'suffix') {
+    // Make sure there's a slash between the path and the locale. Plus, if
+    // the path has a trailing slash, add one after the suffix too.
+    if (url.pathname.endsWith('/')) {
+      url.pathname += localeSlug + '/';
+    } else {
+      url.pathname += '/' + localeSlug;
+    }
+  }
+  return url;
 };
-const setLocalizedWpComPath = function (prefix) {
-  let validLocales = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-  let limitPathMatch = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-  return (url, localeSlug) => {
-    url.host = 'wordpress.com';
-    if (typeof limitPathMatch === 'object' && limitPathMatch instanceof RegExp && !limitPathMatch.test(url.pathname)) {
-      validLocales = []; // only rewrite to English.
-    }
-    url.pathname = prefix + url.pathname;
-    if (validLocales.includes(localeSlug) && localeSlug !== 'en') {
-      url.pathname = localeSlug + url.pathname;
-    }
-    return url;
-  };
+const prefixLocalizedUrlPath = (validLocales = [], limitPathMatch = null) => (url, localeSlug) => {
+  return prefixOrSuffixLocalizedUrlPath(validLocales, limitPathMatch, 'prefix')(url, localeSlug);
 };
-const prefixOrSuffixLocalizedUrlPath = function () {
-  let validLocales = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-  let limitPathMatch = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-  let prefixOrSuffix = arguments.length > 2 ? arguments[2] : undefined;
-  return (url, localeSlug) => {
-    if (typeof limitPathMatch === 'object' && limitPathMatch instanceof RegExp) {
-      if (!limitPathMatch.test(url.pathname)) {
-        return url; // No rewriting if not matches the path.
-      }
-    }
-    if (!validLocales.includes(localeSlug) || localeSlug === 'en') {
-      return url;
-    }
-    if (prefixOrSuffix === 'prefix') {
-      url.pathname = localeSlug + url.pathname;
-    } else if (prefixOrSuffix === 'suffix') {
-      // Make sure there's a slash between the path and the locale. Plus, if
-      // the path has a trailing slash, add one after the suffix too.
-      if (url.pathname.endsWith('/')) {
-        url.pathname += localeSlug + '/';
-      } else {
-        url.pathname += '/' + localeSlug;
-      }
-    }
-    return url;
-  };
-};
-const prefixLocalizedUrlPath = function () {
-  let validLocales = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-  let limitPathMatch = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-  return (url, localeSlug) => {
-    return prefixOrSuffixLocalizedUrlPath(validLocales, limitPathMatch, 'prefix')(url, localeSlug);
-  };
-};
-const suffixLocalizedUrlPath = function () {
-  let validLocales = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-  let limitPathMatch = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-  return (url, localeSlug) => {
-    return prefixOrSuffixLocalizedUrlPath(validLocales, limitPathMatch, 'suffix')(url, localeSlug);
-  };
+const suffixLocalizedUrlPath = (validLocales = [], limitPathMatch = null) => (url, localeSlug) => {
+  return prefixOrSuffixLocalizedUrlPath(validLocales, limitPathMatch, 'suffix')(url, localeSlug);
 };
 const urlLocalizationMapping = {
   'wordpress.com/support/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .supportSiteLocales */ .hI),
@@ -3002,10 +2981,7 @@ function hasTrailingSlash(urlString) {
     return false;
   }
 }
-function localizeUrl(fullUrl) {
-  let locale = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : getDefaultLocale();
-  let isLoggedIn = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-  let preserveTrailingSlashVariation = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+function localizeUrl(fullUrl, locale = getDefaultLocale(), isLoggedIn = true, preserveTrailingSlashVariation = false) {
   let url;
   try {
     url = new URL(String(fullUrl), INVALID_URL);
@@ -3082,11 +3058,11 @@ const withLocalizeUrl = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_1__.creat
 /***/ }),
 
 /***/ 594:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ interpolate; }
+/* harmony export */   Z: () => (/* binding */ interpolate)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(196);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
@@ -3195,11 +3171,11 @@ function interpolate(options) {
 /***/ }),
 
 /***/ 310:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ tokenize; }
+/* harmony export */   Z: () => (/* binding */ tokenize)
 /* harmony export */ });
 function identifyToken(item) {
   // {{/example}}
@@ -3236,7 +3212,7 @@ function tokenize(mixedString) {
 /***/ }),
 
 /***/ 49:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, exports, __webpack_require__) => {
 
 /* eslint-env browser */
 
@@ -3278,7 +3254,7 @@ function useColors() {
   // NB: In an Electron preload script, document will be defined but not fully
   // initialized. Since we know we're in Chrome, we'll just detect this case
   // explicitly
-  if (typeof window !== 'undefined' && window.process && (window.process.type === 'renderer' || window.process.__nwjs)) {
+  if ( true && window.process && (window.process.type === 'renderer' || window.process.__nwjs)) {
     return true;
   }
 
@@ -3291,7 +3267,7 @@ function useColors() {
   // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
   return typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance ||
   // Is firebug? http://stackoverflow.com/a/398120/376773
-  typeof window !== 'undefined' && window.console && (window.console.firebug || window.console.exception && window.console.table) ||
+   true && window.console && (window.console.firebug || window.console.exception && window.console.table) ||
   // Is firefox >= v31?
   // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
   typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31 ||
@@ -3424,7 +3400,7 @@ formatters.j = function (v) {
 /***/ }),
 
 /***/ 632:
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /**
  * This is the common logic for both the Node.js and web browser
@@ -3486,10 +3462,7 @@ function setup(env) {
     let enableOverride = null;
     let namespacesCache;
     let enabledCache;
-    function debug() {
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
+    function debug(...args) {
       // Disabled?
       if (!debug.enabled) {
         return;
@@ -3677,7 +3650,7 @@ module.exports = setup;
 /***/ }),
 
 /***/ 196:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["React"];
@@ -3685,7 +3658,7 @@ module.exports = window["React"];
 /***/ }),
 
 /***/ 333:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["compose"];
@@ -3693,7 +3666,7 @@ module.exports = window["wp"]["compose"];
 /***/ }),
 
 /***/ 307:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["element"];
@@ -3701,7 +3674,7 @@ module.exports = window["wp"]["element"];
 /***/ }),
 
 /***/ 694:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["hooks"];
@@ -3709,7 +3682,7 @@ module.exports = window["wp"]["hooks"];
 /***/ }),
 
 /***/ 736:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["i18n"];
@@ -3744,54 +3717,55 @@ module.exports = window["wp"]["i18n"];
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
-/******/ 	!function() {
+/******/ 	(() => {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = function(module) {
+/******/ 		__webpack_require__.n = (module) => {
 /******/ 			var getter = module && module.__esModule ?
-/******/ 				function() { return module['default']; } :
-/******/ 				function() { return module; };
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
 /******/ 			__webpack_require__.d(getter, { a: getter });
 /******/ 			return getter;
 /******/ 		};
-/******/ 	}();
+/******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/define property getters */
-/******/ 	!function() {
+/******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = function(exports, definition) {
+/******/ 		__webpack_require__.d = (exports, definition) => {
 /******/ 			for(var key in definition) {
 /******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
 /******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 				}
 /******/ 			}
 /******/ 		};
-/******/ 	}();
+/******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	!function() {
-/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
-/******/ 	}();
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
-/******/ 	!function() {
+/******/ 	(() => {
 /******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = function(exports) {
+/******/ 		__webpack_require__.r = (exports) => {
 /******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
 /******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
-/******/ 	}();
+/******/ 	})();
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
-!function() {
+(() => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _src__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-}();
+})();
+
 window.EditingToolkit = __webpack_exports__;
 /******/ })()
 ;

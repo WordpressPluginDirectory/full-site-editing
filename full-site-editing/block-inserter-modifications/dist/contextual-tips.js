@@ -1,9 +1,9 @@
-/******/ (function() { // webpackBootstrap
+/******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 675:
-/***/ (function() {
+/***/ (() => {
 
 // extracted by mini-css-extract-plugin
 
@@ -11,8 +11,11 @@
 /***/ }),
 
 /***/ 298:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(307);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(609);
@@ -30,12 +33,11 @@
 
 
 
-function ContextualTip(_ref) {
-  let {
-    searchTerm,
-    random = false,
-    canUserCreate
-  } = _ref;
+function ContextualTip({
+  searchTerm,
+  random = false,
+  canUserCreate
+}) {
   if (!searchTerm) {
     return null;
   }
@@ -43,13 +45,10 @@ function ContextualTip(_ref) {
     return null;
   }
   const normalizedSearchTerm = (0,lodash__WEBPACK_IMPORTED_MODULE_4__.deburr)((0,lodash__WEBPACK_IMPORTED_MODULE_4__.lowerCase)(searchTerm)).replace(/^\//, '');
-  const foundTips = (0,lodash__WEBPACK_IMPORTED_MODULE_4__.filter)(_list__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, _ref2 => {
-    let {
-      keywords,
-      permission
-    } = _ref2;
-    return canUserCreate(permission) && (0,lodash__WEBPACK_IMPORTED_MODULE_4__.filter)([...new Set(keywords)], keyword => (0,lodash__WEBPACK_IMPORTED_MODULE_4__.includes)(normalizedSearchTerm, keyword)).length;
-  });
+  const foundTips = (0,lodash__WEBPACK_IMPORTED_MODULE_4__.filter)(_list__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, ({
+    keywords,
+    permission
+  }) => canUserCreate(permission) && (0,lodash__WEBPACK_IMPORTED_MODULE_4__.filter)([...new Set(keywords)], keyword => (0,lodash__WEBPACK_IMPORTED_MODULE_4__.includes)(normalizedSearchTerm, keyword)).length);
   if (!foundTips.length) {
     return null;
   }
@@ -58,7 +57,7 @@ function ContextualTip(_ref) {
     className: "contextual-tip"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Tip, null, (0,lodash__WEBPACK_IMPORTED_MODULE_4__.get)(foundTips, [index, 'description'])));
 }
-/* harmony default export */ __webpack_exports__.Z = ((0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_2__.compose)((0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.withSelect)(select => {
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_2__.compose)((0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.withSelect)(select => {
   return {
     canUserCreate: type => select('core').canUser('create', type)
   };
@@ -67,8 +66,11 @@ function ContextualTip(_ref) {
 /***/ }),
 
 /***/ 36:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(307);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(736);
@@ -134,15 +136,15 @@ const tips = [{
   }, __('You can visit the the Customizer to edit the colors on your site.', 'full-site-editing')),
   permission: 'settings'
 }];
-/* harmony default export */ __webpack_exports__.Z = (tips);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (tips);
 
 /***/ }),
 
 /***/ 334:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* export default binding */ __WEBPACK_DEFAULT_EXPORT__; }
+/* harmony export */   Z: () => (/* export default binding */ __WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(307);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
@@ -153,12 +155,11 @@ const tips = [{
 
 
 const isEditorIFramed = (0,_utils__WEBPACK_IMPORTED_MODULE_2__/* .inIframe */ .y)();
-/* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__(_ref) {
-  let {
-    section,
-    children,
-    subsection
-  } = _ref;
+/* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__({
+  section,
+  children,
+  subsection
+}) {
   const {
     hostname
   } = window.location;
@@ -189,11 +190,11 @@ const isEditorIFramed = (0,_utils__WEBPACK_IMPORTED_MODULE_2__/* .inIframe */ .y
 /***/ }),
 
 /***/ 365:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   W: function() { return /* binding */ isSimpleSite; },
-/* harmony export */   y: function() { return /* binding */ inIframe; }
+/* harmony export */   W: () => (/* binding */ isSimpleSite),
+/* harmony export */   y: () => (/* binding */ inIframe)
 /* harmony export */ });
 /**
  * Detect if the editor is already iFramed.
@@ -211,56 +212,56 @@ const isSimpleSite = !!(window && window._currentSiteType && window._currentSite
 /***/ }),
 
 /***/ 819:
-/***/ (function(module) {
+/***/ ((module) => {
 
 module.exports = window["lodash"];
 
 /***/ }),
 
 /***/ 175:
-/***/ (function(module) {
+/***/ ((module) => {
 
 module.exports = window["wp"]["blockEditor"];
 
 /***/ }),
 
 /***/ 609:
-/***/ (function(module) {
+/***/ ((module) => {
 
 module.exports = window["wp"]["components"];
 
 /***/ }),
 
 /***/ 333:
-/***/ (function(module) {
+/***/ ((module) => {
 
 module.exports = window["wp"]["compose"];
 
 /***/ }),
 
 /***/ 818:
-/***/ (function(module) {
+/***/ ((module) => {
 
 module.exports = window["wp"]["data"];
 
 /***/ }),
 
 /***/ 307:
-/***/ (function(module) {
+/***/ ((module) => {
 
 module.exports = window["wp"]["element"];
 
 /***/ }),
 
 /***/ 736:
-/***/ (function(module) {
+/***/ ((module) => {
 
 module.exports = window["wp"]["i18n"];
 
 /***/ }),
 
 /***/ 817:
-/***/ (function(module) {
+/***/ ((module) => {
 
 module.exports = window["wp"]["plugins"];
 
@@ -294,49 +295,49 @@ module.exports = window["wp"]["plugins"];
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
-/******/ 	!function() {
+/******/ 	(() => {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = function(module) {
+/******/ 		__webpack_require__.n = (module) => {
 /******/ 			var getter = module && module.__esModule ?
-/******/ 				function() { return module['default']; } :
-/******/ 				function() { return module; };
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
 /******/ 			__webpack_require__.d(getter, { a: getter });
 /******/ 			return getter;
 /******/ 		};
-/******/ 	}();
+/******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/define property getters */
-/******/ 	!function() {
+/******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = function(exports, definition) {
+/******/ 		__webpack_require__.d = (exports, definition) => {
 /******/ 			for(var key in definition) {
 /******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
 /******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 				}
 /******/ 			}
 /******/ 		};
-/******/ 	}();
+/******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	!function() {
-/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
-/******/ 	}();
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
-/******/ 	!function() {
+/******/ 	(() => {
 /******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = function(exports) {
+/******/ 		__webpack_require__.r = (exports) => {
 /******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
 /******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
-/******/ 	}();
+/******/ 	})();
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
-!function() {
+(() => {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(307);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
@@ -362,11 +363,10 @@ const InserterMenuExtension = typeof _wordpress_block_editor__WEBPACK_IMPORTED_M
 const ContextualTips = function () {
   const [debouncedFilterValue, setFilterValue] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const debouncedSetFilterValue = (0,lodash__WEBPACK_IMPORTED_MODULE_3__.debounce)(setFilterValue, 400);
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(InserterMenuExtension, null, _ref => {
-    let {
-      filterValue,
-      hasItems
-    } = _ref;
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(InserterMenuExtension, null, ({
+    filterValue,
+    hasItems
+  }) => {
     if (hasItems || !filterValue) {
       return null;
     }
@@ -387,7 +387,8 @@ if (typeof InserterMenuExtension !== 'undefined') {
     }
   });
 }
-}();
+})();
+
 window.EditingToolkit = __webpack_exports__;
 /******/ })()
 ;

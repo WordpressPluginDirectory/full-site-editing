@@ -1,9 +1,9 @@
-/******/ (function() { // webpackBootstrap
+/******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 129:
-/***/ (function() {
+/***/ (() => {
 
 // extracted by mini-css-extract-plugin
 
@@ -11,7 +11,7 @@
 /***/ }),
 
 /***/ 448:
-/***/ (function() {
+/***/ (() => {
 
 // extracted by mini-css-extract-plugin
 
@@ -19,8 +19,11 @@
 /***/ }),
 
 /***/ 829:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(307);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(609);
@@ -51,17 +54,15 @@ const TIMEZONELESS_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
  * @param {number} offset the offset in hours
  * @returns a moment instance
  */
-function assignTimezone(date, offset) {
-  let format = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : TIMEZONELESS_FORMAT;
+function assignTimezone(date, offset, format = TIMEZONELESS_FORMAT) {
   // passing the `true` flag to `utcOffset` keeps the date unaltered, only adds a tz
   return moment__WEBPACK_IMPORTED_MODULE_4___default()(date, format).utcOffset(offset * 60, true);
 }
-const edit = _ref => {
-  let {
-    attributes,
-    setAttributes,
-    className
-  } = _ref;
+const edit = ({
+  attributes,
+  setAttributes,
+  className
+}) => {
   const settings = (0,_wordpress_date__WEBPACK_IMPORTED_MODULE_2__.__experimentalGetSettings)();
   let label = __('Choose Date', 'full-site-editing');
   let eventDate;
@@ -96,18 +97,15 @@ const edit = _ref => {
     "aria-label": __('Event Title', 'full-site-editing')
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, __('Date:', 'full-site-editing')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("br", null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Dropdown, {
     position: "bottom left",
-    renderToggle: _ref2 => {
-      let {
-        onToggle,
-        isOpen
-      } = _ref2;
-      return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
-        onClick: onToggle,
-        "aria-expanded": isOpen,
-        "aria-live": "polite",
-        isSecondary: true
-      }, label);
-    },
+    renderToggle: ({
+      onToggle,
+      isOpen
+    }) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+      onClick: onToggle,
+      "aria-expanded": isOpen,
+      "aria-live": "polite",
+      isSecondary: true
+    }, label),
     renderContent: () => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.DateTimePicker, {
       key: "event-countdown-picker",
       onChange: date => setAttributes({
@@ -117,15 +115,15 @@ const edit = _ref => {
     })
   })));
 };
-/* harmony default export */ __webpack_exports__.Z = (edit);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (edit);
 
 /***/ }),
 
 /***/ 515:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   p: function() { return /* binding */ EventCountdownIcon; }
+/* harmony export */   p: () => (/* binding */ EventCountdownIcon)
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(307);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
@@ -145,7 +143,7 @@ const EventCountdownIcon = () => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_
 /***/ }),
 
 /***/ 196:
-/***/ (function(__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(981);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
@@ -217,8 +215,11 @@ const __ = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__;
 /***/ }),
 
 /***/ 674:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(307);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(736);
@@ -231,12 +232,11 @@ const __ = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__;
 
 const __ = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__,
   _x = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__._x;
-const view = _ref => {
-  let {
-    attributes,
-    className,
-    isEditView
-  } = _ref;
+const view = ({
+  attributes,
+  className,
+  isEditView
+}) => {
   // Expected values in save.
   let days = '&nbsp;';
   let hours = '&nbsp;';
@@ -284,47 +284,47 @@ const view = _ref => {
     className: "event-countdown__event-title"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, attributes.eventTitle)));
 };
-/* harmony default export */ __webpack_exports__.Z = (view);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (view);
 
 /***/ }),
 
 /***/ 292:
-/***/ (function(module) {
+/***/ ((module) => {
 
 module.exports = window["moment"];
 
 /***/ }),
 
 /***/ 981:
-/***/ (function(module) {
+/***/ ((module) => {
 
 module.exports = window["wp"]["blocks"];
 
 /***/ }),
 
 /***/ 609:
-/***/ (function(module) {
+/***/ ((module) => {
 
 module.exports = window["wp"]["components"];
 
 /***/ }),
 
 /***/ 771:
-/***/ (function(module) {
+/***/ ((module) => {
 
 module.exports = window["wp"]["date"];
 
 /***/ }),
 
 /***/ 307:
-/***/ (function(module) {
+/***/ ((module) => {
 
 module.exports = window["wp"]["element"];
 
 /***/ }),
 
 /***/ 736:
-/***/ (function(module) {
+/***/ ((module) => {
 
 module.exports = window["wp"]["i18n"];
 
@@ -358,53 +358,54 @@ module.exports = window["wp"]["i18n"];
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
-/******/ 	!function() {
+/******/ 	(() => {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = function(module) {
+/******/ 		__webpack_require__.n = (module) => {
 /******/ 			var getter = module && module.__esModule ?
-/******/ 				function() { return module['default']; } :
-/******/ 				function() { return module; };
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
 /******/ 			__webpack_require__.d(getter, { a: getter });
 /******/ 			return getter;
 /******/ 		};
-/******/ 	}();
+/******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/define property getters */
-/******/ 	!function() {
+/******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = function(exports, definition) {
+/******/ 		__webpack_require__.d = (exports, definition) => {
 /******/ 			for(var key in definition) {
 /******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
 /******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 				}
 /******/ 			}
 /******/ 		};
-/******/ 	}();
+/******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	!function() {
-/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
-/******/ 	}();
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
-/******/ 	!function() {
+/******/ 	(() => {
 /******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = function(exports) {
+/******/ 		__webpack_require__.r = (exports) => {
 /******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
 /******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
-/******/ 	}();
+/******/ 	})();
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
-!function() {
+(() => {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _blocks_src_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(196);
 
-}();
+})();
+
 window.EditingToolkit = __webpack_exports__;
 /******/ })()
 ;

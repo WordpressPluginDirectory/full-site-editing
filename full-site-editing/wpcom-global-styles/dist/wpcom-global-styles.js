@@ -1,8 +1,8 @@
-/******/ (function() { // webpackBootstrap
+/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 6744:
-/***/ (function(module) {
+/***/ ((module) => {
 
 module.exports = {
   "100": "Continue",
@@ -72,7 +72,7 @@ module.exports = {
 /***/ }),
 
 /***/ 3421:
-/***/ (function(__unused_webpack_module, exports) {
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 /*!
@@ -282,7 +282,7 @@ function tryDecode(str, decode) {
 /***/ }),
 
 /***/ 5881:
-/***/ (function(module) {
+/***/ ((module) => {
 
 /**
  * Helpers.
@@ -451,7 +451,7 @@ function plural(ms, msAbs, n, name) {
 /***/ }),
 
 /***/ 2699:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 // Copyright Joyent, Inc. and other Node contributors.
@@ -956,7 +956,7 @@ function eventTargetAgnosticAddListener(emitter, name, listener, flags) {
 /***/ }),
 
 /***/ 4495:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
@@ -1056,7 +1056,7 @@ BlockHash.prototype._pad = function pad() {
 /***/ }),
 
 /***/ 8032:
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -1169,7 +1169,7 @@ SHA256.prototype._digest = function digest(enc) {
 /***/ }),
 
 /***/ 713:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
@@ -1226,7 +1226,7 @@ exports.g1_256 = g1_256;
 /***/ }),
 
 /***/ 212:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
@@ -1512,7 +1512,7 @@ exports.shr64_lo = shr64_lo;
 /***/ }),
 
 /***/ 1285:
-/***/ (function(module) {
+/***/ ((module) => {
 
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
@@ -1546,7 +1546,7 @@ if (typeof Object.create === 'function') {
 /***/ }),
 
 /***/ 1612:
-/***/ (function() {
+/***/ (() => {
 
 "use strict";
 // extracted by mini-css-extract-plugin
@@ -1555,7 +1555,7 @@ if (typeof Object.create === 'function') {
 /***/ }),
 
 /***/ 2131:
-/***/ (function() {
+/***/ (() => {
 
 "use strict";
 // extracted by mini-css-extract-plugin
@@ -1564,7 +1564,7 @@ if (typeof Object.create === 'function') {
 /***/ }),
 
 /***/ 9561:
-/***/ (function(module) {
+/***/ ((module) => {
 
 module.exports = assert;
 
@@ -1582,9 +1582,12 @@ assert.equal = function assertEqual(l, r, msg) {
 /***/ }),
 
 /***/ 1093:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9307);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6115);
@@ -1693,24 +1696,24 @@ const GlobalStylesModal = () => {
     alt: ""
   }))));
 };
-/* harmony default export */ __webpack_exports__.Z = (GlobalStylesModal);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (GlobalStylesModal);
 
 /***/ }),
 
 /***/ 7172:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ GlobalStylesNotices; }
+/* harmony export */   Z: () => (/* binding */ GlobalStylesNotices)
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9307);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6115);
 /* harmony import */ var _automattic_data_stores_src_plans__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(7987);
 /* harmony import */ var _automattic_data_stores_src_plans_constants__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(4703);
-/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(5830);
-/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(7022);
+/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(4010);
+/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(372);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5609);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9818);
@@ -1737,17 +1740,13 @@ const __ = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__;
 
 
 const GLOBAL_STYLES_VIEW_NOTICE_SELECTOR = 'wpcom-global-styles-notice-container';
-const trackEvent = function (eventName) {
-  let isSiteEditor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-  return (0,_automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__/* .recordTracksEvent */ .jN)(eventName, {
-    context: isSiteEditor ? 'site-editor' : 'post-editor',
-    blog_id: wpcomGlobalStyles.wpcomBlogId
-  });
-};
-function GlobalStylesWarningNotice(_ref) {
-  let {
-    plans
-  } = _ref;
+const trackEvent = (eventName, isSiteEditor = true) => (0,_automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__/* .recordTracksEvent */ .jN)(eventName, {
+  context: isSiteEditor ? 'site-editor' : 'post-editor',
+  blog_id: wpcomGlobalStyles.wpcomBlogId
+});
+function GlobalStylesWarningNotice({
+  plans
+}) {
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     trackEvent('calypso_global_styles_gating_notice_view_canvas_show');
   }, []);
@@ -1910,7 +1909,7 @@ function GlobalStylesNotices() {
 /***/ }),
 
 /***/ 7915:
-/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 /* exported __webpack_public_path__ */
 /* global __webpack_public_path__ */
@@ -1919,7 +1918,7 @@ function GlobalStylesNotices() {
  * Dynamically set WebPack's publicPath so that split assets can be found.
  * @see https://webpack.js.org/guides/public-path/#on-the-fly
  */
-if (typeof window === 'object' && window.wpcomGlobalStyles?.assetsUrl) {
+if ( true && window.wpcomGlobalStyles?.assetsUrl) {
   // eslint-disable-next-line no-global-assign
   __webpack_require__.p = window.wpcomGlobalStyles.assetsUrl;
 }
@@ -1927,7 +1926,7 @@ if (typeof window === 'object' && window.wpcomGlobalStyles?.assetsUrl) {
 /***/ }),
 
 /***/ 6421:
-/***/ (function(__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9818);
@@ -1937,9 +1936,7 @@ const DEFAULT_STATE = {
   isModalVisible: true
 };
 (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.registerStore)('automattic/wpcom-global-styles', {
-  reducer: function () {
-    let state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
-    let action = arguments.length > 1 ? arguments[1] : undefined;
+  reducer: (state = DEFAULT_STATE, action) => {
     switch (action.type) {
       case 'DISMISS_MODAL':
         return {
@@ -1963,11 +1960,11 @@ const DEFAULT_STATE = {
 /***/ }),
 
 /***/ 9773:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   $: function() { return /* binding */ useCanvas; }
+/* harmony export */   $: () => (/* binding */ useCanvas)
 /* harmony export */ });
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9818);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
@@ -2003,11 +2000,11 @@ function useCanvas() {
 /***/ }),
 
 /***/ 7210:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Y: function() { return /* binding */ useGlobalStylesConfig; }
+/* harmony export */   Y: () => (/* binding */ useGlobalStylesConfig)
 /* harmony export */ });
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9818);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
@@ -2037,11 +2034,11 @@ function useGlobalStylesConfig() {
 /***/ }),
 
 /***/ 807:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   u: function() { return /* binding */ usePreview; }
+/* harmony export */   u: () => (/* binding */ usePreview)
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9307);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
@@ -2213,11 +2210,11 @@ function usePreview() {
 /***/ }),
 
 /***/ 6115:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   jN: function() { return /* reexport safe */ _tracks__WEBPACK_IMPORTED_MODULE_7__.jN; }
+/* harmony export */   jN: () => (/* reexport safe */ _tracks__WEBPACK_IMPORTED_MODULE_7__.jN)
 /* harmony export */ });
 /* harmony import */ var _utils_do_not_track__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1694);
 /* harmony import */ var _utils_current_user__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6209);
@@ -2244,7 +2241,7 @@ function usePreview() {
 /***/ }),
 
 /***/ 9377:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* unused harmony exports getPageViewParams, getMostRecentUrlPath */
@@ -2254,7 +2251,7 @@ let mostRecentUrlPath = null;
 
 // pathCounter is used to keep track of the order of calypso_page_view Tracks events.
 let pathCounter = 0;
-if (typeof window !== 'undefined') {
+if (true) {
   window.addEventListener('popstate', function () {
     // throw away our URL value if the user used the back/forward buttons
     mostRecentUrlPath = null;
@@ -2282,11 +2279,11 @@ function getMostRecentUrlPath() {
 /***/ }),
 
 /***/ 9792:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   jN: function() { return /* binding */ recordTracksEvent; }
+/* harmony export */   jN: () => (/* binding */ recordTracksEvent)
 /* harmony export */ });
 /* unused harmony exports getTracksLoadPromise, pushEventToTracksQueue, analyticsEvents, getTracksAnonymousUserId, initializeAnalytics, identifyUser, signalUserFromAnotherProduct, recordTracksPageView, recordTracksPageViewWithPageParams, getGenericSuperPropsGetter */
 /* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2699);
@@ -2326,11 +2323,8 @@ let _loadTracksResult = Promise.resolve(); // default value for non-BOM environm
 if (typeof document !== 'undefined') {
   _loadTracksResult = (0,_automattic_load_script__WEBPACK_IMPORTED_MODULE_1__/* .loadScript */ .ve)('//stats.wp.com/w.js?64');
 }
-function createRandomId() {
-  let randomBytesLength = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 9;
-  if (typeof window === 'undefined') {
-    return '';
-  }
+function createRandomId(randomBytesLength = 9) {
+  if (false) {}
   // 9 * 4/3 = 12
   // this is to avoid getting padding of a random byte string when it is base64 encoded
   let randomBytes;
@@ -2343,9 +2337,7 @@ function createRandomId() {
   return window.btoa(String.fromCharCode(...randomBytes));
 }
 function getUrlParameter(name) {
-  if (typeof window === 'undefined') {
-    return '';
-  }
+  if (false) {}
   name = name.replace(/[[]/g, '\\[').replace(/[\]]/g, '\\]');
   const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
   const results = regex.exec(window.location.search);
@@ -2391,7 +2383,7 @@ function getTracksLoadPromise() {
   return _loadTracksResult;
 }
 function pushEventToTracksQueue(args) {
-  if (typeof window !== 'undefined') {
+  if (true) {
     window._tkq = window._tkq || [];
     window._tkq.push(args);
   }
@@ -2475,10 +2467,7 @@ function recordTracksEvent(eventName, eventProperties) {
 
   // Remove properties that have an undefined value
   // This allows a caller to easily remove properties from the recorded set by setting them to undefined
-  eventProperties = Object.fromEntries(Object.entries(eventProperties).filter(_ref => {
-    let [, val] = _ref;
-    return typeof val !== 'undefined';
-  }));
+  eventProperties = Object.fromEntries(Object.entries(eventProperties).filter(([, val]) => typeof val !== 'undefined'));
   (0,_utils_debug__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z)('Recording event "%s" with actual props %o', eventName, eventProperties);
   pushEventToTracksQueue(['recordEvent', eventName, eventProperties]);
   analyticsEvents.emit('record-event', eventName, eventProperties);
@@ -2491,7 +2480,7 @@ function recordTracksPageView(urlPath, params) {
   };
 
   // Add calypso build timestamp if set
-  const build_timestamp = typeof window !== 'undefined' && window.BUILD_TIMESTAMP;
+  const build_timestamp =  true && window.BUILD_TIMESTAMP;
   if (build_timestamp) {
     eventProperties = Object.assign(eventProperties, {
       build_timestamp
@@ -2505,12 +2494,9 @@ function recordTracksPageView(urlPath, params) {
 
   // Record all `utm` marketing parameters as event properties on the page view event
   // so we can analyze their performance with our analytics tools
-  if (typeof window !== 'undefined' && window.location) {
+  if ( true && window.location) {
     const urlParams = new URL(window.location.href).searchParams;
-    const utmParamEntries = urlParams && Array.from(urlParams.entries()).filter(_ref2 => {
-      let [key] = _ref2;
-      return key.startsWith('utm_');
-    });
+    const utmParamEntries = urlParams && Array.from(urlParams.entries()).filter(([key]) => key.startsWith('utm_'));
     const utmParams = utmParamEntries ? Object.fromEntries(utmParamEntries) : {};
     eventProperties = Object.assign(eventProperties, utmParams);
   }
@@ -2528,7 +2514,7 @@ function getGenericSuperPropsGetter(config) {
       site_id_label: 'wpcom',
       client: config('client_slug')
     };
-    if (typeof window !== 'undefined') {
+    if (true) {
       Object.assign(superProps, {
         vph: window.innerHeight,
         vpw: window.innerWidth
@@ -2541,27 +2527,26 @@ function getGenericSuperPropsGetter(config) {
 /***/ }),
 
 /***/ 3722:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* unused harmony exports recordTrainTracksRender, recordTrainTracksInteract, getNewRailcarId */
 /* harmony import */ var _tracks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9792);
 
 
-function recordTrainTracksRender(_ref) {
-  let {
-    railcarId,
-    uiAlgo,
-    uiPosition,
-    fetchAlgo,
-    fetchPosition,
-    query,
-    result,
-    recBlogId,
-    recPostId,
-    recFeedId,
-    recFeedItemId
-  } = _ref;
+function recordTrainTracksRender({
+  railcarId,
+  uiAlgo,
+  uiPosition,
+  fetchAlgo,
+  fetchPosition,
+  query,
+  result,
+  recBlogId,
+  recPostId,
+  recFeedId,
+  recFeedItemId
+}) {
   const props = {};
 
   // Remap and filter undefined props
@@ -2577,31 +2562,26 @@ function recordTrainTracksRender(_ref) {
     rec_post_id: recPostId,
     rec_feed_id: recFeedId,
     rec_feed_item_id: recFeedItemId
-  }).forEach(_ref2 => {
-    let [key, val] = _ref2;
-    return val !== undefined && (props[key] = val);
-  });
+  }).forEach(([key, val]) => val !== undefined && (props[key] = val));
   recordTracksEvent('calypso_traintracks_render', props);
 }
-function recordTrainTracksInteract(_ref3) {
-  let {
-    railcarId,
-    action
-  } = _ref3;
+function recordTrainTracksInteract({
+  railcarId,
+  action
+}) {
   recordTracksEvent('calypso_traintracks_interact', {
     railcar: railcarId,
     action
   });
 }
-function getNewRailcarId() {
-  let suffix = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'recommendation';
+function getNewRailcarId(suffix = 'recommendation') {
   return `${uuid().replace(/-/g, '')}-${suffix}`;
 }
 
 /***/ }),
 
 /***/ 6209:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* unused harmony exports getCurrentUser, setCurrentUser */
@@ -2648,9 +2628,12 @@ function setCurrentUser(currentUser) {
 /***/ }),
 
 /***/ 9358:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8049);
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_0__);
 
@@ -2658,12 +2641,12 @@ function setCurrentUser(currentUser) {
 /**
  * Module variables
  */
-/* harmony default export */ __webpack_exports__.Z = (debug__WEBPACK_IMPORTED_MODULE_0___default()('calypso:analytics'));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (debug__WEBPACK_IMPORTED_MODULE_0___default()('calypso:analytics'));
 
 /***/ }),
 
 /***/ 1694:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* unused harmony export default */
@@ -2676,7 +2659,7 @@ function setCurrentUser(currentUser) {
  * @returns true if Do Not Track is enabled in the user's browser.
  */
 function getDoNotTrack() {
-  const result = Boolean(typeof window !== 'undefined' && (
+  const result = Boolean( true && (
   // Internet Explorer 11 uses window.doNotTrack rather than navigator.doNotTrack.
   // Safari 7.1.3+ uses window.doNotTrack rather than navigator.doNotTrack.
   // MDN ref: https://developer.mozilla.org/en-US/docs/Web/API/navigator/doNotTrack#Browser_compatibility
@@ -2688,11 +2671,11 @@ function getDoNotTrack() {
 /***/ }),
 
 /***/ 2552:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   ZP: function() { return /* binding */ getTrackingPrefs; }
+/* harmony export */   ZP: () => (/* binding */ getTrackingPrefs)
 /* harmony export */ });
 /* unused harmony exports TRACKING_PREFS_COOKIE_V1, TRACKING_PREFS_COOKIE_V2, parseTrackingPrefs */
 /* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3421);
@@ -2730,8 +2713,7 @@ const prefsAllowAll = {
     advertising: true
   }
 };
-const parseTrackingPrefs = function (cookieV2, cookieV1) {
-  let defaultPrefs = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : prefsDisallowAll;
+const parseTrackingPrefs = (cookieV2, cookieV1, defaultPrefs = prefsDisallowAll) => {
   const {
     ok,
     buckets
@@ -2799,7 +2781,7 @@ function getTrackingPrefs() {
 /***/ }),
 
 /***/ 4:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* unused harmony export default */
@@ -2821,11 +2803,11 @@ function hashPii(data) {
 /***/ }),
 
 /***/ 6326:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ isCountryInGdprZone; }
+/* harmony export */   Z: () => (/* binding */ isCountryInGdprZone)
 /* harmony export */ });
 const GDPR_COUNTRIES = [
 // European Member countries
@@ -2911,11 +2893,11 @@ function isCountryInGdprZone(countryCode) {
 /***/ }),
 
 /***/ 2286:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ isRegionInCcpaZone; }
+/* harmony export */   Z: () => (/* binding */ isRegionInCcpaZone)
 /* harmony export */ });
 const CCPA_US_REGIONS = ['california',
 // CA
@@ -2948,7 +2930,7 @@ function isRegionInCcpaZone(countryCode, region) {
 /***/ }),
 
 /***/ 825:
-/***/ (function(__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3421);
@@ -2980,11 +2962,11 @@ const setTrackingPrefs = newPrefs => {
 /***/ }),
 
 /***/ 4703:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   xf: function() { return /* binding */ PLAN_PREMIUM; }
+/* harmony export */   xf: () => (/* binding */ PLAN_PREMIUM)
 /* harmony export */ });
 /* unused harmony exports STORE_KEY, FREE_PLAN_PRODUCT_ID, TIMELESS_PLAN_FREE, TIMELESS_PLAN_PERSONAL, TIMELESS_PLAN_PREMIUM, TIMELESS_PLAN_BUSINESS, TIMELESS_PLAN_ECOMMERCE, plansSlugs, DEFAULT_PAID_PLAN, PLAN_FREE, PLAN_PERSONAL, PLAN_BUSINESS, PLAN_ECOMMERCE, PLAN_PERSONAL_MONTHLY, PLAN_PREMIUM_MONTHLY, PLAN_BUSINESS_MONTHLY, PLAN_ECOMMERCE_MONTHLY, PLAN_ECOMMERCE_TRIAL_MONTHLY, PLAN_MIGRATION_TRIAL_MONTHLY, annualSlugs, monthlySlugs, plansProductSlugs, FEATURE_IDS_THAT_REQUIRE_ANNUALLY_BILLED_PLAN, PLAN_MONTHLY_PERIOD, PLAN_ANNUAL_PERIOD, PLAN_BIENNIAL_PERIOD, PLAN_TRIENNIAL_PERIOD, PERIOD_LIST */
 const STORE_KEY = 'automattic/onboard/plans';
@@ -3024,9 +3006,12 @@ const PERIOD_LIST = [PLAN_MONTHLY_PERIOD, PLAN_ANNUAL_PERIOD, PLAN_BIENNIAL_PERI
 /***/ }),
 
 /***/ 2897:
-/***/ (function(__unused_webpack_module, __webpack_exports__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /**
  * Unpacks an intro offer from an API plan to the respective `PlanIntroductoryOffer` structure for the store.
  */
@@ -3050,27 +3035,33 @@ const unpackIntroOffer = plan => {
     isOfferComplete
   };
 };
-/* harmony default export */ __webpack_exports__.Z = (unpackIntroOffer);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (unpackIntroOffer);
 
 /***/ }),
 
 /***/ 4025:
-/***/ (function(__unused_webpack_module, __webpack_exports__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 const useQueryKeysFactory = () => ({
   sitePlans: siteId => ['site-plans', siteId],
   plans: () => ['plans']
 });
-/* harmony default export */ __webpack_exports__.Z = (useQueryKeysFactory);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (useQueryKeysFactory);
 
 /***/ }),
 
 /***/ 7987:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8943);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2180);
 /* harmony import */ var wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8552);
 /* harmony import */ var _lib_unpack_intro_offer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2897);
 /* harmony import */ var _lib_use_query_keys_factory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4025);
@@ -3102,19 +3093,19 @@ function usePlans() {
     }
   });
 }
-/* harmony default export */ __webpack_exports__.Z = (usePlans);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (usePlans);
 
 /***/ }),
 
 /***/ 3340:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Yt: function() { return /* binding */ handleRequestError; },
-/* harmony export */   _W: function() { return /* binding */ handleRequestSuccess; },
-/* harmony export */   hg: function() { return /* binding */ isLoading; },
-/* harmony export */   lZ: function() { return /* binding */ addScriptCallback; }
+/* harmony export */   Yt: () => (/* binding */ handleRequestError),
+/* harmony export */   _W: () => (/* binding */ handleRequestSuccess),
+/* harmony export */   hg: () => (/* binding */ isLoading),
+/* harmony export */   lZ: () => (/* binding */ addScriptCallback)
 /* harmony export */ });
 /* unused harmony exports getCallbacksMap, removeScriptCallback, removeScriptCallbacks, removeAllScriptCallbacks, executeCallbacks */
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8049);
@@ -3162,8 +3153,7 @@ function removeAllScriptCallbacks() {
   debug('Removing all callbacks for scripts from all URLs');
   getCallbacksMap().clear();
 }
-function executeCallbacks(url) {
-  let error = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+function executeCallbacks(url, error = null) {
   const callbacksMap = getCallbacksMap();
   const callbacksForUrl = callbacksMap.get(url);
   if (callbacksForUrl) {
@@ -3193,12 +3183,12 @@ function handleRequestError() {
 /***/ }),
 
 /***/ 5606:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   C: function() { return /* binding */ createScriptElement; },
-/* harmony export */   k: function() { return /* binding */ attachToHead; }
+/* harmony export */   C: () => (/* binding */ createScriptElement),
+/* harmony export */   k: () => (/* binding */ attachToHead)
 /* harmony export */ });
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8049);
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_0__);
@@ -3215,10 +3205,7 @@ function createScriptElement(url, args) {
   script.onerror = _callback_handler__WEBPACK_IMPORTED_MODULE_1__/* .handleRequestError */ .Yt;
   script.async = true;
   if (args) {
-    Object.entries(args).forEach(_ref => {
-      let [key, value] = _ref;
-      return script[key] = value;
-    });
+    Object.entries(args).forEach(([key, value]) => script[key] = value);
   }
   return script;
 }
@@ -3230,11 +3217,11 @@ function attachToHead(element) {
 /***/ }),
 
 /***/ 4898:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   ve: function() { return /* binding */ loadScript; }
+/* harmony export */   ve: () => (/* binding */ loadScript)
 /* harmony export */ });
 /* unused harmony exports JQUERY_URL, loadjQueryDependentScript */
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8049);
@@ -3310,9 +3297,12 @@ function loadjQueryDependentScript(url, callback, args) {
 /***/ }),
 
 /***/ 8552:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ZP: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* unused harmony exports requestAllBlogsAccess, reloadProxy, canAccessWpcomApis */
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8049);
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_0__);
@@ -3827,13 +3817,13 @@ function canAccessWpcomApis() {
 /**
  * Export `request` function.
  */
-/* harmony default export */ __webpack_exports__.ZP = (request);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (request);
 
 
 /***/ }),
 
 /***/ 8049:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, exports, __webpack_require__) => {
 
 /* eslint-env browser */
 
@@ -3875,7 +3865,7 @@ function useColors() {
   // NB: In an Electron preload script, document will be defined but not fully
   // initialized. Since we know we're in Chrome, we'll just detect this case
   // explicitly
-  if (typeof window !== 'undefined' && window.process && (window.process.type === 'renderer' || window.process.__nwjs)) {
+  if ( true && window.process && (window.process.type === 'renderer' || window.process.__nwjs)) {
     return true;
   }
 
@@ -3888,7 +3878,7 @@ function useColors() {
   // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
   return typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance ||
   // Is firebug? http://stackoverflow.com/a/398120/376773
-  typeof window !== 'undefined' && window.console && (window.console.firebug || window.console.exception && window.console.table) ||
+   true && window.console && (window.console.firebug || window.console.exception && window.console.table) ||
   // Is firefox >= v31?
   // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
   typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31 ||
@@ -4021,7 +4011,7 @@ formatters.j = function (v) {
 /***/ }),
 
 /***/ 2632:
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /**
  * This is the common logic for both the Node.js and web browser
@@ -4083,10 +4073,7 @@ function setup(env) {
     let enableOverride = null;
     let namespacesCache;
     let enabledCache;
-    function debug() {
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
+    function debug(...args) {
       // Disabled?
       if (!debug.enabled) {
         return;
@@ -4274,7 +4261,7 @@ module.exports = setup;
 /***/ }),
 
 /***/ 3830:
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -4289,7 +4276,7 @@ module.exports = function () {
 /***/ }),
 
 /***/ 956:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 
@@ -4323,52 +4310,23 @@ module.exports = function () {
 
 /***/ }),
 
-/***/ 452:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * @license React
- * use-sync-external-store-shim.production.min.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-var e=__webpack_require__(9196);function h(a,b){return a===b&&(0!==a||1/a===1/b)||a!==a&&b!==b}var k="function"===typeof Object.is?Object.is:h,l=e.useState,m=e.useEffect,n=e.useLayoutEffect,p=e.useDebugValue;function q(a,b){var d=b(),f=l({inst:{value:d,getSnapshot:b}}),c=f[0].inst,g=f[1];n(function(){c.value=d;c.getSnapshot=b;r(c)&&g({inst:c})},[a,d,b]);m(function(){r(c)&&g({inst:c});return a(function(){r(c)&&g({inst:c})})},[a]);p(d);return d}
-function r(a){var b=a.getSnapshot;a=a.value;try{var d=b();return!k(a,d)}catch(f){return!0}}function t(a,b){return b()}var u="undefined"===typeof window||"undefined"===typeof window.document||"undefined"===typeof window.document.createElement?t:q;exports.useSyncExternalStore=void 0!==e.useSyncExternalStore?e.useSyncExternalStore:u;
-
-
-/***/ }),
-
-/***/ 3100:
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-
-if (true) {
-  module.exports = __webpack_require__(452);
-} else {}
-
-
-/***/ }),
-
 /***/ 2686:
-/***/ (function(__unused_webpack_module, __webpack_exports__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-/* harmony default export */ __webpack_exports__.Z = (/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i);
 
 /***/ }),
 
 /***/ 5302:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ rng; }
+/* harmony export */   Z: () => (/* binding */ rng)
 /* harmony export */ });
 // Unique ID creation requires a high quality random # generator. In the browser we therefore
 // require the crypto API and do not support built-in fallback to lower quality random number
@@ -4393,9 +4351,12 @@ function rng() {
 /***/ }),
 
 /***/ 708:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var _validate_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6525);
 
 /**
@@ -4426,14 +4387,17 @@ function stringify(arr) {
   return uuid;
 }
 
-/* harmony default export */ __webpack_exports__.Z = (stringify);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (stringify);
 
 /***/ }),
 
 /***/ 8767:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var _rng_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5302);
 /* harmony import */ var _stringify_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(708);
 
@@ -4459,14 +4423,17 @@ function v4(options, buf, offset) {
   return (0,_stringify_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)(rnds);
 }
 
-/* harmony default export */ __webpack_exports__.Z = (v4);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (v4);
 
 /***/ }),
 
 /***/ 6525:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var _regex_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2686);
 
 
@@ -4474,12 +4441,12 @@ function validate(uuid) {
   return typeof uuid === 'string' && _regex_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.test(uuid);
 }
 
-/* harmony default export */ __webpack_exports__.Z = (validate);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (validate);
 
 /***/ }),
 
 /***/ 2884:
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var uppercamelcase = __webpack_require__(3830);
 var statusCodes = __webpack_require__(6744);
@@ -4569,7 +4536,7 @@ function toName ( str ) {
 /***/ }),
 
 /***/ 9731:
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 module.exports = __webpack_require__.p + "images/image-f40c6b2b12b942b650ea.svg";
@@ -4577,7 +4544,7 @@ module.exports = __webpack_require__.p + "images/image-f40c6b2b12b942b650ea.svg"
 /***/ }),
 
 /***/ 9196:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["React"];
@@ -4585,7 +4552,7 @@ module.exports = window["React"];
 /***/ }),
 
 /***/ 5609:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["components"];
@@ -4593,7 +4560,7 @@ module.exports = window["wp"]["components"];
 /***/ }),
 
 /***/ 9818:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["data"];
@@ -4601,7 +4568,7 @@ module.exports = window["wp"]["data"];
 /***/ }),
 
 /***/ 7701:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["domReady"];
@@ -4609,7 +4576,7 @@ module.exports = window["wp"]["domReady"];
 /***/ }),
 
 /***/ 9307:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["element"];
@@ -4617,7 +4584,7 @@ module.exports = window["wp"]["element"];
 /***/ }),
 
 /***/ 5736:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["i18n"];
@@ -4625,7 +4592,7 @@ module.exports = window["wp"]["i18n"];
 /***/ }),
 
 /***/ 8817:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["plugins"];
@@ -4633,1156 +4600,900 @@ module.exports = window["wp"]["plugins"];
 /***/ }),
 
 /***/ 6483:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["url"];
 
 /***/ }),
 
-/***/ 5289:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+/***/ 5777:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   j: function() { return /* binding */ focusManager; }
+/* harmony export */   j: () => (/* binding */ focusManager)
 /* harmony export */ });
 /* unused harmony export FocusManager */
-/* harmony import */ var _subscribable_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2436);
-/* harmony import */ var _utils_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6370);
+/* harmony import */ var _subscribable_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3248);
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8298);
+// src/focusManager.ts
 
 
-
-class FocusManager extends _subscribable_mjs__WEBPACK_IMPORTED_MODULE_0__/* .Subscribable */ .l {
+var FocusManager = class extends _subscribable_js__WEBPACK_IMPORTED_MODULE_0__/* .Subscribable */ .l {
+  #focused;
+  #cleanup;
+  #setup;
   constructor() {
     super();
-
-    this.setup = onFocus => {
-      // addEventListener does not exist in React Native, but window does
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (!_utils_mjs__WEBPACK_IMPORTED_MODULE_1__/* .isServer */ .sk && window.addEventListener) {
-        const listener = () => onFocus(); // Listen to visibillitychange and focus
-
-
-        window.addEventListener('visibilitychange', listener, false);
-        window.addEventListener('focus', listener, false);
+    this.#setup = (onFocus) => {
+      if (!_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .isServer */ .sk && window.addEventListener) {
+        const listener = () => onFocus();
+        window.addEventListener("visibilitychange", listener, false);
         return () => {
-          // Be sure to unsubscribe if a new handler is set
-          window.removeEventListener('visibilitychange', listener);
-          window.removeEventListener('focus', listener);
+          window.removeEventListener("visibilitychange", listener);
         };
       }
-
       return;
     };
   }
-
   onSubscribe() {
-    if (!this.cleanup) {
-      this.setEventListener(this.setup);
+    if (!this.#cleanup) {
+      this.setEventListener(this.#setup);
     }
   }
-
   onUnsubscribe() {
     if (!this.hasListeners()) {
-      var _this$cleanup;
-
-      (_this$cleanup = this.cleanup) == null ? void 0 : _this$cleanup.call(this);
-      this.cleanup = undefined;
+      this.#cleanup?.();
+      this.#cleanup = void 0;
     }
   }
-
   setEventListener(setup) {
-    var _this$cleanup2;
-
-    this.setup = setup;
-    (_this$cleanup2 = this.cleanup) == null ? void 0 : _this$cleanup2.call(this);
-    this.cleanup = setup(focused => {
-      if (typeof focused === 'boolean') {
+    this.#setup = setup;
+    this.#cleanup?.();
+    this.#cleanup = setup((focused) => {
+      if (typeof focused === "boolean") {
         this.setFocused(focused);
       } else {
         this.onFocus();
       }
     });
   }
-
   setFocused(focused) {
-    const changed = this.focused !== focused;
-
+    const changed = this.#focused !== focused;
     if (changed) {
-      this.focused = focused;
+      this.#focused = focused;
       this.onFocus();
     }
   }
-
   onFocus() {
-    this.listeners.forEach(({
-      listener
-    }) => {
+    this.listeners.forEach((listener) => {
       listener();
     });
   }
-
   isFocused() {
-    if (typeof this.focused === 'boolean') {
-      return this.focused;
-    } // document global can be unavailable in react native
-
-
-    if (typeof document === 'undefined') {
-      return true;
+    if (typeof this.#focused === "boolean") {
+      return this.#focused;
     }
-
-    return [undefined, 'visible', 'prerender'].includes(document.visibilityState);
+    return globalThis.document?.visibilityState !== "hidden";
   }
+};
+var focusManager = new FocusManager();
 
-}
-const focusManager = new FocusManager();
-
-
-//# sourceMappingURL=focusManager.mjs.map
-
+//# sourceMappingURL=focusManager.js.map
 
 /***/ }),
 
-/***/ 4388:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+/***/ 3620:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Gm: function() { return /* binding */ infiniteQueryBehavior; }
+/* harmony export */   Gm: () => (/* binding */ infiniteQueryBehavior)
 /* harmony export */ });
-/* unused harmony exports getNextPageParam, getPreviousPageParam, hasNextPage, hasPreviousPage */
-function infiniteQueryBehavior() {
+/* unused harmony exports hasNextPage, hasPreviousPage */
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8298);
+// src/infiniteQueryBehavior.ts
+
+function infiniteQueryBehavior(pages) {
   return {
-    onFetch: context => {
-      context.fetchFn = () => {
-        var _context$fetchOptions, _context$fetchOptions2, _context$fetchOptions3, _context$fetchOptions4, _context$state$data, _context$state$data2;
-
-        const refetchPage = (_context$fetchOptions = context.fetchOptions) == null ? void 0 : (_context$fetchOptions2 = _context$fetchOptions.meta) == null ? void 0 : _context$fetchOptions2.refetchPage;
-        const fetchMore = (_context$fetchOptions3 = context.fetchOptions) == null ? void 0 : (_context$fetchOptions4 = _context$fetchOptions3.meta) == null ? void 0 : _context$fetchOptions4.fetchMore;
-        const pageParam = fetchMore == null ? void 0 : fetchMore.pageParam;
-        const isFetchingNextPage = (fetchMore == null ? void 0 : fetchMore.direction) === 'forward';
-        const isFetchingPreviousPage = (fetchMore == null ? void 0 : fetchMore.direction) === 'backward';
-        const oldPages = ((_context$state$data = context.state.data) == null ? void 0 : _context$state$data.pages) || [];
-        const oldPageParams = ((_context$state$data2 = context.state.data) == null ? void 0 : _context$state$data2.pageParams) || [];
-        let newPageParams = oldPageParams;
+    onFetch: (context, query) => {
+      const fetchFn = async () => {
+        const options = context.options;
+        const direction = context.fetchOptions?.meta?.fetchMore?.direction;
+        const oldPages = context.state.data?.pages || [];
+        const oldPageParams = context.state.data?.pageParams || [];
+        const empty = { pages: [], pageParams: [] };
         let cancelled = false;
-
-        const addSignalProperty = object => {
-          Object.defineProperty(object, 'signal', {
+        const addSignalProperty = (object) => {
+          Object.defineProperty(object, "signal", {
             enumerable: true,
             get: () => {
-              var _context$signal;
-
-              if ((_context$signal = context.signal) != null && _context$signal.aborted) {
+              if (context.signal.aborted) {
                 cancelled = true;
               } else {
-                var _context$signal2;
-
-                (_context$signal2 = context.signal) == null ? void 0 : _context$signal2.addEventListener('abort', () => {
+                context.signal.addEventListener("abort", () => {
                   cancelled = true;
                 });
               }
-
               return context.signal;
             }
           });
-        }; // Get query function
-
-
-        const queryFn = context.options.queryFn || (() => Promise.reject("Missing queryFn for queryKey '" + context.options.queryHash + "'"));
-
-        const buildNewPages = (pages, param, page, previous) => {
-          newPageParams = previous ? [param, ...newPageParams] : [...newPageParams, param];
-          return previous ? [page, ...pages] : [...pages, page];
-        }; // Create function to fetch a page
-
-
-        const fetchPage = (pages, manual, param, previous) => {
+        };
+        const queryFn = context.options.queryFn || (() => Promise.reject(
+          new Error(`Missing queryFn: '${context.options.queryHash}'`)
+        ));
+        const fetchPage = async (data, param, previous) => {
           if (cancelled) {
-            return Promise.reject('Cancelled');
+            return Promise.reject();
           }
-
-          if (typeof param === 'undefined' && !manual && pages.length) {
-            return Promise.resolve(pages);
+          if (param == null && data.pages.length) {
+            return Promise.resolve(data);
           }
-
           const queryFnContext = {
             queryKey: context.queryKey,
             pageParam: param,
+            direction: previous ? "backward" : "forward",
             meta: context.options.meta
           };
           addSignalProperty(queryFnContext);
-          const queryFnResult = queryFn(queryFnContext);
-          const promise = Promise.resolve(queryFnResult).then(page => buildNewPages(pages, param, page, previous));
-          return promise;
+          const page = await queryFn(
+            queryFnContext
+          );
+          const { maxPages } = context.options;
+          const addTo = previous ? _utils_js__WEBPACK_IMPORTED_MODULE_0__/* .addToStart */ .Ht : _utils_js__WEBPACK_IMPORTED_MODULE_0__/* .addToEnd */ .VX;
+          return {
+            pages: addTo(data.pages, page, maxPages),
+            pageParams: addTo(data.pageParams, param, maxPages)
+          };
         };
-
-        let promise; // Fetch first page?
-
-        if (!oldPages.length) {
-          promise = fetchPage([]);
-        } // Fetch next page?
-        else if (isFetchingNextPage) {
-          const manual = typeof pageParam !== 'undefined';
-          const param = manual ? pageParam : getNextPageParam(context.options, oldPages);
-          promise = fetchPage(oldPages, manual, param);
-        } // Fetch previous page?
-        else if (isFetchingPreviousPage) {
-          const manual = typeof pageParam !== 'undefined';
-          const param = manual ? pageParam : getPreviousPageParam(context.options, oldPages);
-          promise = fetchPage(oldPages, manual, param, true);
-        } // Refetch pages
-        else {
-          newPageParams = [];
-          const manual = typeof context.options.getNextPageParam === 'undefined';
-          const shouldFetchFirstPage = refetchPage && oldPages[0] ? refetchPage(oldPages[0], 0, oldPages) : true; // Fetch first page
-
-          promise = shouldFetchFirstPage ? fetchPage([], manual, oldPageParams[0]) : Promise.resolve(buildNewPages([], oldPageParams[0], oldPages[0])); // Fetch remaining pages
-
-          for (let i = 1; i < oldPages.length; i++) {
-            promise = promise.then(pages => {
-              const shouldFetchNextPage = refetchPage && oldPages[i] ? refetchPage(oldPages[i], i, oldPages) : true;
-
-              if (shouldFetchNextPage) {
-                const param = manual ? oldPageParams[i] : getNextPageParam(context.options, pages);
-                return fetchPage(pages, manual, param);
-              }
-
-              return Promise.resolve(buildNewPages(pages, oldPageParams[i], oldPages[i]));
-            });
+        let result;
+        if (direction && oldPages.length) {
+          const previous = direction === "backward";
+          const pageParamFn = previous ? getPreviousPageParam : getNextPageParam;
+          const oldData = {
+            pages: oldPages,
+            pageParams: oldPageParams
+          };
+          const param = pageParamFn(options, oldData);
+          result = await fetchPage(oldData, param, previous);
+        } else {
+          result = await fetchPage(
+            empty,
+            oldPageParams[0] ?? options.initialPageParam
+          );
+          const remainingPages = pages ?? oldPages.length;
+          for (let i = 1; i < remainingPages; i++) {
+            const param = getNextPageParam(options, result);
+            result = await fetchPage(result, param);
           }
         }
-
-        const finalPromise = promise.then(pages => ({
-          pages,
-          pageParams: newPageParams
-        }));
-        return finalPromise;
+        return result;
       };
+      if (context.options.persister) {
+        context.fetchFn = () => {
+          return context.options.persister?.(
+            fetchFn,
+            {
+              queryKey: context.queryKey,
+              meta: context.options.meta,
+              signal: context.signal
+            },
+            query
+          );
+        };
+      } else {
+        context.fetchFn = fetchFn;
+      }
     }
   };
 }
-function getNextPageParam(options, pages) {
-  return options.getNextPageParam == null ? void 0 : options.getNextPageParam(pages[pages.length - 1], pages);
+function getNextPageParam(options, { pages, pageParams }) {
+  const lastIndex = pages.length - 1;
+  return options.getNextPageParam(
+    pages[lastIndex],
+    pages,
+    pageParams[lastIndex],
+    pageParams
+  );
 }
-function getPreviousPageParam(options, pages) {
-  return options.getPreviousPageParam == null ? void 0 : options.getPreviousPageParam(pages[0], pages);
+function getPreviousPageParam(options, { pages, pageParams }) {
+  return options.getPreviousPageParam?.(
+    pages[0],
+    pages,
+    pageParams[0],
+    pageParams
+  );
 }
-/**
- * Checks if there is a next page.
- * Returns `undefined` if it cannot be determined.
- */
-
-function hasNextPage(options, pages) {
-  if (options.getNextPageParam && Array.isArray(pages)) {
-    const nextPageParam = getNextPageParam(options, pages);
-    return typeof nextPageParam !== 'undefined' && nextPageParam !== null && nextPageParam !== false;
-  }
-
-  return;
+function hasNextPage(options, data) {
+  if (!data)
+    return false;
+  return getNextPageParam(options, data) != null;
 }
-/**
- * Checks if there is a previous page.
- * Returns `undefined` if it cannot be determined.
- */
-
-function hasPreviousPage(options, pages) {
-  if (options.getPreviousPageParam && Array.isArray(pages)) {
-    const previousPageParam = getPreviousPageParam(options, pages);
-    return typeof previousPageParam !== 'undefined' && previousPageParam !== null && previousPageParam !== false;
-  }
-
-  return;
+function hasPreviousPage(options, data) {
+  if (!data || !options.getPreviousPageParam)
+    return false;
+  return getPreviousPageParam(options, data) != null;
 }
 
-
-//# sourceMappingURL=infiniteQueryBehavior.mjs.map
-
+//# sourceMappingURL=infiniteQueryBehavior.js.map
 
 /***/ }),
 
-/***/ 714:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+/***/ 457:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   _: function() { return /* binding */ defaultLogger; }
-/* harmony export */ });
-const defaultLogger = console;
-
-
-//# sourceMappingURL=logger.mjs.map
-
-
-/***/ }),
-
-/***/ 6278:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   m: function() { return /* binding */ Mutation; }
+/* harmony export */   m: () => (/* binding */ Mutation)
 /* harmony export */ });
 /* unused harmony export getDefaultState */
-/* harmony import */ var _logger_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(714);
-/* harmony import */ var _notifyManager_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3709);
-/* harmony import */ var _removable_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3429);
-/* harmony import */ var _retryer_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3241);
+/* harmony import */ var _notifyManager_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1895);
+/* harmony import */ var _removable_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9085);
+/* harmony import */ var _retryer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6087);
+// src/mutation.ts
 
 
 
-
-
-// CLASS
-class Mutation extends _removable_mjs__WEBPACK_IMPORTED_MODULE_0__/* .Removable */ .F {
+var Mutation = class extends _removable_js__WEBPACK_IMPORTED_MODULE_0__/* .Removable */ .F {
   constructor(config) {
     super();
-    this.defaultOptions = config.defaultOptions;
     this.mutationId = config.mutationId;
-    this.mutationCache = config.mutationCache;
-    this.logger = config.logger || _logger_mjs__WEBPACK_IMPORTED_MODULE_1__/* .defaultLogger */ ._;
-    this.observers = [];
+    this.#defaultOptions = config.defaultOptions;
+    this.#mutationCache = config.mutationCache;
+    this.#observers = [];
     this.state = config.state || getDefaultState();
     this.setOptions(config.options);
     this.scheduleGc();
   }
-
+  #observers;
+  #defaultOptions;
+  #mutationCache;
+  #retryer;
   setOptions(options) {
-    this.options = { ...this.defaultOptions,
-      ...options
-    };
-    this.updateCacheTime(this.options.cacheTime);
+    this.options = { ...this.#defaultOptions, ...options };
+    this.updateGcTime(this.options.gcTime);
   }
-
   get meta() {
     return this.options.meta;
   }
-
-  setState(state) {
-    this.dispatch({
-      type: 'setState',
-      state
-    });
-  }
-
   addObserver(observer) {
-    if (!this.observers.includes(observer)) {
-      this.observers.push(observer); // Stop the mutation from being garbage collected
-
+    if (!this.#observers.includes(observer)) {
+      this.#observers.push(observer);
       this.clearGcTimeout();
-      this.mutationCache.notify({
-        type: 'observerAdded',
+      this.#mutationCache.notify({
+        type: "observerAdded",
         mutation: this,
         observer
       });
     }
   }
-
   removeObserver(observer) {
-    this.observers = this.observers.filter(x => x !== observer);
+    this.#observers = this.#observers.filter((x) => x !== observer);
     this.scheduleGc();
-    this.mutationCache.notify({
-      type: 'observerRemoved',
+    this.#mutationCache.notify({
+      type: "observerRemoved",
       mutation: this,
       observer
     });
   }
-
   optionalRemove() {
-    if (!this.observers.length) {
-      if (this.state.status === 'loading') {
+    if (!this.#observers.length) {
+      if (this.state.status === "pending") {
         this.scheduleGc();
       } else {
-        this.mutationCache.remove(this);
+        this.#mutationCache.remove(this);
       }
     }
   }
-
   continue() {
-    var _this$retryer$continu, _this$retryer;
-
-    return (_this$retryer$continu = (_this$retryer = this.retryer) == null ? void 0 : _this$retryer.continue()) != null ? _this$retryer$continu : this.execute();
+    return this.#retryer?.continue() ?? // continuing a mutation assumes that variables are set, mutation must have been dehydrated before
+    this.execute(this.state.variables);
   }
-
-  async execute() {
+  async execute(variables) {
     const executeMutation = () => {
-      var _this$options$retry;
-
-      this.retryer = (0,_retryer_mjs__WEBPACK_IMPORTED_MODULE_2__/* .createRetryer */ .Mz)({
+      this.#retryer = (0,_retryer_js__WEBPACK_IMPORTED_MODULE_1__/* .createRetryer */ .Mz)({
         fn: () => {
           if (!this.options.mutationFn) {
-            return Promise.reject('No mutationFn found');
+            return Promise.reject(new Error("No mutationFn found"));
           }
-
-          return this.options.mutationFn(this.state.variables);
+          return this.options.mutationFn(variables);
         },
         onFail: (failureCount, error) => {
-          this.dispatch({
-            type: 'failed',
-            failureCount,
-            error
-          });
+          this.#dispatch({ type: "failed", failureCount, error });
         },
         onPause: () => {
-          this.dispatch({
-            type: 'pause'
-          });
+          this.#dispatch({ type: "pause" });
         },
         onContinue: () => {
-          this.dispatch({
-            type: 'continue'
-          });
+          this.#dispatch({ type: "continue" });
         },
-        retry: (_this$options$retry = this.options.retry) != null ? _this$options$retry : 0,
+        retry: this.options.retry ?? 0,
         retryDelay: this.options.retryDelay,
         networkMode: this.options.networkMode
       });
-      return this.retryer.promise;
+      return this.#retryer.promise;
     };
-
-    const restored = this.state.status === 'loading';
-
+    const restored = this.state.status === "pending";
     try {
-      var _this$mutationCache$c3, _this$mutationCache$c4, _this$options$onSucce, _this$options2, _this$mutationCache$c5, _this$mutationCache$c6, _this$options$onSettl, _this$options3;
-
       if (!restored) {
-        var _this$mutationCache$c, _this$mutationCache$c2, _this$options$onMutat, _this$options;
-
-        this.dispatch({
-          type: 'loading',
-          variables: this.options.variables
-        }); // Notify cache callback
-
-        await ((_this$mutationCache$c = (_this$mutationCache$c2 = this.mutationCache.config).onMutate) == null ? void 0 : _this$mutationCache$c.call(_this$mutationCache$c2, this.state.variables, this));
-        const context = await ((_this$options$onMutat = (_this$options = this.options).onMutate) == null ? void 0 : _this$options$onMutat.call(_this$options, this.state.variables));
-
+        this.#dispatch({ type: "pending", variables });
+        await this.#mutationCache.config.onMutate?.(
+          variables,
+          this
+        );
+        const context = await this.options.onMutate?.(variables);
         if (context !== this.state.context) {
-          this.dispatch({
-            type: 'loading',
+          this.#dispatch({
+            type: "pending",
             context,
-            variables: this.state.variables
+            variables
           });
         }
       }
-
-      const data = await executeMutation(); // Notify cache callback
-
-      await ((_this$mutationCache$c3 = (_this$mutationCache$c4 = this.mutationCache.config).onSuccess) == null ? void 0 : _this$mutationCache$c3.call(_this$mutationCache$c4, data, this.state.variables, this.state.context, this));
-      await ((_this$options$onSucce = (_this$options2 = this.options).onSuccess) == null ? void 0 : _this$options$onSucce.call(_this$options2, data, this.state.variables, this.state.context)); // Notify cache callback
-
-      await ((_this$mutationCache$c5 = (_this$mutationCache$c6 = this.mutationCache.config).onSettled) == null ? void 0 : _this$mutationCache$c5.call(_this$mutationCache$c6, data, null, this.state.variables, this.state.context, this));
-      await ((_this$options$onSettl = (_this$options3 = this.options).onSettled) == null ? void 0 : _this$options$onSettl.call(_this$options3, data, null, this.state.variables, this.state.context));
-      this.dispatch({
-        type: 'success',
-        data
-      });
+      const data = await executeMutation();
+      await this.#mutationCache.config.onSuccess?.(
+        data,
+        variables,
+        this.state.context,
+        this
+      );
+      await this.options.onSuccess?.(data, variables, this.state.context);
+      await this.#mutationCache.config.onSettled?.(
+        data,
+        null,
+        this.state.variables,
+        this.state.context,
+        this
+      );
+      await this.options.onSettled?.(data, null, variables, this.state.context);
+      this.#dispatch({ type: "success", data });
       return data;
     } catch (error) {
       try {
-        var _this$mutationCache$c7, _this$mutationCache$c8, _this$options$onError, _this$options4, _this$mutationCache$c9, _this$mutationCache$c10, _this$options$onSettl2, _this$options5;
-
-        // Notify cache callback
-        await ((_this$mutationCache$c7 = (_this$mutationCache$c8 = this.mutationCache.config).onError) == null ? void 0 : _this$mutationCache$c7.call(_this$mutationCache$c8, error, this.state.variables, this.state.context, this));
-
-        if (false) {}
-
-        await ((_this$options$onError = (_this$options4 = this.options).onError) == null ? void 0 : _this$options$onError.call(_this$options4, error, this.state.variables, this.state.context)); // Notify cache callback
-
-        await ((_this$mutationCache$c9 = (_this$mutationCache$c10 = this.mutationCache.config).onSettled) == null ? void 0 : _this$mutationCache$c9.call(_this$mutationCache$c10, undefined, error, this.state.variables, this.state.context, this));
-        await ((_this$options$onSettl2 = (_this$options5 = this.options).onSettled) == null ? void 0 : _this$options$onSettl2.call(_this$options5, undefined, error, this.state.variables, this.state.context));
+        await this.#mutationCache.config.onError?.(
+          error,
+          variables,
+          this.state.context,
+          this
+        );
+        await this.options.onError?.(
+          error,
+          variables,
+          this.state.context
+        );
+        await this.#mutationCache.config.onSettled?.(
+          void 0,
+          error,
+          this.state.variables,
+          this.state.context,
+          this
+        );
+        await this.options.onSettled?.(
+          void 0,
+          error,
+          variables,
+          this.state.context
+        );
         throw error;
       } finally {
-        this.dispatch({
-          type: 'error',
-          error: error
-        });
+        this.#dispatch({ type: "error", error });
       }
     }
   }
-
-  dispatch(action) {
-    const reducer = state => {
+  #dispatch(action) {
+    const reducer = (state) => {
       switch (action.type) {
-        case 'failed':
-          return { ...state,
+        case "failed":
+          return {
+            ...state,
             failureCount: action.failureCount,
             failureReason: action.error
           };
-
-        case 'pause':
-          return { ...state,
+        case "pause":
+          return {
+            ...state,
             isPaused: true
           };
-
-        case 'continue':
-          return { ...state,
+        case "continue":
+          return {
+            ...state,
             isPaused: false
           };
-
-        case 'loading':
-          return { ...state,
+        case "pending":
+          return {
+            ...state,
             context: action.context,
-            data: undefined,
+            data: void 0,
             failureCount: 0,
             failureReason: null,
             error: null,
-            isPaused: !(0,_retryer_mjs__WEBPACK_IMPORTED_MODULE_2__/* .canFetch */ .Kw)(this.options.networkMode),
-            status: 'loading',
-            variables: action.variables
+            isPaused: !(0,_retryer_js__WEBPACK_IMPORTED_MODULE_1__/* .canFetch */ .Kw)(this.options.networkMode),
+            status: "pending",
+            variables: action.variables,
+            submittedAt: Date.now()
           };
-
-        case 'success':
-          return { ...state,
+        case "success":
+          return {
+            ...state,
             data: action.data,
             failureCount: 0,
             failureReason: null,
             error: null,
-            status: 'success',
+            status: "success",
             isPaused: false
           };
-
-        case 'error':
-          return { ...state,
-            data: undefined,
+        case "error":
+          return {
+            ...state,
+            data: void 0,
             error: action.error,
             failureCount: state.failureCount + 1,
             failureReason: action.error,
             isPaused: false,
-            status: 'error'
-          };
-
-        case 'setState':
-          return { ...state,
-            ...action.state
+            status: "error"
           };
       }
     };
-
     this.state = reducer(this.state);
-    _notifyManager_mjs__WEBPACK_IMPORTED_MODULE_3__/* .notifyManager */ .V.batch(() => {
-      this.observers.forEach(observer => {
+    _notifyManager_js__WEBPACK_IMPORTED_MODULE_2__/* .notifyManager */ .V.batch(() => {
+      this.#observers.forEach((observer) => {
         observer.onMutationUpdate(action);
       });
-      this.mutationCache.notify({
+      this.#mutationCache.notify({
         mutation: this,
-        type: 'updated',
+        type: "updated",
         action
       });
     });
   }
-
-}
+};
 function getDefaultState() {
   return {
-    context: undefined,
-    data: undefined,
+    context: void 0,
+    data: void 0,
     error: null,
     failureCount: 0,
     failureReason: null,
     isPaused: false,
-    status: 'idle',
-    variables: undefined
+    status: "idle",
+    variables: void 0,
+    submittedAt: 0
   };
 }
 
-
-//# sourceMappingURL=mutation.mjs.map
-
+//# sourceMappingURL=mutation.js.map
 
 /***/ }),
 
-/***/ 6072:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+/***/ 1750:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   L: function() { return /* binding */ MutationCache; }
+/* harmony export */   L: () => (/* binding */ MutationCache)
 /* harmony export */ });
-/* harmony import */ var _notifyManager_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3709);
-/* harmony import */ var _mutation_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6278);
-/* harmony import */ var _utils_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6370);
-/* harmony import */ var _subscribable_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2436);
+/* harmony import */ var _notifyManager_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1895);
+/* harmony import */ var _mutation_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(457);
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8298);
+/* harmony import */ var _subscribable_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3248);
+// src/mutationCache.ts
 
 
 
 
-
-// CLASS
-class MutationCache extends _subscribable_mjs__WEBPACK_IMPORTED_MODULE_0__/* .Subscribable */ .l {
-  constructor(config) {
+var MutationCache = class extends _subscribable_js__WEBPACK_IMPORTED_MODULE_0__/* .Subscribable */ .l {
+  constructor(config = {}) {
     super();
-    this.config = config || {};
-    this.mutations = [];
-    this.mutationId = 0;
+    this.config = config;
+    this.#mutations = [];
+    this.#mutationId = 0;
   }
-
+  #mutations;
+  #mutationId;
+  #resuming;
   build(client, options, state) {
-    const mutation = new _mutation_mjs__WEBPACK_IMPORTED_MODULE_1__/* .Mutation */ .m({
+    const mutation = new _mutation_js__WEBPACK_IMPORTED_MODULE_1__/* .Mutation */ .m({
       mutationCache: this,
-      logger: client.getLogger(),
-      mutationId: ++this.mutationId,
+      mutationId: ++this.#mutationId,
       options: client.defaultMutationOptions(options),
-      state,
-      defaultOptions: options.mutationKey ? client.getMutationDefaults(options.mutationKey) : undefined
+      state
     });
     this.add(mutation);
     return mutation;
   }
-
   add(mutation) {
-    this.mutations.push(mutation);
-    this.notify({
-      type: 'added',
-      mutation
-    });
+    this.#mutations.push(mutation);
+    this.notify({ type: "added", mutation });
   }
-
   remove(mutation) {
-    this.mutations = this.mutations.filter(x => x !== mutation);
-    this.notify({
-      type: 'removed',
-      mutation
-    });
+    this.#mutations = this.#mutations.filter((x) => x !== mutation);
+    this.notify({ type: "removed", mutation });
   }
-
   clear() {
-    _notifyManager_mjs__WEBPACK_IMPORTED_MODULE_2__/* .notifyManager */ .V.batch(() => {
-      this.mutations.forEach(mutation => {
+    _notifyManager_js__WEBPACK_IMPORTED_MODULE_2__/* .notifyManager */ .V.batch(() => {
+      this.#mutations.forEach((mutation) => {
         this.remove(mutation);
       });
     });
   }
-
   getAll() {
-    return this.mutations;
+    return this.#mutations;
   }
-
   find(filters) {
-    if (typeof filters.exact === 'undefined') {
-      filters.exact = true;
-    }
-
-    return this.mutations.find(mutation => (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_3__/* .matchMutation */ .X7)(filters, mutation));
+    const defaultedFilters = { exact: true, ...filters };
+    return this.#mutations.find(
+      (mutation) => (0,_utils_js__WEBPACK_IMPORTED_MODULE_3__/* .matchMutation */ .X7)(defaultedFilters, mutation)
+    );
   }
-
-  findAll(filters) {
-    return this.mutations.filter(mutation => (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_3__/* .matchMutation */ .X7)(filters, mutation));
+  findAll(filters = {}) {
+    return this.#mutations.filter(
+      (mutation) => (0,_utils_js__WEBPACK_IMPORTED_MODULE_3__/* .matchMutation */ .X7)(filters, mutation)
+    );
   }
-
   notify(event) {
-    _notifyManager_mjs__WEBPACK_IMPORTED_MODULE_2__/* .notifyManager */ .V.batch(() => {
-      this.listeners.forEach(({
-        listener
-      }) => {
+    _notifyManager_js__WEBPACK_IMPORTED_MODULE_2__/* .notifyManager */ .V.batch(() => {
+      this.listeners.forEach((listener) => {
         listener(event);
       });
     });
   }
-
   resumePausedMutations() {
-    var _this$resuming;
-
-    this.resuming = ((_this$resuming = this.resuming) != null ? _this$resuming : Promise.resolve()).then(() => {
-      const pausedMutations = this.mutations.filter(x => x.state.isPaused);
-      return _notifyManager_mjs__WEBPACK_IMPORTED_MODULE_2__/* .notifyManager */ .V.batch(() => pausedMutations.reduce((promise, mutation) => promise.then(() => mutation.continue().catch(_utils_mjs__WEBPACK_IMPORTED_MODULE_3__/* .noop */ .ZT)), Promise.resolve()));
+    this.#resuming = (this.#resuming ?? Promise.resolve()).then(() => {
+      const pausedMutations = this.#mutations.filter((x) => x.state.isPaused);
+      return _notifyManager_js__WEBPACK_IMPORTED_MODULE_2__/* .notifyManager */ .V.batch(
+        () => pausedMutations.reduce(
+          (promise, mutation) => promise.then(() => mutation.continue().catch(_utils_js__WEBPACK_IMPORTED_MODULE_3__/* .noop */ .ZT)),
+          Promise.resolve()
+        )
+      );
     }).then(() => {
-      this.resuming = undefined;
+      this.#resuming = void 0;
     });
-    return this.resuming;
+    return this.#resuming;
   }
+};
 
-}
-
-
-//# sourceMappingURL=mutationCache.mjs.map
-
+//# sourceMappingURL=mutationCache.js.map
 
 /***/ }),
 
-/***/ 3709:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+/***/ 1895:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   V: function() { return /* binding */ notifyManager; }
+/* harmony export */   V: () => (/* binding */ notifyManager)
 /* harmony export */ });
 /* unused harmony export createNotifyManager */
-/* harmony import */ var _utils_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6370);
-
-
+// src/notifyManager.ts
 function createNotifyManager() {
   let queue = [];
   let transactions = 0;
-
-  let notifyFn = callback => {
+  let notifyFn = (callback) => {
     callback();
   };
-
-  let batchNotifyFn = callback => {
+  let batchNotifyFn = (callback) => {
     callback();
   };
-
-  const batch = callback => {
+  let scheduleFn = (cb) => setTimeout(cb, 0);
+  const setScheduler = (fn) => {
+    scheduleFn = fn;
+  };
+  const batch = (callback) => {
     let result;
     transactions++;
-
     try {
       result = callback();
     } finally {
       transactions--;
-
       if (!transactions) {
         flush();
       }
     }
-
     return result;
   };
-
-  const schedule = callback => {
+  const schedule = (callback) => {
     if (transactions) {
       queue.push(callback);
     } else {
-      (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_0__/* .scheduleMicrotask */ .A4)(() => {
+      scheduleFn(() => {
         notifyFn(callback);
       });
     }
   };
-  /**
-   * All calls to the wrapped function will be batched.
-   */
-
-
-  const batchCalls = callback => {
+  const batchCalls = (callback) => {
     return (...args) => {
       schedule(() => {
         callback(...args);
       });
     };
   };
-
   const flush = () => {
     const originalQueue = queue;
     queue = [];
-
     if (originalQueue.length) {
-      (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_0__/* .scheduleMicrotask */ .A4)(() => {
+      scheduleFn(() => {
         batchNotifyFn(() => {
-          originalQueue.forEach(callback => {
+          originalQueue.forEach((callback) => {
             notifyFn(callback);
           });
         });
       });
     }
   };
-  /**
-   * Use this method to set a custom notify function.
-   * This can be used to for example wrap notifications with `React.act` while running tests.
-   */
-
-
-  const setNotifyFunction = fn => {
+  const setNotifyFunction = (fn) => {
     notifyFn = fn;
   };
-  /**
-   * Use this method to set a custom function to batch notifications together into a single tick.
-   * By default React Query will use the batch function provided by ReactDOM or React Native.
-   */
-
-
-  const setBatchNotifyFunction = fn => {
+  const setBatchNotifyFunction = (fn) => {
     batchNotifyFn = fn;
   };
-
   return {
     batch,
     batchCalls,
     schedule,
     setNotifyFunction,
-    setBatchNotifyFunction
+    setBatchNotifyFunction,
+    setScheduler
   };
-} // SINGLETON
+}
+var notifyManager = createNotifyManager();
 
-const notifyManager = createNotifyManager();
-
-
-//# sourceMappingURL=notifyManager.mjs.map
-
+//# sourceMappingURL=notifyManager.js.map
 
 /***/ }),
 
-/***/ 3240:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+/***/ 3965:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   N: function() { return /* binding */ onlineManager; }
+/* harmony export */   N: () => (/* binding */ onlineManager)
 /* harmony export */ });
 /* unused harmony export OnlineManager */
-/* harmony import */ var _subscribable_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2436);
-/* harmony import */ var _utils_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6370);
+/* harmony import */ var _subscribable_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3248);
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8298);
+// src/onlineManager.ts
 
 
-
-const onlineEvents = ['online', 'offline'];
-class OnlineManager extends _subscribable_mjs__WEBPACK_IMPORTED_MODULE_0__/* .Subscribable */ .l {
+var OnlineManager = class extends _subscribable_js__WEBPACK_IMPORTED_MODULE_0__/* .Subscribable */ .l {
+  #online = true;
+  #cleanup;
+  #setup;
   constructor() {
     super();
-
-    this.setup = onOnline => {
-      // addEventListener does not exist in React Native, but window does
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (!_utils_mjs__WEBPACK_IMPORTED_MODULE_1__/* .isServer */ .sk && window.addEventListener) {
-        const listener = () => onOnline(); // Listen to online
-
-
-        onlineEvents.forEach(event => {
-          window.addEventListener(event, listener, false);
-        });
+    this.#setup = (onOnline) => {
+      if (!_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .isServer */ .sk && window.addEventListener) {
+        const onlineListener = () => onOnline(true);
+        const offlineListener = () => onOnline(false);
+        window.addEventListener("online", onlineListener, false);
+        window.addEventListener("offline", offlineListener, false);
         return () => {
-          // Be sure to unsubscribe if a new handler is set
-          onlineEvents.forEach(event => {
-            window.removeEventListener(event, listener);
-          });
+          window.removeEventListener("online", onlineListener);
+          window.removeEventListener("offline", offlineListener);
         };
       }
-
       return;
     };
   }
-
   onSubscribe() {
-    if (!this.cleanup) {
-      this.setEventListener(this.setup);
+    if (!this.#cleanup) {
+      this.setEventListener(this.#setup);
     }
   }
-
   onUnsubscribe() {
     if (!this.hasListeners()) {
-      var _this$cleanup;
-
-      (_this$cleanup = this.cleanup) == null ? void 0 : _this$cleanup.call(this);
-      this.cleanup = undefined;
+      this.#cleanup?.();
+      this.#cleanup = void 0;
     }
   }
-
   setEventListener(setup) {
-    var _this$cleanup2;
-
-    this.setup = setup;
-    (_this$cleanup2 = this.cleanup) == null ? void 0 : _this$cleanup2.call(this);
-    this.cleanup = setup(online => {
-      if (typeof online === 'boolean') {
-        this.setOnline(online);
-      } else {
-        this.onOnline();
-      }
-    });
+    this.#setup = setup;
+    this.#cleanup?.();
+    this.#cleanup = setup(this.setOnline.bind(this));
   }
-
   setOnline(online) {
-    const changed = this.online !== online;
-
+    const changed = this.#online !== online;
     if (changed) {
-      this.online = online;
-      this.onOnline();
+      this.#online = online;
+      this.listeners.forEach((listener) => {
+        listener(online);
+      });
     }
   }
-
-  onOnline() {
-    this.listeners.forEach(({
-      listener
-    }) => {
-      listener();
-    });
-  }
-
   isOnline() {
-    if (typeof this.online === 'boolean') {
-      return this.online;
-    }
-
-    if (typeof navigator === 'undefined' || typeof navigator.onLine === 'undefined') {
-      return true;
-    }
-
-    return navigator.onLine;
+    return this.#online;
   }
+};
+var onlineManager = new OnlineManager();
 
-}
-const onlineManager = new OnlineManager();
-
-
-//# sourceMappingURL=onlineManager.mjs.map
-
+//# sourceMappingURL=onlineManager.js.map
 
 /***/ }),
 
-/***/ 2356:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+/***/ 681:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   A: function() { return /* binding */ Query; }
+/* harmony export */   A: () => (/* binding */ Query)
 /* harmony export */ });
-/* harmony import */ var _utils_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6370);
-/* harmony import */ var _logger_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(714);
-/* harmony import */ var _notifyManager_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3709);
-/* harmony import */ var _retryer_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3241);
-/* harmony import */ var _removable_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3429);
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8298);
+/* harmony import */ var _notifyManager_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1895);
+/* harmony import */ var _retryer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6087);
+/* harmony import */ var _removable_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9085);
+// src/query.ts
 
 
 
 
-
-
-// CLASS
-class Query extends _removable_mjs__WEBPACK_IMPORTED_MODULE_0__/* .Removable */ .F {
+var Query = class extends _removable_js__WEBPACK_IMPORTED_MODULE_0__/* .Removable */ .F {
   constructor(config) {
     super();
-    this.abortSignalConsumed = false;
-    this.defaultOptions = config.defaultOptions;
-    this.setOptions(config.options);
-    this.observers = [];
-    this.cache = config.cache;
-    this.logger = config.logger || _logger_mjs__WEBPACK_IMPORTED_MODULE_1__/* .defaultLogger */ ._;
+    this.#abortSignalConsumed = false;
+    this.#defaultOptions = config.defaultOptions;
+    this.#setOptions(config.options);
+    this.#observers = [];
+    this.#cache = config.cache;
     this.queryKey = config.queryKey;
     this.queryHash = config.queryHash;
-    this.initialState = config.state || getDefaultState(this.options);
-    this.state = this.initialState;
+    this.#initialState = config.state || getDefaultState(this.options);
+    this.state = this.#initialState;
     this.scheduleGc();
   }
-
+  #initialState;
+  #revertState;
+  #cache;
+  #promise;
+  #retryer;
+  #observers;
+  #defaultOptions;
+  #abortSignalConsumed;
   get meta() {
     return this.options.meta;
   }
-
-  setOptions(options) {
-    this.options = { ...this.defaultOptions,
-      ...options
-    };
-    this.updateCacheTime(this.options.cacheTime);
+  #setOptions(options) {
+    this.options = { ...this.#defaultOptions, ...options };
+    this.updateGcTime(this.options.gcTime);
   }
-
   optionalRemove() {
-    if (!this.observers.length && this.state.fetchStatus === 'idle') {
-      this.cache.remove(this);
+    if (!this.#observers.length && this.state.fetchStatus === "idle") {
+      this.#cache.remove(this);
     }
   }
-
   setData(newData, options) {
-    const data = (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_2__/* .replaceData */ .oE)(this.state.data, newData, this.options); // Set data and mark it as cached
-
-    this.dispatch({
+    const data = (0,_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .replaceData */ .oE)(this.state.data, newData, this.options);
+    this.#dispatch({
       data,
-      type: 'success',
-      dataUpdatedAt: options == null ? void 0 : options.updatedAt,
-      manual: options == null ? void 0 : options.manual
+      type: "success",
+      dataUpdatedAt: options?.updatedAt,
+      manual: options?.manual
     });
     return data;
   }
-
   setState(state, setStateOptions) {
-    this.dispatch({
-      type: 'setState',
-      state,
-      setStateOptions
-    });
+    this.#dispatch({ type: "setState", state, setStateOptions });
   }
-
   cancel(options) {
-    var _this$retryer;
-
-    const promise = this.promise;
-    (_this$retryer = this.retryer) == null ? void 0 : _this$retryer.cancel(options);
-    return promise ? promise.then(_utils_mjs__WEBPACK_IMPORTED_MODULE_2__/* .noop */ .ZT).catch(_utils_mjs__WEBPACK_IMPORTED_MODULE_2__/* .noop */ .ZT) : Promise.resolve();
+    const promise = this.#promise;
+    this.#retryer?.cancel(options);
+    return promise ? promise.then(_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .noop */ .ZT).catch(_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .noop */ .ZT) : Promise.resolve();
   }
-
   destroy() {
     super.destroy();
-    this.cancel({
-      silent: true
-    });
+    this.cancel({ silent: true });
   }
-
   reset() {
     this.destroy();
-    this.setState(this.initialState);
+    this.setState(this.#initialState);
   }
-
   isActive() {
-    return this.observers.some(observer => observer.options.enabled !== false);
+    return this.#observers.some(
+      (observer) => observer.options.enabled !== false
+    );
   }
-
   isDisabled() {
     return this.getObserversCount() > 0 && !this.isActive();
   }
-
   isStale() {
-    return this.state.isInvalidated || !this.state.dataUpdatedAt || this.observers.some(observer => observer.getCurrentResult().isStale);
+    return this.state.isInvalidated || !this.state.dataUpdatedAt || this.#observers.some((observer) => observer.getCurrentResult().isStale);
   }
-
   isStaleByTime(staleTime = 0) {
-    return this.state.isInvalidated || !this.state.dataUpdatedAt || !(0,_utils_mjs__WEBPACK_IMPORTED_MODULE_2__/* .timeUntilStale */ .Kp)(this.state.dataUpdatedAt, staleTime);
+    return this.state.isInvalidated || !this.state.dataUpdatedAt || !(0,_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .timeUntilStale */ .Kp)(this.state.dataUpdatedAt, staleTime);
   }
-
   onFocus() {
-    var _this$retryer2;
-
-    const observer = this.observers.find(x => x.shouldFetchOnWindowFocus());
-
-    if (observer) {
-      observer.refetch({
-        cancelRefetch: false
-      });
-    } // Continue fetch if currently paused
-
-
-    (_this$retryer2 = this.retryer) == null ? void 0 : _this$retryer2.continue();
+    const observer = this.#observers.find((x) => x.shouldFetchOnWindowFocus());
+    observer?.refetch({ cancelRefetch: false });
+    this.#retryer?.continue();
   }
-
   onOnline() {
-    var _this$retryer3;
-
-    const observer = this.observers.find(x => x.shouldFetchOnReconnect());
-
-    if (observer) {
-      observer.refetch({
-        cancelRefetch: false
-      });
-    } // Continue fetch if currently paused
-
-
-    (_this$retryer3 = this.retryer) == null ? void 0 : _this$retryer3.continue();
+    const observer = this.#observers.find((x) => x.shouldFetchOnReconnect());
+    observer?.refetch({ cancelRefetch: false });
+    this.#retryer?.continue();
   }
-
   addObserver(observer) {
-    if (!this.observers.includes(observer)) {
-      this.observers.push(observer); // Stop the query from being garbage collected
-
+    if (!this.#observers.includes(observer)) {
+      this.#observers.push(observer);
       this.clearGcTimeout();
-      this.cache.notify({
-        type: 'observerAdded',
-        query: this,
-        observer
-      });
+      this.#cache.notify({ type: "observerAdded", query: this, observer });
     }
   }
-
   removeObserver(observer) {
-    if (this.observers.includes(observer)) {
-      this.observers = this.observers.filter(x => x !== observer);
-
-      if (!this.observers.length) {
-        // If the transport layer does not support cancellation
-        // we'll let the query continue so the result can be cached
-        if (this.retryer) {
-          if (this.abortSignalConsumed) {
-            this.retryer.cancel({
-              revert: true
-            });
+    if (this.#observers.includes(observer)) {
+      this.#observers = this.#observers.filter((x) => x !== observer);
+      if (!this.#observers.length) {
+        if (this.#retryer) {
+          if (this.#abortSignalConsumed) {
+            this.#retryer.cancel({ revert: true });
           } else {
-            this.retryer.cancelRetry();
+            this.#retryer.cancelRetry();
           }
         }
-
         this.scheduleGc();
       }
-
-      this.cache.notify({
-        type: 'observerRemoved',
-        query: this,
-        observer
-      });
+      this.#cache.notify({ type: "observerRemoved", query: this, observer });
     }
   }
-
   getObserversCount() {
-    return this.observers.length;
+    return this.#observers.length;
   }
-
   invalidate() {
     if (!this.state.isInvalidated) {
-      this.dispatch({
-        type: 'invalidate'
-      });
+      this.#dispatch({ type: "invalidate" });
     }
   }
-
   fetch(options, fetchOptions) {
-    var _this$options$behavio, _context$fetchOptions;
-
-    if (this.state.fetchStatus !== 'idle') {
-      if (this.state.dataUpdatedAt && fetchOptions != null && fetchOptions.cancelRefetch) {
-        // Silently cancel current fetch if the user wants to cancel refetches
-        this.cancel({
-          silent: true
-        });
-      } else if (this.promise) {
-        var _this$retryer4;
-
-        // make sure that retries that were potentially cancelled due to unmounts can continue
-        (_this$retryer4 = this.retryer) == null ? void 0 : _this$retryer4.continueRetry(); // Return current promise if we are already fetching
-
-        return this.promise;
-      }
-    } // Update config if passed, otherwise the config from the last execution is used
-
-
-    if (options) {
-      this.setOptions(options);
-    } // Use the options from the first observer with a query function if no function is found.
-    // This can happen when the query is hydrated or created with setQueryData.
-
-
-    if (!this.options.queryFn) {
-      const observer = this.observers.find(x => x.options.queryFn);
-
-      if (observer) {
-        this.setOptions(observer.options);
+    if (this.state.fetchStatus !== "idle") {
+      if (this.state.dataUpdatedAt && fetchOptions?.cancelRefetch) {
+        this.cancel({ silent: true });
+      } else if (this.#promise) {
+        this.#retryer?.continueRetry();
+        return this.#promise;
       }
     }
-
+    if (options) {
+      this.#setOptions(options);
+    }
+    if (!this.options.queryFn) {
+      const observer = this.#observers.find((x) => x.options.queryFn);
+      if (observer) {
+        this.#setOptions(observer.options);
+      }
+    }
     if (false) {}
-
-    const abortController = (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_2__/* .getAbortController */ .G9)(); // Create query function context
-
+    const abortController = new AbortController();
     const queryFnContext = {
       queryKey: this.queryKey,
-      pageParam: undefined,
       meta: this.meta
-    }; // Adds an enumerable signal property to the object that
-    // which sets abortSignalConsumed to true when the signal
-    // is read.
-
-    const addSignalProperty = object => {
-      Object.defineProperty(object, 'signal', {
+    };
+    const addSignalProperty = (object) => {
+      Object.defineProperty(object, "signal", {
         enumerable: true,
         get: () => {
-          if (abortController) {
-            this.abortSignalConsumed = true;
-            return abortController.signal;
-          }
-
-          return undefined;
+          this.#abortSignalConsumed = true;
+          return abortController.signal;
         }
       });
     };
-
-    addSignalProperty(queryFnContext); // Create fetch function
-
+    addSignalProperty(queryFnContext);
     const fetchFn = () => {
       if (!this.options.queryFn) {
-        return Promise.reject("Missing queryFn for queryKey '" + this.options.queryHash + "'");
+        return Promise.reject(
+          new Error(`Missing queryFn: '${this.options.queryHash}'`)
+        );
       }
-
-      this.abortSignalConsumed = false;
-      return this.options.queryFn(queryFnContext);
-    }; // Trigger behavior hook
-
-
+      this.#abortSignalConsumed = false;
+      if (this.options.persister) {
+        return this.options.persister(
+          this.options.queryFn,
+          queryFnContext,
+          this
+        );
+      }
+      return this.options.queryFn(
+        queryFnContext
+      );
+    };
     const context = {
       fetchOptions,
       options: this.options,
@@ -5791,200 +5502,165 @@ class Query extends _removable_mjs__WEBPACK_IMPORTED_MODULE_0__/* .Removable */ 
       fetchFn
     };
     addSignalProperty(context);
-    (_this$options$behavio = this.options.behavior) == null ? void 0 : _this$options$behavio.onFetch(context); // Store state in case the current fetch needs to be reverted
-
-    this.revertState = this.state; // Set to fetching state if not already in it
-
-    if (this.state.fetchStatus === 'idle' || this.state.fetchMeta !== ((_context$fetchOptions = context.fetchOptions) == null ? void 0 : _context$fetchOptions.meta)) {
-      var _context$fetchOptions2;
-
-      this.dispatch({
-        type: 'fetch',
-        meta: (_context$fetchOptions2 = context.fetchOptions) == null ? void 0 : _context$fetchOptions2.meta
-      });
+    this.options.behavior?.onFetch(
+      context,
+      this
+    );
+    this.#revertState = this.state;
+    if (this.state.fetchStatus === "idle" || this.state.fetchMeta !== context.fetchOptions?.meta) {
+      this.#dispatch({ type: "fetch", meta: context.fetchOptions?.meta });
     }
-
-    const onError = error => {
-      // Optimistically update state if needed
-      if (!((0,_retryer_mjs__WEBPACK_IMPORTED_MODULE_3__/* .isCancelledError */ .DV)(error) && error.silent)) {
-        this.dispatch({
-          type: 'error',
-          error: error
+    const onError = (error) => {
+      if (!((0,_retryer_js__WEBPACK_IMPORTED_MODULE_2__/* .isCancelledError */ .DV)(error) && error.silent)) {
+        this.#dispatch({
+          type: "error",
+          error
         });
       }
-
-      if (!(0,_retryer_mjs__WEBPACK_IMPORTED_MODULE_3__/* .isCancelledError */ .DV)(error)) {
-        var _this$cache$config$on, _this$cache$config, _this$cache$config$on2, _this$cache$config2;
-
-        // Notify cache callback
-        (_this$cache$config$on = (_this$cache$config = this.cache.config).onError) == null ? void 0 : _this$cache$config$on.call(_this$cache$config, error, this);
-        (_this$cache$config$on2 = (_this$cache$config2 = this.cache.config).onSettled) == null ? void 0 : _this$cache$config$on2.call(_this$cache$config2, this.state.data, error, this);
-
-        if (false) {}
+      if (!(0,_retryer_js__WEBPACK_IMPORTED_MODULE_2__/* .isCancelledError */ .DV)(error)) {
+        this.#cache.config.onError?.(
+          error,
+          this
+        );
+        this.#cache.config.onSettled?.(
+          this.state.data,
+          error,
+          this
+        );
       }
-
       if (!this.isFetchingOptimistic) {
-        // Schedule query gc after fetching
         this.scheduleGc();
       }
-
       this.isFetchingOptimistic = false;
-    }; // Try to fetch the data
-
-
-    this.retryer = (0,_retryer_mjs__WEBPACK_IMPORTED_MODULE_3__/* .createRetryer */ .Mz)({
+    };
+    this.#retryer = (0,_retryer_js__WEBPACK_IMPORTED_MODULE_2__/* .createRetryer */ .Mz)({
       fn: context.fetchFn,
-      abort: abortController == null ? void 0 : abortController.abort.bind(abortController),
-      onSuccess: data => {
-        var _this$cache$config$on3, _this$cache$config3, _this$cache$config$on4, _this$cache$config4;
-
-        if (typeof data === 'undefined') {
+      abort: abortController.abort.bind(abortController),
+      onSuccess: (data) => {
+        if (typeof data === "undefined") {
           if (false) {}
-
-          onError(new Error(this.queryHash + " data is undefined"));
+          onError(new Error(`${this.queryHash} data is undefined`));
           return;
         }
-
-        this.setData(data); // Notify cache callback
-
-        (_this$cache$config$on3 = (_this$cache$config3 = this.cache.config).onSuccess) == null ? void 0 : _this$cache$config$on3.call(_this$cache$config3, data, this);
-        (_this$cache$config$on4 = (_this$cache$config4 = this.cache.config).onSettled) == null ? void 0 : _this$cache$config$on4.call(_this$cache$config4, data, this.state.error, this);
-
+        this.setData(data);
+        this.#cache.config.onSuccess?.(data, this);
+        this.#cache.config.onSettled?.(
+          data,
+          this.state.error,
+          this
+        );
         if (!this.isFetchingOptimistic) {
-          // Schedule query gc after fetching
           this.scheduleGc();
         }
-
         this.isFetchingOptimistic = false;
       },
       onError,
       onFail: (failureCount, error) => {
-        this.dispatch({
-          type: 'failed',
-          failureCount,
-          error
-        });
+        this.#dispatch({ type: "failed", failureCount, error });
       },
       onPause: () => {
-        this.dispatch({
-          type: 'pause'
-        });
+        this.#dispatch({ type: "pause" });
       },
       onContinue: () => {
-        this.dispatch({
-          type: 'continue'
-        });
+        this.#dispatch({ type: "continue" });
       },
       retry: context.options.retry,
       retryDelay: context.options.retryDelay,
       networkMode: context.options.networkMode
     });
-    this.promise = this.retryer.promise;
-    return this.promise;
+    this.#promise = this.#retryer.promise;
+    return this.#promise;
   }
-
-  dispatch(action) {
-    const reducer = state => {
-      var _action$meta, _action$dataUpdatedAt;
-
+  #dispatch(action) {
+    const reducer = (state) => {
       switch (action.type) {
-        case 'failed':
-          return { ...state,
+        case "failed":
+          return {
+            ...state,
             fetchFailureCount: action.failureCount,
             fetchFailureReason: action.error
           };
-
-        case 'pause':
-          return { ...state,
-            fetchStatus: 'paused'
+        case "pause":
+          return {
+            ...state,
+            fetchStatus: "paused"
           };
-
-        case 'continue':
-          return { ...state,
-            fetchStatus: 'fetching'
+        case "continue":
+          return {
+            ...state,
+            fetchStatus: "fetching"
           };
-
-        case 'fetch':
-          return { ...state,
+        case "fetch":
+          return {
+            ...state,
             fetchFailureCount: 0,
             fetchFailureReason: null,
-            fetchMeta: (_action$meta = action.meta) != null ? _action$meta : null,
-            fetchStatus: (0,_retryer_mjs__WEBPACK_IMPORTED_MODULE_3__/* .canFetch */ .Kw)(this.options.networkMode) ? 'fetching' : 'paused',
-            ...(!state.dataUpdatedAt && {
+            fetchMeta: action.meta ?? null,
+            fetchStatus: (0,_retryer_js__WEBPACK_IMPORTED_MODULE_2__/* .canFetch */ .Kw)(this.options.networkMode) ? "fetching" : "paused",
+            ...!state.dataUpdatedAt && {
               error: null,
-              status: 'loading'
-            })
+              status: "pending"
+            }
           };
-
-        case 'success':
-          return { ...state,
+        case "success":
+          return {
+            ...state,
             data: action.data,
             dataUpdateCount: state.dataUpdateCount + 1,
-            dataUpdatedAt: (_action$dataUpdatedAt = action.dataUpdatedAt) != null ? _action$dataUpdatedAt : Date.now(),
+            dataUpdatedAt: action.dataUpdatedAt ?? Date.now(),
             error: null,
             isInvalidated: false,
-            status: 'success',
-            ...(!action.manual && {
-              fetchStatus: 'idle',
+            status: "success",
+            ...!action.manual && {
+              fetchStatus: "idle",
               fetchFailureCount: 0,
               fetchFailureReason: null
-            })
+            }
           };
-
-        case 'error':
+        case "error":
           const error = action.error;
-
-          if ((0,_retryer_mjs__WEBPACK_IMPORTED_MODULE_3__/* .isCancelledError */ .DV)(error) && error.revert && this.revertState) {
-            return { ...this.revertState,
-              fetchStatus: 'idle'
-            };
+          if ((0,_retryer_js__WEBPACK_IMPORTED_MODULE_2__/* .isCancelledError */ .DV)(error) && error.revert && this.#revertState) {
+            return { ...this.#revertState, fetchStatus: "idle" };
           }
-
-          return { ...state,
-            error: error,
+          return {
+            ...state,
+            error,
             errorUpdateCount: state.errorUpdateCount + 1,
             errorUpdatedAt: Date.now(),
             fetchFailureCount: state.fetchFailureCount + 1,
             fetchFailureReason: error,
-            fetchStatus: 'idle',
-            status: 'error'
+            fetchStatus: "idle",
+            status: "error"
           };
-
-        case 'invalidate':
-          return { ...state,
+        case "invalidate":
+          return {
+            ...state,
             isInvalidated: true
           };
-
-        case 'setState':
-          return { ...state,
+        case "setState":
+          return {
+            ...state,
             ...action.state
           };
       }
     };
-
     this.state = reducer(this.state);
-    _notifyManager_mjs__WEBPACK_IMPORTED_MODULE_4__/* .notifyManager */ .V.batch(() => {
-      this.observers.forEach(observer => {
-        observer.onQueryUpdate(action);
+    _notifyManager_js__WEBPACK_IMPORTED_MODULE_3__/* .notifyManager */ .V.batch(() => {
+      this.#observers.forEach((observer) => {
+        observer.onQueryUpdate();
       });
-      this.cache.notify({
-        query: this,
-        type: 'updated',
-        action
-      });
+      this.#cache.notify({ query: this, type: "updated", action });
     });
   }
-
-}
-
+};
 function getDefaultState(options) {
-  const data = typeof options.initialData === 'function' ? options.initialData() : options.initialData;
-  const hasData = typeof data !== 'undefined';
-  const initialDataUpdatedAt = hasData ? typeof options.initialDataUpdatedAt === 'function' ? options.initialDataUpdatedAt() : options.initialDataUpdatedAt : 0;
+  const data = typeof options.initialData === "function" ? options.initialData() : options.initialData;
+  const hasData = typeof data !== "undefined";
+  const initialDataUpdatedAt = hasData ? typeof options.initialDataUpdatedAt === "function" ? options.initialDataUpdatedAt() : options.initialDataUpdatedAt : 0;
   return {
     data,
     dataUpdateCount: 0,
-    dataUpdatedAt: hasData ? initialDataUpdatedAt != null ? initialDataUpdatedAt : Date.now() : 0,
+    dataUpdatedAt: hasData ? initialDataUpdatedAt ?? Date.now() : 0,
     error: null,
     errorUpdateCount: 0,
     errorUpdatedAt: 0,
@@ -5992,53 +5668,45 @@ function getDefaultState(options) {
     fetchFailureReason: null,
     fetchMeta: null,
     isInvalidated: false,
-    status: hasData ? 'success' : 'loading',
-    fetchStatus: 'idle'
+    status: hasData ? "success" : "pending",
+    fetchStatus: "idle"
   };
 }
 
-
-//# sourceMappingURL=query.mjs.map
-
+//# sourceMappingURL=query.js.map
 
 /***/ }),
 
-/***/ 3568:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+/***/ 6275:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   t: function() { return /* binding */ QueryCache; }
+/* harmony export */   t: () => (/* binding */ QueryCache)
 /* harmony export */ });
-/* harmony import */ var _utils_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6370);
-/* harmony import */ var _query_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2356);
-/* harmony import */ var _notifyManager_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3709);
-/* harmony import */ var _subscribable_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2436);
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8298);
+/* harmony import */ var _query_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(681);
+/* harmony import */ var _notifyManager_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1895);
+/* harmony import */ var _subscribable_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3248);
+// src/queryCache.ts
 
 
 
 
-
-// CLASS
-class QueryCache extends _subscribable_mjs__WEBPACK_IMPORTED_MODULE_0__/* .Subscribable */ .l {
-  constructor(config) {
+var QueryCache = class extends _subscribable_js__WEBPACK_IMPORTED_MODULE_0__/* .Subscribable */ .l {
+  constructor(config = {}) {
     super();
-    this.config = config || {};
-    this.queries = [];
-    this.queriesMap = {};
+    this.config = config;
+    this.#queries = /* @__PURE__ */ new Map();
   }
-
+  #queries;
   build(client, options, state) {
-    var _options$queryHash;
-
     const queryKey = options.queryKey;
-    const queryHash = (_options$queryHash = options.queryHash) != null ? _options$queryHash : (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_1__/* .hashQueryKeyByOptions */ .Rm)(queryKey, options);
+    const queryHash = options.queryHash ?? (0,_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .hashQueryKeyByOptions */ .Rm)(queryKey, options);
     let query = this.get(queryHash);
-
     if (!query) {
-      query = new _query_mjs__WEBPACK_IMPORTED_MODULE_2__/* .Query */ .A({
+      query = new _query_js__WEBPACK_IMPORTED_MODULE_2__/* .Query */ .A({
         cache: this,
-        logger: client.getLogger(),
         queryKey,
         queryHash,
         options: client.defaultQueryOptions(options),
@@ -6047,119 +5715,92 @@ class QueryCache extends _subscribable_mjs__WEBPACK_IMPORTED_MODULE_0__/* .Subsc
       });
       this.add(query);
     }
-
     return query;
   }
-
   add(query) {
-    if (!this.queriesMap[query.queryHash]) {
-      this.queriesMap[query.queryHash] = query;
-      this.queries.push(query);
+    if (!this.#queries.has(query.queryHash)) {
+      this.#queries.set(query.queryHash, query);
       this.notify({
-        type: 'added',
+        type: "added",
         query
       });
     }
   }
-
   remove(query) {
-    const queryInMap = this.queriesMap[query.queryHash];
-
+    const queryInMap = this.#queries.get(query.queryHash);
     if (queryInMap) {
       query.destroy();
-      this.queries = this.queries.filter(x => x !== query);
-
       if (queryInMap === query) {
-        delete this.queriesMap[query.queryHash];
+        this.#queries.delete(query.queryHash);
       }
-
-      this.notify({
-        type: 'removed',
-        query
-      });
+      this.notify({ type: "removed", query });
     }
   }
-
   clear() {
-    _notifyManager_mjs__WEBPACK_IMPORTED_MODULE_3__/* .notifyManager */ .V.batch(() => {
-      this.queries.forEach(query => {
+    _notifyManager_js__WEBPACK_IMPORTED_MODULE_3__/* .notifyManager */ .V.batch(() => {
+      this.getAll().forEach((query) => {
         this.remove(query);
       });
     });
   }
-
   get(queryHash) {
-    return this.queriesMap[queryHash];
+    return this.#queries.get(queryHash);
   }
-
   getAll() {
-    return this.queries;
+    return [...this.#queries.values()];
   }
-
-  find(arg1, arg2) {
-    const [filters] = (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_1__/* .parseFilterArgs */ .I6)(arg1, arg2);
-
-    if (typeof filters.exact === 'undefined') {
-      filters.exact = true;
-    }
-
-    return this.queries.find(query => (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_1__/* .matchQuery */ ._x)(filters, query));
+  find(filters) {
+    const defaultedFilters = { exact: true, ...filters };
+    return this.getAll().find(
+      (query) => (0,_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .matchQuery */ ._x)(defaultedFilters, query)
+    );
   }
-
-  findAll(arg1, arg2) {
-    const [filters] = (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_1__/* .parseFilterArgs */ .I6)(arg1, arg2);
-    return Object.keys(filters).length > 0 ? this.queries.filter(query => (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_1__/* .matchQuery */ ._x)(filters, query)) : this.queries;
+  findAll(filters = {}) {
+    const queries = this.getAll();
+    return Object.keys(filters).length > 0 ? queries.filter((query) => (0,_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .matchQuery */ ._x)(filters, query)) : queries;
   }
-
   notify(event) {
-    _notifyManager_mjs__WEBPACK_IMPORTED_MODULE_3__/* .notifyManager */ .V.batch(() => {
-      this.listeners.forEach(({
-        listener
-      }) => {
+    _notifyManager_js__WEBPACK_IMPORTED_MODULE_3__/* .notifyManager */ .V.batch(() => {
+      this.listeners.forEach((listener) => {
         listener(event);
       });
     });
   }
-
   onFocus() {
-    _notifyManager_mjs__WEBPACK_IMPORTED_MODULE_3__/* .notifyManager */ .V.batch(() => {
-      this.queries.forEach(query => {
+    _notifyManager_js__WEBPACK_IMPORTED_MODULE_3__/* .notifyManager */ .V.batch(() => {
+      this.getAll().forEach((query) => {
         query.onFocus();
       });
     });
   }
-
   onOnline() {
-    _notifyManager_mjs__WEBPACK_IMPORTED_MODULE_3__/* .notifyManager */ .V.batch(() => {
-      this.queries.forEach(query => {
+    _notifyManager_js__WEBPACK_IMPORTED_MODULE_3__/* .notifyManager */ .V.batch(() => {
+      this.getAll().forEach((query) => {
         query.onOnline();
       });
     });
   }
+};
 
-}
-
-
-//# sourceMappingURL=queryCache.mjs.map
-
+//# sourceMappingURL=queryCache.js.map
 
 /***/ }),
 
-/***/ 7022:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+/***/ 372:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   S: function() { return /* binding */ QueryClient; }
+/* harmony export */   S: () => (/* binding */ QueryClient)
 /* harmony export */ });
-/* harmony import */ var _utils_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6370);
-/* harmony import */ var _queryCache_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3568);
-/* harmony import */ var _mutationCache_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6072);
-/* harmony import */ var _focusManager_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5289);
-/* harmony import */ var _onlineManager_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3240);
-/* harmony import */ var _notifyManager_mjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(3709);
-/* harmony import */ var _infiniteQueryBehavior_mjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(4388);
-/* harmony import */ var _logger_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(714);
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8298);
+/* harmony import */ var _queryCache_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6275);
+/* harmony import */ var _mutationCache_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1750);
+/* harmony import */ var _focusManager_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5777);
+/* harmony import */ var _onlineManager_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3965);
+/* harmony import */ var _notifyManager_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1895);
+/* harmony import */ var _infiniteQueryBehavior_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(3620);
+// src/queryClient.ts
 
 
 
@@ -6167,727 +5808,578 @@ class QueryCache extends _subscribable_mjs__WEBPACK_IMPORTED_MODULE_0__/* .Subsc
 
 
 
-
-
-// CLASS
-class QueryClient {
+var QueryClient = class {
+  #queryCache;
+  #mutationCache;
+  #defaultOptions;
+  #queryDefaults;
+  #mutationDefaults;
+  #mountCount;
+  #unsubscribeFocus;
+  #unsubscribeOnline;
   constructor(config = {}) {
-    this.queryCache = config.queryCache || new _queryCache_mjs__WEBPACK_IMPORTED_MODULE_0__/* .QueryCache */ .t();
-    this.mutationCache = config.mutationCache || new _mutationCache_mjs__WEBPACK_IMPORTED_MODULE_1__/* .MutationCache */ .L();
-    this.logger = config.logger || _logger_mjs__WEBPACK_IMPORTED_MODULE_2__/* .defaultLogger */ ._;
-    this.defaultOptions = config.defaultOptions || {};
-    this.queryDefaults = [];
-    this.mutationDefaults = [];
-    this.mountCount = 0;
-
-    if (false) {}
+    this.#queryCache = config.queryCache || new _queryCache_js__WEBPACK_IMPORTED_MODULE_0__/* .QueryCache */ .t();
+    this.#mutationCache = config.mutationCache || new _mutationCache_js__WEBPACK_IMPORTED_MODULE_1__/* .MutationCache */ .L();
+    this.#defaultOptions = config.defaultOptions || {};
+    this.#queryDefaults = /* @__PURE__ */ new Map();
+    this.#mutationDefaults = /* @__PURE__ */ new Map();
+    this.#mountCount = 0;
   }
-
   mount() {
-    this.mountCount++;
-    if (this.mountCount !== 1) return;
-    this.unsubscribeFocus = _focusManager_mjs__WEBPACK_IMPORTED_MODULE_3__/* .focusManager */ .j.subscribe(() => {
-      if (_focusManager_mjs__WEBPACK_IMPORTED_MODULE_3__/* .focusManager */ .j.isFocused()) {
+    this.#mountCount++;
+    if (this.#mountCount !== 1)
+      return;
+    this.#unsubscribeFocus = _focusManager_js__WEBPACK_IMPORTED_MODULE_2__/* .focusManager */ .j.subscribe(() => {
+      if (_focusManager_js__WEBPACK_IMPORTED_MODULE_2__/* .focusManager */ .j.isFocused()) {
         this.resumePausedMutations();
-        this.queryCache.onFocus();
+        this.#queryCache.onFocus();
       }
     });
-    this.unsubscribeOnline = _onlineManager_mjs__WEBPACK_IMPORTED_MODULE_4__/* .onlineManager */ .N.subscribe(() => {
-      if (_onlineManager_mjs__WEBPACK_IMPORTED_MODULE_4__/* .onlineManager */ .N.isOnline()) {
+    this.#unsubscribeOnline = _onlineManager_js__WEBPACK_IMPORTED_MODULE_3__/* .onlineManager */ .N.subscribe(() => {
+      if (_onlineManager_js__WEBPACK_IMPORTED_MODULE_3__/* .onlineManager */ .N.isOnline()) {
         this.resumePausedMutations();
-        this.queryCache.onOnline();
+        this.#queryCache.onOnline();
       }
     });
   }
-
   unmount() {
-    var _this$unsubscribeFocu, _this$unsubscribeOnli;
-
-    this.mountCount--;
-    if (this.mountCount !== 0) return;
-    (_this$unsubscribeFocu = this.unsubscribeFocus) == null ? void 0 : _this$unsubscribeFocu.call(this);
-    this.unsubscribeFocus = undefined;
-    (_this$unsubscribeOnli = this.unsubscribeOnline) == null ? void 0 : _this$unsubscribeOnli.call(this);
-    this.unsubscribeOnline = undefined;
+    this.#mountCount--;
+    if (this.#mountCount !== 0)
+      return;
+    this.#unsubscribeFocus?.();
+    this.#unsubscribeFocus = void 0;
+    this.#unsubscribeOnline?.();
+    this.#unsubscribeOnline = void 0;
   }
-
-  isFetching(arg1, arg2) {
-    const [filters] = (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_5__/* .parseFilterArgs */ .I6)(arg1, arg2);
-    filters.fetchStatus = 'fetching';
-    return this.queryCache.findAll(filters).length;
+  isFetching(filters) {
+    return this.#queryCache.findAll({ ...filters, fetchStatus: "fetching" }).length;
   }
-
   isMutating(filters) {
-    return this.mutationCache.findAll({ ...filters,
-      fetching: true
-    }).length;
+    return this.#mutationCache.findAll({ ...filters, status: "pending" }).length;
   }
-
-  getQueryData(queryKey, filters) {
-    var _this$queryCache$find;
-
-    return (_this$queryCache$find = this.queryCache.find(queryKey, filters)) == null ? void 0 : _this$queryCache$find.state.data;
+  getQueryData(queryKey) {
+    return this.#queryCache.find({ queryKey })?.state.data;
   }
-
-  ensureQueryData(arg1, arg2, arg3) {
-    const parsedOptions = (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_5__/* .parseQueryArgs */ ._v)(arg1, arg2, arg3);
-    const cachedData = this.getQueryData(parsedOptions.queryKey);
-    return cachedData ? Promise.resolve(cachedData) : this.fetchQuery(parsedOptions);
+  ensureQueryData(options) {
+    const cachedData = this.getQueryData(options.queryKey);
+    return cachedData !== void 0 ? Promise.resolve(cachedData) : this.fetchQuery(options);
   }
-
-  getQueriesData(queryKeyOrFilters) {
-    return this.getQueryCache().findAll(queryKeyOrFilters).map(({
-      queryKey,
-      state
-    }) => {
+  getQueriesData(filters) {
+    return this.getQueryCache().findAll(filters).map(({ queryKey, state }) => {
       const data = state.data;
       return [queryKey, data];
     });
   }
-
   setQueryData(queryKey, updater, options) {
-    const query = this.queryCache.find(queryKey);
-    const prevData = query == null ? void 0 : query.state.data;
-    const data = (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_5__/* .functionalUpdate */ .SE)(updater, prevData);
-
-    if (typeof data === 'undefined') {
-      return undefined;
+    const query = this.#queryCache.find({ queryKey });
+    const prevData = query?.state.data;
+    const data = (0,_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .functionalUpdate */ .SE)(updater, prevData);
+    if (typeof data === "undefined") {
+      return void 0;
     }
-
-    const parsedOptions = (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_5__/* .parseQueryArgs */ ._v)(queryKey);
-    const defaultedOptions = this.defaultQueryOptions(parsedOptions);
-    return this.queryCache.build(this, defaultedOptions).setData(data, { ...options,
-      manual: true
-    });
+    const defaultedOptions = this.defaultQueryOptions({ queryKey });
+    return this.#queryCache.build(this, defaultedOptions).setData(data, { ...options, manual: true });
   }
-
-  setQueriesData(queryKeyOrFilters, updater, options) {
-    return _notifyManager_mjs__WEBPACK_IMPORTED_MODULE_6__/* .notifyManager */ .V.batch(() => this.getQueryCache().findAll(queryKeyOrFilters).map(({
-      queryKey
-    }) => [queryKey, this.setQueryData(queryKey, updater, options)]));
+  setQueriesData(filters, updater, options) {
+    return _notifyManager_js__WEBPACK_IMPORTED_MODULE_5__/* .notifyManager */ .V.batch(
+      () => this.getQueryCache().findAll(filters).map(({ queryKey }) => [
+        queryKey,
+        this.setQueryData(queryKey, updater, options)
+      ])
+    );
   }
-
-  getQueryState(queryKey, filters) {
-    var _this$queryCache$find2;
-
-    return (_this$queryCache$find2 = this.queryCache.find(queryKey, filters)) == null ? void 0 : _this$queryCache$find2.state;
+  getQueryState(queryKey) {
+    return this.#queryCache.find({ queryKey })?.state;
   }
-
-  removeQueries(arg1, arg2) {
-    const [filters] = (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_5__/* .parseFilterArgs */ .I6)(arg1, arg2);
-    const queryCache = this.queryCache;
-    _notifyManager_mjs__WEBPACK_IMPORTED_MODULE_6__/* .notifyManager */ .V.batch(() => {
-      queryCache.findAll(filters).forEach(query => {
+  removeQueries(filters) {
+    const queryCache = this.#queryCache;
+    _notifyManager_js__WEBPACK_IMPORTED_MODULE_5__/* .notifyManager */ .V.batch(() => {
+      queryCache.findAll(filters).forEach((query) => {
         queryCache.remove(query);
       });
     });
   }
-
-  resetQueries(arg1, arg2, arg3) {
-    const [filters, options] = (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_5__/* .parseFilterArgs */ .I6)(arg1, arg2, arg3);
-    const queryCache = this.queryCache;
+  resetQueries(filters, options) {
+    const queryCache = this.#queryCache;
     const refetchFilters = {
-      type: 'active',
+      type: "active",
       ...filters
     };
-    return _notifyManager_mjs__WEBPACK_IMPORTED_MODULE_6__/* .notifyManager */ .V.batch(() => {
-      queryCache.findAll(filters).forEach(query => {
+    return _notifyManager_js__WEBPACK_IMPORTED_MODULE_5__/* .notifyManager */ .V.batch(() => {
+      queryCache.findAll(filters).forEach((query) => {
         query.reset();
       });
       return this.refetchQueries(refetchFilters, options);
     });
   }
-
-  cancelQueries(arg1, arg2, arg3) {
-    const [filters, cancelOptions = {}] = (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_5__/* .parseFilterArgs */ .I6)(arg1, arg2, arg3);
-
-    if (typeof cancelOptions.revert === 'undefined') {
-      cancelOptions.revert = true;
-    }
-
-    const promises = _notifyManager_mjs__WEBPACK_IMPORTED_MODULE_6__/* .notifyManager */ .V.batch(() => this.queryCache.findAll(filters).map(query => query.cancel(cancelOptions)));
-    return Promise.all(promises).then(_utils_mjs__WEBPACK_IMPORTED_MODULE_5__/* .noop */ .ZT).catch(_utils_mjs__WEBPACK_IMPORTED_MODULE_5__/* .noop */ .ZT);
+  cancelQueries(filters = {}, cancelOptions = {}) {
+    const defaultedCancelOptions = { revert: true, ...cancelOptions };
+    const promises = _notifyManager_js__WEBPACK_IMPORTED_MODULE_5__/* .notifyManager */ .V.batch(
+      () => this.#queryCache.findAll(filters).map((query) => query.cancel(defaultedCancelOptions))
+    );
+    return Promise.all(promises).then(_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .noop */ .ZT).catch(_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .noop */ .ZT);
   }
-
-  invalidateQueries(arg1, arg2, arg3) {
-    const [filters, options] = (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_5__/* .parseFilterArgs */ .I6)(arg1, arg2, arg3);
-    return _notifyManager_mjs__WEBPACK_IMPORTED_MODULE_6__/* .notifyManager */ .V.batch(() => {
-      var _ref, _filters$refetchType;
-
-      this.queryCache.findAll(filters).forEach(query => {
+  invalidateQueries(filters = {}, options = {}) {
+    return _notifyManager_js__WEBPACK_IMPORTED_MODULE_5__/* .notifyManager */ .V.batch(() => {
+      this.#queryCache.findAll(filters).forEach((query) => {
         query.invalidate();
       });
-
-      if (filters.refetchType === 'none') {
+      if (filters.refetchType === "none") {
         return Promise.resolve();
       }
-
-      const refetchFilters = { ...filters,
-        type: (_ref = (_filters$refetchType = filters.refetchType) != null ? _filters$refetchType : filters.type) != null ? _ref : 'active'
+      const refetchFilters = {
+        ...filters,
+        type: filters.refetchType ?? filters.type ?? "active"
       };
       return this.refetchQueries(refetchFilters, options);
     });
   }
-
-  refetchQueries(arg1, arg2, arg3) {
-    const [filters, options] = (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_5__/* .parseFilterArgs */ .I6)(arg1, arg2, arg3);
-    const promises = _notifyManager_mjs__WEBPACK_IMPORTED_MODULE_6__/* .notifyManager */ .V.batch(() => this.queryCache.findAll(filters).filter(query => !query.isDisabled()).map(query => {
-      var _options$cancelRefetc;
-
-      return query.fetch(undefined, { ...options,
-        cancelRefetch: (_options$cancelRefetc = options == null ? void 0 : options.cancelRefetch) != null ? _options$cancelRefetc : true,
-        meta: {
-          refetchPage: filters.refetchPage
+  refetchQueries(filters = {}, options) {
+    const fetchOptions = {
+      ...options,
+      cancelRefetch: options?.cancelRefetch ?? true
+    };
+    const promises = _notifyManager_js__WEBPACK_IMPORTED_MODULE_5__/* .notifyManager */ .V.batch(
+      () => this.#queryCache.findAll(filters).filter((query) => !query.isDisabled()).map((query) => {
+        let promise = query.fetch(void 0, fetchOptions);
+        if (!fetchOptions.throwOnError) {
+          promise = promise.catch(_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .noop */ .ZT);
         }
-      });
-    }));
-    let promise = Promise.all(promises).then(_utils_mjs__WEBPACK_IMPORTED_MODULE_5__/* .noop */ .ZT);
-
-    if (!(options != null && options.throwOnError)) {
-      promise = promise.catch(_utils_mjs__WEBPACK_IMPORTED_MODULE_5__/* .noop */ .ZT);
-    }
-
-    return promise;
+        return query.state.fetchStatus === "paused" ? Promise.resolve() : promise;
+      })
+    );
+    return Promise.all(promises).then(_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .noop */ .ZT);
   }
-
-  fetchQuery(arg1, arg2, arg3) {
-    const parsedOptions = (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_5__/* .parseQueryArgs */ ._v)(arg1, arg2, arg3);
-    const defaultedOptions = this.defaultQueryOptions(parsedOptions); // https://github.com/tannerlinsley/react-query/issues/652
-
-    if (typeof defaultedOptions.retry === 'undefined') {
+  fetchQuery(options) {
+    const defaultedOptions = this.defaultQueryOptions(options);
+    if (typeof defaultedOptions.retry === "undefined") {
       defaultedOptions.retry = false;
     }
-
-    const query = this.queryCache.build(this, defaultedOptions);
+    const query = this.#queryCache.build(this, defaultedOptions);
     return query.isStaleByTime(defaultedOptions.staleTime) ? query.fetch(defaultedOptions) : Promise.resolve(query.state.data);
   }
-
-  prefetchQuery(arg1, arg2, arg3) {
-    return this.fetchQuery(arg1, arg2, arg3).then(_utils_mjs__WEBPACK_IMPORTED_MODULE_5__/* .noop */ .ZT).catch(_utils_mjs__WEBPACK_IMPORTED_MODULE_5__/* .noop */ .ZT);
+  prefetchQuery(options) {
+    return this.fetchQuery(options).then(_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .noop */ .ZT).catch(_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .noop */ .ZT);
   }
-
-  fetchInfiniteQuery(arg1, arg2, arg3) {
-    const parsedOptions = (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_5__/* .parseQueryArgs */ ._v)(arg1, arg2, arg3);
-    parsedOptions.behavior = (0,_infiniteQueryBehavior_mjs__WEBPACK_IMPORTED_MODULE_7__/* .infiniteQueryBehavior */ .Gm)();
-    return this.fetchQuery(parsedOptions);
+  fetchInfiniteQuery(options) {
+    options.behavior = (0,_infiniteQueryBehavior_js__WEBPACK_IMPORTED_MODULE_6__/* .infiniteQueryBehavior */ .Gm)(options.pages);
+    return this.fetchQuery(options);
   }
-
-  prefetchInfiniteQuery(arg1, arg2, arg3) {
-    return this.fetchInfiniteQuery(arg1, arg2, arg3).then(_utils_mjs__WEBPACK_IMPORTED_MODULE_5__/* .noop */ .ZT).catch(_utils_mjs__WEBPACK_IMPORTED_MODULE_5__/* .noop */ .ZT);
+  prefetchInfiniteQuery(options) {
+    return this.fetchInfiniteQuery(options).then(_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .noop */ .ZT).catch(_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .noop */ .ZT);
   }
-
   resumePausedMutations() {
-    return this.mutationCache.resumePausedMutations();
+    return this.#mutationCache.resumePausedMutations();
   }
-
   getQueryCache() {
-    return this.queryCache;
+    return this.#queryCache;
   }
-
   getMutationCache() {
-    return this.mutationCache;
+    return this.#mutationCache;
   }
-
-  getLogger() {
-    return this.logger;
-  }
-
   getDefaultOptions() {
-    return this.defaultOptions;
+    return this.#defaultOptions;
   }
-
   setDefaultOptions(options) {
-    this.defaultOptions = options;
+    this.#defaultOptions = options;
   }
-
   setQueryDefaults(queryKey, options) {
-    const result = this.queryDefaults.find(x => (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_5__/* .hashQueryKey */ .yF)(queryKey) === (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_5__/* .hashQueryKey */ .yF)(x.queryKey));
-
-    if (result) {
-      result.defaultOptions = options;
-    } else {
-      this.queryDefaults.push({
-        queryKey,
-        defaultOptions: options
-      });
-    }
+    this.#queryDefaults.set((0,_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .hashKey */ .Ym)(queryKey), {
+      queryKey,
+      defaultOptions: options
+    });
   }
-
   getQueryDefaults(queryKey) {
-    if (!queryKey) {
-      return undefined;
-    } // Get the first matching defaults
-
-
-    const firstMatchingDefaults = this.queryDefaults.find(x => (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_5__/* .partialMatchKey */ .to)(queryKey, x.queryKey)); // Additional checks and error in dev mode
-
-    if (false) {}
-
-    return firstMatchingDefaults == null ? void 0 : firstMatchingDefaults.defaultOptions;
+    const defaults = [...this.#queryDefaults.values()];
+    let result = {};
+    defaults.forEach((queryDefault) => {
+      if ((0,_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .partialMatchKey */ .to)(queryKey, queryDefault.queryKey)) {
+        result = { ...result, ...queryDefault.defaultOptions };
+      }
+    });
+    return result;
   }
-
   setMutationDefaults(mutationKey, options) {
-    const result = this.mutationDefaults.find(x => (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_5__/* .hashQueryKey */ .yF)(mutationKey) === (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_5__/* .hashQueryKey */ .yF)(x.mutationKey));
-
-    if (result) {
-      result.defaultOptions = options;
-    } else {
-      this.mutationDefaults.push({
-        mutationKey,
-        defaultOptions: options
-      });
-    }
+    this.#mutationDefaults.set((0,_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .hashKey */ .Ym)(mutationKey), {
+      mutationKey,
+      defaultOptions: options
+    });
   }
-
   getMutationDefaults(mutationKey) {
-    if (!mutationKey) {
-      return undefined;
-    } // Get the first matching defaults
-
-
-    const firstMatchingDefaults = this.mutationDefaults.find(x => (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_5__/* .partialMatchKey */ .to)(mutationKey, x.mutationKey)); // Additional checks and error in dev mode
-
-    if (false) {}
-
-    return firstMatchingDefaults == null ? void 0 : firstMatchingDefaults.defaultOptions;
+    const defaults = [...this.#mutationDefaults.values()];
+    let result = {};
+    defaults.forEach((queryDefault) => {
+      if ((0,_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .partialMatchKey */ .to)(mutationKey, queryDefault.mutationKey)) {
+        result = { ...result, ...queryDefault.defaultOptions };
+      }
+    });
+    return result;
   }
-
   defaultQueryOptions(options) {
-    if (options != null && options._defaulted) {
+    if (options?._defaulted) {
       return options;
     }
-
-    const defaultedOptions = { ...this.defaultOptions.queries,
-      ...this.getQueryDefaults(options == null ? void 0 : options.queryKey),
+    const defaultedOptions = {
+      ...this.#defaultOptions.queries,
+      ...options?.queryKey && this.getQueryDefaults(options.queryKey),
       ...options,
       _defaulted: true
     };
-
-    if (!defaultedOptions.queryHash && defaultedOptions.queryKey) {
-      defaultedOptions.queryHash = (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_5__/* .hashQueryKeyByOptions */ .Rm)(defaultedOptions.queryKey, defaultedOptions);
-    } // dependent default values
-
-
-    if (typeof defaultedOptions.refetchOnReconnect === 'undefined') {
-      defaultedOptions.refetchOnReconnect = defaultedOptions.networkMode !== 'always';
+    if (!defaultedOptions.queryHash) {
+      defaultedOptions.queryHash = (0,_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .hashQueryKeyByOptions */ .Rm)(
+        defaultedOptions.queryKey,
+        defaultedOptions
+      );
     }
-
-    if (typeof defaultedOptions.useErrorBoundary === 'undefined') {
-      defaultedOptions.useErrorBoundary = !!defaultedOptions.suspense;
+    if (typeof defaultedOptions.refetchOnReconnect === "undefined") {
+      defaultedOptions.refetchOnReconnect = defaultedOptions.networkMode !== "always";
     }
-
+    if (typeof defaultedOptions.throwOnError === "undefined") {
+      defaultedOptions.throwOnError = !!defaultedOptions.suspense;
+    }
+    if (typeof defaultedOptions.networkMode === "undefined" && defaultedOptions.persister) {
+      defaultedOptions.networkMode = "offlineFirst";
+    }
     return defaultedOptions;
   }
-
   defaultMutationOptions(options) {
-    if (options != null && options._defaulted) {
+    if (options?._defaulted) {
       return options;
     }
-
-    return { ...this.defaultOptions.mutations,
-      ...this.getMutationDefaults(options == null ? void 0 : options.mutationKey),
+    return {
+      ...this.#defaultOptions.mutations,
+      ...options?.mutationKey && this.getMutationDefaults(options.mutationKey),
       ...options,
       _defaulted: true
     };
   }
-
   clear() {
-    this.queryCache.clear();
-    this.mutationCache.clear();
+    this.#queryCache.clear();
+    this.#mutationCache.clear();
   }
+};
 
-}
-
-
-//# sourceMappingURL=queryClient.mjs.map
-
+//# sourceMappingURL=queryClient.js.map
 
 /***/ }),
 
-/***/ 1578:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+/***/ 4218:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   z: function() { return /* binding */ QueryObserver; }
+/* harmony export */   z: () => (/* binding */ QueryObserver)
 /* harmony export */ });
-/* harmony import */ var _utils_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6370);
-/* harmony import */ var _notifyManager_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3709);
-/* harmony import */ var _focusManager_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5289);
-/* harmony import */ var _subscribable_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2436);
-/* harmony import */ var _retryer_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3241);
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8298);
+/* harmony import */ var _notifyManager_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1895);
+/* harmony import */ var _focusManager_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5777);
+/* harmony import */ var _subscribable_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3248);
+/* harmony import */ var _retryer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6087);
+// src/queryObserver.ts
 
 
 
 
 
-
-class QueryObserver extends _subscribable_mjs__WEBPACK_IMPORTED_MODULE_0__/* .Subscribable */ .l {
+var QueryObserver = class extends _subscribable_js__WEBPACK_IMPORTED_MODULE_0__/* .Subscribable */ .l {
   constructor(client, options) {
     super();
-    this.client = client;
     this.options = options;
-    this.trackedProps = new Set();
-    this.selectError = null;
+    this.#client = client;
+    this.#selectError = null;
     this.bindMethods();
     this.setOptions(options);
   }
-
+  #client;
+  #currentQuery = void 0;
+  #currentQueryInitialState = void 0;
+  #currentResult = void 0;
+  #currentResultState;
+  #currentResultOptions;
+  #selectError;
+  #selectFn;
+  #selectResult;
+  // This property keeps track of the last query with defined data.
+  // It will be used to pass the previous data and query to the placeholder function between renders.
+  #lastQueryWithDefinedData;
+  #staleTimeoutId;
+  #refetchIntervalId;
+  #currentRefetchInterval;
+  #trackedProps = /* @__PURE__ */ new Set();
   bindMethods() {
-    this.remove = this.remove.bind(this);
     this.refetch = this.refetch.bind(this);
   }
-
   onSubscribe() {
     if (this.listeners.size === 1) {
-      this.currentQuery.addObserver(this);
-
-      if (shouldFetchOnMount(this.currentQuery, this.options)) {
-        this.executeFetch();
+      this.#currentQuery.addObserver(this);
+      if (shouldFetchOnMount(this.#currentQuery, this.options)) {
+        this.#executeFetch();
+      } else {
+        this.updateResult();
       }
-
-      this.updateTimers();
+      this.#updateTimers();
     }
   }
-
   onUnsubscribe() {
     if (!this.hasListeners()) {
       this.destroy();
     }
   }
-
   shouldFetchOnReconnect() {
-    return shouldFetchOn(this.currentQuery, this.options, this.options.refetchOnReconnect);
+    return shouldFetchOn(
+      this.#currentQuery,
+      this.options,
+      this.options.refetchOnReconnect
+    );
   }
-
   shouldFetchOnWindowFocus() {
-    return shouldFetchOn(this.currentQuery, this.options, this.options.refetchOnWindowFocus);
+    return shouldFetchOn(
+      this.#currentQuery,
+      this.options,
+      this.options.refetchOnWindowFocus
+    );
   }
-
   destroy() {
-    this.listeners = new Set();
-    this.clearStaleTimeout();
-    this.clearRefetchInterval();
-    this.currentQuery.removeObserver(this);
+    this.listeners = /* @__PURE__ */ new Set();
+    this.#clearStaleTimeout();
+    this.#clearRefetchInterval();
+    this.#currentQuery.removeObserver(this);
   }
-
   setOptions(options, notifyOptions) {
     const prevOptions = this.options;
-    const prevQuery = this.currentQuery;
-    this.options = this.client.defaultQueryOptions(options);
-
-    if (false) {}
-
-    if (!(0,_utils_mjs__WEBPACK_IMPORTED_MODULE_1__/* .shallowEqualObjects */ .VS)(prevOptions, this.options)) {
-      this.client.getQueryCache().notify({
-        type: 'observerOptionsUpdated',
-        query: this.currentQuery,
+    const prevQuery = this.#currentQuery;
+    this.options = this.#client.defaultQueryOptions(options);
+    if (!(0,_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .shallowEqualObjects */ .VS)(prevOptions, this.options)) {
+      this.#client.getQueryCache().notify({
+        type: "observerOptionsUpdated",
+        query: this.#currentQuery,
         observer: this
       });
     }
-
-    if (typeof this.options.enabled !== 'undefined' && typeof this.options.enabled !== 'boolean') {
-      throw new Error('Expected enabled to be a boolean');
-    } // Keep previous query key if the user does not supply one
-
-
+    if (typeof this.options.enabled !== "undefined" && typeof this.options.enabled !== "boolean") {
+      throw new Error("Expected enabled to be a boolean");
+    }
     if (!this.options.queryKey) {
       this.options.queryKey = prevOptions.queryKey;
     }
-
-    this.updateQuery();
-    const mounted = this.hasListeners(); // Fetch if there are subscribers
-
-    if (mounted && shouldFetchOptionally(this.currentQuery, prevQuery, this.options, prevOptions)) {
-      this.executeFetch();
-    } // Update result
-
-
-    this.updateResult(notifyOptions); // Update stale interval if needed
-
-    if (mounted && (this.currentQuery !== prevQuery || this.options.enabled !== prevOptions.enabled || this.options.staleTime !== prevOptions.staleTime)) {
-      this.updateStaleTimeout();
+    this.#updateQuery();
+    const mounted = this.hasListeners();
+    if (mounted && shouldFetchOptionally(
+      this.#currentQuery,
+      prevQuery,
+      this.options,
+      prevOptions
+    )) {
+      this.#executeFetch();
     }
-
-    const nextRefetchInterval = this.computeRefetchInterval(); // Update refetch interval if needed
-
-    if (mounted && (this.currentQuery !== prevQuery || this.options.enabled !== prevOptions.enabled || nextRefetchInterval !== this.currentRefetchInterval)) {
-      this.updateRefetchInterval(nextRefetchInterval);
+    this.updateResult(notifyOptions);
+    if (mounted && (this.#currentQuery !== prevQuery || this.options.enabled !== prevOptions.enabled || this.options.staleTime !== prevOptions.staleTime)) {
+      this.#updateStaleTimeout();
+    }
+    const nextRefetchInterval = this.#computeRefetchInterval();
+    if (mounted && (this.#currentQuery !== prevQuery || this.options.enabled !== prevOptions.enabled || nextRefetchInterval !== this.#currentRefetchInterval)) {
+      this.#updateRefetchInterval(nextRefetchInterval);
     }
   }
-
   getOptimisticResult(options) {
-    const query = this.client.getQueryCache().build(this.client, options);
+    const query = this.#client.getQueryCache().build(this.#client, options);
     const result = this.createResult(query, options);
-
-    if (shouldAssignObserverCurrentProperties(this, result, options)) {
-      // this assigns the optimistic result to the current Observer
-      // because if the query function changes, useQuery will be performing
-      // an effect where it would fetch again.
-      // When the fetch finishes, we perform a deep data cloning in order
-      // to reuse objects references. This deep data clone is performed against
-      // the `observer.currentResult.data` property
-      // When QueryKey changes, we refresh the query and get new `optimistic`
-      // result, while we leave the `observer.currentResult`, so when new data
-      // arrives, it finds the old `observer.currentResult` which is related
-      // to the old QueryKey. Which means that currentResult and selectData are
-      // out of sync already.
-      // To solve this, we move the cursor of the currentResult everytime
-      // an observer reads an optimistic value.
-      // When keeping the previous data, the result doesn't change until new
-      // data arrives.
-      this.currentResult = result;
-      this.currentResultOptions = this.options;
-      this.currentResultState = this.currentQuery.state;
+    if (shouldAssignObserverCurrentProperties(this, result)) {
+      this.#currentResult = result;
+      this.#currentResultOptions = this.options;
+      this.#currentResultState = this.#currentQuery.state;
     }
-
     return result;
   }
-
   getCurrentResult() {
-    return this.currentResult;
+    return this.#currentResult;
   }
-
   trackResult(result) {
     const trackedResult = {};
-    Object.keys(result).forEach(key => {
+    Object.keys(result).forEach((key) => {
       Object.defineProperty(trackedResult, key, {
         configurable: false,
         enumerable: true,
         get: () => {
-          this.trackedProps.add(key);
+          this.#trackedProps.add(key);
           return result[key];
         }
       });
     });
     return trackedResult;
   }
-
   getCurrentQuery() {
-    return this.currentQuery;
+    return this.#currentQuery;
   }
-
-  remove() {
-    this.client.getQueryCache().remove(this.currentQuery);
-  }
-
-  refetch({
-    refetchPage,
-    ...options
-  } = {}) {
-    return this.fetch({ ...options,
-      meta: {
-        refetchPage
-      }
+  refetch({ ...options } = {}) {
+    return this.fetch({
+      ...options
     });
   }
-
   fetchOptimistic(options) {
-    const defaultedOptions = this.client.defaultQueryOptions(options);
-    const query = this.client.getQueryCache().build(this.client, defaultedOptions);
+    const defaultedOptions = this.#client.defaultQueryOptions(options);
+    const query = this.#client.getQueryCache().build(this.#client, defaultedOptions);
     query.isFetchingOptimistic = true;
     return query.fetch().then(() => this.createResult(query, defaultedOptions));
   }
-
   fetch(fetchOptions) {
-    var _fetchOptions$cancelR;
-
-    return this.executeFetch({ ...fetchOptions,
-      cancelRefetch: (_fetchOptions$cancelR = fetchOptions.cancelRefetch) != null ? _fetchOptions$cancelR : true
+    return this.#executeFetch({
+      ...fetchOptions,
+      cancelRefetch: fetchOptions.cancelRefetch ?? true
     }).then(() => {
       this.updateResult();
-      return this.currentResult;
+      return this.#currentResult;
     });
   }
-
-  executeFetch(fetchOptions) {
-    // Make sure we reference the latest query as the current one might have been removed
-    this.updateQuery(); // Fetch
-
-    let promise = this.currentQuery.fetch(this.options, fetchOptions);
-
-    if (!(fetchOptions != null && fetchOptions.throwOnError)) {
-      promise = promise.catch(_utils_mjs__WEBPACK_IMPORTED_MODULE_1__/* .noop */ .ZT);
+  #executeFetch(fetchOptions) {
+    this.#updateQuery();
+    let promise = this.#currentQuery.fetch(
+      this.options,
+      fetchOptions
+    );
+    if (!fetchOptions?.throwOnError) {
+      promise = promise.catch(_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .noop */ .ZT);
     }
-
     return promise;
   }
-
-  updateStaleTimeout() {
-    this.clearStaleTimeout();
-
-    if (_utils_mjs__WEBPACK_IMPORTED_MODULE_1__/* .isServer */ .sk || this.currentResult.isStale || !(0,_utils_mjs__WEBPACK_IMPORTED_MODULE_1__/* .isValidTimeout */ .PN)(this.options.staleTime)) {
+  #updateStaleTimeout() {
+    this.#clearStaleTimeout();
+    if (_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .isServer */ .sk || this.#currentResult.isStale || !(0,_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .isValidTimeout */ .PN)(this.options.staleTime)) {
       return;
     }
-
-    const time = (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_1__/* .timeUntilStale */ .Kp)(this.currentResult.dataUpdatedAt, this.options.staleTime); // The timeout is sometimes triggered 1 ms before the stale time expiration.
-    // To mitigate this issue we always add 1 ms to the timeout.
-
+    const time = (0,_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .timeUntilStale */ .Kp)(
+      this.#currentResult.dataUpdatedAt,
+      this.options.staleTime
+    );
     const timeout = time + 1;
-    this.staleTimeoutId = setTimeout(() => {
-      if (!this.currentResult.isStale) {
+    this.#staleTimeoutId = setTimeout(() => {
+      if (!this.#currentResult.isStale) {
         this.updateResult();
       }
     }, timeout);
   }
-
-  computeRefetchInterval() {
-    var _this$options$refetch;
-
-    return typeof this.options.refetchInterval === 'function' ? this.options.refetchInterval(this.currentResult.data, this.currentQuery) : (_this$options$refetch = this.options.refetchInterval) != null ? _this$options$refetch : false;
+  #computeRefetchInterval() {
+    return (typeof this.options.refetchInterval === "function" ? this.options.refetchInterval(this.#currentQuery) : this.options.refetchInterval) ?? false;
   }
-
-  updateRefetchInterval(nextInterval) {
-    this.clearRefetchInterval();
-    this.currentRefetchInterval = nextInterval;
-
-    if (_utils_mjs__WEBPACK_IMPORTED_MODULE_1__/* .isServer */ .sk || this.options.enabled === false || !(0,_utils_mjs__WEBPACK_IMPORTED_MODULE_1__/* .isValidTimeout */ .PN)(this.currentRefetchInterval) || this.currentRefetchInterval === 0) {
+  #updateRefetchInterval(nextInterval) {
+    this.#clearRefetchInterval();
+    this.#currentRefetchInterval = nextInterval;
+    if (_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .isServer */ .sk || this.options.enabled === false || !(0,_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .isValidTimeout */ .PN)(this.#currentRefetchInterval) || this.#currentRefetchInterval === 0) {
       return;
     }
-
-    this.refetchIntervalId = setInterval(() => {
-      if (this.options.refetchIntervalInBackground || _focusManager_mjs__WEBPACK_IMPORTED_MODULE_2__/* .focusManager */ .j.isFocused()) {
-        this.executeFetch();
+    this.#refetchIntervalId = setInterval(() => {
+      if (this.options.refetchIntervalInBackground || _focusManager_js__WEBPACK_IMPORTED_MODULE_2__/* .focusManager */ .j.isFocused()) {
+        this.#executeFetch();
       }
-    }, this.currentRefetchInterval);
+    }, this.#currentRefetchInterval);
   }
-
-  updateTimers() {
-    this.updateStaleTimeout();
-    this.updateRefetchInterval(this.computeRefetchInterval());
+  #updateTimers() {
+    this.#updateStaleTimeout();
+    this.#updateRefetchInterval(this.#computeRefetchInterval());
   }
-
-  clearStaleTimeout() {
-    if (this.staleTimeoutId) {
-      clearTimeout(this.staleTimeoutId);
-      this.staleTimeoutId = undefined;
+  #clearStaleTimeout() {
+    if (this.#staleTimeoutId) {
+      clearTimeout(this.#staleTimeoutId);
+      this.#staleTimeoutId = void 0;
     }
   }
-
-  clearRefetchInterval() {
-    if (this.refetchIntervalId) {
-      clearInterval(this.refetchIntervalId);
-      this.refetchIntervalId = undefined;
+  #clearRefetchInterval() {
+    if (this.#refetchIntervalId) {
+      clearInterval(this.#refetchIntervalId);
+      this.#refetchIntervalId = void 0;
     }
   }
-
   createResult(query, options) {
-    const prevQuery = this.currentQuery;
+    const prevQuery = this.#currentQuery;
     const prevOptions = this.options;
-    const prevResult = this.currentResult;
-    const prevResultState = this.currentResultState;
-    const prevResultOptions = this.currentResultOptions;
+    const prevResult = this.#currentResult;
+    const prevResultState = this.#currentResultState;
+    const prevResultOptions = this.#currentResultOptions;
     const queryChange = query !== prevQuery;
-    const queryInitialState = queryChange ? query.state : this.currentQueryInitialState;
-    const prevQueryResult = queryChange ? this.currentResult : this.previousQueryResult;
-    const {
-      state
-    } = query;
-    let {
-      dataUpdatedAt,
-      error,
-      errorUpdatedAt,
-      fetchStatus,
-      status
-    } = state;
-    let isPreviousData = false;
+    const queryInitialState = queryChange ? query.state : this.#currentQueryInitialState;
+    const { state } = query;
+    let { error, errorUpdatedAt, fetchStatus, status } = state;
     let isPlaceholderData = false;
-    let data; // Optimistically set result in fetching state if needed
-
+    let data;
     if (options._optimisticResults) {
       const mounted = this.hasListeners();
       const fetchOnMount = !mounted && shouldFetchOnMount(query, options);
       const fetchOptionally = mounted && shouldFetchOptionally(query, prevQuery, options, prevOptions);
-
       if (fetchOnMount || fetchOptionally) {
-        fetchStatus = (0,_retryer_mjs__WEBPACK_IMPORTED_MODULE_3__/* .canFetch */ .Kw)(query.options.networkMode) ? 'fetching' : 'paused';
-
-        if (!dataUpdatedAt) {
-          status = 'loading';
+        fetchStatus = (0,_retryer_js__WEBPACK_IMPORTED_MODULE_3__/* .canFetch */ .Kw)(query.options.networkMode) ? "fetching" : "paused";
+        if (!state.dataUpdatedAt) {
+          status = "pending";
         }
       }
-
-      if (options._optimisticResults === 'isRestoring') {
-        fetchStatus = 'idle';
+      if (options._optimisticResults === "isRestoring") {
+        fetchStatus = "idle";
       }
-    } // Keep previous data if needed
-
-
-    if (options.keepPreviousData && !state.dataUpdatedAt && prevQueryResult != null && prevQueryResult.isSuccess && status !== 'error') {
-      data = prevQueryResult.data;
-      dataUpdatedAt = prevQueryResult.dataUpdatedAt;
-      status = prevQueryResult.status;
-      isPreviousData = true;
-    } // Select data if needed
-    else if (options.select && typeof state.data !== 'undefined') {
-      // Memoize select result
-      if (prevResult && state.data === (prevResultState == null ? void 0 : prevResultState.data) && options.select === this.selectFn) {
-        data = this.selectResult;
+    }
+    if (options.select && typeof state.data !== "undefined") {
+      if (prevResult && state.data === prevResultState?.data && options.select === this.#selectFn) {
+        data = this.#selectResult;
       } else {
         try {
-          this.selectFn = options.select;
+          this.#selectFn = options.select;
           data = options.select(state.data);
-          data = (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_1__/* .replaceData */ .oE)(prevResult == null ? void 0 : prevResult.data, data, options);
-          this.selectResult = data;
-          this.selectError = null;
+          data = (0,_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .replaceData */ .oE)(prevResult?.data, data, options);
+          this.#selectResult = data;
+          this.#selectError = null;
         } catch (selectError) {
-          if (false) {}
-
-          this.selectError = selectError;
+          this.#selectError = selectError;
         }
       }
-    } // Use query data
-    else {
+    } else {
       data = state.data;
-    } // Show placeholder data if needed
-
-
-    if (typeof options.placeholderData !== 'undefined' && typeof data === 'undefined' && status === 'loading') {
-      let placeholderData; // Memoize placeholder data
-
-      if (prevResult != null && prevResult.isPlaceholderData && options.placeholderData === (prevResultOptions == null ? void 0 : prevResultOptions.placeholderData)) {
+    }
+    if (typeof options.placeholderData !== "undefined" && typeof data === "undefined" && status === "pending") {
+      let placeholderData;
+      if (prevResult?.isPlaceholderData && options.placeholderData === prevResultOptions?.placeholderData) {
         placeholderData = prevResult.data;
       } else {
-        placeholderData = typeof options.placeholderData === 'function' ? options.placeholderData() : options.placeholderData;
-
-        if (options.select && typeof placeholderData !== 'undefined') {
+        placeholderData = typeof options.placeholderData === "function" ? options.placeholderData(
+          this.#lastQueryWithDefinedData?.state.data,
+          this.#lastQueryWithDefinedData
+        ) : options.placeholderData;
+        if (options.select && typeof placeholderData !== "undefined") {
           try {
             placeholderData = options.select(placeholderData);
-            this.selectError = null;
+            this.#selectError = null;
           } catch (selectError) {
-            if (false) {}
-
-            this.selectError = selectError;
+            this.#selectError = selectError;
           }
         }
       }
-
-      if (typeof placeholderData !== 'undefined') {
-        status = 'success';
-        data = (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_1__/* .replaceData */ .oE)(prevResult == null ? void 0 : prevResult.data, placeholderData, options);
+      if (typeof placeholderData !== "undefined") {
+        status = "success";
+        data = (0,_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .replaceData */ .oE)(
+          prevResult?.data,
+          placeholderData,
+          options
+        );
         isPlaceholderData = true;
       }
     }
-
-    if (this.selectError) {
-      error = this.selectError;
-      data = this.selectResult;
+    if (this.#selectError) {
+      error = this.#selectError;
+      data = this.#selectResult;
       errorUpdatedAt = Date.now();
-      status = 'error';
+      status = "error";
     }
-
-    const isFetching = fetchStatus === 'fetching';
-    const isLoading = status === 'loading';
-    const isError = status === 'error';
+    const isFetching = fetchStatus === "fetching";
+    const isPending = status === "pending";
+    const isError = status === "error";
+    const isLoading = isPending && isFetching;
     const result = {
       status,
       fetchStatus,
-      isLoading,
-      isSuccess: status === 'success',
+      isPending,
+      isSuccess: status === "success",
       isError,
-      isInitialLoading: isLoading && isFetching,
+      isInitialLoading: isLoading,
+      isLoading,
       data,
-      dataUpdatedAt,
+      dataUpdatedAt: state.dataUpdatedAt,
       error,
       errorUpdatedAt,
       failureCount: state.fetchFailureCount,
@@ -6896,280 +6388,188 @@ class QueryObserver extends _subscribable_mjs__WEBPACK_IMPORTED_MODULE_0__/* .Su
       isFetched: state.dataUpdateCount > 0 || state.errorUpdateCount > 0,
       isFetchedAfterMount: state.dataUpdateCount > queryInitialState.dataUpdateCount || state.errorUpdateCount > queryInitialState.errorUpdateCount,
       isFetching,
-      isRefetching: isFetching && !isLoading,
+      isRefetching: isFetching && !isPending,
       isLoadingError: isError && state.dataUpdatedAt === 0,
-      isPaused: fetchStatus === 'paused',
+      isPaused: fetchStatus === "paused",
       isPlaceholderData,
-      isPreviousData,
       isRefetchError: isError && state.dataUpdatedAt !== 0,
       isStale: isStale(query, options),
-      refetch: this.refetch,
-      remove: this.remove
+      refetch: this.refetch
     };
     return result;
   }
-
   updateResult(notifyOptions) {
-    const prevResult = this.currentResult;
-    const nextResult = this.createResult(this.currentQuery, this.options);
-    this.currentResultState = this.currentQuery.state;
-    this.currentResultOptions = this.options; // Only notify and update result if something has changed
-
-    if ((0,_utils_mjs__WEBPACK_IMPORTED_MODULE_1__/* .shallowEqualObjects */ .VS)(nextResult, prevResult)) {
+    const prevResult = this.#currentResult;
+    const nextResult = this.createResult(this.#currentQuery, this.options);
+    this.#currentResultState = this.#currentQuery.state;
+    this.#currentResultOptions = this.options;
+    if (this.#currentResultState.data !== void 0) {
+      this.#lastQueryWithDefinedData = this.#currentQuery;
+    }
+    if ((0,_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .shallowEqualObjects */ .VS)(nextResult, prevResult)) {
       return;
     }
-
-    this.currentResult = nextResult; // Determine which callbacks to trigger
-
-    const defaultNotifyOptions = {
-      cache: true
-    };
-
+    this.#currentResult = nextResult;
+    const defaultNotifyOptions = {};
     const shouldNotifyListeners = () => {
       if (!prevResult) {
         return true;
       }
-
-      const {
-        notifyOnChangeProps
-      } = this.options;
-      const notifyOnChangePropsValue = typeof notifyOnChangeProps === 'function' ? notifyOnChangeProps() : notifyOnChangeProps;
-
-      if (notifyOnChangePropsValue === 'all' || !notifyOnChangePropsValue && !this.trackedProps.size) {
+      const { notifyOnChangeProps } = this.options;
+      const notifyOnChangePropsValue = typeof notifyOnChangeProps === "function" ? notifyOnChangeProps() : notifyOnChangeProps;
+      if (notifyOnChangePropsValue === "all" || !notifyOnChangePropsValue && !this.#trackedProps.size) {
         return true;
       }
-
-      const includedProps = new Set(notifyOnChangePropsValue != null ? notifyOnChangePropsValue : this.trackedProps);
-
-      if (this.options.useErrorBoundary) {
-        includedProps.add('error');
+      const includedProps = new Set(
+        notifyOnChangePropsValue ?? this.#trackedProps
+      );
+      if (this.options.throwOnError) {
+        includedProps.add("error");
       }
-
-      return Object.keys(this.currentResult).some(key => {
+      return Object.keys(this.#currentResult).some((key) => {
         const typedKey = key;
-        const changed = this.currentResult[typedKey] !== prevResult[typedKey];
+        const changed = this.#currentResult[typedKey] !== prevResult[typedKey];
         return changed && includedProps.has(typedKey);
       });
     };
-
-    if ((notifyOptions == null ? void 0 : notifyOptions.listeners) !== false && shouldNotifyListeners()) {
+    if (notifyOptions?.listeners !== false && shouldNotifyListeners()) {
       defaultNotifyOptions.listeners = true;
     }
-
-    this.notify({ ...defaultNotifyOptions,
-      ...notifyOptions
-    });
+    this.#notify({ ...defaultNotifyOptions, ...notifyOptions });
   }
-
-  updateQuery() {
-    const query = this.client.getQueryCache().build(this.client, this.options);
-
-    if (query === this.currentQuery) {
+  #updateQuery() {
+    const query = this.#client.getQueryCache().build(this.#client, this.options);
+    if (query === this.#currentQuery) {
       return;
     }
-
-    const prevQuery = this.currentQuery;
-    this.currentQuery = query;
-    this.currentQueryInitialState = query.state;
-    this.previousQueryResult = this.currentResult;
-
+    const prevQuery = this.#currentQuery;
+    this.#currentQuery = query;
+    this.#currentQueryInitialState = query.state;
     if (this.hasListeners()) {
-      prevQuery == null ? void 0 : prevQuery.removeObserver(this);
+      prevQuery?.removeObserver(this);
       query.addObserver(this);
     }
   }
-
-  onQueryUpdate(action) {
-    const notifyOptions = {};
-
-    if (action.type === 'success') {
-      notifyOptions.onSuccess = !action.manual;
-    } else if (action.type === 'error' && !(0,_retryer_mjs__WEBPACK_IMPORTED_MODULE_3__/* .isCancelledError */ .DV)(action.error)) {
-      notifyOptions.onError = true;
-    }
-
-    this.updateResult(notifyOptions);
-
+  onQueryUpdate() {
+    this.updateResult();
     if (this.hasListeners()) {
-      this.updateTimers();
+      this.#updateTimers();
     }
   }
-
-  notify(notifyOptions) {
-    _notifyManager_mjs__WEBPACK_IMPORTED_MODULE_4__/* .notifyManager */ .V.batch(() => {
-      // First trigger the configuration callbacks
-      if (notifyOptions.onSuccess) {
-        var _this$options$onSucce, _this$options, _this$options$onSettl, _this$options2;
-
-        (_this$options$onSucce = (_this$options = this.options).onSuccess) == null ? void 0 : _this$options$onSucce.call(_this$options, this.currentResult.data);
-        (_this$options$onSettl = (_this$options2 = this.options).onSettled) == null ? void 0 : _this$options$onSettl.call(_this$options2, this.currentResult.data, null);
-      } else if (notifyOptions.onError) {
-        var _this$options$onError, _this$options3, _this$options$onSettl2, _this$options4;
-
-        (_this$options$onError = (_this$options3 = this.options).onError) == null ? void 0 : _this$options$onError.call(_this$options3, this.currentResult.error);
-        (_this$options$onSettl2 = (_this$options4 = this.options).onSettled) == null ? void 0 : _this$options$onSettl2.call(_this$options4, undefined, this.currentResult.error);
-      } // Then trigger the listeners
-
-
+  #notify(notifyOptions) {
+    _notifyManager_js__WEBPACK_IMPORTED_MODULE_4__/* .notifyManager */ .V.batch(() => {
       if (notifyOptions.listeners) {
-        this.listeners.forEach(({
-          listener
-        }) => {
-          listener(this.currentResult);
-        });
-      } // Then the cache listeners
-
-
-      if (notifyOptions.cache) {
-        this.client.getQueryCache().notify({
-          query: this.currentQuery,
-          type: 'observerResultsUpdated'
+        this.listeners.forEach((listener) => {
+          listener(this.#currentResult);
         });
       }
+      this.#client.getQueryCache().notify({
+        query: this.#currentQuery,
+        type: "observerResultsUpdated"
+      });
     });
   }
-
-}
-
+};
 function shouldLoadOnMount(query, options) {
-  return options.enabled !== false && !query.state.dataUpdatedAt && !(query.state.status === 'error' && options.retryOnMount === false);
+  return options.enabled !== false && !query.state.dataUpdatedAt && !(query.state.status === "error" && options.retryOnMount === false);
 }
-
 function shouldFetchOnMount(query, options) {
   return shouldLoadOnMount(query, options) || query.state.dataUpdatedAt > 0 && shouldFetchOn(query, options, options.refetchOnMount);
 }
-
 function shouldFetchOn(query, options, field) {
   if (options.enabled !== false) {
-    const value = typeof field === 'function' ? field(query) : field;
-    return value === 'always' || value !== false && isStale(query, options);
+    const value = typeof field === "function" ? field(query) : field;
+    return value === "always" || value !== false && isStale(query, options);
   }
-
   return false;
 }
-
 function shouldFetchOptionally(query, prevQuery, options, prevOptions) {
-  return options.enabled !== false && (query !== prevQuery || prevOptions.enabled === false) && (!options.suspense || query.state.status !== 'error') && isStale(query, options);
+  return options.enabled !== false && (query !== prevQuery || prevOptions.enabled === false) && (!options.suspense || query.state.status !== "error") && isStale(query, options);
 }
-
 function isStale(query, options) {
   return query.isStaleByTime(options.staleTime);
-} // this function would decide if we will update the observer's 'current'
-// properties after an optimistic reading via getOptimisticResult
-
-
-function shouldAssignObserverCurrentProperties(observer, optimisticResult, options) {
-  // it is important to keep this condition like this for three reasons:
-  // 1. It will get removed in the v5
-  // 2. it reads: don't update the properties if we want to keep the previous
-  // data.
-  // 3. The opposite condition (!options.keepPreviousData) would fallthrough
-  // and will result in a bad decision
-  if (options.keepPreviousData) {
-    return false;
-  } // this means we want to put some placeholder data when pending and queryKey
-  // changed.
-
-
-  if (options.placeholderData !== undefined) {
-    // re-assign properties only if current data is placeholder data
-    // which means that data did not arrive yet, so, if there is some cached data
-    // we need to "prepare" to receive it
-    return optimisticResult.isPlaceholderData;
-  } // if the newly created result isn't what the observer is holding as current,
-  // then we'll need to update the properties as well
-
-
-  if (!(0,_utils_mjs__WEBPACK_IMPORTED_MODULE_1__/* .shallowEqualObjects */ .VS)(observer.getCurrentResult(), optimisticResult)) {
+}
+function shouldAssignObserverCurrentProperties(observer, optimisticResult) {
+  if (!(0,_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .shallowEqualObjects */ .VS)(observer.getCurrentResult(), optimisticResult)) {
     return true;
-  } // basically, just keep previous properties if nothing changed
-
-
+  }
   return false;
 }
 
-
-//# sourceMappingURL=queryObserver.mjs.map
-
+//# sourceMappingURL=queryObserver.js.map
 
 /***/ }),
 
-/***/ 3429:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+/***/ 9085:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   F: function() { return /* binding */ Removable; }
+/* harmony export */   F: () => (/* binding */ Removable)
 /* harmony export */ });
-/* harmony import */ var _utils_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6370);
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8298);
+// src/removable.ts
 
-
-class Removable {
+var Removable = class {
+  #gcTimeout;
   destroy() {
     this.clearGcTimeout();
   }
-
   scheduleGc() {
     this.clearGcTimeout();
-
-    if ((0,_utils_mjs__WEBPACK_IMPORTED_MODULE_0__/* .isValidTimeout */ .PN)(this.cacheTime)) {
-      this.gcTimeout = setTimeout(() => {
+    if ((0,_utils_js__WEBPACK_IMPORTED_MODULE_0__/* .isValidTimeout */ .PN)(this.gcTime)) {
+      this.#gcTimeout = setTimeout(() => {
         this.optionalRemove();
-      }, this.cacheTime);
+      }, this.gcTime);
     }
   }
-
-  updateCacheTime(newCacheTime) {
-    // Default to 5 minutes (Infinity for server-side) if no cache time is set
-    this.cacheTime = Math.max(this.cacheTime || 0, newCacheTime != null ? newCacheTime : _utils_mjs__WEBPACK_IMPORTED_MODULE_0__/* .isServer */ .sk ? Infinity : 5 * 60 * 1000);
+  updateGcTime(newGcTime) {
+    this.gcTime = Math.max(
+      this.gcTime || 0,
+      newGcTime ?? (_utils_js__WEBPACK_IMPORTED_MODULE_0__/* .isServer */ .sk ? Infinity : 5 * 60 * 1e3)
+    );
   }
-
   clearGcTimeout() {
-    if (this.gcTimeout) {
-      clearTimeout(this.gcTimeout);
-      this.gcTimeout = undefined;
+    if (this.#gcTimeout) {
+      clearTimeout(this.#gcTimeout);
+      this.#gcTimeout = void 0;
     }
   }
+};
 
-}
-
-
-//# sourceMappingURL=removable.mjs.map
-
+//# sourceMappingURL=removable.js.map
 
 /***/ }),
 
-/***/ 3241:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+/***/ 6087:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   DV: function() { return /* binding */ isCancelledError; },
-/* harmony export */   Kw: function() { return /* binding */ canFetch; },
-/* harmony export */   Mz: function() { return /* binding */ createRetryer; }
+/* harmony export */   DV: () => (/* binding */ isCancelledError),
+/* harmony export */   Kw: () => (/* binding */ canFetch),
+/* harmony export */   Mz: () => (/* binding */ createRetryer)
 /* harmony export */ });
 /* unused harmony export CancelledError */
-/* harmony import */ var _focusManager_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5289);
-/* harmony import */ var _onlineManager_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3240);
-/* harmony import */ var _utils_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6370);
-
+/* harmony import */ var _focusManager_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5777);
+/* harmony import */ var _onlineManager_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3965);
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8298);
+// src/retryer.ts
 
 
 
 function defaultRetryDelay(failureCount) {
-  return Math.min(1000 * 2 ** failureCount, 30000);
+  return Math.min(1e3 * 2 ** failureCount, 3e4);
 }
-
 function canFetch(networkMode) {
-  return (networkMode != null ? networkMode : 'online') === 'online' ? _onlineManager_mjs__WEBPACK_IMPORTED_MODULE_0__/* .onlineManager */ .N.isOnline() : true;
+  return (networkMode ?? "online") === "online" ? _onlineManager_js__WEBPACK_IMPORTED_MODULE_0__/* .onlineManager */ .N.isOnline() : true;
 }
-class CancelledError {
+var CancelledError = class {
   constructor(options) {
-    this.revert = options == null ? void 0 : options.revert;
-    this.silent = options == null ? void 0 : options.silent;
+    this.revert = options?.revert;
+    this.silent = options?.silent;
   }
-
-}
+};
 function isCancelledError(value) {
   return value instanceof CancelledError;
 }
@@ -7184,109 +6584,80 @@ function createRetryer(config) {
     promiseResolve = outerResolve;
     promiseReject = outerReject;
   });
-
-  const cancel = cancelOptions => {
+  const cancel = (cancelOptions) => {
     if (!isResolved) {
       reject(new CancelledError(cancelOptions));
-      config.abort == null ? void 0 : config.abort();
+      config.abort?.();
     }
   };
-
   const cancelRetry = () => {
     isRetryCancelled = true;
   };
-
   const continueRetry = () => {
     isRetryCancelled = false;
   };
-
-  const shouldPause = () => !_focusManager_mjs__WEBPACK_IMPORTED_MODULE_1__/* .focusManager */ .j.isFocused() || config.networkMode !== 'always' && !_onlineManager_mjs__WEBPACK_IMPORTED_MODULE_0__/* .onlineManager */ .N.isOnline();
-
-  const resolve = value => {
+  const shouldPause = () => !_focusManager_js__WEBPACK_IMPORTED_MODULE_1__/* .focusManager */ .j.isFocused() || config.networkMode !== "always" && !_onlineManager_js__WEBPACK_IMPORTED_MODULE_0__/* .onlineManager */ .N.isOnline();
+  const resolve = (value) => {
     if (!isResolved) {
       isResolved = true;
-      config.onSuccess == null ? void 0 : config.onSuccess(value);
-      continueFn == null ? void 0 : continueFn();
+      config.onSuccess?.(value);
+      continueFn?.();
       promiseResolve(value);
     }
   };
-
-  const reject = value => {
+  const reject = (value) => {
     if (!isResolved) {
       isResolved = true;
-      config.onError == null ? void 0 : config.onError(value);
-      continueFn == null ? void 0 : continueFn();
+      config.onError?.(value);
+      continueFn?.();
       promiseReject(value);
     }
   };
-
   const pause = () => {
-    return new Promise(continueResolve => {
-      continueFn = value => {
+    return new Promise((continueResolve) => {
+      continueFn = (value) => {
         const canContinue = isResolved || !shouldPause();
-
         if (canContinue) {
           continueResolve(value);
         }
-
         return canContinue;
       };
-
-      config.onPause == null ? void 0 : config.onPause();
+      config.onPause?.();
     }).then(() => {
-      continueFn = undefined;
-
+      continueFn = void 0;
       if (!isResolved) {
-        config.onContinue == null ? void 0 : config.onContinue();
+        config.onContinue?.();
       }
     });
-  }; // Create loop function
-
-
+  };
   const run = () => {
-    // Do nothing if already resolved
     if (isResolved) {
       return;
     }
-
-    let promiseOrValue; // Execute query
-
+    let promiseOrValue;
     try {
       promiseOrValue = config.fn();
     } catch (error) {
       promiseOrValue = Promise.reject(error);
     }
-
-    Promise.resolve(promiseOrValue).then(resolve).catch(error => {
-      var _config$retry, _config$retryDelay;
-
-      // Stop if the fetch is already resolved
+    Promise.resolve(promiseOrValue).then(resolve).catch((error) => {
       if (isResolved) {
         return;
-      } // Do we need to retry the request?
-
-
-      const retry = (_config$retry = config.retry) != null ? _config$retry : 3;
-      const retryDelay = (_config$retryDelay = config.retryDelay) != null ? _config$retryDelay : defaultRetryDelay;
-      const delay = typeof retryDelay === 'function' ? retryDelay(failureCount, error) : retryDelay;
-      const shouldRetry = retry === true || typeof retry === 'number' && failureCount < retry || typeof retry === 'function' && retry(failureCount, error);
-
+      }
+      const retry = config.retry ?? (_utils_js__WEBPACK_IMPORTED_MODULE_2__/* .isServer */ .sk ? 0 : 3);
+      const retryDelay = config.retryDelay ?? defaultRetryDelay;
+      const delay = typeof retryDelay === "function" ? retryDelay(failureCount, error) : retryDelay;
+      const shouldRetry = retry === true || typeof retry === "number" && failureCount < retry || typeof retry === "function" && retry(failureCount, error);
       if (isRetryCancelled || !shouldRetry) {
-        // We are done if the query does not need to be retried
         reject(error);
         return;
       }
-
-      failureCount++; // Notify on fail
-
-      config.onFail == null ? void 0 : config.onFail(failureCount, error); // Delay
-
-      (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_2__/* .sleep */ .Gh)(delay) // Pause if the document is not visible or when the device is offline
-      .then(() => {
+      failureCount++;
+      config.onFail?.(failureCount, error);
+      (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__/* .sleep */ ._v)(delay).then(() => {
         if (shouldPause()) {
           return pause();
         }
-
         return;
       }).then(() => {
         if (isRetryCancelled) {
@@ -7296,20 +6667,17 @@ function createRetryer(config) {
         }
       });
     });
-  }; // Start loop
-
-
+  };
   if (canFetch(config.networkMode)) {
     run();
   } else {
     pause().then(run);
   }
-
   return {
     promise,
     cancel,
     continue: () => {
-      const didContinue = continueFn == null ? void 0 : continueFn();
+      const didContinue = continueFn?.();
       return didContinue ? promise : Promise.resolve();
     },
     cancelRetry,
@@ -7317,162 +6685,90 @@ function createRetryer(config) {
   };
 }
 
-
-//# sourceMappingURL=retryer.mjs.map
-
+//# sourceMappingURL=retryer.js.map
 
 /***/ }),
 
-/***/ 2436:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+/***/ 3248:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   l: function() { return /* binding */ Subscribable; }
+/* harmony export */   l: () => (/* binding */ Subscribable)
 /* harmony export */ });
-class Subscribable {
+// src/subscribable.ts
+var Subscribable = class {
   constructor() {
-    this.listeners = new Set();
+    this.listeners = /* @__PURE__ */ new Set();
     this.subscribe = this.subscribe.bind(this);
   }
-
   subscribe(listener) {
-    const identity = {
-      listener
-    };
-    this.listeners.add(identity);
+    this.listeners.add(listener);
     this.onSubscribe();
     return () => {
-      this.listeners.delete(identity);
+      this.listeners.delete(listener);
       this.onUnsubscribe();
     };
   }
-
   hasListeners() {
     return this.listeners.size > 0;
   }
-
-  onSubscribe() {// Do nothing
+  onSubscribe() {
   }
-
-  onUnsubscribe() {// Do nothing
+  onUnsubscribe() {
   }
+};
 
-}
-
-
-//# sourceMappingURL=subscribable.mjs.map
-
+//# sourceMappingURL=subscribable.js.map
 
 /***/ }),
 
-/***/ 6370:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+/***/ 8298:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   A4: function() { return /* binding */ scheduleMicrotask; },
-/* harmony export */   G9: function() { return /* binding */ getAbortController; },
-/* harmony export */   Gh: function() { return /* binding */ sleep; },
-/* harmony export */   I6: function() { return /* binding */ parseFilterArgs; },
-/* harmony export */   Kp: function() { return /* binding */ timeUntilStale; },
-/* harmony export */   PN: function() { return /* binding */ isValidTimeout; },
-/* harmony export */   Rm: function() { return /* binding */ hashQueryKeyByOptions; },
-/* harmony export */   SE: function() { return /* binding */ functionalUpdate; },
-/* harmony export */   VS: function() { return /* binding */ shallowEqualObjects; },
-/* harmony export */   X7: function() { return /* binding */ matchMutation; },
-/* harmony export */   ZT: function() { return /* binding */ noop; },
-/* harmony export */   _v: function() { return /* binding */ parseQueryArgs; },
-/* harmony export */   _x: function() { return /* binding */ matchQuery; },
-/* harmony export */   oE: function() { return /* binding */ replaceData; },
-/* harmony export */   sk: function() { return /* binding */ isServer; },
-/* harmony export */   to: function() { return /* binding */ partialMatchKey; },
-/* harmony export */   yF: function() { return /* binding */ hashQueryKey; }
+/* harmony export */   Ht: () => (/* binding */ addToStart),
+/* harmony export */   Kp: () => (/* binding */ timeUntilStale),
+/* harmony export */   PN: () => (/* binding */ isValidTimeout),
+/* harmony export */   Rm: () => (/* binding */ hashQueryKeyByOptions),
+/* harmony export */   SE: () => (/* binding */ functionalUpdate),
+/* harmony export */   VS: () => (/* binding */ shallowEqualObjects),
+/* harmony export */   VX: () => (/* binding */ addToEnd),
+/* harmony export */   X7: () => (/* binding */ matchMutation),
+/* harmony export */   Ym: () => (/* binding */ hashKey),
+/* harmony export */   ZT: () => (/* binding */ noop),
+/* harmony export */   _v: () => (/* binding */ sleep),
+/* harmony export */   _x: () => (/* binding */ matchQuery),
+/* harmony export */   oE: () => (/* binding */ replaceData),
+/* harmony export */   sk: () => (/* binding */ isServer),
+/* harmony export */   to: () => (/* binding */ partialMatchKey)
 /* harmony export */ });
-/* unused harmony exports difference, isError, isPlainArray, isPlainObject, isQueryKey, parseMutationArgs, parseMutationFilterArgs, partialDeepEqual, replaceAt, replaceEqualDeep */
-// TYPES
-// UTILS
-const isServer = typeof window === 'undefined' || 'Deno' in window;
+/* unused harmony exports isPlainArray, isPlainObject, keepPreviousData, replaceEqualDeep */
+// src/utils.ts
+var isServer =  false || "Deno" in window;
 function noop() {
-  return undefined;
+  return void 0;
 }
 function functionalUpdate(updater, input) {
-  return typeof updater === 'function' ? updater(input) : updater;
+  return typeof updater === "function" ? updater(input) : updater;
 }
 function isValidTimeout(value) {
-  return typeof value === 'number' && value >= 0 && value !== Infinity;
-}
-function difference(array1, array2) {
-  return array1.filter(x => !array2.includes(x));
-}
-function replaceAt(array, index, value) {
-  const copy = array.slice(0);
-  copy[index] = value;
-  return copy;
+  return typeof value === "number" && value >= 0 && value !== Infinity;
 }
 function timeUntilStale(updatedAt, staleTime) {
   return Math.max(updatedAt + (staleTime || 0) - Date.now(), 0);
 }
-function parseQueryArgs(arg1, arg2, arg3) {
-  if (!isQueryKey(arg1)) {
-    return arg1;
-  }
-
-  if (typeof arg2 === 'function') {
-    return { ...arg3,
-      queryKey: arg1,
-      queryFn: arg2
-    };
-  }
-
-  return { ...arg2,
-    queryKey: arg1
-  };
-}
-function parseMutationArgs(arg1, arg2, arg3) {
-  if (isQueryKey(arg1)) {
-    if (typeof arg2 === 'function') {
-      return { ...arg3,
-        mutationKey: arg1,
-        mutationFn: arg2
-      };
-    }
-
-    return { ...arg2,
-      mutationKey: arg1
-    };
-  }
-
-  if (typeof arg1 === 'function') {
-    return { ...arg2,
-      mutationFn: arg1
-    };
-  }
-
-  return { ...arg1
-  };
-}
-function parseFilterArgs(arg1, arg2, arg3) {
-  return isQueryKey(arg1) ? [{ ...arg2,
-    queryKey: arg1
-  }, arg3] : [arg1 || {}, arg2];
-}
-function parseMutationFilterArgs(arg1, arg2, arg3) {
-  return isQueryKey(arg1) ? [{ ...arg2,
-    mutationKey: arg1
-  }, arg3] : [arg1 || {}, arg2];
-}
 function matchQuery(filters, query) {
   const {
-    type = 'all',
+    type = "all",
     exact,
     fetchStatus,
     predicate,
     queryKey,
     stale
   } = filters;
-
-  if (isQueryKey(queryKey)) {
+  if (queryKey) {
     if (exact) {
       if (query.queryHash !== hashQueryKeyByOptions(queryKey, query.options)) {
         return false;
@@ -7481,293 +6777,188 @@ function matchQuery(filters, query) {
       return false;
     }
   }
-
-  if (type !== 'all') {
+  if (type !== "all") {
     const isActive = query.isActive();
-
-    if (type === 'active' && !isActive) {
+    if (type === "active" && !isActive) {
       return false;
     }
-
-    if (type === 'inactive' && isActive) {
+    if (type === "inactive" && isActive) {
       return false;
     }
   }
-
-  if (typeof stale === 'boolean' && query.isStale() !== stale) {
+  if (typeof stale === "boolean" && query.isStale() !== stale) {
     return false;
   }
-
-  if (typeof fetchStatus !== 'undefined' && fetchStatus !== query.state.fetchStatus) {
+  if (typeof fetchStatus !== "undefined" && fetchStatus !== query.state.fetchStatus) {
     return false;
   }
-
   if (predicate && !predicate(query)) {
     return false;
   }
-
   return true;
 }
 function matchMutation(filters, mutation) {
-  const {
-    exact,
-    fetching,
-    predicate,
-    mutationKey
-  } = filters;
-
-  if (isQueryKey(mutationKey)) {
+  const { exact, status, predicate, mutationKey } = filters;
+  if (mutationKey) {
     if (!mutation.options.mutationKey) {
       return false;
     }
-
     if (exact) {
-      if (hashQueryKey(mutation.options.mutationKey) !== hashQueryKey(mutationKey)) {
+      if (hashKey(mutation.options.mutationKey) !== hashKey(mutationKey)) {
         return false;
       }
     } else if (!partialMatchKey(mutation.options.mutationKey, mutationKey)) {
       return false;
     }
   }
-
-  if (typeof fetching === 'boolean' && mutation.state.status === 'loading' !== fetching) {
+  if (status && mutation.state.status !== status) {
     return false;
   }
-
   if (predicate && !predicate(mutation)) {
     return false;
   }
-
   return true;
 }
 function hashQueryKeyByOptions(queryKey, options) {
-  const hashFn = (options == null ? void 0 : options.queryKeyHashFn) || hashQueryKey;
+  const hashFn = options?.queryKeyHashFn || hashKey;
   return hashFn(queryKey);
 }
-/**
- * Default query keys hash function.
- * Hashes the value into a stable hash.
- */
-
-function hashQueryKey(queryKey) {
-  return JSON.stringify(queryKey, (_, val) => isPlainObject(val) ? Object.keys(val).sort().reduce((result, key) => {
-    result[key] = val[key];
-    return result;
-  }, {}) : val);
+function hashKey(queryKey) {
+  return JSON.stringify(
+    queryKey,
+    (_, val) => isPlainObject(val) ? Object.keys(val).sort().reduce((result, key) => {
+      result[key] = val[key];
+      return result;
+    }, {}) : val
+  );
 }
-/**
- * Checks if key `b` partially matches with key `a`.
- */
-
 function partialMatchKey(a, b) {
-  return partialDeepEqual(a, b);
-}
-/**
- * Checks if `b` partially matches with `a`.
- */
-
-function partialDeepEqual(a, b) {
   if (a === b) {
     return true;
   }
-
   if (typeof a !== typeof b) {
     return false;
   }
-
-  if (a && b && typeof a === 'object' && typeof b === 'object') {
-    return !Object.keys(b).some(key => !partialDeepEqual(a[key], b[key]));
+  if (a && b && typeof a === "object" && typeof b === "object") {
+    return !Object.keys(b).some((key) => !partialMatchKey(a[key], b[key]));
   }
-
   return false;
 }
-/**
- * This function returns `a` if `b` is deeply equal.
- * If not, it will replace any deeply equal children of `b` with those of `a`.
- * This can be used for structural sharing between JSON values for example.
- */
-
 function replaceEqualDeep(a, b) {
   if (a === b) {
     return a;
   }
-
   const array = isPlainArray(a) && isPlainArray(b);
-
   if (array || isPlainObject(a) && isPlainObject(b)) {
     const aSize = array ? a.length : Object.keys(a).length;
     const bItems = array ? b : Object.keys(b);
     const bSize = bItems.length;
     const copy = array ? [] : {};
     let equalItems = 0;
-
     for (let i = 0; i < bSize; i++) {
       const key = array ? i : bItems[i];
       copy[key] = replaceEqualDeep(a[key], b[key]);
-
       if (copy[key] === a[key]) {
         equalItems++;
       }
     }
-
     return aSize === bSize && equalItems === aSize ? a : copy;
   }
-
   return b;
 }
-/**
- * Shallow compare objects. Only works with objects that always have the same properties.
- */
-
 function shallowEqualObjects(a, b) {
   if (a && !b || b && !a) {
     return false;
   }
-
   for (const key in a) {
     if (a[key] !== b[key]) {
       return false;
     }
   }
-
   return true;
 }
 function isPlainArray(value) {
   return Array.isArray(value) && value.length === Object.keys(value).length;
-} // Copied from: https://github.com/jonschlinkert/is-plain-object
-
+}
 function isPlainObject(o) {
   if (!hasObjectPrototype(o)) {
     return false;
-  } // If has modified constructor
-
-
+  }
   const ctor = o.constructor;
-
-  if (typeof ctor === 'undefined') {
+  if (typeof ctor === "undefined") {
     return true;
-  } // If has modified prototype
-
-
+  }
   const prot = ctor.prototype;
-
   if (!hasObjectPrototype(prot)) {
     return false;
-  } // If constructor does not have an Object-specific method
-
-
-  if (!prot.hasOwnProperty('isPrototypeOf')) {
+  }
+  if (!prot.hasOwnProperty("isPrototypeOf")) {
     return false;
-  } // Most likely a plain Object
-
-
+  }
   return true;
 }
-
 function hasObjectPrototype(o) {
-  return Object.prototype.toString.call(o) === '[object Object]';
+  return Object.prototype.toString.call(o) === "[object Object]";
 }
-
-function isQueryKey(value) {
-  return Array.isArray(value);
-}
-function isError(value) {
-  return value instanceof Error;
-}
-function sleep(timeout) {
-  return new Promise(resolve => {
-    setTimeout(resolve, timeout);
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
   });
 }
-/**
- * Schedules a microtask.
- * This can be useful to schedule state updates after rendering.
- */
-
-function scheduleMicrotask(callback) {
-  sleep(0).then(callback);
-}
-function getAbortController() {
-  if (typeof AbortController === 'function') {
-    return new AbortController();
-  }
-
-  return;
-}
 function replaceData(prevData, data, options) {
-  // Use prev data if an isDataEqual function is defined and returns `true`
-  if (options.isDataEqual != null && options.isDataEqual(prevData, data)) {
-    return prevData;
-  } else if (typeof options.structuralSharing === 'function') {
+  if (typeof options.structuralSharing === "function") {
     return options.structuralSharing(prevData, data);
   } else if (options.structuralSharing !== false) {
-    // Structurally share data between prev and new data if needed
     return replaceEqualDeep(prevData, data);
   }
-
   return data;
 }
+function keepPreviousData(previousData) {
+  return previousData;
+}
+function addToEnd(items, item, max = 0) {
+  const newItems = [...items, item];
+  return max && newItems.length > max ? newItems.slice(1) : newItems;
+}
+function addToStart(items, item, max = 0) {
+  const newItems = [item, ...items];
+  return max && newItems.length > max ? newItems.slice(0, -1) : newItems;
+}
 
-
-//# sourceMappingURL=utils.mjs.map
-
+//# sourceMappingURL=utils.js.map
 
 /***/ }),
 
-/***/ 5830:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+/***/ 4010:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   NL: function() { return /* binding */ useQueryClient; },
-/* harmony export */   aH: function() { return /* binding */ QueryClientProvider; }
+/* harmony export */   NL: () => (/* binding */ useQueryClient),
+/* harmony export */   aH: () => (/* binding */ QueryClientProvider)
 /* harmony export */ });
-/* unused harmony export defaultContext */
+/* unused harmony export QueryClientContext */
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9196);
-'use client';
+"use client";
 
+// src/QueryClientProvider.tsx
 
-const defaultContext = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createContext(undefined);
-const QueryClientSharingContext = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createContext(false); // If we are given a context, we will use it.
-// Otherwise, if contextSharing is on, we share the first and at least one
-// instance of the context across the window
-// to ensure that if React Query is used across
-// different bundles or microfrontends they will
-// all use the same **instance** of context, regardless
-// of module scoping.
-
-function getQueryClientContext(context, contextSharing) {
-  if (context) {
-    return context;
+var QueryClientContext = react__WEBPACK_IMPORTED_MODULE_0__.createContext(
+  void 0
+);
+var useQueryClient = (queryClient) => {
+  const client = react__WEBPACK_IMPORTED_MODULE_0__.useContext(QueryClientContext);
+  if (queryClient) {
+    return queryClient;
   }
-
-  if (contextSharing && typeof window !== 'undefined') {
-    if (!window.ReactQueryClientContext) {
-      window.ReactQueryClientContext = defaultContext;
-    }
-
-    return window.ReactQueryClientContext;
+  if (!client) {
+    throw new Error("No QueryClient set, use QueryClientProvider to set one");
   }
-
-  return defaultContext;
-}
-
-const useQueryClient = ({
-  context
-} = {}) => {
-  const queryClient = react__WEBPACK_IMPORTED_MODULE_0__.useContext(getQueryClientContext(context, react__WEBPACK_IMPORTED_MODULE_0__.useContext(QueryClientSharingContext)));
-
-  if (!queryClient) {
-    throw new Error('No QueryClient set, use QueryClientProvider to set one');
-  }
-
-  return queryClient;
+  return client;
 };
-const QueryClientProvider = ({
+var QueryClientProvider = ({
   client,
-  children,
-  context,
-  contextSharing = false
+  children
 }) => {
   react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
     client.mount();
@@ -7775,34 +6966,25 @@ const QueryClientProvider = ({
       client.unmount();
     };
   }, [client]);
-
-  if (false) {}
-
-  const Context = getQueryClientContext(context, contextSharing);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(QueryClientSharingContext.Provider, {
-    value: !context && contextSharing
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Context.Provider, {
-    value: client
-  }, children));
+  return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(QueryClientContext.Provider, { value: client }, children);
 };
 
-
-//# sourceMappingURL=QueryClientProvider.mjs.map
-
+//# sourceMappingURL=QueryClientProvider.js.map
 
 /***/ }),
 
-/***/ 2985:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+/***/ 6441:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   _: function() { return /* binding */ useQueryErrorResetBoundary; }
+/* harmony export */   _: () => (/* binding */ useQueryErrorResetBoundary)
 /* harmony export */ });
 /* unused harmony export QueryErrorResetBoundary */
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9196);
-'use client';
+"use client";
 
+// src/QueryErrorResetBoundary.tsx
 
 function createValue() {
   let isReset = false;
@@ -7818,145 +7000,127 @@ function createValue() {
     }
   };
 }
-
-const QueryErrorResetBoundaryContext = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createContext(createValue()); // HOOK
-
-const useQueryErrorResetBoundary = () => react__WEBPACK_IMPORTED_MODULE_0__.useContext(QueryErrorResetBoundaryContext); // COMPONENT
-
-const QueryErrorResetBoundary = ({
+var QueryErrorResetBoundaryContext = react__WEBPACK_IMPORTED_MODULE_0__.createContext(createValue());
+var useQueryErrorResetBoundary = () => react__WEBPACK_IMPORTED_MODULE_0__.useContext(QueryErrorResetBoundaryContext);
+var QueryErrorResetBoundary = ({
   children
 }) => {
   const [value] = React.useState(() => createValue());
-  return /*#__PURE__*/React.createElement(QueryErrorResetBoundaryContext.Provider, {
-    value: value
-  }, typeof children === 'function' ? children(value) : children);
+  return /* @__PURE__ */ React.createElement(QueryErrorResetBoundaryContext.Provider, { value }, typeof children === "function" ? children(value) : children);
 };
 
-
-//# sourceMappingURL=QueryErrorResetBoundary.mjs.map
-
+//# sourceMappingURL=QueryErrorResetBoundary.js.map
 
 /***/ }),
 
-/***/ 8879:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+/***/ 5325:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   JN: function() { return /* binding */ useClearResetErrorBoundary; },
-/* harmony export */   KJ: function() { return /* binding */ getHasError; },
-/* harmony export */   pf: function() { return /* binding */ ensurePreventErrorBoundaryRetry; }
+/* harmony export */   JN: () => (/* binding */ useClearResetErrorBoundary),
+/* harmony export */   KJ: () => (/* binding */ getHasError),
+/* harmony export */   pf: () => (/* binding */ ensurePreventErrorBoundaryRetry)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9196);
-/* harmony import */ var _utils_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9189);
-'use client';
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3575);
+"use client";
+
+// src/errorBoundaryUtils.ts
 
 
-
-const ensurePreventErrorBoundaryRetry = (options, errorResetBoundary) => {
-  if (options.suspense || options.useErrorBoundary) {
-    // Prevent retrying failed query if the error boundary has not been reset yet
+var ensurePreventErrorBoundaryRetry = (options, errorResetBoundary) => {
+  if (options.suspense || options.throwOnError) {
     if (!errorResetBoundary.isReset()) {
       options.retryOnMount = false;
     }
   }
 };
-const useClearResetErrorBoundary = errorResetBoundary => {
+var useClearResetErrorBoundary = (errorResetBoundary) => {
   react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
     errorResetBoundary.clearReset();
   }, [errorResetBoundary]);
 };
-const getHasError = ({
+var getHasError = ({
   result,
   errorResetBoundary,
-  useErrorBoundary,
+  throwOnError,
   query
 }) => {
-  return result.isError && !errorResetBoundary.isReset() && !result.isFetching && (0,_utils_mjs__WEBPACK_IMPORTED_MODULE_1__/* .shouldThrowError */ .L)(useErrorBoundary, [result.error, query]);
+  return result.isError && !errorResetBoundary.isReset() && !result.isFetching && query && (0,_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .shouldThrowError */ .L)(throwOnError, [result.error, query]);
 };
 
-
-//# sourceMappingURL=errorBoundaryUtils.mjs.map
-
+//# sourceMappingURL=errorBoundaryUtils.js.map
 
 /***/ }),
 
-/***/ 2257:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+/***/ 2793:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   S: function() { return /* binding */ useIsRestoring; }
+/* harmony export */   S: () => (/* binding */ useIsRestoring)
 /* harmony export */ });
 /* unused harmony export IsRestoringProvider */
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9196);
-'use client';
+"use client";
 
+// src/isRestoring.ts
 
-const IsRestoringContext = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createContext(false);
-const useIsRestoring = () => react__WEBPACK_IMPORTED_MODULE_0__.useContext(IsRestoringContext);
-const IsRestoringProvider = IsRestoringContext.Provider;
+var IsRestoringContext = react__WEBPACK_IMPORTED_MODULE_0__.createContext(false);
+var useIsRestoring = () => react__WEBPACK_IMPORTED_MODULE_0__.useContext(IsRestoringContext);
+var IsRestoringProvider = IsRestoringContext.Provider;
 
-
-//# sourceMappingURL=isRestoring.mjs.map
-
+//# sourceMappingURL=isRestoring.js.map
 
 /***/ }),
 
-/***/ 7167:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+/***/ 5738:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Fb: function() { return /* binding */ ensureStaleTime; },
-/* harmony export */   SB: function() { return /* binding */ shouldSuspend; },
-/* harmony export */   j8: function() { return /* binding */ fetchOptimistic; }
+/* harmony export */   Fb: () => (/* binding */ ensureStaleTime),
+/* harmony export */   SB: () => (/* binding */ shouldSuspend),
+/* harmony export */   j8: () => (/* binding */ fetchOptimistic)
 /* harmony export */ });
-/* unused harmony export willFetch */
-const ensureStaleTime = defaultedOptions => {
+/* unused harmony exports defaultThrowOnError, willFetch */
+// src/suspense.ts
+var defaultThrowOnError = (_error, query) => typeof query.state.data === "undefined";
+var ensureStaleTime = (defaultedOptions) => {
   if (defaultedOptions.suspense) {
-    // Always set stale time when using suspense to prevent
-    // fetching again when directly mounting after suspending
-    if (typeof defaultedOptions.staleTime !== 'number') {
-      defaultedOptions.staleTime = 1000;
+    if (typeof defaultedOptions.staleTime !== "number") {
+      defaultedOptions.staleTime = 1e3;
     }
   }
 };
-const willFetch = (result, isRestoring) => result.isLoading && result.isFetching && !isRestoring;
-const shouldSuspend = (defaultedOptions, result, isRestoring) => (defaultedOptions == null ? void 0 : defaultedOptions.suspense) && willFetch(result, isRestoring);
-const fetchOptimistic = (defaultedOptions, observer, errorResetBoundary) => observer.fetchOptimistic(defaultedOptions).then(({
-  data
-}) => {
-  defaultedOptions.onSuccess == null ? void 0 : defaultedOptions.onSuccess(data);
-  defaultedOptions.onSettled == null ? void 0 : defaultedOptions.onSettled(data, null);
-}).catch(error => {
+var willFetch = (result, isRestoring) => result.isLoading && result.isFetching && !isRestoring;
+var shouldSuspend = (defaultedOptions, result) => defaultedOptions?.suspense && result.isPending;
+var fetchOptimistic = (defaultedOptions, observer, errorResetBoundary) => observer.fetchOptimistic(defaultedOptions).catch(() => {
   errorResetBoundary.clearReset();
-  defaultedOptions.onError == null ? void 0 : defaultedOptions.onError(error);
-  defaultedOptions.onSettled == null ? void 0 : defaultedOptions.onSettled(undefined, error);
 });
 
-
-//# sourceMappingURL=suspense.mjs.map
-
+//# sourceMappingURL=suspense.js.map
 
 /***/ }),
 
-/***/ 8281:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+/***/ 2008:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   r: function() { return /* binding */ useBaseQuery; }
+/* harmony export */   r: () => (/* binding */ useBaseQuery)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9196);
-/* harmony import */ var _tanstack_query_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3709);
-/* harmony import */ var _useSyncExternalStore_mjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(9930);
-/* harmony import */ var _QueryErrorResetBoundary_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2985);
-/* harmony import */ var _QueryClientProvider_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5830);
-/* harmony import */ var _isRestoring_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2257);
-/* harmony import */ var _errorBoundaryUtils_mjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(8879);
-/* harmony import */ var _suspense_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7167);
-'use client';
+/* harmony import */ var _tanstack_query_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1895);
+/* harmony import */ var _QueryErrorResetBoundary_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6441);
+/* harmony import */ var _QueryClientProvider_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4010);
+/* harmony import */ var _isRestoring_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2793);
+/* harmony import */ var _errorBoundaryUtils_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(5325);
+/* harmony import */ var _suspense_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5738);
+"use client";
+
+// src/useBaseQuery.ts
 
 
 
@@ -7964,137 +7128,94 @@ const fetchOptimistic = (defaultedOptions, observer, errorResetBoundary) => obse
 
 
 
-
-
-function useBaseQuery(options, Observer) {
-  const queryClient = (0,_QueryClientProvider_mjs__WEBPACK_IMPORTED_MODULE_1__/* .useQueryClient */ .NL)({
-    context: options.context
-  });
-  const isRestoring = (0,_isRestoring_mjs__WEBPACK_IMPORTED_MODULE_2__/* .useIsRestoring */ .S)();
-  const errorResetBoundary = (0,_QueryErrorResetBoundary_mjs__WEBPACK_IMPORTED_MODULE_3__/* .useQueryErrorResetBoundary */ ._)();
-  const defaultedOptions = queryClient.defaultQueryOptions(options); // Make sure results are optimistically set in fetching state before subscribing or updating options
-
-  defaultedOptions._optimisticResults = isRestoring ? 'isRestoring' : 'optimistic'; // Include callbacks in batch renders
-
-  if (defaultedOptions.onError) {
-    defaultedOptions.onError = _tanstack_query_core__WEBPACK_IMPORTED_MODULE_4__/* .notifyManager */ .V.batchCalls(defaultedOptions.onError);
-  }
-
-  if (defaultedOptions.onSuccess) {
-    defaultedOptions.onSuccess = _tanstack_query_core__WEBPACK_IMPORTED_MODULE_4__/* .notifyManager */ .V.batchCalls(defaultedOptions.onSuccess);
-  }
-
-  if (defaultedOptions.onSettled) {
-    defaultedOptions.onSettled = _tanstack_query_core__WEBPACK_IMPORTED_MODULE_4__/* .notifyManager */ .V.batchCalls(defaultedOptions.onSettled);
-  }
-
-  (0,_suspense_mjs__WEBPACK_IMPORTED_MODULE_5__/* .ensureStaleTime */ .Fb)(defaultedOptions);
-  (0,_errorBoundaryUtils_mjs__WEBPACK_IMPORTED_MODULE_6__/* .ensurePreventErrorBoundaryRetry */ .pf)(defaultedOptions, errorResetBoundary);
-  (0,_errorBoundaryUtils_mjs__WEBPACK_IMPORTED_MODULE_6__/* .useClearResetErrorBoundary */ .JN)(errorResetBoundary);
-  const [observer] = react__WEBPACK_IMPORTED_MODULE_0__.useState(() => new Observer(queryClient, defaultedOptions));
+function useBaseQuery(options, Observer, queryClient) {
+  if (false) {}
+  const client = (0,_QueryClientProvider_js__WEBPACK_IMPORTED_MODULE_1__/* .useQueryClient */ .NL)(queryClient);
+  const isRestoring = (0,_isRestoring_js__WEBPACK_IMPORTED_MODULE_2__/* .useIsRestoring */ .S)();
+  const errorResetBoundary = (0,_QueryErrorResetBoundary_js__WEBPACK_IMPORTED_MODULE_3__/* .useQueryErrorResetBoundary */ ._)();
+  const defaultedOptions = client.defaultQueryOptions(options);
+  defaultedOptions._optimisticResults = isRestoring ? "isRestoring" : "optimistic";
+  (0,_suspense_js__WEBPACK_IMPORTED_MODULE_4__/* .ensureStaleTime */ .Fb)(defaultedOptions);
+  (0,_errorBoundaryUtils_js__WEBPACK_IMPORTED_MODULE_5__/* .ensurePreventErrorBoundaryRetry */ .pf)(defaultedOptions, errorResetBoundary);
+  (0,_errorBoundaryUtils_js__WEBPACK_IMPORTED_MODULE_5__/* .useClearResetErrorBoundary */ .JN)(errorResetBoundary);
+  const [observer] = react__WEBPACK_IMPORTED_MODULE_0__.useState(
+    () => new Observer(
+      client,
+      defaultedOptions
+    )
+  );
   const result = observer.getOptimisticResult(defaultedOptions);
-  (0,_useSyncExternalStore_mjs__WEBPACK_IMPORTED_MODULE_7__/* .useSyncExternalStore */ .$)(react__WEBPACK_IMPORTED_MODULE_0__.useCallback(onStoreChange => {
-    const unsubscribe = isRestoring ? () => undefined : observer.subscribe(_tanstack_query_core__WEBPACK_IMPORTED_MODULE_4__/* .notifyManager */ .V.batchCalls(onStoreChange)); // Update result to make sure we did not miss any query updates
-    // between creating the observer and subscribing to it.
-
-    observer.updateResult();
-    return unsubscribe;
-  }, [observer, isRestoring]), () => observer.getCurrentResult(), () => observer.getCurrentResult());
+  react__WEBPACK_IMPORTED_MODULE_0__.useSyncExternalStore(
+    react__WEBPACK_IMPORTED_MODULE_0__.useCallback(
+      (onStoreChange) => {
+        const unsubscribe = isRestoring ? () => void 0 : observer.subscribe(_tanstack_query_core__WEBPACK_IMPORTED_MODULE_6__/* .notifyManager */ .V.batchCalls(onStoreChange));
+        observer.updateResult();
+        return unsubscribe;
+      },
+      [observer, isRestoring]
+    ),
+    () => observer.getCurrentResult(),
+    () => observer.getCurrentResult()
+  );
   react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
-    // Do not notify on updates because of changes in the options because
-    // these changes should already be reflected in the optimistic result.
-    observer.setOptions(defaultedOptions, {
-      listeners: false
-    });
-  }, [defaultedOptions, observer]); // Handle suspense
-
-  if ((0,_suspense_mjs__WEBPACK_IMPORTED_MODULE_5__/* .shouldSuspend */ .SB)(defaultedOptions, result, isRestoring)) {
-    throw (0,_suspense_mjs__WEBPACK_IMPORTED_MODULE_5__/* .fetchOptimistic */ .j8)(defaultedOptions, observer, errorResetBoundary);
-  } // Handle error boundary
-
-
-  if ((0,_errorBoundaryUtils_mjs__WEBPACK_IMPORTED_MODULE_6__/* .getHasError */ .KJ)({
+    observer.setOptions(defaultedOptions, { listeners: false });
+  }, [defaultedOptions, observer]);
+  if ((0,_suspense_js__WEBPACK_IMPORTED_MODULE_4__/* .shouldSuspend */ .SB)(defaultedOptions, result)) {
+    throw (0,_suspense_js__WEBPACK_IMPORTED_MODULE_4__/* .fetchOptimistic */ .j8)(defaultedOptions, observer, errorResetBoundary);
+  }
+  if ((0,_errorBoundaryUtils_js__WEBPACK_IMPORTED_MODULE_5__/* .getHasError */ .KJ)({
     result,
     errorResetBoundary,
-    useErrorBoundary: defaultedOptions.useErrorBoundary,
-    query: observer.getCurrentQuery()
+    throwOnError: defaultedOptions.throwOnError,
+    query: client.getQueryCache().get(defaultedOptions.queryHash)
   })) {
     throw result.error;
-  } // Handle result property usage tracking
-
-
+  }
   return !defaultedOptions.notifyOnChangeProps ? observer.trackResult(result) : result;
 }
 
-
-//# sourceMappingURL=useBaseQuery.mjs.map
-
+//# sourceMappingURL=useBaseQuery.js.map
 
 /***/ }),
 
-/***/ 8943:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+/***/ 2180:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   a: function() { return /* binding */ useQuery; }
+/* harmony export */   a: () => (/* binding */ useQuery)
 /* harmony export */ });
-/* harmony import */ var _tanstack_query_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6370);
-/* harmony import */ var _tanstack_query_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1578);
-/* harmony import */ var _useBaseQuery_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8281);
-'use client';
+/* harmony import */ var _tanstack_query_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4218);
+/* harmony import */ var _useBaseQuery_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2008);
+"use client";
+
+// src/useQuery.ts
 
 
-
-function useQuery(arg1, arg2, arg3) {
-  const parsedOptions = (0,_tanstack_query_core__WEBPACK_IMPORTED_MODULE_0__/* .parseQueryArgs */ ._v)(arg1, arg2, arg3);
-  return (0,_useBaseQuery_mjs__WEBPACK_IMPORTED_MODULE_1__/* .useBaseQuery */ .r)(parsedOptions, _tanstack_query_core__WEBPACK_IMPORTED_MODULE_2__/* .QueryObserver */ .z);
+function useQuery(options, queryClient) {
+  return (0,_useBaseQuery_js__WEBPACK_IMPORTED_MODULE_0__/* .useBaseQuery */ .r)(options, _tanstack_query_core__WEBPACK_IMPORTED_MODULE_1__/* .QueryObserver */ .z, queryClient);
 }
 
-
-//# sourceMappingURL=useQuery.mjs.map
-
+//# sourceMappingURL=useQuery.js.map
 
 /***/ }),
 
-/***/ 9930:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+/***/ 3575:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   $: function() { return /* binding */ useSyncExternalStore; }
+/* harmony export */   L: () => (/* binding */ shouldThrowError)
 /* harmony export */ });
-/* harmony import */ var use_sync_external_store_shim_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3100);
-'use client';
-
-
-const useSyncExternalStore = use_sync_external_store_shim_index_js__WEBPACK_IMPORTED_MODULE_0__.useSyncExternalStore;
-
-
-//# sourceMappingURL=useSyncExternalStore.mjs.map
-
-
-/***/ }),
-
-/***/ 9189:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   L: function() { return /* binding */ shouldThrowError; }
-/* harmony export */ });
-function shouldThrowError(_useErrorBoundary, params) {
-  // Allow useErrorBoundary function to override throwing behavior on a per-error basis
-  if (typeof _useErrorBoundary === 'function') {
-    return _useErrorBoundary(...params);
+// src/utils.ts
+function shouldThrowError(throwError, params) {
+  if (typeof throwError === "function") {
+    return throwError(...params);
   }
-
-  return !!_useErrorBoundary;
+  return !!throwError;
 }
 
-
-//# sourceMappingURL=utils.mjs.map
-
+//# sourceMappingURL=utils.js.map
 
 /***/ })
 
@@ -8126,31 +7247,31 @@ function shouldThrowError(_useErrorBoundary, params) {
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
-/******/ 	!function() {
+/******/ 	(() => {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = function(module) {
+/******/ 		__webpack_require__.n = (module) => {
 /******/ 			var getter = module && module.__esModule ?
-/******/ 				function() { return module['default']; } :
-/******/ 				function() { return module; };
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
 /******/ 			__webpack_require__.d(getter, { a: getter });
 /******/ 			return getter;
 /******/ 		};
-/******/ 	}();
+/******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/define property getters */
-/******/ 	!function() {
+/******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = function(exports, definition) {
+/******/ 		__webpack_require__.d = (exports, definition) => {
 /******/ 			for(var key in definition) {
 /******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
 /******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 				}
 /******/ 			}
 /******/ 		};
-/******/ 	}();
+/******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
-/******/ 	!function() {
+/******/ 	(() => {
 /******/ 		__webpack_require__.g = (function() {
 /******/ 			if (typeof globalThis === 'object') return globalThis;
 /******/ 			try {
@@ -8159,26 +7280,26 @@ function shouldThrowError(_useErrorBoundary, params) {
 /******/ 				if (typeof window === 'object') return window;
 /******/ 			}
 /******/ 		})();
-/******/ 	}();
+/******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	!function() {
-/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
-/******/ 	}();
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
-/******/ 	!function() {
+/******/ 	(() => {
 /******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = function(exports) {
+/******/ 		__webpack_require__.r = (exports) => {
 /******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
 /******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
-/******/ 	}();
+/******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/publicPath */
-/******/ 	!function() {
+/******/ 	(() => {
 /******/ 		var scriptUrl;
 /******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
 /******/ 		var document = __webpack_require__.g.document;
@@ -8198,20 +7319,20 @@ function shouldThrowError(_useErrorBoundary, params) {
 /******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
 /******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
 /******/ 		__webpack_require__.p = scriptUrl;
-/******/ 	}();
+/******/ 	})();
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
-!function() {
+(() => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9307);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _public_path__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7915);
 /* harmony import */ var _public_path__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_public_path__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(5830);
-/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(7022);
+/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(4010);
+/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(372);
 /* harmony import */ var _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7701);
 /* harmony import */ var _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8817);
@@ -8238,7 +7359,8 @@ const showGlobalStylesComponents = () => {
 _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_2___default()(() => {
   showGlobalStylesComponents();
 });
-}();
+})();
+
 window.EditingToolkit = __webpack_exports__;
 /******/ })()
 ;

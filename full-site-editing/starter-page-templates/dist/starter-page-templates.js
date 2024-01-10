@@ -1,8 +1,8 @@
-/******/ (function() { // webpackBootstrap
+/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 779:
-/***/ (function(module, exports) {
+/***/ ((module, exports) => {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 	Copyright (c) 2018 Jed Watson.
@@ -68,7 +68,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 /***/ }),
 
 /***/ 334:
-/***/ (function() {
+/***/ (() => {
 
 "use strict";
 // extracted by mini-css-extract-plugin
@@ -77,11 +77,11 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 /***/ }),
 
 /***/ 28:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   P: function() { return /* binding */ PagePatternsPlugin; }
+/* harmony export */   P: () => (/* binding */ PagePatternsPlugin)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(896);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(307);
@@ -212,24 +212,20 @@ function PagePatternsPlugin(props) {
 /***/ }),
 
 /***/ 168:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   I: function() { return /* binding */ pageLayoutStore; }
+/* harmony export */   I: () => (/* binding */ pageLayoutStore)
 /* harmony export */ });
 /* unused harmony export selectors */
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(818);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
 
-const reducer = function () {
-  let state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'CLOSED';
-  let {
-    type,
-    ...action
-  } = arguments.length > 1 ? arguments[1] : undefined;
-  return 'SET_IS_OPEN' === type ? action.openState : state;
-};
+const reducer = (state = 'CLOSED', {
+  type,
+  ...action
+}) => 'SET_IS_OPEN' === type ? action.openState : state;
 const actions = {
   setOpenState: openState => ({
     type: 'SET_IS_OPEN',
@@ -250,9 +246,12 @@ const pageLayoutStore = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.createRe
 /***/ }),
 
 /***/ 18:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(666);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(307);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
@@ -299,14 +298,13 @@ class PagePatternModal extends _wordpress_element__WEBPACK_IMPORTED_MODULE_0__.C
     super(props);
     // Parse patterns blocks and memoize them.
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z)(this, "getFormattedPatternsByPatternSlugs", (0,lodash__WEBPACK_IMPORTED_MODULE_6__.memoize)(patterns => {
-      const blocksByPatternSlugs = patterns.reduce((prev, _ref) => {
-        let {
-          name,
-          title = '',
-          description = '',
-          html,
-          pattern_meta
-        } = _ref;
+      const blocksByPatternSlugs = patterns.reduce((prev, {
+        name,
+        title = '',
+        description = '',
+        html,
+        pattern_meta
+      }) => {
         // 1280px is the default value because it's also used when registering patterns from the block-patterns feature in jetpack-mu-wpcom
         const viewportWidth = pattern_meta?.viewport_width ? Number(pattern_meta.viewport_width) : 1280;
         prev[name] = {
@@ -484,8 +482,7 @@ class PagePatternModal extends _wordpress_element__WEBPACK_IMPORTED_MODULE_0__.C
     };
   }
   filterPatternsWithMissingBlocks(patterns) {
-    return Object.entries(patterns).reduce((acc, _ref2) => {
-      let [name, pattern] = _ref2;
+    return Object.entries(patterns).reduce((acc, [name, pattern]) => {
       // Does the pattern contain any missing blocks?
       const patternHasMissingBlocks = (0,_utils_contains_missing_block__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Z)(pattern.blocks);
 
@@ -570,16 +567,13 @@ class PagePatternModal extends _wordpress_element__WEBPACK_IMPORTED_MODULE_0__.C
       className: "page-pattern-modal__mobile-category-dropdown",
       value: selectedCategory ?? undefined,
       onChange: e => this.handleCategorySelection(e.currentTarget.value)
-    }, this.getPatternCategories()?.map(_ref3 => {
-      let {
-        slug,
-        name
-      } = _ref3;
-      return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
-        key: slug,
-        value: slug
-      }, name);
-    }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.VisuallyHidden, {
+    }, this.getPatternCategories()?.map(({
+      slug,
+      name
+    }) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
+      key: slug,
+      value: slug
+    }, name)))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.VisuallyHidden, {
       as: "h2",
       id: `page-pattern-modal__list-heading-${instanceId}`
     }, __('Page categories', "full-site-editing")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.NavigableMenu, {
@@ -587,35 +581,35 @@ class PagePatternModal extends _wordpress_element__WEBPACK_IMPORTED_MODULE_0__.C
       orientation: "vertical",
       "aria-labelledby": `page-pattern-modal__list-heading-${instanceId}`,
       onNavigate: (_index, child) => this.handleCategorySelection(child.dataset.slug ?? null)
-    }, this.getPatternCategories()?.map(_ref4 => {
-      let {
-        slug,
-        name
-      } = _ref4;
-      return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(MenuItem, {
-        key: slug,
-        variant: "tertiary",
-        "aria-selected": slug === selectedCategory,
-        "data-slug": slug,
-        onClick: () => this.handleCategorySelection(slug),
-        className: "page-pattern-modal__category-button",
-        tabIndex: slug === selectedCategory ? undefined : -1
-      }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
-        className: "page-pattern-modal__category-item-selection-wrapper"
-      }, name));
-    }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    }, this.getPatternCategories()?.map(({
+      slug,
+      name
+    }) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(MenuItem, {
+      key: slug,
+      variant: "tertiary",
+      "aria-selected": slug === selectedCategory,
+      "data-slug": slug,
+      onClick: () => this.handleCategorySelection(slug),
+      className: "page-pattern-modal__category-button",
+      tabIndex: slug === selectedCategory ? undefined : -1
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+      className: "page-pattern-modal__category-item-selection-wrapper"
+    }, name))))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "page-pattern-modal__pattern-list-container"
     }, this.renderPatternGroup())));
   }
 }
-/* harmony default export */ __webpack_exports__.Z = ((0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__.withInstanceId)(PagePatternModal));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__.withInstanceId)(PagePatternModal));
 
 /***/ }),
 
 /***/ 958:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* unused harmony export PatternSelectorControl */
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(307);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
@@ -632,13 +626,12 @@ class PagePatternModal extends _wordpress_element__WEBPACK_IMPORTED_MODULE_0__.C
 
 
 const noop = () => undefined;
-const PatternSelectorControl = _ref => {
-  let {
-    instanceId,
-    label,
-    patterns = [],
-    onPatternSelect = noop
-  } = _ref;
+const PatternSelectorControl = ({
+  instanceId,
+  label,
+  patterns = [],
+  onPatternSelect = noop
+}) => {
   const shownPatterns = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__.useAsyncList)(patterns);
   if (!Array.isArray(patterns) || !patterns.length) {
     return null;
@@ -653,14 +646,17 @@ const PatternSelectorControl = _ref => {
     onClickPattern: pattern => onPatternSelect(pattern.name)
   }));
 };
-/* harmony default export */ __webpack_exports__.Z = ((0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)((0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__.withInstanceId)(PatternSelectorControl)));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)((0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__.withInstanceId)(PatternSelectorControl)));
 
 /***/ }),
 
 /***/ 531:
-/***/ (function(__unused_webpack_module, __webpack_exports__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 // Once parsed, missing Blocks have a name prop of `core/missing`.
 // see: https://github.com/WordPress/gutenberg/tree/742dbf2ef0e37481a3c14c29f3688aa0cd3cf887/packages/block-library/src/missing
 const MISSING_BLOCK_NAME = 'core/missing';
@@ -686,16 +682,16 @@ function containsMissingBlock(blocks) {
     return false;
   });
 }
-/* harmony default export */ __webpack_exports__.Z = (containsMissingBlock);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (containsMissingBlock);
 
 /***/ }),
 
 /***/ 988:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   x: function() { return /* binding */ sortGroupNames; }
+/* harmony export */   x: () => (/* binding */ sortGroupNames)
 /* harmony export */ });
 /**
  * Sorts the keys on the group object to have a preferred order.
@@ -718,9 +714,12 @@ function sortGroupNames(preferredGroupOrder, groupsObject) {
 /***/ }),
 
 /***/ 480:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(981);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
 
@@ -749,14 +748,17 @@ function mapBlocksRecursively(blocks, modifier) {
     return block;
   });
 }
-/* harmony default export */ __webpack_exports__.Z = (mapBlocksRecursively);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (mapBlocksRecursively);
 
 /***/ }),
 
 /***/ 656:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(736);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
 
@@ -773,8 +775,7 @@ const KEY_MAP = {
   Phone: 'phone',
   Vertical: 'vertical'
 };
-const replacePlaceholders = function (pageContent) {
-  let siteInformation = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+const replacePlaceholders = (pageContent, siteInformation = {}) => {
   if (!pageContent) {
     return '';
   }
@@ -789,19 +790,19 @@ const replacePlaceholders = function (pageContent) {
 function isObjKey(key, obj) {
   return key in obj;
 }
-/* harmony default export */ __webpack_exports__.Z = (replacePlaceholders);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (replacePlaceholders);
 
 /***/ }),
 
 /***/ 884:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   E2: function() { return /* binding */ trackSelection; },
-/* harmony export */   Fk: function() { return /* binding */ trackView; },
-/* harmony export */   GI: function() { return /* binding */ trackDismiss; },
-/* harmony export */   Z: function() { return /* binding */ initializeWithIdentity; }
+/* harmony export */   E2: () => (/* binding */ trackSelection),
+/* harmony export */   Fk: () => (/* binding */ trackView),
+/* harmony export */   GI: () => (/* binding */ trackDismiss),
+/* harmony export */   Z: () => (/* binding */ initializeWithIdentity)
 /* harmony export */ });
 // Ensure Tracks Library
 window._tkq = window._tkq || [];
@@ -863,7 +864,7 @@ const trackSelection = pattern => {
 /***/ }),
 
 /***/ 819:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["lodash"];
@@ -871,7 +872,7 @@ module.exports = window["lodash"];
 /***/ }),
 
 /***/ 175:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["blockEditor"];
@@ -879,7 +880,7 @@ module.exports = window["wp"]["blockEditor"];
 /***/ }),
 
 /***/ 981:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["blocks"];
@@ -887,7 +888,7 @@ module.exports = window["wp"]["blocks"];
 /***/ }),
 
 /***/ 609:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["components"];
@@ -895,7 +896,7 @@ module.exports = window["wp"]["components"];
 /***/ }),
 
 /***/ 333:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["compose"];
@@ -903,7 +904,7 @@ module.exports = window["wp"]["compose"];
 /***/ }),
 
 /***/ 818:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["data"];
@@ -911,7 +912,7 @@ module.exports = window["wp"]["data"];
 /***/ }),
 
 /***/ 307:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["element"];
@@ -919,7 +920,7 @@ module.exports = window["wp"]["element"];
 /***/ }),
 
 /***/ 694:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["hooks"];
@@ -927,7 +928,7 @@ module.exports = window["wp"]["hooks"];
 /***/ }),
 
 /***/ 736:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["i18n"];
@@ -935,7 +936,7 @@ module.exports = window["wp"]["i18n"];
 /***/ }),
 
 /***/ 462:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["nux"];
@@ -943,7 +944,7 @@ module.exports = window["wp"]["nux"];
 /***/ }),
 
 /***/ 817:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["plugins"];
@@ -951,11 +952,11 @@ module.exports = window["wp"]["plugins"];
 /***/ }),
 
 /***/ 666:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ _defineProperty; }
+/* harmony export */   Z: () => (/* binding */ _defineProperty)
 /* harmony export */ });
 /* harmony import */ var _toPropertyKey_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(795);
 
@@ -977,11 +978,11 @@ function _defineProperty(obj, key, value) {
 /***/ }),
 
 /***/ 896:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ _extends; }
+/* harmony export */   Z: () => (/* binding */ _extends)
 /* harmony export */ });
 function _extends() {
   _extends = Object.assign ? Object.assign.bind() : function (target) {
@@ -1001,51 +1002,51 @@ function _extends() {
 /***/ }),
 
 /***/ 745:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ _toPrimitive; }
+/* harmony export */   Z: () => (/* binding */ toPrimitive)
 /* harmony export */ });
 /* harmony import */ var _typeof_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(522);
 
-function _toPrimitive(input, hint) {
-  if ((0,_typeof_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)(input) !== "object" || input === null) return input;
-  var prim = input[Symbol.toPrimitive];
-  if (prim !== undefined) {
-    var res = prim.call(input, hint || "default");
-    if ((0,_typeof_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)(res) !== "object") return res;
+function toPrimitive(t, r) {
+  if ("object" != (0,_typeof_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)(t) || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r || "default");
+    if ("object" != (0,_typeof_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)(i)) return i;
     throw new TypeError("@@toPrimitive must return a primitive value.");
   }
-  return (hint === "string" ? String : Number)(input);
+  return ("string" === r ? String : Number)(t);
 }
 
 /***/ }),
 
 /***/ 795:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ _toPropertyKey; }
+/* harmony export */   Z: () => (/* binding */ toPropertyKey)
 /* harmony export */ });
 /* harmony import */ var _typeof_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(522);
 /* harmony import */ var _toPrimitive_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(745);
 
 
-function _toPropertyKey(arg) {
-  var key = (0,_toPrimitive_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)(arg, "string");
-  return (0,_typeof_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)(key) === "symbol" ? key : String(key);
+function toPropertyKey(t) {
+  var i = (0,_toPrimitive_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)(t, "string");
+  return "symbol" == (0,_typeof_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)(i) ? i : String(i);
 }
 
 /***/ }),
 
 /***/ 522:
-/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ _typeof; }
+/* harmony export */   Z: () => (/* binding */ _typeof)
 /* harmony export */ });
 function _typeof(o) {
   "@babel/helpers - typeof";
@@ -1087,49 +1088,49 @@ function _typeof(o) {
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
-/******/ 	!function() {
+/******/ 	(() => {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = function(module) {
+/******/ 		__webpack_require__.n = (module) => {
 /******/ 			var getter = module && module.__esModule ?
-/******/ 				function() { return module['default']; } :
-/******/ 				function() { return module; };
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
 /******/ 			__webpack_require__.d(getter, { a: getter });
 /******/ 			return getter;
 /******/ 		};
-/******/ 	}();
+/******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/define property getters */
-/******/ 	!function() {
+/******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = function(exports, definition) {
+/******/ 		__webpack_require__.d = (exports, definition) => {
 /******/ 			for(var key in definition) {
 /******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
 /******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 				}
 /******/ 			}
 /******/ 		};
-/******/ 	}();
+/******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	!function() {
-/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
-/******/ 	}();
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
-/******/ 	!function() {
+/******/ 	(() => {
 /******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = function(exports) {
+/******/ 		__webpack_require__.r = (exports) => {
 /******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
 /******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
-/******/ 	}();
+/******/ 	})();
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
-!function() {
+(() => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(307);
@@ -1176,7 +1177,8 @@ if (screenAction === 'add') {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   icon: undefined
 });
-}();
+})();
+
 window.EditingToolkit = __webpack_exports__;
 /******/ })()
 ;

@@ -1,12 +1,12 @@
 "use strict";
-(self["webpackChunkwebpack"] = self["webpackChunkwebpack"] || []).push([[474],{
+(globalThis["webpackChunkwebpack"] = globalThis["webpackChunkwebpack"] || []).push([[474],{
 
 /***/ 11209:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   recordAliasInFloodlight: function() { return /* binding */ recordAliasInFloodlight; }
+/* harmony export */   recordAliasInFloodlight: () => (/* binding */ recordAliasInFloodlight)
 /* harmony export */ });
 /* harmony import */ var _tracker_buckets__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(54995);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(36190);

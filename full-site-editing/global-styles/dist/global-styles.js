@@ -1,10 +1,13 @@
-/******/ (function() { // webpackBootstrap
+/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 107:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(196);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(444);
@@ -20,13 +23,13 @@ const typography = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpre
 }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.Path, {
   d: "M6.9 7L3 17.8h1.7l1-2.8h4.1l1 2.8h1.7L8.6 7H6.9zm-.7 6.6l1.5-4.3 1.5 4.3h-3zM21.6 17c-.1.1-.2.2-.3.2-.1.1-.2.1-.4.1s-.3-.1-.4-.2c-.1-.1-.1-.3-.1-.6V12c0-.5 0-1-.1-1.4-.1-.4-.3-.7-.5-1-.2-.2-.5-.4-.9-.5-.4 0-.8-.1-1.3-.1s-1 .1-1.4.2c-.4.1-.7.3-1 .4-.2.2-.4.3-.6.5-.1.2-.2.4-.2.7 0 .3.1.5.2.8.2.2.4.3.8.3.3 0 .6-.1.8-.3.2-.2.3-.4.3-.7 0-.3-.1-.5-.2-.7-.2-.2-.4-.3-.6-.4.2-.2.4-.3.7-.4.3-.1.6-.1.8-.1.3 0 .6 0 .8.1.2.1.4.3.5.5.1.2.2.5.2.9v1.1c0 .3-.1.5-.3.6-.2.2-.5.3-.9.4-.3.1-.7.3-1.1.4-.4.1-.8.3-1.1.5-.3.2-.6.4-.8.7-.2.3-.3.7-.3 1.2 0 .6.2 1.1.5 1.4.3.4.9.5 1.6.5.5 0 1-.1 1.4-.3.4-.2.8-.6 1.1-1.1 0 .4.1.7.3 1 .2.3.6.4 1.2.4.4 0 .7-.1.9-.2.2-.1.5-.3.7-.4h-.3zm-3-.9c-.2.4-.5.7-.8.8-.3.2-.6.2-.8.2-.4 0-.6-.1-.9-.3-.2-.2-.3-.6-.3-1.1 0-.5.1-.9.3-1.2s.5-.5.8-.7c.3-.2.7-.3 1-.5.3-.1.6-.3.7-.6v3.4z"
 }));
-/* harmony default export */ __webpack_exports__.Z = (typography);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (typography);
 //# sourceMappingURL=typography.js.map
 
 /***/ }),
 
 /***/ 779:
-/***/ (function(module, exports) {
+/***/ ((module, exports) => {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 	Copyright (c) 2018 Jed Watson.
@@ -92,7 +95,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 /***/ }),
 
 /***/ 318:
-/***/ (function() {
+/***/ (() => {
 
 "use strict";
 // extracted by mini-css-extract-plugin
@@ -101,17 +104,17 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 /***/ }),
 
 /***/ 682:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   GK: function() { return /* binding */ FONT_HEADINGS; },
-/* harmony export */   R$: function() { return /* binding */ FONT_PAIRINGS; },
-/* harmony export */   V6: function() { return /* binding */ FONT_BASE_DEFAULT; },
-/* harmony export */   c$: function() { return /* binding */ FONT_HEADINGS_DEFAULT; },
-/* harmony export */   iU: function() { return /* binding */ FONT_BASE; },
-/* harmony export */   px: function() { return /* binding */ SITE_NAME; },
-/* harmony export */   qD: function() { return /* binding */ FONT_OPTIONS; }
+/* harmony export */   GK: () => (/* binding */ FONT_HEADINGS),
+/* harmony export */   R$: () => (/* binding */ FONT_PAIRINGS),
+/* harmony export */   V6: () => (/* binding */ FONT_BASE_DEFAULT),
+/* harmony export */   c$: () => (/* binding */ FONT_HEADINGS_DEFAULT),
+/* harmony export */   iU: () => (/* binding */ FONT_BASE),
+/* harmony export */   px: () => (/* binding */ SITE_NAME),
+/* harmony export */   qD: () => (/* binding */ FONT_OPTIONS)
 /* harmony export */ });
 const FONT_BASE = 'font_base';
 const FONT_BASE_DEFAULT = 'font_base_default';
@@ -124,9 +127,12 @@ const SITE_NAME = 'blogname';
 /***/ }),
 
 /***/ 517:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(818);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(701);
@@ -142,7 +148,7 @@ const SITE_NAME = 'blogname';
  * @param {string[]} options A list of option names to keep track of.
  * @param {Function} getOptionValue A function that given an option name as a string, returns the current option value.
  */
-/* harmony default export */ __webpack_exports__.Z = ((options, getOptionValue) => {
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((options, getOptionValue) => {
   _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_1___default()(() => {
     // Book-keeping.
     const currentOptions = {};
@@ -197,9 +203,12 @@ const SITE_NAME = 'blogname';
 /***/ }),
 
 /***/ 296:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(307);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(609);
@@ -218,23 +227,21 @@ const __ = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__;
 
 
 
-/* harmony default export */ __webpack_exports__.Z = (_ref => {
-  let {
-    fontPairings,
-    fontBase,
-    fontHeadings,
-    update
-  } = _ref;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (({
+  fontPairings,
+  fontBase,
+  fontHeadings,
+  update
+}) => {
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", null, __('Font Pairings', 'full-site-editing')), fontPairings && fontHeadings && fontBase ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "style-preview__font-options"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "style-preview__font-options-desktop"
-  }, fontPairings.map(_ref2 => {
-    let {
-      label,
-      headings,
-      base
-    } = _ref2;
+  }, fontPairings.map(({
+    label,
+    headings,
+    base
+  }) => {
     const isSelected = headings === fontHeadings && base === fontBase;
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
       className: classnames__WEBPACK_IMPORTED_MODULE_4___default()('style-preview__font-option', {
@@ -269,9 +276,12 @@ const __ = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__;
 /***/ }),
 
 /***/ 529:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(307);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(609);
@@ -284,17 +294,16 @@ const __ = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__;
 
 const __ = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__;
 
-/* harmony default export */ __webpack_exports__.Z = (_ref => {
-  let {
-    fontBase,
-    fontBaseDefault,
-    fontHeadings,
-    fontHeadingsDefault,
-    fontBaseOptions,
-    fontHeadingsOptions,
-    updateBaseFont,
-    updateHeadingsFont
-  } = _ref;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (({
+  fontBase,
+  fontBaseDefault,
+  fontHeadings,
+  fontHeadingsDefault,
+  fontBaseOptions,
+  fontHeadingsOptions,
+  updateBaseFont,
+  updateHeadingsFont
+}) => {
   if (!fontBaseOptions || !fontHeadingsOptions) {
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_no_support__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z, {
       unsupportedFeature: __('custom font selection', 'full-site-editing')
@@ -322,9 +331,12 @@ const __ = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__;
 /***/ }),
 
 /***/ 464:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(307);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(609);
@@ -376,46 +388,42 @@ const toOption = font => {
 };
 const isNotNull = option => option.value !== null && option.label !== null;
 const toOptions = (options, filterProperty) => !options ? [] : options.map(toOption).filter(isNotNull).filter(isFor(filterProperty));
-const PanelActionButtons = _ref => {
-  let {
-    hasLocalChanges,
-    resetAction,
-    publishAction,
-    className = null
-  } = _ref;
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: className
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
-    disabled: !hasLocalChanges,
-    isDefault: true,
-    onClick: resetAction
-  }, __('Reset', 'full-site-editing')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
-    className: "global-styles-sidebar__publish-button",
-    disabled: !hasLocalChanges,
-    isPrimary: true,
-    onClick: publishAction
-  }, __('Publish', 'full-site-editing')));
-};
+const PanelActionButtons = ({
+  hasLocalChanges,
+  resetAction,
+  publishAction,
+  className = null
+}) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  className: className
+}, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+  disabled: !hasLocalChanges,
+  isDefault: true,
+  onClick: resetAction
+}, __('Reset', 'full-site-editing')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+  className: "global-styles-sidebar__publish-button",
+  disabled: !hasLocalChanges,
+  isPrimary: true,
+  onClick: publishAction
+}, __('Publish', 'full-site-editing')));
 function maybeOpenSidebar() {
   const openSidebar = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_5__.getQueryArg)(window.location.href, 'openSidebar');
   if ('global-styles' === openSidebar) {
     (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.dispatch)('core/edit-post').openGeneralSidebar('jetpack-global-styles/global-styles');
   }
 }
-/* harmony default export */ __webpack_exports__.Z = (_ref2 => {
-  let {
-    fontHeadings,
-    fontHeadingsDefault,
-    fontBase,
-    fontBaseDefault,
-    fontPairings,
-    fontOptions,
-    siteName,
-    publishOptions,
-    updateOptions,
-    hasLocalChanges,
-    resetLocalChanges
-  } = _ref2;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (({
+  fontHeadings,
+  fontHeadingsDefault,
+  fontBase,
+  fontBaseDefault,
+  fontPairings,
+  fontOptions,
+  siteName,
+  publishOptions,
+  updateOptions,
+  hasLocalChanges,
+  resetLocalChanges
+}) => {
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     maybeOpenSidebar();
   }, []);
@@ -455,16 +463,13 @@ function maybeOpenSidebar() {
     fontHeadings: fontHeadings,
     fontBase: fontBase,
     fontPairings: fontPairings,
-    update: _ref3 => {
-      let {
-        headings,
-        base
-      } = _ref3;
-      return updateOptions({
-        [_constants__WEBPACK_IMPORTED_MODULE_6__/* .FONT_HEADINGS */ .GK]: headings,
-        [_constants__WEBPACK_IMPORTED_MODULE_6__/* .FONT_BASE */ .iU]: base
-      });
-    }
+    update: ({
+      headings,
+      base
+    }) => updateOptions({
+      [_constants__WEBPACK_IMPORTED_MODULE_6__/* .FONT_HEADINGS */ .GK]: headings,
+      [_constants__WEBPACK_IMPORTED_MODULE_6__/* .FONT_BASE */ .iU]: base
+    })
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, null, hasLocalChanges ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("em", null, __('You have unsaved changes.', 'full-site-editing'))) : null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(PanelActionButtons, {
     hasLocalChanges: hasLocalChanges,
     publishAction: publish,
@@ -476,9 +481,12 @@ function maybeOpenSidebar() {
 /***/ }),
 
 /***/ 409:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(307);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(736);
@@ -486,22 +494,19 @@ function maybeOpenSidebar() {
 
 
 const __ = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__;
-/* harmony default export */ __webpack_exports__.Z = (_ref => {
-  let {
-    unsupportedFeature
-  } = _ref;
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.sprintf)( /* translators: %s: feature name (i.e. font pairings, etc) */
-  __("Your active theme doesn't support %s.", 'full-site-editing'), unsupportedFeature));
-});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (({
+  unsupportedFeature
+}) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.sprintf)( /* translators: %s: feature name (i.e. font pairings, etc) */
+__("Your active theme doesn't support %s.", 'full-site-editing'), unsupportedFeature)));
 
 /***/ }),
 
 /***/ 942:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   h: function() { return /* binding */ store; }
+/* harmony export */   h: () => (/* binding */ store)
 /* harmony export */ });
 /* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(989);
 /* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__);
@@ -595,10 +600,9 @@ const store = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.createReduxStore)(
         path: REST_PATH
       });
     },
-    IO_PUBLISH_OPTIONS(_ref) {
-      let {
-        options
-      } = _ref;
+    IO_PUBLISH_OPTIONS({
+      options
+    }) {
       cache = options; // optimistically update the cache
       return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
         path: REST_PATH,
@@ -615,7 +619,7 @@ const store = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.createReduxStore)(
 /***/ }),
 
 /***/ 196:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["React"];
@@ -623,7 +627,7 @@ module.exports = window["React"];
 /***/ }),
 
 /***/ 819:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["lodash"];
@@ -631,7 +635,7 @@ module.exports = window["lodash"];
 /***/ }),
 
 /***/ 989:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["apiFetch"];
@@ -639,7 +643,7 @@ module.exports = window["wp"]["apiFetch"];
 /***/ }),
 
 /***/ 609:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["components"];
@@ -647,7 +651,7 @@ module.exports = window["wp"]["components"];
 /***/ }),
 
 /***/ 333:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["compose"];
@@ -655,7 +659,7 @@ module.exports = window["wp"]["compose"];
 /***/ }),
 
 /***/ 818:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["data"];
@@ -663,7 +667,7 @@ module.exports = window["wp"]["data"];
 /***/ }),
 
 /***/ 701:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["domReady"];
@@ -671,7 +675,7 @@ module.exports = window["wp"]["domReady"];
 /***/ }),
 
 /***/ 67:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["editPost"];
@@ -679,7 +683,7 @@ module.exports = window["wp"]["editPost"];
 /***/ }),
 
 /***/ 307:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["element"];
@@ -687,7 +691,7 @@ module.exports = window["wp"]["element"];
 /***/ }),
 
 /***/ 736:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["i18n"];
@@ -695,7 +699,7 @@ module.exports = window["wp"]["i18n"];
 /***/ }),
 
 /***/ 630:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["keycodes"];
@@ -703,7 +707,7 @@ module.exports = window["wp"]["keycodes"];
 /***/ }),
 
 /***/ 817:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["plugins"];
@@ -711,7 +715,7 @@ module.exports = window["wp"]["plugins"];
 /***/ }),
 
 /***/ 444:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["primitives"];
@@ -719,7 +723,7 @@ module.exports = window["wp"]["primitives"];
 /***/ }),
 
 /***/ 483:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["url"];
@@ -754,49 +758,49 @@ module.exports = window["wp"]["url"];
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
-/******/ 	!function() {
+/******/ 	(() => {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = function(module) {
+/******/ 		__webpack_require__.n = (module) => {
 /******/ 			var getter = module && module.__esModule ?
-/******/ 				function() { return module['default']; } :
-/******/ 				function() { return module; };
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
 /******/ 			__webpack_require__.d(getter, { a: getter });
 /******/ 			return getter;
 /******/ 		};
-/******/ 	}();
+/******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/define property getters */
-/******/ 	!function() {
+/******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = function(exports, definition) {
+/******/ 		__webpack_require__.d = (exports, definition) => {
 /******/ 			for(var key in definition) {
 /******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
 /******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 				}
 /******/ 			}
 /******/ 		};
-/******/ 	}();
+/******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	!function() {
-/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
-/******/ 	}();
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
-/******/ 	!function() {
+/******/ 	(() => {
 /******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = function(exports) {
+/******/ 		__webpack_require__.r = (exports) => {
 /******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
 /******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
-/******/ 	}();
+/******/ 	})();
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
-!function() {
+(() => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(333);
@@ -849,7 +853,8 @@ const {
     resetLocalChanges: dispatch(_src_store__WEBPACK_IMPORTED_MODULE_6__/* .store */ .h).resetLocalChanges
   })))(_src_global_styles_sidebar__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z)
 });
-}();
+})();
+
 window.EditingToolkit = __webpack_exports__;
 /******/ })()
 ;

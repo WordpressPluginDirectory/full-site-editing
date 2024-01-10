@@ -1,12 +1,12 @@
-/******/ (function() { // webpackBootstrap
+/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 7266:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ compile; }
+/* harmony export */   Z: () => (/* binding */ compile)
 /* harmony export */ });
 /* harmony import */ var _tannin_postfix__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5854);
 /* harmony import */ var _tannin_evaluate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(730);
@@ -44,11 +44,11 @@ function compile( expression ) {
 /***/ }),
 
 /***/ 730:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ evaluate; }
+/* harmony export */   Z: () => (/* binding */ evaluate)
 /* harmony export */ });
 /**
  * Operator callback functions.
@@ -165,11 +165,11 @@ function evaluate( postfix, variables ) {
 /***/ }),
 
 /***/ 1184:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ pluralForms; }
+/* harmony export */   Z: () => (/* binding */ pluralForms)
 /* harmony export */ });
 /* harmony import */ var _tannin_compile__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7266);
 
@@ -195,11 +195,11 @@ function pluralForms( expression ) {
 /***/ }),
 
 /***/ 5854:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ postfix; }
+/* harmony export */   Z: () => (/* binding */ postfix)
 /* harmony export */ });
 var PRECEDENCE, OPENERS, TERMINATORS, PATTERN;
 
@@ -330,11 +330,11 @@ function postfix( expression ) {
 /***/ }),
 
 /***/ 6668:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ sprintf; }
+/* harmony export */   Z: () => (/* binding */ sprintf)
 /* harmony export */ });
 /**
  * Regular expression matching format placeholder syntax.
@@ -474,7 +474,7 @@ function sprintf( string, args ) {
 /***/ }),
 
 /***/ 3421:
-/***/ (function(__unused_webpack_module, exports) {
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 /*!
@@ -684,7 +684,7 @@ function tryDecode(str, decode) {
 /***/ }),
 
 /***/ 5881:
-/***/ (function(module) {
+/***/ ((module) => {
 
 /**
  * Helpers.
@@ -853,7 +853,7 @@ function plural(ms, msAbs, n, name) {
 /***/ }),
 
 /***/ 2699:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 // Copyright Joyent, Inc. and other Node contributors.
@@ -1358,7 +1358,7 @@ function eventTargetAgnosticAddListener(emitter, name, listener, flags) {
 /***/ }),
 
 /***/ 4495:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
@@ -1458,7 +1458,7 @@ BlockHash.prototype._pad = function pad() {
 /***/ }),
 
 /***/ 5079:
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -1540,7 +1540,7 @@ SHA1.prototype._digest = function digest(enc) {
 /***/ }),
 
 /***/ 8032:
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -1653,7 +1653,7 @@ SHA256.prototype._digest = function digest(enc) {
 /***/ }),
 
 /***/ 713:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
@@ -1710,7 +1710,7 @@ exports.g1_256 = g1_256;
 /***/ }),
 
 /***/ 212:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
@@ -1996,7 +1996,7 @@ exports.shr64_lo = shr64_lo;
 /***/ }),
 
 /***/ 1285:
-/***/ (function(module) {
+/***/ ((module) => {
 
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
@@ -2030,7 +2030,7 @@ if (typeof Object.create === 'function') {
 /***/ }),
 
 /***/ 7839:
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var events = __webpack_require__(2699)
 var inherits = __webpack_require__(1285)
@@ -2182,7 +2182,7 @@ LRU.prototype.evict = function () {
 /***/ }),
 
 /***/ 9561:
-/***/ (function(module) {
+/***/ ((module) => {
 
 module.exports = assert;
 
@@ -2200,11 +2200,11 @@ assert.equal = function assertEqual(l, r, msg) {
 /***/ }),
 
 /***/ 9830:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ Tannin; }
+/* harmony export */   Z: () => (/* binding */ Tannin)
 /* harmony export */ });
 /* harmony import */ var _tannin_plural_forms__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1184);
 
@@ -2425,7 +2425,7 @@ Tannin.prototype.dcnpgettext = function( domain, context, singular, plural, n ) 
 /***/ }),
 
 /***/ 2641:
-/***/ (function(__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9307);
@@ -2473,11 +2473,11 @@ const addTagsEducationLink = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__.
 /***/ }),
 
 /***/ 6115:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   jN: function() { return /* reexport safe */ _tracks__WEBPACK_IMPORTED_MODULE_7__.jN; }
+/* harmony export */   jN: () => (/* reexport safe */ _tracks__WEBPACK_IMPORTED_MODULE_7__.jN)
 /* harmony export */ });
 /* harmony import */ var _utils_do_not_track__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1694);
 /* harmony import */ var _utils_current_user__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6209);
@@ -2504,7 +2504,7 @@ const addTagsEducationLink = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__.
 /***/ }),
 
 /***/ 9377:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* unused harmony exports getPageViewParams, getMostRecentUrlPath */
@@ -2514,7 +2514,7 @@ let mostRecentUrlPath = null;
 
 // pathCounter is used to keep track of the order of calypso_page_view Tracks events.
 let pathCounter = 0;
-if (typeof window !== 'undefined') {
+if (true) {
   window.addEventListener('popstate', function () {
     // throw away our URL value if the user used the back/forward buttons
     mostRecentUrlPath = null;
@@ -2542,11 +2542,11 @@ function getMostRecentUrlPath() {
 /***/ }),
 
 /***/ 9792:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   jN: function() { return /* binding */ recordTracksEvent; }
+/* harmony export */   jN: () => (/* binding */ recordTracksEvent)
 /* harmony export */ });
 /* unused harmony exports getTracksLoadPromise, pushEventToTracksQueue, analyticsEvents, getTracksAnonymousUserId, initializeAnalytics, identifyUser, signalUserFromAnotherProduct, recordTracksPageView, recordTracksPageViewWithPageParams, getGenericSuperPropsGetter */
 /* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2699);
@@ -2586,11 +2586,8 @@ let _loadTracksResult = Promise.resolve(); // default value for non-BOM environm
 if (typeof document !== 'undefined') {
   _loadTracksResult = (0,_automattic_load_script__WEBPACK_IMPORTED_MODULE_1__/* .loadScript */ .ve)('//stats.wp.com/w.js?64');
 }
-function createRandomId() {
-  let randomBytesLength = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 9;
-  if (typeof window === 'undefined') {
-    return '';
-  }
+function createRandomId(randomBytesLength = 9) {
+  if (false) {}
   // 9 * 4/3 = 12
   // this is to avoid getting padding of a random byte string when it is base64 encoded
   let randomBytes;
@@ -2603,9 +2600,7 @@ function createRandomId() {
   return window.btoa(String.fromCharCode(...randomBytes));
 }
 function getUrlParameter(name) {
-  if (typeof window === 'undefined') {
-    return '';
-  }
+  if (false) {}
   name = name.replace(/[[]/g, '\\[').replace(/[\]]/g, '\\]');
   const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
   const results = regex.exec(window.location.search);
@@ -2651,7 +2646,7 @@ function getTracksLoadPromise() {
   return _loadTracksResult;
 }
 function pushEventToTracksQueue(args) {
-  if (typeof window !== 'undefined') {
+  if (true) {
     window._tkq = window._tkq || [];
     window._tkq.push(args);
   }
@@ -2735,10 +2730,7 @@ function recordTracksEvent(eventName, eventProperties) {
 
   // Remove properties that have an undefined value
   // This allows a caller to easily remove properties from the recorded set by setting them to undefined
-  eventProperties = Object.fromEntries(Object.entries(eventProperties).filter(_ref => {
-    let [, val] = _ref;
-    return typeof val !== 'undefined';
-  }));
+  eventProperties = Object.fromEntries(Object.entries(eventProperties).filter(([, val]) => typeof val !== 'undefined'));
   (0,_utils_debug__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z)('Recording event "%s" with actual props %o', eventName, eventProperties);
   pushEventToTracksQueue(['recordEvent', eventName, eventProperties]);
   analyticsEvents.emit('record-event', eventName, eventProperties);
@@ -2751,7 +2743,7 @@ function recordTracksPageView(urlPath, params) {
   };
 
   // Add calypso build timestamp if set
-  const build_timestamp = typeof window !== 'undefined' && window.BUILD_TIMESTAMP;
+  const build_timestamp =  true && window.BUILD_TIMESTAMP;
   if (build_timestamp) {
     eventProperties = Object.assign(eventProperties, {
       build_timestamp
@@ -2765,12 +2757,9 @@ function recordTracksPageView(urlPath, params) {
 
   // Record all `utm` marketing parameters as event properties on the page view event
   // so we can analyze their performance with our analytics tools
-  if (typeof window !== 'undefined' && window.location) {
+  if ( true && window.location) {
     const urlParams = new URL(window.location.href).searchParams;
-    const utmParamEntries = urlParams && Array.from(urlParams.entries()).filter(_ref2 => {
-      let [key] = _ref2;
-      return key.startsWith('utm_');
-    });
+    const utmParamEntries = urlParams && Array.from(urlParams.entries()).filter(([key]) => key.startsWith('utm_'));
     const utmParams = utmParamEntries ? Object.fromEntries(utmParamEntries) : {};
     eventProperties = Object.assign(eventProperties, utmParams);
   }
@@ -2788,7 +2777,7 @@ function getGenericSuperPropsGetter(config) {
       site_id_label: 'wpcom',
       client: config('client_slug')
     };
-    if (typeof window !== 'undefined') {
+    if (true) {
       Object.assign(superProps, {
         vph: window.innerHeight,
         vpw: window.innerWidth
@@ -2801,27 +2790,26 @@ function getGenericSuperPropsGetter(config) {
 /***/ }),
 
 /***/ 3722:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* unused harmony exports recordTrainTracksRender, recordTrainTracksInteract, getNewRailcarId */
 /* harmony import */ var _tracks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9792);
 
 
-function recordTrainTracksRender(_ref) {
-  let {
-    railcarId,
-    uiAlgo,
-    uiPosition,
-    fetchAlgo,
-    fetchPosition,
-    query,
-    result,
-    recBlogId,
-    recPostId,
-    recFeedId,
-    recFeedItemId
-  } = _ref;
+function recordTrainTracksRender({
+  railcarId,
+  uiAlgo,
+  uiPosition,
+  fetchAlgo,
+  fetchPosition,
+  query,
+  result,
+  recBlogId,
+  recPostId,
+  recFeedId,
+  recFeedItemId
+}) {
   const props = {};
 
   // Remap and filter undefined props
@@ -2837,31 +2825,26 @@ function recordTrainTracksRender(_ref) {
     rec_post_id: recPostId,
     rec_feed_id: recFeedId,
     rec_feed_item_id: recFeedItemId
-  }).forEach(_ref2 => {
-    let [key, val] = _ref2;
-    return val !== undefined && (props[key] = val);
-  });
+  }).forEach(([key, val]) => val !== undefined && (props[key] = val));
   recordTracksEvent('calypso_traintracks_render', props);
 }
-function recordTrainTracksInteract(_ref3) {
-  let {
-    railcarId,
-    action
-  } = _ref3;
+function recordTrainTracksInteract({
+  railcarId,
+  action
+}) {
   recordTracksEvent('calypso_traintracks_interact', {
     railcar: railcarId,
     action
   });
 }
-function getNewRailcarId() {
-  let suffix = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'recommendation';
+function getNewRailcarId(suffix = 'recommendation') {
   return `${uuid().replace(/-/g, '')}-${suffix}`;
 }
 
 /***/ }),
 
 /***/ 6209:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* unused harmony exports getCurrentUser, setCurrentUser */
@@ -2908,9 +2891,12 @@ function setCurrentUser(currentUser) {
 /***/ }),
 
 /***/ 9358:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8049);
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_0__);
 
@@ -2918,12 +2904,12 @@ function setCurrentUser(currentUser) {
 /**
  * Module variables
  */
-/* harmony default export */ __webpack_exports__.Z = (debug__WEBPACK_IMPORTED_MODULE_0___default()('calypso:analytics'));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (debug__WEBPACK_IMPORTED_MODULE_0___default()('calypso:analytics'));
 
 /***/ }),
 
 /***/ 1694:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* unused harmony export default */
@@ -2936,7 +2922,7 @@ function setCurrentUser(currentUser) {
  * @returns true if Do Not Track is enabled in the user's browser.
  */
 function getDoNotTrack() {
-  const result = Boolean(typeof window !== 'undefined' && (
+  const result = Boolean( true && (
   // Internet Explorer 11 uses window.doNotTrack rather than navigator.doNotTrack.
   // Safari 7.1.3+ uses window.doNotTrack rather than navigator.doNotTrack.
   // MDN ref: https://developer.mozilla.org/en-US/docs/Web/API/navigator/doNotTrack#Browser_compatibility
@@ -2948,11 +2934,11 @@ function getDoNotTrack() {
 /***/ }),
 
 /***/ 2552:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   ZP: function() { return /* binding */ getTrackingPrefs; }
+/* harmony export */   ZP: () => (/* binding */ getTrackingPrefs)
 /* harmony export */ });
 /* unused harmony exports TRACKING_PREFS_COOKIE_V1, TRACKING_PREFS_COOKIE_V2, parseTrackingPrefs */
 /* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3421);
@@ -2990,8 +2976,7 @@ const prefsAllowAll = {
     advertising: true
   }
 };
-const parseTrackingPrefs = function (cookieV2, cookieV1) {
-  let defaultPrefs = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : prefsDisallowAll;
+const parseTrackingPrefs = (cookieV2, cookieV1, defaultPrefs = prefsDisallowAll) => {
   const {
     ok,
     buckets
@@ -3059,7 +3044,7 @@ function getTrackingPrefs() {
 /***/ }),
 
 /***/ 4:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* unused harmony export default */
@@ -3081,11 +3066,11 @@ function hashPii(data) {
 /***/ }),
 
 /***/ 6326:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ isCountryInGdprZone; }
+/* harmony export */   Z: () => (/* binding */ isCountryInGdprZone)
 /* harmony export */ });
 const GDPR_COUNTRIES = [
 // European Member countries
@@ -3171,11 +3156,11 @@ function isCountryInGdprZone(countryCode) {
 /***/ }),
 
 /***/ 2286:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ isRegionInCcpaZone; }
+/* harmony export */   Z: () => (/* binding */ isRegionInCcpaZone)
 /* harmony export */ });
 const CCPA_US_REGIONS = ['california',
 // CA
@@ -3208,7 +3193,7 @@ function isRegionInCcpaZone(countryCode, region) {
 /***/ }),
 
 /***/ 825:
-/***/ (function(__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3421);
@@ -3240,19 +3225,25 @@ const setTrackingPrefs = newPrefs => {
 /***/ }),
 
 /***/ 4724:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var _i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(914);
 
-/* harmony default export */ __webpack_exports__.Z = (new _i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z());
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new _i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z());
 
 /***/ }),
 
 /***/ 914:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2699);
 /* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(events__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _automattic_interpolate_components__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(2594);
@@ -3297,7 +3288,7 @@ function warn() {
   if (!I18N.throwErrors) {
     return;
   }
-  if ('undefined' !== typeof window && window.console && window.console.warn) {
+  if ( true && window.console && window.console.warn) {
     window.console.warn.apply(window.console, arguments);
   }
 }
@@ -3400,14 +3391,14 @@ function I18N() {
   this.configure();
 }
 I18N.throwErrors = false;
-I18N.prototype.on = function () {
-  this.stateObserver.on(...arguments);
+I18N.prototype.on = function (...args) {
+  this.stateObserver.on(...args);
 };
-I18N.prototype.off = function () {
-  this.stateObserver.off(...arguments);
+I18N.prototype.off = function (...args) {
+  this.stateObserver.off(...args);
 };
-I18N.prototype.emit = function () {
-  this.stateObserver.emit(...arguments);
+I18N.prototype.emit = function (...args) {
+  this.stateObserver.emit(...args);
 };
 
 /**
@@ -3416,8 +3407,7 @@ I18N.prototype.emit = function () {
  * @param   {number | Object}  options  Number of decimal places or options object (optional)
  * @returns {string}         Formatted number as string
  */
-I18N.prototype.numberFormat = function (number) {
-  let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+I18N.prototype.numberFormat = function (number, options = {}) {
   const decimals = typeof options === 'number' ? options : options.decimals || 0;
   const decPoint = options.decPoint || this.state.numberFormatSettings.decimal_point || '.';
   const thousandsSep = options.thousandsSep || this.state.numberFormatSettings.thousands_sep || ',';
@@ -3633,16 +3623,16 @@ I18N.prototype.registerComponentUpdateHook = function (callback) {
 I18N.prototype.registerTranslateHook = function (callback) {
   this.translateHooks.push(callback);
 };
-/* harmony default export */ __webpack_exports__.Z = (I18N);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (I18N);
 
 /***/ }),
 
 /***/ 1481:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Yj: function() { return /* binding */ getLocaleSlug; }
+/* harmony export */   Yj: () => (/* binding */ getLocaleSlug)
 /* harmony export */ });
 /* unused harmony exports numberFormat, translate, configure, setLocale, getLocale, getLocaleVariant, isRtl, addTranslations, reRenderTranslations, registerComponentUpdateHook, registerTranslateHook, state, stateObserver, on, off, emit */
 /* harmony import */ var _default_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4724);
@@ -3678,11 +3668,11 @@ const emit = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.emit
 /***/ }),
 
 /***/ 3:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ number_format; }
+/* harmony export */   Z: () => (/* binding */ number_format)
 /* harmony export */ });
 /*
  * Exposes number format capability
@@ -3717,11 +3707,11 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 /***/ }),
 
 /***/ 849:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   bU: function() { return /* binding */ useLocale; }
+/* harmony export */   bU: () => (/* binding */ useLocale)
 /* harmony export */ });
 /* unused harmony exports localeContext, LocaleProvider, withLocale, useIsEnglishLocale, useHasEnTranslation */
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9307);
@@ -3739,15 +3729,12 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 
 
 const localeContext = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_3__.createContext)(null);
-const LocaleProvider = _ref => {
-  let {
-    children,
-    localeSlug
-  } = _ref;
-  return createElement(localeContext.Provider, {
-    value: localeSlug
-  }, children);
-};
+const LocaleProvider = ({
+  children,
+  localeSlug
+}) => createElement(localeContext.Provider, {
+  value: localeSlug
+}, children);
 
 /**
  * Returns locale slug
@@ -3755,8 +3742,7 @@ const LocaleProvider = _ref => {
  * @param {string} locale locale to be converted e.g. "en_US".
  * @returns locale string e.g. "en"
  */
-function mapWpI18nLangToLocaleSlug() {
-  let locale = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+function mapWpI18nLangToLocaleSlug(locale = '') {
   if (!locale) {
     return '';
   }
@@ -3802,7 +3788,7 @@ function useLocale() {
       setWpLocale(getWpI18nLocaleSlug());
     });
   }, [providerHasLocale]);
-  return fromProvider || fromWpI18n || typeof window !== 'undefined' && window._currentUserLocale || 'en';
+  return fromProvider || fromWpI18n ||  true && window._currentUserLocale || 'en';
 }
 
 /**
@@ -3846,28 +3832,26 @@ function useIsEnglishLocale() {
 }
 function useHasEnTranslation() {
   const isEnglishLocale = useIsEnglishLocale();
-  return useCallback(function () {
-    return isEnglishLocale || i18n.hasTranslation(...arguments);
-  }, [isEnglishLocale]);
+  return useCallback((...args) => isEnglishLocale || i18n.hasTranslation(...args), [isEnglishLocale]);
 }
 
 /***/ }),
 
 /***/ 4655:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   GG: function() { return /* binding */ localesWithBlog; },
-/* harmony export */   Xb: function() { return /* binding */ localesToSubdomains; },
-/* harmony export */   _r: function() { return /* binding */ jetpackComLocales; },
-/* harmony export */   dH: function() { return /* binding */ localesWithGoBlog; },
-/* harmony export */   hI: function() { return /* binding */ supportSiteLocales; },
-/* harmony export */   iT: function() { return /* binding */ localesWithPrivacyPolicy; },
-/* harmony export */   mL: function() { return /* binding */ forumLocales; },
-/* harmony export */   vS: function() { return /* binding */ magnificentNonEnLocales; },
-/* harmony export */   xh: function() { return /* binding */ localesForPricePlans; },
-/* harmony export */   xn: function() { return /* binding */ localesWithCookiePolicy; }
+/* harmony export */   GG: () => (/* binding */ localesWithBlog),
+/* harmony export */   Xb: () => (/* binding */ localesToSubdomains),
+/* harmony export */   _r: () => (/* binding */ jetpackComLocales),
+/* harmony export */   dH: () => (/* binding */ localesWithGoBlog),
+/* harmony export */   hI: () => (/* binding */ supportSiteLocales),
+/* harmony export */   iT: () => (/* binding */ localesWithPrivacyPolicy),
+/* harmony export */   mL: () => (/* binding */ forumLocales),
+/* harmony export */   vS: () => (/* binding */ magnificentNonEnLocales),
+/* harmony export */   xh: () => (/* binding */ localesForPricePlans),
+/* harmony export */   xn: () => (/* binding */ localesWithCookiePolicy)
 /* harmony export */ });
 /* unused harmony exports i18nDefaultLocaleSlug, englishLocales, livechatSupportLocales */
 /**
@@ -3913,11 +3897,11 @@ const jetpackComLocales = ['en', 'ar', 'de', 'es', 'fr', 'he', 'id', 'it', 'ja',
 /***/ }),
 
 /***/ 7498:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Iu: function() { return /* binding */ useLocalizeUrl; }
+/* harmony export */   Iu: () => (/* binding */ useLocalizeUrl)
 /* harmony export */ });
 /* unused harmony exports urlLocalizationMapping, localizeUrl, withLocalizeUrl */
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9307);
@@ -3939,73 +3923,53 @@ const INVALID_URL = `http://__domain__.invalid`;
 function getDefaultLocale() {
   return (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_3__/* .getLocaleSlug */ .Yj)?.() ?? 'en';
 }
-const setLocalizedUrlHost = function (hostname) {
-  let validLocales = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-  return (url, locale) => {
-    if (validLocales.includes(locale) && locale !== 'en') {
-      // Avoid changing the hostname when the locale is set via the path.
-      if (url.pathname.substr(0, locale.length + 2) !== '/' + locale + '/') {
-        url.host = `${_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesToSubdomains */ .Xb[locale] || locale}.${hostname}`;
-      }
+const setLocalizedUrlHost = (hostname, validLocales = []) => (url, locale) => {
+  if (validLocales.includes(locale) && locale !== 'en') {
+    // Avoid changing the hostname when the locale is set via the path.
+    if (url.pathname.substr(0, locale.length + 2) !== '/' + locale + '/') {
+      url.host = `${_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesToSubdomains */ .Xb[locale] || locale}.${hostname}`;
     }
+  }
+  return url;
+};
+const setLocalizedWpComPath = (prefix, validLocales = [], limitPathMatch = null) => (url, localeSlug) => {
+  url.host = 'wordpress.com';
+  if (typeof limitPathMatch === 'object' && limitPathMatch instanceof RegExp && !limitPathMatch.test(url.pathname)) {
+    validLocales = []; // only rewrite to English.
+  }
+  url.pathname = prefix + url.pathname;
+  if (validLocales.includes(localeSlug) && localeSlug !== 'en') {
+    url.pathname = localeSlug + url.pathname;
+  }
+  return url;
+};
+const prefixOrSuffixLocalizedUrlPath = (validLocales = [], limitPathMatch = null, prefixOrSuffix) => (url, localeSlug) => {
+  if (typeof limitPathMatch === 'object' && limitPathMatch instanceof RegExp) {
+    if (!limitPathMatch.test(url.pathname)) {
+      return url; // No rewriting if not matches the path.
+    }
+  }
+  if (!validLocales.includes(localeSlug) || localeSlug === 'en') {
     return url;
-  };
+  }
+  if (prefixOrSuffix === 'prefix') {
+    url.pathname = localeSlug + url.pathname;
+  } else if (prefixOrSuffix === 'suffix') {
+    // Make sure there's a slash between the path and the locale. Plus, if
+    // the path has a trailing slash, add one after the suffix too.
+    if (url.pathname.endsWith('/')) {
+      url.pathname += localeSlug + '/';
+    } else {
+      url.pathname += '/' + localeSlug;
+    }
+  }
+  return url;
 };
-const setLocalizedWpComPath = function (prefix) {
-  let validLocales = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-  let limitPathMatch = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-  return (url, localeSlug) => {
-    url.host = 'wordpress.com';
-    if (typeof limitPathMatch === 'object' && limitPathMatch instanceof RegExp && !limitPathMatch.test(url.pathname)) {
-      validLocales = []; // only rewrite to English.
-    }
-    url.pathname = prefix + url.pathname;
-    if (validLocales.includes(localeSlug) && localeSlug !== 'en') {
-      url.pathname = localeSlug + url.pathname;
-    }
-    return url;
-  };
+const prefixLocalizedUrlPath = (validLocales = [], limitPathMatch = null) => (url, localeSlug) => {
+  return prefixOrSuffixLocalizedUrlPath(validLocales, limitPathMatch, 'prefix')(url, localeSlug);
 };
-const prefixOrSuffixLocalizedUrlPath = function () {
-  let validLocales = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-  let limitPathMatch = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-  let prefixOrSuffix = arguments.length > 2 ? arguments[2] : undefined;
-  return (url, localeSlug) => {
-    if (typeof limitPathMatch === 'object' && limitPathMatch instanceof RegExp) {
-      if (!limitPathMatch.test(url.pathname)) {
-        return url; // No rewriting if not matches the path.
-      }
-    }
-    if (!validLocales.includes(localeSlug) || localeSlug === 'en') {
-      return url;
-    }
-    if (prefixOrSuffix === 'prefix') {
-      url.pathname = localeSlug + url.pathname;
-    } else if (prefixOrSuffix === 'suffix') {
-      // Make sure there's a slash between the path and the locale. Plus, if
-      // the path has a trailing slash, add one after the suffix too.
-      if (url.pathname.endsWith('/')) {
-        url.pathname += localeSlug + '/';
-      } else {
-        url.pathname += '/' + localeSlug;
-      }
-    }
-    return url;
-  };
-};
-const prefixLocalizedUrlPath = function () {
-  let validLocales = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-  let limitPathMatch = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-  return (url, localeSlug) => {
-    return prefixOrSuffixLocalizedUrlPath(validLocales, limitPathMatch, 'prefix')(url, localeSlug);
-  };
-};
-const suffixLocalizedUrlPath = function () {
-  let validLocales = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-  let limitPathMatch = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-  return (url, localeSlug) => {
-    return prefixOrSuffixLocalizedUrlPath(validLocales, limitPathMatch, 'suffix')(url, localeSlug);
-  };
+const suffixLocalizedUrlPath = (validLocales = [], limitPathMatch = null) => (url, localeSlug) => {
+  return prefixOrSuffixLocalizedUrlPath(validLocales, limitPathMatch, 'suffix')(url, localeSlug);
 };
 const urlLocalizationMapping = {
   'wordpress.com/support/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .supportSiteLocales */ .hI),
@@ -4079,10 +4043,7 @@ function hasTrailingSlash(urlString) {
     return false;
   }
 }
-function localizeUrl(fullUrl) {
-  let locale = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : getDefaultLocale();
-  let isLoggedIn = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-  let preserveTrailingSlashVariation = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+function localizeUrl(fullUrl, locale = getDefaultLocale(), isLoggedIn = true, preserveTrailingSlashVariation = false) {
   let url;
   try {
     url = new URL(String(fullUrl), INVALID_URL);
@@ -4159,11 +4120,11 @@ const withLocalizeUrl = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_1__.creat
 /***/ }),
 
 /***/ 2594:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ interpolate; }
+/* harmony export */   Z: () => (/* binding */ interpolate)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9196);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
@@ -4272,11 +4233,11 @@ function interpolate(options) {
 /***/ }),
 
 /***/ 1310:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: function() { return /* binding */ tokenize; }
+/* harmony export */   Z: () => (/* binding */ tokenize)
 /* harmony export */ });
 function identifyToken(item) {
   // {{/example}}
@@ -4313,14 +4274,14 @@ function tokenize(mixedString) {
 /***/ }),
 
 /***/ 3340:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Yt: function() { return /* binding */ handleRequestError; },
-/* harmony export */   _W: function() { return /* binding */ handleRequestSuccess; },
-/* harmony export */   hg: function() { return /* binding */ isLoading; },
-/* harmony export */   lZ: function() { return /* binding */ addScriptCallback; }
+/* harmony export */   Yt: () => (/* binding */ handleRequestError),
+/* harmony export */   _W: () => (/* binding */ handleRequestSuccess),
+/* harmony export */   hg: () => (/* binding */ isLoading),
+/* harmony export */   lZ: () => (/* binding */ addScriptCallback)
 /* harmony export */ });
 /* unused harmony exports getCallbacksMap, removeScriptCallback, removeScriptCallbacks, removeAllScriptCallbacks, executeCallbacks */
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8049);
@@ -4368,8 +4329,7 @@ function removeAllScriptCallbacks() {
   debug('Removing all callbacks for scripts from all URLs');
   getCallbacksMap().clear();
 }
-function executeCallbacks(url) {
-  let error = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+function executeCallbacks(url, error = null) {
   const callbacksMap = getCallbacksMap();
   const callbacksForUrl = callbacksMap.get(url);
   if (callbacksForUrl) {
@@ -4399,12 +4359,12 @@ function handleRequestError() {
 /***/ }),
 
 /***/ 5606:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   C: function() { return /* binding */ createScriptElement; },
-/* harmony export */   k: function() { return /* binding */ attachToHead; }
+/* harmony export */   C: () => (/* binding */ createScriptElement),
+/* harmony export */   k: () => (/* binding */ attachToHead)
 /* harmony export */ });
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8049);
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_0__);
@@ -4421,10 +4381,7 @@ function createScriptElement(url, args) {
   script.onerror = _callback_handler__WEBPACK_IMPORTED_MODULE_1__/* .handleRequestError */ .Yt;
   script.async = true;
   if (args) {
-    Object.entries(args).forEach(_ref => {
-      let [key, value] = _ref;
-      return script[key] = value;
-    });
+    Object.entries(args).forEach(([key, value]) => script[key] = value);
   }
   return script;
 }
@@ -4436,11 +4393,11 @@ function attachToHead(element) {
 /***/ }),
 
 /***/ 4898:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   ve: function() { return /* binding */ loadScript; }
+/* harmony export */   ve: () => (/* binding */ loadScript)
 /* harmony export */ });
 /* unused harmony exports JQUERY_URL, loadjQueryDependentScript */
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8049);
@@ -4516,7 +4473,7 @@ function loadjQueryDependentScript(url, callback, args) {
 /***/ }),
 
 /***/ 8049:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, exports, __webpack_require__) => {
 
 /* eslint-env browser */
 
@@ -4558,7 +4515,7 @@ function useColors() {
   // NB: In an Electron preload script, document will be defined but not fully
   // initialized. Since we know we're in Chrome, we'll just detect this case
   // explicitly
-  if (typeof window !== 'undefined' && window.process && (window.process.type === 'renderer' || window.process.__nwjs)) {
+  if ( true && window.process && (window.process.type === 'renderer' || window.process.__nwjs)) {
     return true;
   }
 
@@ -4571,7 +4528,7 @@ function useColors() {
   // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
   return typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance ||
   // Is firebug? http://stackoverflow.com/a/398120/376773
-  typeof window !== 'undefined' && window.console && (window.console.firebug || window.console.exception && window.console.table) ||
+   true && window.console && (window.console.firebug || window.console.exception && window.console.table) ||
   // Is firefox >= v31?
   // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
   typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31 ||
@@ -4704,7 +4661,7 @@ formatters.j = function (v) {
 /***/ }),
 
 /***/ 2632:
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /**
  * This is the common logic for both the Node.js and web browser
@@ -4766,10 +4723,7 @@ function setup(env) {
     let enableOverride = null;
     let namespacesCache;
     let enabledCache;
-    function debug() {
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
+    function debug(...args) {
       // Disabled?
       if (!debug.enabled) {
         return;
@@ -4957,7 +4911,7 @@ module.exports = setup;
 /***/ }),
 
 /***/ 9196:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["React"];
@@ -4965,7 +4919,7 @@ module.exports = window["React"];
 /***/ }),
 
 /***/ 5609:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["components"];
@@ -4973,7 +4927,7 @@ module.exports = window["wp"]["components"];
 /***/ }),
 
 /***/ 4333:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["compose"];
@@ -4981,7 +4935,7 @@ module.exports = window["wp"]["compose"];
 /***/ }),
 
 /***/ 9307:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["element"];
@@ -4989,7 +4943,7 @@ module.exports = window["wp"]["element"];
 /***/ }),
 
 /***/ 2694:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["hooks"];
@@ -4997,7 +4951,7 @@ module.exports = window["wp"]["hooks"];
 /***/ }),
 
 /***/ 5736:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 module.exports = window["wp"]["i18n"];
@@ -5032,54 +4986,55 @@ module.exports = window["wp"]["i18n"];
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
-/******/ 	!function() {
+/******/ 	(() => {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = function(module) {
+/******/ 		__webpack_require__.n = (module) => {
 /******/ 			var getter = module && module.__esModule ?
-/******/ 				function() { return module['default']; } :
-/******/ 				function() { return module; };
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
 /******/ 			__webpack_require__.d(getter, { a: getter });
 /******/ 			return getter;
 /******/ 		};
-/******/ 	}();
+/******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/define property getters */
-/******/ 	!function() {
+/******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = function(exports, definition) {
+/******/ 		__webpack_require__.d = (exports, definition) => {
 /******/ 			for(var key in definition) {
 /******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
 /******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 				}
 /******/ 			}
 /******/ 		};
-/******/ 	}();
+/******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	!function() {
-/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
-/******/ 	}();
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
-/******/ 	!function() {
+/******/ 	(() => {
 /******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = function(exports) {
+/******/ 		__webpack_require__.r = (exports) => {
 /******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
 /******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
-/******/ 	}();
+/******/ 	})();
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
-!function() {
+(() => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _src_add_tags_education_link__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2641);
 
-}();
+})();
+
 window.EditingToolkit = __webpack_exports__;
 /******/ })()
 ;

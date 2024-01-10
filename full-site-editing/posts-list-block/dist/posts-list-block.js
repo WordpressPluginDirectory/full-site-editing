@@ -1,9 +1,9 @@
-/******/ (function() { // webpackBootstrap
+/******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 880:
-/***/ (function() {
+/***/ (() => {
 
 // extracted by mini-css-extract-plugin
 
@@ -11,7 +11,7 @@
 /***/ }),
 
 /***/ 670:
-/***/ (function() {
+/***/ (() => {
 
 // extracted by mini-css-extract-plugin
 
@@ -19,7 +19,7 @@
 /***/ }),
 
 /***/ 654:
-/***/ (function(__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(307);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
@@ -73,13 +73,12 @@ const icon = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("
     inserter: false
   },
   attributes: _block_json__WEBPACK_IMPORTED_MODULE_6__/* .attributes */ .Y4,
-  edit: _ref => {
-    let {
-      attributes,
-      setAttributes,
-      clientId,
-      isSelected
-    } = _ref;
+  edit: ({
+    attributes,
+    setAttributes,
+    clientId,
+    isSelected
+  }) => {
     const block = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.select)('core/block-editor').getBlock(clientId);
 
     // Find if any of possible transformations is into the Homepage Posts block.
@@ -124,20 +123,19 @@ const icon = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("
 /***/ }),
 
 /***/ 153:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   L: function() { return /* binding */ transforms; },
-/* harmony export */   i: function() { return /* binding */ isValidHomepagePostsBlockType; }
+/* harmony export */   L: () => (/* binding */ transforms),
+/* harmony export */   i: () => (/* binding */ isValidHomepagePostsBlockType)
 /* harmony export */ });
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(981);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
 
 const HOMEPAGE_POSTS_BLOCK_TYPES = ['a8c/blog-posts', 'newspack-blocks/homepage-articles'];
-const getTransformFunction = type => _ref => {
-  let {
-    postsPerPage
-  } = _ref;
+const getTransformFunction = type => ({
+  postsPerPage
+}) => {
   // Configure the Newspack block to look as close as possible
   // to the output of this one.
   return (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.createBlock)(type, {
@@ -159,49 +157,49 @@ const transforms = {
 /***/ }),
 
 /***/ 175:
-/***/ (function(module) {
+/***/ ((module) => {
 
 module.exports = window["wp"]["blockEditor"];
 
 /***/ }),
 
 /***/ 981:
-/***/ (function(module) {
+/***/ ((module) => {
 
 module.exports = window["wp"]["blocks"];
 
 /***/ }),
 
 /***/ 609:
-/***/ (function(module) {
+/***/ ((module) => {
 
 module.exports = window["wp"]["components"];
 
 /***/ }),
 
 /***/ 818:
-/***/ (function(module) {
+/***/ ((module) => {
 
 module.exports = window["wp"]["data"];
 
 /***/ }),
 
 /***/ 307:
-/***/ (function(module) {
+/***/ ((module) => {
 
 module.exports = window["wp"]["element"];
 
 /***/ }),
 
 /***/ 736:
-/***/ (function(module) {
+/***/ ((module) => {
 
 module.exports = window["wp"]["i18n"];
 
 /***/ }),
 
 /***/ 638:
-/***/ (function(module) {
+/***/ ((module) => {
 
 module.exports = JSON.parse('{"u2":"a8c/posts-list","Y4":{"postsPerPage":{"type":"number","default":10}}}');
 
@@ -235,53 +233,54 @@ module.exports = JSON.parse('{"u2":"a8c/posts-list","Y4":{"postsPerPage":{"type"
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
-/******/ 	!function() {
+/******/ 	(() => {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = function(module) {
+/******/ 		__webpack_require__.n = (module) => {
 /******/ 			var getter = module && module.__esModule ?
-/******/ 				function() { return module['default']; } :
-/******/ 				function() { return module; };
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
 /******/ 			__webpack_require__.d(getter, { a: getter });
 /******/ 			return getter;
 /******/ 		};
-/******/ 	}();
+/******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/define property getters */
-/******/ 	!function() {
+/******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = function(exports, definition) {
+/******/ 		__webpack_require__.d = (exports, definition) => {
 /******/ 			for(var key in definition) {
 /******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
 /******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 				}
 /******/ 			}
 /******/ 		};
-/******/ 	}();
+/******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	!function() {
-/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
-/******/ 	}();
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
-/******/ 	!function() {
+/******/ 	(() => {
 /******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = function(exports) {
+/******/ 		__webpack_require__.r = (exports) => {
 /******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
 /******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
-/******/ 	}();
+/******/ 	})();
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
-!function() {
+(() => {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _blocks_posts_list__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(654);
 
-}();
+})();
+
 window.EditingToolkit = __webpack_exports__;
 /******/ })()
 ;

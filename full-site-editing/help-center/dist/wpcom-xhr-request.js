@@ -1,7 +1,7 @@
-(self["webpackChunkwebpack"] = self["webpackChunkwebpack"] || []).push([[361],{
+(globalThis["webpackChunkwebpack"] = globalThis["webpackChunkwebpack"] || []).push([[361],{
 
 /***/ 87582:
-/***/ (function(module) {
+/***/ ((module) => {
 
 
 /**
@@ -183,7 +183,7 @@ Emitter.prototype.hasListeners = function(event){
 /***/ }),
 
 /***/ 66545:
-/***/ (function(module) {
+/***/ ((module) => {
 
 function Agent() {
   this._defaults = [];
@@ -210,21 +210,16 @@ module.exports = Agent;
 /***/ }),
 
 /***/ 139:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, exports, __webpack_require__) => {
 
 /**
  * Root reference for iframes.
  */
 
 var root;
-if (typeof window !== 'undefined') { // Browser window
+if (true) { // Browser window
   root = window;
-} else if (typeof self !== 'undefined') { // Web Worker
-  root = self;
-} else { // Other environments
-  console.warn("Using browser-only version of superagent in non-browser environment");
-  root = this;
-}
+} else {}
 
 var Emitter = __webpack_require__(87582);
 var RequestBase = __webpack_require__(2474);
@@ -1137,7 +1132,7 @@ request.put = function(url, data, fn) {
 /***/ }),
 
 /***/ 73354:
-/***/ (function(module) {
+/***/ ((module) => {
 
 "use strict";
 
@@ -1160,7 +1155,7 @@ module.exports = isObject;
 /***/ }),
 
 /***/ 2474:
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -1862,7 +1857,7 @@ RequestBase.prototype._setTimeouts = function() {
 /***/ }),
 
 /***/ 99228:
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
@@ -2006,7 +2001,7 @@ ResponseBase.prototype._setStatusProperties = function(status){
 /***/ }),
 
 /***/ 62433:
-/***/ (function(__unused_webpack_module, exports) {
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
@@ -2085,12 +2080,12 @@ exports.cleanHeader = function(header, changesOrigin){
 /***/ }),
 
 /***/ 3614:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": function() { return /* binding */ request; }
+/* harmony export */   "default": () => (/* binding */ request)
 /* harmony export */ });
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(38049);
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_0__);
@@ -2252,10 +2247,9 @@ function enableStreamModeProcessing(req, onStreamRecord) {
   // should never miss any data.
   // <https://xhr.spec.whatwg.org/#the-send()-method>
   // <https://xhr.spec.whatwg.org/#handle-response-end-of-body>
-  req.xhr.addEventListener('progress', _ref => {
-    let {
-      target
-    } = _ref;
+  req.xhr.addEventListener('progress', ({
+    target
+  }) => {
     // Don’t use ProgressEvent#loaded in this algorithm. It measures progress in octets,
     // while we’re working with text that has already been decoded from UTF-8 into a string
     // that can only be indexed in UTF-16 code units. Reconciling this difference is not
@@ -2297,7 +2291,7 @@ function enableStreamModeProcessing(req, onStreamRecord) {
  * @returns {boolean} `true` if `v` is a DOM File instance
  */
 function isFile(v) {
-  return v instanceof Object && 'undefined' !== typeof window && v.fileContents instanceof window.Blob;
+  return v instanceof Object && 'undefined' !== "object" && v.fileContents instanceof window.Blob;
 }
 
 /**
