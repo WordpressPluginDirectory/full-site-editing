@@ -34232,7 +34232,11 @@ function getSiteFragment(path) {
   // Avoid confusing the receipt ID for the site ID in domain-only checkouts.
   0 === basePath.indexOf('/checkout/thank-you/no-site/') ||
   // Avoid confusing the subscription ID for the site ID in gifting checkouts.
-  basePath.includes('/gift/') && basePath.startsWith('/checkout/')) {
+  basePath.includes('/gift/') && basePath.startsWith('/checkout/') ||
+  // Avoid confusing the subscription ID for the site ID in Akismet checkouts.
+  basePath.includes('/akismet/') && basePath.startsWith('/checkout/') ||
+  // Avoid confusing the subscription ID for the site ID in Marketplace checkouts.
+  basePath.includes('/marketplace/') && basePath.startsWith('/checkout/')) {
     return false;
   }
 
@@ -54114,7 +54118,7 @@ const getPlanPremiumDetails = () => ({
   getLinkInBioHighlightedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2],
   getBlogOnboardingSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES_V2 */ .MA1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STYLE_CUSTOMIZATION */ .alN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Tez, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS */ .lRt, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_4 */ .MRS],
   getBlogOnboardingHighlightedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2],
-  getBlogOnboardingSignupJetpackFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEOPRESS_JP */ .nXV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLTD_SOCIAL_MEDIA_JP */ .HBO, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_ACTIVITY_LOG_JP */ .NtL],
+  getBlogOnboardingSignupJetpackFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEOPRESS_JP */ .nXV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLTD_SOCIAL_MEDIA_JP */ .HBO, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_ACTIVITY_LOG_JP */ .NtL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_PAID */ .ZTn],
   getBlogSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MONETISE */ .SZ6, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ ._k)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES */ .QfP : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_PERSONAL_FEATURES */ .VyO].filter(isValueTruthy),
   getPortfolioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .rli, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ ._k)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES */ .QfP : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_PERSONAL_FEATURES */ .VyO].filter(isValueTruthy),
   getSignupCompareAvailableFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ .q4V, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .Xk_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_V2 */ .$4, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .fhe, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_BUSINESS_DAYS */ .N5t, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EARN_AD */ .Tx8, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ ._k)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES */ .QfP : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .Vms].filter(isValueTruthy),
@@ -61138,7 +61142,7 @@ const getBundledPluginSlug = (state, siteSlug) => state.bundledPluginSlug[siteSl
 /* harmony export */   sw: () => (/* binding */ AtomicSoftwareInstallStatus),
 /* harmony export */   uS: () => (/* binding */ SiteLaunchStatus)
 /* harmony export */ });
-/* unused harmony export Visibility */
+/* unused harmony exports Visibility, SiteCapabilities */
 let Visibility = /*#__PURE__*/function (Visibility) {
   Visibility[Visibility["PublicIndexed"] = 1] = "PublicIndexed";
   Visibility[Visibility["PublicNotIndexed"] = 0] = "PublicNotIndexed";
@@ -61147,6 +61151,31 @@ let Visibility = /*#__PURE__*/function (Visibility) {
 }({});
 
 // is_fse_active && is_fse_eligible properties have been deprecated and removed from SiteDetails interface
+
+let SiteCapabilities = /*#__PURE__*/function (SiteCapabilities) {
+  SiteCapabilities["ACTIVATE_PLUGINS"] = "activate_plugins";
+  SiteCapabilities["ACTIVATE_WORDADS"] = "activate_wordads";
+  SiteCapabilities["DELETE_OTHERS_POSTS"] = "delete_others_posts";
+  SiteCapabilities["DELETE_USERS"] = "delete_users";
+  SiteCapabilities["EDIT_OTHERS_PAGES"] = "edit_others_pages";
+  SiteCapabilities["EDIT_OTHERS_POSTS"] = "edit_others_posts";
+  SiteCapabilities["EDIT_PAGES"] = "edit_pages";
+  SiteCapabilities["EDIT_POSTS"] = "edit_posts";
+  SiteCapabilities["EDIT_THEME_OPTIONS"] = "edit_theme_options";
+  SiteCapabilities["EDIT_USERS"] = "edit_users";
+  SiteCapabilities["LIST_USERS"] = "list_users";
+  SiteCapabilities["MANAGE_CATEGORIES"] = "manage_categories";
+  SiteCapabilities["MANAGE_OPTIONS"] = "manage_options";
+  SiteCapabilities["MODERATE_COMMENTS"] = "moderate_comments";
+  SiteCapabilities["OWN_SITE"] = "own_site";
+  SiteCapabilities["PROMOTE_USERS"] = "promote_users";
+  SiteCapabilities["PUBLISH_POSTS"] = "publish_posts";
+  SiteCapabilities["REMOVE_USERS"] = "remove_users";
+  SiteCapabilities["UPLOAD_FILES"] = "upload_files";
+  SiteCapabilities["VIEW_HOSTING"] = "view_hosting";
+  SiteCapabilities["VIEW_STATS"] = "view_stats";
+  return SiteCapabilities;
+}({});
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 

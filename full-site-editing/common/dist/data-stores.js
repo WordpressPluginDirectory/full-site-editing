@@ -7236,7 +7236,7 @@ const getBundledPluginSlug = (state, siteSlug) => state.bundledPluginSlug[siteSl
 /* harmony export */   sw: () => (/* binding */ AtomicSoftwareInstallStatus),
 /* harmony export */   uS: () => (/* binding */ SiteLaunchStatus)
 /* harmony export */ });
-/* unused harmony export Visibility */
+/* unused harmony exports Visibility, SiteCapabilities */
 let Visibility = /*#__PURE__*/function (Visibility) {
   Visibility[Visibility["PublicIndexed"] = 1] = "PublicIndexed";
   Visibility[Visibility["PublicNotIndexed"] = 0] = "PublicNotIndexed";
@@ -7245,6 +7245,31 @@ let Visibility = /*#__PURE__*/function (Visibility) {
 }({});
 
 // is_fse_active && is_fse_eligible properties have been deprecated and removed from SiteDetails interface
+
+let SiteCapabilities = /*#__PURE__*/function (SiteCapabilities) {
+  SiteCapabilities["ACTIVATE_PLUGINS"] = "activate_plugins";
+  SiteCapabilities["ACTIVATE_WORDADS"] = "activate_wordads";
+  SiteCapabilities["DELETE_OTHERS_POSTS"] = "delete_others_posts";
+  SiteCapabilities["DELETE_USERS"] = "delete_users";
+  SiteCapabilities["EDIT_OTHERS_PAGES"] = "edit_others_pages";
+  SiteCapabilities["EDIT_OTHERS_POSTS"] = "edit_others_posts";
+  SiteCapabilities["EDIT_PAGES"] = "edit_pages";
+  SiteCapabilities["EDIT_POSTS"] = "edit_posts";
+  SiteCapabilities["EDIT_THEME_OPTIONS"] = "edit_theme_options";
+  SiteCapabilities["EDIT_USERS"] = "edit_users";
+  SiteCapabilities["LIST_USERS"] = "list_users";
+  SiteCapabilities["MANAGE_CATEGORIES"] = "manage_categories";
+  SiteCapabilities["MANAGE_OPTIONS"] = "manage_options";
+  SiteCapabilities["MODERATE_COMMENTS"] = "moderate_comments";
+  SiteCapabilities["OWN_SITE"] = "own_site";
+  SiteCapabilities["PROMOTE_USERS"] = "promote_users";
+  SiteCapabilities["PUBLISH_POSTS"] = "publish_posts";
+  SiteCapabilities["REMOVE_USERS"] = "remove_users";
+  SiteCapabilities["UPLOAD_FILES"] = "upload_files";
+  SiteCapabilities["VIEW_HOSTING"] = "view_hosting";
+  SiteCapabilities["VIEW_STATS"] = "view_stats";
+  return SiteCapabilities;
+}({});
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
