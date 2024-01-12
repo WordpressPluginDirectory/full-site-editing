@@ -473,6 +473,154 @@ function sprintf( string, args ) {
 
 /***/ }),
 
+/***/ 6744:
+/***/ ((module) => {
+
+module.exports = {
+  "100": "Continue",
+  "101": "Switching Protocols",
+  "102": "Processing",
+  "200": "OK",
+  "201": "Created",
+  "202": "Accepted",
+  "203": "Non-Authoritative Information",
+  "204": "No Content",
+  "205": "Reset Content",
+  "206": "Partial Content",
+  "207": "Multi-Status",
+  "208": "Already Reported",
+  "226": "IM Used",
+  "300": "Multiple Choices",
+  "301": "Moved Permanently",
+  "302": "Found",
+  "303": "See Other",
+  "304": "Not Modified",
+  "305": "Use Proxy",
+  "307": "Temporary Redirect",
+  "308": "Permanent Redirect",
+  "400": "Bad Request",
+  "401": "Unauthorized",
+  "402": "Payment Required",
+  "403": "Forbidden",
+  "404": "Not Found",
+  "405": "Method Not Allowed",
+  "406": "Not Acceptable",
+  "407": "Proxy Authentication Required",
+  "408": "Request Timeout",
+  "409": "Conflict",
+  "410": "Gone",
+  "411": "Length Required",
+  "412": "Precondition Failed",
+  "413": "Payload Too Large",
+  "414": "URI Too Long",
+  "415": "Unsupported Media Type",
+  "416": "Range Not Satisfiable",
+  "417": "Expectation Failed",
+  "418": "I'm a teapot",
+  "421": "Misdirected Request",
+  "422": "Unprocessable Entity",
+  "423": "Locked",
+  "424": "Failed Dependency",
+  "425": "Unordered Collection",
+  "426": "Upgrade Required",
+  "428": "Precondition Required",
+  "429": "Too Many Requests",
+  "431": "Request Header Fields Too Large",
+  "500": "Internal Server Error",
+  "501": "Not Implemented",
+  "502": "Bad Gateway",
+  "503": "Service Unavailable",
+  "504": "Gateway Timeout",
+  "505": "HTTP Version Not Supported",
+  "506": "Variant Also Negotiates",
+  "507": "Insufficient Storage",
+  "508": "Loop Detected",
+  "509": "Bandwidth Limit Exceeded",
+  "510": "Not Extended",
+  "511": "Network Authentication Required"
+}
+
+
+/***/ }),
+
+/***/ 2680:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var GetIntrinsic = __webpack_require__(7286);
+
+var callBind = __webpack_require__(9429);
+
+var $indexOf = callBind(GetIntrinsic('String.prototype.indexOf'));
+
+module.exports = function callBoundIntrinsic(name, allowMissing) {
+	var intrinsic = GetIntrinsic(name, !!allowMissing);
+	if (typeof intrinsic === 'function' && $indexOf(name, '.prototype.') > -1) {
+		return callBind(intrinsic);
+	}
+	return intrinsic;
+};
+
+
+/***/ }),
+
+/***/ 9429:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var bind = __webpack_require__(4090);
+var GetIntrinsic = __webpack_require__(7286);
+
+var $apply = GetIntrinsic('%Function.prototype.apply%');
+var $call = GetIntrinsic('%Function.prototype.call%');
+var $reflectApply = GetIntrinsic('%Reflect.apply%', true) || bind.call($call, $apply);
+
+var $gOPD = GetIntrinsic('%Object.getOwnPropertyDescriptor%', true);
+var $defineProperty = GetIntrinsic('%Object.defineProperty%', true);
+var $max = GetIntrinsic('%Math.max%');
+
+if ($defineProperty) {
+	try {
+		$defineProperty({}, 'a', { value: 1 });
+	} catch (e) {
+		// IE 8 has a broken defineProperty
+		$defineProperty = null;
+	}
+}
+
+module.exports = function callBind(originalFunction) {
+	var func = $reflectApply(bind, $call, arguments);
+	if ($gOPD && $defineProperty) {
+		var desc = $gOPD(func, 'length');
+		if (desc.configurable) {
+			// original length, plus the receiver, minus any additional arguments (after the receiver)
+			$defineProperty(
+				func,
+				'length',
+				{ value: 1 + $max(0, originalFunction.length - (arguments.length - 1)) }
+			);
+		}
+	}
+	return func;
+};
+
+var applyBind = function applyBind() {
+	return $reflectApply(bind, $apply, arguments);
+};
+
+if ($defineProperty) {
+	$defineProperty(module.exports, 'apply', { value: applyBind });
+} else {
+	module.exports.apply = applyBind;
+}
+
+
+/***/ }),
+
 /***/ 3421:
 /***/ ((__unused_webpack_module, exports) => {
 
@@ -1357,6 +1505,573 @@ function eventTargetAgnosticAddListener(emitter, name, listener, flags) {
 
 /***/ }),
 
+/***/ 7795:
+/***/ ((module) => {
+
+"use strict";
+
+
+/* eslint no-invalid-this: 1 */
+
+var ERROR_MESSAGE = 'Function.prototype.bind called on incompatible ';
+var toStr = Object.prototype.toString;
+var max = Math.max;
+var funcType = '[object Function]';
+
+var concatty = function concatty(a, b) {
+    var arr = [];
+
+    for (var i = 0; i < a.length; i += 1) {
+        arr[i] = a[i];
+    }
+    for (var j = 0; j < b.length; j += 1) {
+        arr[j + a.length] = b[j];
+    }
+
+    return arr;
+};
+
+var slicy = function slicy(arrLike, offset) {
+    var arr = [];
+    for (var i = offset || 0, j = 0; i < arrLike.length; i += 1, j += 1) {
+        arr[j] = arrLike[i];
+    }
+    return arr;
+};
+
+var joiny = function (arr, joiner) {
+    var str = '';
+    for (var i = 0; i < arr.length; i += 1) {
+        str += arr[i];
+        if (i + 1 < arr.length) {
+            str += joiner;
+        }
+    }
+    return str;
+};
+
+module.exports = function bind(that) {
+    var target = this;
+    if (typeof target !== 'function' || toStr.apply(target) !== funcType) {
+        throw new TypeError(ERROR_MESSAGE + target);
+    }
+    var args = slicy(arguments, 1);
+
+    var bound;
+    var binder = function () {
+        if (this instanceof bound) {
+            var result = target.apply(
+                this,
+                concatty(args, arguments)
+            );
+            if (Object(result) === result) {
+                return result;
+            }
+            return this;
+        }
+        return target.apply(
+            that,
+            concatty(args, arguments)
+        );
+
+    };
+
+    var boundLength = max(0, target.length - args.length);
+    var boundArgs = [];
+    for (var i = 0; i < boundLength; i++) {
+        boundArgs[i] = '$' + i;
+    }
+
+    bound = Function('binder', 'return function (' + joiny(boundArgs, ',') + '){ return binder.apply(this,arguments); }')(binder);
+
+    if (target.prototype) {
+        var Empty = function Empty() {};
+        Empty.prototype = target.prototype;
+        bound.prototype = new Empty();
+        Empty.prototype = null;
+    }
+
+    return bound;
+};
+
+
+/***/ }),
+
+/***/ 4090:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var implementation = __webpack_require__(7795);
+
+module.exports = Function.prototype.bind || implementation;
+
+
+/***/ }),
+
+/***/ 7286:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var undefined;
+
+var $SyntaxError = SyntaxError;
+var $Function = Function;
+var $TypeError = TypeError;
+
+// eslint-disable-next-line consistent-return
+var getEvalledConstructor = function (expressionSyntax) {
+	try {
+		return $Function('"use strict"; return (' + expressionSyntax + ').constructor;')();
+	} catch (e) {}
+};
+
+var $gOPD = Object.getOwnPropertyDescriptor;
+if ($gOPD) {
+	try {
+		$gOPD({}, '');
+	} catch (e) {
+		$gOPD = null; // this is IE 8, which has a broken gOPD
+	}
+}
+
+var throwTypeError = function () {
+	throw new $TypeError();
+};
+var ThrowTypeError = $gOPD
+	? (function () {
+		try {
+			// eslint-disable-next-line no-unused-expressions, no-caller, no-restricted-properties
+			arguments.callee; // IE 8 does not throw here
+			return throwTypeError;
+		} catch (calleeThrows) {
+			try {
+				// IE 8 throws on Object.getOwnPropertyDescriptor(arguments, '')
+				return $gOPD(arguments, 'callee').get;
+			} catch (gOPDthrows) {
+				return throwTypeError;
+			}
+		}
+	}())
+	: throwTypeError;
+
+var hasSymbols = __webpack_require__(2636)();
+var hasProto = __webpack_require__(8486)();
+
+var getProto = Object.getPrototypeOf || (
+	hasProto
+		? function (x) { return x.__proto__; } // eslint-disable-line no-proto
+		: null
+);
+
+var needsEval = {};
+
+var TypedArray = typeof Uint8Array === 'undefined' || !getProto ? undefined : getProto(Uint8Array);
+
+var INTRINSICS = {
+	'%AggregateError%': typeof AggregateError === 'undefined' ? undefined : AggregateError,
+	'%Array%': Array,
+	'%ArrayBuffer%': typeof ArrayBuffer === 'undefined' ? undefined : ArrayBuffer,
+	'%ArrayIteratorPrototype%': hasSymbols && getProto ? getProto([][Symbol.iterator]()) : undefined,
+	'%AsyncFromSyncIteratorPrototype%': undefined,
+	'%AsyncFunction%': needsEval,
+	'%AsyncGenerator%': needsEval,
+	'%AsyncGeneratorFunction%': needsEval,
+	'%AsyncIteratorPrototype%': needsEval,
+	'%Atomics%': typeof Atomics === 'undefined' ? undefined : Atomics,
+	'%BigInt%': typeof BigInt === 'undefined' ? undefined : BigInt,
+	'%BigInt64Array%': typeof BigInt64Array === 'undefined' ? undefined : BigInt64Array,
+	'%BigUint64Array%': typeof BigUint64Array === 'undefined' ? undefined : BigUint64Array,
+	'%Boolean%': Boolean,
+	'%DataView%': typeof DataView === 'undefined' ? undefined : DataView,
+	'%Date%': Date,
+	'%decodeURI%': decodeURI,
+	'%decodeURIComponent%': decodeURIComponent,
+	'%encodeURI%': encodeURI,
+	'%encodeURIComponent%': encodeURIComponent,
+	'%Error%': Error,
+	'%eval%': eval, // eslint-disable-line no-eval
+	'%EvalError%': EvalError,
+	'%Float32Array%': typeof Float32Array === 'undefined' ? undefined : Float32Array,
+	'%Float64Array%': typeof Float64Array === 'undefined' ? undefined : Float64Array,
+	'%FinalizationRegistry%': typeof FinalizationRegistry === 'undefined' ? undefined : FinalizationRegistry,
+	'%Function%': $Function,
+	'%GeneratorFunction%': needsEval,
+	'%Int8Array%': typeof Int8Array === 'undefined' ? undefined : Int8Array,
+	'%Int16Array%': typeof Int16Array === 'undefined' ? undefined : Int16Array,
+	'%Int32Array%': typeof Int32Array === 'undefined' ? undefined : Int32Array,
+	'%isFinite%': isFinite,
+	'%isNaN%': isNaN,
+	'%IteratorPrototype%': hasSymbols && getProto ? getProto(getProto([][Symbol.iterator]())) : undefined,
+	'%JSON%': typeof JSON === 'object' ? JSON : undefined,
+	'%Map%': typeof Map === 'undefined' ? undefined : Map,
+	'%MapIteratorPrototype%': typeof Map === 'undefined' || !hasSymbols || !getProto ? undefined : getProto(new Map()[Symbol.iterator]()),
+	'%Math%': Math,
+	'%Number%': Number,
+	'%Object%': Object,
+	'%parseFloat%': parseFloat,
+	'%parseInt%': parseInt,
+	'%Promise%': typeof Promise === 'undefined' ? undefined : Promise,
+	'%Proxy%': typeof Proxy === 'undefined' ? undefined : Proxy,
+	'%RangeError%': RangeError,
+	'%ReferenceError%': ReferenceError,
+	'%Reflect%': typeof Reflect === 'undefined' ? undefined : Reflect,
+	'%RegExp%': RegExp,
+	'%Set%': typeof Set === 'undefined' ? undefined : Set,
+	'%SetIteratorPrototype%': typeof Set === 'undefined' || !hasSymbols || !getProto ? undefined : getProto(new Set()[Symbol.iterator]()),
+	'%SharedArrayBuffer%': typeof SharedArrayBuffer === 'undefined' ? undefined : SharedArrayBuffer,
+	'%String%': String,
+	'%StringIteratorPrototype%': hasSymbols && getProto ? getProto(''[Symbol.iterator]()) : undefined,
+	'%Symbol%': hasSymbols ? Symbol : undefined,
+	'%SyntaxError%': $SyntaxError,
+	'%ThrowTypeError%': ThrowTypeError,
+	'%TypedArray%': TypedArray,
+	'%TypeError%': $TypeError,
+	'%Uint8Array%': typeof Uint8Array === 'undefined' ? undefined : Uint8Array,
+	'%Uint8ClampedArray%': typeof Uint8ClampedArray === 'undefined' ? undefined : Uint8ClampedArray,
+	'%Uint16Array%': typeof Uint16Array === 'undefined' ? undefined : Uint16Array,
+	'%Uint32Array%': typeof Uint32Array === 'undefined' ? undefined : Uint32Array,
+	'%URIError%': URIError,
+	'%WeakMap%': typeof WeakMap === 'undefined' ? undefined : WeakMap,
+	'%WeakRef%': typeof WeakRef === 'undefined' ? undefined : WeakRef,
+	'%WeakSet%': typeof WeakSet === 'undefined' ? undefined : WeakSet
+};
+
+if (getProto) {
+	try {
+		null.error; // eslint-disable-line no-unused-expressions
+	} catch (e) {
+		// https://github.com/tc39/proposal-shadowrealm/pull/384#issuecomment-1364264229
+		var errorProto = getProto(getProto(e));
+		INTRINSICS['%Error.prototype%'] = errorProto;
+	}
+}
+
+var doEval = function doEval(name) {
+	var value;
+	if (name === '%AsyncFunction%') {
+		value = getEvalledConstructor('async function () {}');
+	} else if (name === '%GeneratorFunction%') {
+		value = getEvalledConstructor('function* () {}');
+	} else if (name === '%AsyncGeneratorFunction%') {
+		value = getEvalledConstructor('async function* () {}');
+	} else if (name === '%AsyncGenerator%') {
+		var fn = doEval('%AsyncGeneratorFunction%');
+		if (fn) {
+			value = fn.prototype;
+		}
+	} else if (name === '%AsyncIteratorPrototype%') {
+		var gen = doEval('%AsyncGenerator%');
+		if (gen && getProto) {
+			value = getProto(gen.prototype);
+		}
+	}
+
+	INTRINSICS[name] = value;
+
+	return value;
+};
+
+var LEGACY_ALIASES = {
+	'%ArrayBufferPrototype%': ['ArrayBuffer', 'prototype'],
+	'%ArrayPrototype%': ['Array', 'prototype'],
+	'%ArrayProto_entries%': ['Array', 'prototype', 'entries'],
+	'%ArrayProto_forEach%': ['Array', 'prototype', 'forEach'],
+	'%ArrayProto_keys%': ['Array', 'prototype', 'keys'],
+	'%ArrayProto_values%': ['Array', 'prototype', 'values'],
+	'%AsyncFunctionPrototype%': ['AsyncFunction', 'prototype'],
+	'%AsyncGenerator%': ['AsyncGeneratorFunction', 'prototype'],
+	'%AsyncGeneratorPrototype%': ['AsyncGeneratorFunction', 'prototype', 'prototype'],
+	'%BooleanPrototype%': ['Boolean', 'prototype'],
+	'%DataViewPrototype%': ['DataView', 'prototype'],
+	'%DatePrototype%': ['Date', 'prototype'],
+	'%ErrorPrototype%': ['Error', 'prototype'],
+	'%EvalErrorPrototype%': ['EvalError', 'prototype'],
+	'%Float32ArrayPrototype%': ['Float32Array', 'prototype'],
+	'%Float64ArrayPrototype%': ['Float64Array', 'prototype'],
+	'%FunctionPrototype%': ['Function', 'prototype'],
+	'%Generator%': ['GeneratorFunction', 'prototype'],
+	'%GeneratorPrototype%': ['GeneratorFunction', 'prototype', 'prototype'],
+	'%Int8ArrayPrototype%': ['Int8Array', 'prototype'],
+	'%Int16ArrayPrototype%': ['Int16Array', 'prototype'],
+	'%Int32ArrayPrototype%': ['Int32Array', 'prototype'],
+	'%JSONParse%': ['JSON', 'parse'],
+	'%JSONStringify%': ['JSON', 'stringify'],
+	'%MapPrototype%': ['Map', 'prototype'],
+	'%NumberPrototype%': ['Number', 'prototype'],
+	'%ObjectPrototype%': ['Object', 'prototype'],
+	'%ObjProto_toString%': ['Object', 'prototype', 'toString'],
+	'%ObjProto_valueOf%': ['Object', 'prototype', 'valueOf'],
+	'%PromisePrototype%': ['Promise', 'prototype'],
+	'%PromiseProto_then%': ['Promise', 'prototype', 'then'],
+	'%Promise_all%': ['Promise', 'all'],
+	'%Promise_reject%': ['Promise', 'reject'],
+	'%Promise_resolve%': ['Promise', 'resolve'],
+	'%RangeErrorPrototype%': ['RangeError', 'prototype'],
+	'%ReferenceErrorPrototype%': ['ReferenceError', 'prototype'],
+	'%RegExpPrototype%': ['RegExp', 'prototype'],
+	'%SetPrototype%': ['Set', 'prototype'],
+	'%SharedArrayBufferPrototype%': ['SharedArrayBuffer', 'prototype'],
+	'%StringPrototype%': ['String', 'prototype'],
+	'%SymbolPrototype%': ['Symbol', 'prototype'],
+	'%SyntaxErrorPrototype%': ['SyntaxError', 'prototype'],
+	'%TypedArrayPrototype%': ['TypedArray', 'prototype'],
+	'%TypeErrorPrototype%': ['TypeError', 'prototype'],
+	'%Uint8ArrayPrototype%': ['Uint8Array', 'prototype'],
+	'%Uint8ClampedArrayPrototype%': ['Uint8ClampedArray', 'prototype'],
+	'%Uint16ArrayPrototype%': ['Uint16Array', 'prototype'],
+	'%Uint32ArrayPrototype%': ['Uint32Array', 'prototype'],
+	'%URIErrorPrototype%': ['URIError', 'prototype'],
+	'%WeakMapPrototype%': ['WeakMap', 'prototype'],
+	'%WeakSetPrototype%': ['WeakSet', 'prototype']
+};
+
+var bind = __webpack_require__(4090);
+var hasOwn = __webpack_require__(3198);
+var $concat = bind.call(Function.call, Array.prototype.concat);
+var $spliceApply = bind.call(Function.apply, Array.prototype.splice);
+var $replace = bind.call(Function.call, String.prototype.replace);
+var $strSlice = bind.call(Function.call, String.prototype.slice);
+var $exec = bind.call(Function.call, RegExp.prototype.exec);
+
+/* adapted from https://github.com/lodash/lodash/blob/4.17.15/dist/lodash.js#L6735-L6744 */
+var rePropName = /[^%.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|%$))/g;
+var reEscapeChar = /\\(\\)?/g; /** Used to match backslashes in property paths. */
+var stringToPath = function stringToPath(string) {
+	var first = $strSlice(string, 0, 1);
+	var last = $strSlice(string, -1);
+	if (first === '%' && last !== '%') {
+		throw new $SyntaxError('invalid intrinsic syntax, expected closing `%`');
+	} else if (last === '%' && first !== '%') {
+		throw new $SyntaxError('invalid intrinsic syntax, expected opening `%`');
+	}
+	var result = [];
+	$replace(string, rePropName, function (match, number, quote, subString) {
+		result[result.length] = quote ? $replace(subString, reEscapeChar, '$1') : number || match;
+	});
+	return result;
+};
+/* end adaptation */
+
+var getBaseIntrinsic = function getBaseIntrinsic(name, allowMissing) {
+	var intrinsicName = name;
+	var alias;
+	if (hasOwn(LEGACY_ALIASES, intrinsicName)) {
+		alias = LEGACY_ALIASES[intrinsicName];
+		intrinsicName = '%' + alias[0] + '%';
+	}
+
+	if (hasOwn(INTRINSICS, intrinsicName)) {
+		var value = INTRINSICS[intrinsicName];
+		if (value === needsEval) {
+			value = doEval(intrinsicName);
+		}
+		if (typeof value === 'undefined' && !allowMissing) {
+			throw new $TypeError('intrinsic ' + name + ' exists, but is not available. Please file an issue!');
+		}
+
+		return {
+			alias: alias,
+			name: intrinsicName,
+			value: value
+		};
+	}
+
+	throw new $SyntaxError('intrinsic ' + name + ' does not exist!');
+};
+
+module.exports = function GetIntrinsic(name, allowMissing) {
+	if (typeof name !== 'string' || name.length === 0) {
+		throw new $TypeError('intrinsic name must be a non-empty string');
+	}
+	if (arguments.length > 1 && typeof allowMissing !== 'boolean') {
+		throw new $TypeError('"allowMissing" argument must be a boolean');
+	}
+
+	if ($exec(/^%?[^%]*%?$/, name) === null) {
+		throw new $SyntaxError('`%` may not be present anywhere but at the beginning and end of the intrinsic name');
+	}
+	var parts = stringToPath(name);
+	var intrinsicBaseName = parts.length > 0 ? parts[0] : '';
+
+	var intrinsic = getBaseIntrinsic('%' + intrinsicBaseName + '%', allowMissing);
+	var intrinsicRealName = intrinsic.name;
+	var value = intrinsic.value;
+	var skipFurtherCaching = false;
+
+	var alias = intrinsic.alias;
+	if (alias) {
+		intrinsicBaseName = alias[0];
+		$spliceApply(parts, $concat([0, 1], alias));
+	}
+
+	for (var i = 1, isOwn = true; i < parts.length; i += 1) {
+		var part = parts[i];
+		var first = $strSlice(part, 0, 1);
+		var last = $strSlice(part, -1);
+		if (
+			(
+				(first === '"' || first === "'" || first === '`')
+				|| (last === '"' || last === "'" || last === '`')
+			)
+			&& first !== last
+		) {
+			throw new $SyntaxError('property names with quotes must have matching quotes');
+		}
+		if (part === 'constructor' || !isOwn) {
+			skipFurtherCaching = true;
+		}
+
+		intrinsicBaseName += '.' + part;
+		intrinsicRealName = '%' + intrinsicBaseName + '%';
+
+		if (hasOwn(INTRINSICS, intrinsicRealName)) {
+			value = INTRINSICS[intrinsicRealName];
+		} else if (value != null) {
+			if (!(part in value)) {
+				if (!allowMissing) {
+					throw new $TypeError('base intrinsic for ' + name + ' exists, but the property is not available.');
+				}
+				return void undefined;
+			}
+			if ($gOPD && (i + 1) >= parts.length) {
+				var desc = $gOPD(value, part);
+				isOwn = !!desc;
+
+				// By convention, when a data property is converted to an accessor
+				// property to emulate a data property that does not suffer from
+				// the override mistake, that accessor's getter is marked with
+				// an `originalValue` property. Here, when we detect this, we
+				// uphold the illusion by pretending to see that original data
+				// property, i.e., returning the value rather than the getter
+				// itself.
+				if (isOwn && 'get' in desc && !('originalValue' in desc.get)) {
+					value = desc.get;
+				} else {
+					value = value[part];
+				}
+			} else {
+				isOwn = hasOwn(value, part);
+				value = value[part];
+			}
+
+			if (isOwn && !skipFurtherCaching) {
+				INTRINSICS[intrinsicRealName] = value;
+			}
+		}
+	}
+	return value;
+};
+
+
+/***/ }),
+
+/***/ 8486:
+/***/ ((module) => {
+
+"use strict";
+
+
+var test = {
+	foo: {}
+};
+
+var $Object = Object;
+
+module.exports = function hasProto() {
+	return { __proto__: test }.foo === test.foo && !({ __proto__: null } instanceof $Object);
+};
+
+
+/***/ }),
+
+/***/ 2636:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var origSymbol = typeof Symbol !== 'undefined' && Symbol;
+var hasSymbolSham = __webpack_require__(6679);
+
+module.exports = function hasNativeSymbols() {
+	if (typeof origSymbol !== 'function') { return false; }
+	if (typeof Symbol !== 'function') { return false; }
+	if (typeof origSymbol('foo') !== 'symbol') { return false; }
+	if (typeof Symbol('bar') !== 'symbol') { return false; }
+
+	return hasSymbolSham();
+};
+
+
+/***/ }),
+
+/***/ 6679:
+/***/ ((module) => {
+
+"use strict";
+
+
+/* eslint complexity: [2, 18], max-statements: [2, 33] */
+module.exports = function hasSymbols() {
+	if (typeof Symbol !== 'function' || typeof Object.getOwnPropertySymbols !== 'function') { return false; }
+	if (typeof Symbol.iterator === 'symbol') { return true; }
+
+	var obj = {};
+	var sym = Symbol('test');
+	var symObj = Object(sym);
+	if (typeof sym === 'string') { return false; }
+
+	if (Object.prototype.toString.call(sym) !== '[object Symbol]') { return false; }
+	if (Object.prototype.toString.call(symObj) !== '[object Symbol]') { return false; }
+
+	// temp disabled per https://github.com/ljharb/object.assign/issues/17
+	// if (sym instanceof Symbol) { return false; }
+	// temp disabled per https://github.com/WebReflection/get-own-property-symbols/issues/4
+	// if (!(symObj instanceof Symbol)) { return false; }
+
+	// if (typeof Symbol.prototype.toString !== 'function') { return false; }
+	// if (String(sym) !== Symbol.prototype.toString.call(sym)) { return false; }
+
+	var symVal = 42;
+	obj[sym] = symVal;
+	for (sym in obj) { return false; } // eslint-disable-line no-restricted-syntax, no-unreachable-loop
+	if (typeof Object.keys === 'function' && Object.keys(obj).length !== 0) { return false; }
+
+	if (typeof Object.getOwnPropertyNames === 'function' && Object.getOwnPropertyNames(obj).length !== 0) { return false; }
+
+	var syms = Object.getOwnPropertySymbols(obj);
+	if (syms.length !== 1 || syms[0] !== sym) { return false; }
+
+	if (!Object.prototype.propertyIsEnumerable.call(obj, sym)) { return false; }
+
+	if (typeof Object.getOwnPropertyDescriptor === 'function') {
+		var descriptor = Object.getOwnPropertyDescriptor(obj, sym);
+		if (descriptor.value !== symVal || descriptor.enumerable !== true) { return false; }
+	}
+
+	return true;
+};
+
+
+/***/ }),
+
+/***/ 3198:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var bind = __webpack_require__(4090);
+
+module.exports = bind.call(Function.call, Object.prototype.hasOwnProperty);
+
+
+/***/ }),
+
 /***/ 4495:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
@@ -2199,6 +2914,1571 @@ assert.equal = function assertEqual(l, r, msg) {
 
 /***/ }),
 
+/***/ 9500:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var hasMap = typeof Map === 'function' && Map.prototype;
+var mapSizeDescriptor = Object.getOwnPropertyDescriptor && hasMap ? Object.getOwnPropertyDescriptor(Map.prototype, 'size') : null;
+var mapSize = hasMap && mapSizeDescriptor && typeof mapSizeDescriptor.get === 'function' ? mapSizeDescriptor.get : null;
+var mapForEach = hasMap && Map.prototype.forEach;
+var hasSet = typeof Set === 'function' && Set.prototype;
+var setSizeDescriptor = Object.getOwnPropertyDescriptor && hasSet ? Object.getOwnPropertyDescriptor(Set.prototype, 'size') : null;
+var setSize = hasSet && setSizeDescriptor && typeof setSizeDescriptor.get === 'function' ? setSizeDescriptor.get : null;
+var setForEach = hasSet && Set.prototype.forEach;
+var hasWeakMap = typeof WeakMap === 'function' && WeakMap.prototype;
+var weakMapHas = hasWeakMap ? WeakMap.prototype.has : null;
+var hasWeakSet = typeof WeakSet === 'function' && WeakSet.prototype;
+var weakSetHas = hasWeakSet ? WeakSet.prototype.has : null;
+var hasWeakRef = typeof WeakRef === 'function' && WeakRef.prototype;
+var weakRefDeref = hasWeakRef ? WeakRef.prototype.deref : null;
+var booleanValueOf = Boolean.prototype.valueOf;
+var objectToString = Object.prototype.toString;
+var functionToString = Function.prototype.toString;
+var $match = String.prototype.match;
+var $slice = String.prototype.slice;
+var $replace = String.prototype.replace;
+var $toUpperCase = String.prototype.toUpperCase;
+var $toLowerCase = String.prototype.toLowerCase;
+var $test = RegExp.prototype.test;
+var $concat = Array.prototype.concat;
+var $join = Array.prototype.join;
+var $arrSlice = Array.prototype.slice;
+var $floor = Math.floor;
+var bigIntValueOf = typeof BigInt === 'function' ? BigInt.prototype.valueOf : null;
+var gOPS = Object.getOwnPropertySymbols;
+var symToString = typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol' ? Symbol.prototype.toString : null;
+var hasShammedSymbols = typeof Symbol === 'function' && typeof Symbol.iterator === 'object';
+// ie, `has-tostringtag/shams
+var toStringTag = typeof Symbol === 'function' && Symbol.toStringTag && (typeof Symbol.toStringTag === hasShammedSymbols ? 'object' : 'symbol')
+    ? Symbol.toStringTag
+    : null;
+var isEnumerable = Object.prototype.propertyIsEnumerable;
+
+var gPO = (typeof Reflect === 'function' ? Reflect.getPrototypeOf : Object.getPrototypeOf) || (
+    [].__proto__ === Array.prototype // eslint-disable-line no-proto
+        ? function (O) {
+            return O.__proto__; // eslint-disable-line no-proto
+        }
+        : null
+);
+
+function addNumericSeparator(num, str) {
+    if (
+        num === Infinity
+        || num === -Infinity
+        || num !== num
+        || (num && num > -1000 && num < 1000)
+        || $test.call(/e/, str)
+    ) {
+        return str;
+    }
+    var sepRegex = /[0-9](?=(?:[0-9]{3})+(?![0-9]))/g;
+    if (typeof num === 'number') {
+        var int = num < 0 ? -$floor(-num) : $floor(num); // trunc(num)
+        if (int !== num) {
+            var intStr = String(int);
+            var dec = $slice.call(str, intStr.length + 1);
+            return $replace.call(intStr, sepRegex, '$&_') + '.' + $replace.call($replace.call(dec, /([0-9]{3})/g, '$&_'), /_$/, '');
+        }
+    }
+    return $replace.call(str, sepRegex, '$&_');
+}
+
+var utilInspect = __webpack_require__(3260);
+var inspectCustom = utilInspect.custom;
+var inspectSymbol = isSymbol(inspectCustom) ? inspectCustom : null;
+
+module.exports = function inspect_(obj, options, depth, seen) {
+    var opts = options || {};
+
+    if (has(opts, 'quoteStyle') && (opts.quoteStyle !== 'single' && opts.quoteStyle !== 'double')) {
+        throw new TypeError('option "quoteStyle" must be "single" or "double"');
+    }
+    if (
+        has(opts, 'maxStringLength') && (typeof opts.maxStringLength === 'number'
+            ? opts.maxStringLength < 0 && opts.maxStringLength !== Infinity
+            : opts.maxStringLength !== null
+        )
+    ) {
+        throw new TypeError('option "maxStringLength", if provided, must be a positive integer, Infinity, or `null`');
+    }
+    var customInspect = has(opts, 'customInspect') ? opts.customInspect : true;
+    if (typeof customInspect !== 'boolean' && customInspect !== 'symbol') {
+        throw new TypeError('option "customInspect", if provided, must be `true`, `false`, or `\'symbol\'`');
+    }
+
+    if (
+        has(opts, 'indent')
+        && opts.indent !== null
+        && opts.indent !== '\t'
+        && !(parseInt(opts.indent, 10) === opts.indent && opts.indent > 0)
+    ) {
+        throw new TypeError('option "indent" must be "\\t", an integer > 0, or `null`');
+    }
+    if (has(opts, 'numericSeparator') && typeof opts.numericSeparator !== 'boolean') {
+        throw new TypeError('option "numericSeparator", if provided, must be `true` or `false`');
+    }
+    var numericSeparator = opts.numericSeparator;
+
+    if (typeof obj === 'undefined') {
+        return 'undefined';
+    }
+    if (obj === null) {
+        return 'null';
+    }
+    if (typeof obj === 'boolean') {
+        return obj ? 'true' : 'false';
+    }
+
+    if (typeof obj === 'string') {
+        return inspectString(obj, opts);
+    }
+    if (typeof obj === 'number') {
+        if (obj === 0) {
+            return Infinity / obj > 0 ? '0' : '-0';
+        }
+        var str = String(obj);
+        return numericSeparator ? addNumericSeparator(obj, str) : str;
+    }
+    if (typeof obj === 'bigint') {
+        var bigIntStr = String(obj) + 'n';
+        return numericSeparator ? addNumericSeparator(obj, bigIntStr) : bigIntStr;
+    }
+
+    var maxDepth = typeof opts.depth === 'undefined' ? 5 : opts.depth;
+    if (typeof depth === 'undefined') { depth = 0; }
+    if (depth >= maxDepth && maxDepth > 0 && typeof obj === 'object') {
+        return isArray(obj) ? '[Array]' : '[Object]';
+    }
+
+    var indent = getIndent(opts, depth);
+
+    if (typeof seen === 'undefined') {
+        seen = [];
+    } else if (indexOf(seen, obj) >= 0) {
+        return '[Circular]';
+    }
+
+    function inspect(value, from, noIndent) {
+        if (from) {
+            seen = $arrSlice.call(seen);
+            seen.push(from);
+        }
+        if (noIndent) {
+            var newOpts = {
+                depth: opts.depth
+            };
+            if (has(opts, 'quoteStyle')) {
+                newOpts.quoteStyle = opts.quoteStyle;
+            }
+            return inspect_(value, newOpts, depth + 1, seen);
+        }
+        return inspect_(value, opts, depth + 1, seen);
+    }
+
+    if (typeof obj === 'function' && !isRegExp(obj)) { // in older engines, regexes are callable
+        var name = nameOf(obj);
+        var keys = arrObjKeys(obj, inspect);
+        return '[Function' + (name ? ': ' + name : ' (anonymous)') + ']' + (keys.length > 0 ? ' { ' + $join.call(keys, ', ') + ' }' : '');
+    }
+    if (isSymbol(obj)) {
+        var symString = hasShammedSymbols ? $replace.call(String(obj), /^(Symbol\(.*\))_[^)]*$/, '$1') : symToString.call(obj);
+        return typeof obj === 'object' && !hasShammedSymbols ? markBoxed(symString) : symString;
+    }
+    if (isElement(obj)) {
+        var s = '<' + $toLowerCase.call(String(obj.nodeName));
+        var attrs = obj.attributes || [];
+        for (var i = 0; i < attrs.length; i++) {
+            s += ' ' + attrs[i].name + '=' + wrapQuotes(quote(attrs[i].value), 'double', opts);
+        }
+        s += '>';
+        if (obj.childNodes && obj.childNodes.length) { s += '...'; }
+        s += '</' + $toLowerCase.call(String(obj.nodeName)) + '>';
+        return s;
+    }
+    if (isArray(obj)) {
+        if (obj.length === 0) { return '[]'; }
+        var xs = arrObjKeys(obj, inspect);
+        if (indent && !singleLineValues(xs)) {
+            return '[' + indentedJoin(xs, indent) + ']';
+        }
+        return '[ ' + $join.call(xs, ', ') + ' ]';
+    }
+    if (isError(obj)) {
+        var parts = arrObjKeys(obj, inspect);
+        if (!('cause' in Error.prototype) && 'cause' in obj && !isEnumerable.call(obj, 'cause')) {
+            return '{ [' + String(obj) + '] ' + $join.call($concat.call('[cause]: ' + inspect(obj.cause), parts), ', ') + ' }';
+        }
+        if (parts.length === 0) { return '[' + String(obj) + ']'; }
+        return '{ [' + String(obj) + '] ' + $join.call(parts, ', ') + ' }';
+    }
+    if (typeof obj === 'object' && customInspect) {
+        if (inspectSymbol && typeof obj[inspectSymbol] === 'function' && utilInspect) {
+            return utilInspect(obj, { depth: maxDepth - depth });
+        } else if (customInspect !== 'symbol' && typeof obj.inspect === 'function') {
+            return obj.inspect();
+        }
+    }
+    if (isMap(obj)) {
+        var mapParts = [];
+        if (mapForEach) {
+            mapForEach.call(obj, function (value, key) {
+                mapParts.push(inspect(key, obj, true) + ' => ' + inspect(value, obj));
+            });
+        }
+        return collectionOf('Map', mapSize.call(obj), mapParts, indent);
+    }
+    if (isSet(obj)) {
+        var setParts = [];
+        if (setForEach) {
+            setForEach.call(obj, function (value) {
+                setParts.push(inspect(value, obj));
+            });
+        }
+        return collectionOf('Set', setSize.call(obj), setParts, indent);
+    }
+    if (isWeakMap(obj)) {
+        return weakCollectionOf('WeakMap');
+    }
+    if (isWeakSet(obj)) {
+        return weakCollectionOf('WeakSet');
+    }
+    if (isWeakRef(obj)) {
+        return weakCollectionOf('WeakRef');
+    }
+    if (isNumber(obj)) {
+        return markBoxed(inspect(Number(obj)));
+    }
+    if (isBigInt(obj)) {
+        return markBoxed(inspect(bigIntValueOf.call(obj)));
+    }
+    if (isBoolean(obj)) {
+        return markBoxed(booleanValueOf.call(obj));
+    }
+    if (isString(obj)) {
+        return markBoxed(inspect(String(obj)));
+    }
+    if (!isDate(obj) && !isRegExp(obj)) {
+        var ys = arrObjKeys(obj, inspect);
+        var isPlainObject = gPO ? gPO(obj) === Object.prototype : obj instanceof Object || obj.constructor === Object;
+        var protoTag = obj instanceof Object ? '' : 'null prototype';
+        var stringTag = !isPlainObject && toStringTag && Object(obj) === obj && toStringTag in obj ? $slice.call(toStr(obj), 8, -1) : protoTag ? 'Object' : '';
+        var constructorTag = isPlainObject || typeof obj.constructor !== 'function' ? '' : obj.constructor.name ? obj.constructor.name + ' ' : '';
+        var tag = constructorTag + (stringTag || protoTag ? '[' + $join.call($concat.call([], stringTag || [], protoTag || []), ': ') + '] ' : '');
+        if (ys.length === 0) { return tag + '{}'; }
+        if (indent) {
+            return tag + '{' + indentedJoin(ys, indent) + '}';
+        }
+        return tag + '{ ' + $join.call(ys, ', ') + ' }';
+    }
+    return String(obj);
+};
+
+function wrapQuotes(s, defaultStyle, opts) {
+    var quoteChar = (opts.quoteStyle || defaultStyle) === 'double' ? '"' : "'";
+    return quoteChar + s + quoteChar;
+}
+
+function quote(s) {
+    return $replace.call(String(s), /"/g, '&quot;');
+}
+
+function isArray(obj) { return toStr(obj) === '[object Array]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+function isDate(obj) { return toStr(obj) === '[object Date]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+function isRegExp(obj) { return toStr(obj) === '[object RegExp]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+function isError(obj) { return toStr(obj) === '[object Error]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+function isString(obj) { return toStr(obj) === '[object String]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+function isNumber(obj) { return toStr(obj) === '[object Number]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+function isBoolean(obj) { return toStr(obj) === '[object Boolean]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+
+// Symbol and BigInt do have Symbol.toStringTag by spec, so that can't be used to eliminate false positives
+function isSymbol(obj) {
+    if (hasShammedSymbols) {
+        return obj && typeof obj === 'object' && obj instanceof Symbol;
+    }
+    if (typeof obj === 'symbol') {
+        return true;
+    }
+    if (!obj || typeof obj !== 'object' || !symToString) {
+        return false;
+    }
+    try {
+        symToString.call(obj);
+        return true;
+    } catch (e) {}
+    return false;
+}
+
+function isBigInt(obj) {
+    if (!obj || typeof obj !== 'object' || !bigIntValueOf) {
+        return false;
+    }
+    try {
+        bigIntValueOf.call(obj);
+        return true;
+    } catch (e) {}
+    return false;
+}
+
+var hasOwn = Object.prototype.hasOwnProperty || function (key) { return key in this; };
+function has(obj, key) {
+    return hasOwn.call(obj, key);
+}
+
+function toStr(obj) {
+    return objectToString.call(obj);
+}
+
+function nameOf(f) {
+    if (f.name) { return f.name; }
+    var m = $match.call(functionToString.call(f), /^function\s*([\w$]+)/);
+    if (m) { return m[1]; }
+    return null;
+}
+
+function indexOf(xs, x) {
+    if (xs.indexOf) { return xs.indexOf(x); }
+    for (var i = 0, l = xs.length; i < l; i++) {
+        if (xs[i] === x) { return i; }
+    }
+    return -1;
+}
+
+function isMap(x) {
+    if (!mapSize || !x || typeof x !== 'object') {
+        return false;
+    }
+    try {
+        mapSize.call(x);
+        try {
+            setSize.call(x);
+        } catch (s) {
+            return true;
+        }
+        return x instanceof Map; // core-js workaround, pre-v2.5.0
+    } catch (e) {}
+    return false;
+}
+
+function isWeakMap(x) {
+    if (!weakMapHas || !x || typeof x !== 'object') {
+        return false;
+    }
+    try {
+        weakMapHas.call(x, weakMapHas);
+        try {
+            weakSetHas.call(x, weakSetHas);
+        } catch (s) {
+            return true;
+        }
+        return x instanceof WeakMap; // core-js workaround, pre-v2.5.0
+    } catch (e) {}
+    return false;
+}
+
+function isWeakRef(x) {
+    if (!weakRefDeref || !x || typeof x !== 'object') {
+        return false;
+    }
+    try {
+        weakRefDeref.call(x);
+        return true;
+    } catch (e) {}
+    return false;
+}
+
+function isSet(x) {
+    if (!setSize || !x || typeof x !== 'object') {
+        return false;
+    }
+    try {
+        setSize.call(x);
+        try {
+            mapSize.call(x);
+        } catch (m) {
+            return true;
+        }
+        return x instanceof Set; // core-js workaround, pre-v2.5.0
+    } catch (e) {}
+    return false;
+}
+
+function isWeakSet(x) {
+    if (!weakSetHas || !x || typeof x !== 'object') {
+        return false;
+    }
+    try {
+        weakSetHas.call(x, weakSetHas);
+        try {
+            weakMapHas.call(x, weakMapHas);
+        } catch (s) {
+            return true;
+        }
+        return x instanceof WeakSet; // core-js workaround, pre-v2.5.0
+    } catch (e) {}
+    return false;
+}
+
+function isElement(x) {
+    if (!x || typeof x !== 'object') { return false; }
+    if (typeof HTMLElement !== 'undefined' && x instanceof HTMLElement) {
+        return true;
+    }
+    return typeof x.nodeName === 'string' && typeof x.getAttribute === 'function';
+}
+
+function inspectString(str, opts) {
+    if (str.length > opts.maxStringLength) {
+        var remaining = str.length - opts.maxStringLength;
+        var trailer = '... ' + remaining + ' more character' + (remaining > 1 ? 's' : '');
+        return inspectString($slice.call(str, 0, opts.maxStringLength), opts) + trailer;
+    }
+    // eslint-disable-next-line no-control-regex
+    var s = $replace.call($replace.call(str, /(['\\])/g, '\\$1'), /[\x00-\x1f]/g, lowbyte);
+    return wrapQuotes(s, 'single', opts);
+}
+
+function lowbyte(c) {
+    var n = c.charCodeAt(0);
+    var x = {
+        8: 'b',
+        9: 't',
+        10: 'n',
+        12: 'f',
+        13: 'r'
+    }[n];
+    if (x) { return '\\' + x; }
+    return '\\x' + (n < 0x10 ? '0' : '') + $toUpperCase.call(n.toString(16));
+}
+
+function markBoxed(str) {
+    return 'Object(' + str + ')';
+}
+
+function weakCollectionOf(type) {
+    return type + ' { ? }';
+}
+
+function collectionOf(type, size, entries, indent) {
+    var joinedEntries = indent ? indentedJoin(entries, indent) : $join.call(entries, ', ');
+    return type + ' (' + size + ') {' + joinedEntries + '}';
+}
+
+function singleLineValues(xs) {
+    for (var i = 0; i < xs.length; i++) {
+        if (indexOf(xs[i], '\n') >= 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function getIndent(opts, depth) {
+    var baseIndent;
+    if (opts.indent === '\t') {
+        baseIndent = '\t';
+    } else if (typeof opts.indent === 'number' && opts.indent > 0) {
+        baseIndent = $join.call(Array(opts.indent + 1), ' ');
+    } else {
+        return null;
+    }
+    return {
+        base: baseIndent,
+        prev: $join.call(Array(depth + 1), baseIndent)
+    };
+}
+
+function indentedJoin(xs, indent) {
+    if (xs.length === 0) { return ''; }
+    var lineJoiner = '\n' + indent.prev + indent.base;
+    return lineJoiner + $join.call(xs, ',' + lineJoiner) + '\n' + indent.prev;
+}
+
+function arrObjKeys(obj, inspect) {
+    var isArr = isArray(obj);
+    var xs = [];
+    if (isArr) {
+        xs.length = obj.length;
+        for (var i = 0; i < obj.length; i++) {
+            xs[i] = has(obj, i) ? inspect(obj[i], obj) : '';
+        }
+    }
+    var syms = typeof gOPS === 'function' ? gOPS(obj) : [];
+    var symMap;
+    if (hasShammedSymbols) {
+        symMap = {};
+        for (var k = 0; k < syms.length; k++) {
+            symMap['$' + syms[k]] = syms[k];
+        }
+    }
+
+    for (var key in obj) { // eslint-disable-line no-restricted-syntax
+        if (!has(obj, key)) { continue; } // eslint-disable-line no-restricted-syntax, no-continue
+        if (isArr && String(Number(key)) === key && key < obj.length) { continue; } // eslint-disable-line no-restricted-syntax, no-continue
+        if (hasShammedSymbols && symMap['$' + key] instanceof Symbol) {
+            // this is to prevent shammed Symbols, which are stored as strings, from being included in the string key section
+            continue; // eslint-disable-line no-restricted-syntax, no-continue
+        } else if ($test.call(/[^\w$]/, key)) {
+            xs.push(inspect(key, obj) + ': ' + inspect(obj[key], obj));
+        } else {
+            xs.push(key + ': ' + inspect(obj[key], obj));
+        }
+    }
+    if (typeof gOPS === 'function') {
+        for (var j = 0; j < syms.length; j++) {
+            if (isEnumerable.call(obj, syms[j])) {
+                xs.push('[' + inspect(syms[j]) + ']: ' + inspect(obj[syms[j]], obj));
+            }
+        }
+    }
+    return xs;
+}
+
+
+/***/ }),
+
+/***/ 5527:
+/***/ ((module) => {
+
+"use strict";
+
+
+var replace = String.prototype.replace;
+var percentTwenties = /%20/g;
+
+var Format = {
+    RFC1738: 'RFC1738',
+    RFC3986: 'RFC3986'
+};
+
+module.exports = {
+    'default': Format.RFC3986,
+    formatters: {
+        RFC1738: function (value) {
+            return replace.call(value, percentTwenties, '+');
+        },
+        RFC3986: function (value) {
+            return String(value);
+        }
+    },
+    RFC1738: Format.RFC1738,
+    RFC3986: Format.RFC3986
+};
+
+
+/***/ }),
+
+/***/ 9126:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var stringify = __webpack_require__(6845);
+var parse = __webpack_require__(9166);
+var formats = __webpack_require__(5527);
+
+module.exports = {
+    formats: formats,
+    parse: parse,
+    stringify: stringify
+};
+
+
+/***/ }),
+
+/***/ 9166:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(2493);
+
+var has = Object.prototype.hasOwnProperty;
+var isArray = Array.isArray;
+
+var defaults = {
+    allowDots: false,
+    allowPrototypes: false,
+    allowSparse: false,
+    arrayLimit: 20,
+    charset: 'utf-8',
+    charsetSentinel: false,
+    comma: false,
+    decoder: utils.decode,
+    delimiter: '&',
+    depth: 5,
+    ignoreQueryPrefix: false,
+    interpretNumericEntities: false,
+    parameterLimit: 1000,
+    parseArrays: true,
+    plainObjects: false,
+    strictNullHandling: false
+};
+
+var interpretNumericEntities = function (str) {
+    return str.replace(/&#(\d+);/g, function ($0, numberStr) {
+        return String.fromCharCode(parseInt(numberStr, 10));
+    });
+};
+
+var parseArrayValue = function (val, options) {
+    if (val && typeof val === 'string' && options.comma && val.indexOf(',') > -1) {
+        return val.split(',');
+    }
+
+    return val;
+};
+
+// This is what browsers will submit when the ✓ character occurs in an
+// application/x-www-form-urlencoded body and the encoding of the page containing
+// the form is iso-8859-1, or when the submitted form has an accept-charset
+// attribute of iso-8859-1. Presumably also with other charsets that do not contain
+// the ✓ character, such as us-ascii.
+var isoSentinel = 'utf8=%26%2310003%3B'; // encodeURIComponent('&#10003;')
+
+// These are the percent-encoded utf-8 octets representing a checkmark, indicating that the request actually is utf-8 encoded.
+var charsetSentinel = 'utf8=%E2%9C%93'; // encodeURIComponent('✓')
+
+var parseValues = function parseQueryStringValues(str, options) {
+    var obj = { __proto__: null };
+
+    var cleanStr = options.ignoreQueryPrefix ? str.replace(/^\?/, '') : str;
+    var limit = options.parameterLimit === Infinity ? undefined : options.parameterLimit;
+    var parts = cleanStr.split(options.delimiter, limit);
+    var skipIndex = -1; // Keep track of where the utf8 sentinel was found
+    var i;
+
+    var charset = options.charset;
+    if (options.charsetSentinel) {
+        for (i = 0; i < parts.length; ++i) {
+            if (parts[i].indexOf('utf8=') === 0) {
+                if (parts[i] === charsetSentinel) {
+                    charset = 'utf-8';
+                } else if (parts[i] === isoSentinel) {
+                    charset = 'iso-8859-1';
+                }
+                skipIndex = i;
+                i = parts.length; // The eslint settings do not allow break;
+            }
+        }
+    }
+
+    for (i = 0; i < parts.length; ++i) {
+        if (i === skipIndex) {
+            continue;
+        }
+        var part = parts[i];
+
+        var bracketEqualsPos = part.indexOf(']=');
+        var pos = bracketEqualsPos === -1 ? part.indexOf('=') : bracketEqualsPos + 1;
+
+        var key, val;
+        if (pos === -1) {
+            key = options.decoder(part, defaults.decoder, charset, 'key');
+            val = options.strictNullHandling ? null : '';
+        } else {
+            key = options.decoder(part.slice(0, pos), defaults.decoder, charset, 'key');
+            val = utils.maybeMap(
+                parseArrayValue(part.slice(pos + 1), options),
+                function (encodedVal) {
+                    return options.decoder(encodedVal, defaults.decoder, charset, 'value');
+                }
+            );
+        }
+
+        if (val && options.interpretNumericEntities && charset === 'iso-8859-1') {
+            val = interpretNumericEntities(val);
+        }
+
+        if (part.indexOf('[]=') > -1) {
+            val = isArray(val) ? [val] : val;
+        }
+
+        if (has.call(obj, key)) {
+            obj[key] = utils.combine(obj[key], val);
+        } else {
+            obj[key] = val;
+        }
+    }
+
+    return obj;
+};
+
+var parseObject = function (chain, val, options, valuesParsed) {
+    var leaf = valuesParsed ? val : parseArrayValue(val, options);
+
+    for (var i = chain.length - 1; i >= 0; --i) {
+        var obj;
+        var root = chain[i];
+
+        if (root === '[]' && options.parseArrays) {
+            obj = [].concat(leaf);
+        } else {
+            obj = options.plainObjects ? Object.create(null) : {};
+            var cleanRoot = root.charAt(0) === '[' && root.charAt(root.length - 1) === ']' ? root.slice(1, -1) : root;
+            var index = parseInt(cleanRoot, 10);
+            if (!options.parseArrays && cleanRoot === '') {
+                obj = { 0: leaf };
+            } else if (
+                !isNaN(index)
+                && root !== cleanRoot
+                && String(index) === cleanRoot
+                && index >= 0
+                && (options.parseArrays && index <= options.arrayLimit)
+            ) {
+                obj = [];
+                obj[index] = leaf;
+            } else if (cleanRoot !== '__proto__') {
+                obj[cleanRoot] = leaf;
+            }
+        }
+
+        leaf = obj;
+    }
+
+    return leaf;
+};
+
+var parseKeys = function parseQueryStringKeys(givenKey, val, options, valuesParsed) {
+    if (!givenKey) {
+        return;
+    }
+
+    // Transform dot notation to bracket notation
+    var key = options.allowDots ? givenKey.replace(/\.([^.[]+)/g, '[$1]') : givenKey;
+
+    // The regex chunks
+
+    var brackets = /(\[[^[\]]*])/;
+    var child = /(\[[^[\]]*])/g;
+
+    // Get the parent
+
+    var segment = options.depth > 0 && brackets.exec(key);
+    var parent = segment ? key.slice(0, segment.index) : key;
+
+    // Stash the parent if it exists
+
+    var keys = [];
+    if (parent) {
+        // If we aren't using plain objects, optionally prefix keys that would overwrite object prototype properties
+        if (!options.plainObjects && has.call(Object.prototype, parent)) {
+            if (!options.allowPrototypes) {
+                return;
+            }
+        }
+
+        keys.push(parent);
+    }
+
+    // Loop through children appending to the array until we hit depth
+
+    var i = 0;
+    while (options.depth > 0 && (segment = child.exec(key)) !== null && i < options.depth) {
+        i += 1;
+        if (!options.plainObjects && has.call(Object.prototype, segment[1].slice(1, -1))) {
+            if (!options.allowPrototypes) {
+                return;
+            }
+        }
+        keys.push(segment[1]);
+    }
+
+    // If there's a remainder, just add whatever is left
+
+    if (segment) {
+        keys.push('[' + key.slice(segment.index) + ']');
+    }
+
+    return parseObject(keys, val, options, valuesParsed);
+};
+
+var normalizeParseOptions = function normalizeParseOptions(opts) {
+    if (!opts) {
+        return defaults;
+    }
+
+    if (opts.decoder !== null && opts.decoder !== undefined && typeof opts.decoder !== 'function') {
+        throw new TypeError('Decoder has to be a function.');
+    }
+
+    if (typeof opts.charset !== 'undefined' && opts.charset !== 'utf-8' && opts.charset !== 'iso-8859-1') {
+        throw new TypeError('The charset option must be either utf-8, iso-8859-1, or undefined');
+    }
+    var charset = typeof opts.charset === 'undefined' ? defaults.charset : opts.charset;
+
+    return {
+        allowDots: typeof opts.allowDots === 'undefined' ? defaults.allowDots : !!opts.allowDots,
+        allowPrototypes: typeof opts.allowPrototypes === 'boolean' ? opts.allowPrototypes : defaults.allowPrototypes,
+        allowSparse: typeof opts.allowSparse === 'boolean' ? opts.allowSparse : defaults.allowSparse,
+        arrayLimit: typeof opts.arrayLimit === 'number' ? opts.arrayLimit : defaults.arrayLimit,
+        charset: charset,
+        charsetSentinel: typeof opts.charsetSentinel === 'boolean' ? opts.charsetSentinel : defaults.charsetSentinel,
+        comma: typeof opts.comma === 'boolean' ? opts.comma : defaults.comma,
+        decoder: typeof opts.decoder === 'function' ? opts.decoder : defaults.decoder,
+        delimiter: typeof opts.delimiter === 'string' || utils.isRegExp(opts.delimiter) ? opts.delimiter : defaults.delimiter,
+        // eslint-disable-next-line no-implicit-coercion, no-extra-parens
+        depth: (typeof opts.depth === 'number' || opts.depth === false) ? +opts.depth : defaults.depth,
+        ignoreQueryPrefix: opts.ignoreQueryPrefix === true,
+        interpretNumericEntities: typeof opts.interpretNumericEntities === 'boolean' ? opts.interpretNumericEntities : defaults.interpretNumericEntities,
+        parameterLimit: typeof opts.parameterLimit === 'number' ? opts.parameterLimit : defaults.parameterLimit,
+        parseArrays: opts.parseArrays !== false,
+        plainObjects: typeof opts.plainObjects === 'boolean' ? opts.plainObjects : defaults.plainObjects,
+        strictNullHandling: typeof opts.strictNullHandling === 'boolean' ? opts.strictNullHandling : defaults.strictNullHandling
+    };
+};
+
+module.exports = function (str, opts) {
+    var options = normalizeParseOptions(opts);
+
+    if (str === '' || str === null || typeof str === 'undefined') {
+        return options.plainObjects ? Object.create(null) : {};
+    }
+
+    var tempObj = typeof str === 'string' ? parseValues(str, options) : str;
+    var obj = options.plainObjects ? Object.create(null) : {};
+
+    // Iterate over the keys and setup the new object
+
+    var keys = Object.keys(tempObj);
+    for (var i = 0; i < keys.length; ++i) {
+        var key = keys[i];
+        var newObj = parseKeys(key, tempObj[key], options, typeof str === 'string');
+        obj = utils.merge(obj, newObj, options);
+    }
+
+    if (options.allowSparse === true) {
+        return obj;
+    }
+
+    return utils.compact(obj);
+};
+
+
+/***/ }),
+
+/***/ 6845:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var getSideChannel = __webpack_require__(4294);
+var utils = __webpack_require__(2493);
+var formats = __webpack_require__(5527);
+var has = Object.prototype.hasOwnProperty;
+
+var arrayPrefixGenerators = {
+    brackets: function brackets(prefix) {
+        return prefix + '[]';
+    },
+    comma: 'comma',
+    indices: function indices(prefix, key) {
+        return prefix + '[' + key + ']';
+    },
+    repeat: function repeat(prefix) {
+        return prefix;
+    }
+};
+
+var isArray = Array.isArray;
+var push = Array.prototype.push;
+var pushToArray = function (arr, valueOrArray) {
+    push.apply(arr, isArray(valueOrArray) ? valueOrArray : [valueOrArray]);
+};
+
+var toISO = Date.prototype.toISOString;
+
+var defaultFormat = formats['default'];
+var defaults = {
+    addQueryPrefix: false,
+    allowDots: false,
+    charset: 'utf-8',
+    charsetSentinel: false,
+    delimiter: '&',
+    encode: true,
+    encoder: utils.encode,
+    encodeValuesOnly: false,
+    format: defaultFormat,
+    formatter: formats.formatters[defaultFormat],
+    // deprecated
+    indices: false,
+    serializeDate: function serializeDate(date) {
+        return toISO.call(date);
+    },
+    skipNulls: false,
+    strictNullHandling: false
+};
+
+var isNonNullishPrimitive = function isNonNullishPrimitive(v) {
+    return typeof v === 'string'
+        || typeof v === 'number'
+        || typeof v === 'boolean'
+        || typeof v === 'symbol'
+        || typeof v === 'bigint';
+};
+
+var sentinel = {};
+
+var stringify = function stringify(
+    object,
+    prefix,
+    generateArrayPrefix,
+    commaRoundTrip,
+    strictNullHandling,
+    skipNulls,
+    encoder,
+    filter,
+    sort,
+    allowDots,
+    serializeDate,
+    format,
+    formatter,
+    encodeValuesOnly,
+    charset,
+    sideChannel
+) {
+    var obj = object;
+
+    var tmpSc = sideChannel;
+    var step = 0;
+    var findFlag = false;
+    while ((tmpSc = tmpSc.get(sentinel)) !== void undefined && !findFlag) {
+        // Where object last appeared in the ref tree
+        var pos = tmpSc.get(object);
+        step += 1;
+        if (typeof pos !== 'undefined') {
+            if (pos === step) {
+                throw new RangeError('Cyclic object value');
+            } else {
+                findFlag = true; // Break while
+            }
+        }
+        if (typeof tmpSc.get(sentinel) === 'undefined') {
+            step = 0;
+        }
+    }
+
+    if (typeof filter === 'function') {
+        obj = filter(prefix, obj);
+    } else if (obj instanceof Date) {
+        obj = serializeDate(obj);
+    } else if (generateArrayPrefix === 'comma' && isArray(obj)) {
+        obj = utils.maybeMap(obj, function (value) {
+            if (value instanceof Date) {
+                return serializeDate(value);
+            }
+            return value;
+        });
+    }
+
+    if (obj === null) {
+        if (strictNullHandling) {
+            return encoder && !encodeValuesOnly ? encoder(prefix, defaults.encoder, charset, 'key', format) : prefix;
+        }
+
+        obj = '';
+    }
+
+    if (isNonNullishPrimitive(obj) || utils.isBuffer(obj)) {
+        if (encoder) {
+            var keyValue = encodeValuesOnly ? prefix : encoder(prefix, defaults.encoder, charset, 'key', format);
+            return [formatter(keyValue) + '=' + formatter(encoder(obj, defaults.encoder, charset, 'value', format))];
+        }
+        return [formatter(prefix) + '=' + formatter(String(obj))];
+    }
+
+    var values = [];
+
+    if (typeof obj === 'undefined') {
+        return values;
+    }
+
+    var objKeys;
+    if (generateArrayPrefix === 'comma' && isArray(obj)) {
+        // we need to join elements in
+        if (encodeValuesOnly && encoder) {
+            obj = utils.maybeMap(obj, encoder);
+        }
+        objKeys = [{ value: obj.length > 0 ? obj.join(',') || null : void undefined }];
+    } else if (isArray(filter)) {
+        objKeys = filter;
+    } else {
+        var keys = Object.keys(obj);
+        objKeys = sort ? keys.sort(sort) : keys;
+    }
+
+    var adjustedPrefix = commaRoundTrip && isArray(obj) && obj.length === 1 ? prefix + '[]' : prefix;
+
+    for (var j = 0; j < objKeys.length; ++j) {
+        var key = objKeys[j];
+        var value = typeof key === 'object' && typeof key.value !== 'undefined' ? key.value : obj[key];
+
+        if (skipNulls && value === null) {
+            continue;
+        }
+
+        var keyPrefix = isArray(obj)
+            ? typeof generateArrayPrefix === 'function' ? generateArrayPrefix(adjustedPrefix, key) : adjustedPrefix
+            : adjustedPrefix + (allowDots ? '.' + key : '[' + key + ']');
+
+        sideChannel.set(object, step);
+        var valueSideChannel = getSideChannel();
+        valueSideChannel.set(sentinel, sideChannel);
+        pushToArray(values, stringify(
+            value,
+            keyPrefix,
+            generateArrayPrefix,
+            commaRoundTrip,
+            strictNullHandling,
+            skipNulls,
+            generateArrayPrefix === 'comma' && encodeValuesOnly && isArray(obj) ? null : encoder,
+            filter,
+            sort,
+            allowDots,
+            serializeDate,
+            format,
+            formatter,
+            encodeValuesOnly,
+            charset,
+            valueSideChannel
+        ));
+    }
+
+    return values;
+};
+
+var normalizeStringifyOptions = function normalizeStringifyOptions(opts) {
+    if (!opts) {
+        return defaults;
+    }
+
+    if (opts.encoder !== null && typeof opts.encoder !== 'undefined' && typeof opts.encoder !== 'function') {
+        throw new TypeError('Encoder has to be a function.');
+    }
+
+    var charset = opts.charset || defaults.charset;
+    if (typeof opts.charset !== 'undefined' && opts.charset !== 'utf-8' && opts.charset !== 'iso-8859-1') {
+        throw new TypeError('The charset option must be either utf-8, iso-8859-1, or undefined');
+    }
+
+    var format = formats['default'];
+    if (typeof opts.format !== 'undefined') {
+        if (!has.call(formats.formatters, opts.format)) {
+            throw new TypeError('Unknown format option provided.');
+        }
+        format = opts.format;
+    }
+    var formatter = formats.formatters[format];
+
+    var filter = defaults.filter;
+    if (typeof opts.filter === 'function' || isArray(opts.filter)) {
+        filter = opts.filter;
+    }
+
+    return {
+        addQueryPrefix: typeof opts.addQueryPrefix === 'boolean' ? opts.addQueryPrefix : defaults.addQueryPrefix,
+        allowDots: typeof opts.allowDots === 'undefined' ? defaults.allowDots : !!opts.allowDots,
+        charset: charset,
+        charsetSentinel: typeof opts.charsetSentinel === 'boolean' ? opts.charsetSentinel : defaults.charsetSentinel,
+        delimiter: typeof opts.delimiter === 'undefined' ? defaults.delimiter : opts.delimiter,
+        encode: typeof opts.encode === 'boolean' ? opts.encode : defaults.encode,
+        encoder: typeof opts.encoder === 'function' ? opts.encoder : defaults.encoder,
+        encodeValuesOnly: typeof opts.encodeValuesOnly === 'boolean' ? opts.encodeValuesOnly : defaults.encodeValuesOnly,
+        filter: filter,
+        format: format,
+        formatter: formatter,
+        serializeDate: typeof opts.serializeDate === 'function' ? opts.serializeDate : defaults.serializeDate,
+        skipNulls: typeof opts.skipNulls === 'boolean' ? opts.skipNulls : defaults.skipNulls,
+        sort: typeof opts.sort === 'function' ? opts.sort : null,
+        strictNullHandling: typeof opts.strictNullHandling === 'boolean' ? opts.strictNullHandling : defaults.strictNullHandling
+    };
+};
+
+module.exports = function (object, opts) {
+    var obj = object;
+    var options = normalizeStringifyOptions(opts);
+
+    var objKeys;
+    var filter;
+
+    if (typeof options.filter === 'function') {
+        filter = options.filter;
+        obj = filter('', obj);
+    } else if (isArray(options.filter)) {
+        filter = options.filter;
+        objKeys = filter;
+    }
+
+    var keys = [];
+
+    if (typeof obj !== 'object' || obj === null) {
+        return '';
+    }
+
+    var arrayFormat;
+    if (opts && opts.arrayFormat in arrayPrefixGenerators) {
+        arrayFormat = opts.arrayFormat;
+    } else if (opts && 'indices' in opts) {
+        arrayFormat = opts.indices ? 'indices' : 'repeat';
+    } else {
+        arrayFormat = 'indices';
+    }
+
+    var generateArrayPrefix = arrayPrefixGenerators[arrayFormat];
+    if (opts && 'commaRoundTrip' in opts && typeof opts.commaRoundTrip !== 'boolean') {
+        throw new TypeError('`commaRoundTrip` must be a boolean, or absent');
+    }
+    var commaRoundTrip = generateArrayPrefix === 'comma' && opts && opts.commaRoundTrip;
+
+    if (!objKeys) {
+        objKeys = Object.keys(obj);
+    }
+
+    if (options.sort) {
+        objKeys.sort(options.sort);
+    }
+
+    var sideChannel = getSideChannel();
+    for (var i = 0; i < objKeys.length; ++i) {
+        var key = objKeys[i];
+
+        if (options.skipNulls && obj[key] === null) {
+            continue;
+        }
+        pushToArray(keys, stringify(
+            obj[key],
+            key,
+            generateArrayPrefix,
+            commaRoundTrip,
+            options.strictNullHandling,
+            options.skipNulls,
+            options.encode ? options.encoder : null,
+            options.filter,
+            options.sort,
+            options.allowDots,
+            options.serializeDate,
+            options.format,
+            options.formatter,
+            options.encodeValuesOnly,
+            options.charset,
+            sideChannel
+        ));
+    }
+
+    var joined = keys.join(options.delimiter);
+    var prefix = options.addQueryPrefix === true ? '?' : '';
+
+    if (options.charsetSentinel) {
+        if (options.charset === 'iso-8859-1') {
+            // encodeURIComponent('&#10003;'), the "numeric entity" representation of a checkmark
+            prefix += 'utf8=%26%2310003%3B&';
+        } else {
+            // encodeURIComponent('✓')
+            prefix += 'utf8=%E2%9C%93&';
+        }
+    }
+
+    return joined.length > 0 ? prefix + joined : '';
+};
+
+
+/***/ }),
+
+/***/ 2493:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var formats = __webpack_require__(5527);
+
+var has = Object.prototype.hasOwnProperty;
+var isArray = Array.isArray;
+
+var hexTable = (function () {
+    var array = [];
+    for (var i = 0; i < 256; ++i) {
+        array.push('%' + ((i < 16 ? '0' : '') + i.toString(16)).toUpperCase());
+    }
+
+    return array;
+}());
+
+var compactQueue = function compactQueue(queue) {
+    while (queue.length > 1) {
+        var item = queue.pop();
+        var obj = item.obj[item.prop];
+
+        if (isArray(obj)) {
+            var compacted = [];
+
+            for (var j = 0; j < obj.length; ++j) {
+                if (typeof obj[j] !== 'undefined') {
+                    compacted.push(obj[j]);
+                }
+            }
+
+            item.obj[item.prop] = compacted;
+        }
+    }
+};
+
+var arrayToObject = function arrayToObject(source, options) {
+    var obj = options && options.plainObjects ? Object.create(null) : {};
+    for (var i = 0; i < source.length; ++i) {
+        if (typeof source[i] !== 'undefined') {
+            obj[i] = source[i];
+        }
+    }
+
+    return obj;
+};
+
+var merge = function merge(target, source, options) {
+    /* eslint no-param-reassign: 0 */
+    if (!source) {
+        return target;
+    }
+
+    if (typeof source !== 'object') {
+        if (isArray(target)) {
+            target.push(source);
+        } else if (target && typeof target === 'object') {
+            if ((options && (options.plainObjects || options.allowPrototypes)) || !has.call(Object.prototype, source)) {
+                target[source] = true;
+            }
+        } else {
+            return [target, source];
+        }
+
+        return target;
+    }
+
+    if (!target || typeof target !== 'object') {
+        return [target].concat(source);
+    }
+
+    var mergeTarget = target;
+    if (isArray(target) && !isArray(source)) {
+        mergeTarget = arrayToObject(target, options);
+    }
+
+    if (isArray(target) && isArray(source)) {
+        source.forEach(function (item, i) {
+            if (has.call(target, i)) {
+                var targetItem = target[i];
+                if (targetItem && typeof targetItem === 'object' && item && typeof item === 'object') {
+                    target[i] = merge(targetItem, item, options);
+                } else {
+                    target.push(item);
+                }
+            } else {
+                target[i] = item;
+            }
+        });
+        return target;
+    }
+
+    return Object.keys(source).reduce(function (acc, key) {
+        var value = source[key];
+
+        if (has.call(acc, key)) {
+            acc[key] = merge(acc[key], value, options);
+        } else {
+            acc[key] = value;
+        }
+        return acc;
+    }, mergeTarget);
+};
+
+var assign = function assignSingleSource(target, source) {
+    return Object.keys(source).reduce(function (acc, key) {
+        acc[key] = source[key];
+        return acc;
+    }, target);
+};
+
+var decode = function (str, decoder, charset) {
+    var strWithoutPlus = str.replace(/\+/g, ' ');
+    if (charset === 'iso-8859-1') {
+        // unescape never throws, no try...catch needed:
+        return strWithoutPlus.replace(/%[0-9a-f]{2}/gi, unescape);
+    }
+    // utf-8
+    try {
+        return decodeURIComponent(strWithoutPlus);
+    } catch (e) {
+        return strWithoutPlus;
+    }
+};
+
+var encode = function encode(str, defaultEncoder, charset, kind, format) {
+    // This code was originally written by Brian White (mscdex) for the io.js core querystring library.
+    // It has been adapted here for stricter adherence to RFC 3986
+    if (str.length === 0) {
+        return str;
+    }
+
+    var string = str;
+    if (typeof str === 'symbol') {
+        string = Symbol.prototype.toString.call(str);
+    } else if (typeof str !== 'string') {
+        string = String(str);
+    }
+
+    if (charset === 'iso-8859-1') {
+        return escape(string).replace(/%u[0-9a-f]{4}/gi, function ($0) {
+            return '%26%23' + parseInt($0.slice(2), 16) + '%3B';
+        });
+    }
+
+    var out = '';
+    for (var i = 0; i < string.length; ++i) {
+        var c = string.charCodeAt(i);
+
+        if (
+            c === 0x2D // -
+            || c === 0x2E // .
+            || c === 0x5F // _
+            || c === 0x7E // ~
+            || (c >= 0x30 && c <= 0x39) // 0-9
+            || (c >= 0x41 && c <= 0x5A) // a-z
+            || (c >= 0x61 && c <= 0x7A) // A-Z
+            || (format === formats.RFC1738 && (c === 0x28 || c === 0x29)) // ( )
+        ) {
+            out += string.charAt(i);
+            continue;
+        }
+
+        if (c < 0x80) {
+            out = out + hexTable[c];
+            continue;
+        }
+
+        if (c < 0x800) {
+            out = out + (hexTable[0xC0 | (c >> 6)] + hexTable[0x80 | (c & 0x3F)]);
+            continue;
+        }
+
+        if (c < 0xD800 || c >= 0xE000) {
+            out = out + (hexTable[0xE0 | (c >> 12)] + hexTable[0x80 | ((c >> 6) & 0x3F)] + hexTable[0x80 | (c & 0x3F)]);
+            continue;
+        }
+
+        i += 1;
+        c = 0x10000 + (((c & 0x3FF) << 10) | (string.charCodeAt(i) & 0x3FF));
+        /* eslint operator-linebreak: [2, "before"] */
+        out += hexTable[0xF0 | (c >> 18)]
+            + hexTable[0x80 | ((c >> 12) & 0x3F)]
+            + hexTable[0x80 | ((c >> 6) & 0x3F)]
+            + hexTable[0x80 | (c & 0x3F)];
+    }
+
+    return out;
+};
+
+var compact = function compact(value) {
+    var queue = [{ obj: { o: value }, prop: 'o' }];
+    var refs = [];
+
+    for (var i = 0; i < queue.length; ++i) {
+        var item = queue[i];
+        var obj = item.obj[item.prop];
+
+        var keys = Object.keys(obj);
+        for (var j = 0; j < keys.length; ++j) {
+            var key = keys[j];
+            var val = obj[key];
+            if (typeof val === 'object' && val !== null && refs.indexOf(val) === -1) {
+                queue.push({ obj: obj, prop: key });
+                refs.push(val);
+            }
+        }
+    }
+
+    compactQueue(queue);
+
+    return value;
+};
+
+var isRegExp = function isRegExp(obj) {
+    return Object.prototype.toString.call(obj) === '[object RegExp]';
+};
+
+var isBuffer = function isBuffer(obj) {
+    if (!obj || typeof obj !== 'object') {
+        return false;
+    }
+
+    return !!(obj.constructor && obj.constructor.isBuffer && obj.constructor.isBuffer(obj));
+};
+
+var combine = function combine(a, b) {
+    return [].concat(a, b);
+};
+
+var maybeMap = function maybeMap(val, fn) {
+    if (isArray(val)) {
+        var mapped = [];
+        for (var i = 0; i < val.length; i += 1) {
+            mapped.push(fn(val[i]));
+        }
+        return mapped;
+    }
+    return fn(val);
+};
+
+module.exports = {
+    arrayToObject: arrayToObject,
+    assign: assign,
+    combine: combine,
+    compact: compact,
+    decode: decode,
+    encode: encode,
+    isBuffer: isBuffer,
+    isRegExp: isRegExp,
+    maybeMap: maybeMap,
+    merge: merge
+};
+
+
+/***/ }),
+
+/***/ 4294:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var GetIntrinsic = __webpack_require__(7286);
+var callBound = __webpack_require__(2680);
+var inspect = __webpack_require__(9500);
+
+var $TypeError = GetIntrinsic('%TypeError%');
+var $WeakMap = GetIntrinsic('%WeakMap%', true);
+var $Map = GetIntrinsic('%Map%', true);
+
+var $weakMapGet = callBound('WeakMap.prototype.get', true);
+var $weakMapSet = callBound('WeakMap.prototype.set', true);
+var $weakMapHas = callBound('WeakMap.prototype.has', true);
+var $mapGet = callBound('Map.prototype.get', true);
+var $mapSet = callBound('Map.prototype.set', true);
+var $mapHas = callBound('Map.prototype.has', true);
+
+/*
+ * This function traverses the list returning the node corresponding to the
+ * given key.
+ *
+ * That node is also moved to the head of the list, so that if it's accessed
+ * again we don't need to traverse the whole list. By doing so, all the recently
+ * used nodes can be accessed relatively quickly.
+ */
+var listGetNode = function (list, key) { // eslint-disable-line consistent-return
+	for (var prev = list, curr; (curr = prev.next) !== null; prev = curr) {
+		if (curr.key === key) {
+			prev.next = curr.next;
+			curr.next = list.next;
+			list.next = curr; // eslint-disable-line no-param-reassign
+			return curr;
+		}
+	}
+};
+
+var listGet = function (objects, key) {
+	var node = listGetNode(objects, key);
+	return node && node.value;
+};
+var listSet = function (objects, key, value) {
+	var node = listGetNode(objects, key);
+	if (node) {
+		node.value = value;
+	} else {
+		// Prepend the new node to the beginning of the list
+		objects.next = { // eslint-disable-line no-param-reassign
+			key: key,
+			next: objects.next,
+			value: value
+		};
+	}
+};
+var listHas = function (objects, key) {
+	return !!listGetNode(objects, key);
+};
+
+module.exports = function getSideChannel() {
+	var $wm;
+	var $m;
+	var $o;
+	var channel = {
+		assert: function (key) {
+			if (!channel.has(key)) {
+				throw new $TypeError('Side channel does not contain ' + inspect(key));
+			}
+		},
+		get: function (key) { // eslint-disable-line consistent-return
+			if ($WeakMap && key && (typeof key === 'object' || typeof key === 'function')) {
+				if ($wm) {
+					return $weakMapGet($wm, key);
+				}
+			} else if ($Map) {
+				if ($m) {
+					return $mapGet($m, key);
+				}
+			} else {
+				if ($o) { // eslint-disable-line no-lonely-if
+					return listGet($o, key);
+				}
+			}
+		},
+		has: function (key) {
+			if ($WeakMap && key && (typeof key === 'object' || typeof key === 'function')) {
+				if ($wm) {
+					return $weakMapHas($wm, key);
+				}
+			} else if ($Map) {
+				if ($m) {
+					return $mapHas($m, key);
+				}
+			} else {
+				if ($o) { // eslint-disable-line no-lonely-if
+					return listHas($o, key);
+				}
+			}
+			return false;
+		},
+		set: function (key, value) {
+			if ($WeakMap && key && (typeof key === 'object' || typeof key === 'function')) {
+				if (!$wm) {
+					$wm = new $WeakMap();
+				}
+				$weakMapSet($wm, key, value);
+			} else if ($Map) {
+				if (!$m) {
+					$m = new $Map();
+				}
+				$mapSet($m, key, value);
+			} else {
+				if (!$o) {
+					/*
+					 * Initialize the linked list as an empty node, so that we don't have
+					 * to special-case handling of the first node: we can always refer to
+					 * it as (previous node).next, instead of something like (list).head
+					 */
+					$o = { key: {}, next: null };
+				}
+				listSet($o, key, value);
+			}
+		}
+	};
+	return channel;
+};
+
+
+/***/ }),
+
 /***/ 9830:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -2429,118 +4709,367 @@ Tannin.prototype.dcnpgettext = function( domain, context, singular, plural, n ) 
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Y6: () => (/* binding */ blockLinksWithVariations),
 /* harmony export */   ZP: () => (__WEBPACK_DEFAULT_EXPORT__),
-/* harmony export */   k_: () => (/* binding */ childrenBlockLinksWithDifferentUrl)
+/* harmony export */   gM: () => (/* binding */ childrenBlockInfoWithDifferentUrl),
+/* harmony export */   yd: () => (/* binding */ blockInfoWithVariations)
 /* harmony export */ });
 /* URLs are localized within the function where these URLs are used. */
 /* eslint-disable wpcalypso/i18n-unlocalized-url */
-const blockLinks = {
+const blockInfoMapping = {
   /**
    * Core Blocks
    */
-  'core/template-part': 'https://wordpress.com/support/full-site-editing/theme-blocks/template-part-block/',
-  'core/site-title': 'https://wordpress.com/support/full-site-editing/theme-blocks/site-title-block/',
-  'core/site-tagline': 'https://wordpress.com/support/full-site-editing/theme-blocks/site-tagline-block/',
-  'core/site-logo': 'https://wordpress.com/support/full-site-editing/theme-blocks/site-logo-block/',
-  'core/page-list': 'https://wordpress.com/support/full-site-editing/theme-blocks/page-list-block/',
-  'core/loginout': 'https://wordpress.com/support/full-site-editing/theme-blocks/login-out-block/',
-  'core/video': 'https://wordpress.com/support/wordpress-editor/blocks/video-block/',
-  'core/verse': 'https://wordpress.com/support/wordpress-editor/blocks/verse-block/',
-  'core/spacer': 'https://wordpress.com/support/wordpress-editor/blocks/spacer-block/',
-  'core/shortcode': 'https://wordpress.com/support/wordpress-editor/blocks/shortcode-block/',
-  'core/separator': 'https://wordpress.com/support/wordpress-editor/blocks/separator-block/',
-  'core/search': 'https://wordpress.com/support/wordpress-editor/blocks/search-block/',
-  'core/rss': 'https://wordpress.com/support/wordpress-editor/blocks/rss-block/',
-  'core/navigation': 'https://wordpress.com/support/site-editing/theme-blocks/navigation-block/',
-  'core/tag-cloud': 'https://wordpress.com/support/wordpress-editor/blocks/tag-cloud-block/',
-  'core/quote': 'https://wordpress.com/support/wordpress-editor/blocks/quote-block/',
-  'core/pullquote': 'https://wordpress.com/support/wordpress-editor/blocks/pullquote-block/',
-  'core/preformatted': 'https://wordpress.com/support/wordpress-editor/blocks/preformatted-block/',
-  'core/paragraph': 'https://wordpress.com/support/wordpress-editor/blocks/paragraph-block/',
-  'core/more': 'https://wordpress.com/support/wordpress-editor/blocks/more-block/',
-  'core/list': 'https://wordpress.com/support/wordpress-editor/blocks/list-block/',
-  'core/latest-posts': 'https://wordpress.com/support/wordpress-editor/blocks/latest-posts-block/',
-  'core/latest-comments': 'https://wordpress.com/support/wordpress-editor/blocks/latest-comments-block/',
-  'core/heading': 'https://wordpress.com/support/wordpress-editor/blocks/heading-block/',
-  'core/file': 'https://wordpress.com/support/wordpress-editor/blocks/file-block/',
-  'core/embed': 'https://wordpress.com/support/wordpress-editor/blocks/embed-block/',
-  'core/html': 'https://wordpress.com/support/wordpress-editor/blocks/custom-html-block/',
-  'core/code': 'https://wordpress.com/support/wordpress-editor/blocks/code-block/',
-  'core/freeform': 'https://wordpress.com/support/wordpress-editor/blocks/classic-block/',
-  'core/categories': 'https://wordpress.com/support/wordpress-editor/blocks/categories-block/',
-  'core/calendar': 'https://wordpress.com/support/wordpress-editor/blocks/calendar-block/',
-  'core/audio': 'https://wordpress.com/support/wordpress-editor/blocks/audio-block/',
-  'core/archives': 'https://wordpress.com/support/wordpress-editor/blocks/archives-block/',
-  'core/query': 'https://wordpress.com/support/full-site-editing/theme-blocks/query-loop-block/',
-  'core/media-text': 'https://wordpress.com/support/wordpress-editor/blocks/media-text-block/',
-  'core/table': 'https://wordpress.com/support/wordpress-editor/blocks/table-block/',
-  'core/social-links': 'https://wordpress.com/support/wordpress-editor/blocks/social-links-block/',
-  'core/columns': 'https://wordpress.com/support/wordpress-editor/blocks/columns-block/',
-  'core/image': 'https://wordpress.com/support/wordpress-editor/blocks/image-block/',
-  'core/cover': 'https://wordpress.com/support/wordpress-editor/blocks/cover-block/',
-  'core/buttons': 'https://wordpress.com/support/wordpress-editor/blocks/buttons-block/',
-  'core/gallery': 'https://wordpress.com/support/wordpress-editor/blocks/gallery-block/',
-  'core/post-content': 'https://wordpress.com/support/full-site-editing/theme-blocks/post-content-block/',
-  'core/table-of-contents': 'https://wordpress.com/support/wordpress-editor/table-of-contents-block/',
-  'core/comments': 'https://wordpress.com/support/full-site-editing/theme-blocks/comments-block/',
-  'core/post-time-to-read': 'https://wordpress.com/support/site-editing/theme-blocks/time-to-read-block',
-  /**
-   * A8C and CO Blocks
-   */
-  'syntaxhighlighter/code': 'https://wordpress.com/support/wordpress-editor/blocks/syntax-highlighter-code-block/',
-  'crowdsignal-forms/vote': 'https://wordpress.com/support/wordpress-editor/blocks/vote-block/',
-  'crowdsignal-forms/poll': 'https://wordpress.com/support/wordpress-editor/blocks/poll-block/',
-  'crowdsignal-forms/nps': 'https://wordpress.com/support/wordpress-editor/blocks/measure-nps-block/',
-  'crowdsignal-forms/feedback': 'https://wordpress.com/support/wordpress-editor/blocks/feedback-button-block/',
-  'a8c/posts-carousel': 'https://wordpress.com/support/wordpress-editor/blocks/posts-carousel-block/',
-  'premium-content/container': 'https://wordpress.com/support/wordpress-editor/blocks/premium-content-block/',
-  'a8c/blog-posts': 'https://wordpress.com/support/wordpress-editor/blocks/blog-posts-block/',
-  'jetpack/send-a-message': 'https://wordpress.com/support/wordpress-editor/blocks/whatsapp-button-block/',
-  /**
-   * Jetpack Blocks
-   */
-  'jetpack/blogroll': 'https://wordpress.com/support/wordpress-editor/blocks/blogroll-block/',
-  'jetpack/timeline': 'https://wordpress.com/support/wordpress-editor/blocks/timeline-block/',
-  'jetpack/story': 'https://wordpress.com/support/wordpress-editor/blocks/story-block/',
-  'jetpack/revue': 'https://wordpress.com/support/wordpress-editor/blocks/revue-block/',
-  'jetpack/rating-star': 'https://wordpress.com/support/wordpress-editor/blocks/ratings-block/',
-  'jetpack/related-posts': 'https://wordpress.com/support/wordpress-editor/blocks/related-posts-block/',
-  'jetpack/repeat-visitor': 'https://wordpress.com/support/wordpress-editor/blocks/repeat-visitor-block/',
-  'jetpack/podcast-player': 'https://wordpress.com/support/wordpress-editor/blocks/podcast-player-block/',
-  'jetpack/opentable': 'https://wordpress.com/support/wordpress-editor/blocks/opentable-block/',
-  'jetpack/map': 'https://wordpress.com/support/wordpress-editor/blocks/map-block/',
-  'jetpack/image-compare': 'https://wordpress.com/support/wordpress-editor/blocks/image-compare-block/',
-  'jetpack/gif': 'https://wordpress.com/support/wordpress-editor/blocks/gif-block/',
-  'jetpack/event-countdown': 'https://wordpress.com/support/wordpress-editor/blocks/event-countdown-block/',
-  'jetpack/donations': 'https://wordpress.com/support/wordpress-editor/blocks/donations/',
-  'jetpack/calendly': 'https://wordpress.com/support/wordpress-editor/blocks/calendly-block/',
-  'jetpack/business-hours': 'https://wordpress.com/support/wordpress-editor/blocks/business-hours-block/',
-  'jetpack/wordads': 'https://wordpress.com/support/wordpress-editor/blocks/ad-block/',
-  'jetpack/payments-intro': 'https://wordpress.com/support/wordpress-editor/blocks/payments/',
-  'jetpack/contact-info': 'https://wordpress.com/support/wordpress-editor/blocks/contact-info-block/',
-  'jetpack/tiled-gallery': 'https://wordpress.com/support/wordpress-editor/blocks/tiled-gallery-block/',
-  'jetpack/slideshow': 'https://wordpress.com/support/wordpress-editor/blocks/slideshow-block/',
-  'jetpack/subscriptions': 'https://wordpress.com/support/wordpress-editor/blocks/subscription-form-block/',
-  'jetpack/contact-form': 'https://wordpress.com/support/wordpress-editor/blocks/form-block/',
-  'jetpack/layout-grid': 'https://wordpress.com/support/wordpress-editor/blocks/layout-grid-block/',
-  'jetpack/mailchimp': 'https://wordpress.com/support/wordpress-editor/blocks/mailchimp-block/',
-  'jetpack/paywall': 'https://wordpress.com/support/paid-newsletters/#use-the-paywall-block'
-};
-const blockLinksWithVariations = {
-  'core/group': {
-    group: 'https://wordpress.com/support/wordpress-editor/blocks/group-block/',
-    'group-row': 'https://wordpress.com/support/wordpress-editor/blocks/row-block/',
-    'group-stack': 'https://wordpress.com/support/wordpress-editor/blocks/row-block/'
+  'core/template-part': {
+    link: 'https://wordpress.com/support/full-site-editing/theme-blocks/template-part-block/',
+    postId: 192398
+  },
+  'core/site-title': {
+    link: 'https://wordpress.com/support/full-site-editing/theme-blocks/site-title-block/',
+    postId: 184569
+  },
+  'core/site-tagline': {
+    link: 'https://wordpress.com/support/full-site-editing/theme-blocks/site-tagline-block/',
+    postId: 184553
+  },
+  'core/site-logo': {
+    link: 'https://wordpress.com/support/full-site-editing/theme-blocks/site-logo-block/',
+    postId: 184537
+  },
+  'core/page-list': {
+    link: 'https://wordpress.com/support/full-site-editing/theme-blocks/page-list-block/',
+    postId: 180696
+  },
+  'core/loginout': {
+    link: 'https://wordpress.com/support/full-site-editing/theme-blocks/login-out-block/',
+    postId: 184610
+  },
+  'core/video': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/video-block/',
+    postId: 149045
+  },
+  'core/verse': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/verse-block/',
+    postId: 149992
+  },
+  'core/spacer': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/spacer-block/',
+    postId: 148996
+  },
+  'core/shortcode': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/shortcode-block/',
+    postId: 149209
+  },
+  'core/separator': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/separator-block/',
+    postId: 149012
+  },
+  'core/search': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/search-block/',
+    postId: 187104
+  },
+  'core/rss': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/rss-block/',
+    postId: 174794
+  },
+  'core/navigation': {
+    link: 'https://wordpress.com/support/site-editing/theme-blocks/navigation-block/',
+    postId: 162159
+  },
+  'core/tag-cloud': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/tag-cloud-block/',
+    postId: 188957
+  },
+  'core/quote': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/quote-block/',
+    postId: 148575
+  },
+  'core/pullquote': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/pullquote-block/',
+    postId: 149344
+  },
+  'core/preformatted': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/preformatted-block/',
+    postId: 149339
+  },
+  'core/paragraph': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/paragraph-block/',
+    postId: 148375
+  },
+  'core/more': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/more-block/',
+    postId: 148614
+  },
+  'core/list': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/list-block/',
+    postId: 148563
+  },
+  'core/latest-posts': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/latest-posts-block/',
+    postId: 149818
+  },
+  'core/latest-comments': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/latest-comments-block/',
+    postId: 149811
+  },
+  'core/heading': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/heading-block/',
+    postId: 148403
+  },
+  'core/file': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/file-block/',
+    postId: 148586
+  },
+  'core/embed': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/embed-block/',
+    postId: 150644
+  },
+  'core/html': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/custom-html-block/',
+    postId: 149059
+  },
+  'core/code': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/code-block/',
+    postId: 149042
+  },
+  'core/freeform': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/classic-block/',
+    postId: 149026
+  },
+  'core/categories': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/categories-block/',
+    postId: 149793
+  },
+  'core/calendar': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/calendar-block/',
+    postId: 171935
+  },
+  'core/audio': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/audio-block/',
+    postId: 148670
+  },
+  'core/archives': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/archives-block/',
+    postId: 149225
+  },
+  'core/query': {
+    link: 'https://wordpress.com/support/full-site-editing/theme-blocks/query-loop-block/',
+    postId: 184188
+  },
+  'core/media-text': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/media-text-block/',
+    postId: 151100
+  },
+  'core/table': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/table-block/',
+    postId: 149666
+  },
+  'core/social-links': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/social-links-block/',
+    postId: 159466
+  },
+  'core/columns': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/columns-block/',
+    postId: 149073
+  },
+  'core/image': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/image-block/',
+    postId: 148378
+  },
+  'core/cover': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/cover-block/',
+    postId: 148675
+  },
+  'core/buttons': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/buttons-block/',
+    postId: 162116
+  },
+  'core/gallery': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/gallery-block/',
+    postId: 148667
+  },
+  'core/post-content': {
+    link: 'https://wordpress.com/support/full-site-editing/theme-blocks/post-content-block/',
+    postId: 216265
+  },
+  'core/table-of-contents': {
+    link: 'https://wordpress.com/support/wordpress-editor/table-of-contents-block/',
+    postId: 201571
+  },
+  'core/comments': {
+    link: 'https://wordpress.com/support/full-site-editing/theme-blocks/comments-block/',
+    postId: 218903
+  },
+  'core/post-time-to-read': {
+    link: 'https://wordpress.com/support/site-editing/theme-blocks/time-to-read-block',
+    postId: 243241
+  },
+  'syntaxhighlighter/code': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/syntax-highlighter-code-block/',
+    postId: 4743
+  },
+  'crowdsignal-forms/vote': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/vote-block/',
+    postId: 174824
+  },
+  'crowdsignal-forms/poll': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/poll-block/',
+    postId: 170183
+  },
+  'crowdsignal-forms/nps': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/measure-nps-block/',
+    postId: 182393
+  },
+  'crowdsignal-forms/feedback': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/feedback-button-block/',
+    postId: 183578
+  },
+  'a8c/posts-carousel': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/posts-carousel-block/',
+    postId: 166417
+  },
+  'premium-content/container': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/premium-content-block/',
+    postId: 243475
+  },
+  'a8c/blog-posts': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/blog-posts-block/',
+    postId: 158419
+  },
+  'jetpack/send-a-message': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/whatsapp-button-block/',
+    postId: 169728
+  },
+  'jetpack/blogroll': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/blogroll-block/',
+    postId: 291406
+  },
+  'jetpack/timeline': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/timeline-block/',
+    postId: 158453
+  },
+  'jetpack/story': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/story-block/',
+    postId: 176320
+  },
+  'jetpack/revue': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/revue-block/',
+    postId: 67810
+  },
+  'jetpack/rating-star': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/ratings-block/',
+    postId: 158224
+  },
+  'jetpack/related-posts': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/related-posts-block/',
+    postId: 1545
+  },
+  'jetpack/repeat-visitor': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/repeat-visitor-block/',
+    postId: 154471
+  },
+  'jetpack/podcast-player': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/podcast-player-block/',
+    postId: 163160
+  },
+  'jetpack/opentable': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/opentable-block/',
+    postId: 162208
+  },
+  'jetpack/map': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/map-block/',
+    postId: 149684
+  },
+  'jetpack/image-compare': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/image-compare-block/',
+    postId: 168169
+  },
+  'jetpack/gif': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/gif-block/',
+    postId: 174810
+  },
+  'jetpack/event-countdown': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/event-countdown-block/',
+    postId: 159246
+  },
+  'jetpack/donations': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/donations/',
+    postId: 171110
+  },
+  'jetpack/calendly': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/calendly-block/',
+    postId: 162199
+  },
+  'jetpack/business-hours': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/business-hours-block/',
+    postId: 173136
+  },
+  'jetpack/wordads': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/ad-block/',
+    postId: 190916
+  },
+  'jetpack/payments-intro': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/payments/',
+    postId: 169123
+  },
+  'jetpack/contact-info': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/contact-info-block/',
+    postId: 186162
+  },
+  'jetpack/tiled-gallery': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/tiled-gallery-block/',
+    postId: 150746
+  },
+  'jetpack/slideshow': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/slideshow-block/',
+    postId: 157055
+  },
+  'jetpack/subscriptions': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/subscription-form-block/',
+    postId: 170164
+  },
+  'jetpack/contact-form': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/form-block/',
+    postId: 168307
+  },
+  'jetpack/layout-grid': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/layout-grid-block/',
+    postId: 160172
+  },
+  'jetpack/mailchimp': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/mailchimp-block/',
+    postId: 152657
+  },
+  'jetpack/paywall': {
+    link: 'https://wordpress.com/support/paid-newsletters/#use-the-paywall-block',
+    postId: 168381
   }
 };
-const childrenBlockLinksWithDifferentUrl = {
+const blockInfoWithVariations = {
+  'core/group': {
+    group: {
+      link: 'https://wordpress.com/support/wordpress-editor/blocks/group-block/',
+      postId: 161882
+    },
+    'group-row': {
+      link: 'https://wordpress.com/support/wordpress-editor/blocks/row-block/',
+      postId: 190036
+    },
+    'group-stack': {
+      link: 'https://wordpress.com/support/wordpress-editor/blocks/row-block/',
+      postId: 190036
+    }
+  }
+};
+const childrenBlockInfoWithDifferentUrl = {
   /**
    * Core Blocks
    */
-  'core/nextpage': 'https://wordpress.com/support/wordpress-editor/blocks/page-break-block/'
+  'core/nextpage': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/page-break-block/',
+    postId: 149374
+  }
 };
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (blockLinks);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (blockInfoMapping);
 
 /***/ }),
 
@@ -2561,12 +5090,13 @@ const childrenBlockLinksWithDifferentUrl = {
 
 
 
-const createLocalizedDescriptionWithLearnMore = (title, description, url) => {
+const createLocalizedDescriptionWithLearnMore = (title, description, url, postId) => {
   const localizedUrl = (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_4__/* .localizeUrl */ .aq)(url, window.wpcomBlockDescriptionLinksLocale);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createInterpolateElement)('<InlineSupportLink />', {
     InlineSupportLink: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_inline_support_link__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z, {
       title: String(title),
-      url: localizedUrl
+      url: localizedUrl,
+      postId: postId
     }, description)
   });
 };
@@ -2588,21 +5118,23 @@ const addBlockSupportLinks = (settings, name) => {
     return settings;
   }
   processedBlocks[name] = true;
-  const additonalDesc = _block_links_map__WEBPACK_IMPORTED_MODULE_2__/* .childrenBlockLinksWithDifferentUrl */ .k_[name] || _block_links_map__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .ZP[blockName];
+  const additonalDescLink = _block_links_map__WEBPACK_IMPORTED_MODULE_2__/* .childrenBlockInfoWithDifferentUrl */ .gM[name]?.link || _block_links_map__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .ZP[blockName]?.link;
+  const additionalDescPostId = _block_links_map__WEBPACK_IMPORTED_MODULE_2__/* .childrenBlockInfoWithDifferentUrl */ .gM[name]?.postId || _block_links_map__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .ZP[blockName]?.postId;
 
   /**
    * Some elements are children, but have their own url for Learn More, and we want to show those.
    */
-  if (additonalDesc) {
-    settings.description = createLocalizedDescriptionWithLearnMore(String(settings.title), settings.description, additonalDesc);
+  if (additonalDescLink && additionalDescPostId) {
+    settings.description = createLocalizedDescriptionWithLearnMore(String(settings.title), settings.description, additonalDescLink, additionalDescPostId);
   }
-  if (_block_links_map__WEBPACK_IMPORTED_MODULE_2__/* .blockLinksWithVariations */ .Y6[name] && settings.variations && Array.isArray(settings.variations)) {
+  if (_block_links_map__WEBPACK_IMPORTED_MODULE_2__/* .blockInfoWithVariations */ .yd[name] && settings.variations && Array.isArray(settings.variations)) {
     settings.variations = settings.variations.map(variation => {
-      const link = _block_links_map__WEBPACK_IMPORTED_MODULE_2__/* .blockLinksWithVariations */ .Y6[name][variation.name];
+      const link = _block_links_map__WEBPACK_IMPORTED_MODULE_2__/* .blockInfoWithVariations */ .yd[name][variation.name]?.link;
+      const postId = _block_links_map__WEBPACK_IMPORTED_MODULE_2__/* .blockInfoWithVariations */ .yd[name][variation.name]?.postId;
       if (!link) {
         return variation;
       }
-      variation.description = createLocalizedDescriptionWithLearnMore(variation.title, variation.description, link);
+      variation.description = createLocalizedDescriptionWithLearnMore(variation.title, variation.description, link, postId);
       return variation;
     });
   }
@@ -2622,30 +5154,57 @@ const addBlockSupportLinks = (settings, name) => {
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9307);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6115);
+/* harmony import */ var _automattic_help_center_src_stores__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(8865);
+/* harmony import */ var _automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(7498);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5609);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5736);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9196);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9818);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5736);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9196);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_5__);
 
 
 
 
-const __ = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__;
+
+
+
+const __ = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__;
 
 function DescriptionSupportLink({
   children,
   title,
-  url
+  url,
+  postId
 }) {
   // This was cooked up to only apply the link in the BlockEditor sidebar.
   // Since there was no identifier in the environment to differentiate.
-  const [ref, setRef] = (0,react__WEBPACK_IMPORTED_MODULE_4__.useState)();
+  const [ref, setRef] = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)();
+  const {
+    setShowHelpCenter,
+    setShowSupportDoc
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useDispatch)(_automattic_help_center_src_stores__WEBPACK_IMPORTED_MODULE_6__/* .HELP_CENTER_STORE */ .aM);
   if (ref && !ref?.closest('.block-editor-block-inspector')) {
     return children;
   }
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, children, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("br", null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ExternalLink, {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, children, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("br", null), setShowHelpCenter ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    onClick: () => {
+      setShowHelpCenter(true);
+      setShowSupportDoc((0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_7__/* .localizeUrl */ .aq)(url), postId);
+      (0,_automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__/* .recordTracksEvent */ .jN)('calypso_block_description_support_link_click', {
+        block: title,
+        support_link: url
+      });
+    },
+    style: {
+      marginTop: 10
+    },
+    ref: reference => ref !== reference && setRef(reference),
+    className: "fse-inline-support-link is-compact",
+    variant: "primary"
+  }, __('Learn more', 'full-site-editing')) : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ExternalLink, {
     onClick: () => {
       (0,_automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__/* .recordTracksEvent */ .jN)('calypso_block_description_support_link_click', {
         block: title,
@@ -3414,6 +5973,2484 @@ const setTrackingPrefs = newPrefs => {
   return newOptions;
 };
 /* unused harmony default export */ var __WEBPACK_DEFAULT_EXPORT__ = ((/* unused pure expression or super */ null && (setTrackingPrefs)));
+
+/***/ }),
+
+/***/ 9770:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// TODO: Revisit whether it is useful for the Desktop app to override the following properties:
+// signup_url, login_url, logout_url and discover_logged_out_redirect_url
+
+const config = {
+  env: 'production',
+  env_id: 'desktop',
+  client_slug: 'desktop',
+  readerFollowingSource: 'desktop',
+  boom_analytics_key: 'desktop',
+  google_recaptcha_site_key: '6LdoXcAUAAAAAM61KvdgP8xwnC19YuzAiOWn5Wtn'
+};
+const features = {
+  desktop: true,
+  'desktop-promo': false,
+  'login/social-first': false,
+  'sign-in-with-apple': false,
+  // Note: there is also a sign-in-with-apple/redirect flag
+  // that may/may not be relevant to override for the Desktop app.
+  'signup/social': false,
+  'signup/social-first': false,
+  'login/magic-login': false,
+  'bilmur-script': false
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (data => {
+  data = Object.assign(data, config);
+  if (data.features) {
+    data.features = Object.assign(data.features, features);
+  }
+  if (window.electron && window.electron.features) {
+    data.features = Object.assign(data.features ?? {}, window.electron.features);
+  }
+  return data;
+});
+
+/***/ }),
+
+/***/ 899:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ZP: () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   _k: () => (/* binding */ isEnabled)
+/* harmony export */ });
+/* unused harmony exports isCalypsoLive, enabledFeatures, enable, disable */
+/* harmony import */ var _automattic_create_calypso_config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(544);
+/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3421);
+/* harmony import */ var _desktop__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9770);
+
+
+
+/**
+ * Manages config flags for various deployment builds
+ *
+ * @module config/index
+ */
+if (false) {}
+if (!window.configData) {
+  if (false) {}
+  window.configData = {};
+}
+const isDesktop = window.electron !== undefined;
+let configData;
+if (isDesktop) {
+  configData = (0,_desktop__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z)(window.configData);
+} else {
+  configData = window.configData;
+}
+
+// calypso.live matches
+// hash-abcd1234.calypso.live matches
+// calypso.live.com doesn't match
+const CALYPSO_LIVE_REGEX = /^([a-zA-Z0-9-]+\.)?calypso\.live$/;
+
+// check if the current browser location is *.calypso.live
+function isCalypsoLive() {
+  return  true && CALYPSO_LIVE_REGEX.test(window.location.host);
+}
+function applyFlags(flagsString, modificationMethod) {
+  const flags = flagsString.split(',');
+  flags.forEach(flagRaw => {
+    const flag = flagRaw.replace(/^[-+]/, '');
+    const enabled = !/^-/.test(flagRaw);
+    if (configData.features) {
+      configData.features[flag] = enabled;
+      // eslint-disable-next-line no-console
+      console.log('%cConfig flag %s via %s: %s', 'font-weight: bold;', enabled ? 'enabled' : 'disabled', modificationMethod, flag);
+    }
+  });
+}
+const flagEnvironments = ['wpcalypso', 'horizon', 'stage', 'jetpack-cloud-stage'];
+if ( false || flagEnvironments.includes(configData.env_id) || isCalypsoLive()) {
+  const cookies = cookie__WEBPACK_IMPORTED_MODULE_1__.parse(document.cookie);
+  if (cookies.flags) {
+    applyFlags(cookies.flags, 'cookie');
+  }
+  try {
+    const session = window.sessionStorage.getItem('flags');
+    if (session) {
+      applyFlags(session, 'sessionStorage');
+    }
+  } catch (e) {
+    // in private context, accessing session storage can throw
+  }
+  const match = document.location.search && document.location.search.match(/[?&]flags=([^&]+)(&|$)/);
+  if (match) {
+    applyFlags(decodeURIComponent(match[1]), 'URL');
+  }
+}
+const configApi = (0,_automattic_create_calypso_config__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)(configData);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (configApi);
+const isEnabled = configApi.isEnabled;
+const enabledFeatures = configApi.enabledFeatures;
+const enable = configApi.enable;
+const disable = configApi.disable;
+
+/***/ }),
+
+/***/ 544:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * Returns configuration value for given key
+ *
+ * If the requested key isn't defined in the configuration
+ * data then this will report the failure with either an
+ * error or a console warning.
+ *
+ * When in the 'development' NODE_ENV it will raise an error
+ * to crash execution early. However, because many modules
+ * call this function in the module-global scope a failure
+ * here can not only crash that module but also entire
+ * application flows as well as trigger unexpected and
+ * unwanted behaviors. Therefore if the NODE_ENV is not
+ * 'development' we will return `undefined` and log a message
+ * to the console instead of halting the execution thread.
+ *
+ * The config files are loaded in sequence: _shared.json, {env}.json, {env}.local.json
+ *
+ * @see server/config/parser.js
+ * @param data Configurat data.
+ * @throws {ReferenceError} when key not defined in the config (NODE_ENV=development only)
+ * @returns A function that gets the value of property named by the key
+ */
+const config = data => key => {
+  if (key in data) {
+    return data[key];
+  }
+  if (false) {}
+
+  // display console error only in a browser
+  // (not in tests, for example)
+  if (true) {
+    // eslint-disable-next-line no-console
+    console.error('%cCore Error: ' + `%cCould not find config value for key %c${key}%c. ` + 'Please make sure that if you need it then it has a default value assigned in ' + '%cconfig/_shared.json' + '%c.', 'color: red; font-size: 120%',
+    // error prefix
+    'color: black;',
+    // message
+    'color: blue;',
+    // key name
+    'color: black;',
+    // message
+    'color: blue;',
+    // config file reference
+    'color: black' // message
+    );
+  }
+  return undefined;
+};
+
+/**
+ * Checks whether a specific feature is enabled.
+ *
+ * @param data the json environment configuration to use for getting config values
+ * @returns A function that takes a feature name and returns true when the feature is enabled.
+ */
+const isEnabled = data => feature => data.features && !!data.features[feature] || false;
+
+/**
+ * Gets a list of all enabled features.
+ *
+ * @param data A set of config data (Not used by general users, is pre-filled via currying).
+ * @returns List of enabled features (strings).
+ */
+const enabledFeatures = data => () => {
+  if (!data.features) {
+    return [];
+  }
+  return Object.entries(data.features).reduce((enabled, [feature, isEnabled]) => isEnabled ? [...enabled, feature] : enabled, []);
+};
+
+/**
+ * Enables a specific feature.
+ *
+ * @param data the json environment configuration to use for getting config values
+ */
+const enable = data => feature => {
+  if (data.features) {
+    data.features[feature] = true;
+  }
+};
+
+/**
+ * Disables a specific feature.
+ *
+ * @param data the json environment configuration to use for getting config values
+ */
+
+const disable = data => feature => {
+  if (data.features) {
+    data.features[feature] = false;
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (data => {
+  const configApi = config(data);
+  configApi.isEnabled = isEnabled(data);
+  configApi.enabledFeatures = enabledFeatures(data);
+  configApi.enable = enable(data);
+  configApi.disable = disable(data);
+  return configApi;
+});
+
+/***/ }),
+
+/***/ 2865:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   receiveHasSeenWhatsNewModal: () => (/* binding */ receiveHasSeenWhatsNewModal),
+/* harmony export */   resetStore: () => (/* binding */ resetStore),
+/* harmony export */   setHasSeenWhatsNewModal: () => (/* binding */ setHasSeenWhatsNewModal),
+/* harmony export */   setInitialRoute: () => (/* binding */ setInitialRoute),
+/* harmony export */   setIsMinimized: () => (/* binding */ setIsMinimized),
+/* harmony export */   setMessage: () => (/* binding */ setMessage),
+/* harmony export */   setShowHelpCenter: () => (/* binding */ setShowHelpCenter),
+/* harmony export */   setShowMessagingChat: () => (/* binding */ setShowMessagingChat),
+/* harmony export */   setShowMessagingLauncher: () => (/* binding */ setShowMessagingLauncher),
+/* harmony export */   setShowMessagingWidget: () => (/* binding */ setShowMessagingWidget),
+/* harmony export */   setShowSupportDoc: () => (/* binding */ setShowSupportDoc),
+/* harmony export */   setSite: () => (/* binding */ setSite),
+/* harmony export */   setSubject: () => (/* binding */ setSubject),
+/* harmony export */   setUnreadCount: () => (/* binding */ setUnreadCount),
+/* harmony export */   setUserDeclaredSite: () => (/* binding */ setUserDeclaredSite),
+/* harmony export */   setUserDeclaredSiteUrl: () => (/* binding */ setUserDeclaredSiteUrl),
+/* harmony export */   startHelpCenterChat: () => (/* binding */ startHelpCenterChat)
+/* harmony export */ });
+/* harmony import */ var _wordpress_data_controls__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3418);
+/* harmony import */ var _wordpress_data_controls__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data_controls__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8552);
+/* harmony import */ var _wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3661);
+
+
+
+const receiveHasSeenWhatsNewModal = value => ({
+  type: 'HELP_CENTER_SET_SEEN_WHATS_NEW_MODAL',
+  value
+});
+function* setHasSeenWhatsNewModal(value) {
+  let response;
+  if ((0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_1__/* .canAccessWpcomApis */ .aO)()) {
+    response = yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ ._9)({
+      path: `/block-editor/has-seen-whats-new-modal`,
+      apiNamespace: 'wpcom/v2',
+      method: 'PUT',
+      body: {
+        has_seen_whats_new_modal: value
+      }
+    });
+  } else {
+    response = yield (0,_wordpress_data_controls__WEBPACK_IMPORTED_MODULE_0__.apiFetch)({
+      global: true,
+      path: `/wpcom/v2/block-editor/has-seen-whats-new-modal`,
+      method: 'PUT',
+      data: {
+        has_seen_whats_new_modal: value
+      }
+    });
+  }
+  return receiveHasSeenWhatsNewModal(response.has_seen_whats_new_modal);
+}
+const setSite = site => ({
+  type: 'HELP_CENTER_SET_SITE',
+  site
+});
+const setUnreadCount = count => ({
+  type: 'HELP_CENTER_SET_UNREAD_COUNT',
+  count
+});
+const setInitialRoute = route => ({
+  type: 'HELP_CENTER_SET_INITIAL_ROUTE',
+  route
+});
+const setIsMinimized = minimized => ({
+  type: 'HELP_CENTER_SET_MINIMIZED',
+  minimized
+});
+const setShowMessagingLauncher = show => ({
+  type: 'HELP_CENTER_SET_SHOW_MESSAGING_LAUNCHER',
+  show
+});
+const setShowMessagingWidget = show => ({
+  type: 'HELP_CENTER_SET_SHOW_MESSAGING_WIDGET',
+  show
+});
+const setShowHelpCenter = function* (show) {
+  if (!show) {
+    yield setInitialRoute(undefined);
+    yield setIsMinimized(false);
+  } else {
+    yield setShowMessagingWidget(false);
+  }
+  return {
+    type: 'HELP_CENTER_SET_SHOW',
+    show
+  };
+};
+const setSubject = subject => ({
+  type: 'HELP_CENTER_SET_SUBJECT',
+  subject
+});
+const setMessage = message => ({
+  type: 'HELP_CENTER_SET_MESSAGE',
+  message
+});
+const setUserDeclaredSiteUrl = url => ({
+  type: 'HELP_CENTER_SET_USER_DECLARED_SITE_URL',
+  url
+});
+const setUserDeclaredSite = site => ({
+  type: 'HELP_CENTER_SET_USER_DECLARED_SITE',
+  site
+});
+const resetStore = () => ({
+  type: 'HELP_CENTER_RESET_STORE'
+});
+const startHelpCenterChat = function* (site, message) {
+  yield setInitialRoute('/contact-form?mode=CHAT');
+  yield setSite(site);
+  yield setMessage(message);
+  yield setShowHelpCenter(true);
+};
+const setShowMessagingChat = function* () {
+  yield setShowHelpCenter(false);
+  yield setShowMessagingLauncher(true);
+  yield setShowMessagingWidget(true);
+  yield resetStore();
+};
+const setShowSupportDoc = function* (link, postId) {
+  const params = new URLSearchParams({
+    link,
+    postId: String(postId),
+    cacheBuster: String(Date.now())
+  });
+  yield setInitialRoute(`/post/?${params}`);
+  yield setShowHelpCenter(true);
+};
+
+/***/ }),
+
+/***/ 2193:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   L: () => (/* binding */ STORE_KEY)
+/* harmony export */ });
+const STORE_KEY = 'automattic/help-center';
+
+/***/ }),
+
+/***/ 7624:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   z: () => (/* binding */ register)
+/* harmony export */ });
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9818);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_data_controls__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3418);
+/* harmony import */ var _wordpress_data_controls__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data_controls__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _plugins__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6963);
+/* harmony import */ var _wpcom_request_controls__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(3661);
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(2865);
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2193);
+/* harmony import */ var _reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1654);
+/* harmony import */ var _selectors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(5601);
+
+
+
+
+
+
+
+
+let isRegistered = false;
+function register() {
+  (0,_plugins__WEBPACK_IMPORTED_MODULE_2__/* .registerPlugins */ .z)();
+  if (!isRegistered) {
+    (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.registerStore)(_constants__WEBPACK_IMPORTED_MODULE_3__/* .STORE_KEY */ .L, {
+      actions: _actions__WEBPACK_IMPORTED_MODULE_4__,
+      reducer: _reducer__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z,
+      controls: {
+        ..._wordpress_data_controls__WEBPACK_IMPORTED_MODULE_1__.controls,
+        ..._wpcom_request_controls__WEBPACK_IMPORTED_MODULE_6__/* .controls */ .ai
+      },
+      selectors: _selectors__WEBPACK_IMPORTED_MODULE_7__,
+      persist: ['site', 'message', 'userDeclaredSite', 'userDeclaredSiteUrl', 'subject']
+    });
+    isRegistered = true;
+  }
+  return _constants__WEBPACK_IMPORTED_MODULE_3__/* .STORE_KEY */ .L;
+}
+
+/***/ }),
+
+/***/ 1654:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9818);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
+
+const showHelpCenter = (state, action) => {
+  switch (action.type) {
+    case 'HELP_CENTER_SET_SHOW':
+      return action.show;
+  }
+  return state;
+};
+const showMessagingLauncher = (state, action) => {
+  switch (action.type) {
+    case 'HELP_CENTER_SET_SHOW_MESSAGING_LAUNCHER':
+      return action.show;
+  }
+  return state;
+};
+const showMessagingWidget = (state, action) => {
+  switch (action.type) {
+    case 'HELP_CENTER_SET_SHOW_MESSAGING_WIDGET':
+      return action.show;
+  }
+  return state;
+};
+const hasSeenWhatsNewModal = (state, action) => {
+  switch (action.type) {
+    case 'HELP_CENTER_SET_SEEN_WHATS_NEW_MODAL':
+      return action.value;
+  }
+  return state;
+};
+const isMinimized = (state = false, action) => {
+  switch (action.type) {
+    case 'HELP_CENTER_SET_MINIMIZED':
+      return action.minimized;
+  }
+  return state;
+};
+const site = (state, action) => {
+  if (action.type === 'HELP_CENTER_RESET_STORE') {
+    return undefined;
+  } else if (action.type === 'HELP_CENTER_SET_SITE') {
+    return action.site;
+  }
+  return state;
+};
+const subject = (state, action) => {
+  if (action.type === 'HELP_CENTER_RESET_STORE') {
+    return undefined;
+  } else if (action.type === 'HELP_CENTER_SET_SUBJECT') {
+    return action.subject;
+  }
+  return state;
+};
+const unreadCount = (state = 0, action) => {
+  if (action.type === 'HELP_CENTER_SET_UNREAD_COUNT') {
+    return action.count;
+  } else if (action.type === 'HELP_CENTER_RESET_STORE') {
+    return 0;
+  }
+  return state;
+};
+const message = (state, action) => {
+  if (action.type === 'HELP_CENTER_RESET_STORE') {
+    return undefined;
+  } else if (action.type === 'HELP_CENTER_SET_MESSAGE') {
+    return action.message;
+  }
+  return state;
+};
+const userDeclaredSiteUrl = (state, action) => {
+  if (action.type === 'HELP_CENTER_RESET_STORE') {
+    return undefined;
+  } else if (action.type === 'HELP_CENTER_SET_USER_DECLARED_SITE_URL') {
+    return action.url;
+  }
+  return state;
+};
+const userDeclaredSite = (state, action) => {
+  if (action.type === 'HELP_CENTER_RESET_STORE') {
+    return undefined;
+  } else if (action.type === 'HELP_CENTER_SET_USER_DECLARED_SITE') {
+    return action.site;
+  }
+  return state;
+};
+const initialRoute = (state, action) => {
+  if (action.type === 'HELP_CENTER_SET_INITIAL_ROUTE') {
+    return action.route;
+  }
+  return state;
+};
+const reducer = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.combineReducers)({
+  showHelpCenter,
+  showMessagingLauncher,
+  showMessagingWidget,
+  site,
+  subject,
+  message,
+  userDeclaredSite,
+  userDeclaredSiteUrl,
+  hasSeenWhatsNewModal,
+  isMinimized,
+  unreadCount,
+  initialRoute
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (reducer);
+
+/***/ }),
+
+/***/ 5601:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getHasSeenWhatsNewModal: () => (/* binding */ getHasSeenWhatsNewModal),
+/* harmony export */   getInitialRoute: () => (/* binding */ getInitialRoute),
+/* harmony export */   getIsMinimized: () => (/* binding */ getIsMinimized),
+/* harmony export */   getMessage: () => (/* binding */ getMessage),
+/* harmony export */   getSite: () => (/* binding */ getSite),
+/* harmony export */   getSubject: () => (/* binding */ getSubject),
+/* harmony export */   getUnreadCount: () => (/* binding */ getUnreadCount),
+/* harmony export */   getUserDeclaredSite: () => (/* binding */ getUserDeclaredSite),
+/* harmony export */   getUserDeclaredSiteUrl: () => (/* binding */ getUserDeclaredSiteUrl),
+/* harmony export */   isHelpCenterShown: () => (/* binding */ isHelpCenterShown),
+/* harmony export */   isMessagingLauncherShown: () => (/* binding */ isMessagingLauncherShown),
+/* harmony export */   isMessagingWidgetShown: () => (/* binding */ isMessagingWidgetShown)
+/* harmony export */ });
+const isHelpCenterShown = state => state.showHelpCenter;
+const isMessagingLauncherShown = state => state.showMessagingLauncher;
+const isMessagingWidgetShown = state => state.showMessagingWidget;
+const getSite = state => state.site;
+const getSubject = state => state.subject;
+const getMessage = state => state.message;
+const getUserDeclaredSiteUrl = state => state.userDeclaredSiteUrl;
+const getUserDeclaredSite = state => state.userDeclaredSite;
+const getUnreadCount = state => state.unreadCount;
+const getIsMinimized = state => state.isMinimized;
+const getHasSeenWhatsNewModal = state => state.hasSeenWhatsNewModal;
+const getInitialRoute = state => state.initialRoute;
+
+/***/ }),
+
+/***/ 6963:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   z: () => (/* binding */ registerPlugins)
+/* harmony export */ });
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9818);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _one_week_persistence_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7246);
+
+
+let isRegistered = false;
+const registerPlugins = () => {
+  if (isRegistered) {
+    return;
+  }
+  isRegistered = true;
+
+  /**
+   * Register plugins for data-stores
+   */
+  (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.use)(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.plugins.persistence, _one_week_persistence_config__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z);
+};
+
+/***/ }),
+
+/***/ 7246:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/*
+    Defines the options used for the @wp/data persistence plugin, 
+    which include a persistent storage implementation to add data expiration handling.
+*/
+const storageKey = 'WPCOM_7_DAYS_PERSISTENCE';
+const PERSISTENCE_INTERVAL = 7 * 24 * 3600000; // days * hours in days * ms in hour
+const STORAGE_KEY = storageKey;
+const STORAGE_TS_KEY = storageKey + '_TS';
+
+// A plain object fallback if localStorage is not available
+const objStore = {};
+const objStorage = {
+  getItem(key) {
+    if (objStore.hasOwnProperty(key)) {
+      return objStore[key];
+    }
+    return null;
+  },
+  setItem(key, value) {
+    objStore[key] = String(value);
+  },
+  removeItem(key) {
+    delete objStore[key];
+  }
+};
+
+// Make sure localStorage support exists
+const localStorageSupport = () => {
+  try {
+    window.localStorage.setItem('WP_ONBOARD_TEST', '1');
+    window.localStorage.removeItem('WP_ONBOARD_TEST');
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
+// Choose the right storage implementation
+const storageHandler = localStorageSupport() ? window.localStorage : objStorage;
+
+// Persisted data expires after seven days
+const isNotExpired = timestampStr => {
+  const timestamp = Number(timestampStr);
+  return Boolean(timestamp) && timestamp + PERSISTENCE_INTERVAL > Date.now();
+};
+
+// Check for "fresh" query param
+const hasFreshParam = () => {
+  return new URLSearchParams(window.location.search).has('fresh');
+};
+
+// Handle data expiration by providing a storage object override to the @wp/data persistence plugin.
+const storage = {
+  getItem(key) {
+    const timestamp = storageHandler.getItem(STORAGE_TS_KEY);
+    if (timestamp && isNotExpired(timestamp) && !hasFreshParam()) {
+      return storageHandler.getItem(key);
+    }
+    storageHandler.removeItem(STORAGE_KEY);
+    storageHandler.removeItem(STORAGE_TS_KEY);
+    return null;
+  },
+  setItem(key, value) {
+    storageHandler.setItem(STORAGE_TS_KEY, JSON.stringify(Date.now()));
+    storageHandler.setItem(key, value);
+  }
+};
+const persistOptions = {
+  storageKey: STORAGE_KEY,
+  storage
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (persistOptions);
+
+/***/ }),
+
+/***/ 8459:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   d: () => (/* binding */ createActions)
+/* harmony export */ });
+/* harmony import */ var _automattic_calypso_config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(899);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5736);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3661);
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9639);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3691);
+
+
+const __ = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__;
+
+
+
+// Import from a specific file directly to avoid the circular dependencies
+
+function createActions(clientCreds) {
+  const fetchSite = () => ({
+    type: 'FETCH_SITE'
+  });
+  const fetchNewSite = () => ({
+    type: 'FETCH_NEW_SITE'
+  });
+  const receiveNewSite = response => ({
+    type: 'RECEIVE_NEW_SITE',
+    response
+  });
+  const receiveNewSiteFailed = error => ({
+    type: 'RECEIVE_NEW_SITE_FAILED',
+    error
+  });
+  function* createSite(params) {
+    yield fetchNewSite();
+    try {
+      const {
+        authToken,
+        ...providedParams
+      } = params;
+      const defaultParams = {
+        client_id: clientCreds.client_id,
+        client_secret: clientCreds.client_secret,
+        // will find an available `*.wordpress.com` url based on the `blog_name`
+        find_available_url: true,
+        // Private site is default, but overridable, setting
+        public: -1
+      };
+      const mergedParams = {
+        ...defaultParams,
+        ...providedParams,
+        // Set to false because site validation should be a separate action
+        validate: false
+      };
+      const newSite = yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ ._9)({
+        path: '/sites/new',
+        apiVersion: '1.1',
+        method: 'post',
+        body: mergedParams,
+        token: authToken
+      });
+      yield receiveNewSite(newSite);
+      return true;
+    } catch (err) {
+      yield receiveNewSiteFailed(err);
+      return false;
+    }
+  }
+  const receiveSite = (siteId, response) => ({
+    type: 'RECEIVE_SITE',
+    siteId,
+    response
+  });
+  const receiveSiteTitle = (siteId, name) => ({
+    type: 'RECEIVE_SITE_TITLE',
+    siteId,
+    name
+  });
+  const receiveSiteTagline = (siteId, tagline) => ({
+    type: 'RECEIVE_SITE_TAGLINE',
+    siteId,
+    tagline
+  });
+  const receiveSiteVerticalId = (siteId, verticalId) => ({
+    type: 'RECEIVE_SITE_VERTICAL_ID',
+    siteId,
+    verticalId
+  });
+  const receiveSiteFailed = (siteId, response) => ({
+    type: 'RECEIVE_SITE_FAILED',
+    siteId,
+    response
+  });
+  const reset = () => ({
+    type: 'RESET_SITE_STORE'
+  });
+  const resetNewSiteFailed = () => ({
+    type: 'RESET_RECEIVE_NEW_SITE_FAILED'
+  });
+  const launchSiteStart = siteId => ({
+    type: 'LAUNCH_SITE_START',
+    siteId
+  });
+  const launchSiteSuccess = siteId => ({
+    type: 'LAUNCH_SITE_SUCCESS',
+    siteId
+  });
+  const launchSiteFailure = (siteId, error) => ({
+    type: 'LAUNCH_SITE_FAILURE',
+    siteId,
+    error
+  });
+  function* launchSite(siteId) {
+    yield launchSiteStart(siteId);
+    try {
+      yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ ._9)({
+        path: `/sites/${siteId}/launch`,
+        apiVersion: '1.1',
+        method: 'post'
+      });
+      yield launchSiteSuccess(siteId);
+    } catch (_) {
+      yield launchSiteFailure(siteId, _types__WEBPACK_IMPORTED_MODULE_3__/* .SiteLaunchError */ .Hc.INTERNAL);
+    }
+  }
+
+  // TODO: move getCart and setCart to a 'cart' data-store
+  function* getCart(siteId) {
+    const success = yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ ._9)({
+      path: '/me/shopping-cart/' + siteId,
+      apiVersion: '1.1',
+      method: 'GET'
+    });
+    return success;
+  }
+  const receiveSiteDomains = (siteId, domains) => ({
+    type: 'RECEIVE_SITE_DOMAINS',
+    siteId,
+    domains
+  });
+  const receiveSiteTheme = (siteId, theme) => ({
+    type: 'RECEIVE_SITE_THEME',
+    siteId,
+    theme
+  });
+  const receiveSiteSettings = (siteId, settings) => ({
+    type: 'RECEIVE_SITE_SETTINGS',
+    siteId,
+    settings
+  });
+  const updateSiteSettings = (siteId, settings) => ({
+    type: 'UPDATE_SITE_SETTINGS',
+    siteId,
+    settings
+  });
+  function* setCart(siteId, cartData) {
+    const success = yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ ._9)({
+      path: '/me/shopping-cart/' + siteId,
+      apiVersion: '1.1',
+      method: 'POST',
+      body: cartData
+    });
+    return success;
+  }
+  const receiveSiteGlobalStyles = (siteId, globalStyles) => ({
+    type: 'RECEIVE_SITE_GLOBAL_STYLES',
+    siteId,
+    globalStyles
+  });
+  function* getGlobalStyles(siteId, stylesheet) {
+    const globalStyles = yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ ._9)({
+      path: `/sites/${siteId}/global-styles/themes/${stylesheet}`,
+      apiNamespace: 'wp/v2'
+    });
+    yield receiveSiteGlobalStyles(siteId, globalStyles);
+    return globalStyles;
+  }
+  function* setGlobalStyles(siteIdOrSlug, stylesheet, globalStyles, activatedTheme) {
+    // only update if there settings or styles to update
+    if (Object.keys(globalStyles.settings ?? {}).length || Object.keys(globalStyles.styles ?? {}).length) {
+      const globalStylesId = activatedTheme?.global_styles_id || (yield getGlobalStylesId(siteIdOrSlug, stylesheet));
+      const updatedGlobalStyles = yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ ._9)({
+        path: `/sites/${encodeURIComponent(siteIdOrSlug)}/global-styles/${globalStylesId}`,
+        apiNamespace: 'wp/v2',
+        method: 'POST',
+        body: {
+          id: globalStylesId,
+          settings: globalStyles.settings ?? {},
+          styles: globalStyles.styles ?? {}
+        }
+      });
+      return updatedGlobalStyles;
+    }
+  }
+  function* getGlobalStylesId(siteIdOrSlug, stylesheet) {
+    const theme = yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ ._9)({
+      path: `/sites/${encodeURIComponent(siteIdOrSlug)}/themes/${stylesheet}`,
+      method: 'GET',
+      apiNamespace: 'wp/v2'
+    });
+    const globalStylesUrl = theme?._links?.['wp:user-global-styles']?.[0]?.href;
+    if (globalStylesUrl) {
+      // eslint-disable-next-line no-useless-escape
+      const match = globalStylesUrl.match(/global-styles\/(?<id>[\/\w-]+)/);
+      if (match && match.groups) {
+        return match.groups.id;
+      }
+    }
+    return null;
+  }
+  function* getGlobalStylesVariations(siteIdOrSlug, stylesheet) {
+    const variations = yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ ._9)({
+      path: `/sites/${encodeURIComponent(siteIdOrSlug)}/global-styles/themes/${stylesheet}/variations`,
+      method: 'GET',
+      apiNamespace: 'wp/v2'
+    });
+    return variations;
+  }
+  function* saveSiteSettings(siteId, settings) {
+    try {
+      // extract this into its own function as a generic settings setter
+      yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ ._9)({
+        path: `/sites/${encodeURIComponent(siteId)}/settings`,
+        apiVersion: '1.4',
+        body: settings,
+        method: 'POST'
+      });
+      if ('blogname' in settings) {
+        yield receiveSiteTitle(siteId, settings.blogname);
+      }
+      if ('blogdescription' in settings) {
+        yield receiveSiteTagline(siteId, settings.blogdescription);
+      }
+      if ('site_vertical_id' in settings) {
+        yield receiveSiteVerticalId(siteId, settings.site_vertical_id);
+      }
+      yield updateSiteSettings(siteId, settings);
+    } catch (e) {}
+  }
+  function* setIntentOnSite(siteSlug, intent) {
+    try {
+      yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ ._9)({
+        path: `/sites/${encodeURIComponent(siteSlug)}/site-intent`,
+        apiNamespace: 'wpcom/v2',
+        body: {
+          site_intent: intent
+        },
+        method: 'POST'
+      });
+    } catch (e) {}
+  }
+  function* setStaticHomepageOnSite(siteID, pageId) {
+    try {
+      yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ ._9)({
+        path: `/sites/${encodeURIComponent(siteID)}/homepage`,
+        apiVersion: '1.1',
+        body: {
+          is_page_on_front: true,
+          page_on_front_id: pageId
+        },
+        method: 'POST'
+      });
+    } catch (e) {}
+  }
+  function* setGoalsOnSite(siteSlug, goals) {
+    try {
+      yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ ._9)({
+        path: `/sites/${encodeURIComponent(siteSlug)}/site-goals`,
+        apiNamespace: 'wpcom/v2',
+        body: {
+          site_goals: goals
+        },
+        method: 'POST'
+      });
+    } catch (e) {}
+  }
+  function* saveSiteTitle(siteId, blogname) {
+    yield saveSiteSettings(siteId, {
+      blogname
+    });
+  }
+  function* saveSiteTagline(siteId, blogdescription) {
+    yield saveSiteSettings(siteId, {
+      blogdescription
+    });
+  }
+  function* installTheme(siteSlugOrId, themeSlug) {
+    yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ ._9)({
+      path: `/sites/${siteSlugOrId}/themes/${themeSlug}/install`,
+      apiVersion: '1.1',
+      method: 'POST'
+    });
+  }
+  function* runThemeSetupOnSite(siteSlug) {
+    yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ ._9)({
+      path: `/sites/${encodeURIComponent(siteSlug)}/theme-setup/?_locale=user`,
+      apiNamespace: 'wpcom/v2',
+      method: 'POST'
+    });
+  }
+  function* setDesignOnSite(siteSlug, selectedDesign, options = {}) {
+    const themeSlug = selectedDesign.slug || selectedDesign.recipe?.stylesheet?.split('/')[1] || selectedDesign.theme;
+    const {
+      styleVariation,
+      globalStyles
+    } = options;
+    const activatedTheme = yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ ._9)({
+      path: `/sites/${siteSlug}/themes/mine?_locale=user`,
+      apiVersion: '1.1',
+      body: {
+        theme: themeSlug
+      },
+      method: 'POST'
+    });
+
+    // @todo Always use the global styles for consistency
+    if (styleVariation?.slug) {
+      const variations = yield* getGlobalStylesVariations(siteSlug, activatedTheme.stylesheet);
+      const currentVariation = variations.find(variation => variation.title && variation.title.split(' ').join('-').toLowerCase() === styleVariation?.slug);
+      if (currentVariation) {
+        yield* setGlobalStyles(siteSlug, activatedTheme.stylesheet, currentVariation, activatedTheme);
+      }
+    }
+    if (globalStyles) {
+      yield* setGlobalStyles(siteSlug, activatedTheme.stylesheet, globalStyles, activatedTheme);
+    }
+
+    // Potentially runs Headstart.
+    // E.g. if the homepage has a Query Loop block, we insert placeholder posts on the new site.
+    yield* runThemeSetupOnSite(siteSlug);
+    return activatedTheme;
+  }
+  function* createCustomTemplate(siteSlug, stylesheet, slug, title, content) {
+    const templateId = `${stylesheet}//${slug}`;
+    let existed = true;
+    try {
+      yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ ._9)({
+        path: `/sites/${encodeURIComponent(siteSlug)}/templates/${templateId}`,
+        apiNamespace: 'wp/v2',
+        method: 'GET'
+      });
+    } catch {
+      existed = false;
+    }
+    const templatePath = `templates/${existed ? templateId : ''}`;
+    yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ ._9)({
+      path: `/sites/${encodeURIComponent(siteSlug)}/${templatePath}`,
+      apiNamespace: 'wp/v2',
+      body: {
+        slug,
+        theme: stylesheet,
+        title,
+        content,
+        status: 'publish',
+        is_wp_suggestion: true
+      },
+      method: 'POST'
+    });
+  }
+  function* assembleSite(siteSlug, stylesheet = '', {
+    homeHtml,
+    headerHtml,
+    footerHtml,
+    pages,
+    globalStyles,
+    canReplaceContent,
+    siteSetupOption
+  } = {}) {
+    const templates = [{
+      type: 'wp_template',
+      slug: 'home',
+      title: __('Home'),
+      content: (0,_utils__WEBPACK_IMPORTED_MODULE_4__/* .createCustomHomeTemplateContent */ .J)(stylesheet, !!headerHtml, !!footerHtml, !!homeHtml, homeHtml)
+    }, headerHtml && {
+      type: 'wp_template_part',
+      slug: 'header',
+      title: __('Header'),
+      content: headerHtml
+    }, footerHtml && {
+      type: 'wp_template_part',
+      slug: 'footer',
+      title: __('Footer'),
+      content: footerHtml
+    }].filter(Boolean);
+    const endpointSuffix = (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_0__/* .isEnabled */ ._k)('pattern-assembler/perf-test') ? '-perf-test' : '';
+    yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ ._9)({
+      path: `/sites/${encodeURIComponent(siteSlug)}/site-assembler${endpointSuffix}`,
+      apiNamespace: 'wpcom/v2',
+      body: {
+        templates,
+        pages,
+        global_styles: globalStyles,
+        can_replace_content: canReplaceContent,
+        site_setup_option: siteSetupOption
+      },
+      method: 'POST'
+    });
+  }
+  const setSiteSetupError = (error, message) => ({
+    type: 'SET_SITE_SETUP_ERROR',
+    error,
+    message
+  });
+  const clearSiteSetupError = siteId => ({
+    type: 'CLEAR_SITE_SETUP_ERROR',
+    siteId
+  });
+  const atomicTransferStart = (siteId, softwareSet) => ({
+    type: 'ATOMIC_TRANSFER_START',
+    siteId,
+    softwareSet
+  });
+  const atomicTransferSuccess = (siteId, softwareSet) => ({
+    type: 'ATOMIC_TRANSFER_SUCCESS',
+    siteId,
+    softwareSet
+  });
+  const atomicTransferFailure = (siteId, softwareSet, error) => ({
+    type: 'ATOMIC_TRANSFER_FAILURE',
+    siteId,
+    softwareSet,
+    error
+  });
+  function* initiateAtomicTransfer(siteId, softwareSet) {
+    yield atomicTransferStart(siteId, softwareSet);
+    try {
+      yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ ._9)({
+        path: `/sites/${encodeURIComponent(siteId)}/atomic/transfers`,
+        apiNamespace: 'wpcom/v2',
+        method: 'POST',
+        ...(softwareSet ? {
+          body: {
+            software_set: encodeURIComponent(softwareSet),
+            context: softwareSet
+          }
+        } : {
+          body: {
+            context: 'unknown'
+          }
+        })
+      });
+      yield atomicTransferSuccess(siteId, softwareSet);
+    } catch (_) {
+      yield atomicTransferFailure(siteId, softwareSet, _types__WEBPACK_IMPORTED_MODULE_3__/* .AtomicTransferError */ .Hf.INTERNAL);
+    }
+  }
+  const latestAtomicTransferStart = siteId => ({
+    type: 'LATEST_ATOMIC_TRANSFER_START',
+    siteId
+  });
+  const latestAtomicTransferSuccess = (siteId, transfer) => ({
+    type: 'LATEST_ATOMIC_TRANSFER_SUCCESS',
+    siteId,
+    transfer
+  });
+  const latestAtomicTransferFailure = (siteId, error) => ({
+    type: 'LATEST_ATOMIC_TRANSFER_FAILURE',
+    siteId,
+    error
+  });
+  function* requestLatestAtomicTransfer(siteId) {
+    yield latestAtomicTransferStart(siteId);
+    try {
+      const transfer = yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ ._9)({
+        path: `/sites/${encodeURIComponent(siteId)}/atomic/transfers/latest`,
+        apiNamespace: 'wpcom/v2',
+        method: 'GET'
+      });
+      yield latestAtomicTransferSuccess(siteId, transfer);
+    } catch (err) {
+      yield latestAtomicTransferFailure(siteId, err);
+    }
+  }
+  const atomicSoftwareStatusStart = (siteId, softwareSet) => ({
+    type: 'ATOMIC_SOFTWARE_STATUS_START',
+    siteId,
+    softwareSet
+  });
+  const atomicSoftwareStatusSuccess = (siteId, softwareSet, status) => ({
+    type: 'ATOMIC_SOFTWARE_STATUS_SUCCESS',
+    siteId,
+    softwareSet,
+    status
+  });
+  const atomicSoftwareStatusFailure = (siteId, softwareSet, error) => ({
+    type: 'ATOMIC_SOFTWARE_STATUS_FAILURE',
+    siteId,
+    softwareSet,
+    error
+  });
+  function* requestAtomicSoftwareStatus(siteId, softwareSet) {
+    yield atomicSoftwareStatusStart(siteId, softwareSet);
+    try {
+      const status = yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ ._9)({
+        path: `/sites/${encodeURIComponent(siteId)}/atomic/software/${encodeURIComponent(softwareSet)}`,
+        apiNamespace: 'wpcom/v2',
+        method: 'GET'
+      });
+      yield atomicSoftwareStatusSuccess(siteId, softwareSet, status);
+    } catch (err) {
+      yield atomicSoftwareStatusFailure(siteId, softwareSet, err);
+    }
+  }
+  const atomicSoftwareInstallStart = (siteId, softwareSet) => ({
+    type: 'ATOMIC_SOFTWARE_INSTALL_START',
+    siteId,
+    softwareSet
+  });
+  const atomicSoftwareInstallSuccess = (siteId, softwareSet) => ({
+    type: 'ATOMIC_SOFTWARE_INSTALL_SUCCESS',
+    siteId,
+    softwareSet
+  });
+  const atomicSoftwareInstallFailure = (siteId, softwareSet, error) => ({
+    type: 'ATOMIC_SOFTWARE_INSTALL_FAILURE',
+    siteId,
+    softwareSet,
+    error
+  });
+  function* initiateSoftwareInstall(siteId, softwareSet) {
+    yield atomicSoftwareInstallStart(siteId, softwareSet);
+    try {
+      yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ ._9)({
+        path: `/sites/${encodeURIComponent(siteId)}/atomic/software/${encodeURIComponent(softwareSet)}`,
+        apiNamespace: 'wpcom/v2',
+        method: 'POST',
+        body: {}
+      });
+      yield atomicSoftwareInstallSuccess(siteId, softwareSet);
+    } catch (err) {
+      yield atomicSoftwareInstallFailure(siteId, softwareSet, err);
+    }
+  }
+  const setBundledPluginSlug = (siteSlug, pluginSlug) => ({
+    type: 'SET_BUNDLED_PLUGIN_SLUG',
+    siteSlug,
+    pluginSlug
+  });
+  return {
+    receiveSiteDomains,
+    receiveSiteSettings,
+    receiveSiteTheme,
+    saveSiteTitle,
+    saveSiteSettings,
+    setIntentOnSite,
+    setStaticHomepageOnSite,
+    setGoalsOnSite,
+    receiveSiteTitle,
+    fetchNewSite,
+    fetchSite,
+    receiveNewSite,
+    receiveNewSiteFailed,
+    resetNewSiteFailed,
+    installTheme,
+    setDesignOnSite,
+    createCustomTemplate,
+    assembleSite,
+    createSite,
+    receiveSite,
+    receiveSiteFailed,
+    receiveSiteTagline,
+    receiveSiteVerticalId,
+    updateSiteSettings,
+    saveSiteTagline,
+    reset,
+    launchSite,
+    launchSiteStart,
+    launchSiteSuccess,
+    launchSiteFailure,
+    getCart,
+    setCart,
+    getGlobalStyles,
+    setGlobalStyles,
+    receiveSiteGlobalStyles,
+    setSiteSetupError,
+    clearSiteSetupError,
+    initiateAtomicTransfer,
+    atomicTransferStart,
+    atomicTransferSuccess,
+    atomicTransferFailure,
+    latestAtomicTransferStart,
+    latestAtomicTransferSuccess,
+    latestAtomicTransferFailure,
+    requestLatestAtomicTransfer,
+    atomicSoftwareStatusStart,
+    atomicSoftwareStatusSuccess,
+    atomicSoftwareStatusFailure,
+    requestAtomicSoftwareStatus,
+    initiateSoftwareInstall,
+    atomicSoftwareInstallStart,
+    atomicSoftwareInstallSuccess,
+    atomicSoftwareInstallFailure,
+    setBundledPluginSlug
+  };
+}
+
+/***/ }),
+
+/***/ 2005:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   L: () => (/* binding */ STORE_KEY)
+/* harmony export */ });
+/* unused harmony export getPlaceholderSiteID */
+/* harmony import */ var _automattic_calypso_config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(899);
+
+const STORE_KEY = 'automattic/site';
+const getPlaceholderSiteID = () => isEnabled('pattern-assembler/v2') ? '226011606' // assemblerdemo
+: '224076220'; // creatio2demo
+
+/***/ }),
+
+/***/ 2369:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   z2: () => (/* binding */ register)
+/* harmony export */ });
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9818);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _plugins__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6963);
+/* harmony import */ var _wpcom_request_controls__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3661);
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8459);
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2005);
+/* harmony import */ var _reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2701);
+/* harmony import */ var _resolvers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7862);
+/* harmony import */ var _selectors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(4309);
+
+
+
+
+
+
+
+
+
+
+let isRegistered = false;
+function register(clientCreds) {
+  if (!isRegistered) {
+    (0,_plugins__WEBPACK_IMPORTED_MODULE_1__/* .registerPlugins */ .z)();
+    isRegistered = true;
+    (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.registerStore)(_constants__WEBPACK_IMPORTED_MODULE_2__/* .STORE_KEY */ .L, {
+      actions: (0,_actions__WEBPACK_IMPORTED_MODULE_3__/* .createActions */ .d)(clientCreds),
+      controls: _wpcom_request_controls__WEBPACK_IMPORTED_MODULE_4__/* .controls */ .ai,
+      reducer: _reducer__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .ZP,
+      resolvers: _resolvers__WEBPACK_IMPORTED_MODULE_6__,
+      selectors: _selectors__WEBPACK_IMPORTED_MODULE_7__,
+      persist: ['bundledPluginSlug']
+    });
+  }
+  return _constants__WEBPACK_IMPORTED_MODULE_2__/* .STORE_KEY */ .L;
+}
+
+/***/ }),
+
+/***/ 2701:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ZP: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* unused harmony exports newSiteData, newSiteError, isFetchingSite, fetchingSiteError, isFetchingSiteDetails, sites, sitesDomains, sitesSettings, siteTheme, sitesGlobalStyles, launchStatus, siteSetupErrors, atomicTransferStatus, latestAtomicTransferStatus, atomicSoftwareStatus, atomicSoftwareInstallStatus */
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9818);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9639);
+
+
+
+const newSiteData = (state, action) => {
+  if (action.type === 'RECEIVE_NEW_SITE') {
+    const {
+      response
+    } = action;
+    return response.blog_details;
+  } else if (action.type === 'RECEIVE_NEW_SITE_FAILED') {
+    return undefined;
+  } else if (action.type === 'RESET_SITE_STORE') {
+    return undefined;
+  }
+  return state;
+};
+const newSiteError = (state, action) => {
+  switch (action.type) {
+    case 'FETCH_NEW_SITE':
+    case 'RECEIVE_NEW_SITE':
+    case 'RESET_SITE_STORE':
+    case 'RESET_RECEIVE_NEW_SITE_FAILED':
+      return undefined;
+    case 'RECEIVE_NEW_SITE_FAILED':
+      return {
+        error: action.error.error,
+        status: action.error.status,
+        statusCode: action.error.statusCode,
+        name: action.error.name,
+        message: action.error.message
+      };
+  }
+  return state;
+};
+const isFetchingSite = (state = false, action) => {
+  switch (action.type) {
+    case 'FETCH_NEW_SITE':
+      return true;
+    case 'RECEIVE_NEW_SITE':
+    case 'RECEIVE_NEW_SITE_FAILED':
+    case 'RESET_SITE_STORE':
+    case 'RESET_RECEIVE_NEW_SITE_FAILED':
+      return false;
+  }
+  return state;
+};
+const fetchingSiteError = (state, action) => {
+  switch (action.type) {
+    case 'RECEIVE_SITE_FAILED':
+      return {
+        error: action.response.error,
+        message: action.response.message
+      };
+  }
+  return state;
+};
+const isFetchingSiteDetails = (state = false, action) => {
+  switch (action.type) {
+    case 'FETCH_SITE':
+      return true;
+    case 'RECEIVE_SITE':
+    case 'RECEIVE_SITE_FAILED':
+      return false;
+  }
+  return state;
+};
+const sites = (state = {}, action) => {
+  if (action.type === 'RECEIVE_SITE') {
+    if (action.response) {
+      return {
+        ...state,
+        [action.response.ID]: action.response
+      };
+    }
+    return state;
+  } else if (action.type === 'RECEIVE_SITE_FAILED') {
+    const {
+      [action.siteId]: idToBeRemoved,
+      ...remainingState
+    } = state;
+    return {
+      ...remainingState
+    };
+  } else if (action.type === 'RESET_SITE_STORE') {
+    return {};
+  } else if (action.type === 'RECEIVE_SITE_TITLE') {
+    return {
+      ...state,
+      [action.siteId]: {
+        ...state[action.siteId],
+        name: action.name
+      }
+    };
+  } else if (action.type === 'RECEIVE_SITE_TAGLINE') {
+    return {
+      ...state,
+      [action.siteId]: {
+        ...state[action.siteId],
+        description: action.tagline ?? ''
+      }
+    };
+  } else if (action.type === 'RECEIVE_SITE_VERTICAL_ID') {
+    return {
+      ...state,
+      [action.siteId]: {
+        ...state[action.siteId],
+        options: {
+          ...state[action.siteId]?.options,
+          site_vertical_id: action.verticalId
+        }
+      }
+    };
+  }
+  return state;
+};
+const sitesDomains = (state = {}, action) => {
+  if (action.type === 'RECEIVE_SITE_DOMAINS') {
+    return {
+      ...state,
+      [action.siteId]: action.domains
+    };
+  }
+  return state;
+};
+const sitesSettings = (state = {}, action) => {
+  if (action.type === 'RECEIVE_SITE_SETTINGS') {
+    return {
+      ...state,
+      [action.siteId]: action.settings
+    };
+  }
+  if (action.type === 'UPDATE_SITE_SETTINGS') {
+    return {
+      ...state,
+      [action.siteId]: {
+        ...state?.[action.siteId],
+        ...action.settings
+      }
+    };
+  }
+  return state;
+};
+const siteTheme = (state = {}, action) => {
+  if (action.type === 'RECEIVE_SITE_THEME') {
+    return {
+      ...state,
+      [action.siteId]: action.theme
+    };
+  }
+  return state;
+};
+const sitesGlobalStyles = (state = {}, action) => {
+  if (action.type === 'RECEIVE_SITE_GLOBAL_STYLES') {
+    return {
+      ...state,
+      [action.siteId]: {
+        ...state?.[action.siteId],
+        ...action.globalStyles
+      }
+    };
+  }
+  return state;
+};
+const launchStatus = (state = {}, action) => {
+  if (action.type === 'LAUNCH_SITE_START') {
+    return {
+      ...state,
+      [action.siteId]: {
+        status: _types__WEBPACK_IMPORTED_MODULE_1__/* .SiteLaunchStatus */ .uS.IN_PROGRESS,
+        errorCode: undefined
+      }
+    };
+  }
+  if (action.type === 'LAUNCH_SITE_SUCCESS') {
+    return {
+      ...state,
+      [action.siteId]: {
+        status: _types__WEBPACK_IMPORTED_MODULE_1__/* .SiteLaunchStatus */ .uS.SUCCESS,
+        errorCode: undefined
+      }
+    };
+  }
+  if (action.type === 'LAUNCH_SITE_FAILURE') {
+    return {
+      ...state,
+      [action.siteId]: {
+        status: _types__WEBPACK_IMPORTED_MODULE_1__/* .SiteLaunchStatus */ .uS.FAILURE,
+        errorCode: action.error
+      }
+    };
+  }
+  return state;
+};
+const siteSetupErrors = (state = {}, action) => {
+  if (action.type === 'SET_SITE_SETUP_ERROR') {
+    const {
+      error,
+      message
+    } = action;
+    return {
+      error,
+      message
+    };
+  }
+  if (action.type === 'CLEAR_SITE_SETUP_ERROR') {
+    return {};
+  }
+  return state;
+};
+const atomicTransferStatus = (state = {}, action) => {
+  if (action.type === 'ATOMIC_TRANSFER_START') {
+    return {
+      ...state,
+      [action.siteId]: {
+        status: _types__WEBPACK_IMPORTED_MODULE_1__/* .AtomicTransferStatus */ .bc.IN_PROGRESS,
+        softwareSet: action.softwareSet,
+        errorCode: undefined
+      }
+    };
+  }
+  if (action.type === 'ATOMIC_TRANSFER_SUCCESS') {
+    return {
+      ...state,
+      [action.siteId]: {
+        status: _types__WEBPACK_IMPORTED_MODULE_1__/* .AtomicTransferStatus */ .bc.SUCCESS,
+        softwareSet: action.softwareSet,
+        errorCode: undefined
+      }
+    };
+  }
+  if (action.type === 'ATOMIC_TRANSFER_FAILURE') {
+    return {
+      ...state,
+      [action.siteId]: {
+        status: _types__WEBPACK_IMPORTED_MODULE_1__/* .AtomicTransferStatus */ .bc.FAILURE,
+        softwareSet: action.softwareSet,
+        errorCode: action.error
+      }
+    };
+  }
+  return state;
+};
+const latestAtomicTransferStatus = (state = {}, action) => {
+  if (action.type === 'LATEST_ATOMIC_TRANSFER_START') {
+    return {
+      ...state,
+      [action.siteId]: {
+        status: _types__WEBPACK_IMPORTED_MODULE_1__/* .LatestAtomicTransferStatus */ .O.IN_PROGRESS,
+        transfer: undefined,
+        errorCode: undefined
+      }
+    };
+  }
+  if (action.type === 'LATEST_ATOMIC_TRANSFER_SUCCESS') {
+    return {
+      ...state,
+      [action.siteId]: {
+        status: _types__WEBPACK_IMPORTED_MODULE_1__/* .LatestAtomicTransferStatus */ .O.SUCCESS,
+        transfer: action.transfer,
+        errorCode: undefined
+      }
+    };
+  }
+  if (action.type === 'LATEST_ATOMIC_TRANSFER_FAILURE') {
+    return {
+      ...state,
+      [action.siteId]: {
+        status: _types__WEBPACK_IMPORTED_MODULE_1__/* .LatestAtomicTransferStatus */ .O.FAILURE,
+        transfer: undefined,
+        errorCode: action.error
+      }
+    };
+  }
+  return state;
+};
+const atomicSoftwareStatus = (state = {}, action) => {
+  if (action.type === 'ATOMIC_SOFTWARE_STATUS_START') {
+    return {
+      ...state,
+      [action.siteId]: {
+        [action.softwareSet]: {
+          status: undefined,
+          error: undefined
+        }
+      }
+    };
+  }
+  if (action.type === 'ATOMIC_SOFTWARE_STATUS_SUCCESS') {
+    return {
+      ...state,
+      [action.siteId]: {
+        [action.softwareSet]: {
+          status: action.status,
+          error: undefined
+        }
+      }
+    };
+  }
+  if (action.type === 'ATOMIC_SOFTWARE_STATUS_FAILURE') {
+    return {
+      ...state,
+      [action.siteId]: {
+        [action.softwareSet]: {
+          status: undefined,
+          error: action.error
+        }
+      }
+    };
+  }
+  return state;
+};
+const atomicSoftwareInstallStatus = (state = {}, action) => {
+  if (action.type === 'ATOMIC_SOFTWARE_INSTALL_START') {
+    return {
+      ...state,
+      [action.siteId]: {
+        [action.softwareSet]: {
+          status: _types__WEBPACK_IMPORTED_MODULE_1__/* .AtomicSoftwareInstallStatus */ .sw.IN_PROGRESS,
+          error: undefined
+        }
+      }
+    };
+  }
+  if (action.type === 'ATOMIC_SOFTWARE_INSTALL_SUCCESS') {
+    return {
+      ...state,
+      [action.siteId]: {
+        [action.softwareSet]: {
+          status: _types__WEBPACK_IMPORTED_MODULE_1__/* .AtomicSoftwareInstallStatus */ .sw.SUCCESS,
+          error: undefined
+        }
+      }
+    };
+  }
+  if (action.type === 'ATOMIC_SOFTWARE_INSTALL_FAILURE') {
+    return {
+      ...state,
+      [action.siteId]: {
+        [action.softwareSet]: {
+          status: _types__WEBPACK_IMPORTED_MODULE_1__/* .AtomicSoftwareInstallStatus */ .sw.FAILURE,
+          error: action.error
+        }
+      }
+    };
+  }
+  return state;
+};
+const bundledPluginSlug = (state = {}, action) => {
+  if (action.type === 'SET_BUNDLED_PLUGIN_SLUG') {
+    return {
+      ...state,
+      [action.siteSlug]: action.pluginSlug
+    };
+  }
+  if (action.type === 'RESET_SITE_STORE') {
+    return {};
+  }
+  return state;
+};
+const newSite = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.combineReducers)({
+  data: newSiteData,
+  error: newSiteError,
+  isFetching: isFetchingSite
+});
+const reducer = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.combineReducers)({
+  isFetchingSiteDetails,
+  newSite,
+  fetchingSiteError,
+  sites,
+  launchStatus,
+  sitesDomains,
+  sitesSettings,
+  siteTheme,
+  sitesGlobalStyles,
+  siteSetupErrors,
+  atomicTransferStatus,
+  latestAtomicTransferStatus,
+  atomicSoftwareStatus,
+  atomicSoftwareInstallStatus,
+  bundledPluginSlug
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (reducer);
+
+/***/ }),
+
+/***/ 7862:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getSite: () => (/* binding */ getSite),
+/* harmony export */   getSiteDomains: () => (/* binding */ getSiteDomains),
+/* harmony export */   getSiteSettings: () => (/* binding */ getSiteSettings),
+/* harmony export */   getSiteTheme: () => (/* binding */ getSiteTheme)
+/* harmony export */ });
+/* harmony import */ var wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8552);
+// wpcomRequest is a temporary rename while we're working on migrating generators to thunks
+
+/**
+ * Attempt to find a site based on its id, and if not return undefined.
+ * We are currently ignoring error messages and silently failing if we can't find a
+ * site. This could be extended in the future by retrieving the `error` and
+ * `message` strings returned by the API.
+ *
+ * @param siteId {number}	The site to look up
+ */
+const getSite = siteId => async ({
+  dispatch
+}) => {
+  dispatch.fetchSite();
+  try {
+    const existingSite = await (0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .ZP)({
+      path: '/sites/' + encodeURIComponent(siteId),
+      apiVersion: '1.1',
+      query: 'force=wpcom'
+    });
+    dispatch.receiveSite(siteId, existingSite);
+  } catch (err) {
+    dispatch.receiveSiteFailed(siteId, err);
+  }
+};
+
+/**
+ * Get all site domains
+ *
+ * @param siteId {number} The site id
+ */
+const getSiteDomains = siteId => async ({
+  dispatch
+}) => {
+  const result = await (0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .ZP)({
+    path: '/sites/' + encodeURIComponent(siteId) + '/domains',
+    apiVersion: '1.2'
+  });
+  dispatch.receiveSiteDomains(siteId, result?.domains);
+};
+
+/**
+ * Get all site settings
+ *
+ * @param siteId {number} The site id
+ */
+const getSiteSettings = siteId => async ({
+  dispatch
+}) => {
+  const result = await (0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .ZP)({
+    path: '/sites/' + encodeURIComponent(siteId) + '/settings',
+    apiVersion: '1.4'
+  });
+  dispatch.receiveSiteSettings(siteId, result?.settings);
+};
+
+/**
+ * Get current site theme
+ *
+ * @param siteId {number} The site id
+ */
+const getSiteTheme = siteId => async ({
+  dispatch
+}) => {
+  const theme = await (0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .ZP)({
+    path: '/sites/' + encodeURIComponent(siteId) + '/themes/mine',
+    apiVersion: '1.1'
+  });
+  dispatch.receiveSiteTheme(siteId, theme);
+};
+
+/***/ }),
+
+/***/ 4309:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getAtomicSoftwareError: () => (/* binding */ getAtomicSoftwareError),
+/* harmony export */   getAtomicSoftwareInstallError: () => (/* binding */ getAtomicSoftwareInstallError),
+/* harmony export */   getAtomicSoftwareStatus: () => (/* binding */ getAtomicSoftwareStatus),
+/* harmony export */   getBundledPluginSlug: () => (/* binding */ getBundledPluginSlug),
+/* harmony export */   getFetchingSiteError: () => (/* binding */ getFetchingSiteError),
+/* harmony export */   getNewSite: () => (/* binding */ getNewSite),
+/* harmony export */   getNewSiteError: () => (/* binding */ getNewSiteError),
+/* harmony export */   getPrimarySiteDomain: () => (/* binding */ getPrimarySiteDomain),
+/* harmony export */   getSite: () => (/* binding */ getSite),
+/* harmony export */   getSiteDomains: () => (/* binding */ getSiteDomains),
+/* harmony export */   getSiteGlobalStyles: () => (/* binding */ getSiteGlobalStyles),
+/* harmony export */   getSiteIdBySlug: () => (/* binding */ getSiteIdBySlug),
+/* harmony export */   getSiteLatestAtomicTransfer: () => (/* binding */ getSiteLatestAtomicTransfer),
+/* harmony export */   getSiteLatestAtomicTransferError: () => (/* binding */ getSiteLatestAtomicTransferError),
+/* harmony export */   getSiteOption: () => (/* binding */ getSiteOption),
+/* harmony export */   getSiteOptions: () => (/* binding */ getSiteOptions),
+/* harmony export */   getSiteSettings: () => (/* binding */ getSiteSettings),
+/* harmony export */   getSiteSetupError: () => (/* binding */ getSiteSetupError),
+/* harmony export */   getSiteSubdomain: () => (/* binding */ getSiteSubdomain),
+/* harmony export */   getSiteTheme: () => (/* binding */ getSiteTheme),
+/* harmony export */   getSiteTitle: () => (/* binding */ getSiteTitle),
+/* harmony export */   getSiteVerticalId: () => (/* binding */ getSiteVerticalId),
+/* harmony export */   getState: () => (/* binding */ getState),
+/* harmony export */   isFetchingSite: () => (/* binding */ isFetchingSite),
+/* harmony export */   isFetchingSiteDetails: () => (/* binding */ isFetchingSiteDetails),
+/* harmony export */   isJetpackSite: () => (/* binding */ isJetpackSite),
+/* harmony export */   isNewSite: () => (/* binding */ isNewSite),
+/* harmony export */   isSiteAtomic: () => (/* binding */ isSiteAtomic),
+/* harmony export */   isSiteLaunched: () => (/* binding */ isSiteLaunched),
+/* harmony export */   isSiteLaunching: () => (/* binding */ isSiteLaunching),
+/* harmony export */   isSiteWPForTeams: () => (/* binding */ isSiteWPForTeams),
+/* harmony export */   requiresUpgrade: () => (/* binding */ requiresUpgrade),
+/* harmony export */   siteHasFeature: () => (/* binding */ siteHasFeature)
+/* harmony export */ });
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9818);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2005);
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9639);
+
+
+
+const getState = state => state;
+const getNewSite = state => state.newSite.data;
+const getNewSiteError = state => state.newSite.error;
+const isFetchingSite = state => state.newSite.isFetching;
+const getFetchingSiteError = state => state.fetchingSiteError;
+const isFetchingSiteDetails = state => state.isFetchingSiteDetails;
+const isNewSite = state => !!state.newSite.data;
+
+/**
+ * Get a site matched by id. This selector has a matching
+ * resolver that uses the `siteId` parameter to fetch an existing site. If the
+ * site cannot be found, invalidate the resolution cache.
+ * @param state {State}		state object
+ * @param siteId {number}	id of the site to look up
+ */
+const getSite = (state, siteId) => {
+  return (
+    // Try matching numeric site ID
+    state.sites[siteId] ||
+    // Then try matching primary domain
+    Object.values(state.sites).find(site => site && new URL(site.URL).host === siteId) ||
+    // Then try matching second domain
+    Object.values(state.sites).find(site => site?.options?.unmapped_url && new URL(site.options.unmapped_url).host === siteId)
+  );
+};
+const getSiteIdBySlug = (_, slug) => {
+  return (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.select)(_constants__WEBPACK_IMPORTED_MODULE_1__/* .STORE_KEY */ .L).getSite(slug)?.ID;
+};
+const getSiteTitle = (_, siteId) => (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.select)(_constants__WEBPACK_IMPORTED_MODULE_1__/* .STORE_KEY */ .L).getSite(siteId)?.name;
+const getSiteVerticalId = (_, siteId) => (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.select)(_constants__WEBPACK_IMPORTED_MODULE_1__/* .STORE_KEY */ .L).getSite(siteId)?.options?.site_vertical_id;
+
+// @TODO: Return LaunchStatus instead of a boolean
+const isSiteLaunched = (state, siteId) => {
+  return state.launchStatus[siteId]?.status === _types__WEBPACK_IMPORTED_MODULE_2__/* .SiteLaunchStatus */ .uS.SUCCESS;
+};
+
+// @TODO: Return LaunchStatus instead of a boolean
+const isSiteLaunching = (state, siteId) => {
+  return state.launchStatus[siteId]?.status === _types__WEBPACK_IMPORTED_MODULE_2__/* .SiteLaunchStatus */ .uS.IN_PROGRESS;
+};
+const isSiteAtomic = (state, siteId) => {
+  return (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.select)(_constants__WEBPACK_IMPORTED_MODULE_1__/* .STORE_KEY */ .L).getSite(siteId)?.options?.is_wpcom_atomic === true;
+};
+const isSiteWPForTeams = (state, siteId) => {
+  return (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.select)(_constants__WEBPACK_IMPORTED_MODULE_1__/* .STORE_KEY */ .L).getSite(siteId)?.options?.is_wpforteams_site === true;
+};
+const getSiteDomains = (state, siteId) => {
+  return state.sitesDomains[siteId];
+};
+const getSiteSettings = (state, siteId) => {
+  return state.sitesSettings[siteId];
+};
+const getSiteTheme = (state, siteId) => {
+  return state.siteTheme[siteId];
+};
+const getSiteGlobalStyles = (state, siteId) => {
+  return state.sitesGlobalStyles[siteId];
+};
+const getSiteSetupError = state => {
+  return state.siteSetupErrors;
+};
+const getSiteOptions = (state, siteId) => {
+  return state.sites[siteId]?.options;
+};
+const getSiteOption = (state, siteId, optionName) => {
+  return state.sites[siteId]?.options?.[optionName];
+};
+const getPrimarySiteDomain = (_, siteId) => (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.select)(_constants__WEBPACK_IMPORTED_MODULE_1__/* .STORE_KEY */ .L).getSiteDomains(siteId)?.find(domain => domain.primary_domain);
+const getSiteSubdomain = (_, siteId) => (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.select)(_constants__WEBPACK_IMPORTED_MODULE_1__/* .STORE_KEY */ .L).getSiteDomains(siteId)?.find(domain => domain.is_subdomain);
+const getSiteLatestAtomicTransfer = (state, siteId) => {
+  return state.latestAtomicTransferStatus[siteId]?.transfer;
+};
+const getSiteLatestAtomicTransferError = (state, siteId) => {
+  return state.latestAtomicTransferStatus[siteId]?.errorCode;
+};
+const getAtomicSoftwareStatus = (state, siteId, softwareSet) => {
+  return state.atomicSoftwareStatus[siteId]?.[softwareSet]?.status;
+};
+const getAtomicSoftwareError = (state, siteId, softwareSet) => {
+  return state.atomicSoftwareStatus[siteId]?.[softwareSet]?.error;
+};
+const getAtomicSoftwareInstallError = (state, siteId, softwareSet) => {
+  return state.atomicSoftwareInstallStatus[siteId]?.[softwareSet]?.error;
+};
+const siteHasFeature = (_, siteId, featureKey) => {
+  return Boolean(siteId && (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.select)(_constants__WEBPACK_IMPORTED_MODULE_1__/* .STORE_KEY */ .L).getSite(siteId)?.plan?.features.active.includes(featureKey));
+};
+
+// TODO: The `0` here seems wrong and should likely be addressed.
+const requiresUpgrade = (state, siteId) => {
+  return siteId && !(0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.select)(_constants__WEBPACK_IMPORTED_MODULE_1__/* .STORE_KEY */ .L).siteHasFeature(siteId, 'woop');
+};
+function isJetpackSite(state, siteId) {
+  return Boolean(siteId && (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.select)(_constants__WEBPACK_IMPORTED_MODULE_1__/* .STORE_KEY */ .L).getSite(siteId)?.jetpack);
+}
+const getBundledPluginSlug = (state, siteSlug) => state.bundledPluginSlug[siteSlug];
+
+/***/ }),
+
+/***/ 9639:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Hc: () => (/* binding */ SiteLaunchError),
+/* harmony export */   Hf: () => (/* binding */ AtomicTransferError),
+/* harmony export */   O: () => (/* binding */ LatestAtomicTransferStatus),
+/* harmony export */   bc: () => (/* binding */ AtomicTransferStatus),
+/* harmony export */   sw: () => (/* binding */ AtomicSoftwareInstallStatus),
+/* harmony export */   uS: () => (/* binding */ SiteLaunchStatus)
+/* harmony export */ });
+/* unused harmony exports Visibility, SiteCapabilities */
+let Visibility = /*#__PURE__*/function (Visibility) {
+  Visibility[Visibility["PublicIndexed"] = 1] = "PublicIndexed";
+  Visibility[Visibility["PublicNotIndexed"] = 0] = "PublicNotIndexed";
+  Visibility[Visibility["Private"] = -1] = "Private";
+  return Visibility;
+}({});
+
+// is_fse_active && is_fse_eligible properties have been deprecated and removed from SiteDetails interface
+
+let SiteCapabilities = /*#__PURE__*/function (SiteCapabilities) {
+  SiteCapabilities["ACTIVATE_PLUGINS"] = "activate_plugins";
+  SiteCapabilities["ACTIVATE_WORDADS"] = "activate_wordads";
+  SiteCapabilities["DELETE_OTHERS_POSTS"] = "delete_others_posts";
+  SiteCapabilities["DELETE_USERS"] = "delete_users";
+  SiteCapabilities["EDIT_OTHERS_PAGES"] = "edit_others_pages";
+  SiteCapabilities["EDIT_OTHERS_POSTS"] = "edit_others_posts";
+  SiteCapabilities["EDIT_PAGES"] = "edit_pages";
+  SiteCapabilities["EDIT_POSTS"] = "edit_posts";
+  SiteCapabilities["EDIT_THEME_OPTIONS"] = "edit_theme_options";
+  SiteCapabilities["EDIT_USERS"] = "edit_users";
+  SiteCapabilities["LIST_USERS"] = "list_users";
+  SiteCapabilities["MANAGE_CATEGORIES"] = "manage_categories";
+  SiteCapabilities["MANAGE_OPTIONS"] = "manage_options";
+  SiteCapabilities["MODERATE_COMMENTS"] = "moderate_comments";
+  SiteCapabilities["OWN_SITE"] = "own_site";
+  SiteCapabilities["PROMOTE_USERS"] = "promote_users";
+  SiteCapabilities["PUBLISH_POSTS"] = "publish_posts";
+  SiteCapabilities["REMOVE_USERS"] = "remove_users";
+  SiteCapabilities["UPLOAD_FILES"] = "upload_files";
+  SiteCapabilities["VIEW_HOSTING"] = "view_hosting";
+  SiteCapabilities["VIEW_STATS"] = "view_stats";
+  return SiteCapabilities;
+}({});
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+/* eslint-enable @typescript-eslint/no-explicit-any */
+
+let SiteLaunchError = /*#__PURE__*/function (SiteLaunchError) {
+  SiteLaunchError["INTERNAL"] = "internal";
+  return SiteLaunchError;
+}({});
+let SiteLaunchStatus = /*#__PURE__*/function (SiteLaunchStatus) {
+  SiteLaunchStatus["UNINITIALIZED"] = "unintialized";
+  SiteLaunchStatus["IN_PROGRESS"] = "in_progress";
+  SiteLaunchStatus["SUCCESS"] = "success";
+  SiteLaunchStatus["FAILURE"] = "failure";
+  return SiteLaunchStatus;
+}({});
+let AtomicTransferStatus = /*#__PURE__*/function (AtomicTransferStatus) {
+  AtomicTransferStatus["UNINITIALIZED"] = "unintialized";
+  AtomicTransferStatus["IN_PROGRESS"] = "in_progress";
+  AtomicTransferStatus["SUCCESS"] = "success";
+  AtomicTransferStatus["FAILURE"] = "failure";
+  return AtomicTransferStatus;
+}({});
+let AtomicTransferError = /*#__PURE__*/function (AtomicTransferError) {
+  AtomicTransferError["INTERNAL"] = "internal";
+  return AtomicTransferError;
+}({});
+let LatestAtomicTransferStatus = /*#__PURE__*/function (LatestAtomicTransferStatus) {
+  LatestAtomicTransferStatus["UNINITIALIZED"] = "unintialized";
+  LatestAtomicTransferStatus["IN_PROGRESS"] = "in_progress";
+  LatestAtomicTransferStatus["SUCCESS"] = "success";
+  LatestAtomicTransferStatus["FAILURE"] = "failure";
+  return LatestAtomicTransferStatus;
+}({});
+let AtomicSoftwareInstallStatus = /*#__PURE__*/function (AtomicSoftwareInstallStatus) {
+  AtomicSoftwareInstallStatus["UNINITIALIZED"] = "unintialized";
+  AtomicSoftwareInstallStatus["IN_PROGRESS"] = "in_progress";
+  AtomicSoftwareInstallStatus["SUCCESS"] = "success";
+  AtomicSoftwareInstallStatus["FAILURE"] = "failure";
+  return AtomicSoftwareInstallStatus;
+}({});
+
+/***/ }),
+
+/***/ 3691:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   J: () => (/* binding */ createCustomHomeTemplateContent)
+/* harmony export */ });
+const createCustomHomeTemplateContent = (stylesheet, hasHeader, hasFooter, hasSections, mainHtml = '') => {
+  const content = [];
+  if (hasHeader) {
+    content.push(`<!-- wp:template-part {"slug":"header","tagName":"header","theme":"${stylesheet}"} /-->`);
+  }
+  if (hasSections) {
+    // blockGap":"0" removes the theme blockGap from the main group while allowing users to change it from the editor
+    content.push(`
+<!-- wp:group {"tagName":"main","style":{"spacing":{"blockGap":"0"}}} -->
+	<main class="wp-block-group">
+		${mainHtml}
+	</main>
+<!-- /wp:group -->`);
+  }
+  if (hasFooter) {
+    content.push(`<!-- wp:template-part {"slug":"footer","tagName":"footer","theme":"${stylesheet}","className":"site-footer-container"} /-->`);
+  }
+  if (content.length) {
+    return content.join('\n');
+  }
+
+  // If no layout is selected, return the paragraph block to start with blank content to avoid the StartModal showing.
+  // See https://github.com/WordPress/gutenberg/blob/343fd27a51ae549c013bc30f51f13aad235d0d4a/packages/edit-site/src/components/start-template-options/index.js#L162
+  return '<!-- wp:paragraph --><p></p><!-- /wp:paragraph -->';
+};
+
+/***/ }),
+
+/***/ 1382:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   d: () => (/* binding */ createActions)
+/* harmony export */ });
+/* harmony import */ var qs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9126);
+/* harmony import */ var qs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(qs__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wpcom_request_controls__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3661);
+
+
+function createActions(clientCreds) {
+  const receiveCurrentUser = currentUser => ({
+    type: 'RECEIVE_CURRENT_USER',
+    currentUser
+  });
+  const receiveCurrentUserFailed = () => ({
+    type: 'RECEIVE_CURRENT_USER_FAILED'
+  });
+  const fetchNewUser = () => ({
+    type: 'FETCH_NEW_USER'
+  });
+  const receiveNewUser = response => ({
+    type: 'RECEIVE_NEW_USER',
+    response
+  });
+  const receiveNewUserFailed = error => ({
+    type: 'RECEIVE_NEW_USER_FAILED',
+    error
+  });
+  const clearErrors = () => ({
+    type: 'CLEAR_ERRORS'
+  });
+  function* createAccount(params) {
+    yield fetchNewUser();
+    try {
+      const newUser = yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_1__/* .wpcomRequest */ ._9)({
+        body: {
+          // defaults
+          is_passwordless: true,
+          signup_flow_name: 'gutenboarding',
+          locale: 'en',
+          ...clientCreds,
+          ...params,
+          // Set to false because account validation should be a separate action
+          validate: false
+        },
+        path: '/users/new',
+        apiVersion: '1.1',
+        method: 'post',
+        query: (0,qs__WEBPACK_IMPORTED_MODULE_0__.stringify)({
+          locale: params.locale
+        })
+      });
+      yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_1__/* .reloadProxy */ .sS)();
+
+      // Need to rerequest access after the proxy is reloaded
+      yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_1__/* .requestAllBlogsAccess */ .Vw)();
+      yield receiveNewUser(newUser);
+      return {
+        ok: true
+      };
+    } catch (error) {
+      const newUserError = error;
+      yield receiveNewUserFailed(newUserError);
+      return {
+        ok: false,
+        newUserError
+      };
+    }
+  }
+  return {
+    receiveCurrentUser,
+    receiveCurrentUserFailed,
+    fetchNewUser,
+    receiveNewUser,
+    receiveNewUserFailed,
+    clearErrors,
+    createAccount
+  };
+}
+
+/***/ }),
+
+/***/ 7037:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   L: () => (/* binding */ STORE_KEY)
+/* harmony export */ });
+const STORE_KEY = 'automattic/user';
+
+/***/ }),
+
+/***/ 8330:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   z: () => (/* binding */ register)
+/* harmony export */ });
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9818);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wpcom_request_controls__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3661);
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1382);
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7037);
+/* harmony import */ var _reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5938);
+/* harmony import */ var _resolvers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(5177);
+/* harmony import */ var _selectors__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7092);
+
+
+
+
+
+
+
+
+let isRegistered = false;
+function register(clientCreds) {
+  if (!isRegistered) {
+    isRegistered = true;
+    (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.registerStore)(_constants__WEBPACK_IMPORTED_MODULE_1__/* .STORE_KEY */ .L, {
+      actions: (0,_actions__WEBPACK_IMPORTED_MODULE_2__/* .createActions */ .d)(clientCreds),
+      controls: _wpcom_request_controls__WEBPACK_IMPORTED_MODULE_3__/* .controls */ .ai,
+      reducer: _reducer__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .ZP,
+      resolvers: (0,_resolvers__WEBPACK_IMPORTED_MODULE_5__/* .createResolvers */ .i)(clientCreds),
+      selectors: _selectors__WEBPACK_IMPORTED_MODULE_6__
+    });
+  }
+  return _constants__WEBPACK_IMPORTED_MODULE_1__/* .STORE_KEY */ .L;
+}
+
+/***/ }),
+
+/***/ 5938:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ZP: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* unused harmony exports currentUser, newUserData, newUserError, isFetchingNewUser */
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9818);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
+
+const currentUser = (state, action) => {
+  switch (action.type) {
+    case 'RECEIVE_CURRENT_USER':
+      return action.currentUser;
+    case 'RECEIVE_CURRENT_USER_FAILED':
+      return null;
+  }
+  return state;
+};
+const newUserData = (state, action) => {
+  if (action.type === 'RECEIVE_NEW_USER') {
+    const {
+      response
+    } = action;
+    return {
+      username: response.signup_sandbox_username || response.username,
+      userId: response.signup_sandbox_user_id || response.user_id,
+      bearerToken: response.bearer_token
+    };
+  } else if (action.type === 'RECEIVE_NEW_USER_FAILED') {
+    return undefined;
+  }
+  return state;
+};
+const newUserError = (state, action) => {
+  switch (action.type) {
+    case 'FETCH_NEW_USER':
+      return undefined;
+    case 'RECEIVE_NEW_USER':
+      return undefined;
+    case 'CLEAR_ERRORS':
+      return undefined;
+    case 'RECEIVE_NEW_USER_FAILED':
+      return {
+        error: action.error.error,
+        status: action.error.status,
+        statusCode: action.error.statusCode,
+        name: action.error.name,
+        message: action.error.message
+      };
+  }
+  return state;
+};
+const isFetchingNewUser = (state = false, action) => {
+  switch (action.type) {
+    case 'FETCH_NEW_USER':
+      return true;
+    case 'RECEIVE_NEW_USER':
+      return false;
+    case 'RECEIVE_NEW_USER_FAILED':
+      return false;
+  }
+  return state;
+};
+const newUser = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.combineReducers)({
+  data: newUserData,
+  error: newUserError,
+  isFetching: isFetchingNewUser
+});
+const reducer = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.combineReducers)({
+  currentUser,
+  newUser
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (reducer);
+
+/***/ }),
+
+/***/ 5177:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   i: () => (/* binding */ createResolvers)
+/* harmony export */ });
+/* harmony import */ var _wpcom_request_controls__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3661);
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1382);
+
+
+function createResolvers(clientCreds) {
+  const {
+    receiveCurrentUser,
+    receiveCurrentUserFailed
+  } = (0,_actions__WEBPACK_IMPORTED_MODULE_0__/* .createActions */ .d)(clientCreds);
+  function* getCurrentUser() {
+    // In environments where `wpcom-user-bootstrap` is set to true, the currentUser
+    // object will be server-side rendered to window.currentUser. In these cases,
+    // return that object instead of performing another API request to `/me`.
+    if (window.currentUser) {
+      return receiveCurrentUser(window.currentUser);
+    }
+    try {
+      const currentUser = yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_1__/* .wpcomRequest */ ._9)({
+        path: '/me',
+        apiVersion: '1.1'
+      });
+      return receiveCurrentUser(currentUser);
+    } catch (err) {
+      return receiveCurrentUserFailed();
+    }
+  }
+  return {
+    getCurrentUser
+  };
+}
+
+/***/ }),
+
+/***/ 7092:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getCurrentUser: () => (/* binding */ getCurrentUser),
+/* harmony export */   getNewUser: () => (/* binding */ getNewUser),
+/* harmony export */   getNewUserError: () => (/* binding */ getNewUserError),
+/* harmony export */   getState: () => (/* binding */ getState),
+/* harmony export */   isCurrentUserLoggedIn: () => (/* binding */ isCurrentUserLoggedIn),
+/* harmony export */   isFetchingNewUser: () => (/* binding */ isFetchingNewUser),
+/* harmony export */   isNewUser: () => (/* binding */ isNewUser)
+/* harmony export */ });
+const getState = state => state;
+const getCurrentUser = state => state.currentUser;
+const isCurrentUserLoggedIn = state => !!state.currentUser?.ID;
+const getNewUser = state => state.newUser.data;
+const getNewUserError = state => state.newUser.error;
+const isFetchingNewUser = state => state.newUser.isFetching;
+const isNewUser = state => !!state.newUser.data;
+
+/***/ }),
+
+/***/ 3661:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Vw: () => (/* binding */ requestAllBlogsAccess),
+/* harmony export */   _9: () => (/* binding */ wpcomRequest),
+/* harmony export */   ai: () => (/* binding */ controls),
+/* harmony export */   sS: () => (/* binding */ reloadProxy)
+/* harmony export */ });
+/* unused harmony exports fetchAndParse, wait */
+/* harmony import */ var wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8552);
+
+const wpcomRequest = request => ({
+  type: 'WPCOM_REQUEST',
+  request
+});
+
+/**
+ * Action for performing a fetching using `window.fetch()` and parsing the response body.
+ * It's different from `apiFetch()` from
+ * `@wordpress/data-controls` in that it doesn't use any middleware to add extra parameters.
+ *
+ * @param resource the resource you wish to fetch
+ * @param options request options
+ */
+const fetchAndParse = (resource, options) => ({
+  type: 'FETCH_AND_PARSE',
+  resource,
+  options
+});
+const reloadProxy = () => ({
+  type: 'RELOAD_PROXY'
+});
+const requestAllBlogsAccess = () => ({
+  type: 'REQUEST_ALL_BLOGS_ACCESS'
+});
+const wait = ms => ({
+  type: 'WAIT',
+  ms
+});
+const controls = {
+  WPCOM_REQUEST: ({
+    request
+  }) => (0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .ZP)(request),
+  FETCH_AND_PARSE: async ({
+    resource,
+    options
+  }) => {
+    const response = await window.fetch(resource, options);
+    return {
+      ok: response.ok,
+      body: await response.json()
+    };
+  },
+  RELOAD_PROXY: () => {
+    (0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_0__/* .reloadProxy */ .sS)();
+  },
+  REQUEST_ALL_BLOGS_ACCESS: () => (0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_0__/* .requestAllBlogsAccess */ .Vw)(),
+  WAIT: ({
+    ms
+  }) => new Promise(resolve => setTimeout(resolve, ms))
+};
+
+/***/ }),
+
+/***/ 8865:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   aM: () => (/* binding */ HELP_CENTER_STORE)
+/* harmony export */ });
+/* unused harmony exports USER_STORE, SITE_STORE */
+/* harmony import */ var _automattic_calypso_config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(899);
+/* harmony import */ var _automattic_data_stores__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7624);
+/* harmony import */ var _automattic_data_stores__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8330);
+/* harmony import */ var _automattic_data_stores__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2369);
+/**
+ * External Dependencies
+ */
+
+
+const HELP_CENTER_STORE = _automattic_data_stores__WEBPACK_IMPORTED_MODULE_1__/* .register */ .z();
+
+// these creds are only needed when signing up users
+const USER_STORE = _automattic_data_stores__WEBPACK_IMPORTED_MODULE_2__/* .register */ .z({
+  client_id: (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .ZP)('wpcom_signup_id'),
+  client_secret: (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .ZP)('wpcom_signup_key')
+});
+const SITE_STORE = _automattic_data_stores__WEBPACK_IMPORTED_MODULE_3__/* .register */ .z2({
+  client_id: (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .ZP)('wpcom_signup_id'),
+  client_secret: (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .ZP)('wpcom_signup_key')
+});
 
 /***/ }),
 
@@ -4665,6 +9702,534 @@ function loadjQueryDependentScript(url, callback, args) {
 
 /***/ }),
 
+/***/ 8552:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Vw: () => (/* binding */ requestAllBlogsAccess),
+/* harmony export */   ZP: () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   aO: () => (/* binding */ canAccessWpcomApis),
+/* harmony export */   sS: () => (/* binding */ reloadProxy)
+/* harmony export */ });
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8049);
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8767);
+/* harmony import */ var wp_error__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2884);
+/* harmony import */ var wp_error__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(wp_error__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+
+/**
+ * debug instance
+ */
+const debug = debug__WEBPACK_IMPORTED_MODULE_0___default()('wpcom-proxy-request');
+
+/**
+ * WordPress.com REST API base endpoint.
+ */
+const proxyOrigin = 'https://public-api.wordpress.com';
+let onStreamRecord = null;
+
+/**
+ * Detecting support for the structured clone algorithm. IE8 and 9, and Firefox
+ * 6.0 and below only support strings as postMessage's message. This browsers
+ * will try to use the toString method.
+ *
+ * https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage
+ * https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM/The_structured_clone_algorithm
+ * https://github.com/Modernizr/Modernizr/issues/388#issuecomment-31127462
+ */
+const postStrings = (() => {
+  let r = false;
+  try {
+    window.postMessage({
+      toString: function () {
+        r = true;
+      }
+    }, '*');
+  } catch (e) {
+    /* empty */
+  }
+  return r;
+})();
+
+/**
+ * Test if the browser supports constructing a new `File` object. Not present on Edge and IE.
+ */
+const supportsFileConstructor = (() => {
+  try {
+    // eslint-disable-next-line no-new
+    new window.File(['a'], 'test.jpg', {
+      type: 'image/jpeg'
+    });
+    return true;
+  } catch (e) {
+    return false;
+  }
+})();
+
+/**
+ * Reference to the <iframe> DOM element.
+ * Gets set in the install() function.
+ */
+let iframe = null;
+
+/**
+ * Set to `true` upon the iframe's "load" event.
+ */
+let loaded = false;
+
+/**
+ * Array of buffered API requests. Added to when API requests are done before the
+ * proxy <iframe> is "loaded", and fulfilled once the "load" DOM event on the
+ * iframe occurs.
+ */
+let buffered;
+
+/**
+ * In-flight API request XMLHttpRequest dummy "proxy" instances.
+ */
+const requests = {};
+
+/**
+ * Performs a "proxied REST API request". This happens by calling
+ * `iframe.postMessage()` on the proxy iframe instance, which from there
+ * takes care of WordPress.com user authentication (via the currently
+ * logged-in user's cookies).
+ * @param {Object} originalParams - request parameters
+ * @param {Function} [fn] - callback response
+ * @returns {window.XMLHttpRequest} XMLHttpRequest instance
+ */
+const makeRequest = (originalParams, fn) => {
+  const params = Object.assign({}, originalParams);
+  debug('request(%o)', params);
+
+  // inject the <iframe> upon the first proxied API request
+  if (!iframe) {
+    install();
+  }
+
+  // generate a uuid for this API request
+  const id = (0,uuid__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z)();
+  params.callback = id;
+  params.supports_args = true; // supports receiving variable amount of arguments
+  params.supports_error_obj = true; // better Error object info
+  params.supports_progress = true; // supports receiving XHR "progress" events
+
+  // force uppercase "method" since that's what the <iframe> is expecting
+  params.method = String(params.method || 'GET').toUpperCase();
+  debug('params object: %o', params);
+  const xhr = new window.XMLHttpRequest();
+  xhr.params = params;
+
+  // store the `XMLHttpRequest` instance so that "onmessage" can access it again
+  requests[id] = xhr;
+  if ('function' === typeof fn) {
+    // a callback function was provided
+    let called = false;
+    const xhrOnLoad = e => {
+      if (called) {
+        return;
+      }
+      called = true;
+      const body = e.response ?? xhr.response;
+      debug('body: ', body);
+      debug('headers: ', e.headers);
+      fn(null, body, e.headers);
+    };
+    const xhrOnError = e => {
+      if (called) {
+        return;
+      }
+      called = true;
+      const error = e.error ?? e.err ?? e;
+      debug('error: ', error);
+      debug('headers: ', e.headers);
+      fn(error, null, e.headers);
+    };
+    xhr.addEventListener('load', xhrOnLoad);
+    xhr.addEventListener('abort', xhrOnError);
+    xhr.addEventListener('error', xhrOnError);
+  }
+  if ('function' === typeof params.onStreamRecord) {
+    // remove onStreamRecord param, which can’t be cloned
+    onStreamRecord = params.onStreamRecord;
+    delete params.onStreamRecord;
+
+    // FIXME @azabani implement stream mode processing
+    // Hint: port the algorithm from wpcom-xhr-request@1.2.0 to /public.api/rest-proxy/provider-
+    // v2.0.js in rWP, then plumb stream records from onmessage below to onStreamRecord (or add
+    // the XMLHttpRequest#response to ondownloadprogress there, then parse the chunks here).
+  }
+  if (loaded) {
+    submitRequest(params);
+  } else {
+    debug('buffering API request since proxying <iframe> is not yet loaded');
+    buffered.push(params);
+  }
+  return xhr;
+};
+
+/**
+ * Performs a "proxied REST API request". This happens by calling
+ * `iframe.postMessage()` on the proxy iframe instance, which from there
+ * takes care of WordPress.com user authentication (via the currently
+ * logged-in user's cookies).
+ *
+ * If no function is specified as second parameter, a promise is returned.
+ * @param {Object} originalParams - request parameters
+ * @param {Function} [fn] - callback response
+ * @returns {window.XMLHttpRequest|Promise} XMLHttpRequest instance or Promise
+ */
+const request = (originalParams, fn) => {
+  // if callback is provided, behave traditionally
+  if ('function' === typeof fn) {
+    // request method
+    return makeRequest(originalParams, fn);
+  }
+
+  // but if not, return a Promise
+  return new Promise((res, rej) => {
+    makeRequest(originalParams, (err, response) => {
+      err ? rej(err) : res(response);
+    });
+  });
+};
+
+/**
+ * Set proxy to "access all users' blogs" mode.
+ */
+function requestAllBlogsAccess() {
+  return request({
+    metaAPI: {
+      accessAllUsersBlogs: true
+    }
+  });
+}
+
+/**
+ * Calls the `postMessage()` function on the <iframe>.
+ * @param {Object} params
+ */
+
+function submitRequest(params) {
+  // Sometimes the `iframe.contentWindow` is `null` even though the `iframe` has been correctly
+  // loaded. Can happen when some other buggy script removes it from the document.
+  if (!iframe.contentWindow) {
+    debug('proxy iframe is not present in the document');
+    // Look up the issuing XHR request and make it fail
+    const id = params.callback;
+    const xhr = requests[id];
+    delete requests[id];
+    reject(xhr, wp_error__WEBPACK_IMPORTED_MODULE_1___default()({
+      status_code: 500,
+      error_description: 'proxy iframe element is not loaded'
+    }), {});
+    return;
+  }
+  debug('sending API request to proxy <iframe> %o', params);
+
+  // `formData` needs to be patched if it contains `File` objects to work around
+  // a Chrome bug. See `patchFileObjects` description for more details.
+  if (params.formData) {
+    patchFileObjects(params.formData);
+  }
+  iframe.contentWindow.postMessage(postStrings ? JSON.stringify(params) : params, proxyOrigin);
+}
+
+/**
+ * Returns `true` if `v` is a DOM File instance, `false` otherwise.
+ * @param {any} v - instance to analyze
+ * @returns {boolean} `true` if `v` is a DOM File instance
+ */
+function isFile(v) {
+  return v && Object.prototype.toString.call(v) === '[object File]';
+}
+
+/*
+ * Find a `File` object in a form data value. It can be either the value itself, or
+ * in a `fileContents` property of the value.
+ */
+function getFileValue(v) {
+  if (isFile(v)) {
+    return v;
+  }
+  if (typeof v === 'object' && isFile(v.fileContents)) {
+    return v.fileContents;
+  }
+  return null;
+}
+
+/**
+ * Finds all `File` instances in `formData` and creates a new `File` instance whose storage is
+ * forced to be a `Blob` instead of being backed by a file on disk. That works around a bug in
+ * Chrome where `File` instances with `has_backing_file` flag cannot be sent over a process
+ * boundary when site isolation is on.
+ * @see https://bugs.chromium.org/p/chromium/issues/detail?id=866805
+ * @see https://bugs.chromium.org/p/chromium/issues/detail?id=631877
+ * @param {Array} formData Form data to patch
+ */
+function patchFileObjects(formData) {
+  // There are several landmines to avoid when making file uploads work on all browsers:
+  // - the `new File()` constructor trick breaks file uploads on Safari 10 in a way that's
+  //   impossible to detect: it will send empty files in the multipart/form-data body.
+  //   Therefore we need to detect Chrome.
+  // - IE11 and Edge don't support the `new File()` constructor at all. It will throw exception,
+  //   so it's detectable by the `supportsFileConstructor` code.
+  // - `window.chrome` exists also on Edge (!), `window.chrome.webstore` is only in Chrome and
+  //   not in other Chromium based browsers (which have the site isolation bug, too).
+  if (!window.chrome || !supportsFileConstructor) {
+    return;
+  }
+  for (let i = 0; i < formData.length; i++) {
+    const val = getFileValue(formData[i][1]);
+    if (val) {
+      formData[i][1] = new window.File([val], val.name, {
+        type: val.type
+      });
+    }
+  }
+}
+
+/**
+ * Injects the proxy <iframe> instance in the <body> of the current
+ * HTML page.
+ */
+
+function install() {
+  debug('install()');
+  if (iframe) {
+    uninstall();
+  }
+  buffered = [];
+
+  // listen to messages sent to `window`
+  window.addEventListener('message', onmessage);
+
+  // create the <iframe>
+  iframe = document.createElement('iframe');
+  const origin = window.location.origin;
+  debug('using "origin": %o', origin);
+
+  // set `src` and hide the iframe
+  iframe.src = proxyOrigin + '/wp-admin/rest-proxy/?v=2.0#' + origin;
+  iframe.style.display = 'none';
+
+  // inject the <iframe> into the <body>
+  document.body.appendChild(iframe);
+}
+
+/**
+ * Reloads the proxy iframe.
+ */
+const reloadProxy = () => {
+  install();
+};
+
+/**
+ * Removes the <iframe> proxy instance from the <body> of the page.
+ */
+function uninstall() {
+  debug('uninstall()');
+  window.removeEventListener('message', onmessage);
+  document.body.removeChild(iframe);
+  loaded = false;
+  iframe = null;
+}
+
+/**
+ * The proxy <iframe> instance's "load" event callback function.
+ */
+
+function onload() {
+  debug('proxy <iframe> "load" event');
+  loaded = true;
+
+  // flush any buffered API calls
+  if (buffered) {
+    for (let i = 0; i < buffered.length; i++) {
+      submitRequest(buffered[i]);
+    }
+    buffered = null;
+  }
+}
+
+/**
+ * The main `window` object's "message" event callback function.
+ * @param {window.Event} e
+ */
+
+function onmessage(e) {
+  // If the iframe was never loaded, this message might be unrelated.
+  if (!iframe?.contentWindow) {
+    return;
+  }
+  debug('onmessage');
+
+  // Filter out messages from different origins
+  if (e.origin !== proxyOrigin) {
+    debug('ignoring message... %o !== %o', e.origin, proxyOrigin);
+    return;
+  }
+
+  // Filter out messages from different iframes
+  if (e.source !== iframe.contentWindow) {
+    debug('ignoring message... iframe elements do not match');
+    return;
+  }
+  let {
+    data
+  } = e;
+  if (!data) {
+    return debug('no `data`, bailing');
+  }
+
+  // Once the iframe is loaded, we can start using it.
+  if (data === 'ready') {
+    onload();
+    return;
+  }
+  if (postStrings && 'string' === typeof data) {
+    data = JSON.parse(data);
+  }
+
+  // check if we're receiving a "progress" event
+  if (data.upload || data.download) {
+    return onprogress(data);
+  }
+  if (!data.length) {
+    return debug("`e.data` doesn't appear to be an Array, bailing...");
+  }
+
+  // first get the `xhr` instance that we're interested in
+  const id = data[data.length - 1];
+  if (!(id in requests)) {
+    return debug('bailing, no matching request with callback: %o', id);
+  }
+  const xhr = requests[id];
+
+  // Build `error` and `body` object from the `data` object
+  const {
+    params
+  } = xhr;
+  const body = data[0];
+  let statusCode = data[1];
+  const headers = data[2];
+
+  // We don't want to delete requests while we're processing stream messages
+  if (statusCode === 207) {
+    // 207 is a signal from rest-proxy. It means, "this isn't the final
+    // response to the query." The proxy supports WebSocket connections
+    // by invoking the original success callback for each message received.
+  } else {
+    // this is the final response to this query
+    delete requests[id];
+  }
+  if (!params.metaAPI) {
+    debug('got %o status code for URL: %o', statusCode, params.path);
+  } else {
+    statusCode = body === 'metaAPIupdated' ? 200 : 500;
+  }
+  if (typeof headers === 'object') {
+    // add statusCode into headers object
+    headers.status = statusCode;
+    if (shouldProcessInStreamMode(headers['Content-Type'])) {
+      if (statusCode === 207) {
+        onStreamRecord(body);
+        return;
+      }
+    }
+  }
+  if (statusCode && 2 === Math.floor(statusCode / 100)) {
+    // 2xx status code, success
+    resolve(xhr, body, headers);
+  } else {
+    // any other status code is a failure
+    const wpe = wp_error__WEBPACK_IMPORTED_MODULE_1___default()(params, statusCode, body);
+    reject(xhr, wpe, headers);
+  }
+}
+
+/**
+ * Returns true iff stream mode processing is required (see wpcom-xhr-request@1.2.0).
+ * @param {string} contentType response Content-Type header value
+ */
+function shouldProcessInStreamMode(contentType) {
+  return /^application[/]x-ndjson($|;)/.test(contentType);
+}
+
+/**
+ * Handles a "progress" event being proxied back from the iframe page.
+ * @param {Object} data
+ */
+
+function onprogress(data) {
+  debug('got "progress" event: %o', data);
+  const xhr = requests[data.callbackId];
+  if (xhr) {
+    const prog = new window.ProgressEvent('progress', data);
+    const target = data.upload ? xhr.upload : xhr;
+    target.dispatchEvent(prog);
+  }
+}
+
+/**
+ * Emits the "load" event on the `xhr`.
+ * @param {window.XMLHttpRequest} xhr
+ * @param {Object} body
+ */
+
+function resolve(xhr, body, headers) {
+  const e = new window.ProgressEvent('load');
+  e.data = e.body = e.response = body;
+  e.headers = headers;
+  xhr.dispatchEvent(e);
+}
+
+/**
+ * Emits the "error" event on the `xhr`.
+ * @param {window.XMLHttpRequest} xhr
+ * @param {Error} err
+ */
+
+function reject(xhr, err, headers) {
+  const e = new window.ProgressEvent('error');
+  e.error = e.err = err;
+  e.headers = headers;
+  xhr.dispatchEvent(e);
+}
+
+// list of valid origins for wpcom requests.
+// taken from wpcom-proxy-request (rest-proxy/provider-v2.0.js)
+const wpcomAllowedOrigins = ['https://wordpress.com', 'https://cloud.jetpack.com', 'http://wpcalypso.wordpress.com',
+// for running docker on dev instances
+'http://widgets.wp.com', 'https://widgets.wp.com', 'https://dev-mc.a8c.com', 'https://mc.a8c.com', 'https://dserve.a8c.com', 'http://calypso.localhost:3000', 'https://calypso.localhost:3000', 'http://jetpack.cloud.localhost:3000', 'https://jetpack.cloud.localhost:3000', 'http://calypso.localhost:3001', 'https://calypso.localhost:3001', 'https://calypso.live', 'http://127.0.0.1:41050', 'http://send.linguine.localhost:3000'];
+
+/**
+ * Shelved from rest-proxy/provider-v2.0.js.
+ * This returns true for all WPCOM origins except Atomic sites.
+ * @param urlOrigin
+ * @returns
+ */
+function isAllowedOrigin(urlOrigin) {
+  // sites in the allow-list and some subdomains of "calypso.live" and "wordpress.com"
+  // are allowed without further check
+  return wpcomAllowedOrigins.includes(urlOrigin) || /^https:\/\/[a-z0-9-]+\.calypso\.live$/.test(urlOrigin) || /^https:\/\/([a-z0-9-]+\.)+wordpress\.com$/.test(urlOrigin);
+}
+function canAccessWpcomApis() {
+  return isAllowedOrigin(window.location.origin);
+}
+
+/**
+ * Export `request` function.
+ */
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (request);
+
+
+/***/ }),
+
 /***/ 8049:
 /***/ ((module, exports, __webpack_require__) => {
 
@@ -5103,6 +10668,281 @@ module.exports = setup;
 
 /***/ }),
 
+/***/ 3830:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var camelCase = __webpack_require__(956);
+
+module.exports = function () {
+	var cased = camelCase.apply(camelCase, arguments);
+	return cased.charAt(0).toUpperCase() + cased.slice(1);
+};
+
+
+/***/ }),
+
+/***/ 956:
+/***/ ((module) => {
+
+"use strict";
+
+module.exports = function () {
+	var str = [].map.call(arguments, function (str) {
+		return str.trim();
+	}).filter(function (str) {
+		return str.length;
+	}).join('-');
+
+	if (!str.length) {
+		return '';
+	}
+
+	if (str.length === 1 || !(/[_.\- ]+/).test(str) ) {
+		if (str[0] === str[0].toLowerCase() && str.slice(1) !== str.slice(1).toLowerCase()) {
+			return str;
+		}
+
+		return str.toLowerCase();
+	}
+
+	return str
+	.replace(/^[_.\- ]+/, '')
+	.toLowerCase()
+	.replace(/[_.\- ]+(\w|$)/g, function (m, p1) {
+		return p1.toUpperCase();
+	});
+};
+
+
+/***/ }),
+
+/***/ 2686:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i);
+
+/***/ }),
+
+/***/ 5302:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (/* binding */ rng)
+/* harmony export */ });
+// Unique ID creation requires a high quality random # generator. In the browser we therefore
+// require the crypto API and do not support built-in fallback to lower quality random number
+// generators (like Math.random()).
+var getRandomValues;
+var rnds8 = new Uint8Array(16);
+function rng() {
+  // lazy load so that environments that need to polyfill have a chance to do so
+  if (!getRandomValues) {
+    // getRandomValues needs to be invoked in a context where "this" is a Crypto implementation. Also,
+    // find the complete implementation of crypto (msCrypto) on IE11.
+    getRandomValues = typeof crypto !== 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto) || typeof msCrypto !== 'undefined' && typeof msCrypto.getRandomValues === 'function' && msCrypto.getRandomValues.bind(msCrypto);
+
+    if (!getRandomValues) {
+      throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');
+    }
+  }
+
+  return getRandomValues(rnds8);
+}
+
+/***/ }),
+
+/***/ 708:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _validate_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6525);
+
+/**
+ * Convert array of 16 byte values to UUID string format of the form:
+ * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+ */
+
+var byteToHex = [];
+
+for (var i = 0; i < 256; ++i) {
+  byteToHex.push((i + 0x100).toString(16).substr(1));
+}
+
+function stringify(arr) {
+  var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  // Note: Be careful editing this code!  It's been tuned for performance
+  // and works in ways you may not expect. See https://github.com/uuidjs/uuid/pull/434
+  var uuid = (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + '-' + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + '-' + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + '-' + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + '-' + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase(); // Consistency check for valid UUID.  If this throws, it's likely due to one
+  // of the following:
+  // - One or more input array values don't map to a hex octet (leading to
+  // "undefined" in the uuid)
+  // - Invalid input values for the RFC `version` or `variant` fields
+
+  if (!(0,_validate_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)(uuid)) {
+    throw TypeError('Stringified UUID is invalid');
+  }
+
+  return uuid;
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (stringify);
+
+/***/ }),
+
+/***/ 8767:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _rng_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5302);
+/* harmony import */ var _stringify_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(708);
+
+
+
+function v4(options, buf, offset) {
+  options = options || {};
+  var rnds = options.random || (options.rng || _rng_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
+
+  rnds[6] = rnds[6] & 0x0f | 0x40;
+  rnds[8] = rnds[8] & 0x3f | 0x80; // Copy bytes to buffer, if provided
+
+  if (buf) {
+    offset = offset || 0;
+
+    for (var i = 0; i < 16; ++i) {
+      buf[offset + i] = rnds[i];
+    }
+
+    return buf;
+  }
+
+  return (0,_stringify_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)(rnds);
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (v4);
+
+/***/ }),
+
+/***/ 6525:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _regex_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2686);
+
+
+function validate(uuid) {
+  return typeof uuid === 'string' && _regex_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.test(uuid);
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (validate);
+
+/***/ }),
+
+/***/ 2884:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var uppercamelcase = __webpack_require__(3830);
+var statusCodes = __webpack_require__(6744);
+
+module.exports = WPError;
+
+function WPError () {
+  var self = new Error();
+
+  for (var i = 0; i < arguments.length; i++) {
+    process(self, arguments[i]);
+  }
+
+  if (typeof Error.captureStackTrace === 'function') {
+    Error.captureStackTrace(self, WPError);
+  }
+
+  return self;
+}
+
+function process ( self, data ) {
+  if ( ! data ) { 
+    return;
+  }
+  
+  if (typeof data === 'number') {
+    setStatusCode( self, data );
+
+  } else {
+    // assume it's a plain 'ol Object with some props to copy over
+    if ( data.status_code ) {
+      setStatusCode( self, data.status_code );
+    }
+
+    if ( data.error ) {
+      self.name = toName( data.error );
+    }
+
+    if ( data.error_description ) {
+      self.message = data.error_description;
+    }
+
+    var errors = data.errors;
+    if ( errors ) {
+      var first = errors.length ? errors[0] : errors;
+      process( self, first );
+    }
+
+    for ( var i in data ) {
+      self[i] = data[i];
+    }
+
+    if ( self.status && ( data.method || data.path ) ) {
+      setStatusCodeMessage( self );
+    }
+  }
+}
+
+function setStatusCode ( self, code ) {
+  self.name = toName( statusCodes[ code ] );
+  self.status = self.statusCode = code;
+  setStatusCodeMessage( self );
+}
+
+function setStatusCodeMessage ( self ) {
+  var code = self.status;
+  var method = self.method;
+  var path = self.path;
+
+  var m = code + ' status code';
+  var extended = method || path;
+
+  if ( extended ) m += ' for "';
+  if ( method ) m += method;
+  if ( extended ) m += ' ';
+  if ( path ) m += path;
+  if ( extended ) m += '"';
+
+  self.message = m;
+}
+
+function toName ( str ) {
+  return uppercamelcase( String(str).replace(/error$/i, ''), 'error' );
+}
+
+
+/***/ }),
+
 /***/ 9196:
 /***/ ((module) => {
 
@@ -5127,6 +10967,22 @@ module.exports = window["wp"]["compose"];
 
 /***/ }),
 
+/***/ 9818:
+/***/ ((module) => {
+
+"use strict";
+module.exports = window["wp"]["data"];
+
+/***/ }),
+
+/***/ 3418:
+/***/ ((module) => {
+
+"use strict";
+module.exports = window["wp"]["dataControls"];
+
+/***/ }),
+
 /***/ 9307:
 /***/ ((module) => {
 
@@ -5148,6 +11004,13 @@ module.exports = window["wp"]["hooks"];
 
 "use strict";
 module.exports = window["wp"]["i18n"];
+
+/***/ }),
+
+/***/ 3260:
+/***/ (() => {
+
+/* (ignored) */
 
 /***/ })
 
