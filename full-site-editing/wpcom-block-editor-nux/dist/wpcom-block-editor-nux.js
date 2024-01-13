@@ -8436,7 +8436,7 @@ const BloggingPromptsModalInner = () => {
       promptId
     })]);
     (0,_automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__/* .recordTracksEvent */ .jN)('calypso_editor_writing_prompts_modal_prompt_selected', {
-      promptId
+      prompt_id: promptId
     });
     setIsOpen(false);
   }
