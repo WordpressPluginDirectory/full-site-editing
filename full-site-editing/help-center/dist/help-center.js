@@ -14413,15 +14413,6 @@ LRU.prototype.evict = function () {
 
 /***/ }),
 
-/***/ 98659:
-/***/ (() => {
-
-"use strict";
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
 /***/ 81712:
 /***/ (() => {
 
@@ -14540,6 +14531,60 @@ LRU.prototype.evict = function () {
 /***/ }),
 
 /***/ 62829:
+/***/ (() => {
+
+"use strict";
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ 92128:
+/***/ (() => {
+
+"use strict";
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ 15455:
+/***/ (() => {
+
+"use strict";
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ 57129:
+/***/ (() => {
+
+"use strict";
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ 44518:
+/***/ (() => {
+
+"use strict";
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ 91310:
+/***/ (() => {
+
+"use strict";
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ 95283:
 /***/ (() => {
 
 "use strict";
@@ -28469,9 +28514,8 @@ function fireGoogleAnalyticsEvent(category, action, label, value) {
 
 
 
-// Ensure setup has run.
-
 const loadTrackingScripts = attemptLoad(async () => {
+  (0,_setup__WEBPACK_IMPORTED_MODULE_4__/* .setup */ .c)();
   const scripts = getTrackingScriptsToLoad();
   let hasError = false;
   for (const src of scripts) {
@@ -28493,6 +28537,7 @@ const loadTrackingScripts = attemptLoad(async () => {
 
   // uses JSON.stringify for consistency with recordOrder()
   (0,_constants__WEBPACK_IMPORTED_MODULE_5__/* .debug */ .fF)('loadTrackingScripts: dataLayer:', JSON.stringify(window.dataLayer, null, 2));
+  return scripts;
 });
 function getTrackingScriptsToLoad() {
   const scripts = [];
@@ -28591,19 +28636,25 @@ function initLoadedTrackingScripts() {
 //   promise, for the current and all previous callers. That effectively implements a queue.
 function attemptLoad(loader) {
   let setLoadResult;
+  let loadResult;
   let status = 'not-loading';
-  const loadResult = new Promise(resolve => {
-    setLoadResult = resolve;
-  });
-  return () => {
-    if (status === 'not-loading') {
-      status = 'loading';
-      loader().then(result => {
-        status = 'loaded';
-        setLoadResult(result);
-      }, () => {
+  function initiateLoad() {
+    loadResult = new Promise(resolve => {
+      setLoadResult = resolve;
+    });
+    loader().then(result => {
+      status = 'loaded';
+      setLoadResult(result);
+    }, () => {
+      status = 'not-loading';
+    });
+  }
+  return (reload = false) => {
+    if (status === 'not-loading' || reload) {
+      if (reload) {
         status = 'not-loading';
-      });
+      }
+      initiateLoad();
     }
     return loadResult;
   };
@@ -28785,9 +28836,12 @@ async function retarget(urlPath) {
 /***/ }),
 
 /***/ 28122:
-/***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   c: () => (/* binding */ setup)
+/* harmony export */ });
 /* harmony import */ var calypso_lib_akismet_is_akismet_checkout__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(67578);
 /* harmony import */ var calypso_lib_jetpack_is_jetpack_checkout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(83486);
 /* harmony import */ var calypso_lib_jetpack_is_jetpack_cloud__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9415);
@@ -28798,77 +28852,80 @@ async function retarget(urlPath) {
 
 
 
-if (true) {
-  if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('ga')) {
-    setupGtag();
-  }
+function setup() {
+  if (true) {
+    if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('ga')) {
+      setupGtag();
+    }
 
-  // Facebook
-  if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('facebook')) {
-    setupFacebookGlobal();
-  }
+    // Facebook
+    if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('facebook')) {
+      setupFacebookGlobal();
+    }
 
-  // Bing
-  if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('bing') && !window.uetq) {
-    window.uetq = [];
-  }
+    // Bing
+    if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('bing') && !window.uetq) {
+      window.uetq = [];
+    }
 
-  // Criteo
-  if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('criteo') && !window.criteo_q) {
-    window.criteo_q = [];
-  }
+    // Criteo
+    if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('criteo') && !window.criteo_q) {
+      window.criteo_q = [];
+    }
 
-  // Quantcast
-  if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('quantcast') && !window._qevents) {
-    window._qevents = [];
-  }
+    // Quantcast
+    if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('quantcast') && !window._qevents) {
+      window._qevents = [];
+    }
 
-  // Google Ads Gtag for wordpress.com
-  if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('googleAds')) {
-    setupWpcomGoogleAdsGtag();
-  }
-  if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('floodlight')) {
-    setupWpcomFloodlightGtag();
-  }
+    // Google Ads Gtag for wordpress.com
+    if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('googleAds')) {
+      setupWpcomGoogleAdsGtag();
+    }
+    if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('floodlight')) {
+      setupWpcomFloodlightGtag();
+    }
 
-  // Twitter
-  if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('twitter')) {
-    setupTwitterGlobal();
-  }
+    // Twitter
+    if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('twitter')) {
+      setupTwitterGlobal();
+    }
 
-  // Linkedin
-  if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('linkedin')) {
-    setupLinkedinInsight((0,calypso_lib_jetpack_is_jetpack_cloud__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)() || (0,calypso_lib_jetpack_is_jetpack_checkout__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z)() ? _constants__WEBPACK_IMPORTED_MODULE_3__/* .TRACKING_IDS */ .Hb.jetpackLinkedinId : null);
-  }
+    // Linkedin
+    if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('linkedin')) {
+      setupLinkedinInsight((0,calypso_lib_jetpack_is_jetpack_cloud__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)() || (0,calypso_lib_jetpack_is_jetpack_checkout__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z)() ? _constants__WEBPACK_IMPORTED_MODULE_3__/* .TRACKING_IDS */ .Hb.jetpackLinkedinId : null);
+    }
 
-  // Quora
-  if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('quora')) {
-    setupQuoraGlobal();
-  }
+    // Quora
+    if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('quora')) {
+      setupQuoraGlobal();
+    }
 
-  // Outbrain
-  if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('outbrain')) {
-    setupOutbrainGlobal();
-  }
+    // Outbrain
+    if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('outbrain')) {
+      setupOutbrainGlobal();
+    }
 
-  // Pinterest
-  if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('pinterest')) {
-    setupPinterestGlobal();
-  }
+    // Pinterest
+    if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('pinterest')) {
+      setupPinterestGlobal();
+    }
 
-  // AdRoll
-  if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('adroll')) {
-    setupAdRollGlobal();
-  }
+    // AdRoll
+    if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('adroll')) {
+      setupAdRollGlobal();
+    }
 
-  // GTM
-  if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('googleTagManager')) {
-    setupGtmGtag();
-  }
-  if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('clarity')) {
-    setupClarityGlobal();
+    // GTM
+    if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('googleTagManager')) {
+      setupGtmGtag();
+    }
+    if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .K2)('clarity')) {
+      setupClarityGlobal();
+    }
   }
 }
+setup();
 
 /**
  * Initializes Linkedin tracking.
@@ -29225,6 +29282,41 @@ function addHotJarScript() {
 
 /***/ }),
 
+/***/ 14429:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (/* binding */ saveImpactAffiliateClickId)
+/* harmony export */ });
+/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13421);
+/* harmony import */ var calypso_lib_analytics_tracks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17032);
+/* harmony import */ var _utils_url_parse_amp_compatible__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(78920);
+
+
+
+
+/**
+ * Save Impact Affiliate Click ID in a cookie if it is set as a query parameter.
+ */
+function saveImpactAffiliateClickId() {
+  // Read click ID query argument, return early if there is none.
+  const parsedUrl = (0,_utils_url_parse_amp_compatible__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z)(window.location.href);
+  const clickId = parsedUrl?.searchParams.get('irclickid');
+  if (!clickId) {
+    return;
+  }
+  document.cookie = cookie__WEBPACK_IMPORTED_MODULE_0__.serialize('irclickid', clickId, {
+    path: '/',
+    expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) // 30 days
+  });
+  (0,calypso_lib_analytics_tracks__WEBPACK_IMPORTED_MODULE_1__.recordTracksEvent)('calypso_impact_affiliate_visit', {
+    page: parsedUrl.host + parsedUrl.pathname
+  });
+}
+
+/***/ }),
+
 /***/ 70858:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -29329,15 +29421,17 @@ function bumpStatWithPageView(group, name) {
 /* harmony export */   A: () => (/* binding */ recordPageView)
 /* harmony export */ });
 /* harmony import */ var _automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(36115);
-/* harmony import */ var _automattic_viewport__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(79321);
-/* harmony import */ var calypso_lib_analytics_ad_tracking__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(32985);
-/* harmony import */ var calypso_lib_analytics_sem__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(93513);
-/* harmony import */ var calypso_lib_analytics_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(11915);
-/* harmony import */ var calypso_lib_analytics_utils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(7369);
-/* harmony import */ var _ga__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(44567);
-/* harmony import */ var _queue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(38602);
-/* harmony import */ var _refer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5323);
+/* harmony import */ var _automattic_viewport__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(79321);
+/* harmony import */ var calypso_lib_analytics_ad_tracking__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(32985);
+/* harmony import */ var calypso_lib_analytics_impact_affiliate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(14429);
+/* harmony import */ var calypso_lib_analytics_sem__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(93513);
+/* harmony import */ var calypso_lib_analytics_utils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(11915);
+/* harmony import */ var calypso_lib_analytics_utils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(7369);
+/* harmony import */ var _ga__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(44567);
+/* harmony import */ var _queue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(38602);
+/* harmony import */ var _refer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(5323);
 // pageView is a wrapper for pageview events across Tracks and GA.
+
 
 
 
@@ -29352,25 +29446,26 @@ function recordPageView(urlPath, pageTitle, params = {}, options = {}) {
   // `_dl` (browserdocumentlocation) is read from the current URL by external JavaScript.
   setTimeout(() => {
     // Add device type to Tracks page view event.
-    params.device_type = (0,_automattic_viewport__WEBPACK_IMPORTED_MODULE_5__/* .resolveDeviceTypeByViewPort */ .jv)();
+    params.device_type = (0,_automattic_viewport__WEBPACK_IMPORTED_MODULE_6__/* .resolveDeviceTypeByViewPort */ .jv)();
 
     // Tracks, Google Analytics, Refer platform.
     (0,_automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_0__/* .recordTracksPageViewWithPageParams */ .w2)(urlPath, params);
     safeGoogleAnalyticsPageView(urlPath, pageTitle, options?.useJetpackGoogleAnalytics, options?.useAkismetGoogleAnalytics);
-    (0,_refer__WEBPACK_IMPORTED_MODULE_4__/* .referRecordPageView */ .G)();
+    (0,_refer__WEBPACK_IMPORTED_MODULE_5__/* .referRecordPageView */ .G)();
+    (0,calypso_lib_analytics_impact_affiliate__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)();
 
     // Retargeting.
-    (0,calypso_lib_analytics_utils__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z)();
-    (0,calypso_lib_analytics_sem__WEBPACK_IMPORTED_MODULE_1__/* .updateQueryParamsTracking */ .n)();
-    (0,calypso_lib_analytics_ad_tracking__WEBPACK_IMPORTED_MODULE_7__/* .retarget */ .a)(urlPath);
+    (0,calypso_lib_analytics_utils__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z)();
+    (0,calypso_lib_analytics_sem__WEBPACK_IMPORTED_MODULE_2__/* .updateQueryParamsTracking */ .n)();
+    (0,calypso_lib_analytics_ad_tracking__WEBPACK_IMPORTED_MODULE_8__/* .retarget */ .a)(urlPath);
 
     // Process queue.
-    (0,_queue__WEBPACK_IMPORTED_MODULE_3__/* .processQueue */ .V)();
+    (0,_queue__WEBPACK_IMPORTED_MODULE_4__/* .processQueue */ .V)();
   }, 0);
 }
 async function safeGoogleAnalyticsPageView(urlPath, pageTitle, useJetpackGoogleAnalytics = false, useAkismetGoogleAnalytics = false) {
-  await (0,calypso_lib_analytics_utils__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Z)();
-  (0,_ga__WEBPACK_IMPORTED_MODULE_2__/* .gaRecordPageView */ .eK)(urlPath, pageTitle, useJetpackGoogleAnalytics, useAkismetGoogleAnalytics);
+  await (0,calypso_lib_analytics_utils__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z)();
+  (0,_ga__WEBPACK_IMPORTED_MODULE_3__/* .gaRecordPageView */ .eK)(urlPath, pageTitle, useJetpackGoogleAnalytics, useAkismetGoogleAnalytics);
 }
 
 /***/ }),
@@ -35214,1578 +35309,6 @@ function getCustomizerFocus(panel) {
   }
   return null;
 }
-
-/***/ }),
-
-/***/ 22141:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(69307);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(72779);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(99196);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-
-
-
-
-const Button = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_2__.forwardRef)(({
-  compact,
-  borderless,
-  onClick,
-  className: externalClassName,
-  children,
-  disabled
-}, ref) => {
-  const className = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-button-default', externalClassName, {
-    'odie-button-compact': compact,
-    'odie-button-borderless': borderless
-  });
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
-    ref: ref,
-    className: className,
-    onClick: onClick,
-    disabled: disabled
-  }, children);
-});
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Button);
-
-/***/ }),
-
-/***/ 75362:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(69307);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(56399);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(72779);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(99196);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var calypso_components_popover_menu__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(37457);
-/* harmony import */ var _button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(22141);
-
-
-
-
-
-
-
-const EllipsisMenu = ({
-  position,
-  children,
-  popoverClassName
-}) => {
-  const [isMenuVisible, setMenuVisible] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
-  const popoverContext = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)(null);
-  const handleClick = () => {
-    setMenuVisible(!isMenuVisible);
-  };
-  const hideMenu = () => {
-    setMenuVisible(false);
-  };
-  const classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()('ellipsis-menu', {
-    'is-menu-visible': isMenuVisible
-  });
-  const popoverClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()('ellipsis-menu__menu', 'popover', popoverClassName);
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
-    className: classes
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_button__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
-    ref: popoverContext,
-    onClick: handleClick,
-    borderless: true,
-    className: "ellipsis-menu__toggle"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_components__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {
-    icon: "ellipsis",
-    className: "ellipsis-menu__toggle-icon"
-  })), isMenuVisible && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_popover_menu__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z, {
-    isVisible: true,
-    onClose: hideMenu,
-    position: position,
-    context: popoverContext.current,
-    className: popoverClasses
-  }, children));
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EllipsisMenu);
-
-/***/ }),
-
-/***/ 56458:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(69307);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(72779);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(26712);
-
-
-
-
-
-// This component will be extended in the future to support other types of links.
-// For now, it only supports prompt:// links. But in the future might be more protocols like:
-// - navigate:// to navigate within calypso
-// - choice:// to send a message to the bot based on the user's choice
-// - confirm:// to send a message to the bot based on the user's confirmation
-// - etc.
-const CustomALink = ({
-  href,
-  children,
-  inline = true
-}) => {
-  const {
-    trackEvent
-  } = (0,_context__WEBPACK_IMPORTED_MODULE_2__/* .useOdieAssistantContext */ .qi)();
-  const classNames = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-sources', {
-    'odie-sources-inline': inline
-  });
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
-    className: classNames
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
-    className: "odie-sources-link",
-    href: href,
-    target: "_blank",
-    rel: "noopener noreferrer",
-    onClick: () => {
-      trackEvent('chat_message_action_click', {
-        action: 'link',
-        href: href
-      });
-    }
-  }, children));
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CustomALink);
-
-/***/ }),
-
-/***/ 42537:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(69307);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(41946);
-/* harmony import */ var _automattic_help_center_src_hooks__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(53457);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(72779);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(10975);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(99196);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(91850);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4792);
-/* harmony import */ var calypso_components_async_load__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7484);
-/* harmony import */ var calypso_components_gravatar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(3407);
-/* harmony import */ var calypso_state_current_user_selectors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(36747);
-/* harmony import */ var _assets_maximize_icon_svg__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(44507);
-/* harmony import */ var _assets_minimize_icon_svg__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(12620);
-/* harmony import */ var _assets_wapuu_squared_avatar_svg__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(22528);
-/* harmony import */ var _assets_wapuu_thinking_svg__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(86656);
-/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(26712);
-/* harmony import */ var _button__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(22141);
-/* harmony import */ var _custom_a_link__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(56458);
-/* harmony import */ var _uri_transformer__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(15954);
-/* harmony import */ var _was_this_helpful_buttons__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(97381);
-
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// This is due to the AsyncLoad component. The initial scroll is not working properly, due to
-// the fact that the AsyncLoad component is not rendering the children immediately. In order to solve that
-// we know that the placeholder component will be unmounted when the AsyncLoad component has finished loading.
-const ComponentLoadedReporter = ({
-  callback
-}) => {
-  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
-    return callback;
-  }, [callback]);
-  return null;
-};
-const ChatMessage = ({
-  message,
-  scrollToBottom
-}, ref) => {
-  const isUser = message.role === 'user';
-  const {
-    botName,
-    extraContactOptions,
-    addMessage,
-    trackEvent
-  } = (0,_context__WEBPACK_IMPORTED_MODULE_12__/* .useOdieAssistantContext */ .qi)();
-  const [scrolledToBottom, setScrolledToBottom] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
-  const [isFullscreen, setIsFullscreen] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
-  const currentUser = (0,react_redux__WEBPACK_IMPORTED_MODULE_4__/* .useSelector */ .v9)(calypso_state_current_user_selectors__WEBPACK_IMPORTED_MODULE_7__/* .getCurrentUser */ .ts);
-  const translate = (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .Z)();
-  const realTimeMessage = (0,_automattic_help_center_src_hooks__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .Z)(message.content, !isUser && message.type === 'message', {
-    delayBetweenCharacters: 66,
-    randomDelayBetweenCharacters: true,
-    charactersPerInterval: 5
-  });
-  const hasSources = message?.context?.sources && message.context?.sources.length > 0;
-  const hasFeedback = !!message?.rating_value;
-
-  // dedupe sources based on url
-  let sources = message?.context?.sources ?? [];
-  if (sources.length > 0) {
-    sources = [...new Map(sources.map(source => [source.url, source])).values()];
-  }
-  const isTypeMessageOrEmpty = !message.type || message.type === 'message';
-  const isSimulatedTypingFinished = message.simulateTyping && message.content === realTimeMessage;
-  const isRequestingHumanSupport = message.context?.flags?.forward_to_human_support;
-  const fullscreenRef = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)(null);
-  const messageFullyTyped = isTypeMessageOrEmpty && (!message.simulateTyping || isSimulatedTypingFinished);
-  const handleBackdropClick = () => {
-    setIsFullscreen(false);
-  };
-  const handleContentClick = event => {
-    event.stopPropagation();
-  };
-  const messageClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-chatbox-message', isUser ? 'odie-chatbox-message-user' : 'odie-chatbox-message-wapuu');
-  const handleFullscreenToggle = () => {
-    setIsFullscreen(!isFullscreen);
-  };
-  const handleWheel = (0,react__WEBPACK_IMPORTED_MODULE_2__.useCallback)(event => {
-    if (!isFullscreen) {
-      return;
-    }
-    const element = fullscreenRef.current;
-    if (element) {
-      const {
-        scrollTop,
-        scrollHeight,
-        clientHeight
-      } = element;
-      const atTop = scrollTop <= 0;
-      const tolerance = 2;
-      const atBottom = scrollTop + clientHeight >= scrollHeight - tolerance;
-
-      // Prevent scrolling the parent element when at the bounds
-      if (atTop && event.deltaY < 0 || atBottom && event.deltaY > 0) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-    }
-  }, [isFullscreen]);
-  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
-    const fullscreenElement = fullscreenRef.current;
-    if (fullscreenElement) {
-      fullscreenElement.addEventListener('wheel', handleWheel, {
-        passive: false
-      });
-    }
-    return () => {
-      if (fullscreenElement) {
-        fullscreenElement.removeEventListener('wheel', handleWheel);
-      }
-    };
-  }, [handleWheel]);
-  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
-    if (message.content !== realTimeMessage && message.simulateTyping) {
-      scrollToBottom();
-    }
-  }, [message, realTimeMessage, scrollToBottom]);
-  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
-    if (messageFullyTyped && !scrolledToBottom) {
-      scrollToBottom();
-      setScrolledToBottom(true);
-    }
-  }, [messageFullyTyped, scrolledToBottom, scrollToBottom]);
-  if (!currentUser || !botName) {
-    return;
-  }
-  const wapuuAvatarClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-chatbox-message-avatar', {
-    'odie-chatbox-message-avatar-wapuu-liked': message.liked
-  });
-  const messageAvatarHeader = isUser ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_gravatar__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {
-    user: currentUser,
-    size: 32,
-    alt: translate('User profile display picture', {
-      context: 'html alt tag',
-      textOnly: true
-    })
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", {
-    className: "message-header-name"
-  }, currentUser.display_name)) : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
-    src: _assets_wapuu_squared_avatar_svg__WEBPACK_IMPORTED_MODULE_10__,
-    alt: translate('%(botName)s profile picture', {
-      context: 'html alt tag',
-      textOnly: true,
-      args: {
-        botName
-      }
-    }),
-    className: wapuuAvatarClasses
-  }), message.type === 'placeholder' ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
-    src: _assets_wapuu_thinking_svg__WEBPACK_IMPORTED_MODULE_11__,
-    alt: translate('Loading state, awaiting response from %(botName)s', {
-      context: 'html alt tag',
-      textOnly: true,
-      args: {
-        botName
-      }
-    }),
-    className: "odie-chatbox-thinking-icon"
-  }) : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", {
-    className: "message-header-name"
-  }, botName), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "message-header-buttons"
-  }, message.content?.length > 600 && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_button__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Z, {
-    compact: true,
-    borderless: true,
-    onClick: handleFullscreenToggle
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
-    src: isFullscreen ? _assets_minimize_icon_svg__WEBPACK_IMPORTED_MODULE_9__ : _assets_maximize_icon_svg__WEBPACK_IMPORTED_MODULE_8__,
-    alt: translate('Icon to expand or collapse %(botName)s messages', {
-      context: 'html alt tag',
-      textOnly: true,
-      args: {
-        botName
-      }
-    })
-  }))));
-  const messageHeader = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: `message-header ${isUser ? 'user' : 'bot'}`
-  }, messageAvatarHeader);
-  const shouldRenderExtraContactOptions = isRequestingHumanSupport && messageFullyTyped;
-  const onDislike = () => {
-    if (shouldRenderExtraContactOptions) {
-      return;
-    }
-    setTimeout(() => {
-      addMessage({
-        content: '...',
-        role: 'bot',
-        type: 'dislike-feedback'
-      });
-    }, 1200);
-  };
-  const odieChatBoxMessageSourcesContainerClass = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-chatbox-message-sources-container', {
-    'odie-chatbox-message-sources-container-fullscreen': isFullscreen
-  });
-  const messageContent = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: odieChatBoxMessageSourcesContainerClass,
-    ref: fullscreenRef
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: messageClasses
-  }, messageHeader, message.type === 'error' && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_async_load__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {
-    require: "react-markdown",
-    placeholder: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ComponentLoadedReporter, {
-      callback: scrollToBottom
-    }),
-    transformLinkUri: _uri_transformer__WEBPACK_IMPORTED_MODULE_18__/* .uriTransformer */ .A,
-    components: {
-      a: _custom_a_link__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Z
-    }
-  }, message.content), extraContactOptions), (message.type === 'message' || !message.type) && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_async_load__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {
-    require: "react-markdown",
-    placeholder: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ComponentLoadedReporter, {
-      callback: scrollToBottom
-    }),
-    transformLinkUri: _uri_transformer__WEBPACK_IMPORTED_MODULE_18__/* .uriTransformer */ .A,
-    components: {
-      a: _custom_a_link__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Z
-    }
-  }, isUser || !message.simulateTyping ? message.content : realTimeMessage), !hasFeedback && !isUser && messageFullyTyped && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_was_this_helpful_buttons__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Z, {
-    message: message,
-    onDislike: onDislike
-  })), message.type === 'introduction' && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "odie-introduction-message-content"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "odie-chatbox-introduction-message"
-  }, message.content)), message.type === 'dislike-feedback' && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_async_load__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {
-    require: "react-markdown",
-    placeholder: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ComponentLoadedReporter, {
-      callback: scrollToBottom
-    }),
-    transformLinkUri: _uri_transformer__WEBPACK_IMPORTED_MODULE_18__/* .uriTransformer */ .A,
-    components: {
-      a: _custom_a_link__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Z
-    }
-  }, translate('I’m sorry my last response didn’t meet your expectations! Here’s some other ways to get more in-depth help:', {
-    context: 'Message displayed when the user dislikes a message from the bot',
-    textOnly: true
-  })), extraContactOptions), shouldRenderExtraContactOptions && extraContactOptions), hasSources && messageFullyTyped && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_components__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .Z, {
-    className: "odie-sources-foldable-card",
-    clickableHeader: true,
-    header: translate('Related Guides', {
-      context: 'Below this text are links to sources for the current message received from the bot.',
-      textOnly: true
-    }),
-    onClose: () => trackEvent('chat_message_action_sources', {
-      action: 'close',
-      message_id: message.message_id
-    }),
-    onOpen: () => trackEvent('chat_message_action_sources', {
-      action: 'open',
-      message_id: message.message_id
-    }),
-    screenReaderText: "More"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "odie-chatbox-message-sources"
-  }, sources.length > 0 && sources.map((source, index) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_custom_a_link__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Z, {
-    key: index,
-    href: source.url,
-    inline: false
-  }, source?.title)))));
-  const fullscreenContent = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "odie-fullscreen",
-    onClick: handleBackdropClick
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "odie-fullscreen-backdrop",
-    onClick: handleContentClick
-  }, messageContent));
-  if (isFullscreen) {
-    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, messageContent, /*#__PURE__*/react_dom__WEBPACK_IMPORTED_MODULE_3___default().createPortal(fullscreenContent, document.body));
-  }
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: odieChatBoxMessageSourcesContainerClass,
-    ref: ref
-  }, messageContent);
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ChatMessage);
-
-/***/ }),
-
-/***/ 82056:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   V: () => (/* binding */ JumpToRecent)
-/* harmony export */ });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(69307);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5869);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(43383);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(72779);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(10975);
-/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(26712);
-
-
-
-
-
-
-/**
- * This might be synced with CSS in client/odie/message/style.scss, which is half of the height for the gradient.
- * Used to calculate the bottom offset for the jump to recent button, so it doesn't overlap with the last message.
- * Also, making it twice as big, will prevent the gradient to be not visible when the input grows/shrinks in height.
- */
-const heightOffset = 48;
-const JumpToRecent = ({
-  scrollToBottom,
-  enableJumpToRecent,
-  bottomOffset
-}) => {
-  const {
-    trackEvent,
-    isMinimized
-  } = (0,_context__WEBPACK_IMPORTED_MODULE_2__/* .useOdieAssistantContext */ .qi)();
-  const translate = (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z)();
-  const jumpToRecent = () => {
-    scrollToBottom();
-    trackEvent('chat_jump_to_recent_click');
-  };
-  if (isMinimized) {
-    return null;
-  }
-  const className = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-gradient-to-white', {
-    'is-visible': enableJumpToRecent,
-    'is-hidden': !enableJumpToRecent
-  });
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: className,
-    style: {
-      bottom: bottomOffset - heightOffset
-    }
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
-    className: "odie-jump-to-recent-message-button",
-    onClick: jumpToRecent
-  }, translate('Jump to recent', {
-    context: 'A dynamic button that appears on a chatbox, when the last message is not vissible'
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z,
-    fill: "white"
-  })));
-};
-
-/***/ }),
-
-/***/ 34571:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   k: () => (/* binding */ ThumbsDownIcon),
-/* harmony export */   l: () => (/* binding */ ThumbsUpIcon)
-/* harmony export */ });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(69307);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-
-const ThumbsUpIcon = ({
-  className
-}) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
-  xmlns: "http://www.w3.org/2000/svg",
-  width: "24",
-  height: "24",
-  viewBox: "0 0 24 24",
-  className: className
-}, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
-  fillRule: "evenodd",
-  clipRule: "evenodd",
-  d: "M9.24155 10.0159C9.31208 10.0054 9.38426 10 9.45771 10C9.77958 10 10.0633 9.78887 10.1558 9.48058L11.3423 5.52577C11.4359 5.21371 11.7231 5 12.0489 5C13.6788 5 15 6.32124 15 7.95108V9.5C15 9.77614 15.2239 10 15.5 10H17.4384C18.7396 10 19.6943 11.2228 19.3787 12.4851L18.3787 16.4851C18.1561 17.3754 17.3562 18 16.4384 18H10C9.52703 18 9.0924 17.8358 8.75 17.5613C8.4076 17.8358 7.97297 18 7.5 18H6C5.44772 18 5 17.5523 5 17V10C5 9.44772 5.44772 9 6 9H7.5C8.24683 9 8.89806 9.40935 9.24155 10.0159ZM15.5 11.5H17.4384C17.7637 11.5 18.0024 11.8057 17.9235 12.1213L16.9235 16.1213C16.8679 16.3439 16.6679 16.5 16.4384 16.5H10C9.72386 16.5 9.5 16.2761 9.5 16V11.4996C10.4668 11.4814 11.3138 10.8408 11.5926 9.9116L12.5853 6.60237C13.1212 6.81569 13.5 7.33915 13.5 7.95108V9.5C13.5 10.6046 14.3954 11.5 15.5 11.5ZM8 16V11C8 10.7239 7.77614 10.5 7.5 10.5H6.5V16.5H7.5C7.77614 16.5 8 16.2761 8 16Z"
-}));
-const ThumbsDownIcon = ({
-  className
-}) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
-  xmlns: "http://www.w3.org/2000/svg",
-  width: "24",
-  height: "24",
-  viewBox: "0 0 24 24",
-  className: className
-}, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
-  fillRule: "evenodd",
-  clipRule: "evenodd",
-  d: "M15.1979 12.9841C15.1273 12.9946 15.0552 13 14.9817 13C14.6599 13 14.3761 13.2111 14.2836 13.5194L13.0972 17.4742C13.0035 17.7863 12.7163 18 12.3905 18C10.7607 18 9.43943 16.6788 9.43943 15.0489V13.5C9.43943 13.2239 9.21557 13 8.93943 13H7.00098C5.69984 13 4.74513 11.7772 5.0607 10.5149L6.0607 6.51493C6.28328 5.62459 7.08325 5 8.00098 5L14.4394 5C14.9124 5 15.347 5.16418 15.6894 5.43866C16.0318 5.16418 16.4665 5 16.9394 5L18.4394 5C18.9917 5 19.4394 5.44772 19.4394 6V13C19.4394 13.5523 18.9917 14 18.4394 14H16.9394C16.1926 14 15.5414 13.5906 15.1979 12.9841ZM8.93943 11.5H7.00098C6.6757 11.5 6.43702 11.1943 6.51591 10.8787L7.51591 6.87873C7.57156 6.65615 7.77155 6.5 8.00098 6.5L14.4394 6.5C14.7156 6.5 14.9394 6.72386 14.9394 7V11.5004C13.9727 11.5186 13.1256 12.1592 12.8469 13.0884L11.8541 16.3976C11.3182 16.1843 10.9394 15.6608 10.9394 15.0489V13.5C10.9394 12.3954 10.044 11.5 8.93943 11.5ZM16.4394 7V12C16.4394 12.2761 16.6633 12.5 16.9394 12.5H17.9394V6.5H16.9394C16.6633 6.5 16.4394 6.72386 16.4394 7Z"
-}));
-
-/***/ }),
-
-/***/ 15954:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   A: () => (/* binding */ uriTransformer)
-/* harmony export */ });
-// This is exactly the same implementation that is used in the react-markdown library.
-// It is used to allow only certain protocols in links, and that's why I've copied it here.
-// And overrided with my own implementation to include 'prompt' protocol. We might add more
-// protocols in the future, but for now, this is enough. That would REALLY simplify things for
-// us, because adding a new protocol would be as simple as adding it to the array above, and
-// and extending the component custom-a-link.tsx to handle it. That's it.
-const protocols = ['http', 'https', 'mailto', 'tel', 'prompt'];
-
-/**
- * @param {string} uri
- * @returns {string}
- */
-function uriTransformer(uri) {
-  const url = (uri || '').trim();
-  const first = url.charAt(0);
-  if (first === '#' || first === '/') {
-    return url;
-  }
-  const colon = url.indexOf(':');
-  if (colon === -1) {
-    return url;
-  }
-  let index = -1;
-  while (++index < protocols.length) {
-    const protocol = protocols[index];
-    if (colon === protocol.length && url.slice(0, protocol.length).toLowerCase() === protocol) {
-      return url;
-    }
-  }
-  index = url.indexOf('?');
-  if (index !== -1 && colon > index) {
-    return url;
-  }
-  index = url.indexOf('#');
-  if (index !== -1 && colon > index) {
-    return url;
-  }
-
-  // eslint-disable-next-line no-script-url
-  return 'javascript:void(0)';
-}
-
-/***/ }),
-
-/***/ 97381:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(69307);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(72779);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(10975);
-/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(26712);
-/* harmony import */ var _query__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(24258);
-/* harmony import */ var _thumbs_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(34571);
-
-
-
-
-
-
-
-const WasThisHelpfulButtons = ({
-  message,
-  onDislike = _context__WEBPACK_IMPORTED_MODULE_2__/* .noop */ .ZT
-}) => {
-  const THUMBS_DOWN_RATING_VALUE = 2;
-  const THUMBS_UP_RATING_VALUE = 4;
-  const translate = (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z)();
-  const {
-    setMessageLikedStatus,
-    trackEvent
-  } = (0,_context__WEBPACK_IMPORTED_MODULE_2__/* .useOdieAssistantContext */ .qi)();
-  const {
-    mutateAsync: sendOdieMessageFeedback
-  } = (0,_query__WEBPACK_IMPORTED_MODULE_3__/* .useOdieSendMessageFeedback */ .k4)();
-  const liked = message.liked === true;
-  const disliked = message.liked === false;
-  const rated = message.liked !== null && message.liked !== undefined;
-  const handleIsHelpful = isHelpful => {
-    sendOdieMessageFeedback({
-      message,
-      rating_value: isHelpful ? THUMBS_UP_RATING_VALUE : THUMBS_DOWN_RATING_VALUE
-    });
-    setMessageLikedStatus(message, isHelpful);
-    if (!isHelpful) {
-      onDislike();
-    }
-    trackEvent('chat_message_action_feedback', {
-      action: 'feedback',
-      is_helpful: isHelpful,
-      message_id: message.message_id
-    });
-  };
-  const thumbsUpClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()({
-    'odie-feedback-component-button-icon-disabled': rated && disliked,
-    'odie-feedback-component-button-icon-pressed': rated && liked
-  });
-  const thumbsDownClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()({
-    'odie-feedback-component-button-icon-disabled': rated && liked,
-    'odie-feedback-component-button-icon-pressed': rated && disliked
-  });
-  const questionClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-feedback-component-question', {
-    'odie-question-out': rated,
-    'odie-question-hidden': rated
-  });
-  const thanksClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-feedback-component-thanks', {
-    'odie-thanks-in': rated,
-    'odie-thanks-hidden': !rated
-  });
-  const buttonLikedClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-feedback-component-button', {
-    'odie-feedback-component-button-liked-pressed': rated && liked,
-    'odie-feedback-component-button-liked-disabled': rated && disliked
-  });
-  const buttonDislikedClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-feedback-component-button', {
-    'odie-feedback-component-button-disliked-pressed': rated && disliked,
-    'odie-feedback-component-button-disliked-disabled': rated && liked
-  });
-  const containerClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-feedback-component-container', {
-    'odie-question-collapse': rated
-  });
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: containerClasses
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "odie-feedback-message"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
-    className: questionClasses
-  }, translate('Was this helpful?', {
-    context: 'Indicates if a messaged provided by a chatbot was helpful or not'
-  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
-    className: thanksClasses
-  }, translate('Thanks!', {
-    context: 'Indicates that the user has provided feedback to a chatbot message'
-  }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
-    className: "odie-feedback-component-button-container"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
-    className: buttonLikedClasses,
-    onClick: () => handleIsHelpful(true),
-    disabled: disliked
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_thumbs_icons__WEBPACK_IMPORTED_MODULE_4__/* .ThumbsUpIcon */ .l, {
-    className: thumbsUpClasses
-  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
-    className: buttonDislikedClasses,
-    onClick: () => handleIsHelpful(false),
-    disabled: liked
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_thumbs_icons__WEBPACK_IMPORTED_MODULE_4__/* .ThumbsDownIcon */ .k, {
-    className: thumbsDownClasses
-  }))));
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (WasThisHelpfulButtons);
-
-/***/ }),
-
-/***/ 30682:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   K: () => (/* binding */ OdieSendMessageButton)
-/* harmony export */ });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(69307);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(10975);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99196);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var calypso_components_textarea_autosize__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(93667);
-/* harmony import */ var _assets_arrow_up_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(17985);
-/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(26712);
-/* harmony import */ var _query__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(24258);
-/* harmony import */ var _message_jump_to_recent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(82056);
-
-
-
-
-
-
-
-
-
-const OdieSendMessageButton = ({
-  scrollToRecent,
-  scrollToBottom,
-  enableStickToBottom,
-  enableJumpToRecent
-}) => {
-  const [messageString, setMessageString] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
-  const divContainerRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
-  const {
-    initialUserMessage,
-    chat,
-    isLoading,
-    trackEvent
-  } = (0,_context__WEBPACK_IMPORTED_MODULE_4__/* .useOdieAssistantContext */ .qi)();
-  const {
-    mutateAsync: sendOdieMessage
-  } = (0,_query__WEBPACK_IMPORTED_MODULE_5__/* .useOdieSendMessage */ .hZ)();
-  const translate = (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z)();
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-    if (initialUserMessage && !chat.chat_id) {
-      setMessageString(initialUserMessage);
-    }
-  }, [initialUserMessage, chat.chat_id]);
-  const sendMessage = async () => {
-    try {
-      trackEvent('chat_message_action_send');
-      const message = {
-        content: messageString,
-        role: 'user',
-        type: 'message'
-      };
-      await sendOdieMessage({
-        message
-      });
-      trackEvent('chat_message_action_receive');
-    } catch (e) {
-      const error = e;
-      trackEvent('chat_message_error', {
-        error: error?.message
-      });
-    }
-  };
-  const sendMessageIfNotEmpty = async () => {
-    if (messageString.trim() === '') {
-      return;
-    }
-    setMessageString('');
-    enableStickToBottom();
-    await sendMessage();
-    scrollToBottom(true);
-  };
-  const handleKeyPress = async event => {
-    scrollToBottom(false);
-    if (isLoading) {
-      return;
-    }
-    if (event.key === 'Enter' && !event.shiftKey) {
-      event.preventDefault();
-      await sendMessageIfNotEmpty();
-    }
-  };
-  const handleSubmit = async event => {
-    event.preventDefault();
-    await sendMessageIfNotEmpty();
-  };
-  const divContainerHeight = divContainerRef?.current?.clientHeight;
-  const userHasAskedToContactHE = chat.messages.some(message => message.context?.flags?.forward_to_human_support === true);
-  const userHasNegativeFeedback = chat.messages.some(message => message.liked === false);
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_message_jump_to_recent__WEBPACK_IMPORTED_MODULE_6__/* .JumpToRecent */ .V, {
-    scrollToBottom: scrollToRecent,
-    enableJumpToRecent: enableJumpToRecent,
-    bottomOffset: divContainerHeight ?? 0
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "odie-chat-message-input-container",
-    ref: divContainerRef
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("form", {
-    onSubmit: handleSubmit,
-    className: "odie-send-message-input-container"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_textarea_autosize__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z, {
-    placeholder: userHasAskedToContactHE || userHasNegativeFeedback ? translate('Continue chatting with Wapuu', {
-      context: 'Placeholder text for the message input field (chat)',
-      textOnly: true
-    }) : translate('Ask your question', {
-      context: 'Placeholder text for the message input field (chat)',
-      textOnly: true
-    }),
-    className: "odie-send-message-input",
-    rows: 1,
-    value: messageString,
-    onChange: event => setMessageString(event.currentTarget.value),
-    onKeyPress: handleKeyPress
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
-    type: "submit",
-    className: "odie-send-message-inner-button",
-    disabled: messageString.trim() === '' || isLoading
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
-    src: _assets_arrow_up_svg__WEBPACK_IMPORTED_MODULE_3__,
-    alt: translate('Arrow icon', {
-      context: 'html alt tag',
-      textOnly: true
-    })
-  })))));
-};
-
-/***/ }),
-
-/***/ 53183:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   P: () => (/* binding */ getOdieInitialMessage)
-/* harmony export */ });
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(65736);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
-
-const __ = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__;
-const getOdieInitialPrompt = botNameSlug => {
-  switch (botNameSlug) {
-    case 'wpcom-support-chat':
-      return __('Hi there 👋 I’m Wapuu, WordPress.com’s AI assistant! Having an issue with your site or account? Tell me all about it and I’ll be happy to help.');
-  }
-};
-const getOdieInitialMessage = botNameSlug => {
-  return {
-    content: getOdieInitialPrompt(botNameSlug),
-    role: 'bot',
-    type: 'introduction'
-  };
-};
-
-/***/ }),
-
-/***/ 26712:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   JU: () => (/* binding */ OdieAssistantProvider),
-/* harmony export */   ZT: () => (/* binding */ noop),
-/* harmony export */   qi: () => (/* binding */ useOdieAssistantContext)
-/* harmony export */ });
-/* unused harmony export OdieAssistantContext */
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(69307);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99196);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(38301);
-/* harmony import */ var _get_odie_initial_message__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(53183);
-/* harmony import */ var _use_load_previous_chat__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(53637);
-
-
-
-
-
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-const noop = () => {};
-
-/*
- * This is the interface for the context. It contains all the methods and values that are
- * available to the components that are wrapped in the provider.
- *
- */
-
-const defaultContextInterfaceValues = {
-  addMessage: noop,
-  botName: 'Wapuu',
-  botNameSlug: 'wpcom-support-chat',
-  chat: {
-    context: {
-      section_name: '',
-      site_id: null
-    },
-    messages: []
-  },
-  clearChat: noop,
-  initialUserMessage: null,
-  isLoadingChat: false,
-  isLoading: false,
-  isMinimized: false,
-  isNudging: false,
-  isVisible: false,
-  lastNudge: null,
-  sendNudge: noop,
-  setChat: noop,
-  setIsLoadingChat: noop,
-  setMessageLikedStatus: noop,
-  setContext: noop,
-  setIsNudging: noop,
-  setIsVisible: noop,
-  setIsLoading: noop,
-  trackEvent: noop,
-  updateMessage: noop
-};
-
-// Create a default new context
-const OdieAssistantContext = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.createContext)(defaultContextInterfaceValues);
-
-// Custom hook to access the OdieAssistantContext
-const useOdieAssistantContext = () => (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(OdieAssistantContext);
-
-// Create a provider component for the context
-const OdieAssistantProvider = ({
-  botName = 'Wapuu assistant',
-  botNameSlug = 'wpcom-support-chat',
-  initialUserMessage,
-  isMinimized = false,
-  extraContactOptions,
-  enabled = true,
-  logger,
-  loggerEventNamePrefix,
-  children
-}) => {
-  const [isVisible, setIsVisible] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
-  const [isLoading, setIsLoading] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
-  const [isNudging, setIsNudging] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
-  const [lastNudge, setLastNudge] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
-  const existingChatIdString = (0,_data__WEBPACK_IMPORTED_MODULE_2__/* .useOdieStorage */ .y)('chat_id');
-  const existingChatId = existingChatIdString ? parseInt(existingChatIdString, 10) : null;
-  const existingChat = (0,_use_load_previous_chat__WEBPACK_IMPORTED_MODULE_4__/* .useLoadPreviousChat */ .M)(botNameSlug, existingChatId);
-  const [chat, setChat] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(existingChat);
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-    if (existingChat.chat_id) {
-      setChat(existingChat);
-    }
-  }, [existingChat, existingChat.chat_id]);
-  const trackEvent = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)((eventName, properties = {}) => {
-    const event = loggerEventNamePrefix ? `${loggerEventNamePrefix}_${eventName}` : eventName;
-    logger?.(event, {
-      ...properties,
-      chat_id: chat?.chat_id,
-      bot_name_slug: botNameSlug
-    });
-  }, [botNameSlug, chat?.chat_id, logger, loggerEventNamePrefix]);
-  const clearChat = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)(() => {
-    (0,_data__WEBPACK_IMPORTED_MODULE_2__/* .clearOdieStorage */ .x0)('chat_id');
-    setChat({
-      chat_id: null,
-      messages: [(0,_get_odie_initial_message__WEBPACK_IMPORTED_MODULE_3__/* .getOdieInitialMessage */ .P)(botNameSlug)]
-    });
-    trackEvent('chat_cleared', {});
-  }, [botNameSlug, trackEvent]);
-  const setMessageLikedStatus = (message, liked) => {
-    setChat(prevChat => {
-      const messageIndex = prevChat.messages.findIndex(m => m === message);
-      const updatedMessage = {
-        ...message,
-        liked
-      };
-      return {
-        ...prevChat,
-        messages: [...prevChat.messages.slice(0, messageIndex), updatedMessage, ...prevChat.messages.slice(messageIndex + 1)]
-      };
-    });
-  };
-
-  // This might need a rework in the future, like connecting messages to a client_chat_id and
-  // Update it to be a message.type = 'message' in order to keep simplicity.
-  const addMessage = message => {
-    setChat(prevChat => {
-      // Normalize message to always be an array
-      const newMessages = Array.isArray(message) ? message : [message];
-
-      // Check if the new message is of type 'dislike-feedback'
-      const isNewMessageDislikeFeedback = newMessages.some(msg => msg.type === 'dislike-feedback');
-      const filteredMessages = !isNewMessageDislikeFeedback ? prevChat.messages.filter(msg => msg.type !== 'placeholder') : prevChat.messages;
-
-      // If the new message is 'dislike-feedback' and there's a placeholder, insert it before the placeholder
-      if (isNewMessageDislikeFeedback) {
-        const lastPlaceholderIndex = prevChat.messages.map(msg => msg.type).lastIndexOf('placeholder');
-        return {
-          chat_id: prevChat.chat_id,
-          messages: [...prevChat.messages.slice(0, lastPlaceholderIndex),
-          // Take all messages before the last placeholder
-          ...newMessages,
-          // Insert new 'dislike-feedback' messages
-          ...prevChat.messages.slice(lastPlaceholderIndex) // Add back the placeholder and any messages after it
-          ]
-        };
-      }
-
-      // For all other cases, append new messages at the end, without placeholders if not 'dislike-feedback'
-      return {
-        chat_id: prevChat.chat_id,
-        messages: [...filteredMessages, ...newMessages]
-      };
-    });
-  };
-  const updateMessage = message => {
-    setChat(prevChat => {
-      const updatedMessages = prevChat.messages.map(m => message.internal_message_id && m.internal_message_id === message.internal_message_id || message.message_id && m.message_id === message.message_id ? {
-        ...m,
-        ...message
-      } : m);
-      return {
-        ...prevChat,
-        messages: updatedMessages
-      };
-    });
-  };
-  if (!enabled) {
-    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, children);
-  }
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(OdieAssistantContext.Provider, {
-    value: {
-      addMessage,
-      botName,
-      botNameSlug,
-      chat,
-      clearChat,
-      extraContactOptions,
-      initialUserMessage,
-      isLoadingChat: false,
-      isLoading: isLoading,
-      isMinimized,
-      isNudging,
-      isVisible,
-      lastNudge,
-      sendNudge: setLastNudge,
-      setChat,
-      setIsLoadingChat: noop,
-      setMessageLikedStatus,
-      setContext: noop,
-      setIsLoading,
-      setIsNudging,
-      setIsVisible,
-      trackEvent,
-      updateMessage
-    }
-  }, children);
-};
-
-
-/***/ }),
-
-/***/ 53637:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   M: () => (/* binding */ useLoadPreviousChat)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(99196);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _query__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(24258);
-/* harmony import */ var _get_odie_initial_message__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(53183);
-
-
-
-const useLoadPreviousChat = (botNameSlug, chatId) => {
-  const {
-    data: existingChat
-  } = (0,_query__WEBPACK_IMPORTED_MODULE_1__/* .useOdieGetChat */ .L)(botNameSlug, chatId, 1, 30);
-  const [chat, setChat] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
-    chat_id: null,
-    messages: [(0,_get_odie_initial_message__WEBPACK_IMPORTED_MODULE_2__/* .getOdieInitialMessage */ .P)(botNameSlug)]
-  });
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    if (existingChat) {
-      const initialMessage = (0,_get_odie_initial_message__WEBPACK_IMPORTED_MODULE_2__/* .getOdieInitialMessage */ .P)(botNameSlug);
-      const messages = [initialMessage, ...existingChat.messages];
-      setChat({
-        ...existingChat,
-        messages
-      });
-    } else {
-      setChat({
-        chat_id: null,
-        messages: [(0,_get_odie_initial_message__WEBPACK_IMPORTED_MODULE_2__/* .getOdieInitialMessage */ .P)(botNameSlug)]
-      });
-    }
-  }, [botNameSlug, chatId, existingChat]);
-  return chat;
-};
-
-/***/ }),
-
-/***/ 38301:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   C8: () => (/* binding */ getOdieStorage),
-/* harmony export */   QL: () => (/* binding */ setOdieStorage),
-/* harmony export */   x0: () => (/* binding */ clearOdieStorage),
-/* harmony export */   y: () => (/* binding */ useOdieStorage)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(99196);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-
-const buildOdieStorageKey = key => `odie_${key}`;
-const storageEventName = 'odieStorageEvent';
-const getOdieStorage = key => {
-  const storageKey = buildOdieStorageKey(key);
-  return localStorage.getItem(storageKey);
-};
-const setOdieStorage = (key, value) => {
-  const storageKey = buildOdieStorageKey(key);
-  localStorage.setItem(storageKey, value);
-
-  // Duplicate the value to last_chat_id
-  if (key === 'chat_id') {
-    localStorage.setItem(buildOdieStorageKey('last_chat_id'), value);
-    window.dispatchEvent(new CustomEvent(storageEventName, {
-      detail: {
-        key: buildOdieStorageKey('last_chat_id'),
-        value: value
-      }
-    }));
-  }
-  const event = new CustomEvent(storageEventName, {
-    detail: {
-      key: storageKey,
-      value: value
-    }
-  });
-  window.dispatchEvent(event);
-};
-const clearOdieStorage = key => {
-  const storageKey = buildOdieStorageKey(key);
-  localStorage.removeItem(storageKey);
-  const event = new CustomEvent(storageEventName, {
-    detail: {
-      key: storageKey,
-      value: null
-    }
-  });
-  window.dispatchEvent(event);
-};
-const useOdieStorage = key => {
-  const storageKey = buildOdieStorageKey(key);
-  const [value, setValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(getOdieStorage(key));
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    const storageListener = e => {
-      if (e.key === storageKey) {
-        setValue(e.newValue);
-      }
-    };
-    const customStorageListener = e => {
-      const detail = e.detail;
-      if (detail.key === storageKey) {
-        setValue(detail.value);
-      }
-    };
-    window.addEventListener('storage', storageListener);
-    window.addEventListener(storageEventName, customStorageListener);
-    return () => {
-      window.removeEventListener('storage', storageListener);
-      window.removeEventListener(storageEventName, customStorageListener);
-    };
-  }, [key, storageKey]);
-  return value;
-};
-
-/***/ }),
-
-/***/ 13852:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   T: () => (/* binding */ WAPUU_ERROR_MESSAGE),
-/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(69307);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(11481);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99196);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_intersection_observer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(34059);
-/* harmony import */ var _components_message__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(42537);
-/* harmony import */ var _components_send_message_input__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(30682);
-/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(26712);
-
-
-
-
-
-
-
-
-const WAPUU_ERROR_MESSAGE = i18n_calypso__WEBPACK_IMPORTED_MODULE_5__/* ["default"].translate */ .ZP.translate("Wapuu oopsie! 😺 I'm in snooze mode and can't chat just now. Don't fret, just browse through the buttons below to connect with WordPress.com support.", {
-  comment: 'Error message when Wapuu fails to send a message',
-  textOnly: true
-});
-const ForwardedChatMessage = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(_components_message__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z);
-const OdieAssistant = () => {
-  const {
-    chat,
-    trackEvent
-  } = (0,_context__WEBPACK_IMPORTED_MODULE_4__/* .useOdieAssistantContext */ .qi)();
-  const chatboxMessagesRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
-  const {
-    ref: bottomRef,
-    entry: lastMessageElement,
-    inView
-  } = (0,react_intersection_observer__WEBPACK_IMPORTED_MODULE_6__/* .useInView */ .YD)({
-    threshold: 0
-  });
-  const [stickToBottom, setStickToBottom] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true);
-  const scrollToBottom = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)((force = false) => {
-    if (force || stickToBottom) {
-      requestAnimationFrame(() => {
-        if (lastMessageElement?.target) {
-          lastMessageElement.target.scrollIntoView({
-            behavior: 'auto',
-            block: 'end',
-            inline: 'end'
-          });
-        }
-      });
-    }
-  }, [lastMessageElement?.target, stickToBottom]);
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-    trackEvent('chatbox_view');
-  }, [trackEvent]);
-  const scrollToInitialBlockOfLastMessage = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)(() => {
-    if (chatboxMessagesRef.current) {
-      requestAnimationFrame(() => {
-        if (lastMessageElement?.target) {
-          lastMessageElement?.target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start',
-            inline: 'nearest'
-          });
-        }
-      });
-    }
-  }, [lastMessageElement?.target]);
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-    scrollToInitialBlockOfLastMessage();
-  }, [chat.messages.length, scrollToInitialBlockOfLastMessage]);
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "chatbox"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "chat-box-message-container"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "chatbox-messages",
-    ref: chatboxMessagesRef,
-    onWheel: event => {
-      // If delta is negative, we are scrolling up so we want to disable stick to bottom
-      // we might improve this in the future for touch devices
-      if (event.deltaY < 0) {
-        setStickToBottom(false);
-      } else if (chatboxMessagesRef.current) {
-        const scrollHeight = chatboxMessagesRef.current.scrollHeight;
-        const scrollTop = chatboxMessagesRef.current.scrollTop;
-        const clientHeight = chatboxMessagesRef.current.clientHeight;
-        const scrollBottom = scrollHeight - scrollTop - clientHeight;
-        setStickToBottom(scrollBottom < 8);
-      }
-    }
-  }, chat.messages.map((message, index) => {
-    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ForwardedChatMessage, {
-      message: message,
-      key: index,
-      scrollToBottom: scrollToBottom,
-      ref: chat.messages.length - 1 === index ? bottomRef : undefined
-    });
-  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_send_message_input__WEBPACK_IMPORTED_MODULE_3__/* .OdieSendMessageButton */ .K, {
-    scrollToBottom: scrollToBottom,
-    scrollToRecent: scrollToInitialBlockOfLastMessage,
-    enableStickToBottom: () => setStickToBottom(true),
-    enableJumpToRecent: !inView
-  })));
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (OdieAssistant);
-
-/***/ }),
-
-/***/ 24258:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   L: () => (/* binding */ useOdieGetChat),
-/* harmony export */   hZ: () => (/* binding */ useOdieSendMessage),
-/* harmony export */   k4: () => (/* binding */ useOdieSendMessageFeedback)
-/* harmony export */ });
-/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(4182);
-/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(42180);
-/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86989);
-/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(18552);
-/* harmony import */ var calypso_lib_wp__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(72429);
-/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(13852);
-/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(26712);
-/* harmony import */ var _data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(38301);
-
-
-
-
-
-
-
-// Either we use wpcom or apiFetch for the request for accessing odie endpoint for atomic or wpcom sites
-const buildSendChatMessage = async (message, botNameSlug, chat_id) => {
-  const baseApiPath = '/help-center/odie/chat/';
-  const wpcomBaseApiPath = '/odie/chat/';
-  const apiPathWithIds = chat_id !== null && chat_id !== undefined ? `${baseApiPath}${botNameSlug}/${chat_id}` : `${baseApiPath}${botNameSlug}`;
-  const wpcomApiPathWithIds = chat_id !== null && chat_id !== undefined ? `${wpcomBaseApiPath}${botNameSlug}/${chat_id}` : `${wpcomBaseApiPath}${botNameSlug}`;
-  return (0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_5__/* .canAccessWpcomApis */ .aO)() ? odieWpcomSendSupportMessage(message, wpcomApiPathWithIds) : _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
-    path: apiPathWithIds,
-    method: 'POST',
-    data: {
-      message
-    }
-  });
-};
-function odieWpcomSendSupportMessage(message, path) {
-  return calypso_lib_wp__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z.req.post({
-    path,
-    apiNamespace: 'wpcom/v2',
-    body: {
-      message: message.content
-    }
-  });
-}
-
-// Internal helper function to generate a uuid
-function uuid() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    const r = Math.random() * 16 | 0;
-    const v = c === 'x' ? r : r & 0x3 | 0x8;
-    return v.toString(16);
-  });
-}
-
-/**
- * It will post a new message using the current chat_id.
- * The message object should be in the format of Message type. The mutator will take
- * care of adding placeholders and error messages to the chat.
- * @returns UseMutationResult
- * @example
- * const { mutate, isLoading } = useOdieSendMessage();
- * mutate( { message: { content: 'Hello' } } );
- */
-const useOdieSendMessage = () => {
-  const {
-    chat,
-    botNameSlug,
-    setIsLoading,
-    addMessage,
-    updateMessage
-  } = (0,_context__WEBPACK_IMPORTED_MODULE_3__/* .useOdieAssistantContext */ .qi)();
-  return (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_6__/* .useMutation */ .D)({
-    mutationFn: ({
-      message
-    }) => {
-      return buildSendChatMessage({
-        ...message
-      }, botNameSlug, chat.chat_id);
-    },
-    onMutate: ({
-      message
-    }) => {
-      const internal_message_id = uuid();
-      addMessage([message, {
-        internal_message_id,
-        content: '...',
-        role: 'bot',
-        type: 'placeholder'
-      }]);
-      setIsLoading(true);
-      return {
-        internal_message_id
-      };
-    },
-    onSuccess: (data, _, context) => {
-      if (!context) {
-        throw new Error('Context is undefined');
-      }
-      const {
-        internal_message_id
-      } = context;
-      if (!data.messages || !data.messages[0].content) {
-        updateMessage({
-          content: ___WEBPACK_IMPORTED_MODULE_2__/* .WAPUU_ERROR_MESSAGE */ .T,
-          internal_message_id,
-          role: 'bot',
-          type: 'error'
-        });
-        return;
-      }
-      updateMessage({
-        message_id: data.messages[0].message_id,
-        internal_message_id,
-        content: data.messages[0].content,
-        role: 'bot',
-        simulateTyping: data.messages[0].simulateTyping,
-        type: 'message',
-        context: data.messages[0].context
-      });
-      (0,_data__WEBPACK_IMPORTED_MODULE_4__/* .setOdieStorage */ .QL)('chat_id', data.chat_id);
-    },
-    onSettled: () => {
-      setIsLoading(false);
-    },
-    onError: (_, __, context) => {
-      if (!context) {
-        throw new Error('Context is undefined');
-      }
-      const {
-        internal_message_id
-      } = context;
-      updateMessage({
-        content: ___WEBPACK_IMPORTED_MODULE_2__/* .WAPUU_ERROR_MESSAGE */ .T,
-        internal_message_id,
-        role: 'bot',
-        type: 'error'
-      });
-    }
-  });
-};
-const buildGetChatMessage = (botNameSlug, chat_id, page, perPage, includeFeedback) => {
-  const urlQueryParams = new URLSearchParams({
-    page_number: page.toString(),
-    items_per_page: perPage.toString(),
-    include_feedback: includeFeedback.toString()
-  });
-  const baseApiPath = `/help-center/odie/chat/${botNameSlug}/${chat_id}?${urlQueryParams.toString()}`;
-  const wpcomBaseApiPath = `/odie/chat/${botNameSlug}/${chat_id}?${urlQueryParams.toString()}`;
-  return (0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_5__/* .canAccessWpcomApis */ .aO)() ? odieWpcomGetChat(wpcomBaseApiPath) : _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
-    path: baseApiPath,
-    method: 'GET'
-  });
-};
-function odieWpcomGetChat(path) {
-  return calypso_lib_wp__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z.req.get({
-    path,
-    apiNamespace: 'wpcom/v2'
-  });
-}
-
-/**
- * It will get the chat messages using the current chat_id.
- * @returns UseQueryResult
- * @example
- * const { data, isLoading } = useOdieGetChat();
- */
-const useOdieGetChat = (botNameSlug, chatId, page = 1, perPage = 10, includeFeedback = true) => {
-  const {
-    chat
-  } = (0,_context__WEBPACK_IMPORTED_MODULE_3__/* .useOdieAssistantContext */ .qi)();
-  return (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_7__/* .useQuery */ .a)({
-    queryKey: ['chat', botNameSlug, chatId, page, perPage, includeFeedback],
-    queryFn: () => buildGetChatMessage(botNameSlug, chatId, page, perPage, includeFeedback),
-    refetchOnWindowFocus: false,
-    enabled: !!chatId && !chat.chat_id,
-    select: data => {
-      const negativeFeedbackThreshold = 3;
-      const modifiedMessages = [];
-      data.messages.forEach(message => {
-        modifiedMessages.push(message);
-
-        // Check if the message has negative feedback
-        if (message.rating_value && message.rating_value < negativeFeedbackThreshold && !message.context?.flags?.forward_to_human_support) {
-          // Add a new 'dislike-feedback' message right after the current message
-          const dislikeFeedbackMessage = {
-            content: '...',
-            role: 'bot',
-            type: 'dislike-feedback',
-            simulateTyping: false
-          };
-          modifiedMessages.push(dislikeFeedbackMessage);
-        }
-      });
-      return {
-        ...data,
-        messages: modifiedMessages
-      };
-    }
-  });
-};
-const odieWpcomSendMessageFeedback = (botNameSlug, chatId, messageId, rating_value) => {
-  const path = `/odie/chat/${botNameSlug}/${chatId}/${messageId}/feedback`;
-  return calypso_lib_wp__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z.req.post({
-    path,
-    apiNamespace: 'wpcom/v2',
-    body: {
-      rating_value
-    }
-  });
-};
-
-/**
- * It will post a new message using the current chat_id.
- * This mutator is intended to shend feedback (thumbs up or down) for a message.
- * @returns UseMutationResult
- * @example
- * const { mutate, isLoading } = useOdieSendMessageFeedback();
- * mutate( { rating_value: 1, message: { message_id: 123 } } );
- */
-const useOdieSendMessageFeedback = () => {
-  const {
-    chat,
-    botNameSlug
-  } = (0,_context__WEBPACK_IMPORTED_MODULE_3__/* .useOdieAssistantContext */ .qi)();
-  return (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_6__/* .useMutation */ .D)({
-    mutationFn: ({
-      rating_value,
-      message
-    }) => {
-      return odieWpcomSendMessageFeedback(botNameSlug, chat.chat_id || 0, message.message_id || 0, rating_value);
-    }
-  });
-};
 
 /***/ }),
 
@@ -51717,7 +50240,7 @@ const FEATURE_CANCELLATION_UNLIMITED_TRAFFIC = 'cancellation-unlimited-traffic';
 /* harmony export */   zh5: () => (/* binding */ FEATURE_SALES_REPORTS),
 /* harmony export */   zrQ: () => (/* binding */ FEATURE_JETPACK_ANTI_SPAM)
 /* harmony export */ });
-/* unused harmony exports FEATURE_SET_PRIMARY_CUSTOM_DOMAIN, FEATURE_LEGACY_STORAGE_200GB, FEATURE_UNLIMITED_STORAGE, FEATURE_SFTP, FEATURE_SSH, FEATURE_VIDEO_UPLOADS_JETPACK_PREMIUM, FEATURE_INSTALL_THEMES, FEATURE_PERFORMANCE, FEATURE_ALL_PERSONAL_FEATURES_JETPACK, FEATURE_DONATIONS, FEATURE_PREMIUM_CONTENT_CONTAINER, FEATURE_SECURITY_SETTINGS, FEATURE_WOOP, FEATURE_PERSONAL_THEMES, FEATURE_STATS_FREE, FEATURE_SEARCH, FEATURE_SEARCH_V2, FEATURE_VIDEO_HOSTING_V2, FEATURE_CRM_INTEGRATED_WITH_WORDPRESS, FEATURE_CRM_LEADS_AND_FUNNEL, FEATURE_CRM_PROPOSALS_AND_INVOICES, FEATURE_CRM_TRACK_TRANSACTIONS, FEATURE_CRM_NO_CONTACT_LIMITS, FEATURE_SECURE_STORAGE_V2, FEATURE_ONE_CLICK_FIX_V2, FEATURE_INSTANT_EMAIL_V2, FEATURE_AKISMET_V2, FEATURE_SPAM_BLOCK_V2, FEATURE_SPAM_10K_PER_MONTH, FEATURE_FILTERING_V2, FEATURE_LANGUAGE_SUPPORT_V2, FEATURE_SPELLING_CORRECTION_V2, FEATURE_SUPPORTS_WOOCOMMERCE_V2, FEATURE_JETPACK_SCAN_BI_YEARLY, FEATURE_JETPACK_VIDEOPRESS_EDITOR, FEATURE_JETPACK_VIDEOPRESS_STORAGE, FEATURE_JETPACK_VIDEOPRESS_UNBRANDED, FEATURE_SOCIAL_SHARES_1000, FEATURE_SOCIAL_ENHANCED_PUBLISHING, FEATURE_SOCIAL_MASTODON_CONNECTION, FEATURE_SOCIAL_INSTAGRAM_CONNECTION, FEATURE_SOCIAL_NEXTDOOR_CONNECTION, FEATURE_JETPACK_MONITOR_MONTHLY, FEATURE_JETPACK_MONITOR_YEARLY, FEATURE_MONITOR_1_MINUTE_CHECK_INTERVAL, FEATURE_MONITOR_MULTIPLE_EMAIL_RECIPIENTS, FEATURE_MONITOR_SMS_NOTIFICATIONS, FEATURE_JETPACK_1GB_BACKUP_STORAGE, FEATURE_JETPACK_10GB_BACKUP_STORAGE, FEATURE_JETPACK_REAL_TIME_CLOUD_BACKUPS, FEATURE_UNLIMITED_USERS, FEATURE_UNLIMITED_POSTS_PAGES, FEATURE_ADDITIONAL_SITES, WPCOM_FEATURES_AI_ASSISTANT, WPCOM_FEATURES_AKISMET, WPCOM_FEATURES_BACKUPS_RESTORE, WPCOM_FEATURES_CDN, WPCOM_FEATURES_CLASSIC_SEARCH, WPCOM_FEATURES_CLOUDFLARE_CDN, WPCOM_FEATURES_COPY_SITE, WPCOM_FEATURES_FULL_ACTIVITY_LOG, WPCOM_FEATURES_INSTALL_PLUGINS, WPCOM_FEATURES_INSTANT_SEARCH, WPCOM_FEATURES_LIVE_SUPPORT, WPCOM_FEATURES_MANAGE_PLUGINS, WPCOM_FEATURES_NO_ADVERTS, WPCOM_FEATURES_NO_WPCOM_BRANDING, WPCOM_FEATURES_PREMIUM_THEMES, WPCOM_FEATURES_PRIORITY_SUPPORT, WPCOM_FEATURES_REAL_TIME_BACKUPS, WPCOM_FEATURES_SEO_PREVIEW_TOOLS, WPCOM_FEATURES_SUBSCRIPTION_GIFTING, WPCOM_FEATURES_LOCKED_MODE, WPCOM_FEATURES_LEGACY_CONTACT, WPCOM_FEATURES_UPLOAD_AUDIO_FILES, WPCOM_FEATURES_UPLOAD_PLUGINS, WPCOM_FEATURES_UPLOAD_VIDEO_FILES, WPCOM_FEATURES_VAULTPRESS_BACKUPS, WPCOM_FEATURES_VIDEOPRESS, WPCOM_FEATURES_VIDEOPRESS_UNLIMITED_STORAGE, WPCOM_FEATURES_VIDEO_HOSTING, WPCOM_FEATURES_WORDADS, WPCOM_FEATURES_CUSTOM_DESIGN, WPCOM_FEATURES_GLOBAL_STYLES, WPCOM_FEATURES_SITE_PREVIEW_LINKS, FEATURE_IMPORT_SUBSCRIBERS, FEATURE_ADD_MULTIPLE_PAGES_NEWSLETTER, FEATURE_COLLECT_PAYMENTS_NEWSLETTER, FEATURE_POST_BY_EMAIL, FEATURE_GOOGLE_ANALYTICS_V2, FEATURE_CUSTOMIZE_THEMES_BUTTONS_COLORS, FEATURE_TRACK_VIEWS_CLICKS, FEATURE_DESIGN_TOOLS, FEATURE_REFERRAL_PROGRAMS, FEATURE_CUSTOMER_BIRTHDAY_EMAILS, FEATURE_LOYALTY_POINTS_PROGRAMS, FEATURE_ASSEMBLED_PRODUCTS_AND_KITS, FEATURE_BRUTE_PROTECT_JP, FEATURE_AUTOMATTIC_DATACENTER_FAILOVER, WPCOM_STORAGE_ADD_ONS, FEATURE_CUSTOM_PRODUCT_KITS */
+/* unused harmony exports FEATURE_SET_PRIMARY_CUSTOM_DOMAIN, FEATURE_LEGACY_STORAGE_200GB, FEATURE_UNLIMITED_STORAGE, FEATURE_SFTP, FEATURE_SSH, FEATURE_VIDEO_UPLOADS_JETPACK_PREMIUM, FEATURE_INSTALL_THEMES, FEATURE_PERFORMANCE, FEATURE_ALL_PERSONAL_FEATURES_JETPACK, FEATURE_DONATIONS, FEATURE_PREMIUM_CONTENT_CONTAINER, FEATURE_SECURITY_SETTINGS, FEATURE_WOOP, FEATURE_PERSONAL_THEMES, FEATURE_STATS_FREE, FEATURE_SEARCH, FEATURE_SEARCH_V2, FEATURE_VIDEO_HOSTING_V2, FEATURE_CRM_INTEGRATED_WITH_WORDPRESS, FEATURE_CRM_LEADS_AND_FUNNEL, FEATURE_CRM_PROPOSALS_AND_INVOICES, FEATURE_CRM_TRACK_TRANSACTIONS, FEATURE_CRM_NO_CONTACT_LIMITS, FEATURE_SECURE_STORAGE_V2, FEATURE_ONE_CLICK_FIX_V2, FEATURE_INSTANT_EMAIL_V2, FEATURE_AKISMET_V2, FEATURE_SPAM_BLOCK_V2, FEATURE_SPAM_10K_PER_MONTH, FEATURE_FILTERING_V2, FEATURE_LANGUAGE_SUPPORT_V2, FEATURE_SPELLING_CORRECTION_V2, FEATURE_SUPPORTS_WOOCOMMERCE_V2, FEATURE_JETPACK_SCAN_BI_YEARLY, FEATURE_JETPACK_VIDEOPRESS_EDITOR, FEATURE_JETPACK_VIDEOPRESS_STORAGE, FEATURE_JETPACK_VIDEOPRESS_UNBRANDED, FEATURE_SOCIAL_SHARES_1000, FEATURE_SOCIAL_ENHANCED_PUBLISHING, FEATURE_SOCIAL_MASTODON_CONNECTION, FEATURE_SOCIAL_INSTAGRAM_CONNECTION, FEATURE_SOCIAL_NEXTDOOR_CONNECTION, FEATURE_JETPACK_MONITOR_MONTHLY, FEATURE_JETPACK_MONITOR_YEARLY, FEATURE_MONITOR_1_MINUTE_CHECK_INTERVAL, FEATURE_MONITOR_MULTIPLE_EMAIL_RECIPIENTS, FEATURE_MONITOR_SMS_NOTIFICATIONS, FEATURE_JETPACK_1GB_BACKUP_STORAGE, FEATURE_JETPACK_10GB_BACKUP_STORAGE, FEATURE_JETPACK_REAL_TIME_CLOUD_BACKUPS, FEATURE_UNLIMITED_USERS, FEATURE_UNLIMITED_POSTS_PAGES, FEATURE_ADDITIONAL_SITES, WPCOM_FEATURES_AI_ASSISTANT, WPCOM_FEATURES_AKISMET, WPCOM_FEATURES_BACKUPS_RESTORE, WPCOM_FEATURES_CDN, WPCOM_FEATURES_CLASSIC_SEARCH, WPCOM_FEATURES_CLOUDFLARE_CDN, WPCOM_FEATURES_COPY_SITE, WPCOM_FEATURES_FULL_ACTIVITY_LOG, WPCOM_FEATURES_INSTALL_PLUGINS, WPCOM_FEATURES_INSTANT_SEARCH, WPCOM_FEATURES_LIVE_SUPPORT, WPCOM_FEATURES_MANAGE_PLUGINS, WPCOM_FEATURES_NO_ADVERTS, WPCOM_FEATURES_NO_WPCOM_BRANDING, WPCOM_FEATURES_PREMIUM_THEMES, WPCOM_FEATURES_PRIORITY_SUPPORT, WPCOM_FEATURES_REAL_TIME_BACKUPS, WPCOM_FEATURES_SEO_PREVIEW_TOOLS, WPCOM_FEATURES_SUBSCRIPTION_GIFTING, WPCOM_FEATURES_LOCKED_MODE, WPCOM_FEATURES_LEGACY_CONTACT, WPCOM_FEATURES_UPLOAD_AUDIO_FILES, WPCOM_FEATURES_UPLOAD_PLUGINS, WPCOM_FEATURES_UPLOAD_VIDEO_FILES, WPCOM_FEATURES_VAULTPRESS_BACKUPS, WPCOM_FEATURES_VIDEOPRESS, WPCOM_FEATURES_VIDEOPRESS_UNLIMITED_STORAGE, WPCOM_FEATURES_VIDEO_HOSTING, WPCOM_FEATURES_WORDADS, WPCOM_FEATURES_CUSTOM_DESIGN, WPCOM_FEATURES_GLOBAL_STYLES, WPCOM_FEATURES_SITE_PREVIEW_LINKS, FEATURE_IMPORT_SUBSCRIBERS, FEATURE_ADD_MULTIPLE_PAGES_NEWSLETTER, FEATURE_COLLECT_PAYMENTS_NEWSLETTER, FEATURE_POST_BY_EMAIL, FEATURE_GOOGLE_ANALYTICS_V2, FEATURE_CUSTOMIZE_THEMES_BUTTONS_COLORS, FEATURE_TRACK_VIEWS_CLICKS, FEATURE_DESIGN_TOOLS, FEATURE_REFERRAL_PROGRAMS, FEATURE_CUSTOMER_BIRTHDAY_EMAILS, FEATURE_LOYALTY_POINTS_PROGRAMS, FEATURE_ASSEMBLED_PRODUCTS_AND_KITS, FEATURE_BRUTE_PROTECT_JP, FEATURE_AUTOMATTIC_DATACENTER_FAILOVER, WPCOM_STORAGE_ADD_ONS, FEATURE_CUSTOM_PRODUCT_KITS, FEATURE_TYPE_JETPACK_ANTI_SPAM, FEATURE_TYPE_JETPACK_ACTIVITY_LOG, FEATURE_TYPE_JETPACK_BACKUP, FEATURE_TYPE_JETPACK_BOOST, FEATURE_TYPE_JETPACK_SCAN, FEATURE_TYPE_JETPACK_SEARCH, FEATURE_TYPE_JETPACK_STATS, FEATURE_TYPE_JETPACK_VIDEOPRESS */
 /* harmony import */ var _jetpack__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(90892);
 
 const FEATURE_WP_SUBDOMAIN = 'wordpress-subdomain';
@@ -52134,6 +50657,16 @@ const FEATURE_LIVE_SHIPPING_RATES = 'live-shipping-rates'; // Live shipping rate
 const FEATURE_DISCOUNTED_SHIPPING = 'discounted-shipping'; // Discounted shipping
 const FEATURE_PRINT_SHIPPING_LABELS = 'print-shipping-labels'; // Print shipping labels
 const FEATURE_AI_ASSISTED_PRODUCT_DESCRIPTION = 'ai-assisted-product-descriptions'; // AI-assisted product descriptions
+
+// Feature types
+const FEATURE_TYPE_JETPACK_ANTI_SPAM = 'jetpack_anti_spam';
+const FEATURE_TYPE_JETPACK_ACTIVITY_LOG = 'jetpack_activity_log';
+const FEATURE_TYPE_JETPACK_BACKUP = 'jetpack_backup';
+const FEATURE_TYPE_JETPACK_BOOST = 'jetpack_boost';
+const FEATURE_TYPE_JETPACK_SCAN = 'jetpack_scan';
+const FEATURE_TYPE_JETPACK_SEARCH = 'jetpack_search';
+const FEATURE_TYPE_JETPACK_STATS = 'jetpack_stats';
+const FEATURE_TYPE_JETPACK_VIDEOPRESS = 'jetpack_videopress';
 
 /***/ }),
 
@@ -55026,8 +53559,8 @@ PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_TRIAL_MONTH
   term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .ob,
   getBillingTimeFrame: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('free trial'),
   getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_TRIAL_MONTHLY */ .FC,
-  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('eCommerce free trial'),
-  getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('eCommerce free trial'),
+  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Entrepreneur free trial'),
+  getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Entrepreneur free trial'),
   getTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Get a taste of the world’s most popular eCommerce software.')
 };
 if ((0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ ._k)('plans/migration-trial')) {
@@ -55040,12 +53573,12 @@ if ((0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .
     term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .ob,
     getBillingTimeFrame: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('free trial'),
     getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_MIGRATION_TRIAL_MONTHLY */ .T$,
-    getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Business Trial')
+    getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Creator Trial')
   };
 }
 PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY */ .Rl] = {
   ...getPlanBusinessDetails(),
-  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Try all the features of our Business plan.'),
+  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Try all the features of our Creator plan.'),
   type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_BUSINESS */ .Qj,
   group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .w9,
   getProductId: () => 1058,
@@ -55053,7 +53586,7 @@ PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY
   term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .ob,
   getBillingTimeFrame: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Try it for 3 days'),
   getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY */ .Rl,
-  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Business trial'),
+  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Creator Trial'),
   getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Hosting free trial'),
   getTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Get a taste of unlimited performance and unbeatable uptime')
 };
@@ -56758,182 +55291,6 @@ const CircularProgressBar = ({
 
 /***/ }),
 
-/***/ 41946:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(56666);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(72779);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(93493);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(13980);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99196);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(97493);
-/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(56399);
-/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(42021);
-/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(98148);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(98659);
-
-
-
-
-
-
-
-const noop = () => {};
-class FoldableCard extends react__WEBPACK_IMPORTED_MODULE_1__.Component {
-  constructor(...args) {
-    super(...args);
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z)(this, "state", {
-      expanded: this.props.expanded
-    });
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z)(this, "onClick", () => {
-      if (this.props.children) {
-        this.setState({
-          expanded: !this.state.expanded
-        });
-      }
-      if (this.props.onClick) {
-        this.props.onClick();
-      }
-      if (this.state.expanded) {
-        this.props.onClose(this.props.cardKey);
-      } else {
-        this.props.onOpen(this.props.cardKey);
-      }
-    });
-  }
-  // @TODO: Please update https://github.com/Automattic/wp-calypso/issues/58453 if you are refactoring away from UNSAFE_* lifecycle methods!
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.expanded !== this.props.expanded) {
-      this.setState({
-        expanded: nextProps.expanded
-      });
-    }
-  }
-  getClickAction() {
-    if (this.props.disabled) {
-      return;
-    }
-    return this.onClick;
-  }
-  getActionButton() {
-    if (this.state.expanded) {
-      return this.props.actionButtonExpanded || this.props.actionButton;
-    }
-    return this.props.actionButton;
-  }
-  renderActionButton() {
-    const clickAction = !this.props.clickableHeader ? this.getClickAction() : null;
-    if (this.props.actionButton) {
-      return /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.createElement)("div", {
-        className: "foldable-card__action",
-        role: "presentation",
-        onClick: clickAction
-      }, this.getActionButton());
-    }
-    if (this.props.children) {
-      const screenReaderText = this.props.screenReaderText || this.props.translate('More');
-      return /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.createElement)("button", {
-        disabled: this.props.disabled,
-        type: "button",
-        className: "foldable-card__action foldable-card__expand",
-        "aria-expanded": this.state.expanded,
-        onClick: clickAction
-      }, /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.createElement)(___WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, null, screenReaderText), /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.createElement)(___WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {
-        icon: this.props.icon,
-        size: this.props.iconSize
-      }));
-    }
-  }
-  renderContent() {
-    const additionalStyle = this.state.expanded ? this.props.contentExpandedStyle : this.props.contentCollapsedStyle;
-    return /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.createElement)("div", {
-      className: "foldable-card__content",
-      style: additionalStyle
-    }, this.props.children);
-  }
-  renderHeader() {
-    const summary = this.props.summary ? /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.createElement)("span", {
-      className: "foldable-card__summary"
-    }, this.props.summary, " ") : null;
-    const expandedSummary = this.props.expandedSummary ? /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.createElement)("span", {
-      className: "foldable-card__summary-expanded"
-    }, this.props.expandedSummary, " ") : null;
-    const headerClickAction = this.props.clickableHeader ? this.getClickAction() : null;
-    const headerClasses = classnames__WEBPACK_IMPORTED_MODULE_0___default()('foldable-card__header', {
-      'is-clickable': !!this.props.clickableHeader,
-      'has-border': !!this.props.summary
-    });
-    const header = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.createElement)(this.props.headerTagName, {
-      className: 'foldable-card__main'
-    }, this.props.header, this.renderActionButton());
-    return /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.createElement)("div", {
-      className: headerClasses,
-      role: "presentation",
-      onClick: headerClickAction
-    }, header, !this.props.hideSummary && /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.createElement)("span", {
-      className: "foldable-card__secondary"
-    }, summary, expandedSummary));
-  }
-  render() {
-    const Container = this.props.compact ? ___WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z : ___WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z;
-    const itemSiteClasses = classnames__WEBPACK_IMPORTED_MODULE_0___default()('foldable-card', this.props.className, {
-      'is-disabled': !!this.props.disabled,
-      'is-expanded': !!this.state.expanded,
-      'has-expanded-summary': !!this.props.expandedSummary,
-      'is-smooth': !!this.props.smooth
-    });
-    return /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.createElement)(Container, {
-      className: itemSiteClasses,
-      highlight: this.props.highlight
-    }, this.renderHeader(), (this.state.expanded || this.props.smooth) && this.renderContent());
-  }
-}
-(0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z)(FoldableCard, "displayName", 'FoldableCard');
-(0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z)(FoldableCard, "propTypes", {
-  actionButton: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().node),
-  actionButtonExpanded: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().node),
-  cardKey: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().string),
-  clickableHeader: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().bool),
-  compact: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().bool),
-  disabled: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().bool),
-  expandedSummary: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().node),
-  expanded: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().bool),
-  headerTagName: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().string),
-  icon: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().string),
-  iconSize: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().number),
-  onClick: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().func),
-  onClose: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().func),
-  onOpen: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().func),
-  screenReaderText: prop_types__WEBPACK_IMPORTED_MODULE_8___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_8___default().string), (prop_types__WEBPACK_IMPORTED_MODULE_8___default().bool)]),
-  summary: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().node),
-  hideSummary: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().bool),
-  highlight: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().string),
-  smooth: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().bool),
-  contentExpandedStyle: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().object),
-  contentCollapsedStyle: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().object)
-});
-(0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z)(FoldableCard, "defaultProps", {
-  onOpen: noop,
-  onClose: noop,
-  cardKey: '',
-  headerTagName: 'span',
-  icon: 'chevron-down',
-  iconSize: 24,
-  expanded: false,
-  screenReaderText: false,
-  smooth: false
-});
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,i18n_calypso__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z)(FoldableCard));
-
-/***/ }),
-
 /***/ 27136:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -58325,8 +56682,11 @@ const disable = data => feature => {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   _: () => (/* binding */ generateAdminSections)
 /* harmony export */ });
+/* harmony import */ var _automattic_calypso_products__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4112);
+/* harmony import */ var _automattic_calypso_products__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(77904);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(65736);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
+
 
 const __ = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__;
 function generateAdminSections(siteSlug, customizerUrls, googleMailService, onboardingUrl) {
@@ -58435,9 +56795,11 @@ function generateAdminSections(siteSlug, customizerUrls, googleMailService, onbo
     icon: 'cloud-upload'
   }, {
     title: __('Earn money from my site', "full-site-editing"),
-    description: __("By upgrading to the Premium plan, you'll be able to monetize your site through the WordAds program."),
+    description: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.sprintf)(
+    // translators: %s is the name of the Explorer/Premium plan.
+    __("By upgrading to the %s plan, you'll be able to monetize your site through the WordAds program."), (0,_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_1__/* .getPlan */ .Wh)(_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_2__/* .PLAN_PREMIUM */ .xf)?.getTitle()),
     link: `/earn/${siteSlug}`,
-    synonyms: ['monetize', 'wordads', 'premium'],
+    synonyms: ['monetize', 'wordads', 'premium', 'explorer'],
     icon: 'money'
   }, {
     title: __('Learn how to market my site', "full-site-editing"),
@@ -61861,13 +60223,14 @@ const ArticleFetchingContent = ({
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(36115);
 /* harmony import */ var _automattic_calypso_config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(20899);
-/* harmony import */ var _automattic_calypso_products__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(4112);
+/* harmony import */ var _automattic_calypso_products__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(4112);
 /* harmony import */ var _automattic_calypso_products__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(68689);
 /* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(37499);
 /* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(6010);
 /* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(27136);
-/* harmony import */ var _automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(30849);
-/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(14010);
+/* harmony import */ var _automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(30849);
+/* harmony import */ var _automattic_odie_client__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(61381);
+/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(14010);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(55609);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9818);
@@ -61879,31 +60242,30 @@ const ArticleFetchingContent = ({
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(99196);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(4792);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(73557);
-/* harmony import */ var use_debounce__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(17127);
-/* harmony import */ var calypso_lib_formatting__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(93345);
-/* harmony import */ var calypso_lib_formatting__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(50118);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(73557);
+/* harmony import */ var use_debounce__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(17127);
+/* harmony import */ var calypso_lib_formatting__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(93345);
+/* harmony import */ var calypso_lib_formatting__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(50118);
 /* harmony import */ var calypso_lib_mobile_app__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(90358);
 /* harmony import */ var calypso_lib_query_args__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(29719);
-/* harmony import */ var calypso_odie_data__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(38301);
-/* harmony import */ var calypso_state_current_user_selectors__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(36747);
-/* harmony import */ var calypso_state_ui_selectors__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(73041);
+/* harmony import */ var calypso_state_current_user_selectors__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(36747);
+/* harmony import */ var calypso_state_ui_selectors__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(73041);
 /* harmony import */ var _data_use_jetpack_search_ai__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(65964);
-/* harmony import */ var _data_use_site_analysis__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(81983);
-/* harmony import */ var _data_use_submit_forums_topic__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(88564);
-/* harmony import */ var _data_use_submit_support_ticket__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(436);
-/* harmony import */ var _data_use_user_sites__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(52155);
-/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(8787);
-/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(35426);
-/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(48823);
-/* harmony import */ var _stores__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(98865);
-/* harmony import */ var _support_variations__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(44241);
+/* harmony import */ var _data_use_site_analysis__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(81983);
+/* harmony import */ var _data_use_submit_forums_topic__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(88564);
+/* harmony import */ var _data_use_submit_support_ticket__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(436);
+/* harmony import */ var _data_use_user_sites__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(52155);
+/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(8787);
+/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(35426);
+/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(48823);
+/* harmony import */ var _stores__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(98865);
+/* harmony import */ var _support_variations__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(44241);
 /* harmony import */ var _back_button__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(40495);
 /* harmony import */ var _help_center_gpt__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(97783);
 /* harmony import */ var _help_center_search_results__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(90887);
 /* harmony import */ var _help_center_site_picker__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(83690);
 /* harmony import */ var _help_center_third_party_cookies_notice__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(67404);
-/* harmony import */ var _help_center_contact_form_scss__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(27427);
+/* harmony import */ var _help_center_contact_form_scss__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(27427);
 
 /* eslint-disable no-restricted-imports */
 /**
@@ -61918,8 +60280,8 @@ const ArticleFetchingContent = ({
 
 
 
-const __ = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__;
 
+const __ = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__;
 
 
 
@@ -61965,31 +60327,31 @@ const getSupportedLanguages = (supportType, locale) => {
 const HelpCenterContactForm = () => {
   const {
     search
-  } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_13__/* .useLocation */ .TH)();
-  const sectionName = (0,react_redux__WEBPACK_IMPORTED_MODULE_7__/* .useSelector */ .v9)(calypso_state_ui_selectors__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Z);
+  } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_12__/* .useLocation */ .TH)();
+  const sectionName = (0,react_redux__WEBPACK_IMPORTED_MODULE_7__/* .useSelector */ .v9)(calypso_state_ui_selectors__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Z);
   const params = new URLSearchParams(search);
   const mode = params.get('mode');
   const overflow = params.get('overflow') === 'true';
   const wapuuFlow = params.get('wapuuFlow') === 'true';
-  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_13__/* .useNavigate */ .s0)();
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_12__/* .useNavigate */ .s0)();
   const [hideSiteInfo, setHideSiteInfo] = (0,react__WEBPACK_IMPORTED_MODULE_6__.useState)(false);
   const [hasSubmittingError, setHasSubmittingError] = (0,react__WEBPACK_IMPORTED_MODULE_6__.useState)(false);
-  const locale = (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_15__/* .useLocale */ .bU)();
+  const locale = (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_14__/* .useLocale */ .bU)();
   const {
     isPending: submittingTicket,
     mutateAsync: submitTicket
-  } = (0,_data_use_submit_support_ticket__WEBPACK_IMPORTED_MODULE_16__/* .useSubmitTicketMutation */ .g)();
+  } = (0,_data_use_submit_support_ticket__WEBPACK_IMPORTED_MODULE_15__/* .useSubmitTicketMutation */ .g)();
   const {
     isPending: submittingTopic,
     mutateAsync: submitTopic
-  } = (0,_data_use_submit_forums_topic__WEBPACK_IMPORTED_MODULE_17__/* .useSubmitForumsMutation */ .M)();
-  const userId = (0,react_redux__WEBPACK_IMPORTED_MODULE_7__/* .useSelector */ .v9)(calypso_state_current_user_selectors__WEBPACK_IMPORTED_MODULE_11__/* .getCurrentUserId */ .rc);
+  } = (0,_data_use_submit_forums_topic__WEBPACK_IMPORTED_MODULE_16__/* .useSubmitForumsMutation */ .M)();
+  const userId = (0,react_redux__WEBPACK_IMPORTED_MODULE_7__/* .useSelector */ .v9)(calypso_state_current_user_selectors__WEBPACK_IMPORTED_MODULE_10__/* .getCurrentUserId */ .rc);
   const {
     data: userSites
-  } = (0,_data_use_user_sites__WEBPACK_IMPORTED_MODULE_18__/* .useUserSites */ .u)(userId);
+  } = (0,_data_use_user_sites__WEBPACK_IMPORTED_MODULE_17__/* .useUserSites */ .u)(userId);
   const userWithNoSites = userSites?.sites.length === 0;
-  const queryClient = (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_19__/* .useQueryClient */ .NL)();
-  const email = (0,react_redux__WEBPACK_IMPORTED_MODULE_7__/* .useSelector */ .v9)(calypso_state_current_user_selectors__WEBPACK_IMPORTED_MODULE_11__/* .getCurrentUserEmail */ .vz);
+  const queryClient = (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_18__/* .useQueryClient */ .NL)();
+  const email = (0,react_redux__WEBPACK_IMPORTED_MODULE_7__/* .useSelector */ .v9)(calypso_state_current_user_selectors__WEBPACK_IMPORTED_MODULE_10__/* .getCurrentUserEmail */ .vz);
   const [sitePickerChoice, setSitePickerChoice] = (0,react__WEBPACK_IMPORTED_MODULE_6__.useState)('CURRENT_SITE');
   const [gptResponse, setGptResponse] = (0,react__WEBPACK_IMPORTED_MODULE_6__.useState)();
   const {
@@ -61998,7 +60360,7 @@ const HelpCenterContactForm = () => {
     message,
     userDeclaredSiteUrl
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => {
-    const helpCenterSelect = select(_stores__WEBPACK_IMPORTED_MODULE_20__/* .HELP_CENTER_STORE */ .aM);
+    const helpCenterSelect = select(_stores__WEBPACK_IMPORTED_MODULE_19__/* .HELP_CENTER_STORE */ .aM);
     return {
       currentSite: helpCenterSelect.getSite(),
       subject: helpCenterSelect.getSubject(),
@@ -62012,19 +60374,19 @@ const HelpCenterContactForm = () => {
     setShowMessagingChat,
     setSubject,
     setMessage
-  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useDispatch)(_stores__WEBPACK_IMPORTED_MODULE_20__/* .HELP_CENTER_STORE */ .aM);
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useDispatch)(_stores__WEBPACK_IMPORTED_MODULE_19__/* .HELP_CENTER_STORE */ .aM);
   const {
     canConnectToZendesk,
     hasActiveChats,
     isEligibleForChat,
     isLoading: isLoadingChatStatus
-  } = (0,_hooks__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .Z)();
+  } = (0,_hooks__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .Z)();
   const {
     isOpeningChatWidget,
     openChatWidget
-  } = (0,_hooks__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .Z)('zendesk_support_chat_key', isEligibleForChat || hasActiveChats);
+  } = (0,_hooks__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .Z)('zendesk_support_chat_key', isEligibleForChat || hasActiveChats);
   (0,react__WEBPACK_IMPORTED_MODULE_6__.useEffect)(() => {
-    const supportVariation = (0,_support_variations__WEBPACK_IMPORTED_MODULE_23__/* .getSupportVariationFromMode */ .yQ)(mode);
+    const supportVariation = (0,_support_variations__WEBPACK_IMPORTED_MODULE_22__/* .getSupportVariationFromMode */ .yQ)(mode);
     (0,_automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__/* .recordTracksEvent */ .jN)('calypso_inlinehelp_contact_view', {
       support_variation: supportVariation,
       force_site_id: true,
@@ -62037,8 +60399,8 @@ const HelpCenterContactForm = () => {
       setSitePickerChoice('OTHER_SITE');
     }
   }, [userWithNoSites]);
-  const formTitles = (0,_hooks__WEBPACK_IMPORTED_MODULE_24__/* .useContactFormTitle */ .m)(mode);
-  let ownershipResult = (0,_data_use_site_analysis__WEBPACK_IMPORTED_MODULE_25__/* .useSiteAnalysis */ .g)(
+  const formTitles = (0,_hooks__WEBPACK_IMPORTED_MODULE_23__/* .useContactFormTitle */ .m)(mode);
+  let ownershipResult = (0,_data_use_site_analysis__WEBPACK_IMPORTED_MODULE_24__/* .useSiteAnalysis */ .g)(
   // pass user email as query cache key
   userId, userDeclaredSiteUrl, sitePickerChoice === 'OTHER_SITE');
   const ownershipStatusLoading = ownershipResult?.result === 'LOADING';
@@ -62068,8 +60430,8 @@ const HelpCenterContactForm = () => {
   } else {
     supportSite = currentSite;
   }
-  const [debouncedMessage] = (0,use_debounce__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .Z)(message || '', 500);
-  const [debouncedSubject] = (0,use_debounce__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .Z)(subject || '', 500);
+  const [debouncedMessage] = (0,use_debounce__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .Z)(message || '', 500);
+  const [debouncedSubject] = (0,use_debounce__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .Z)(subject || '', 500);
   const enableGPTResponse = _automattic_calypso_config__WEBPACK_IMPORTED_MODULE_2__/* ["default"].isEnabled */ .ZP.isEnabled('help/gpt-response') && !(params.get('disable-gpt') === 'true') && !wapuuFlow;
   const showingSearchResults = params.get('show-results') === 'true';
   const showingGPTResponse = enableGPTResponse && params.get('show-gpt') === 'true';
@@ -62094,7 +60456,7 @@ const HelpCenterContactForm = () => {
       link: result.link,
       postId: String(result.post_id),
       query: debouncedMessage || '',
-      title: (0,calypso_lib_formatting__WEBPACK_IMPORTED_MODULE_27__/* .preventWidows */ .R)((0,calypso_lib_formatting__WEBPACK_IMPORTED_MODULE_28__/* .decodeEntities */ .S)(result.title))
+      title: (0,calypso_lib_formatting__WEBPACK_IMPORTED_MODULE_26__/* .preventWidows */ .R)((0,calypso_lib_formatting__WEBPACK_IMPORTED_MODULE_27__/* .decodeEntities */ .S)(result.title))
     });
     if (result.blog_id) {
       params.set('blogId', String(result.blog_id));
@@ -62153,11 +60515,11 @@ const HelpCenterContactForm = () => {
       params.set('show-gpt', 'false');
     }
     const productSlug = supportSite?.plan.product_slug;
-    const plan = (0,_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_29__/* .getPlan */ .Wh)(productSlug);
+    const plan = (0,_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_28__/* .getPlan */ .Wh)(productSlug);
     const productId = plan?.getProductId();
     const productName = plan?.getTitle();
-    const productTerm = (0,_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_29__/* .getPlanTermLabel */ .uH)(productSlug, text => text);
-    const wapuuChatId = (0,calypso_odie_data__WEBPACK_IMPORTED_MODULE_10__/* .getOdieStorage */ .C8)('last_chat_id');
+    const productTerm = (0,_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_28__/* .getPlanTermLabel */ .uH)(productSlug, text => text);
+    const wapuuChatId = (0,_automattic_odie_client__WEBPACK_IMPORTED_MODULE_29__/* .getOdieStorage */ .C8)('last_chat_id');
     const aiChatId = wapuuFlow ? wapuuChatId ?? '' : gptResponse?.answer_id;
     switch (mode) {
       case 'CHAT':
@@ -62471,36 +60833,34 @@ const HelpCenterContactForm = () => {
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(36115);
 /* harmony import */ var _automattic_calypso_config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(20899);
-/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(6010);
-/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(98480);
-/* harmony import */ var _automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(30849);
-/* harmony import */ var _automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(6339);
+/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(6010);
+/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(98480);
+/* harmony import */ var _automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(30849);
+/* harmony import */ var _automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(6339);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(65736);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(5869);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(77343);
-/* harmony import */ var _wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(95885);
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(5869);
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(77343);
+/* harmony import */ var _wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(95885);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(72779);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(4792);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(39857);
-/* harmony import */ var calypso_odie_context__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(26712);
-/* harmony import */ var calypso_state_ui_selectors__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(73041);
-/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(40495);
-/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(82513);
-/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(8787);
-/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(28672);
-/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(97878);
-/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(83822);
-/* harmony import */ var _icons__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(52016);
-/* harmony import */ var _icons__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(67605);
-/* harmony import */ var _help_center_notice__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(10083);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(39857);
+/* harmony import */ var calypso_state_ui_selectors__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(73041);
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(40495);
+/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(82513);
+/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(8787);
+/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(28672);
+/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(97878);
+/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(83822);
+/* harmony import */ var _icons__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(52016);
+/* harmony import */ var _icons__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(67605);
+/* harmony import */ var _help_center_notice__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(10083);
 
 /* eslint-disable no-restricted-imports */
 /**
  * External Dependencies
  */
-
 
 
 
@@ -62525,13 +60885,14 @@ const ConditionalLink = ({
   ...props
 }) => {
   if (active) {
-    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_7__/* .Link */ .rU, props);
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__/* .Link */ .rU, props);
   }
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", props);
 };
+const noop = () => {};
 const generateContactOnClickEvent = (contactOption, contactOptionEventName, onClick) => {
   if (!onClick || !contactOptionEventName) {
-    return calypso_odie_context__WEBPACK_IMPORTED_MODULE_6__/* .noop */ .ZT;
+    return noop;
   }
   return () => {
     (0,_automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__/* .recordTracksEvent */ .jN)(contactOptionEventName, {
@@ -62559,18 +60920,18 @@ const HelpCenterContactPage = ({
 }) => {
   const {
     __
-  } = (0,_wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_8__/* .useI18n */ .QT)();
-  const locale = (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_9__/* .useLocale */ .bU)();
-  const renderEmail = (0,_hooks__WEBPACK_IMPORTED_MODULE_10__/* .useShouldRenderEmailOption */ .X)();
+  } = (0,_wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_7__/* .useI18n */ .QT)();
+  const locale = (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_8__/* .useLocale */ .bU)();
+  const renderEmail = (0,_hooks__WEBPACK_IMPORTED_MODULE_9__/* .useShouldRenderEmailOption */ .X)();
   const {
     hasActiveChats,
     isChatAvailable,
     isEligibleForChat,
     isLoading: isLoadingChatStatus,
     supportActivity
-  } = (0,_hooks__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Z)();
-  (0,_hooks__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .Z)('zendesk_support_chat_key', isEligibleForChat || hasActiveChats, isEligibleForChat || hasActiveChats);
-  const renderChat = (0,_hooks__WEBPACK_IMPORTED_MODULE_13__/* .useShouldRenderChatOption */ .v)(isChatAvailable || hasActiveChats, isEligibleForChat);
+  } = (0,_hooks__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Z)();
+  (0,_hooks__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Z)('zendesk_support_chat_key', isEligibleForChat || hasActiveChats, isEligibleForChat || hasActiveChats);
+  const renderChat = (0,_hooks__WEBPACK_IMPORTED_MODULE_12__/* .useShouldRenderChatOption */ .v)(isChatAvailable || hasActiveChats, isEligibleForChat);
   const isLoading = renderEmail.isLoading || isLoadingChatStatus;
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (isLoading) {
@@ -62584,18 +60945,18 @@ const HelpCenterContactPage = ({
     });
   }, [isLoading, renderChat.state, renderEmail.render]);
   const liveChatHeaderText = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => {
-    if ((0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_14__/* .isDefaultLocale */ .TF)(locale) || !(0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.hasTranslation)('Live chat (English)')) {
+    if ((0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_13__/* .isDefaultLocale */ .TF)(locale) || !(0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.hasTranslation)('Live chat (English)')) {
       return __('Live chat', "full-site-editing");
     }
     return __('Live chat (English)', "full-site-editing");
   }, [__, locale]);
   const emailHeaderText = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => {
-    if ((0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_14__/* .isDefaultLocale */ .TF)(locale)) {
+    if ((0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_13__/* .isDefaultLocale */ .TF)(locale)) {
       return __('Email', "full-site-editing");
     }
     const isLanguageSupported = (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .ZP)('upwork_support_locales').includes(locale);
     if (isLanguageSupported) {
-      const language = (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_14__/* .getLanguage */ .G3)(locale)?.name;
+      const language = (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_13__/* .getLanguage */ .G3)(locale)?.name;
       return language && (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.hasTranslation)('Email (%s)') ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.sprintf)(
       // translators: %s is the language name
       __('Email (%s)', "full-site-editing"), language) : __('Email', "full-site-editing");
@@ -62606,7 +60967,7 @@ const HelpCenterContactPage = ({
     return __('Email', "full-site-editing");
   }, [__, locale]);
   const forumHeaderText = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => {
-    if ((0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_14__/* .isDefaultLocale */ .TF)(locale)) {
+    if ((0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_13__/* .isDefaultLocale */ .TF)(locale)) {
       return __('Community forums', "full-site-editing");
     }
     return __('Community forums (English)', "full-site-editing");
@@ -62614,7 +60975,7 @@ const HelpCenterContactPage = ({
   if (isLoading) {
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "help-center-contact-page__loading"
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_components__WEBPACK_IMPORTED_MODULE_15__/* .Spinner */ .$, {
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_components__WEBPACK_IMPORTED_MODULE_14__/* .Spinner */ .$, {
       baseClassName: ""
     }));
   }
@@ -62648,18 +61009,18 @@ const HelpCenterContactPage = ({
   };
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "help-center-contact-page"
-  }, !hideHeaders && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(___WEBPACK_IMPORTED_MODULE_16__/* .BackButton */ .x, null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, !hideHeaders && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(___WEBPACK_IMPORTED_MODULE_15__/* .BackButton */ .x, null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "help-center-contact-page__content"
-  }, !hideHeaders && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", null, __('Contact our WordPress.com experts', "full-site-editing")), supportActivity && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_notice__WEBPACK_IMPORTED_MODULE_17__/* .HelpCenterActiveTicketNotice */ .Fv, {
+  }, !hideHeaders && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", null, __('Contact our WordPress.com experts', "full-site-editing")), supportActivity && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_notice__WEBPACK_IMPORTED_MODULE_16__/* .HelpCenterActiveTicketNotice */ .Fv, {
     tickets: supportActivity
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_components__WEBPACK_IMPORTED_MODULE_18__/* .GMClosureNotice */ .X, {
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_components__WEBPACK_IMPORTED_MODULE_17__/* .GMClosureNotice */ .X, {
     displayAt: "2023-12-26 00:00Z",
     closesAt: "2023-12-31 00:00Z",
     reopensAt: "2024-01-02 07:00Z",
     enabled: renderChat.render
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_4___default()('help-center-contact-page__boxes')
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_7__/* .Link */ .rU, {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__/* .Link */ .rU, {
     to: forumUrl,
     onClick: contactOptionsEventMap['forum']
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -62668,8 +61029,8 @@ const HelpCenterContactPage = ({
     tabIndex: 0
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "help-center-contact-page__box-icon"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .Z, {
-    icon: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .Z, null)
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .Z, {
+    icon: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .Z, null)
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, forumHeaderText), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, __('Your question and any answers will be public', "full-site-editing"))))), renderChat.render && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_4___default()({
       disabled: renderChat.state !== 'AVAILABLE'
@@ -62686,9 +61047,9 @@ const HelpCenterContactPage = ({
     tabIndex: 0
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "help-center-contact-page__box-icon"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .Z, {
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .Z
-  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, liveChatHeaderText), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, renderChat.state !== 'AVAILABLE' ? __('Chat is unavailable right now', "full-site-editing") : __('Get an immediate reply', "full-site-editing")))))), renderEmail.render && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_7__/* .Link */ .rU, {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .Z, {
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .Z
+  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, liveChatHeaderText), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, renderChat.state !== 'AVAILABLE' ? __('Chat is unavailable right now', "full-site-editing") : __('Get an immediate reply', "full-site-editing")))))), renderEmail.render && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__/* .Link */ .rU, {
     to: emailUrl,
     onClick: contactOptionsEventMap['email']
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -62697,19 +61058,19 @@ const HelpCenterContactPage = ({
     tabIndex: 0
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "help-center-contact-page__box-icon"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .Z, {
-    icon: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .Z, null)
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .Z, {
+    icon: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .Z, null)
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, emailHeaderText), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, __('An expert will get back to you soon', "full-site-editing"))))))));
 };
 const HelpCenterContactButton = () => {
   const {
     __
-  } = (0,_wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_8__/* .useI18n */ .QT)();
+  } = (0,_wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_7__/* .useI18n */ .QT)();
   const {
     url,
     isLoading
-  } = (0,_hooks__WEBPACK_IMPORTED_MODULE_23__/* .useStillNeedHelpURL */ .A)();
-  const sectionName = (0,react_redux__WEBPACK_IMPORTED_MODULE_5__/* .useSelector */ .v9)(calypso_state_ui_selectors__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .Z);
+  } = (0,_hooks__WEBPACK_IMPORTED_MODULE_22__/* .useStillNeedHelpURL */ .A)();
+  const sectionName = (0,react_redux__WEBPACK_IMPORTED_MODULE_5__/* .useSelector */ .v9)(calypso_state_ui_selectors__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .Z);
   const redirectToWpcom = url === 'https://wordpress.com/help/contact';
   const trackContactButtonClicked = () => {
     (0,_automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__/* .recordTracksEvent */ .jN)('calypso_inlinehelp_morehelp_click', {
@@ -62724,13 +61085,13 @@ const HelpCenterContactButton = () => {
   if (isLoading) {
     to = '';
   }
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_7__/* .Link */ .rU, {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__/* .Link */ .rU, {
     to: to,
     target: redirectToWpcom ? '_blank' : '_self',
     onClick: trackContactButtonClicked,
     className: "button help-center-contact-page__button"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .Z, {
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .Z
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .Z, {
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .Z
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, __('Still need help?', "full-site-editing")));
 };
 
@@ -62873,6 +61234,8 @@ const HelpCenterContainer = ({
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(69307);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(36115);
+/* harmony import */ var _automattic_odie_client__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(23075);
+/* harmony import */ var _automattic_odie_client__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(61381);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(55609);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9818);
@@ -62880,24 +61243,21 @@ const HelpCenterContainer = ({
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(99196);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(4792);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(73557);
-/* harmony import */ var calypso_odie_context__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(26712);
-/* harmony import */ var calypso_odie_data__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(38301);
-/* harmony import */ var calypso_state_ui_selectors__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(73041);
-/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(19820);
-/* harmony import */ var _stores__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(98865);
-/* harmony import */ var _help_center_contact_form__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(23025);
-/* harmony import */ var _help_center_contact_page__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(98490);
-/* harmony import */ var _help_center_embed_result__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(26212);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(73557);
+/* harmony import */ var calypso_state_ui_selectors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(73041);
+/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(19820);
+/* harmony import */ var _stores__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(98865);
+/* harmony import */ var _help_center_contact_form__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(23025);
+/* harmony import */ var _help_center_contact_page__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(98490);
+/* harmony import */ var _help_center_embed_result__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(26212);
 /* harmony import */ var _help_center_odie__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(81655);
-/* harmony import */ var _help_center_search__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(817);
-/* harmony import */ var _ticket_success_screen__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(94509);
+/* harmony import */ var _help_center_search__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(817);
+/* harmony import */ var _ticket_success_screen__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(94509);
 
 /* eslint-disable no-restricted-imports */
 /**
  * External Dependencies
  */
-
 
 
 
@@ -62922,15 +61282,15 @@ const HelpCenterContent = ({
   currentRoute
 }) => {
   const [searchTerm, setSearchTerm] = (0,react__WEBPACK_IMPORTED_MODULE_4__.useState)('');
-  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__/* .useLocation */ .TH)();
-  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__/* .useNavigate */ .s0)();
+  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__/* .useLocation */ .TH)();
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__/* .useNavigate */ .s0)();
   const containerRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
-  const section = (0,react_redux__WEBPACK_IMPORTED_MODULE_5__/* .useSelector */ .v9)(calypso_state_ui_selectors__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z);
-  const isWapuuEnabled = (0,_hooks__WEBPACK_IMPORTED_MODULE_10__/* .useIsWapuuEnabled */ .s)();
+  const section = (0,react_redux__WEBPACK_IMPORTED_MODULE_5__/* .useSelector */ .v9)(calypso_state_ui_selectors__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z);
+  const isWapuuEnabled = (0,_hooks__WEBPACK_IMPORTED_MODULE_8__/* .useIsWapuuEnabled */ .s)();
   const {
     isMinimized
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => {
-    const store = select(_stores__WEBPACK_IMPORTED_MODULE_11__/* .HELP_CENTER_STORE */ .aM);
+    const store = select(_stores__WEBPACK_IMPORTED_MODULE_9__/* .HELP_CENTER_STORE */ .aM);
     return {
       isMinimized: store.getIsMinimized()
     };
@@ -62947,7 +61307,7 @@ const HelpCenterContent = ({
   const {
     initialRoute
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => ({
-    initialRoute: select(_stores__WEBPACK_IMPORTED_MODULE_11__/* .HELP_CENTER_STORE */ .aM).getInitialRoute()
+    initialRoute: select(_stores__WEBPACK_IMPORTED_MODULE_9__/* .HELP_CENTER_STORE */ .aM).getInitialRoute()
   }), []);
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (initialRoute) {
@@ -62968,27 +61328,27 @@ const HelpCenterContent = ({
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CardBody, {
     ref: containerRef,
     className: "help-center__container-content"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__/* .Routes */ .Z5, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__/* .Route */ .AW, {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__/* .Routes */ .Z5, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__/* .Route */ .AW, {
     path: "/",
-    element: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_search__WEBPACK_IMPORTED_MODULE_12__/* .HelpCenterSearch */ .Z, {
+    element: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_search__WEBPACK_IMPORTED_MODULE_10__/* .HelpCenterSearch */ .Z, {
       onSearchChange: setSearchTerm,
       currentRoute: currentRoute
     })
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__/* .Route */ .AW, {
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__/* .Route */ .AW, {
     path: "/post",
-    element: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_embed_result__WEBPACK_IMPORTED_MODULE_13__/* .HelpCenterEmbedResult */ .X, null)
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__/* .Route */ .AW, {
+    element: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_embed_result__WEBPACK_IMPORTED_MODULE_11__/* .HelpCenterEmbedResult */ .X, null)
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__/* .Route */ .AW, {
     path: "/contact-options",
-    element: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_contact_page__WEBPACK_IMPORTED_MODULE_14__/* .HelpCenterContactPage */ ._, null)
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__/* .Route */ .AW, {
+    element: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_contact_page__WEBPACK_IMPORTED_MODULE_12__/* .HelpCenterContactPage */ ._, null)
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__/* .Route */ .AW, {
     path: "/contact-form",
-    element: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_contact_form__WEBPACK_IMPORTED_MODULE_15__/* .HelpCenterContactForm */ ._, null)
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__/* .Route */ .AW, {
+    element: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_contact_form__WEBPACK_IMPORTED_MODULE_13__/* .HelpCenterContactForm */ ._, null)
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__/* .Route */ .AW, {
     path: "/success",
-    element: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_ticket_success_screen__WEBPACK_IMPORTED_MODULE_16__/* .SuccessScreen */ .k, null)
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__/* .Route */ .AW, {
+    element: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_ticket_success_screen__WEBPACK_IMPORTED_MODULE_14__/* .SuccessScreen */ .k, null)
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__/* .Route */ .AW, {
     path: "/odie",
-    element: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_odie_context__WEBPACK_IMPORTED_MODULE_6__/* .OdieAssistantProvider */ .JU, {
+    element: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_odie_client__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .ZP, {
       botNameSlug: "wpcom-support-chat",
       botName: "Wapuu",
       enabled: isWapuuEnabled,
@@ -62996,10 +61356,10 @@ const HelpCenterContent = ({
       initialUserMessage: searchTerm,
       logger: trackEvent,
       loggerEventNamePrefix: "calypso_odie",
-      extraContactOptions: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_contact_page__WEBPACK_IMPORTED_MODULE_14__/* .HelpCenterContactPage */ ._, {
+      extraContactOptions: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_contact_page__WEBPACK_IMPORTED_MODULE_12__/* .HelpCenterContactPage */ ._, {
         hideHeaders: true,
         trackEventName: "calypso_odie_extra_contact_option",
-        onClick: () => (0,calypso_odie_data__WEBPACK_IMPORTED_MODULE_7__/* .clearOdieStorage */ .x0)('chat_id')
+        onClick: () => (0,_automattic_odie_client__WEBPACK_IMPORTED_MODULE_16__/* .clearOdieStorage */ .x0)('chat_id')
       })
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_odie__WEBPACK_IMPORTED_MODULE_17__/* .HelpCenterOdie */ .P, null))
   })));
@@ -63874,13 +62234,13 @@ function HelpCenterNotice({
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(69307);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(56399);
-/* harmony import */ var _wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(95885);
+/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(56399);
+/* harmony import */ var _automattic_odie_client__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(98793);
+/* harmony import */ var _automattic_odie_client__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(15589);
+/* harmony import */ var _automattic_odie_client__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(23075);
+/* harmony import */ var _wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(95885);
 /* harmony import */ var calypso_components_popover_menu_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(524);
-/* harmony import */ var calypso_odie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(13852);
-/* harmony import */ var calypso_odie_components_ellipsis_menu__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(75362);
-/* harmony import */ var calypso_odie_context__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(26712);
-/* harmony import */ var _back_button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(40495);
+/* harmony import */ var _back_button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(40495);
 
 /* eslint-disable no-restricted-imports */
 /**
@@ -63890,35 +62250,33 @@ function HelpCenterNotice({
 
 
 
-
-
 /**
  * Internal Dependencies
  */
 
-const HelpCenterOdie = () => {
+function HelpCenterOdie() {
   const {
     __
-  } = (0,_wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_5__/* .useI18n */ .QT)();
+  } = (0,_wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_2__/* .useI18n */ .QT)();
   const {
     clearChat
-  } = (0,calypso_odie_context__WEBPACK_IMPORTED_MODULE_4__/* .useOdieAssistantContext */ .qi)();
+  } = (0,_automattic_odie_client__WEBPACK_IMPORTED_MODULE_3__/* .useOdieAssistantContext */ .qi)();
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "help-center__container-content-odie"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "help-center__container-odie-header"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_back_button__WEBPACK_IMPORTED_MODULE_6__/* .BackButton */ .x, {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_back_button__WEBPACK_IMPORTED_MODULE_4__/* .BackButton */ .x, {
     className: "help-center__container-odie-back-button"
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_odie_components_ellipsis_menu__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z, {
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_odie_client__WEBPACK_IMPORTED_MODULE_5__/* .EllipsisMenu */ .Q, {
     popoverClassName: "help-center__container-header-menu",
     position: "bottom"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_popover_menu_item__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z, {
     onClick: clearChat,
     className: "help-center__container-header-menu-item"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_components__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_components__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {
     icon: "comment"
-  }), __('Start a New Chat')))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_odie__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z, null));
-};
+  }), __('Start a New Chat')))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_odie_client__WEBPACK_IMPORTED_MODULE_7__/* .OdieAssistant */ .lL, null));
+}
 
 /***/ }),
 
@@ -66531,57 +64889,6 @@ const emit = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.emit
 
 /***/ }),
 
-/***/ 93493:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (/* binding */ localize)
-/* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7896);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(69307);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99196);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8057);
-
-
-
-
-function bindI18nProps(i18n) {
-  return {
-    numberFormat: i18n.numberFormat.bind(i18n),
-    translate: i18n.translate.bind(i18n),
-    locale: i18n.getLocaleSlug()
-  };
-}
-
-/**
- * Localize a React component
- * @param  {import('react').Component} ComposedComponent React component to localize
- * @returns {import('react').Component} The localized component
- */
-function localize(ComposedComponent) {
-  const LocalizedComponent = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.forwardRef)((props, ref) => {
-    const i18n = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_context__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z);
-    const [counter, setCounter] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0);
-    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-      const onChange = () => setCounter(c => c + 1);
-      i18n.on('change', onChange);
-      return () => i18n.off('change', onChange);
-    }, [i18n]);
-    const i18nProps = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => bindI18nProps(i18n, counter), [i18n, counter]);
-    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ComposedComponent, (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z)({}, props, i18nProps, {
-      ref: ref
-    }));
-  });
-  const componentName = ComposedComponent.displayName || ComposedComponent.name || '';
-  LocalizedComponent.displayName = 'Localized(' + componentName + ')';
-  return LocalizedComponent;
-}
-
-/***/ }),
-
 /***/ 10003:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -67937,6 +66244,1789 @@ function loadjQueryDependentScript(url, callback, args) {
 
   // if not, return the Promise
   return loadPromise;
+}
+
+/***/ }),
+
+/***/ 34747:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(69307);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(72779);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(99196);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(92128);
+
+
+
+
+const Button = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_2__.forwardRef)(({
+  compact,
+  borderless,
+  onClick,
+  className: externalClassName,
+  children,
+  disabled
+}, ref) => {
+  const className = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-button-default', externalClassName, {
+    'odie-button-compact': compact,
+    'odie-button-borderless': borderless
+  });
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    ref: ref,
+    className: className,
+    onClick: onClick,
+    disabled: disabled
+  }, children);
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Button);
+
+/***/ }),
+
+/***/ 15589:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Q: () => (/* binding */ EllipsisMenu)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(69307);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(56399);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(72779);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(99196);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var calypso_components_popover_menu__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(37457);
+/* harmony import */ var _button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(34747);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(15455);
+
+
+
+
+// eslint-disable-next-line no-restricted-imports
+
+
+
+const EllipsisMenu = ({
+  position,
+  children,
+  popoverClassName
+}) => {
+  const [isMenuVisible, setMenuVisible] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
+  const popoverContext = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)(null);
+  const handleClick = () => {
+    setMenuVisible(!isMenuVisible);
+  };
+  const hideMenu = () => {
+    setMenuVisible(false);
+  };
+  const classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()('ellipsis-menu', {
+    'is-menu-visible': isMenuVisible
+  });
+  const popoverClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()('ellipsis-menu__menu', 'popover', popoverClassName);
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    className: classes
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_button__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {
+    ref: popoverContext,
+    onClick: handleClick,
+    borderless: true,
+    className: "ellipsis-menu__toggle"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_components__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {
+    icon: "ellipsis",
+    className: "ellipsis-menu__toggle-icon"
+  })), isMenuVisible && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_popover_menu__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z, {
+    isVisible: true,
+    onClose: hideMenu,
+    position: position,
+    context: popoverContext.current,
+    className: popoverClasses
+  }, children));
+};
+
+/***/ }),
+
+/***/ 11116:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(69307);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(97493);
+/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(56399);
+/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(42021);
+/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(98148);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(72779);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(99196);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(57129);
+
+
+
+
+
+const noop = () => {};
+const FoldableCard = ({
+  actionButton,
+  actionButtonExpanded,
+  cardKey = '',
+  clickableHeader = false,
+  compact = false,
+  disabled = false,
+  expandedSummary,
+  expanded = false,
+  header = '',
+  icon = 'chevron-down',
+  iconSize = 24,
+  onClick = noop,
+  onClose = noop,
+  onOpen = noop,
+  screenReaderText = false,
+  highlight,
+  smooth = false,
+  contentExpandedStyle,
+  contentCollapsedStyle,
+  className,
+  children
+}) => {
+  const [isExpanded, setIsExpanded] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(expanded);
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
+    setIsExpanded(expanded);
+  }, [expanded]);
+  const handleClick = (0,react__WEBPACK_IMPORTED_MODULE_2__.useCallback)(() => {
+    if (children) {
+      setIsExpanded(!isExpanded);
+    }
+    onClick();
+    if (isExpanded) {
+      onClose(cardKey);
+    } else {
+      onOpen(cardKey);
+    }
+  }, [isExpanded, onClick, onClose, onOpen, cardKey, children]);
+  const getClickAction = () => {
+    if (disabled) {
+      return;
+    }
+    return handleClick;
+  };
+  const getActionButton = () => {
+    return isExpanded ? actionButtonExpanded || actionButton : actionButton;
+  };
+  const renderActionButton = () => {
+    const clickAction = !clickableHeader ? getClickAction() : undefined;
+    if (actionButton) {
+      return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+        className: "foldable-card__action",
+        role: "presentation",
+        onClick: clickAction
+      }, getActionButton());
+    }
+    if (children) {
+      const screenReaderTextContent = screenReaderText || 'More';
+      return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+        disabled: disabled,
+        type: "button",
+        className: "foldable-card__action foldable-card__expand",
+        "aria-expanded": isExpanded,
+        onClick: clickAction
+      }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_components__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, null, screenReaderTextContent), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_components__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {
+        icon: icon,
+        size: iconSize
+      }));
+    }
+  };
+  const renderContent = () => {
+    const additionalStyle = isExpanded ? contentExpandedStyle : contentCollapsedStyle;
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+      className: "foldable-card__content",
+      style: additionalStyle
+    }, children);
+  };
+  const Container = compact ? _automattic_components__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z : _automattic_components__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z;
+  const itemSiteClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()('foldable-card', className, {
+    'is-disabled': disabled,
+    'is-expanded': isExpanded,
+    'has-expanded-summary': !!expandedSummary,
+    'is-smooth': smooth
+  });
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Container, {
+    className: itemSiteClasses,
+    highlight: highlight
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "foldable-card__header is-clickable",
+    role: "presentation",
+    onClick: getClickAction()
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    className: "foldable-card__main"
+  }, header), renderActionButton()), (isExpanded || smooth) && renderContent());
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FoldableCard);
+
+/***/ }),
+
+/***/ 64218:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(69307);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(72779);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(98793);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(44518);
+
+
+
+
+
+// This component will be extended in the future to support other types of links.
+// For now, it only supports prompt:// links. But in the future might be more protocols like:
+// - navigate:// to navigate within calypso
+// - choice:// to send a message to the bot based on the user's choice
+// - confirm:// to send a message to the bot based on the user's confirmation
+// - etc.
+const CustomALink = ({
+  href,
+  children,
+  inline = true
+}) => {
+  const {
+    trackEvent
+  } = (0,_context__WEBPACK_IMPORTED_MODULE_3__/* .useOdieAssistantContext */ .qi)();
+  const classNames = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-sources', {
+    'odie-sources-inline': inline
+  });
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    className: classNames
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+    className: "odie-sources-link",
+    href: href,
+    target: "_blank",
+    rel: "noopener noreferrer",
+    onClick: () => {
+      trackEvent('chat_message_action_click', {
+        action: 'link',
+        href: href
+      });
+    }
+  }, children));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CustomALink);
+
+/***/ }),
+
+/***/ 73355:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(69307);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(72779);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(10975);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(99196);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(91850);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4792);
+/* harmony import */ var calypso_components_async_load__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7484);
+/* harmony import */ var calypso_components_gravatar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(3407);
+/* harmony import */ var calypso_state_current_user_selectors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(36747);
+/* harmony import */ var _assets_maximize_icon_svg__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(32888);
+/* harmony import */ var _assets_minimize_icon_svg__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(15529);
+/* harmony import */ var _assets_wapuu_squared_avatar_svg__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(85389);
+/* harmony import */ var _assets_wapuu_thinking_svg__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(91669);
+/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(98793);
+/* harmony import */ var _utils_user_typer__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(67635);
+/* harmony import */ var _button__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(34747);
+/* harmony import */ var _foldable__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(11116);
+/* harmony import */ var _custom_a_link__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(64218);
+/* harmony import */ var _uri_transformer__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(30596);
+/* harmony import */ var _was_this_helpful_buttons__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(16140);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(44518);
+
+/* eslint-disable no-restricted-imports */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// This is due to the AsyncLoad component. The initial scroll is not working properly, due to
+// the fact that the AsyncLoad component is not rendering the children immediately. In order to solve that
+// we know that the placeholder component will be unmounted when the AsyncLoad component has finished loading.
+const ComponentLoadedReporter = ({
+  callback
+}) => {
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
+    return callback;
+  }, [callback]);
+  return null;
+};
+const ChatMessage = ({
+  message,
+  scrollToBottom
+}, ref) => {
+  const isUser = message.role === 'user';
+  const {
+    botName,
+    extraContactOptions,
+    addMessage,
+    trackEvent
+  } = (0,_context__WEBPACK_IMPORTED_MODULE_9__/* .useOdieAssistantContext */ .qi)();
+  const [scrolledToBottom, setScrolledToBottom] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
+  const [isFullscreen, setIsFullscreen] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
+  const currentUser = (0,react_redux__WEBPACK_IMPORTED_MODULE_4__/* .useSelector */ .v9)(calypso_state_current_user_selectors__WEBPACK_IMPORTED_MODULE_7__/* .getCurrentUser */ .ts);
+  const translate = (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Z)();
+  const realTimeMessage = (0,_utils_user_typer__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Z)(message.content, !isUser && message.type === 'message', {
+    delayBetweenCharacters: 66,
+    randomDelayBetweenCharacters: true,
+    charactersPerInterval: 5
+  });
+  const hasSources = message?.context?.sources && message.context?.sources.length > 0;
+  const hasFeedback = !!message?.rating_value;
+
+  // dedupe sources based on url
+  let sources = message?.context?.sources ?? [];
+  if (sources.length > 0) {
+    sources = [...new Map(sources.map(source => [source.url, source])).values()];
+  }
+  const isTypeMessageOrEmpty = !message.type || message.type === 'message';
+  const isSimulatedTypingFinished = message.simulateTyping && message.content === realTimeMessage;
+  const isRequestingHumanSupport = message.context?.flags?.forward_to_human_support;
+  const fullscreenRef = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)(null);
+  const messageFullyTyped = isTypeMessageOrEmpty && (!message.simulateTyping || isSimulatedTypingFinished);
+  const handleBackdropClick = () => {
+    setIsFullscreen(false);
+  };
+  const handleContentClick = event => {
+    event.stopPropagation();
+  };
+  const messageClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-chatbox-message', isUser ? 'odie-chatbox-message-user' : 'odie-chatbox-message-wapuu');
+  const handleFullscreenToggle = () => {
+    setIsFullscreen(!isFullscreen);
+  };
+  const handleWheel = (0,react__WEBPACK_IMPORTED_MODULE_2__.useCallback)(event => {
+    if (!isFullscreen) {
+      return;
+    }
+    const element = fullscreenRef.current;
+    if (element) {
+      const {
+        scrollTop,
+        scrollHeight,
+        clientHeight
+      } = element;
+      const atTop = scrollTop <= 0;
+      const tolerance = 2;
+      const atBottom = scrollTop + clientHeight >= scrollHeight - tolerance;
+
+      // Prevent scrolling the parent element when at the bounds
+      if (atTop && event.deltaY < 0 || atBottom && event.deltaY > 0) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    }
+  }, [isFullscreen]);
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
+    const fullscreenElement = fullscreenRef.current;
+    if (fullscreenElement) {
+      fullscreenElement.addEventListener('wheel', handleWheel, {
+        passive: false
+      });
+    }
+    return () => {
+      if (fullscreenElement) {
+        fullscreenElement.removeEventListener('wheel', handleWheel);
+      }
+    };
+  }, [handleWheel]);
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
+    if (message.content !== realTimeMessage && message.simulateTyping) {
+      scrollToBottom();
+    }
+  }, [message, realTimeMessage, scrollToBottom]);
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
+    if (messageFullyTyped && !scrolledToBottom) {
+      scrollToBottom();
+      setScrolledToBottom(true);
+    }
+  }, [messageFullyTyped, scrolledToBottom, scrollToBottom]);
+  if (!currentUser || !botName) {
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+      ref: ref
+    });
+  }
+  const wapuuAvatarClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-chatbox-message-avatar', {
+    'odie-chatbox-message-avatar-wapuu-liked': message.liked
+  });
+  const messageAvatarHeader = isUser ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_gravatar__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {
+    user: currentUser,
+    size: 32,
+    alt: translate('User profile display picture', {
+      context: 'html alt tag',
+      textOnly: true
+    })
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", {
+    className: "message-header-name"
+  }, currentUser.display_name)) : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+    src: _assets_wapuu_squared_avatar_svg__WEBPACK_IMPORTED_MODULE_12__,
+    alt: translate('%(botName)s profile picture', {
+      context: 'html alt tag',
+      textOnly: true,
+      args: {
+        botName
+      }
+    }),
+    className: wapuuAvatarClasses
+  }), message.type === 'placeholder' ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+    src: _assets_wapuu_thinking_svg__WEBPACK_IMPORTED_MODULE_13__,
+    alt: translate('Loading state, awaiting response from %(botName)s', {
+      context: 'html alt tag',
+      textOnly: true,
+      args: {
+        botName
+      }
+    }),
+    className: "odie-chatbox-thinking-icon"
+  }) : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", {
+    className: "message-header-name"
+  }, botName), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "message-header-buttons"
+  }, message.content?.length > 600 && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_button__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Z, {
+    compact: true,
+    borderless: true,
+    onClick: handleFullscreenToggle
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+    src: isFullscreen ? _assets_minimize_icon_svg__WEBPACK_IMPORTED_MODULE_15__ : _assets_maximize_icon_svg__WEBPACK_IMPORTED_MODULE_16__,
+    alt: translate('Icon to expand or collapse %(botName)s messages', {
+      context: 'html alt tag',
+      textOnly: true,
+      args: {
+        botName
+      }
+    })
+  }))));
+  const messageHeader = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: `message-header ${isUser ? 'user' : 'bot'}`
+  }, messageAvatarHeader);
+  const shouldRenderExtraContactOptions = isRequestingHumanSupport && messageFullyTyped;
+  const onDislike = () => {
+    if (shouldRenderExtraContactOptions) {
+      return;
+    }
+    setTimeout(() => {
+      addMessage({
+        content: '...',
+        role: 'bot',
+        type: 'dislike-feedback'
+      });
+    }, 1200);
+  };
+  const odieChatBoxMessageSourcesContainerClass = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-chatbox-message-sources-container', {
+    'odie-chatbox-message-sources-container-fullscreen': isFullscreen
+  });
+  const messageContent = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: odieChatBoxMessageSourcesContainerClass,
+    ref: fullscreenRef
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: messageClasses
+  }, messageHeader, message.type === 'error' && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_async_load__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {
+    require: "react-markdown",
+    placeholder: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ComponentLoadedReporter, {
+      callback: scrollToBottom
+    }),
+    transformLinkUri: _uri_transformer__WEBPACK_IMPORTED_MODULE_17__/* .uriTransformer */ .A,
+    components: {
+      a: _custom_a_link__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .Z
+    }
+  }, message.content), extraContactOptions), (message.type === 'message' || !message.type) && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_async_load__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {
+    require: "react-markdown",
+    placeholder: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ComponentLoadedReporter, {
+      callback: scrollToBottom
+    }),
+    transformLinkUri: _uri_transformer__WEBPACK_IMPORTED_MODULE_17__/* .uriTransformer */ .A,
+    components: {
+      a: _custom_a_link__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .Z
+    }
+  }, isUser || !message.simulateTyping ? message.content : realTimeMessage), !hasFeedback && !isUser && messageFullyTyped && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_was_this_helpful_buttons__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .Z, {
+    message: message,
+    onDislike: onDislike
+  })), message.type === 'introduction' && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "odie-introduction-message-content"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "odie-chatbox-introduction-message"
+  }, message.content)), message.type === 'dislike-feedback' && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_async_load__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {
+    require: "react-markdown",
+    placeholder: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ComponentLoadedReporter, {
+      callback: scrollToBottom
+    }),
+    transformLinkUri: _uri_transformer__WEBPACK_IMPORTED_MODULE_17__/* .uriTransformer */ .A,
+    components: {
+      a: _custom_a_link__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .Z
+    }
+  }, translate('I’m sorry my last response didn’t meet your expectations! Here’s some other ways to get more in-depth help:', {
+    context: 'Message displayed when the user dislikes a message from the bot',
+    textOnly: true
+  })), extraContactOptions), shouldRenderExtraContactOptions && extraContactOptions), hasSources && messageFullyTyped && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_foldable__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .Z, {
+    className: "odie-sources-foldable-card",
+    clickableHeader: true,
+    header: translate('Related Guides', {
+      context: 'Below this text are links to sources for the current message received from the bot.',
+      textOnly: true
+    }),
+    onClose: () => trackEvent('chat_message_action_sources', {
+      action: 'close',
+      message_id: message.message_id
+    }),
+    onOpen: () => trackEvent('chat_message_action_sources', {
+      action: 'open',
+      message_id: message.message_id
+    }),
+    screenReaderText: "More"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "odie-chatbox-message-sources"
+  }, sources.length > 0 && sources.map((source, index) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_custom_a_link__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .Z, {
+    key: index,
+    href: source.url,
+    inline: false
+  }, source?.title)))));
+  const fullscreenContent = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "odie-fullscreen",
+    onClick: handleBackdropClick
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "odie-fullscreen-backdrop",
+    onClick: handleContentClick
+  }, messageContent));
+  if (isFullscreen) {
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, messageContent, /*#__PURE__*/react_dom__WEBPACK_IMPORTED_MODULE_3___default().createPortal(fullscreenContent, document.body));
+  }
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: odieChatBoxMessageSourcesContainerClass,
+    ref: ref
+  }, messageContent);
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ChatMessage);
+
+/***/ }),
+
+/***/ 58942:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   V: () => (/* binding */ JumpToRecent)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(69307);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5869);
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(43383);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(72779);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(10975);
+/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(98793);
+
+
+
+
+
+
+/**
+ * This might be synced with CSS in client/odie/message/style.scss, which is half of the height for the gradient.
+ * Used to calculate the bottom offset for the jump to recent button, so it doesn't overlap with the last message.
+ * Also, making it twice as big, will prevent the gradient to be not visible when the input grows/shrinks in height.
+ */
+const heightOffset = 48;
+const JumpToRecent = ({
+  scrollToBottom,
+  enableJumpToRecent,
+  bottomOffset
+}) => {
+  const {
+    trackEvent,
+    isMinimized
+  } = (0,_context__WEBPACK_IMPORTED_MODULE_2__/* .useOdieAssistantContext */ .qi)();
+  const translate = (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z)();
+  const jumpToRecent = () => {
+    scrollToBottom();
+    trackEvent('chat_jump_to_recent_click');
+  };
+  if (isMinimized) {
+    return null;
+  }
+  const className = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-gradient-to-white', {
+    'is-visible': enableJumpToRecent,
+    'is-hidden': !enableJumpToRecent
+  });
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: className,
+    style: {
+      bottom: bottomOffset - heightOffset
+    }
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    className: "odie-jump-to-recent-message-button",
+    onClick: jumpToRecent
+  }, translate('Jump to recent', {
+    context: 'A dynamic button that appears on a chatbox, when the last message is not vissible'
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z,
+    fill: "white"
+  })));
+};
+
+/***/ }),
+
+/***/ 83825:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   k: () => (/* binding */ ThumbsDownIcon),
+/* harmony export */   l: () => (/* binding */ ThumbsUpIcon)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(69307);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+
+const ThumbsUpIcon = ({
+  className
+}) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: "24",
+  height: "24",
+  viewBox: "0 0 24 24",
+  className: className
+}, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M9.24155 10.0159C9.31208 10.0054 9.38426 10 9.45771 10C9.77958 10 10.0633 9.78887 10.1558 9.48058L11.3423 5.52577C11.4359 5.21371 11.7231 5 12.0489 5C13.6788 5 15 6.32124 15 7.95108V9.5C15 9.77614 15.2239 10 15.5 10H17.4384C18.7396 10 19.6943 11.2228 19.3787 12.4851L18.3787 16.4851C18.1561 17.3754 17.3562 18 16.4384 18H10C9.52703 18 9.0924 17.8358 8.75 17.5613C8.4076 17.8358 7.97297 18 7.5 18H6C5.44772 18 5 17.5523 5 17V10C5 9.44772 5.44772 9 6 9H7.5C8.24683 9 8.89806 9.40935 9.24155 10.0159ZM15.5 11.5H17.4384C17.7637 11.5 18.0024 11.8057 17.9235 12.1213L16.9235 16.1213C16.8679 16.3439 16.6679 16.5 16.4384 16.5H10C9.72386 16.5 9.5 16.2761 9.5 16V11.4996C10.4668 11.4814 11.3138 10.8408 11.5926 9.9116L12.5853 6.60237C13.1212 6.81569 13.5 7.33915 13.5 7.95108V9.5C13.5 10.6046 14.3954 11.5 15.5 11.5ZM8 16V11C8 10.7239 7.77614 10.5 7.5 10.5H6.5V16.5H7.5C7.77614 16.5 8 16.2761 8 16Z"
+}));
+const ThumbsDownIcon = ({
+  className
+}) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: "24",
+  height: "24",
+  viewBox: "0 0 24 24",
+  className: className
+}, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M15.1979 12.9841C15.1273 12.9946 15.0552 13 14.9817 13C14.6599 13 14.3761 13.2111 14.2836 13.5194L13.0972 17.4742C13.0035 17.7863 12.7163 18 12.3905 18C10.7607 18 9.43943 16.6788 9.43943 15.0489V13.5C9.43943 13.2239 9.21557 13 8.93943 13H7.00098C5.69984 13 4.74513 11.7772 5.0607 10.5149L6.0607 6.51493C6.28328 5.62459 7.08325 5 8.00098 5L14.4394 5C14.9124 5 15.347 5.16418 15.6894 5.43866C16.0318 5.16418 16.4665 5 16.9394 5L18.4394 5C18.9917 5 19.4394 5.44772 19.4394 6V13C19.4394 13.5523 18.9917 14 18.4394 14H16.9394C16.1926 14 15.5414 13.5906 15.1979 12.9841ZM8.93943 11.5H7.00098C6.6757 11.5 6.43702 11.1943 6.51591 10.8787L7.51591 6.87873C7.57156 6.65615 7.77155 6.5 8.00098 6.5L14.4394 6.5C14.7156 6.5 14.9394 6.72386 14.9394 7V11.5004C13.9727 11.5186 13.1256 12.1592 12.8469 13.0884L11.8541 16.3976C11.3182 16.1843 10.9394 15.6608 10.9394 15.0489V13.5C10.9394 12.3954 10.044 11.5 8.93943 11.5ZM16.4394 7V12C16.4394 12.2761 16.6633 12.5 16.9394 12.5H17.9394V6.5H16.9394C16.6633 6.5 16.4394 6.72386 16.4394 7Z"
+}));
+
+/***/ }),
+
+/***/ 30596:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ uriTransformer)
+/* harmony export */ });
+// This is exactly the same implementation that is used in the react-markdown library.
+// It is used to allow only certain protocols in links, and that's why I've copied it here.
+// And overrided with my own implementation to include 'prompt' protocol. We might add more
+// protocols in the future, but for now, this is enough. That would REALLY simplify things for
+// us, because adding a new protocol would be as simple as adding it to the array above, and
+// and extending the component custom-a-link.tsx to handle it. That's it.
+const protocols = ['http', 'https', 'mailto', 'tel', 'prompt'];
+
+/**
+ * @param {string} uri
+ * @returns {string}
+ */
+function uriTransformer(uri) {
+  const url = (uri || '').trim();
+  const first = url.charAt(0);
+  if (first === '#' || first === '/') {
+    return url;
+  }
+  const colon = url.indexOf(':');
+  if (colon === -1) {
+    return url;
+  }
+  let index = -1;
+  while (++index < protocols.length) {
+    const protocol = protocols[index];
+    if (colon === protocol.length && url.slice(0, protocol.length).toLowerCase() === protocol) {
+      return url;
+    }
+  }
+  index = url.indexOf('?');
+  if (index !== -1 && colon > index) {
+    return url;
+  }
+  index = url.indexOf('#');
+  if (index !== -1 && colon > index) {
+    return url;
+  }
+
+  // eslint-disable-next-line no-script-url
+  return 'javascript:void(0)';
+}
+
+/***/ }),
+
+/***/ 16140:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(69307);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(72779);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(10975);
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(23075);
+/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(98793);
+/* harmony import */ var _query__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(68751);
+/* harmony import */ var _thumbs_icons__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(83825);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(44518);
+
+
+
+
+
+
+
+
+const WasThisHelpfulButtons = ({
+  message,
+  onDislike = _context__WEBPACK_IMPORTED_MODULE_3__/* .noop */ .ZT
+}) => {
+  const translate = (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z)();
+  const {
+    setMessageLikedStatus,
+    trackEvent
+  } = (0,_context__WEBPACK_IMPORTED_MODULE_3__/* .useOdieAssistantContext */ .qi)();
+  const {
+    mutateAsync: sendOdieMessageFeedback
+  } = (0,_query__WEBPACK_IMPORTED_MODULE_5__/* .useOdieSendMessageFeedback */ .k4)();
+  const liked = message.liked === true;
+  const disliked = message.liked === false;
+  const rated = message.liked !== null && message.liked !== undefined;
+  const handleIsHelpful = isHelpful => {
+    sendOdieMessageFeedback({
+      message,
+      rating_value: isHelpful ? ___WEBPACK_IMPORTED_MODULE_6__/* .ODIE_THUMBS_UP_RATING_VALUE */ .AA : ___WEBPACK_IMPORTED_MODULE_6__/* .ODIE_THUMBS_DOWN_RATING_VALUE */ .IV
+    });
+    setMessageLikedStatus(message, isHelpful);
+    if (!isHelpful) {
+      onDislike();
+    }
+    trackEvent('chat_message_action_feedback', {
+      action: 'feedback',
+      is_helpful: isHelpful,
+      message_id: message.message_id
+    });
+  };
+  const thumbsUpClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()({
+    'odie-feedback-component-button-icon-disabled': rated && disliked,
+    'odie-feedback-component-button-icon-pressed': rated && liked
+  });
+  const thumbsDownClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()({
+    'odie-feedback-component-button-icon-disabled': rated && liked,
+    'odie-feedback-component-button-icon-pressed': rated && disliked
+  });
+  const questionClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-feedback-component-question', {
+    'odie-question-out': rated,
+    'odie-question-hidden': rated
+  });
+  const thanksClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-feedback-component-thanks', {
+    'odie-thanks-in': rated,
+    'odie-thanks-hidden': !rated
+  });
+  const buttonLikedClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-feedback-component-button', {
+    'odie-feedback-component-button-liked-pressed': rated && liked,
+    'odie-feedback-component-button-liked-disabled': rated && disliked
+  });
+  const buttonDislikedClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-feedback-component-button', {
+    'odie-feedback-component-button-disliked-pressed': rated && disliked,
+    'odie-feedback-component-button-disliked-disabled': rated && liked
+  });
+  const containerClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-feedback-component-container', {
+    'odie-question-collapse': rated
+  });
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: containerClasses
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "odie-feedback-message"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    className: questionClasses
+  }, translate('Was this helpful?', {
+    context: 'Indicates if a messaged provided by a chatbot was helpful or not'
+  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    className: thanksClasses
+  }, translate('Thanks!', {
+    context: 'Indicates that the user has provided feedback to a chatbot message'
+  }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    className: "odie-feedback-component-button-container"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    className: buttonLikedClasses,
+    onClick: () => handleIsHelpful(true),
+    disabled: disliked
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_thumbs_icons__WEBPACK_IMPORTED_MODULE_7__/* .ThumbsUpIcon */ .l, {
+    className: thumbsUpClasses
+  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    className: buttonDislikedClasses,
+    onClick: () => handleIsHelpful(false),
+    disabled: liked
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_thumbs_icons__WEBPACK_IMPORTED_MODULE_7__/* .ThumbsDownIcon */ .k, {
+    className: thumbsDownClasses
+  }))));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (WasThisHelpfulButtons);
+
+/***/ }),
+
+/***/ 86586:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   K: () => (/* binding */ OdieSendMessageButton)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(69307);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(10975);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99196);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var calypso_components_textarea_autosize__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(93667);
+/* harmony import */ var _assets_arrow_up_svg__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(71350);
+/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(98793);
+/* harmony import */ var _query__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(68751);
+/* harmony import */ var _message_jump_to_recent__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(58942);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(91310);
+
+/* eslint-disable no-restricted-imports */
+
+
+
+
+
+
+
+
+const OdieSendMessageButton = ({
+  scrollToRecent,
+  scrollToBottom,
+  enableStickToBottom,
+  enableJumpToRecent
+}) => {
+  const [messageString, setMessageString] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
+  const divContainerRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
+  const {
+    initialUserMessage,
+    chat,
+    isLoading,
+    trackEvent
+  } = (0,_context__WEBPACK_IMPORTED_MODULE_4__/* .useOdieAssistantContext */ .qi)();
+  const {
+    mutateAsync: sendOdieMessage
+  } = (0,_query__WEBPACK_IMPORTED_MODULE_5__/* .useOdieSendMessage */ .hZ)();
+  const translate = (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z)();
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    if (initialUserMessage && !chat.chat_id) {
+      setMessageString(initialUserMessage);
+    }
+  }, [initialUserMessage, chat.chat_id]);
+  const sendMessage = async () => {
+    try {
+      trackEvent('chat_message_action_send');
+      const message = {
+        content: messageString,
+        role: 'user',
+        type: 'message'
+      };
+      await sendOdieMessage({
+        message
+      });
+      trackEvent('chat_message_action_receive');
+    } catch (e) {
+      const error = e;
+      trackEvent('chat_message_error', {
+        error: error?.message
+      });
+    }
+  };
+  const sendMessageIfNotEmpty = async () => {
+    if (messageString.trim() === '') {
+      return;
+    }
+    setMessageString('');
+    enableStickToBottom();
+    await sendMessage();
+    scrollToBottom(true);
+  };
+  const handleKeyPress = async event => {
+    scrollToBottom(false);
+    if (isLoading) {
+      return;
+    }
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      await sendMessageIfNotEmpty();
+    }
+  };
+  const handleSubmit = async event => {
+    event.preventDefault();
+    await sendMessageIfNotEmpty();
+  };
+  const divContainerHeight = divContainerRef?.current?.clientHeight;
+  const userHasAskedToContactHE = chat.messages.some(message => message.context?.flags?.forward_to_human_support === true);
+  const userHasNegativeFeedback = chat.messages.some(message => message.liked === false);
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_message_jump_to_recent__WEBPACK_IMPORTED_MODULE_7__/* .JumpToRecent */ .V, {
+    scrollToBottom: scrollToRecent,
+    enableJumpToRecent: enableJumpToRecent,
+    bottomOffset: divContainerHeight ?? 0
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "odie-chat-message-input-container",
+    ref: divContainerRef
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("form", {
+    onSubmit: handleSubmit,
+    className: "odie-send-message-input-container"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_textarea_autosize__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z, {
+    placeholder: userHasAskedToContactHE || userHasNegativeFeedback ? translate('Continue chatting with Wapuu', {
+      context: 'Placeholder text for the message input field (chat)',
+      textOnly: true
+    }) : translate('Ask your question', {
+      context: 'Placeholder text for the message input field (chat)',
+      textOnly: true
+    }),
+    className: "odie-send-message-input",
+    rows: 1,
+    value: messageString,
+    onChange: event => setMessageString(event.currentTarget.value),
+    onKeyPress: handleKeyPress
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    type: "submit",
+    className: "odie-send-message-inner-button",
+    disabled: messageString.trim() === '' || isLoading
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+    src: _assets_arrow_up_svg__WEBPACK_IMPORTED_MODULE_8__,
+    alt: translate('Arrow icon', {
+      context: 'html alt tag',
+      textOnly: true
+    })
+  })))));
+};
+
+/***/ }),
+
+/***/ 89731:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   P: () => (/* binding */ getOdieInitialMessage)
+/* harmony export */ });
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(65736);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
+
+const __ = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__;
+const getOdieInitialPrompt = botNameSlug => {
+  switch (botNameSlug) {
+    case 'wpcom-support-chat':
+      return __('Hi there 👋 I’m Wapuu, WordPress.com’s AI assistant! Having an issue with your site or account? Tell me all about it and I’ll be happy to help.');
+  }
+};
+const getOdieInitialMessage = botNameSlug => {
+  return {
+    content: getOdieInitialPrompt(botNameSlug),
+    role: 'bot',
+    type: 'introduction'
+  };
+};
+
+/***/ }),
+
+/***/ 98793:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   JU: () => (/* binding */ OdieAssistantProvider),
+/* harmony export */   ZT: () => (/* binding */ noop),
+/* harmony export */   qi: () => (/* binding */ useOdieAssistantContext)
+/* harmony export */ });
+/* unused harmony export OdieAssistantContext */
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(69307);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99196);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(61381);
+/* harmony import */ var _get_odie_initial_message__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(89731);
+/* harmony import */ var _use_load_previous_chat__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(48404);
+
+
+
+
+
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+const noop = () => {};
+
+/*
+ * This is the interface for the context. It contains all the methods and values that are
+ * available to the components that are wrapped in the provider.
+ *
+ */
+
+const defaultContextInterfaceValues = {
+  addMessage: noop,
+  botName: 'Wapuu',
+  botNameSlug: 'wpcom-support-chat',
+  chat: {
+    context: {
+      section_name: '',
+      site_id: null
+    },
+    messages: []
+  },
+  clearChat: noop,
+  initialUserMessage: null,
+  isLoadingChat: false,
+  isLoading: false,
+  isMinimized: false,
+  isNudging: false,
+  isVisible: false,
+  lastNudge: null,
+  sendNudge: noop,
+  setChat: noop,
+  setIsLoadingChat: noop,
+  setMessageLikedStatus: noop,
+  setContext: noop,
+  setIsNudging: noop,
+  setIsVisible: noop,
+  setIsLoading: noop,
+  trackEvent: noop,
+  updateMessage: noop
+};
+
+// Create a default new context
+const OdieAssistantContext = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.createContext)(defaultContextInterfaceValues);
+
+// Custom hook to access the OdieAssistantContext
+const useOdieAssistantContext = () => (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(OdieAssistantContext);
+// Create a provider component for the context
+const OdieAssistantProvider = ({
+  botName = 'Wapuu assistant',
+  botNameSlug = 'wpcom-support-chat',
+  initialUserMessage,
+  isMinimized = false,
+  extraContactOptions,
+  enabled = true,
+  logger,
+  loggerEventNamePrefix,
+  children
+}) => {
+  const [isVisible, setIsVisible] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+  const [isLoading, setIsLoading] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+  const [isNudging, setIsNudging] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+  const [lastNudge, setLastNudge] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+  const existingChatIdString = (0,_data__WEBPACK_IMPORTED_MODULE_2__/* .useOdieStorage */ .y)('chat_id');
+  const existingChatId = existingChatIdString ? parseInt(existingChatIdString, 10) : null;
+  const existingChat = (0,_use_load_previous_chat__WEBPACK_IMPORTED_MODULE_3__/* .useLoadPreviousChat */ .M)(botNameSlug, existingChatId);
+  const [chat, setChat] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(existingChat);
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    if (existingChat.chat_id) {
+      setChat(existingChat);
+    }
+  }, [existingChat, existingChat.chat_id]);
+  const trackEvent = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)((eventName, properties = {}) => {
+    const event = loggerEventNamePrefix ? `${loggerEventNamePrefix}_${eventName}` : eventName;
+    logger?.(event, {
+      ...properties,
+      chat_id: chat?.chat_id,
+      bot_name_slug: botNameSlug
+    });
+  }, [botNameSlug, chat?.chat_id, logger, loggerEventNamePrefix]);
+  const clearChat = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)(() => {
+    (0,_data__WEBPACK_IMPORTED_MODULE_2__/* .clearOdieStorage */ .x0)('chat_id');
+    setChat({
+      chat_id: null,
+      messages: [(0,_get_odie_initial_message__WEBPACK_IMPORTED_MODULE_4__/* .getOdieInitialMessage */ .P)(botNameSlug)]
+    });
+    trackEvent('chat_cleared', {});
+  }, [botNameSlug, trackEvent]);
+  const setMessageLikedStatus = (message, liked) => {
+    setChat(prevChat => {
+      const messageIndex = prevChat.messages.findIndex(m => m === message);
+      const updatedMessage = {
+        ...message,
+        liked
+      };
+      return {
+        ...prevChat,
+        messages: [...prevChat.messages.slice(0, messageIndex), updatedMessage, ...prevChat.messages.slice(messageIndex + 1)]
+      };
+    });
+  };
+
+  // This might need a rework in the future, like connecting messages to a client_chat_id and
+  // Update it to be a message.type = 'message' in order to keep simplicity.
+  const addMessage = message => {
+    setChat(prevChat => {
+      // Normalize message to always be an array
+      const newMessages = Array.isArray(message) ? message : [message];
+
+      // Check if the new message is of type 'dislike-feedback'
+      const isNewMessageDislikeFeedback = newMessages.some(msg => msg.type === 'dislike-feedback');
+      const filteredMessages = !isNewMessageDislikeFeedback ? prevChat.messages.filter(msg => msg.type !== 'placeholder') : prevChat.messages;
+
+      // If the new message is 'dislike-feedback' and there's a placeholder, insert it before the placeholder
+      if (isNewMessageDislikeFeedback) {
+        const lastPlaceholderIndex = prevChat.messages.map(msg => msg.type).lastIndexOf('placeholder');
+        return {
+          chat_id: prevChat.chat_id,
+          messages: [...prevChat.messages.slice(0, lastPlaceholderIndex),
+          // Take all messages before the last placeholder
+          ...newMessages,
+          // Insert new 'dislike-feedback' messages
+          ...prevChat.messages.slice(lastPlaceholderIndex) // Add back the placeholder and any messages after it
+          ]
+        };
+      }
+
+      // For all other cases, append new messages at the end, without placeholders if not 'dislike-feedback'
+      return {
+        chat_id: prevChat.chat_id,
+        messages: [...filteredMessages, ...newMessages]
+      };
+    });
+  };
+  const updateMessage = message => {
+    setChat(prevChat => {
+      const updatedMessages = prevChat.messages.map(m => message.internal_message_id && m.internal_message_id === message.internal_message_id || message.message_id && m.message_id === message.message_id ? {
+        ...m,
+        ...message
+      } : m);
+      return {
+        ...prevChat,
+        messages: updatedMessages
+      };
+    });
+  };
+  if (!enabled) {
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, children);
+  }
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(OdieAssistantContext.Provider, {
+    value: {
+      addMessage,
+      botName,
+      botNameSlug,
+      chat,
+      clearChat,
+      extraContactOptions,
+      initialUserMessage,
+      isLoadingChat: false,
+      isLoading: isLoading,
+      isMinimized,
+      isNudging,
+      isVisible,
+      lastNudge,
+      sendNudge: setLastNudge,
+      setChat,
+      setIsLoadingChat: noop,
+      setMessageLikedStatus,
+      setContext: noop,
+      setIsLoading,
+      setIsNudging,
+      setIsVisible,
+      trackEvent,
+      updateMessage
+    }
+  }, children);
+};
+
+
+/***/ }),
+
+/***/ 48404:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   M: () => (/* binding */ useLoadPreviousChat)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(99196);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _query__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(68751);
+/* harmony import */ var _get_odie_initial_message__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(89731);
+
+
+
+const useLoadPreviousChat = (botNameSlug, chatId) => {
+  const {
+    data: existingChat
+  } = (0,_query__WEBPACK_IMPORTED_MODULE_1__/* .useOdieGetChat */ .L)(botNameSlug, chatId, 1, 30);
+  const [chat, setChat] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    chat_id: null,
+    messages: [(0,_get_odie_initial_message__WEBPACK_IMPORTED_MODULE_2__/* .getOdieInitialMessage */ .P)(botNameSlug)]
+  });
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (existingChat) {
+      const initialMessage = (0,_get_odie_initial_message__WEBPACK_IMPORTED_MODULE_2__/* .getOdieInitialMessage */ .P)(botNameSlug);
+      const messages = [initialMessage, ...existingChat.messages];
+      setChat({
+        ...existingChat,
+        messages
+      });
+    } else {
+      setChat({
+        chat_id: null,
+        messages: [(0,_get_odie_initial_message__WEBPACK_IMPORTED_MODULE_2__/* .getOdieInitialMessage */ .P)(botNameSlug)]
+      });
+    }
+  }, [botNameSlug, chatId, existingChat]);
+  return chat;
+};
+
+/***/ }),
+
+/***/ 61381:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   C8: () => (/* binding */ getOdieStorage),
+/* harmony export */   QL: () => (/* binding */ setOdieStorage),
+/* harmony export */   x0: () => (/* binding */ clearOdieStorage),
+/* harmony export */   y: () => (/* binding */ useOdieStorage)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(99196);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+const buildOdieStorageKey = key => `odie_${key}`;
+const storageEventName = 'odieStorageEvent';
+const getOdieStorage = key => {
+  const storageKey = buildOdieStorageKey(key);
+  return localStorage.getItem(storageKey);
+};
+const setOdieStorage = (key, value) => {
+  const storageKey = buildOdieStorageKey(key);
+  localStorage.setItem(storageKey, value);
+
+  // Duplicate the value to last_chat_id
+  if (key === 'chat_id') {
+    localStorage.setItem(buildOdieStorageKey('last_chat_id'), value);
+    window.dispatchEvent(new CustomEvent(storageEventName, {
+      detail: {
+        key: buildOdieStorageKey('last_chat_id'),
+        value: value
+      }
+    }));
+  }
+  const event = new CustomEvent(storageEventName, {
+    detail: {
+      key: storageKey,
+      value: value
+    }
+  });
+  window.dispatchEvent(event);
+};
+const clearOdieStorage = key => {
+  const storageKey = buildOdieStorageKey(key);
+  localStorage.removeItem(storageKey);
+  const event = new CustomEvent(storageEventName, {
+    detail: {
+      key: storageKey,
+      value: null
+    }
+  });
+  window.dispatchEvent(event);
+};
+const useOdieStorage = key => {
+  const storageKey = buildOdieStorageKey(key);
+  const [value, setValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(getOdieStorage(key));
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    const storageListener = e => {
+      if (e.key === storageKey) {
+        setValue(e.newValue);
+      }
+    };
+    const customStorageListener = e => {
+      const detail = e.detail;
+      if (detail.key === storageKey) {
+        setValue(detail.value);
+      }
+    };
+    window.addEventListener('storage', storageListener);
+    window.addEventListener(storageEventName, customStorageListener);
+    return () => {
+      window.removeEventListener('storage', storageListener);
+      window.removeEventListener(storageEventName, customStorageListener);
+    };
+  }, [key, storageKey]);
+  return value;
+};
+
+/***/ }),
+
+/***/ 23075:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   AA: () => (/* binding */ ODIE_THUMBS_UP_RATING_VALUE),
+/* harmony export */   IV: () => (/* binding */ ODIE_THUMBS_DOWN_RATING_VALUE),
+/* harmony export */   TQ: () => (/* binding */ WAPUU_ERROR_MESSAGE),
+/* harmony export */   ZP: () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   lL: () => (/* binding */ OdieAssistant)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(69307);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(11481);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99196);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_intersection_observer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(34059);
+/* harmony import */ var _components_message__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(73355);
+/* harmony import */ var _components_send_message_input__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(86586);
+/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(98793);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(95283);
+
+
+
+
+
+
+
+
+const WAPUU_ERROR_MESSAGE = i18n_calypso__WEBPACK_IMPORTED_MODULE_3__/* ["default"].translate */ .ZP.translate("Wapuu oopsie! 😺 I'm in snooze mode and can't chat just now. Don't fret, just browse through the buttons below to connect with WordPress.com support.", {
+  comment: 'Error message when Wapuu fails to send a message',
+  textOnly: true
+});
+const ODIE_THUMBS_DOWN_RATING_VALUE = 0;
+const ODIE_THUMBS_UP_RATING_VALUE = 1;
+const ForwardedChatMessage = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(_components_message__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z);
+const OdieAssistant = () => {
+  const {
+    chat,
+    trackEvent
+  } = (0,_context__WEBPACK_IMPORTED_MODULE_5__/* .useOdieAssistantContext */ .qi)();
+  const chatboxMessagesRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
+  const {
+    ref: bottomRef,
+    entry: lastMessageElement,
+    inView
+  } = (0,react_intersection_observer__WEBPACK_IMPORTED_MODULE_6__/* .useInView */ .YD)({
+    threshold: 0
+  });
+  const [stickToBottom, setStickToBottom] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true);
+  const scrollToBottom = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)((force = false) => {
+    if (force || stickToBottom) {
+      requestAnimationFrame(() => {
+        if (lastMessageElement?.target) {
+          lastMessageElement.target.scrollIntoView({
+            behavior: 'auto',
+            block: 'end',
+            inline: 'end'
+          });
+        }
+      });
+    }
+  }, [lastMessageElement?.target, stickToBottom]);
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    trackEvent('chatbox_view');
+  }, [trackEvent]);
+  const scrollToInitialBlockOfLastMessage = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)(() => {
+    if (chatboxMessagesRef.current) {
+      requestAnimationFrame(() => {
+        if (lastMessageElement?.target) {
+          lastMessageElement?.target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+            inline: 'nearest'
+          });
+        }
+      });
+    }
+  }, [lastMessageElement?.target]);
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    scrollToInitialBlockOfLastMessage();
+  }, [chat.messages.length, scrollToInitialBlockOfLastMessage]);
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "chatbox"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "chat-box-message-container"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "chatbox-messages",
+    ref: chatboxMessagesRef,
+    onWheel: event => {
+      // If delta is negative, we are scrolling up so we want to disable stick to bottom
+      // we might improve this in the future for touch devices
+      if (event.deltaY < 0) {
+        setStickToBottom(false);
+      } else if (chatboxMessagesRef.current) {
+        const scrollHeight = chatboxMessagesRef.current.scrollHeight;
+        const scrollTop = chatboxMessagesRef.current.scrollTop;
+        const clientHeight = chatboxMessagesRef.current.clientHeight;
+        const scrollBottom = scrollHeight - scrollTop - clientHeight;
+        setStickToBottom(scrollBottom < 8);
+      }
+    }
+  }, chat.messages.map((message, index) => {
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ForwardedChatMessage, {
+      message: message,
+      key: index,
+      scrollToBottom: scrollToBottom,
+      ref: chat.messages.length - 1 === index ? bottomRef : undefined
+    });
+  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_send_message_input__WEBPACK_IMPORTED_MODULE_7__/* .OdieSendMessageButton */ .K, {
+    scrollToBottom: scrollToBottom,
+    scrollToRecent: scrollToInitialBlockOfLastMessage,
+    enableStickToBottom: () => setStickToBottom(true),
+    enableJumpToRecent: !inView
+  })));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_context__WEBPACK_IMPORTED_MODULE_5__/* .OdieAssistantProvider */ .JU);
+
+
+
+
+/***/ }),
+
+/***/ 68751:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   L: () => (/* binding */ useOdieGetChat),
+/* harmony export */   hZ: () => (/* binding */ useOdieSendMessage),
+/* harmony export */   k4: () => (/* binding */ useOdieSendMessageFeedback)
+/* harmony export */ });
+/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4182);
+/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(42180);
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86989);
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(18552);
+/* harmony import */ var calypso_lib_wp__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(72429);
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(23075);
+/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(98793);
+/* harmony import */ var _data__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(61381);
+
+
+
+// eslint-disable-next-line no-restricted-imports
+
+
+
+
+// Either we use wpcom or apiFetch for the request for accessing odie endpoint for atomic or wpcom sites
+const buildSendChatMessage = async (message, botNameSlug, chat_id) => {
+  const baseApiPath = '/help-center/odie/chat/';
+  const wpcomBaseApiPath = '/odie/chat/';
+  const apiPathWithIds = chat_id !== null && chat_id !== undefined ? `${baseApiPath}${botNameSlug}/${chat_id}` : `${baseApiPath}${botNameSlug}`;
+  const wpcomApiPathWithIds = chat_id !== null && chat_id !== undefined ? `${wpcomBaseApiPath}${botNameSlug}/${chat_id}` : `${wpcomBaseApiPath}${botNameSlug}`;
+  return (0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_2__/* .canAccessWpcomApis */ .aO)() ? odieWpcomSendSupportMessage(message, wpcomApiPathWithIds) : _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
+    path: apiPathWithIds,
+    method: 'POST',
+    data: {
+      message
+    }
+  });
+};
+function odieWpcomSendSupportMessage(message, path) {
+  return calypso_lib_wp__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z.req.post({
+    path,
+    apiNamespace: 'wpcom/v2',
+    body: {
+      message: message.content
+    }
+  });
+}
+
+// Internal helper function to generate a uuid
+function uuid() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : r & 0x3 | 0x8;
+    return v.toString(16);
+  });
+}
+
+/**
+ * It will post a new message using the current chat_id.
+ * The message object should be in the format of Message type. The mutator will take
+ * care of adding placeholders and error messages to the chat.
+ * @returns UseMutationResult
+ * @example
+ * const { mutate, isLoading } = useOdieSendMessage();
+ * mutate( { message: { content: 'Hello' } } );
+ */
+const useOdieSendMessage = () => {
+  const {
+    chat,
+    botNameSlug,
+    setIsLoading,
+    addMessage,
+    updateMessage
+  } = (0,_context__WEBPACK_IMPORTED_MODULE_3__/* .useOdieAssistantContext */ .qi)();
+  return (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_4__/* .useMutation */ .D)({
+    mutationFn: ({
+      message
+    }) => {
+      return buildSendChatMessage({
+        ...message
+      }, botNameSlug, chat.chat_id);
+    },
+    onMutate: ({
+      message
+    }) => {
+      const internal_message_id = uuid();
+      addMessage([message, {
+        internal_message_id,
+        content: '...',
+        role: 'bot',
+        type: 'placeholder'
+      }]);
+      setIsLoading(true);
+      return {
+        internal_message_id
+      };
+    },
+    onSuccess: (data, _, context) => {
+      if (!context) {
+        throw new Error('Context is undefined');
+      }
+      const {
+        internal_message_id
+      } = context;
+      if (!data.messages || !data.messages[0].content) {
+        updateMessage({
+          content: ___WEBPACK_IMPORTED_MODULE_5__/* .WAPUU_ERROR_MESSAGE */ .TQ,
+          internal_message_id,
+          role: 'bot',
+          type: 'error'
+        });
+        return;
+      }
+      updateMessage({
+        message_id: data.messages[0].message_id,
+        internal_message_id,
+        content: data.messages[0].content,
+        role: 'bot',
+        simulateTyping: data.messages[0].simulateTyping,
+        type: 'message',
+        context: data.messages[0].context
+      });
+      (0,_data__WEBPACK_IMPORTED_MODULE_6__/* .setOdieStorage */ .QL)('chat_id', data.chat_id);
+    },
+    onSettled: () => {
+      setIsLoading(false);
+    },
+    onError: (_, __, context) => {
+      if (!context) {
+        throw new Error('Context is undefined');
+      }
+      const {
+        internal_message_id
+      } = context;
+      updateMessage({
+        content: ___WEBPACK_IMPORTED_MODULE_5__/* .WAPUU_ERROR_MESSAGE */ .TQ,
+        internal_message_id,
+        role: 'bot',
+        type: 'error'
+      });
+    }
+  });
+};
+const buildGetChatMessage = (botNameSlug, chat_id, page, perPage, includeFeedback) => {
+  const urlQueryParams = new URLSearchParams({
+    page_number: page.toString(),
+    items_per_page: perPage.toString(),
+    include_feedback: includeFeedback.toString()
+  });
+  const baseApiPath = `/help-center/odie/chat/${botNameSlug}/${chat_id}?${urlQueryParams.toString()}`;
+  const wpcomBaseApiPath = `/odie/chat/${botNameSlug}/${chat_id}?${urlQueryParams.toString()}`;
+  return (0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_2__/* .canAccessWpcomApis */ .aO)() ? odieWpcomGetChat(wpcomBaseApiPath) : _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
+    path: baseApiPath,
+    method: 'GET'
+  });
+};
+function odieWpcomGetChat(path) {
+  return calypso_lib_wp__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z.req.get({
+    path,
+    apiNamespace: 'wpcom/v2'
+  });
+}
+
+/**
+ * It will get the chat messages using the current chat_id.
+ * @returns UseQueryResult
+ * @example
+ * const { data, isLoading } = useOdieGetChat();
+ */
+const useOdieGetChat = (botNameSlug, chatId, page = 1, perPage = 10, includeFeedback = true) => {
+  const {
+    chat
+  } = (0,_context__WEBPACK_IMPORTED_MODULE_3__/* .useOdieAssistantContext */ .qi)();
+  return (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_7__/* .useQuery */ .a)({
+    queryKey: ['chat', botNameSlug, chatId, page, perPage, includeFeedback],
+    queryFn: () => buildGetChatMessage(botNameSlug, chatId, page, perPage, includeFeedback),
+    refetchOnWindowFocus: false,
+    enabled: !!chatId && !chat.chat_id,
+    select: data => {
+      const modifiedMessages = [];
+      data.messages.forEach(message => {
+        modifiedMessages.push(message);
+
+        // Check if the message has negative feedback
+        if (message.rating_value && message.rating_value === ___WEBPACK_IMPORTED_MODULE_5__/* .ODIE_THUMBS_DOWN_RATING_VALUE */ .IV && !message.context?.flags?.forward_to_human_support) {
+          // Add a new 'dislike-feedback' message right after the current message
+          const dislikeFeedbackMessage = {
+            content: '...',
+            role: 'bot',
+            type: 'dislike-feedback',
+            simulateTyping: false
+          };
+          modifiedMessages.push(dislikeFeedbackMessage);
+        }
+      });
+      return {
+        ...data,
+        messages: modifiedMessages
+      };
+    }
+  });
+};
+const odieWpcomSendMessageFeedback = (botNameSlug, chatId, messageId, rating_value) => {
+  const path = `/odie/chat/${botNameSlug}/${chatId}/${messageId}/feedback`;
+  return calypso_lib_wp__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z.req.post({
+    path,
+    apiNamespace: 'wpcom/v2',
+    body: {
+      rating_value
+    }
+  });
+};
+
+/**
+ * It will post a new message using the current chat_id.
+ * This mutator is intended to shend feedback (thumbs up or down) for a message.
+ * @returns UseMutationResult
+ * @example
+ * const { mutate, isLoading } = useOdieSendMessageFeedback();
+ * mutate( { rating_value: 1, message: { message_id: 123 } } );
+ */
+const useOdieSendMessageFeedback = () => {
+  const {
+    chat,
+    botNameSlug
+  } = (0,_context__WEBPACK_IMPORTED_MODULE_3__/* .useOdieAssistantContext */ .qi)();
+  return (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_4__/* .useMutation */ .D)({
+    mutationFn: ({
+      rating_value,
+      message
+    }) => {
+      return odieWpcomSendMessageFeedback(botNameSlug, chat.chat_id || 0, message.message_id || 0, rating_value);
+    }
+  });
+};
+
+/***/ }),
+
+/***/ 67635:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (/* binding */ useTyper)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(99196);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var calypso_lib_interval_use_interval__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(83187);
+
+// eslint-disable-next-line no-restricted-imports
+
+const DEFAULT_OPTIONS = {
+  charactersPerInterval: 1,
+  delayBetweenCharacters: 120,
+  delayBetweenPhrases: 1200,
+  randomDelayBetweenCharacters: false
+};
+
+/**
+ * A React hook that returns typing-machine animated strings
+ * @param phrases An array of strings you want to create the typing effect for
+ * @param enabled Whether the animation is enabled
+ * @param options Animation options
+ * @returns truncated strings from `phrases` array.
+ * The word get longer at every passing `delayBetweenCharacters` until it's fully spelled,
+ * then the next word is spelled out after `delayBetweenPhrases` passes.
+ */
+function useTyper(phrases, enabled = true, options) {
+  const [charIndex, setCharIndex] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0);
+  const [phraseIndex, setPhraseIndex] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0);
+  const [mode, setMode] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('TYPING');
+  const populatedOptions = {
+    ...DEFAULT_OPTIONS,
+    ...options
+  };
+  const delayBetweenCharacters = populatedOptions.randomDelayBetweenCharacters ? Math.random() * populatedOptions.delayBetweenCharacters : populatedOptions.delayBetweenCharacters;
+  const delayInCharacters = populatedOptions.randomDelayBetweenCharacters ? delayBetweenCharacters : populatedOptions.delayBetweenPhrases / populatedOptions.delayBetweenCharacters;
+  const phrasesArray = Array.isArray(phrases) ? phrases : [phrases];
+  const singlePhrase = phrasesArray.length === 1;
+  (0,calypso_lib_interval_use_interval__WEBPACK_IMPORTED_MODULE_1__/* .useInterval */ .Y)(() => {
+    // disable the animation to save render cycles if it's not needed
+    if (enabled && phrasesArray && phrasesArray.length) {
+      // wait extra characters between phrases to emulate a pause between phrases without extra logic
+      // `charIndex > word.length` is not a problem for substr :)
+      if (singlePhrase && mode === 'DELETING') {
+        return;
+      }
+      if (charIndex - delayInCharacters < phrasesArray[phraseIndex].length && mode === 'TYPING' || charIndex >= populatedOptions.charactersPerInterval && mode === 'DELETING') {
+        const increment = mode === 'TYPING' ? populatedOptions.charactersPerInterval : -populatedOptions.charactersPerInterval;
+        setCharIndex(charIndex + increment);
+      } else if (mode === 'TYPING') {
+        // start deleting
+        setMode('DELETING');
+      } else {
+        // Pick the next phrase
+        setPhraseIndex((phraseIndex + 1) % phrasesArray.length);
+        setMode('TYPING');
+      }
+    }
+  }, mode === 'TYPING' ? delayBetweenCharacters : populatedOptions.delayBetweenCharacters / 3);
+  if (phrasesArray && phrasesArray.length) {
+    return phrasesArray[phraseIndex].substr(0, charIndex);
+  }
+  return '';
 }
 
 /***/ }),
@@ -79301,7 +79391,15 @@ function extend() {
 
 /***/ }),
 
-/***/ 17985:
+/***/ 68785:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+module.exports = __webpack_require__.p + "images/gridicons-47c7fb356fcb2d963681.svg";
+
+/***/ }),
+
+/***/ 71350:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -79309,7 +79407,7 @@ module.exports = __webpack_require__.p + "images/arrow-up-e82a5439772acd6b3e97.s
 
 /***/ }),
 
-/***/ 44507:
+/***/ 32888:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -79317,7 +79415,7 @@ module.exports = __webpack_require__.p + "images/maximize-icon-4bc9a907ac844328e
 
 /***/ }),
 
-/***/ 12620:
+/***/ 15529:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -79325,7 +79423,7 @@ module.exports = __webpack_require__.p + "images/minimize-icon-329e9869529f13417
 
 /***/ }),
 
-/***/ 22528:
+/***/ 85389:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -79333,19 +79431,11 @@ module.exports = __webpack_require__.p + "images/wapuu-squared-avatar-cf83bdae49
 
 /***/ }),
 
-/***/ 86656:
+/***/ 91669:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 module.exports = __webpack_require__.p + "images/wapuu-thinking-81c2d0f615199fe8d906.svg";
-
-/***/ }),
-
-/***/ 68785:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-module.exports = __webpack_require__.p + "images/gridicons-47c7fb356fcb2d963681.svg";
 
 /***/ }),
 

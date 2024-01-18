@@ -5401,11 +5401,13 @@ const FREE_PLAN_PRODUCT_ID = 1;
 
 // plans constants
 const TIMELESS_PLAN_FREE = 'free';
-const TIMELESS_PLAN_PERSONAL = 'personal';
-const TIMELESS_PLAN_PREMIUM = 'premium';
-const TIMELESS_PLAN_BUSINESS = 'business';
-const TIMELESS_PLAN_ECOMMERCE = 'ecommerce';
-const plansSlugs = [TIMELESS_PLAN_FREE, TIMELESS_PLAN_PERSONAL, TIMELESS_PLAN_PREMIUM, TIMELESS_PLAN_BUSINESS, TIMELESS_PLAN_ECOMMERCE];
+const TIMELESS_PLAN_PERSONAL = 'starter';
+const TIMELESS_PLAN_PREMIUM = 'explorer';
+const TIMELESS_PLAN_BUSINESS = 'creator';
+const TIMELESS_PLAN_ECOMMERCE = 'entrepreneur';
+const plansSlugs = [TIMELESS_PLAN_FREE, TIMELESS_PLAN_PERSONAL, TIMELESS_PLAN_PREMIUM, TIMELESS_PLAN_BUSINESS, TIMELESS_PLAN_ECOMMERCE,
+// Keeping the old slugs for backwards compatibility.
+'personal', 'premium', 'business', 'ecommerce'];
 const DEFAULT_PAID_PLAN = TIMELESS_PLAN_PREMIUM;
 
 // plan products constants
