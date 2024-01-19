@@ -4791,10 +4791,6 @@ const blockInfoMapping = {
     link: 'https://wordpress.com/support/wordpress-editor/blocks/preformatted-block/',
     postId: 149339
   },
-  'core/paragraph': {
-    link: 'https://wordpress.com/support/wordpress-editor/blocks/paragraph-block/',
-    postId: 148375
-  },
   'core/more': {
     link: 'https://wordpress.com/support/wordpress-editor/blocks/more-block/',
     postId: 148614
@@ -5199,11 +5195,12 @@ function DescriptionSupportLink({
       });
     },
     style: {
-      marginTop: 10
+      marginTop: 10,
+      height: 'unset'
     },
     ref: reference => ref !== reference && setRef(reference),
     className: "fse-inline-support-link is-compact",
-    variant: "primary"
+    variant: "link"
   }, __('Learn more', 'full-site-editing')) : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ExternalLink, {
     onClick: () => {
       (0,_automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__/* .recordTracksEvent */ .jN)('calypso_block_description_support_link_click', {
@@ -5336,7 +5333,7 @@ let _superProps; // Added to all Tracks events.
 let _loadTracksResult = Promise.resolve(); // default value for non-BOM environments.
 
 if (typeof document !== 'undefined') {
-  _loadTracksResult = (0,_automattic_load_script__WEBPACK_IMPORTED_MODULE_1__/* .loadScript */ .ve)('//stats.wp.com/w.js?64');
+  _loadTracksResult = (0,_automattic_load_script__WEBPACK_IMPORTED_MODULE_1__/* .loadScript */ .ve)('//stats.wp.com/w.js?67');
 }
 function createRandomId(randomBytesLength = 9) {
   if (false) {}
