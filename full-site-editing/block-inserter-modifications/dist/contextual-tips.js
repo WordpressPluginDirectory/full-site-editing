@@ -356,14 +356,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-// InserterMenuExtension has been made unstable in this PR: https://github.com/WordPress/gutenberg/pull/31417 / Gutenberg v10.7.0-rc.1.
-// We need to support both symbols until we're sure Gutenberg < v10.7.x is not used anymore in WPCOM.
-const InserterMenuExtension = typeof _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.__unstableInserterMenuExtension !== 'undefined' ? _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.__unstableInserterMenuExtension : _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.__experimentalInserterMenuExtension;
 const ContextualTips = function () {
   const [debouncedFilterValue, setFilterValue] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const debouncedSetFilterValue = (0,lodash__WEBPACK_IMPORTED_MODULE_3__.debounce)(setFilterValue, 400);
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(InserterMenuExtension, null, ({
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.__unstableInserterMenuExtension, null, ({
     filterValue,
     hasItems
   }) => {
@@ -380,7 +376,7 @@ const ContextualTips = function () {
 };
 
 // Check if the experimental slot is available before to register plugin.
-if (typeof InserterMenuExtension !== 'undefined') {
+if (typeof _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.__unstableInserterMenuExtension !== 'undefined') {
   (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_2__.registerPlugin)('block-inserter-contextual-tips', {
     render() {
       return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ContextualTips, null);

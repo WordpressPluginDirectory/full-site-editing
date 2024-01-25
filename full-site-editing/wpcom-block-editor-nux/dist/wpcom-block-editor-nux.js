@@ -6363,7 +6363,6 @@ const useShouldShowVideoCelebrationModal = isEditorSaving => {
 /**
  * Sometimes Gutenberg doesn't allow you to re-register the module and throws an error.
  * FIXME: The new version allow it by default, but we might need to ensure that all the site has the new version.
- *
  * @see https://github.com/Automattic/wp-calypso/pull/79663
  */
 let unlock;
@@ -7382,7 +7381,6 @@ const SharingModal = () => {
  * see https://github.com/w3c/svgwg/issues/707
  *
  * InlineSocialLogosSprite must be included on the page where this is used
- *
  * @returns A Social Logo SVG
  */
 function InlineSocialLogo(props) {
@@ -7428,7 +7426,6 @@ function InlineSocialLogo(props) {
  * A hidden inline svg sprite of social logos.
  *
  * Sprite was coppied from https://wordpress.com/calypso/images/social-logos-d55401f99bb02ebd6cf4.svg
- *
  * @returns see above.
  */
 const InlineSocialLogosSprite = () => {
@@ -8328,14 +8325,12 @@ function NuxPage({
  * Navigation menu (Post Type: ‘nav_menu_item’)
  * Block templates (Post Type: ‘wp_template’)
  * Template parts (Post Type: ‘wp_template_part’)
- *
  * @see https://developer.wordpress.org/themes/basics/post-types/#default-post-types
  */
 
 const getEditorType = () => {
   /**
    * Beware when using this method to figure out if we are in the site editor.
-   *
    * @see https://github.com/WordPress/gutenberg/issues/46616#issuecomment-1355301090
    * @see https://github.com/Automattic/jetpack/blob/2e56d0d/projects/plugins/jetpack/extensions/shared/get-editor-type.js
    */
@@ -9227,7 +9222,6 @@ const analyticsEvents = new events__WEBPACK_IMPORTED_MODULE_0__.EventEmitter();
 
 /**
  * Returns the anoymous id stored in the `tk_ai` cookie
- *
  * @returns The Tracks anonymous user id
  */
 function getTracksAnonymousUserId() {
@@ -9429,7 +9423,6 @@ function getNewRailcarId(suffix = 'recommendation') {
 let _currentUser;
 /**
  * Gets current user.
- *
  * @returns Current user.
  */
 function getCurrentUser() {
@@ -9438,7 +9431,6 @@ function getCurrentUser() {
 
 /**
  * Sets current user, (stored in javascript memory).
- *
  * @param currentUser the user data for the current user
  * @returns Current user.
  */
@@ -9490,7 +9482,6 @@ function setCurrentUser(currentUser) {
 
 /**
  * Whether Do Not Track is enabled in the user's browser.
- *
  * @returns true if Do Not Track is enabled in the user's browser.
  */
 function getDoNotTrack() {
@@ -9626,7 +9617,6 @@ function getTrackingPrefs() {
 
 /**
  * Hashes users' Personally Identifiable Information using SHA256
- *
  * @param data Data to be hashed
  * @returns SHA256 in hex string format
  */
@@ -10545,7 +10535,6 @@ const LocaleProvider = ({
 
 /**
  * Returns locale slug
- *
  * @param {string} locale locale to be converted e.g. "en_US".
  * @returns locale string e.g. "en"
  */
@@ -10571,7 +10560,6 @@ function getWpI18nLocaleSlug() {
  * React hook providing the current locale slug. If `<LocaleProvider>` hasn't
  * been defined in the component tree then it will fall back to using the
  * data from `@wordpress/i18n` to determine the current locale slug.
- *
  * @example
  *
  * import { useLocale } from '@automattic/i18n-utils';
@@ -10600,7 +10588,6 @@ function useLocale() {
 
 /**
  * HoC providing the current locale slug supplied to `<LocaleProvider>`.
- *
  * @param InnerComponent Component that will receive `locale` as a prop
  * @returns Component enhanced with locale
  * @example
@@ -10624,7 +10611,6 @@ const withLocale = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_1__.createHigh
 
 /**
  * React hook providing whether the current locale slug belongs to English or not
- *
  * @example
  *
  * import { useIsEnglishLocale } from '@automattic/i18n-utils';
@@ -12092,7 +12078,6 @@ class ErrorBoundary extends (react__WEBPACK_IMPORTED_MODULE_1___default().Compon
 
 /**
  * A hook that returns true/false if ref node receives focus by either tabbing or clicking into any of its children.
- *
  * @param ref React.MutableRefObject< null | HTMLElement >
  */
 const useFocusHandler = ref => {
@@ -12154,7 +12139,6 @@ const useFocusHandler = ref => {
 
 /**
  * A hook that constraints tabbing/focus on focuable elements in the given element ref.
- *
  * @param ref React.MutableRefObject< null | HTMLElement >
  */
 const useFocusTrap = ref => {
@@ -12294,7 +12278,6 @@ const useStepTracking = (currentStepIndex, onStepViewOnce) => {
 
 /**
  * Helper to convert CSV of `classes` to an array.
- *
  * @param classes String or array of classes to format.
  * @returns Array of classes
  */
@@ -12328,7 +12311,6 @@ const debug = debug__WEBPACK_IMPORTED_MODULE_0___default()('tour-kit');
  *
  * The Popper modifier queues an asynchronous update on the Popper instance whenever either of the
  * Observers trigger its callback.
- *
  * @returns custom Popper modifier
  */
 const liveResizeModifier = ({
@@ -13246,7 +13228,6 @@ function getMediaQueryList(breakpoint) {
 
 /**
  * Returns whether the current window width matches a breakpoint.
- *
  * @param {string} breakpoint The breakpoint to consider.
  * @returns {boolean|undefined} Whether the provided breakpoint is matched.
  */
@@ -13257,7 +13238,6 @@ function isWithinBreakpoint(breakpoint) {
 
 /**
  * Registers a listener to be notified of changes to breakpoint matching status.
- *
  * @param {string} breakpoint The breakpoint to consider.
  * @param {Function} listener The listener to be called on change.
  * @returns {Function} The function to be called when unsubscribing.
@@ -13278,7 +13258,6 @@ function subscribeIsWithinBreakpoint(breakpoint, listener) {
 
 /**
  * Returns whether the current window width matches the mobile breakpoint.
- *
  * @returns {boolean|undefined} Whether the mobile breakpoint is matched.
  */
 function isMobile() {
@@ -13287,7 +13266,6 @@ function isMobile() {
 
 /**
  * Registers a listener to be notified of changes to mobile breakpoint matching status.
- *
  * @param {Function} listener The listener to be called on change.
  * @returns {Function} The registered subscription; undefined if none.
  */
@@ -13297,7 +13275,6 @@ function subscribeIsMobile(listener) {
 
 /**
  * Returns whether the current window width matches the desktop breakpoint.
- *
  * @returns {boolean|undefined} Whether the desktop breakpoint is matched.
  */
 function isDesktop() {
@@ -13306,7 +13283,6 @@ function isDesktop() {
 
 /**
  * Registers a listener to be notified of changes to desktop breakpoint matching status.
- *
  * @param {Function} listener The listener to be called on change.
  * @returns {Function} The registered subscription; undefined if none.
  */
@@ -13317,7 +13293,6 @@ function subscribeIsDesktop(listener) {
 /**
  * Returns the current window width.
  * Avoid using this method, as it triggers a layout recalc.
- *
  * @returns {number} The current window width, in pixels.
  */
 function getWindowInnerWidth() {
@@ -14366,14 +14341,17 @@ module.exports = function () {
 
 /***/ }),
 
-/***/ 2686:
+/***/ 9015:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i);
+const randomUUID = typeof crypto !== 'undefined' && crypto.randomUUID && crypto.randomUUID.bind(crypto);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  randomUUID
+});
 
 /***/ }),
 
@@ -14387,14 +14365,13 @@ module.exports = function () {
 // Unique ID creation requires a high quality random # generator. In the browser we therefore
 // require the crypto API and do not support built-in fallback to lower quality random number
 // generators (like Math.random()).
-var getRandomValues;
-var rnds8 = new Uint8Array(16);
+let getRandomValues;
+const rnds8 = new Uint8Array(16);
 function rng() {
   // lazy load so that environments that need to polyfill have a chance to do so
   if (!getRandomValues) {
-    // getRandomValues needs to be invoked in a context where "this" is a Crypto implementation. Also,
-    // find the complete implementation of crypto (msCrypto) on IE11.
-    getRandomValues = typeof crypto !== 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto) || typeof msCrypto !== 'undefined' && typeof msCrypto.getRandomValues === 'function' && msCrypto.getRandomValues.bind(msCrypto);
+    // getRandomValues needs to be invoked in a context where "this" is a Crypto implementation.
+    getRandomValues = typeof crypto !== 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto);
 
     if (!getRandomValues) {
       throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');
@@ -14411,39 +14388,41 @@ function rng() {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   S: () => (/* binding */ unsafeStringify)
 /* harmony export */ });
-/* harmony import */ var _validate_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6525);
 
 /**
  * Convert array of 16 byte values to UUID string format of the form:
  * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
  */
 
-var byteToHex = [];
+const byteToHex = [];
 
-for (var i = 0; i < 256; ++i) {
-  byteToHex.push((i + 0x100).toString(16).substr(1));
+for (let i = 0; i < 256; ++i) {
+  byteToHex.push((i + 0x100).toString(16).slice(1));
 }
 
-function stringify(arr) {
-  var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+function unsafeStringify(arr, offset = 0) {
   // Note: Be careful editing this code!  It's been tuned for performance
   // and works in ways you may not expect. See https://github.com/uuidjs/uuid/pull/434
-  var uuid = (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + '-' + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + '-' + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + '-' + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + '-' + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase(); // Consistency check for valid UUID.  If this throws, it's likely due to one
+  return byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + '-' + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + '-' + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + '-' + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + '-' + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]];
+}
+
+function stringify(arr, offset = 0) {
+  const uuid = unsafeStringify(arr, offset); // Consistency check for valid UUID.  If this throws, it's likely due to one
   // of the following:
   // - One or more input array values don't map to a hex octet (leading to
   // "undefined" in the uuid)
   // - Invalid input values for the RFC `version` or `variant` fields
 
-  if (!(0,_validate_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)(uuid)) {
+  if (!validate(uuid)) {
     throw TypeError('Stringified UUID is invalid');
   }
 
   return uuid;
 }
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (stringify);
+/* unused harmony default export */ var __WEBPACK_DEFAULT_EXPORT__ = ((/* unused pure expression or super */ null && (stringify)));
 
 /***/ }),
 
@@ -14454,14 +14433,20 @@ function stringify(arr) {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _rng_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5302);
-/* harmony import */ var _stringify_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(708);
+/* harmony import */ var _native_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9015);
+/* harmony import */ var _rng_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5302);
+/* harmony import */ var _stringify_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(708);
+
 
 
 
 function v4(options, buf, offset) {
+  if (_native_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.randomUUID && !buf && !options) {
+    return _native_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.randomUUID();
+  }
+
   options = options || {};
-  var rnds = options.random || (options.rng || _rng_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
+  const rnds = options.random || (options.rng || _rng_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
 
   rnds[6] = rnds[6] & 0x0f | 0x40;
   rnds[8] = rnds[8] & 0x3f | 0x80; // Copy bytes to buffer, if provided
@@ -14469,35 +14454,17 @@ function v4(options, buf, offset) {
   if (buf) {
     offset = offset || 0;
 
-    for (var i = 0; i < 16; ++i) {
+    for (let i = 0; i < 16; ++i) {
       buf[offset + i] = rnds[i];
     }
 
     return buf;
   }
 
-  return (0,_stringify_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)(rnds);
+  return (0,_stringify_js__WEBPACK_IMPORTED_MODULE_2__/* .unsafeStringify */ .S)(rnds);
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (v4);
-
-/***/ }),
-
-/***/ 6525:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _regex_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2686);
-
-
-function validate(uuid) {
-  return typeof uuid === 'string' && _regex_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.test(uuid);
-}
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (validate);
 
 /***/ }),
 

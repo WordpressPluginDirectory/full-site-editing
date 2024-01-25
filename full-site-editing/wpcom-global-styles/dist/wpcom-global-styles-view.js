@@ -1685,7 +1685,6 @@ const analyticsEvents = new events__WEBPACK_IMPORTED_MODULE_0__.EventEmitter();
 
 /**
  * Returns the anoymous id stored in the `tk_ai` cookie
- *
  * @returns The Tracks anonymous user id
  */
 function getTracksAnonymousUserId() {
@@ -1887,7 +1886,6 @@ function getNewRailcarId(suffix = 'recommendation') {
 let _currentUser;
 /**
  * Gets current user.
- *
  * @returns Current user.
  */
 function getCurrentUser() {
@@ -1896,7 +1894,6 @@ function getCurrentUser() {
 
 /**
  * Sets current user, (stored in javascript memory).
- *
  * @param currentUser the user data for the current user
  * @returns Current user.
  */
@@ -1948,7 +1945,6 @@ function setCurrentUser(currentUser) {
 
 /**
  * Whether Do Not Track is enabled in the user's browser.
- *
  * @returns true if Do Not Track is enabled in the user's browser.
  */
 function getDoNotTrack() {
@@ -2084,7 +2080,6 @@ function getTrackingPrefs() {
 
 /**
  * Hashes users' Personally Identifiable Information using SHA256
- *
  * @param data Data to be hashed
  * @returns SHA256 in hex string format
  */

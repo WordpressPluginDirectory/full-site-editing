@@ -664,7 +664,6 @@ const MISSING_BLOCK_NAME = 'core/missing';
 /**
  * Determines whether the provided collection of Blocks contains any "missing"
  * blocks as determined by the presence of the `core/missing` block type.
- *
  * @param blocks the collection of block objects to check for "missing" block .
  * @returns whether the collection blocks contains any missing blocks.
  */
@@ -696,7 +695,6 @@ function containsMissingBlock(blocks) {
 /**
  * Sorts the keys on the group object to have a preferred order.
  * If some groups exist without a preferred order, they will be included last
- *
  * @param preferredGroupOrder the order of group slugs that we want
  * @param groupsObject an object with all group information, with group names as keys
  */
@@ -726,7 +724,6 @@ function sortGroupNames(preferredGroupOrder, groupsObject) {
 /**
  * Recursively maps over a collection of blocks calling the modifier function on
  * each to modify it and returning a collection of new block references.
- *
  * @param blocks an array of block objects
  * @param modifier a callback function used to modify the blocks
  */
@@ -811,7 +808,6 @@ let tracksIdentity = null;
 /**
  * Populate `identity` on WPCOM and ATOMIC to enable tracking.
  * Always disabled for regular self-hosted installations.
- *
  * @param identity Info about identity.
  */
 const initializeWithIdentity = identity => {
@@ -821,7 +817,6 @@ const initializeWithIdentity = identity => {
 
 /**
  * Track a view of the layout selector.
- *
  * @param source Source triggering the view.
  */
 const trackView = source => {
@@ -848,7 +843,6 @@ const trackDismiss = () => {
 
 /**
  * Track layout selection.
- *
  * @param pattern Pattern slug.
  */
 const trackSelection = pattern => {

@@ -2655,7 +2655,6 @@ const analyticsEvents = new events__WEBPACK_IMPORTED_MODULE_0__.EventEmitter();
 
 /**
  * Returns the anoymous id stored in the `tk_ai` cookie
- *
  * @returns The Tracks anonymous user id
  */
 function getTracksAnonymousUserId() {
@@ -2857,7 +2856,6 @@ function getNewRailcarId(suffix = 'recommendation') {
 let _currentUser;
 /**
  * Gets current user.
- *
  * @returns Current user.
  */
 function getCurrentUser() {
@@ -2866,7 +2864,6 @@ function getCurrentUser() {
 
 /**
  * Sets current user, (stored in javascript memory).
- *
  * @param currentUser the user data for the current user
  * @returns Current user.
  */
@@ -2918,7 +2915,6 @@ function setCurrentUser(currentUser) {
 
 /**
  * Whether Do Not Track is enabled in the user's browser.
- *
  * @returns true if Do Not Track is enabled in the user's browser.
  */
 function getDoNotTrack() {
@@ -3054,7 +3050,6 @@ function getTrackingPrefs() {
 
 /**
  * Hashes users' Personally Identifiable Information using SHA256
- *
  * @param data Data to be hashed
  * @returns SHA256 in hex string format
  */
@@ -3738,7 +3733,6 @@ const LocaleProvider = ({
 
 /**
  * Returns locale slug
- *
  * @param {string} locale locale to be converted e.g. "en_US".
  * @returns locale string e.g. "en"
  */
@@ -3764,7 +3758,6 @@ function getWpI18nLocaleSlug() {
  * React hook providing the current locale slug. If `<LocaleProvider>` hasn't
  * been defined in the component tree then it will fall back to using the
  * data from `@wordpress/i18n` to determine the current locale slug.
- *
  * @example
  *
  * import { useLocale } from '@automattic/i18n-utils';
@@ -3793,7 +3786,6 @@ function useLocale() {
 
 /**
  * HoC providing the current locale slug supplied to `<LocaleProvider>`.
- *
  * @param InnerComponent Component that will receive `locale` as a prop
  * @returns Component enhanced with locale
  * @example
@@ -3817,7 +3809,6 @@ const withLocale = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_1__.createHigh
 
 /**
  * React hook providing whether the current locale slug belongs to English or not
- *
  * @example
  *
  * import { useIsEnglishLocale } from '@automattic/i18n-utils';

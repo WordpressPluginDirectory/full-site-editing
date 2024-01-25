@@ -473,6 +473,72 @@ function sprintf( string, args ) {
 
 /***/ }),
 
+/***/ 2779:
+/***/ ((module, exports) => {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	Copyright (c) 2018 Jed Watson.
+	Licensed under the MIT License (MIT), see
+	http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+	var nativeCodeString = '[native code]';
+
+	function classNames() {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg)) {
+				if (arg.length) {
+					var inner = classNames.apply(null, arg);
+					if (inner) {
+						classes.push(inner);
+					}
+				}
+			} else if (argType === 'object') {
+				if (arg.toString !== Object.prototype.toString && !arg.toString.toString().includes('[native code]')) {
+					classes.push(arg.toString());
+					continue;
+				}
+
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if ( true && module.exports) {
+		classNames.default = classNames;
+		module.exports = classNames;
+	} else if (true) {
+		// register as 'classnames', consistent with npm package name
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+			return classNames;
+		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else {}
+}());
+
+
+/***/ }),
+
 /***/ 3421:
 /***/ ((__unused_webpack_module, exports) => {
 
@@ -2570,20 +2636,22 @@ const GlobalStylesModal = () => {
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9307);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6115);
-/* harmony import */ var _automattic_calypso_products__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(4112);
-/* harmony import */ var _automattic_calypso_products__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(7904);
-/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(4010);
-/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(372);
+/* harmony import */ var _automattic_calypso_products__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(4112);
+/* harmony import */ var _automattic_calypso_products__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(7904);
+/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(4010);
+/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(372);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5609);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9818);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5736);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _use_canvas__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9773);
-/* harmony import */ var _use_global_styles_config__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7210);
-/* harmony import */ var _use_preview__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(807);
-/* harmony import */ var _notice_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(2131);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2779);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _use_canvas__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(9773);
+/* harmony import */ var _use_global_styles_config__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(7210);
+/* harmony import */ var _use_preview__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(807);
+/* harmony import */ var _notice_scss__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(2131);
 
 /* global wpcomGlobalStyles */
 
@@ -2598,6 +2666,7 @@ const __ = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__;
 
 
 
+
 const GLOBAL_STYLES_VIEW_NOTICE_SELECTOR = 'wpcom-global-styles-notice-container';
 const trackEvent = (eventName, isSiteEditor = true) => (0,_automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__/* .recordTracksEvent */ .jN)(eventName, {
   context: isSiteEditor ? 'site-editor' : 'post-editor',
@@ -2607,7 +2676,7 @@ function GlobalStylesWarningNotice() {
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     trackEvent('calypso_global_styles_gating_notice_view_canvas_show');
   }, []);
-  const planName = (0,_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_9__/* .getPlan */ .Wh)(_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_10__/* .PLAN_PREMIUM */ .xf).getTitle();
+  const planName = (0,_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_10__/* .getPlan */ .Wh)(_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_11__/* .PLAN_PREMIUM */ .xf).getTitle();
   const upgradeTranslation = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)( /* translators: %s is the short-form Premium plan name */
   __('Your site includes premium styles that are only visible to visitors after <a>upgrading to the %s plan or higher</a>.', 'full-site-editing'), planName);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Notice, {
@@ -2625,11 +2694,11 @@ function GlobalStylesWarningNotice() {
 function GlobalStylesViewNotice() {
   const {
     canvas
-  } = (0,_use_canvas__WEBPACK_IMPORTED_MODULE_5__/* .useCanvas */ .$)();
+  } = (0,_use_canvas__WEBPACK_IMPORTED_MODULE_6__/* .useCanvas */ .$)();
   const [isRendered, setIsRendered] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const {
     globalStylesInUse
-  } = (0,_use_global_styles_config__WEBPACK_IMPORTED_MODULE_6__/* .useGlobalStylesConfig */ .Y)();
+  } = (0,_use_global_styles_config__WEBPACK_IMPORTED_MODULE_7__/* .useGlobalStylesConfig */ .Y)();
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (!globalStylesInUse) {
       document.querySelector(`.${GLOBAL_STYLES_VIEW_NOTICE_SELECTOR}`)?.remove();
@@ -2663,10 +2732,10 @@ function GlobalStylesEditNotice() {
   const {
     globalStylesInUse,
     globalStylesId
-  } = (0,_use_global_styles_config__WEBPACK_IMPORTED_MODULE_6__/* .useGlobalStylesConfig */ .Y)();
+  } = (0,_use_global_styles_config__WEBPACK_IMPORTED_MODULE_7__/* .useGlobalStylesConfig */ .Y)();
   const {
     canvas
-  } = (0,_use_canvas__WEBPACK_IMPORTED_MODULE_5__/* .useCanvas */ .$)();
+  } = (0,_use_canvas__WEBPACK_IMPORTED_MODULE_6__/* .useCanvas */ .$)();
   const {
     isSiteEditor,
     isPostEditor
@@ -2677,7 +2746,7 @@ function GlobalStylesEditNotice() {
   const {
     previewPostWithoutCustomStyles,
     canPreviewPost
-  } = (0,_use_preview__WEBPACK_IMPORTED_MODULE_7__/* .usePreview */ .u)();
+  } = (0,_use_preview__WEBPACK_IMPORTED_MODULE_8__/* .usePreview */ .u)();
   const {
     createWarningNotice,
     removeNotice
@@ -2713,7 +2782,7 @@ function GlobalStylesEditNotice() {
       onClick: upgradePlan,
       variant: 'primary',
       noDefaultClasses: true,
-      className: 'wpcom-global-styles-action-has-icon wpcom-global-styles-action-is-external'
+      className: classnames__WEBPACK_IMPORTED_MODULE_5___default()('wpcom-global-styles-action-is-upgrade', 'wpcom-global-styles-action-has-icon', 'wpcom-global-styles-action-is-external')
     }];
     if (isPostEditor && canPreviewPost) {
       actions.push({
@@ -2731,7 +2800,7 @@ function GlobalStylesEditNotice() {
       noDefaultClasses: true,
       className: isSiteEditor ? '' : 'wpcom-global-styles-action-has-icon wpcom-global-styles-action-is-external wpcom-global-styles-action-is-support'
     });
-    const planName = (0,_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_9__/* .getPlan */ .Wh)(_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_10__/* .PLAN_PREMIUM */ .xf).getTitle();
+    const planName = (0,_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_10__/* .getPlan */ .Wh)(_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_11__/* .PLAN_PREMIUM */ .xf).getTitle();
     createWarningNotice((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)( /* translators: %s is the short-form Premium plan name */
     __('Your site includes premium styles that are only visible to visitors after upgrading to the %s plan or higher.', 'full-site-editing'), planName), {
       id: NOTICE_ID,
@@ -2753,8 +2822,8 @@ function GlobalStylesEditNotice() {
   return null;
 }
 function GlobalStylesNotices() {
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_tanstack_react_query__WEBPACK_IMPORTED_MODULE_11__/* .QueryClientProvider */ .aH, {
-    client: new _tanstack_react_query__WEBPACK_IMPORTED_MODULE_12__/* .QueryClient */ .S()
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_tanstack_react_query__WEBPACK_IMPORTED_MODULE_12__/* .QueryClientProvider */ .aH, {
+    client: new _tanstack_react_query__WEBPACK_IMPORTED_MODULE_13__/* .QueryClient */ .S()
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(GlobalStylesViewNotice, null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(GlobalStylesEditNotice, null));
 }
 
@@ -3244,7 +3313,6 @@ const analyticsEvents = new events__WEBPACK_IMPORTED_MODULE_0__.EventEmitter();
 
 /**
  * Returns the anoymous id stored in the `tk_ai` cookie
- *
  * @returns The Tracks anonymous user id
  */
 function getTracksAnonymousUserId() {
@@ -3446,7 +3514,6 @@ function getNewRailcarId(suffix = 'recommendation') {
 let _currentUser;
 /**
  * Gets current user.
- *
  * @returns Current user.
  */
 function getCurrentUser() {
@@ -3455,7 +3522,6 @@ function getCurrentUser() {
 
 /**
  * Sets current user, (stored in javascript memory).
- *
  * @param currentUser the user data for the current user
  * @returns Current user.
  */
@@ -3507,7 +3573,6 @@ function setCurrentUser(currentUser) {
 
 /**
  * Whether Do Not Track is enabled in the user's browser.
- *
  * @returns true if Do Not Track is enabled in the user's browser.
  */
 function getDoNotTrack() {
@@ -3643,7 +3708,6 @@ function getTrackingPrefs() {
 
 /**
  * Hashes users' Personally Identifiable Information using SHA256
- *
  * @param data Data to be hashed
  * @returns SHA256 in hex string format
  */
@@ -3872,7 +3936,6 @@ const features = {
 
 /**
  * Manages config flags for various deployment builds
- *
  * @module config/index
  */
 if (false) {}
@@ -4052,6 +4115,7 @@ const FEATURE_CANCELLATION_UNLIMITED_TRAFFIC = 'cancellation-unlimited-traffic';
 /* harmony export */   Hdl: () => (/* binding */ FEATURE_BANDWIDTH),
 /* harmony export */   HpB: () => (/* binding */ FEATURE_PRODUCT_BACKUP_REALTIME_V2),
 /* harmony export */   Hrz: () => (/* binding */ FEATURE_REAL_TIME_ANALYTICS),
+/* harmony export */   IFj: () => (/* binding */ FEATURE_SENSEI_HOSTING),
 /* harmony export */   IhT: () => (/* binding */ FEATURE_EMAIL_LIVE_CHAT_SUPPORT_ALL_DAYS),
 /* harmony export */   IxF: () => (/* binding */ FEATURE_STREAMLINED_CHECKOUT),
 /* harmony export */   J8D: () => (/* binding */ FEATURE_PREMIUM_SUPPORT),
@@ -4088,6 +4152,7 @@ const FEATURE_CANCELLATION_UNLIMITED_TRAFFIC = 'cancellation-unlimited-traffic';
 /* harmony export */   Pnf: () => (/* binding */ FEATURE_SHIPPING_INTEGRATIONS),
 /* harmony export */   Q1W: () => (/* binding */ FEATURE_FREE_BLOG_DOMAIN),
 /* harmony export */   Q3C: () => (/* binding */ FEATURE_NO_BRANDING),
+/* harmony export */   QFD: () => (/* binding */ FEATURE_SENSEI_INTERACTIVE),
 /* harmony export */   QNW: () => (/* binding */ FEATURE_VIDEO_UPLOADS_JETPACK_PRO),
 /* harmony export */   QWL: () => (/* binding */ FEATURE_PROMOTE_ON_TIKTOK),
 /* harmony export */   Q_7: () => (/* binding */ FEATURE_LTD_SOCIAL_MEDIA_JP),
@@ -4132,7 +4197,9 @@ const FEATURE_CANCELLATION_UNLIMITED_TRAFFIC = 'cancellation-unlimited-traffic';
 /* harmony export */   Vms: () => (/* binding */ FEATURE_GOOGLE_ANALYTICS),
 /* harmony export */   VyO: () => (/* binding */ FEATURE_ALL_PERSONAL_FEATURES),
 /* harmony export */   W4b: () => (/* binding */ FEATURE_6GB_STORAGE),
+/* harmony export */   WML: () => (/* binding */ FEATURE_SENSEI_JETPACK),
 /* harmony export */   Wa6: () => (/* binding */ FEATURE_STOCK_NOTIFS),
+/* harmony export */   WgD: () => (/* binding */ FEATURE_SENSEI_QUIZZES),
 /* harmony export */   Ws3: () => (/* binding */ FEATURE_DISCOUNTED_SHIPPING),
 /* harmony export */   Wxo: () => (/* binding */ FEATURE_WAF_V2),
 /* harmony export */   X2I: () => (/* binding */ FEATURE_PLAN_SECURITY_DAILY),
@@ -4141,6 +4208,7 @@ const FEATURE_CANCELLATION_UNLIMITED_TRAFFIC = 'cancellation-unlimited-traffic';
 /* harmony export */   XgZ: () => (/* binding */ FEATURE_PRODUCT_SCAN_REALTIME_V2),
 /* harmony export */   Xif: () => (/* binding */ FEATURE_UNLIMITED_PRODUCTS_SERVICES),
 /* harmony export */   Xk_: () => (/* binding */ FEATURE_NO_ADS),
+/* harmony export */   XmH: () => (/* binding */ FEATURE_SENSEI_SUPPORT),
 /* harmony export */   XzA: () => (/* binding */ FEATURE_COMMISSION_FEE_WOO_FEATURES),
 /* harmony export */   YPm: () => (/* binding */ FEATURE_DEV_TOOLS),
 /* harmony export */   Yg_: () => (/* binding */ FEATURE_ABANDONED_CART_RECOVERY),
@@ -4175,6 +4243,7 @@ const FEATURE_CANCELLATION_UNLIMITED_TRAFFIC = 'cancellation-unlimited-traffic';
 /* harmony export */   c74: () => (/* binding */ FEATURE_JETPACK_ADVANCED),
 /* harmony export */   cFx: () => (/* binding */ FEATURE_REALTIME_BACKUPS_JP),
 /* harmony export */   cMD: () => (/* binding */ FEATURE_COLLECT_PAYMENTS_LINK_IN_BIO),
+/* harmony export */   cMf: () => (/* binding */ FEATURE_SENSEI_STORAGE),
 /* harmony export */   cTd: () => (/* binding */ FEATURE_PRODUCT_RECOMMENDATIONS),
 /* harmony export */   cWM: () => (/* binding */ FEATURE_SFTP_DATABASE),
 /* harmony export */   c__: () => (/* binding */ FEATURE_UNLIMITED_TRAFFIC),
@@ -4234,6 +4303,7 @@ const FEATURE_CANCELLATION_UNLIMITED_TRAFFIC = 'cancellation-unlimited-traffic';
 /* harmony export */   nsi: () => (/* binding */ FEATURE_BACKUP_ARCHIVE_30),
 /* harmony export */   oIe: () => (/* binding */ FEATURE_PRODUCT_SCAN_DAILY_V2),
 /* harmony export */   oTu: () => (/* binding */ FEATURE_SELL_SHIP),
+/* harmony export */   oUN: () => (/* binding */ FEATURE_SENSEI_UNLIMITED),
 /* harmony export */   okS: () => (/* binding */ FEATURE_SEO_PREVIEW_TOOLS),
 /* harmony export */   ops: () => (/* binding */ FEATURE_P2_ACTIVITY_OVERVIEW),
 /* harmony export */   p1e: () => (/* binding */ FEATURE_PAYMENT_BUTTONS_JP),
@@ -4264,6 +4334,7 @@ const FEATURE_CANCELLATION_UNLIMITED_TRAFFIC = 'cancellation-unlimited-traffic';
 /* harmony export */   sYz: () => (/* binding */ FEATURE_WP_SUBDOMAIN_SIGNUP),
 /* harmony export */   tP7: () => (/* binding */ FEATURE_AUTOMATED_BACKUPS_SECURITY_SCAN),
 /* harmony export */   tS0: () => (/* binding */ FEATURE_JETPACK_BACKUP_T2_YEARLY),
+/* harmony export */   uD5: () => (/* binding */ FEATURE_SENSEI_SELL_COURSES),
 /* harmony export */   uT1: () => (/* binding */ FEATURE_NEWSLETTERS_RSS),
 /* harmony export */   vEX: () => (/* binding */ FEATURE_UPLOAD_THEMES_PLUGINS),
 /* harmony export */   vQ$: () => (/* binding */ FEATURE_MALWARE_SCANNING_DAILY_AND_ON_DEMAND),
@@ -4707,6 +4778,16 @@ const FEATURE_LIVE_SHIPPING_RATES = 'live-shipping-rates'; // Live shipping rate
 const FEATURE_DISCOUNTED_SHIPPING = 'discounted-shipping'; // Discounted shipping
 const FEATURE_PRINT_SHIPPING_LABELS = 'print-shipping-labels'; // Print shipping labels
 const FEATURE_AI_ASSISTED_PRODUCT_DESCRIPTION = 'ai-assisted-product-descriptions'; // AI-assisted product descriptions
+
+// Sensei Features
+const FEATURE_SENSEI_SUPPORT = 'sensei-support';
+const FEATURE_SENSEI_UNLIMITED = 'sensei-unlimited';
+const FEATURE_SENSEI_INTERACTIVE = 'sensei-interactive';
+const FEATURE_SENSEI_QUIZZES = 'sensei-quizzes';
+const FEATURE_SENSEI_SELL_COURSES = 'sensei-sell-courses';
+const FEATURE_SENSEI_STORAGE = 'sensei-storage';
+const FEATURE_SENSEI_HOSTING = 'sensei-hosting';
+const FEATURE_SENSEI_JETPACK = 'sensei-jetpack';
 
 // Feature types
 const FEATURE_TYPE_JETPACK_ANTI_SPAM = 'jetpack_anti_spam';
@@ -6632,7 +6713,7 @@ const getPlanPremiumDetails = () => ({
     }];
   },
   get2023PlanComparisonConditionalFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHARES_SOCIAL_MEDIA_JP */ .TFL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_STANDARD_FEATURES */ .DUl],
-  get2023PlanComparisonJetpackFeatureOverride: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYPAL_JP */ .RF_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEOPRESS_JP */ .nXV],
+  get2023PlanComparisonJetpackFeatureOverride: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYPAL_JP */ .RF_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEOPRESS_JP */ .nXV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_PAID */ .ZTn],
   // Features not displayed but used for checking plan abilities
   getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUDIO_UPLOADS */ .XMd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CLOUDFLARE_ANALYTICS */ .$G1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .ikw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .Ly9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .DEy],
   getInferiorFeatures: () => [],
@@ -6730,7 +6811,9 @@ const getPlanBusinessDetails = () => ({
       featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PLUGINS */ .yc, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_TOOLS */ .NV, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_BACKUPS_AND_RESTORE */ .ZJ, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SFTP_AND_DATABASE */ .BS],
       andMore: true
     }
-  })
+  }),
+  getSenseiFeatures: term => () => compact([term !== _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .ob && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, term !== _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .ob && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_SUPPORT */ .XmH, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_UNLIMITED */ .oUN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_INTERACTIVE */ .QFD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_QUIZZES */ .WgD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_SELL_COURSES */ .uD5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_STORAGE */ .cMf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_HOSTING */ .IFj, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_JETPACK */ .WML]),
+  getSenseiHighlightedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_SUPPORT */ .XmH]
 });
 const getPlanProDetails = () => ({
   ...getDotcomPlanDetails(),
@@ -7605,7 +7688,6 @@ PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY
  * to the console instead of halting the execution thread.
  *
  * The config files are loaded in sequence: _shared.json, {env}.json, {env}.local.json
- *
  * @see server/config/parser.js
  * @param data Configurat data.
  * @throws {ReferenceError} when key not defined in the config (NODE_ENV=development only)
@@ -7639,7 +7721,6 @@ const config = data => key => {
 
 /**
  * Checks whether a specific feature is enabled.
- *
  * @param data the json environment configuration to use for getting config values
  * @returns A function that takes a feature name and returns true when the feature is enabled.
  */
@@ -7647,7 +7728,6 @@ const isEnabled = data => feature => data.features && !!data.features[feature] |
 
 /**
  * Gets a list of all enabled features.
- *
  * @param data A set of config data (Not used by general users, is pre-filled via currying).
  * @returns List of enabled features (strings).
  */
@@ -7660,7 +7740,6 @@ const enabledFeatures = data => () => {
 
 /**
  * Enables a specific feature.
- *
  * @param data the json environment configuration to use for getting config values
  */
 const enable = data => feature => {
@@ -7671,7 +7750,6 @@ const enable = data => feature => {
 
 /**
  * Disables a specific feature.
- *
  * @param data the json environment configuration to use for getting config values
  */
 

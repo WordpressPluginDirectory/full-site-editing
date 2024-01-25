@@ -4750,7 +4750,6 @@ const features = {
 
 /**
  * Manages config flags for various deployment builds
- *
  * @module config/index
  */
 if (false) {}
@@ -4839,7 +4838,6 @@ const disable = configApi.disable;
  * to the console instead of halting the execution thread.
  *
  * The config files are loaded in sequence: _shared.json, {env}.json, {env}.local.json
- *
  * @see server/config/parser.js
  * @param data Configurat data.
  * @throws {ReferenceError} when key not defined in the config (NODE_ENV=development only)
@@ -4873,7 +4871,6 @@ const config = data => key => {
 
 /**
  * Checks whether a specific feature is enabled.
- *
  * @param data the json environment configuration to use for getting config values
  * @returns A function that takes a feature name and returns true when the feature is enabled.
  */
@@ -4881,7 +4878,6 @@ const isEnabled = data => feature => data.features && !!data.features[feature] |
 
 /**
  * Gets a list of all enabled features.
- *
  * @param data A set of config data (Not used by general users, is pre-filled via currying).
  * @returns List of enabled features (strings).
  */
@@ -4894,7 +4890,6 @@ const enabledFeatures = data => () => {
 
 /**
  * Enables a specific feature.
- *
  * @param data the json environment configuration to use for getting config values
  */
 const enable = data => feature => {
@@ -4905,7 +4900,6 @@ const enable = data => feature => {
 
 /**
  * Disables a specific feature.
- *
  * @param data the json environment configuration to use for getting config values
  */
 
@@ -5262,7 +5256,6 @@ const isLoadingDomainSuggestions = (_state, search, options = {}) => {
 
 /**
  * Do not use this selector. It is for internal use.
- *
  * @param state Store state
  * @param queryObject Normalized object representing the query
  * @returns suggestions
@@ -5295,7 +5288,6 @@ const getDomainAvailabilities = state => {
 
 /**
  * Stable transform to an object key for storage and access.
- *
  * @see client/state/domains/suggestions/utils.js
  */
 const stringifyDomainQueryObject = (fast_json_stable_stringify__WEBPACK_IMPORTED_MODULE_0___default());
@@ -5303,7 +5295,6 @@ const stringifyDomainQueryObject = (fast_json_stable_stringify__WEBPACK_IMPORTED
 /**
  * Formats the domain suggestion price according to 'format-currency' package rules
  * We use this for consistency in prices formats across plans and domains
- *
  * @param price the domain suggestion raw price
  * @param currencyCode the currency code to be used when formatting price
  */
@@ -5318,7 +5309,6 @@ function getFormattedPrice(price, currencyCode) {
  *
  * It's important to have a consistent, reproduceable representation of a domains query so that the result can be
  * stored and retrieved.
- *
  * @see client/state/domains/suggestions/utils.js
  * @see client/components/data/query-domains-suggestions/index.jsx
  * @param search       Domain search string
@@ -5579,7 +5569,6 @@ const MONTHLY_PLAN_BILLING_PERIOD = 31;
 /**
  * Calculates the monthly price of a plan
  * Annual plans are only priced yearly
- *
  * @param plan the plan object
  */
 function getMonthlyPrice(plan) {
@@ -5590,7 +5579,6 @@ function getMonthlyPrice(plan) {
 
 /**
  * Calculates the yearly price of a monthly plan
- *
  * @param plan the plan object
  */
 function getAnnualPrice(plan) {
@@ -5602,7 +5590,6 @@ function getAnnualPrice(plan) {
 /**
  * Formats the plan price according to 'format-currency' package rules
  * We use this for consistency in prices formats across monthly and annual plans
- *
  * @param plan the plan object
  */
 function getFormattedPrice(plan) {
@@ -7018,7 +7005,6 @@ __webpack_require__.r(__webpack_exports__);
  * We are currently ignoring error messages and silently failing if we can't find a
  * site. This could be extended in the future by retrieving the `error` and
  * `message` strings returned by the API.
- *
  * @param siteId {number}	The site to look up
  */
 const getSite = siteId => async ({
@@ -7039,7 +7025,6 @@ const getSite = siteId => async ({
 
 /**
  * Get all site domains
- *
  * @param siteId {number} The site id
  */
 const getSiteDomains = siteId => async ({
@@ -7054,7 +7039,6 @@ const getSiteDomains = siteId => async ({
 
 /**
  * Get all site settings
- *
  * @param siteId {number} The site id
  */
 const getSiteSettings = siteId => async ({
@@ -7069,7 +7053,6 @@ const getSiteSettings = siteId => async ({
 
 /**
  * Get current site theme
- *
  * @param siteId {number} The site id
  */
 const getSiteTheme = siteId => async ({
@@ -7376,7 +7359,6 @@ const wpcomRequest = request => ({
  * Action for performing a fetching using `window.fetch()` and parsing the response body.
  * It's different from `apiFetch()` from
  * `@wordpress/data-controls` in that it doesn't use any middleware to add extra parameters.
- *
  * @param resource the resource you wish to fetch
  * @param options request options
  */
@@ -9962,14 +9944,17 @@ module.exports = function () {
 
 /***/ }),
 
-/***/ 2686:
+/***/ 9015:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i);
+const randomUUID = typeof crypto !== 'undefined' && crypto.randomUUID && crypto.randomUUID.bind(crypto);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  randomUUID
+});
 
 /***/ }),
 
@@ -9983,14 +9968,13 @@ module.exports = function () {
 // Unique ID creation requires a high quality random # generator. In the browser we therefore
 // require the crypto API and do not support built-in fallback to lower quality random number
 // generators (like Math.random()).
-var getRandomValues;
-var rnds8 = new Uint8Array(16);
+let getRandomValues;
+const rnds8 = new Uint8Array(16);
 function rng() {
   // lazy load so that environments that need to polyfill have a chance to do so
   if (!getRandomValues) {
-    // getRandomValues needs to be invoked in a context where "this" is a Crypto implementation. Also,
-    // find the complete implementation of crypto (msCrypto) on IE11.
-    getRandomValues = typeof crypto !== 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto) || typeof msCrypto !== 'undefined' && typeof msCrypto.getRandomValues === 'function' && msCrypto.getRandomValues.bind(msCrypto);
+    // getRandomValues needs to be invoked in a context where "this" is a Crypto implementation.
+    getRandomValues = typeof crypto !== 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto);
 
     if (!getRandomValues) {
       throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');
@@ -10007,39 +9991,41 @@ function rng() {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   S: () => (/* binding */ unsafeStringify)
 /* harmony export */ });
-/* harmony import */ var _validate_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6525);
 
 /**
  * Convert array of 16 byte values to UUID string format of the form:
  * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
  */
 
-var byteToHex = [];
+const byteToHex = [];
 
-for (var i = 0; i < 256; ++i) {
-  byteToHex.push((i + 0x100).toString(16).substr(1));
+for (let i = 0; i < 256; ++i) {
+  byteToHex.push((i + 0x100).toString(16).slice(1));
 }
 
-function stringify(arr) {
-  var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+function unsafeStringify(arr, offset = 0) {
   // Note: Be careful editing this code!  It's been tuned for performance
   // and works in ways you may not expect. See https://github.com/uuidjs/uuid/pull/434
-  var uuid = (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + '-' + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + '-' + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + '-' + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + '-' + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase(); // Consistency check for valid UUID.  If this throws, it's likely due to one
+  return byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + '-' + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + '-' + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + '-' + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + '-' + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]];
+}
+
+function stringify(arr, offset = 0) {
+  const uuid = unsafeStringify(arr, offset); // Consistency check for valid UUID.  If this throws, it's likely due to one
   // of the following:
   // - One or more input array values don't map to a hex octet (leading to
   // "undefined" in the uuid)
   // - Invalid input values for the RFC `version` or `variant` fields
 
-  if (!(0,_validate_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)(uuid)) {
+  if (!validate(uuid)) {
     throw TypeError('Stringified UUID is invalid');
   }
 
   return uuid;
 }
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (stringify);
+/* unused harmony default export */ var __WEBPACK_DEFAULT_EXPORT__ = ((/* unused pure expression or super */ null && (stringify)));
 
 /***/ }),
 
@@ -10050,14 +10036,20 @@ function stringify(arr) {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _rng_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5302);
-/* harmony import */ var _stringify_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(708);
+/* harmony import */ var _native_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9015);
+/* harmony import */ var _rng_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5302);
+/* harmony import */ var _stringify_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(708);
+
 
 
 
 function v4(options, buf, offset) {
+  if (_native_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.randomUUID && !buf && !options) {
+    return _native_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.randomUUID();
+  }
+
   options = options || {};
-  var rnds = options.random || (options.rng || _rng_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
+  const rnds = options.random || (options.rng || _rng_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
 
   rnds[6] = rnds[6] & 0x0f | 0x40;
   rnds[8] = rnds[8] & 0x3f | 0x80; // Copy bytes to buffer, if provided
@@ -10065,35 +10057,17 @@ function v4(options, buf, offset) {
   if (buf) {
     offset = offset || 0;
 
-    for (var i = 0; i < 16; ++i) {
+    for (let i = 0; i < 16; ++i) {
       buf[offset + i] = rnds[i];
     }
 
     return buf;
   }
 
-  return (0,_stringify_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)(rnds);
+  return (0,_stringify_js__WEBPACK_IMPORTED_MODULE_2__/* .unsafeStringify */ .S)(rnds);
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (v4);
-
-/***/ }),
-
-/***/ 6525:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _regex_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2686);
-
-
-function validate(uuid) {
-  return typeof uuid === 'string' && _regex_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.test(uuid);
-}
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (validate);
 
 /***/ }),
 
