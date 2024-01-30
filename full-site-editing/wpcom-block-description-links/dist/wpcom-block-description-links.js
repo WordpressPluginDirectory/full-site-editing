@@ -2919,7 +2919,7 @@ function DescriptionSupportLink({
     ref: reference => ref !== reference && setRef(reference),
     className: "fse-inline-support-link is-compact",
     variant: "link"
-  }, __('Learn more', 'full-site-editing')) : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ExternalLink, {
+  }, __('Block guide', 'full-site-editing')) : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ExternalLink, {
     onClick: () => {
       (0,_automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__/* .recordTracksEvent */ .jN)('calypso_block_description_support_link_click', {
         block: title,
