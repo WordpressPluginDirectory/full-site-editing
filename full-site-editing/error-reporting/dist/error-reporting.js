@@ -2,22 +2,22 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 2314:
+/***/ 640:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   R: () => (/* binding */ BrowserClient)
+/* harmony export */   u: () => (/* binding */ BrowserClient)
 /* harmony export */ });
-/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9849);
-/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1476);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4285);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(8536);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(250);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(3135);
-/* harmony import */ var _eventbuilder_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1988);
-/* harmony import */ var _helpers_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2634);
-/* harmony import */ var _integrations_breadcrumbs_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(8356);
-/* harmony import */ var _userfeedback_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(9313);
+/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4936);
+/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4960);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8020);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(832);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(7488);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(4640);
+/* harmony import */ var _eventbuilder_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1304);
+/* harmony import */ var _helpers_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2656);
+/* harmony import */ var _integrations_breadcrumbs_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(8576);
+/* harmony import */ var _userfeedback_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1420);
 
 
 
@@ -43,7 +43,7 @@ class BrowserClient extends _sentry_core__WEBPACK_IMPORTED_MODULE_0__/* .BaseCli
    * @param options Configuration options for this SDK.
    */
    constructor(options) {
-    const sdkSource = _helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .m9.SENTRY_SDK_SOURCE || (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .getSDKSource */ .S)();
+    const sdkSource = _helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .sn.SENTRY_SDK_SOURCE || (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .getSDKSource */ .C)();
 
     options._metadata = options._metadata || {};
     options._metadata.sdk = options._metadata.sdk || {
@@ -51,17 +51,17 @@ class BrowserClient extends _sentry_core__WEBPACK_IMPORTED_MODULE_0__/* .BaseCli
       packages: [
         {
           name: `${sdkSource}:@sentry/browser`,
-          version: _sentry_core__WEBPACK_IMPORTED_MODULE_3__/* .SDK_VERSION */ .J,
+          version: _sentry_core__WEBPACK_IMPORTED_MODULE_3__/* .SDK_VERSION */ .S,
         },
       ],
-      version: _sentry_core__WEBPACK_IMPORTED_MODULE_3__/* .SDK_VERSION */ .J,
+      version: _sentry_core__WEBPACK_IMPORTED_MODULE_3__/* .SDK_VERSION */ .S,
     };
 
     super(options);
 
-    if (options.sendClientReports && _helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .m9.document) {
-      _helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .m9.document.addEventListener('visibilitychange', () => {
-        if (_helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .m9.document.visibilityState === 'hidden') {
+    if (options.sendClientReports && _helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .sn.document) {
+      _helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .sn.document.addEventListener('visibilitychange', () => {
+        if (_helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .sn.document.visibilityState === 'hidden') {
           this._flushOutcomes();
         }
       });
@@ -72,7 +72,7 @@ class BrowserClient extends _sentry_core__WEBPACK_IMPORTED_MODULE_0__/* .BaseCli
    * @inheritDoc
    */
    eventFromException(exception, hint) {
-    return (0,_eventbuilder_js__WEBPACK_IMPORTED_MODULE_4__/* .eventFromException */ .dr)(this._options.stackParser, exception, hint, this._options.attachStacktrace);
+    return (0,_eventbuilder_js__WEBPACK_IMPORTED_MODULE_4__/* .eventFromException */ .Eo)(this._options.stackParser, exception, hint, this._options.attachStacktrace);
   }
 
   /**
@@ -84,7 +84,7 @@ class BrowserClient extends _sentry_core__WEBPACK_IMPORTED_MODULE_0__/* .BaseCli
     level = 'info',
     hint,
   ) {
-    return (0,_eventbuilder_js__WEBPACK_IMPORTED_MODULE_4__/* .eventFromMessage */ .aB)(this._options.stackParser, message, level, hint, this._options.attachStacktrace);
+    return (0,_eventbuilder_js__WEBPACK_IMPORTED_MODULE_4__/* .eventFromMessage */ .aq)(this._options.stackParser, message, level, hint, this._options.attachStacktrace);
   }
 
   /**
@@ -97,7 +97,7 @@ class BrowserClient extends _sentry_core__WEBPACK_IMPORTED_MODULE_0__/* .BaseCli
     // bundles, if it is not used by the SDK.
     // This all sadly is a bit ugly, but we currently don't have a "pre-send" hook on the integrations so we do it this
     // way for now.
-    const breadcrumbIntegration = this.getIntegrationById(_integrations_breadcrumbs_js__WEBPACK_IMPORTED_MODULE_5__/* .BREADCRUMB_INTEGRATION_ID */ .p) ;
+    const breadcrumbIntegration = this.getIntegrationById(_integrations_breadcrumbs_js__WEBPACK_IMPORTED_MODULE_5__/* .BREADCRUMB_INTEGRATION_ID */ .Y) ;
     // We check for definedness of `addSentryBreadcrumb` in case users provided their own integration with id
     // "Breadcrumbs" that does not have this function.
     if (breadcrumbIntegration && breadcrumbIntegration.addSentryBreadcrumb) {
@@ -112,11 +112,11 @@ class BrowserClient extends _sentry_core__WEBPACK_IMPORTED_MODULE_0__/* .BaseCli
    */
    captureUserFeedback(feedback) {
     if (!this._isEnabled()) {
-      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .logger */ .kg.warn('SDK not enabled, will not capture user feedback.');
+      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .logger */ .QE.warn('SDK not enabled, will not capture user feedback.');
       return;
     }
 
-    const envelope = (0,_userfeedback_js__WEBPACK_IMPORTED_MODULE_7__/* .createUserFeedbackEnvelope */ .r)(feedback, {
+    const envelope = (0,_userfeedback_js__WEBPACK_IMPORTED_MODULE_7__/* .createUserFeedbackEnvelope */ .C)(feedback, {
       metadata: this.getSdkMetadata(),
       dsn: this.getDsn(),
       tunnel: this.getOptions().tunnel,
@@ -139,18 +139,18 @@ class BrowserClient extends _sentry_core__WEBPACK_IMPORTED_MODULE_0__/* .BaseCli
     const outcomes = this._clearOutcomes();
 
     if (outcomes.length === 0) {
-      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .logger */ .kg.log('No outcomes to send');
+      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .logger */ .QE.log('No outcomes to send');
       return;
     }
 
     if (!this._dsn) {
-      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .logger */ .kg.log('No dsn provided, will not send outcomes');
+      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .logger */ .QE.log('No dsn provided, will not send outcomes');
       return;
     }
 
-    (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .logger */ .kg.log('Sending outcomes:', outcomes);
+    (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .logger */ .QE.log('Sending outcomes:', outcomes);
 
-    const envelope = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_8__/* .createClientReportEnvelope */ .y)(outcomes, this._options.tunnel && (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_9__/* .dsnToString */ .RA)(this._dsn));
+    const envelope = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_8__/* .createClientReportEnvelope */ .y)(outcomes, this._options.tunnel && (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_9__/* .dsnToString */ .CK)(this._dsn));
     void this._sendEnvelope(envelope);
   }
 }
@@ -161,22 +161,22 @@ class BrowserClient extends _sentry_core__WEBPACK_IMPORTED_MODULE_0__/* .BaseCli
 
 /***/ }),
 
-/***/ 1988:
+/***/ 1304:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   GJ: () => (/* binding */ exceptionFromError),
-/* harmony export */   ME: () => (/* binding */ eventFromUnknownInput),
-/* harmony export */   aB: () => (/* binding */ eventFromMessage),
-/* harmony export */   dr: () => (/* binding */ eventFromException)
+/* harmony export */   Eo: () => (/* binding */ eventFromException),
+/* harmony export */   Gs: () => (/* binding */ exceptionFromError),
+/* harmony export */   IF: () => (/* binding */ eventFromUnknownInput),
+/* harmony export */   aq: () => (/* binding */ eventFromMessage)
 /* harmony export */ });
 /* unused harmony exports eventFromError, eventFromPlainObject, eventFromString, parseStackFrames */
-/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6465);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1757);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1995);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8035);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3699);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7946);
+/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5400);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6484);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5324);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6760);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(2503);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7000);
 
 
 
@@ -212,7 +212,7 @@ function eventFromPlainObject(
   syntheticException,
   isUnhandledRejection,
 ) {
-  const hub = (0,_sentry_core__WEBPACK_IMPORTED_MODULE_0__/* .getCurrentHub */ .Gd)();
+  const hub = (0,_sentry_core__WEBPACK_IMPORTED_MODULE_0__/* .getCurrentHub */ .WS)();
   const client = hub.getClient();
   const normalizeDepth = client && client.getOptions().normalizeDepth;
 
@@ -220,15 +220,15 @@ function eventFromPlainObject(
     exception: {
       values: [
         {
-          type: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .isEvent */ .cO)(exception) ? exception.constructor.name : isUnhandledRejection ? 'UnhandledRejection' : 'Error',
+          type: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .isEvent */ .SO)(exception) ? exception.constructor.name : isUnhandledRejection ? 'UnhandledRejection' : 'Error',
           value: `Non-Error ${
             isUnhandledRejection ? 'promise rejection' : 'exception'
-          } captured with keys: ${(0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .extractExceptionKeysForMessage */ .zf)(exception)}`,
+          } captured with keys: ${(0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .extractExceptionKeysForMessage */ .yq)(exception)}`,
         },
       ],
     },
     extra: {
-      __serialized__: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_3__/* .normalizeToSize */ .Qy)(exception, normalizeDepth),
+      __serialized__: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_3__/* .normalizeToSize */ .yY)(exception, normalizeDepth),
     },
   };
 
@@ -320,12 +320,12 @@ function eventFromException(
 ) {
   const syntheticException = (hint && hint.syntheticException) || undefined;
   const event = eventFromUnknownInput(stackParser, exception, syntheticException, attachStacktrace);
-  (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .addExceptionMechanism */ .EG)(event); // defaults to { type: 'generic', handled: true }
+  (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .addExceptionMechanism */ .qW)(event); // defaults to { type: 'generic', handled: true }
   event.level = 'error';
   if (hint && hint.event_id) {
     event.event_id = hint.event_id;
   }
-  return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_5__/* .resolvedSyncPromise */ .WD)(event);
+  return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_5__/* .resolvedSyncPromise */ .ig)(event);
 }
 
 /**
@@ -346,7 +346,7 @@ function eventFromMessage(
   if (hint && hint.event_id) {
     event.event_id = hint.event_id;
   }
-  return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_5__/* .resolvedSyncPromise */ .WD)(event);
+  return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_5__/* .resolvedSyncPromise */ .ig)(event);
 }
 
 /**
@@ -361,7 +361,7 @@ function eventFromUnknownInput(
 ) {
   let event;
 
-  if ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .isErrorEvent */ .VW)(exception ) && (exception ).error) {
+  if ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .isErrorEvent */ .cz)(exception ) && (exception ).error) {
     // If it is an ErrorEvent with `error` property, extract it to get actual Error
     const errorEvent = exception ;
     return eventFromError(stackParser, errorEvent.error );
@@ -374,16 +374,16 @@ function eventFromUnknownInput(
   // https://developer.mozilla.org/en-US/docs/Web/API/DOMError
   // https://developer.mozilla.org/en-US/docs/Web/API/DOMException
   // https://webidl.spec.whatwg.org/#es-DOMException-specialness
-  if ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .isDOMError */ .TX)(exception ) || (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .isDOMException */ .fm)(exception )) {
+  if ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .isDOMError */ .Sc)(exception ) || (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .isDOMException */ .Qn)(exception )) {
     const domException = exception ;
 
     if ('stack' in (exception )) {
       event = eventFromError(stackParser, exception );
     } else {
-      const name = domException.name || ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .isDOMError */ .TX)(domException) ? 'DOMError' : 'DOMException');
+      const name = domException.name || ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .isDOMError */ .Sc)(domException) ? 'DOMError' : 'DOMException');
       const message = domException.message ? `${name}: ${domException.message}` : name;
       event = eventFromString(stackParser, message, syntheticException, attachStacktrace);
-      (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .addExceptionTypeValue */ .Db)(event, message);
+      (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .addExceptionTypeValue */ .NP)(event, message);
     }
     if ('code' in domException) {
       event.tags = { ...event.tags, 'DOMException.code': `${domException.code}` };
@@ -391,17 +391,17 @@ function eventFromUnknownInput(
 
     return event;
   }
-  if ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .isError */ .VZ)(exception)) {
+  if ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .isError */ .eU)(exception)) {
     // we have a real Error object, do nothing
     return eventFromError(stackParser, exception);
   }
-  if ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .isPlainObject */ .PO)(exception) || (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .isEvent */ .cO)(exception)) {
+  if ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .isPlainObject */ .oF)(exception) || (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .isEvent */ .SO)(exception)) {
     // If it's a plain object or an instance of `Event` (the built-in JS kind, not this SDK's `Event` type), serialize
     // it manually. This will allow us to group events based on top-level keys which is much better than creating a new
     // group on any key/value change.
     const objectException = exception ;
     event = eventFromPlainObject(stackParser, objectException, syntheticException, isUnhandledRejection);
-    (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .addExceptionMechanism */ .EG)(event, {
+    (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .addExceptionMechanism */ .qW)(event, {
       synthetic: true,
     });
     return event;
@@ -417,8 +417,8 @@ function eventFromUnknownInput(
   //
   // So bail out and capture it as a simple message:
   event = eventFromString(stackParser, exception , syntheticException, attachStacktrace);
-  (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .addExceptionTypeValue */ .Db)(event, `${exception}`, undefined);
-  (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .addExceptionMechanism */ .EG)(event, {
+  (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .addExceptionTypeValue */ .NP)(event, `${exception}`, undefined);
+  (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .addExceptionMechanism */ .qW)(event, {
     synthetic: true,
   });
 
@@ -456,23 +456,23 @@ function eventFromString(
 
 /***/ }),
 
-/***/ 2634:
+/***/ 2656:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Wz: () => (/* binding */ shouldIgnoreOnError),
-/* harmony export */   m9: () => (/* binding */ WINDOW),
-/* harmony export */   re: () => (/* binding */ wrap)
+/* harmony export */   Q5: () => (/* binding */ shouldIgnoreOnError),
+/* harmony export */   em: () => (/* binding */ wrap),
+/* harmony export */   sn: () => (/* binding */ WINDOW)
 /* harmony export */ });
 /* unused harmony export ignoreNextOnError */
-/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2642);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(63);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1995);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3699);
+/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1060);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4616);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5324);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2503);
 
 
 
-const WINDOW = _sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .GLOBAL_OBJ */ .n2 ;
+const WINDOW = _sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .GLOBAL_OBJ */ .eg ;
 
 let ignoreOnError = 0;
 
@@ -531,7 +531,7 @@ function wrap(
     }
 
     // We don't wanna wrap it twice
-    if ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .getOriginalFunction */ .HK)(fn)) {
+    if ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .getOriginalFunction */ ._k)(fn)) {
       return fn;
     }
   } catch (e) {
@@ -562,11 +562,11 @@ function wrap(
     } catch (ex) {
       ignoreNextOnError();
 
-      (0,_sentry_core__WEBPACK_IMPORTED_MODULE_2__/* .withScope */ .$e)((scope) => {
+      (0,_sentry_core__WEBPACK_IMPORTED_MODULE_2__/* .withScope */ .oV)((scope) => {
         scope.addEventProcessor((event) => {
           if (options.mechanism) {
-            (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_3__/* .addExceptionTypeValue */ .Db)(event, undefined, undefined);
-            (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_3__/* .addExceptionMechanism */ .EG)(event, options.mechanism);
+            (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_3__/* .addExceptionTypeValue */ .NP)(event, undefined, undefined);
+            (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_3__/* .addExceptionMechanism */ .qW)(event, options.mechanism);
           }
 
           event.extra = {
@@ -577,7 +577,7 @@ function wrap(
           return event;
         });
 
-        (0,_sentry_core__WEBPACK_IMPORTED_MODULE_2__/* .captureException */ .Tb)(ex);
+        (0,_sentry_core__WEBPACK_IMPORTED_MODULE_2__/* .captureException */ .wx)(ex);
       });
 
       throw ex;
@@ -597,9 +597,9 @@ function wrap(
 
   // Signal that this function has been wrapped/filled already
   // for both debugging and to prevent it to being wrapped/filled twice
-  (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .markFunctionWrapped */ .$Q)(sentryWrapped, fn);
+  (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .markFunctionWrapped */ .Ql)(sentryWrapped, fn);
 
-  (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .addNonEnumerableProperty */ .xp)(fn, '__sentry_wrapped__', sentryWrapped);
+  (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .addNonEnumerableProperty */ .QB)(fn, '__sentry_wrapped__', sentryWrapped);
 
   // Restore original function name (not all browsers allow that)
   try {
@@ -627,22 +627,22 @@ function wrap(
 
 /***/ }),
 
-/***/ 8356:
+/***/ 8576:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   O: () => (/* binding */ Breadcrumbs),
-/* harmony export */   p: () => (/* binding */ BREADCRUMB_INTEGRATION_ID)
+/* harmony export */   M: () => (/* binding */ Breadcrumbs),
+/* harmony export */   Y: () => (/* binding */ BREADCRUMB_INTEGRATION_ID)
 /* harmony export */ });
-/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6465);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4005);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3699);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8536);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4194);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(8653);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(9660);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(3483);
-/* harmony import */ var _helpers_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(2634);
+/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5400);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9588);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2503);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(832);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1744);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9640);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(9268);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(2256);
+/* harmony import */ var _helpers_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(2656);
 
 
 
@@ -699,19 +699,19 @@ class Breadcrumbs  {
    */
    setupOnce() {
     if (this.options.console) {
-      (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .addInstrumentationHandler */ .oq)('console', _consoleBreadcrumb);
+      (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .addInstrumentationHandler */ .cS)('console', _consoleBreadcrumb);
     }
     if (this.options.dom) {
-      (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .addInstrumentationHandler */ .oq)('dom', _domBreadcrumb(this.options.dom));
+      (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .addInstrumentationHandler */ .cS)('dom', _domBreadcrumb(this.options.dom));
     }
     if (this.options.xhr) {
-      (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .addInstrumentationHandler */ .oq)('xhr', _xhrBreadcrumb);
+      (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .addInstrumentationHandler */ .cS)('xhr', _xhrBreadcrumb);
     }
     if (this.options.fetch) {
-      (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .addInstrumentationHandler */ .oq)('fetch', _fetchBreadcrumb);
+      (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .addInstrumentationHandler */ .cS)('fetch', _fetchBreadcrumb);
     }
     if (this.options.history) {
-      (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .addInstrumentationHandler */ .oq)('history', _historyBreadcrumb);
+      (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .addInstrumentationHandler */ .cS)('history', _historyBreadcrumb);
     }
   }
 
@@ -720,12 +720,12 @@ class Breadcrumbs  {
    */
    addSentryBreadcrumb(event) {
     if (this.options.sentry) {
-      (0,_sentry_core__WEBPACK_IMPORTED_MODULE_1__/* .getCurrentHub */ .Gd)().addBreadcrumb(
+      (0,_sentry_core__WEBPACK_IMPORTED_MODULE_1__/* .getCurrentHub */ .WS)().addBreadcrumb(
         {
           category: `sentry.${event.type === 'transaction' ? 'transaction' : 'event'}`,
           event_id: event.event_id,
           level: event.level,
-          message: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .getEventDescription */ .jH)(event),
+          message: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .getEventDescription */ .y_)(event),
         },
         {
           event,
@@ -748,7 +748,7 @@ function _domBreadcrumb(dom) {
       typeof dom === 'object' && typeof dom.maxStringLength === 'number' ? dom.maxStringLength : undefined;
     if (maxStringLength && maxStringLength > MAX_ALLOWED_STRING_LENGTH) {
       (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) &&
-        _sentry_utils__WEBPACK_IMPORTED_MODULE_3__/* .logger */ .kg.warn(
+        _sentry_utils__WEBPACK_IMPORTED_MODULE_3__/* .logger */ .QE.warn(
           `\`dom.maxStringLength\` cannot exceed ${MAX_ALLOWED_STRING_LENGTH}, but a value of ${maxStringLength} was configured. Sentry will use ${MAX_ALLOWED_STRING_LENGTH} instead.`,
         );
       maxStringLength = MAX_ALLOWED_STRING_LENGTH;
@@ -762,8 +762,8 @@ function _domBreadcrumb(dom) {
     try {
       const event = handlerData.event ;
       target = _isEvent(event)
-        ? (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .htmlTreeAsString */ .Rt)(event.target, { keyAttrs, maxStringLength })
-        : (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .htmlTreeAsString */ .Rt)(event, { keyAttrs, maxStringLength });
+        ? (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .htmlTreeAsString */ .IN)(event.target, { keyAttrs, maxStringLength })
+        : (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .htmlTreeAsString */ .IN)(event, { keyAttrs, maxStringLength });
     } catch (e) {
       target = '<unknown>';
     }
@@ -772,7 +772,7 @@ function _domBreadcrumb(dom) {
       return;
     }
 
-    (0,_sentry_core__WEBPACK_IMPORTED_MODULE_1__/* .getCurrentHub */ .Gd)().addBreadcrumb(
+    (0,_sentry_core__WEBPACK_IMPORTED_MODULE_1__/* .getCurrentHub */ .WS)().addBreadcrumb(
       {
         category: `ui.${handlerData.name}`,
         message: target,
@@ -810,13 +810,13 @@ function _consoleBreadcrumb(handlerData) {
       arguments: handlerData.args,
       logger: 'console',
     },
-    level: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_5__/* .severityLevelFromString */ .VT)(handlerData.level),
-    message: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .safeJoin */ .nK)(handlerData.args, ' '),
+    level: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_5__/* .severityLevelFromString */ .iy)(handlerData.level),
+    message: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .safeJoin */ .Y9)(handlerData.args, ' '),
   };
 
   if (handlerData.level === 'assert') {
     if (handlerData.args[0] === false) {
-      breadcrumb.message = `Assertion failed: ${(0,_sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .safeJoin */ .nK)(handlerData.args.slice(1), ' ') || 'console.assert'}`;
+      breadcrumb.message = `Assertion failed: ${(0,_sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .safeJoin */ .Y9)(handlerData.args.slice(1), ' ') || 'console.assert'}`;
       breadcrumb.data.arguments = handlerData.args.slice(1);
     } else {
       // Don't capture a breadcrumb for passed assertions
@@ -824,7 +824,7 @@ function _consoleBreadcrumb(handlerData) {
     }
   }
 
-  (0,_sentry_core__WEBPACK_IMPORTED_MODULE_1__/* .getCurrentHub */ .Gd)().addBreadcrumb(breadcrumb, {
+  (0,_sentry_core__WEBPACK_IMPORTED_MODULE_1__/* .getCurrentHub */ .WS)().addBreadcrumb(breadcrumb, {
     input: handlerData.args,
     level: handlerData.level,
   });
@@ -836,7 +836,7 @@ function _consoleBreadcrumb(handlerData) {
 function _xhrBreadcrumb(handlerData) {
   const { startTimestamp, endTimestamp } = handlerData;
 
-  const sentryXhrData = handlerData.xhr[_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .SENTRY_XHR_DATA_KEY */ .xU];
+  const sentryXhrData = handlerData.xhr[_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .SENTRY_XHR_DATA_KEY */ .Ou];
 
   // We only capture complete, non-sentry requests
   if (!startTimestamp || !endTimestamp || !sentryXhrData) {
@@ -858,7 +858,7 @@ function _xhrBreadcrumb(handlerData) {
     endTimestamp,
   };
 
-  (0,_sentry_core__WEBPACK_IMPORTED_MODULE_1__/* .getCurrentHub */ .Gd)().addBreadcrumb(
+  (0,_sentry_core__WEBPACK_IMPORTED_MODULE_1__/* .getCurrentHub */ .WS)().addBreadcrumb(
     {
       category: 'xhr',
       data,
@@ -893,7 +893,7 @@ function _fetchBreadcrumb(handlerData) {
       endTimestamp,
     };
 
-    (0,_sentry_core__WEBPACK_IMPORTED_MODULE_1__/* .getCurrentHub */ .Gd)().addBreadcrumb(
+    (0,_sentry_core__WEBPACK_IMPORTED_MODULE_1__/* .getCurrentHub */ .WS)().addBreadcrumb(
       {
         category: 'fetch',
         data,
@@ -913,7 +913,7 @@ function _fetchBreadcrumb(handlerData) {
       startTimestamp,
       endTimestamp,
     };
-    (0,_sentry_core__WEBPACK_IMPORTED_MODULE_1__/* .getCurrentHub */ .Gd)().addBreadcrumb(
+    (0,_sentry_core__WEBPACK_IMPORTED_MODULE_1__/* .getCurrentHub */ .WS)().addBreadcrumb(
       {
         category: 'fetch',
         data,
@@ -930,9 +930,9 @@ function _fetchBreadcrumb(handlerData) {
 function _historyBreadcrumb(handlerData) {
   let from = handlerData.from;
   let to = handlerData.to;
-  const parsedLoc = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_7__/* .parseUrl */ .en)(_helpers_js__WEBPACK_IMPORTED_MODULE_8__/* .WINDOW */ .m9.location.href);
-  let parsedFrom = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_7__/* .parseUrl */ .en)(from);
-  const parsedTo = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_7__/* .parseUrl */ .en)(to);
+  const parsedLoc = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_7__/* .parseUrl */ .UX)(_helpers_js__WEBPACK_IMPORTED_MODULE_8__/* .WINDOW */ .sn.location.href);
+  let parsedFrom = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_7__/* .parseUrl */ .UX)(from);
+  const parsedTo = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_7__/* .parseUrl */ .UX)(to);
 
   // Initial pushState doesn't provide `from` information
   if (!parsedFrom.path) {
@@ -948,7 +948,7 @@ function _historyBreadcrumb(handlerData) {
     from = parsedFrom.relative;
   }
 
-  (0,_sentry_core__WEBPACK_IMPORTED_MODULE_1__/* .getCurrentHub */ .Gd)().addBreadcrumb({
+  (0,_sentry_core__WEBPACK_IMPORTED_MODULE_1__/* .getCurrentHub */ .WS)().addBreadcrumb({
     category: 'navigation',
     data: {
       from,
@@ -967,13 +967,13 @@ function _isEvent(event) {
 
 /***/ }),
 
-/***/ 184:
+/***/ 1819:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   I: () => (/* binding */ Dedupe)
+/* harmony export */   W: () => (/* binding */ Dedupe)
 /* harmony export */ });
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8536);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(832);
 
 
 /** Deduplication filter */
@@ -1008,7 +1008,7 @@ class Dedupe  {constructor() { Dedupe.prototype.__init.call(this); }
         // Juuust in case something goes wrong
         try {
           if (_shouldDropEvent(currentEvent, self._previousEvent)) {
-            (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .logger */ .kg.warn('Event dropped due to being a duplicate of previously captured event.');
+            (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .logger */ .QE.warn('Event dropped due to being a duplicate of previously captured event.');
             return null;
           }
         } catch (_oO) {
@@ -1189,20 +1189,20 @@ function _getFramesFromEvent(event) {
 
 /***/ }),
 
-/***/ 1228:
+/***/ 3776:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   d: () => (/* binding */ GlobalHandlers)
+/* harmony export */   O: () => (/* binding */ GlobalHandlers)
 /* harmony export */ });
-/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(6465);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4005);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1757);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4194);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(8536);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(3699);
-/* harmony import */ var _eventbuilder_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1988);
-/* harmony import */ var _helpers_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2634);
+/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(5400);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9588);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6484);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1744);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(832);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(2503);
+/* harmony import */ var _eventbuilder_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1304);
+/* harmony import */ var _helpers_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2656);
 
 
 
@@ -1264,7 +1264,7 @@ class GlobalHandlers  {
 
 /** JSDoc */
 function _installGlobalOnErrorHandler() {
-  (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .addInstrumentationHandler */ .oq)(
+  (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .addInstrumentationHandler */ .cS)(
     'error',
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (data) => {
@@ -1273,15 +1273,15 @@ function _installGlobalOnErrorHandler() {
         return;
       }
       const { msg, url, line, column, error } = data;
-      if ((0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .shouldIgnoreOnError */ .Wz)() || (error && error.__sentry_own_request__)) {
+      if ((0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .shouldIgnoreOnError */ .Q5)() || (error && error.__sentry_own_request__)) {
         return;
       }
 
       const event =
-        error === undefined && (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .isString */ .HD)(msg)
+        error === undefined && (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .isString */ .ct)(msg)
           ? _eventFromIncompleteOnError(msg, url, line, column)
           : _enhanceEventWithInitialFrame(
-              (0,_eventbuilder_js__WEBPACK_IMPORTED_MODULE_3__/* .eventFromUnknownInput */ .ME)(stackParser, error || msg, undefined, attachStacktrace, false),
+              (0,_eventbuilder_js__WEBPACK_IMPORTED_MODULE_3__/* .eventFromUnknownInput */ .IF)(stackParser, error || msg, undefined, attachStacktrace, false),
               url,
               line,
               column,
@@ -1296,7 +1296,7 @@ function _installGlobalOnErrorHandler() {
 
 /** JSDoc */
 function _installGlobalOnUnhandledRejectionHandler() {
-  (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .addInstrumentationHandler */ .oq)(
+  (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .addInstrumentationHandler */ .cS)(
     'unhandledrejection',
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (e) => {
@@ -1325,13 +1325,13 @@ function _installGlobalOnUnhandledRejectionHandler() {
         // no-empty
       }
 
-      if ((0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .shouldIgnoreOnError */ .Wz)() || (error && error.__sentry_own_request__)) {
+      if ((0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .shouldIgnoreOnError */ .Q5)() || (error && error.__sentry_own_request__)) {
         return true;
       }
 
-      const event = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .isPrimitive */ .pt)(error)
+      const event = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .isPrimitive */ .od)(error)
         ? _eventFromRejectionWithPrimitive(error)
-        : (0,_eventbuilder_js__WEBPACK_IMPORTED_MODULE_3__/* .eventFromUnknownInput */ .ME)(stackParser, error, undefined, attachStacktrace, true);
+        : (0,_eventbuilder_js__WEBPACK_IMPORTED_MODULE_3__/* .eventFromUnknownInput */ .IF)(stackParser, error, undefined, attachStacktrace, true);
 
       event.level = 'error';
 
@@ -1370,7 +1370,7 @@ function _eventFromIncompleteOnError(msg, url, line, column) {
     /^(?:[Uu]ncaught (?:exception: )?)?(?:((?:Eval|Internal|Range|Reference|Syntax|Type|URI|)Error): )?(.*)$/i;
 
   // If 'message' is ErrorEvent, get real message from inside
-  let message = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .isErrorEvent */ .VW)(msg) ? msg.message : msg;
+  let message = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .isErrorEvent */ .cz)(msg) ? msg.message : msg;
   let name = 'Error';
 
   const groups = message.match(ERROR_TYPES_RE);
@@ -1409,7 +1409,7 @@ function _enhanceEventWithInitialFrame(event, url, line, column) {
 
   const colno = isNaN(parseInt(column, 10)) ? undefined : column;
   const lineno = isNaN(parseInt(line, 10)) ? undefined : line;
-  const filename = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .isString */ .HD)(url) && url.length > 0 ? url : (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .getLocationHref */ .l4)();
+  const filename = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .isString */ .ct)(url) && url.length > 0 ? url : (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .getLocationHref */ .s5)();
 
   // event.exception.values[0].stacktrace.frames
   if (ev0sf.length === 0) {
@@ -1426,11 +1426,11 @@ function _enhanceEventWithInitialFrame(event, url, line, column) {
 }
 
 function globalHandlerLog(type) {
-  (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_5__/* .logger */ .kg.log(`Global Handler attached: ${type}`);
+  (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_5__/* .logger */ .QE.log(`Global Handler attached: ${type}`);
 }
 
 function addMechanismAndCapture(hub, error, event, type) {
-  (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .addExceptionMechanism */ .EG)(event, {
+  (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .addExceptionMechanism */ .qW)(event, {
     handled: false,
     type,
   });
@@ -1440,7 +1440,7 @@ function addMechanismAndCapture(hub, error, event, type) {
 }
 
 function getHubAndOptions() {
-  const hub = (0,_sentry_core__WEBPACK_IMPORTED_MODULE_7__/* .getCurrentHub */ .Gd)();
+  const hub = (0,_sentry_core__WEBPACK_IMPORTED_MODULE_7__/* .getCurrentHub */ .WS)();
   const client = hub.getClient();
   const options = (client && client.getOptions()) || {
     stackParser: () => [],
@@ -1455,15 +1455,15 @@ function getHubAndOptions() {
 
 /***/ }),
 
-/***/ 2605:
+/***/ 5708:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   q: () => (/* binding */ HttpContext)
+/* harmony export */   A: () => (/* binding */ HttpContext)
 /* harmony export */ });
-/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1877);
-/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6465);
-/* harmony import */ var _helpers_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2634);
+/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6528);
+/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5400);
+/* harmony import */ var _helpers_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2656);
 
 
 
@@ -1483,17 +1483,17 @@ class HttpContext  {constructor() { HttpContext.prototype.__init.call(this); }
    * @inheritDoc
    */
    setupOnce() {
-    (0,_sentry_core__WEBPACK_IMPORTED_MODULE_0__/* .addGlobalEventProcessor */ .c)((event) => {
-      if ((0,_sentry_core__WEBPACK_IMPORTED_MODULE_1__/* .getCurrentHub */ .Gd)().getIntegration(HttpContext)) {
+    (0,_sentry_core__WEBPACK_IMPORTED_MODULE_0__/* .addGlobalEventProcessor */ .e)((event) => {
+      if ((0,_sentry_core__WEBPACK_IMPORTED_MODULE_1__/* .getCurrentHub */ .WS)().getIntegration(HttpContext)) {
         // if none of the information we want exists, don't bother
-        if (!_helpers_js__WEBPACK_IMPORTED_MODULE_2__/* .WINDOW */ .m9.navigator && !_helpers_js__WEBPACK_IMPORTED_MODULE_2__/* .WINDOW */ .m9.location && !_helpers_js__WEBPACK_IMPORTED_MODULE_2__/* .WINDOW */ .m9.document) {
+        if (!_helpers_js__WEBPACK_IMPORTED_MODULE_2__/* .WINDOW */ .sn.navigator && !_helpers_js__WEBPACK_IMPORTED_MODULE_2__/* .WINDOW */ .sn.location && !_helpers_js__WEBPACK_IMPORTED_MODULE_2__/* .WINDOW */ .sn.document) {
           return event;
         }
 
         // grab as much info as exists and add it to the event
-        const url = (event.request && event.request.url) || (_helpers_js__WEBPACK_IMPORTED_MODULE_2__/* .WINDOW */ .m9.location && _helpers_js__WEBPACK_IMPORTED_MODULE_2__/* .WINDOW */ .m9.location.href);
-        const { referrer } = _helpers_js__WEBPACK_IMPORTED_MODULE_2__/* .WINDOW */ .m9.document || {};
-        const { userAgent } = _helpers_js__WEBPACK_IMPORTED_MODULE_2__/* .WINDOW */ .m9.navigator || {};
+        const url = (event.request && event.request.url) || (_helpers_js__WEBPACK_IMPORTED_MODULE_2__/* .WINDOW */ .sn.location && _helpers_js__WEBPACK_IMPORTED_MODULE_2__/* .WINDOW */ .sn.location.href);
+        const { referrer } = _helpers_js__WEBPACK_IMPORTED_MODULE_2__/* .WINDOW */ .sn.document || {};
+        const { userAgent } = _helpers_js__WEBPACK_IMPORTED_MODULE_2__/* .WINDOW */ .sn.navigator || {};
 
         const headers = {
           ...(event.request && event.request.headers),
@@ -1515,17 +1515,17 @@ class HttpContext  {constructor() { HttpContext.prototype.__init.call(this); }
 
 /***/ }),
 
-/***/ 3440:
+/***/ 9555:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   iP: () => (/* binding */ LinkedErrors)
+/* harmony export */   Q7: () => (/* binding */ LinkedErrors)
 /* harmony export */ });
 /* unused harmony exports _handler, _walkErrorTree */
-/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6465);
-/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1877);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1757);
-/* harmony import */ var _eventbuilder_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1988);
+/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5400);
+/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6528);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6484);
+/* harmony import */ var _eventbuilder_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1304);
 
 
 
@@ -1565,12 +1565,12 @@ class LinkedErrors  {
    * @inheritDoc
    */
    setupOnce() {
-    const client = (0,_sentry_core__WEBPACK_IMPORTED_MODULE_0__/* .getCurrentHub */ .Gd)().getClient();
+    const client = (0,_sentry_core__WEBPACK_IMPORTED_MODULE_0__/* .getCurrentHub */ .WS)().getClient();
     if (!client) {
       return;
     }
-    (0,_sentry_core__WEBPACK_IMPORTED_MODULE_1__/* .addGlobalEventProcessor */ .c)((event, hint) => {
-      const self = (0,_sentry_core__WEBPACK_IMPORTED_MODULE_0__/* .getCurrentHub */ .Gd)().getIntegration(LinkedErrors);
+    (0,_sentry_core__WEBPACK_IMPORTED_MODULE_1__/* .addGlobalEventProcessor */ .e)((event, hint) => {
+      const self = (0,_sentry_core__WEBPACK_IMPORTED_MODULE_0__/* .getCurrentHub */ .WS)().getIntegration(LinkedErrors);
       return self ? _handler(client.getOptions().stackParser, self._key, self._limit, event, hint) : event;
     });
   }
@@ -1586,7 +1586,7 @@ function _handler(
   event,
   hint,
 ) {
-  if (!event.exception || !event.exception.values || !hint || !(0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .isInstanceOf */ .V9)(hint.originalException, Error)) {
+  if (!event.exception || !event.exception.values || !hint || !(0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .isInstanceOf */ .aG)(hint.originalException, Error)) {
     return event;
   }
   const linkedErrors = _walkErrorTree(parser, limit, hint.originalException , key);
@@ -1604,10 +1604,10 @@ function _walkErrorTree(
   key,
   stack = [],
 ) {
-  if (!(0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .isInstanceOf */ .V9)(error[key], Error) || stack.length + 1 >= limit) {
+  if (!(0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .isInstanceOf */ .aG)(error[key], Error) || stack.length + 1 >= limit) {
     return stack;
   }
-  const exception = (0,_eventbuilder_js__WEBPACK_IMPORTED_MODULE_3__/* .exceptionFromError */ .GJ)(parser, error[key]);
+  const exception = (0,_eventbuilder_js__WEBPACK_IMPORTED_MODULE_3__/* .exceptionFromError */ .Gs)(parser, error[key]);
   return _walkErrorTree(parser, limit, error[key], key, [exception, ...stack]);
 }
 
@@ -1617,15 +1617,15 @@ function _walkErrorTree(
 
 /***/ }),
 
-/***/ 3399:
+/***/ 8664:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   p: () => (/* binding */ TryCatch)
+/* harmony export */   A: () => (/* binding */ TryCatch)
 /* harmony export */ });
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1995);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9038);
-/* harmony import */ var _helpers_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2634);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5324);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6192);
+/* harmony import */ var _helpers_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2656);
 
 
 
@@ -1695,19 +1695,19 @@ class TryCatch  {
    */
    setupOnce() {
     if (this._options.setTimeout) {
-      (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .fill */ .hl)(_helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .m9, 'setTimeout', _wrapTimeFunction);
+      (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .fill */ .ym)(_helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .sn, 'setTimeout', _wrapTimeFunction);
     }
 
     if (this._options.setInterval) {
-      (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .fill */ .hl)(_helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .m9, 'setInterval', _wrapTimeFunction);
+      (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .fill */ .ym)(_helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .sn, 'setInterval', _wrapTimeFunction);
     }
 
     if (this._options.requestAnimationFrame) {
-      (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .fill */ .hl)(_helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .m9, 'requestAnimationFrame', _wrapRAF);
+      (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .fill */ .ym)(_helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .sn, 'requestAnimationFrame', _wrapRAF);
     }
 
-    if (this._options.XMLHttpRequest && "XMLHttpRequest" in _helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .m9) {
-      (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .fill */ .hl)(XMLHttpRequest.prototype, 'send', _wrapXHR);
+    if (this._options.XMLHttpRequest && "XMLHttpRequest" in _helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .sn) {
+      (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .fill */ .ym)(XMLHttpRequest.prototype, 'send', _wrapXHR);
     }
 
     const eventTargetOption = this._options.eventTarget;
@@ -1723,9 +1723,9 @@ function _wrapTimeFunction(original) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return function ( ...args) {
     const originalCallback = args[0];
-    args[0] = (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .wrap */ .re)(originalCallback, {
+    args[0] = (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .wrap */ .em)(originalCallback, {
       mechanism: {
-        data: { function: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .getFunctionName */ .$P)(original) },
+        data: { function: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .getFunctionName */ .kJ)(original) },
         handled: true,
         type: 'instrument',
       },
@@ -1741,11 +1741,11 @@ function _wrapRAF(original) {
   return function ( callback) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     return original.apply(this, [
-      (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .wrap */ .re)(callback, {
+      (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .wrap */ .em)(callback, {
         mechanism: {
           data: {
             function: 'requestAnimationFrame',
-            handler: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .getFunctionName */ .$P)(original),
+            handler: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .getFunctionName */ .kJ)(original),
           },
           handled: true,
           type: 'instrument',
@@ -1766,12 +1766,12 @@ function _wrapXHR(originalSend) {
     xmlHttpRequestProps.forEach(prop => {
       if (prop in xhr && typeof xhr[prop] === 'function') {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .fill */ .hl)(xhr, prop, function (original) {
+        (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .fill */ .ym)(xhr, prop, function (original) {
           const wrapOptions = {
             mechanism: {
               data: {
                 function: prop,
-                handler: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .getFunctionName */ .$P)(original),
+                handler: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .getFunctionName */ .kJ)(original),
               },
               handled: true,
               type: 'instrument',
@@ -1779,13 +1779,13 @@ function _wrapXHR(originalSend) {
           };
 
           // If Instrument integration has been called before TryCatch, get the name of original function
-          const originalFunction = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .getOriginalFunction */ .HK)(original);
+          const originalFunction = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .getOriginalFunction */ ._k)(original);
           if (originalFunction) {
-            wrapOptions.mechanism.data.handler = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .getFunctionName */ .$P)(originalFunction);
+            wrapOptions.mechanism.data.handler = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .getFunctionName */ .kJ)(originalFunction);
           }
 
           // Otherwise wrap directly
-          return (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .wrap */ .re)(original, wrapOptions);
+          return (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .wrap */ .em)(original, wrapOptions);
         });
       }
     });
@@ -1797,7 +1797,7 @@ function _wrapXHR(originalSend) {
 /** JSDoc */
 function _wrapEventTarget(target) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const globalObject = _helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .m9 ;
+  const globalObject = _helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .sn ;
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   const proto = globalObject[target] && globalObject[target].prototype;
 
@@ -1806,7 +1806,7 @@ function _wrapEventTarget(target) {
     return;
   }
 
-  (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .fill */ .hl)(proto, 'addEventListener', function (original)
+  (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .fill */ .ym)(proto, 'addEventListener', function (original)
 
  {
     return function (
@@ -1824,11 +1824,11 @@ function _wrapEventTarget(target) {
           //  flags(like __sentry_original__) attached. `wrap` checks for those flags to avoid unnecessary wrapping.
           //  Without those flags, every call to addEventListener wraps the function again, causing a memory leak.
           // eslint-disable-next-line @typescript-eslint/unbound-method
-          fn.handleEvent = (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .wrap */ .re)(fn.handleEvent, {
+          fn.handleEvent = (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .wrap */ .em)(fn.handleEvent, {
             mechanism: {
               data: {
                 function: 'handleEvent',
-                handler: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .getFunctionName */ .$P)(fn),
+                handler: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .getFunctionName */ .kJ)(fn),
                 target,
               },
               handled: true,
@@ -1843,11 +1843,11 @@ function _wrapEventTarget(target) {
       return original.apply(this, [
         eventName,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .wrap */ .re)(fn , {
+        (0,_helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .wrap */ .em)(fn , {
           mechanism: {
             data: {
               function: 'addEventListener',
-              handler: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .getFunctionName */ .$P)(fn),
+              handler: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .getFunctionName */ .kJ)(fn),
               target,
             },
             handled: true,
@@ -1859,7 +1859,7 @@ function _wrapEventTarget(target) {
     };
   });
 
-  (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .fill */ .hl)(
+  (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .fill */ .ym)(
     proto,
     'removeEventListener',
     function (
@@ -1911,35 +1911,35 @@ function _wrapEventTarget(target) {
 
 /***/ }),
 
-/***/ 2456:
+/***/ 8864:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   S1: () => (/* binding */ init),
-/* harmony export */   yl: () => (/* binding */ flush)
+/* harmony export */   _6: () => (/* binding */ init),
+/* harmony export */   q2: () => (/* binding */ flush)
 /* harmony export */ });
 /* unused harmony exports captureUserFeedback, close, defaultIntegrations, forceLoad, lastEventId, onLoad, showReportDialog, wrap */
-/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1061);
-/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6286);
-/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(8889);
-/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(6853);
-/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(6465);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(9038);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(9798);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(8536);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(7946);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(4005);
-/* harmony import */ var _client_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(2314);
-/* harmony import */ var _helpers_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(2634);
-/* harmony import */ var _integrations_globalhandlers_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1228);
-/* harmony import */ var _integrations_trycatch_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3399);
-/* harmony import */ var _integrations_breadcrumbs_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8356);
-/* harmony import */ var _integrations_linkederrors_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(3440);
-/* harmony import */ var _integrations_httpcontext_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(2605);
-/* harmony import */ var _integrations_dedupe_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(184);
-/* harmony import */ var _stack_parsers_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(2224);
-/* harmony import */ var _transports_fetch_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(6149);
-/* harmony import */ var _transports_xhr_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(6144);
+/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8256);
+/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6948);
+/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(8736);
+/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(7504);
+/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(5400);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(6192);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(8036);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(832);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(7000);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(9588);
+/* harmony import */ var _client_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(640);
+/* harmony import */ var _helpers_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(2656);
+/* harmony import */ var _integrations_globalhandlers_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3776);
+/* harmony import */ var _integrations_trycatch_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8664);
+/* harmony import */ var _integrations_breadcrumbs_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8576);
+/* harmony import */ var _integrations_linkederrors_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9555);
+/* harmony import */ var _integrations_httpcontext_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(5708);
+/* harmony import */ var _integrations_dedupe_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1819);
+/* harmony import */ var _stack_parsers_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(9000);
+/* harmony import */ var _transports_fetch_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(8879);
+/* harmony import */ var _transports_xhr_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(9136);
 
 
 
@@ -1955,14 +1955,14 @@ function _wrapEventTarget(target) {
 
 
 const defaultIntegrations = [
-  new _sentry_core__WEBPACK_IMPORTED_MODULE_0__/* .InboundFilters */ .QD(),
-  new _sentry_core__WEBPACK_IMPORTED_MODULE_1__/* .FunctionToString */ .c(),
-  new _integrations_trycatch_js__WEBPACK_IMPORTED_MODULE_2__/* .TryCatch */ .p(),
-  new _integrations_breadcrumbs_js__WEBPACK_IMPORTED_MODULE_3__/* .Breadcrumbs */ .O(),
-  new _integrations_globalhandlers_js__WEBPACK_IMPORTED_MODULE_4__/* .GlobalHandlers */ .d(),
-  new _integrations_linkederrors_js__WEBPACK_IMPORTED_MODULE_5__/* .LinkedErrors */ .iP(),
-  new _integrations_dedupe_js__WEBPACK_IMPORTED_MODULE_6__/* .Dedupe */ .I(),
-  new _integrations_httpcontext_js__WEBPACK_IMPORTED_MODULE_7__/* .HttpContext */ .q(),
+  new _sentry_core__WEBPACK_IMPORTED_MODULE_0__/* .InboundFilters */ .qC(),
+  new _sentry_core__WEBPACK_IMPORTED_MODULE_1__/* .FunctionToString */ .A(),
+  new _integrations_trycatch_js__WEBPACK_IMPORTED_MODULE_2__/* .TryCatch */ .A(),
+  new _integrations_breadcrumbs_js__WEBPACK_IMPORTED_MODULE_3__/* .Breadcrumbs */ .M(),
+  new _integrations_globalhandlers_js__WEBPACK_IMPORTED_MODULE_4__/* .GlobalHandlers */ .O(),
+  new _integrations_linkederrors_js__WEBPACK_IMPORTED_MODULE_5__/* .LinkedErrors */ .Q7(),
+  new _integrations_dedupe_js__WEBPACK_IMPORTED_MODULE_6__/* .Dedupe */ .W(),
+  new _integrations_httpcontext_js__WEBPACK_IMPORTED_MODULE_7__/* .HttpContext */ .A(),
 ];
 
 /**
@@ -2037,8 +2037,8 @@ function init(options = {}) {
     }
 
     // This supports the variable that sentry-webpack-plugin injects
-    if (_helpers_js__WEBPACK_IMPORTED_MODULE_8__/* .WINDOW */ .m9.SENTRY_RELEASE && _helpers_js__WEBPACK_IMPORTED_MODULE_8__/* .WINDOW */ .m9.SENTRY_RELEASE.id) {
-      options.release = _helpers_js__WEBPACK_IMPORTED_MODULE_8__/* .WINDOW */ .m9.SENTRY_RELEASE.id;
+    if (_helpers_js__WEBPACK_IMPORTED_MODULE_8__/* .WINDOW */ .sn.SENTRY_RELEASE && _helpers_js__WEBPACK_IMPORTED_MODULE_8__/* .WINDOW */ .sn.SENTRY_RELEASE.id) {
+      options.release = _helpers_js__WEBPACK_IMPORTED_MODULE_8__/* .WINDOW */ .sn.SENTRY_RELEASE.id;
     }
   }
   if (options.autoSessionTracking === undefined) {
@@ -2050,12 +2050,12 @@ function init(options = {}) {
 
   const clientOptions = {
     ...options,
-    stackParser: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_9__/* .stackParserFromStackParserOptions */ .Sq)(options.stackParser || _stack_parsers_js__WEBPACK_IMPORTED_MODULE_10__/* .defaultStackParser */ .Dt),
-    integrations: (0,_sentry_core__WEBPACK_IMPORTED_MODULE_11__/* .getIntegrationsToSetup */ .m8)(options),
-    transport: options.transport || ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_12__/* .supportsFetch */ .Ak)() ? _transports_fetch_js__WEBPACK_IMPORTED_MODULE_13__/* .makeFetchTransport */ .f : _transports_xhr_js__WEBPACK_IMPORTED_MODULE_14__/* .makeXHRTransport */ .K),
+    stackParser: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_9__/* .stackParserFromStackParserOptions */ .M$)(options.stackParser || _stack_parsers_js__WEBPACK_IMPORTED_MODULE_10__/* .defaultStackParser */ .ot),
+    integrations: (0,_sentry_core__WEBPACK_IMPORTED_MODULE_11__/* .getIntegrationsToSetup */ .WW)(options),
+    transport: options.transport || ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_12__/* .supportsFetch */ .Gk)() ? _transports_fetch_js__WEBPACK_IMPORTED_MODULE_13__/* .makeFetchTransport */ .e : _transports_xhr_js__WEBPACK_IMPORTED_MODULE_14__/* .makeXHRTransport */ .e),
   };
 
-  (0,_sentry_core__WEBPACK_IMPORTED_MODULE_15__/* .initAndBind */ .M)(_client_js__WEBPACK_IMPORTED_MODULE_16__/* .BrowserClient */ .R, clientOptions);
+  (0,_sentry_core__WEBPACK_IMPORTED_MODULE_15__/* .initAndBind */ .g)(_client_js__WEBPACK_IMPORTED_MODULE_16__/* .BrowserClient */ .u, clientOptions);
 
   if (options.autoSessionTracking) {
     startSessionTracking();
@@ -2142,12 +2142,12 @@ function onLoad(callback) {
  * doesn't (or if there's no client defined).
  */
 function flush(timeout) {
-  const client = (0,_sentry_core__WEBPACK_IMPORTED_MODULE_17__/* .getCurrentHub */ .Gd)().getClient();
+  const client = (0,_sentry_core__WEBPACK_IMPORTED_MODULE_17__/* .getCurrentHub */ .WS)().getClient();
   if (client) {
     return client.flush(timeout);
   }
-  (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_18__/* .logger */ .kg.warn('Cannot flush events. No client defined.');
-  return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_19__/* .resolvedSyncPromise */ .WD)(false);
+  (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_18__/* .logger */ .QE.warn('Cannot flush events. No client defined.');
+  return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_19__/* .resolvedSyncPromise */ .ig)(false);
 }
 
 /**
@@ -2188,13 +2188,13 @@ function startSessionOnHub(hub) {
  * Enable automatic Session Tracking for the initial page load.
  */
 function startSessionTracking() {
-  if (typeof _helpers_js__WEBPACK_IMPORTED_MODULE_8__/* .WINDOW */ .m9.document === 'undefined') {
+  if (typeof _helpers_js__WEBPACK_IMPORTED_MODULE_8__/* .WINDOW */ .sn.document === 'undefined') {
     (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) &&
-      _sentry_utils__WEBPACK_IMPORTED_MODULE_18__/* .logger */ .kg.warn('Session tracking in non-browser environment with @sentry/browser is not supported.');
+      _sentry_utils__WEBPACK_IMPORTED_MODULE_18__/* .logger */ .QE.warn('Session tracking in non-browser environment with @sentry/browser is not supported.');
     return;
   }
 
-  const hub = (0,_sentry_core__WEBPACK_IMPORTED_MODULE_17__/* .getCurrentHub */ .Gd)();
+  const hub = (0,_sentry_core__WEBPACK_IMPORTED_MODULE_17__/* .getCurrentHub */ .WS)();
 
   // The only way for this to be false is for there to be a version mismatch between @sentry/browser (>= 6.0.0) and
   // @sentry/hub (< 5.27.0). In the simple case, there won't ever be such a mismatch, because the two packages are
@@ -2213,10 +2213,10 @@ function startSessionTracking() {
   startSessionOnHub(hub);
 
   // We want to create a session for every navigation as well
-  (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_20__/* .addInstrumentationHandler */ .oq)('history', ({ from, to }) => {
+  (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_20__/* .addInstrumentationHandler */ .cS)('history', ({ from, to }) => {
     // Don't create an additional session for the initial route or if the location did not change
     if (!(from === undefined || from === to)) {
-      startSessionOnHub((0,_sentry_core__WEBPACK_IMPORTED_MODULE_17__/* .getCurrentHub */ .Gd)());
+      startSessionOnHub((0,_sentry_core__WEBPACK_IMPORTED_MODULE_17__/* .getCurrentHub */ .WS)());
     }
   });
 }
@@ -2237,14 +2237,14 @@ function captureUserFeedback(feedback) {
 
 /***/ }),
 
-/***/ 2224:
+/***/ 9000:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Dt: () => (/* binding */ defaultStackParser)
+/* harmony export */   ot: () => (/* binding */ defaultStackParser)
 /* harmony export */ });
 /* unused harmony exports chromeStackLineParser, defaultStackLineParsers, geckoStackLineParser, opera10StackLineParser, opera11StackLineParser, winjsStackLineParser */
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9038);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6192);
 
 
 // global reference to slice
@@ -2377,7 +2377,7 @@ const opera11StackLineParser = [OPERA11_PRIORITY, opera11];
 
 const defaultStackLineParsers = [chromeStackLineParser, geckoStackLineParser, winjsStackLineParser];
 
-const defaultStackParser = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .createStackParser */ .pE)(...defaultStackLineParsers);
+const defaultStackParser = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .createStackParser */ .i4)(...defaultStackLineParsers);
 
 /**
  * Safari web extensions, starting version unknown, can produce "frames-only" stacktraces.
@@ -2417,15 +2417,15 @@ const extractSafariExtensionDetails = (func, filename) => {
 
 /***/ }),
 
-/***/ 6149:
+/***/ 8879:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   f: () => (/* binding */ makeFetchTransport)
+/* harmony export */   e: () => (/* binding */ makeFetchTransport)
 /* harmony export */ });
-/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1518);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7946);
-/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5854);
+/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1800);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7000);
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7841);
 
 
 
@@ -2435,7 +2435,7 @@ const extractSafariExtensionDetails = (func, filename) => {
  */
 function makeFetchTransport(
   options,
-  nativeFetch = (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__/* .getNativeFetchImplementation */ .x)(),
+  nativeFetch = (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__/* .getNativeFetchImplementation */ .I)(),
 ) {
   let pendingBodySize = 0;
   let pendingCount = 0;
@@ -2478,14 +2478,14 @@ function makeFetchTransport(
         };
       });
     } catch (e) {
-      (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__/* .clearCachedFetchImplementation */ .c)();
+      (0,_utils_js__WEBPACK_IMPORTED_MODULE_0__/* .clearCachedFetchImplementation */ .o)();
       pendingBodySize -= requestSize;
       pendingCount--;
-      return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .rejectedSyncPromise */ .$2)(e);
+      return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .rejectedSyncPromise */ .qE)(e);
     }
   }
 
-  return (0,_sentry_core__WEBPACK_IMPORTED_MODULE_2__/* .createTransport */ .q)(options, makeRequest);
+  return (0,_sentry_core__WEBPACK_IMPORTED_MODULE_2__/* .createTransport */ .i)(options, makeRequest);
 }
 
 
@@ -2494,16 +2494,16 @@ function makeFetchTransport(
 
 /***/ }),
 
-/***/ 5854:
+/***/ 7841:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   c: () => (/* binding */ clearCachedFetchImplementation),
-/* harmony export */   x: () => (/* binding */ getNativeFetchImplementation)
+/* harmony export */   I: () => (/* binding */ getNativeFetchImplementation),
+/* harmony export */   o: () => (/* binding */ clearCachedFetchImplementation)
 /* harmony export */ });
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9798);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8536);
-/* harmony import */ var _helpers_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2634);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8036);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(832);
+/* harmony import */ var _helpers_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2656);
 
 
 
@@ -2555,12 +2555,12 @@ function getNativeFetchImplementation() {
   /* eslint-disable @typescript-eslint/unbound-method */
 
   // Fast path to avoid DOM I/O
-  if ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .isNativeFetch */ .Du)(_helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .m9.fetch)) {
-    return (cachedFetchImpl = _helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .m9.fetch.bind(_helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .m9));
+  if ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .isNativeFetch */ .MD)(_helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .sn.fetch)) {
+    return (cachedFetchImpl = _helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .sn.fetch.bind(_helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .sn));
   }
 
-  const document = _helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .m9.document;
-  let fetchImpl = _helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .m9.fetch;
+  const document = _helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .sn.document;
+  let fetchImpl = _helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .sn.fetch;
   // eslint-disable-next-line deprecation/deprecation
   if (document && typeof document.createElement === 'function') {
     try {
@@ -2574,11 +2574,11 @@ function getNativeFetchImplementation() {
       document.head.removeChild(sandbox);
     } catch (e) {
       (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) &&
-        _sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .logger */ .kg.warn('Could not create sandbox iframe for pure fetch check, bailing to window.fetch: ', e);
+        _sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .logger */ .QE.warn('Could not create sandbox iframe for pure fetch check, bailing to window.fetch: ', e);
     }
   }
 
-  return (cachedFetchImpl = fetchImpl.bind(_helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .m9));
+  return (cachedFetchImpl = fetchImpl.bind(_helpers_js__WEBPACK_IMPORTED_MODULE_1__/* .WINDOW */ .sn));
   /* eslint-enable @typescript-eslint/unbound-method */
 }
 
@@ -2593,14 +2593,14 @@ function clearCachedFetchImplementation() {
 
 /***/ }),
 
-/***/ 6144:
+/***/ 9136:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   K: () => (/* binding */ makeXHRTransport)
+/* harmony export */   e: () => (/* binding */ makeXHRTransport)
 /* harmony export */ });
-/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1518);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7946);
+/* harmony import */ var _sentry_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1800);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7000);
 
 
 
@@ -2619,7 +2619,7 @@ const XHR_READYSTATE_DONE = 4;
  */
 function makeXHRTransport(options) {
   function makeRequest(request) {
-    return new _sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .SyncPromise */ .cW((resolve, reject) => {
+    return new _sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .SyncPromise */ .Gg((resolve, reject) => {
       const xhr = new XMLHttpRequest();
 
       xhr.onerror = reject;
@@ -2648,7 +2648,7 @@ function makeXHRTransport(options) {
     });
   }
 
-  return (0,_sentry_core__WEBPACK_IMPORTED_MODULE_1__/* .createTransport */ .q)(options, makeRequest);
+  return (0,_sentry_core__WEBPACK_IMPORTED_MODULE_1__/* .createTransport */ .i)(options, makeRequest);
 }
 
 
@@ -2657,14 +2657,14 @@ function makeXHRTransport(options) {
 
 /***/ }),
 
-/***/ 9313:
+/***/ 1420:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   r: () => (/* binding */ createUserFeedbackEnvelope)
+/* harmony export */   C: () => (/* binding */ createUserFeedbackEnvelope)
 /* harmony export */ });
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3135);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6894);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4640);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(172);
 
 
 /**
@@ -2690,11 +2690,11 @@ function createUserFeedbackEnvelope(
           version: metadata.sdk.version,
         },
       }),
-    ...(!!tunnel && !!dsn && { dsn: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .dsnToString */ .RA)(dsn) }),
+    ...(!!tunnel && !!dsn && { dsn: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .dsnToString */ .CK)(dsn) }),
   };
   const item = createUserFeedbackEnvelopeItem(feedback);
 
-  return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .createEnvelope */ .Jd)(headers, [item]);
+  return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .createEnvelope */ .Ks)(headers, [item]);
 }
 
 function createUserFeedbackEnvelopeItem(feedback) {
@@ -2710,14 +2710,14 @@ function createUserFeedbackEnvelopeItem(feedback) {
 
 /***/ }),
 
-/***/ 4911:
+/***/ 2408:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   U: () => (/* binding */ getEnvelopeEndpointWithUrlEncodedAuth)
+/* harmony export */   C: () => (/* binding */ getEnvelopeEndpointWithUrlEncodedAuth)
 /* harmony export */ });
 /* unused harmony export getReportDialogEndpoint */
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1995);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5324);
 
 
 const SENTRY_API_VERSION = '7';
@@ -2736,7 +2736,7 @@ function _getIngestEndpoint(dsn) {
 
 /** Returns a URL-encoded string with auth config suitable for a query string. */
 function _encodedAuth(dsn, sdkInfo) {
-  return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .urlEncode */ ._j)({
+  return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .urlEncode */ .OW)({
     // We send only the minimum set of required information. See
     // https://github.com/getsentry/sentry-javascript/issues/2572.
     sentry_key: dsn.publicKey,
@@ -2812,24 +2812,24 @@ function getReportDialogEndpoint(
 
 /***/ }),
 
-/***/ 9849:
+/***/ 4936:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   W: () => (/* binding */ BaseClient)
 /* harmony export */ });
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3135);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8536);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3699);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1757);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7946);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(6894);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(4388);
-/* harmony import */ var _api_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4911);
-/* harmony import */ var _envelope_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(3055);
-/* harmony import */ var _integration_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(8889);
-/* harmony import */ var _session_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(8364);
-/* harmony import */ var _utils_prepareEvent_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(8738);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4640);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(832);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2503);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6484);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7000);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(172);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(8388);
+/* harmony import */ var _api_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2408);
+/* harmony import */ var _envelope_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(160);
+/* harmony import */ var _integration_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(8736);
+/* harmony import */ var _session_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(5728);
+/* harmony import */ var _utils_prepareEvent_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(2292);
 
 
 
@@ -2899,13 +2899,13 @@ class BaseClient {
     this._options = options;
 
     if (options.dsn) {
-      this._dsn = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .makeDsn */ .vK)(options.dsn);
+      this._dsn = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .makeDsn */ .AD)(options.dsn);
     } else {
-      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .kg.warn('No DSN provided, client will not do anything.');
+      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .QE.warn('No DSN provided, client will not do anything.');
     }
 
     if (this._dsn) {
-      const url = (0,_api_js__WEBPACK_IMPORTED_MODULE_2__/* .getEnvelopeEndpointWithUrlEncodedAuth */ .U)(this._dsn, options);
+      const url = (0,_api_js__WEBPACK_IMPORTED_MODULE_2__/* .getEnvelopeEndpointWithUrlEncodedAuth */ .C)(this._dsn, options);
       this._transport = options.transport({
         recordDroppedEvent: this.recordDroppedEvent.bind(this),
         ...options.transportOptions,
@@ -2920,8 +2920,8 @@ class BaseClient {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
    captureException(exception, hint, scope) {
     // ensure we haven't captured this very object before
-    if ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_3__/* .checkOrSetAlreadyCaught */ .YO)(exception)) {
-      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .kg.log(ALREADY_SEEN_ERROR);
+    if ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_3__/* .checkOrSetAlreadyCaught */ .kT)(exception)) {
+      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .QE.log(ALREADY_SEEN_ERROR);
       return;
     }
 
@@ -2950,7 +2950,7 @@ class BaseClient {
   ) {
     let eventId = hint && hint.event_id;
 
-    const promisedEvent = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .isPrimitive */ .pt)(message)
+    const promisedEvent = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .isPrimitive */ .od)(message)
       ? this.eventFromMessage(String(message), level, hint)
       : this.eventFromException(message, hint);
 
@@ -2970,8 +2970,8 @@ class BaseClient {
    */
    captureEvent(event, hint, scope) {
     // ensure we haven't captured this very object before
-    if (hint && hint.originalException && (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_3__/* .checkOrSetAlreadyCaught */ .YO)(hint.originalException)) {
-      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .kg.log(ALREADY_SEEN_ERROR);
+    if (hint && hint.originalException && (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_3__/* .checkOrSetAlreadyCaught */ .kT)(hint.originalException)) {
+      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .QE.log(ALREADY_SEEN_ERROR);
       return;
     }
 
@@ -2991,16 +2991,16 @@ class BaseClient {
    */
    captureSession(session) {
     if (!this._isEnabled()) {
-      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .kg.warn('SDK not enabled, will not capture session.');
+      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .QE.warn('SDK not enabled, will not capture session.');
       return;
     }
 
     if (!(typeof session.release === 'string')) {
-      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .kg.warn('Discarded session because of missing or non-string release');
+      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .QE.warn('Discarded session because of missing or non-string release');
     } else {
       this.sendSession(session);
       // After sending, we set init false to indicate it's not the first occurrence
-      (0,_session_js__WEBPACK_IMPORTED_MODULE_5__/* .updateSession */ .CT)(session, { init: false });
+      (0,_session_js__WEBPACK_IMPORTED_MODULE_5__/* .updateSession */ .mM)(session, { init: false });
     }
   }
 
@@ -3044,7 +3044,7 @@ class BaseClient {
         return transport.flush(timeout).then(transportFlushed => clientFinished && transportFlushed);
       });
     } else {
-      return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .resolvedSyncPromise */ .WD)(true);
+      return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .resolvedSyncPromise */ .ig)(true);
     }
   }
 
@@ -3063,7 +3063,7 @@ class BaseClient {
    */
    setupIntegrations() {
     if (this._isEnabled() && !this._integrationsInitialized) {
-      this._integrations = (0,_integration_js__WEBPACK_IMPORTED_MODULE_7__/* .setupIntegrations */ .q4)(this._options.integrations);
+      this._integrations = (0,_integration_js__WEBPACK_IMPORTED_MODULE_7__/* .setupIntegrations */ .aC)(this._options.integrations);
       this._integrationsInitialized = true;
     }
   }
@@ -3084,7 +3084,7 @@ class BaseClient {
     try {
       return (this._integrations[integration.id] ) || null;
     } catch (_oO) {
-      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .kg.warn(`Cannot retrieve integration ${integration.id} from the current Client`);
+      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .QE.warn(`Cannot retrieve integration ${integration.id} from the current Client`);
       return null;
     }
   }
@@ -3093,7 +3093,7 @@ class BaseClient {
    * @inheritDoc
    */
    addIntegration(integration) {
-    (0,_integration_js__WEBPACK_IMPORTED_MODULE_7__/* .setupIntegration */ .m7)(integration, this._integrations);
+    (0,_integration_js__WEBPACK_IMPORTED_MODULE_7__/* .setupIntegration */ .cL)(integration, this._integrations);
   }
 
   /**
@@ -3101,12 +3101,12 @@ class BaseClient {
    */
    sendEvent(event, hint = {}) {
     if (this._dsn) {
-      let env = (0,_envelope_js__WEBPACK_IMPORTED_MODULE_8__/* .createEventEnvelope */ .M)(event, this._dsn, this._options._metadata, this._options.tunnel);
+      let env = (0,_envelope_js__WEBPACK_IMPORTED_MODULE_8__/* .createEventEnvelope */ .s)(event, this._dsn, this._options._metadata, this._options.tunnel);
 
       for (const attachment of hint.attachments || []) {
-        env = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_9__/* .addItemToEnvelope */ .BO)(
+        env = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_9__/* .addItemToEnvelope */ .kN)(
           env,
-          (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_9__/* .createAttachmentEnvelopeItem */ .zQ)(
+          (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_9__/* .createAttachmentEnvelopeItem */ .aA)(
             attachment,
             this._options.transportOptions && this._options.transportOptions.textEncoder,
           ),
@@ -3125,7 +3125,7 @@ class BaseClient {
    */
    sendSession(session) {
     if (this._dsn) {
-      const env = (0,_envelope_js__WEBPACK_IMPORTED_MODULE_8__/* .createSessionEnvelope */ .Q)(session, this._dsn, this._options._metadata, this._options.tunnel);
+      const env = (0,_envelope_js__WEBPACK_IMPORTED_MODULE_8__/* .createSessionEnvelope */ .A)(session, this._dsn, this._options._metadata, this._options.tunnel);
       void this._sendEnvelope(env);
     }
   }
@@ -3144,7 +3144,7 @@ class BaseClient {
       // would be `Partial<Record<SentryRequestType, Partial<Record<Outcome, number>>>>`
       // With typescript 4.1 we could even use template literal types
       const key = `${reason}:${category}`;
-      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .kg.log(`Adding outcome: "${key}"`);
+      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .QE.log(`Adding outcome: "${key}"`);
 
       // The following works because undefined + 1 === NaN and NaN is falsy
       this._outcomes[key] = this._outcomes[key] + 1 || 1;
@@ -3200,7 +3200,7 @@ class BaseClient {
     const shouldUpdateAndSend = (sessionNonTerminal && session.errors === 0) || (sessionNonTerminal && crashed);
 
     if (shouldUpdateAndSend) {
-      (0,_session_js__WEBPACK_IMPORTED_MODULE_5__/* .updateSession */ .CT)(session, {
+      (0,_session_js__WEBPACK_IMPORTED_MODULE_5__/* .updateSession */ .mM)(session, {
         ...(crashed && { status: 'crashed' }),
         errors: session.errors || Number(errored || crashed),
       });
@@ -3219,7 +3219,7 @@ class BaseClient {
    * `false` otherwise
    */
    _isClientDoneProcessing(timeout) {
-    return new _sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .SyncPromise */ .cW(resolve => {
+    return new _sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .SyncPromise */ .Gg(resolve => {
       let ticked = 0;
       const tick = 1;
 
@@ -3263,7 +3263,7 @@ class BaseClient {
     if (!hint.integrations && integrations.length > 0) {
       hint.integrations = integrations;
     }
-    return (0,_utils_prepareEvent_js__WEBPACK_IMPORTED_MODULE_10__/* .prepareEvent */ .R)(options, event, hint, scope);
+    return (0,_utils_prepareEvent_js__WEBPACK_IMPORTED_MODULE_10__/* .prepareEvent */ .G)(options, event, hint, scope);
   }
 
   /**
@@ -3283,9 +3283,9 @@ class BaseClient {
           // control flow, log just the message (no stack) as a log-level log.
           const sentryError = reason ;
           if (sentryError.logLevel === 'log') {
-            _sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .kg.log(sentryError.message);
+            _sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .QE.log(sentryError.message);
           } else {
-            _sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .kg.warn(sentryError);
+            _sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .QE.warn(sentryError);
           }
         }
         return undefined;
@@ -3311,7 +3311,7 @@ class BaseClient {
     const { sampleRate } = options;
 
     if (!this._isEnabled()) {
-      return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .rejectedSyncPromise */ .$2)(new _sentry_utils__WEBPACK_IMPORTED_MODULE_11__/* .SentryError */ .b('SDK not enabled, will not capture event.', 'log'));
+      return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .rejectedSyncPromise */ .qE)(new _sentry_utils__WEBPACK_IMPORTED_MODULE_11__/* .SentryError */ .C('SDK not enabled, will not capture event.', 'log'));
     }
 
     const isTransaction = isTransactionEvent(event);
@@ -3324,8 +3324,8 @@ class BaseClient {
     // Sampling for transaction happens somewhere else
     if (isError && typeof sampleRate === 'number' && Math.random() > sampleRate) {
       this.recordDroppedEvent('sample_rate', 'error', event);
-      return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .rejectedSyncPromise */ .$2)(
-        new _sentry_utils__WEBPACK_IMPORTED_MODULE_11__/* .SentryError */ .b(
+      return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .rejectedSyncPromise */ .qE)(
+        new _sentry_utils__WEBPACK_IMPORTED_MODULE_11__/* .SentryError */ .C(
           `Discarding event because it's not included in the random sample (sampling rate = ${sampleRate})`,
           'log',
         ),
@@ -3338,7 +3338,7 @@ class BaseClient {
       .then(prepared => {
         if (prepared === null) {
           this.recordDroppedEvent('event_processor', dataCategory, event);
-          throw new _sentry_utils__WEBPACK_IMPORTED_MODULE_11__/* .SentryError */ .b('An event processor returned `null`, will not send event.', 'log');
+          throw new _sentry_utils__WEBPACK_IMPORTED_MODULE_11__/* .SentryError */ .C('An event processor returned `null`, will not send event.', 'log');
         }
 
         const isInternalException = hint.data && (hint.data ).__sentry__ === true;
@@ -3352,7 +3352,7 @@ class BaseClient {
       .then(processedEvent => {
         if (processedEvent === null) {
           this.recordDroppedEvent('before_send', dataCategory, event);
-          throw new _sentry_utils__WEBPACK_IMPORTED_MODULE_11__/* .SentryError */ .b(`${beforeSendLabel} returned \`null\`, will not send event.`, 'log');
+          throw new _sentry_utils__WEBPACK_IMPORTED_MODULE_11__/* .SentryError */ .C(`${beforeSendLabel} returned \`null\`, will not send event.`, 'log');
         }
 
         const session = scope && scope.getSession();
@@ -3376,7 +3376,7 @@ class BaseClient {
         return processedEvent;
       })
       .then(null, reason => {
-        if (reason instanceof _sentry_utils__WEBPACK_IMPORTED_MODULE_11__/* .SentryError */ .b) {
+        if (reason instanceof _sentry_utils__WEBPACK_IMPORTED_MODULE_11__/* .SentryError */ .C) {
           throw reason;
         }
 
@@ -3386,7 +3386,7 @@ class BaseClient {
           },
           originalException: reason,
         });
-        throw new _sentry_utils__WEBPACK_IMPORTED_MODULE_11__/* .SentryError */ .b(
+        throw new _sentry_utils__WEBPACK_IMPORTED_MODULE_11__/* .SentryError */ .C(
           `Event processing pipeline threw an error, original event will not be sent. Details have been sent as a new event.\nReason: ${reason}`,
         );
       });
@@ -3417,10 +3417,10 @@ class BaseClient {
       this.emit('beforeEnvelope', envelope);
 
       return this._transport.send(envelope).then(null, reason => {
-        (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .kg.error('Error while sending event:', reason);
+        (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .QE.error('Error while sending event:', reason);
       });
     } else {
-      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .kg.error('Transport disabled');
+      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .QE.error('Transport disabled');
     }
   }
 
@@ -3455,20 +3455,20 @@ function _validateBeforeSendResult(
   beforeSendLabel,
 ) {
   const invalidValueError = `${beforeSendLabel} must return \`null\` or a valid event.`;
-  if ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .isThenable */ .J8)(beforeSendResult)) {
+  if ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .isThenable */ .Oe)(beforeSendResult)) {
     return beforeSendResult.then(
       event => {
-        if (!(0,_sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .isPlainObject */ .PO)(event) && event !== null) {
-          throw new _sentry_utils__WEBPACK_IMPORTED_MODULE_11__/* .SentryError */ .b(invalidValueError);
+        if (!(0,_sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .isPlainObject */ .oF)(event) && event !== null) {
+          throw new _sentry_utils__WEBPACK_IMPORTED_MODULE_11__/* .SentryError */ .C(invalidValueError);
         }
         return event;
       },
       e => {
-        throw new _sentry_utils__WEBPACK_IMPORTED_MODULE_11__/* .SentryError */ .b(`${beforeSendLabel} rejected with ${e}`);
+        throw new _sentry_utils__WEBPACK_IMPORTED_MODULE_11__/* .SentryError */ .C(`${beforeSendLabel} rejected with ${e}`);
       },
     );
-  } else if (!(0,_sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .isPlainObject */ .PO)(beforeSendResult) && beforeSendResult !== null) {
-    throw new _sentry_utils__WEBPACK_IMPORTED_MODULE_11__/* .SentryError */ .b(invalidValueError);
+  } else if (!(0,_sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .isPlainObject */ .oF)(beforeSendResult) && beforeSendResult !== null) {
+    throw new _sentry_utils__WEBPACK_IMPORTED_MODULE_11__/* .SentryError */ .C(invalidValueError);
   }
   return beforeSendResult;
 }
@@ -3508,11 +3508,11 @@ function isTransactionEvent(event) {
 
 /***/ }),
 
-/***/ 6417:
+/***/ 3528:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   J: () => (/* binding */ DEFAULT_ENVIRONMENT)
+/* harmony export */   a: () => (/* binding */ DEFAULT_ENVIRONMENT)
 /* harmony export */ });
 const DEFAULT_ENVIRONMENT = 'production';
 
@@ -3522,15 +3522,15 @@ const DEFAULT_ENVIRONMENT = 'production';
 
 /***/ }),
 
-/***/ 3055:
+/***/ 160:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   M: () => (/* binding */ createEventEnvelope),
-/* harmony export */   Q: () => (/* binding */ createSessionEnvelope)
+/* harmony export */   A: () => (/* binding */ createSessionEnvelope),
+/* harmony export */   s: () => (/* binding */ createEventEnvelope)
 /* harmony export */ });
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6894);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3135);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(172);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4640);
 
 
 /**
@@ -3556,17 +3556,17 @@ function createSessionEnvelope(
   metadata,
   tunnel,
 ) {
-  const sdkInfo = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .getSdkMetadataForEnvelopeHeader */ .HY)(metadata);
+  const sdkInfo = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .getSdkMetadataForEnvelopeHeader */ .ck)(metadata);
   const envelopeHeaders = {
     sent_at: new Date().toISOString(),
     ...(sdkInfo && { sdk: sdkInfo }),
-    ...(!!tunnel && { dsn: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .dsnToString */ .RA)(dsn) }),
+    ...(!!tunnel && { dsn: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .dsnToString */ .CK)(dsn) }),
   };
 
   const envelopeItem =
     'aggregates' in session ? [{ type: 'sessions' }, session] : [{ type: 'session' }, session.toJSON()];
 
-  return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .createEnvelope */ .Jd)(envelopeHeaders, [envelopeItem]);
+  return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .createEnvelope */ .Ks)(envelopeHeaders, [envelopeItem]);
 }
 
 /**
@@ -3578,7 +3578,7 @@ function createEventEnvelope(
   metadata,
   tunnel,
 ) {
-  const sdkInfo = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .getSdkMetadataForEnvelopeHeader */ .HY)(metadata);
+  const sdkInfo = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .getSdkMetadataForEnvelopeHeader */ .ck)(metadata);
 
   /*
     Note: Due to TS, event.type may be `replay_event`, theoretically.
@@ -3591,7 +3591,7 @@ function createEventEnvelope(
 
   enhanceEventWithSdkInfo(event, metadata && metadata.sdk);
 
-  const envelopeHeaders = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .createEventEnvelopeHeaders */ .Cd)(event, sdkInfo, tunnel, dsn);
+  const envelopeHeaders = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .createEventEnvelopeHeaders */ .mE)(event, sdkInfo, tunnel, dsn);
 
   // Prevent this data (which, if it exists, was used in earlier steps in the processing pipeline) from being sent to
   // sentry. (Note: Our use of this property comes and goes with whatever we might be debugging, whatever hacks we may
@@ -3600,7 +3600,7 @@ function createEventEnvelope(
   delete event.sdkProcessingMetadata;
 
   const eventItem = [{ type: eventType }, event];
-  return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .createEnvelope */ .Jd)(envelopeHeaders, [eventItem]);
+  return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .createEnvelope */ .Ks)(envelopeHeaders, [eventItem]);
 }
 
 
@@ -3609,15 +3609,15 @@ function createEventEnvelope(
 
 /***/ }),
 
-/***/ 2642:
+/***/ 1060:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   $e: () => (/* binding */ withScope),
-/* harmony export */   Tb: () => (/* binding */ captureException)
+/* harmony export */   oV: () => (/* binding */ withScope),
+/* harmony export */   wx: () => (/* binding */ captureException)
 /* harmony export */ });
 /* unused harmony exports addBreadcrumb, captureCheckIn, captureEvent, captureMessage, configureScope, setContext, setExtra, setExtras, setTag, setTags, setUser, startTransaction */
-/* harmony import */ var _hub_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6465);
+/* harmony import */ var _hub_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5400);
 
 
 
@@ -3637,7 +3637,7 @@ function createEventEnvelope(
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 function captureException(exception, captureContext) {
-  return (0,_hub_js__WEBPACK_IMPORTED_MODULE_0__/* .getCurrentHub */ .Gd)().captureException(exception, { captureContext });
+  return (0,_hub_js__WEBPACK_IMPORTED_MODULE_0__/* .getCurrentHub */ .WS)().captureException(exception, { captureContext });
 }
 
 /**
@@ -3759,7 +3759,7 @@ function setUser(user) {
  * @param callback that will be enclosed into push/popScope.
  */
 function withScope(callback) {
-  (0,_hub_js__WEBPACK_IMPORTED_MODULE_0__/* .getCurrentHub */ .Gd)().withScope(callback);
+  (0,_hub_js__WEBPACK_IMPORTED_MODULE_0__/* .getCurrentHub */ .WS)().withScope(callback);
 }
 
 /**
@@ -3815,20 +3815,20 @@ function captureCheckIn(checkIn, upsertMonitorConfig) {
 
 /***/ }),
 
-/***/ 6465:
+/***/ 5400:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Gd: () => (/* binding */ getCurrentHub)
+/* harmony export */   WS: () => (/* binding */ getCurrentHub)
 /* harmony export */ });
 /* unused harmony exports API_VERSION, Hub, ensureHubOnCarrier, getHubFromCarrier, getMainCarrier, makeMain, runWithAsyncContext, setAsyncContextStrategy, setHubOnCarrier */
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3699);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7790);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8536);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(63);
-/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6417);
-/* harmony import */ var _scope_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1877);
-/* harmony import */ var _session_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8364);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2503);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2244);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(832);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(4616);
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(3528);
+/* harmony import */ var _scope_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6528);
+/* harmony import */ var _session_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5728);
 
 
 
@@ -3866,7 +3866,7 @@ class Hub  {
    * @param scope bound to the hub.
    * @param version number, higher number means higher priority.
    */
-   constructor(client, scope = new _scope_js__WEBPACK_IMPORTED_MODULE_0__/* .Scope */ .s(),   _version = API_VERSION) {this._version = _version;
+   constructor(client, scope = new _scope_js__WEBPACK_IMPORTED_MODULE_0__/* .Scope */ .k(),   _version = API_VERSION) {this._version = _version;
     this._stack = [{ scope }];
     if (client) {
       this.bindClient(client);
@@ -3896,7 +3896,7 @@ class Hub  {
    */
    pushScope() {
     // We want to clone the content of prev scope
-    const scope = _scope_js__WEBPACK_IMPORTED_MODULE_0__/* .Scope */ .s.clone(this.getScope());
+    const scope = _scope_js__WEBPACK_IMPORTED_MODULE_0__/* .Scope */ .k.clone(this.getScope());
     this.getStack().push({
       client: this.getClient(),
       scope,
@@ -3950,7 +3950,7 @@ class Hub  {
    * @inheritDoc
    */
    captureException(exception, hint) {
-    const eventId = (this._lastEventId = hint && hint.event_id ? hint.event_id : (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .uuid4 */ .DM)());
+    const eventId = (this._lastEventId = hint && hint.event_id ? hint.event_id : (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .uuid4 */ .OW)());
     const syntheticException = new Error('Sentry syntheticException');
     this._withClient((client, scope) => {
       client.captureException(
@@ -3976,7 +3976,7 @@ class Hub  {
     level,
     hint,
   ) {
-    const eventId = (this._lastEventId = hint && hint.event_id ? hint.event_id : (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .uuid4 */ .DM)());
+    const eventId = (this._lastEventId = hint && hint.event_id ? hint.event_id : (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .uuid4 */ .OW)());
     const syntheticException = new Error(message);
     this._withClient((client, scope) => {
       client.captureMessage(
@@ -3998,7 +3998,7 @@ class Hub  {
    * @inheritDoc
    */
    captureEvent(event, hint) {
-    const eventId = hint && hint.event_id ? hint.event_id : (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .uuid4 */ .DM)();
+    const eventId = hint && hint.event_id ? hint.event_id : (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .uuid4 */ .OW)();
     if (!event.type) {
       this._lastEventId = eventId;
     }
@@ -4029,10 +4029,10 @@ class Hub  {
 
     if (maxBreadcrumbs <= 0) return;
 
-    const timestamp = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .dateTimestampInSeconds */ .yW)();
+    const timestamp = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .dateTimestampInSeconds */ .CG)();
     const mergedBreadcrumb = { timestamp, ...breadcrumb };
     const finalBreadcrumb = beforeBreadcrumb
-      ? ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_3__/* .consoleSandbox */ .Cf)(() => beforeBreadcrumb(mergedBreadcrumb, hint)) )
+      ? ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_3__/* .consoleSandbox */ .QD)(() => beforeBreadcrumb(mergedBreadcrumb, hint)) )
       : mergedBreadcrumb;
 
     if (finalBreadcrumb === null) return;
@@ -4118,7 +4118,7 @@ class Hub  {
     try {
       return client.getIntegration(integration);
     } catch (_oO) {
-      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_3__/* .logger */ .kg.warn(`Cannot retrieve integration ${integration.id} from the current Hub`);
+      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_3__/* .logger */ .QE.warn(`Cannot retrieve integration ${integration.id} from the current Hub`);
       return null;
     }
   }
@@ -4168,7 +4168,7 @@ Sentry.init({...});
     const scope = layer.scope;
     const session = scope.getSession();
     if (session) {
-      (0,_session_js__WEBPACK_IMPORTED_MODULE_4__/* .closeSession */ .RJ)(session);
+      (0,_session_js__WEBPACK_IMPORTED_MODULE_4__/* .closeSession */ .yK)(session);
     }
     this._sendSessionUpdate();
 
@@ -4181,12 +4181,12 @@ Sentry.init({...});
    */
    startSession(context) {
     const { scope, client } = this.getStackTop();
-    const { release, environment = _constants_js__WEBPACK_IMPORTED_MODULE_5__/* .DEFAULT_ENVIRONMENT */ .J } = (client && client.getOptions()) || {};
+    const { release, environment = _constants_js__WEBPACK_IMPORTED_MODULE_5__/* .DEFAULT_ENVIRONMENT */ .a } = (client && client.getOptions()) || {};
 
     // Will fetch userAgent if called from browser sdk
-    const { userAgent } = _sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .GLOBAL_OBJ */ .n2.navigator || {};
+    const { userAgent } = _sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .GLOBAL_OBJ */ .eg.navigator || {};
 
-    const session = (0,_session_js__WEBPACK_IMPORTED_MODULE_4__/* .makeSession */ .Hv)({
+    const session = (0,_session_js__WEBPACK_IMPORTED_MODULE_4__/* .makeSession */ .yG)({
       release,
       environment,
       user: scope.getUser(),
@@ -4197,7 +4197,7 @@ Sentry.init({...});
     // End existing session if there's one
     const currentSession = scope.getSession && scope.getSession();
     if (currentSession && currentSession.status === 'ok') {
-      (0,_session_js__WEBPACK_IMPORTED_MODULE_4__/* .updateSession */ .CT)(currentSession, { status: 'exited' });
+      (0,_session_js__WEBPACK_IMPORTED_MODULE_4__/* .updateSession */ .mM)(currentSession, { status: 'exited' });
     }
     this.endSession();
 
@@ -4253,7 +4253,7 @@ Sentry.init({...});
     if (sentry && sentry.extensions && typeof sentry.extensions[method] === 'function') {
       return sentry.extensions[method].apply(this, args);
     }
-    (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_3__/* .logger */ .kg.warn(`Extension method ${method} couldn't be found, doing nothing.`);
+    (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_3__/* .logger */ .QE.warn(`Extension method ${method} couldn't be found, doing nothing.`);
   }
 }
 
@@ -4265,11 +4265,11 @@ Sentry.init({...});
  * at the call-site. We always access the carrier through this function, so we can guarantee that `__SENTRY__` is there.
  **/
 function getMainCarrier() {
-  _sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .GLOBAL_OBJ */ .n2.__SENTRY__ = _sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .GLOBAL_OBJ */ .n2.__SENTRY__ || {
+  _sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .GLOBAL_OBJ */ .eg.__SENTRY__ = _sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .GLOBAL_OBJ */ .eg.__SENTRY__ || {
     extensions: {},
     hub: undefined,
   };
-  return _sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .GLOBAL_OBJ */ .n2;
+  return _sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .GLOBAL_OBJ */ .eg;
 }
 
 /**
@@ -4375,7 +4375,7 @@ function hasHubOnCarrier(carrier) {
  * @hidden
  */
 function getHubFromCarrier(carrier) {
-  return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .getGlobalSingleton */ .YO)('hub', () => new Hub(), carrier);
+  return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .getGlobalSingleton */ .aG)('hub', () => new Hub(), carrier);
 }
 
 /**
@@ -4397,19 +4397,19 @@ function setHubOnCarrier(carrier, hub) {
 
 /***/ }),
 
-/***/ 8889:
+/***/ 8736:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   m7: () => (/* binding */ setupIntegration),
-/* harmony export */   m8: () => (/* binding */ getIntegrationsToSetup),
-/* harmony export */   q4: () => (/* binding */ setupIntegrations)
+/* harmony export */   WW: () => (/* binding */ getIntegrationsToSetup),
+/* harmony export */   aC: () => (/* binding */ setupIntegrations),
+/* harmony export */   cL: () => (/* binding */ setupIntegration)
 /* harmony export */ });
 /* unused harmony export installedIntegrations */
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3699);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8536);
-/* harmony import */ var _hub_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6465);
-/* harmony import */ var _scope_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1877);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2503);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(832);
+/* harmony import */ var _hub_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5400);
+/* harmony import */ var _scope_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6528);
 
 
 
@@ -4459,7 +4459,7 @@ function getIntegrationsToSetup(options) {
   if (Array.isArray(userIntegrations)) {
     integrations = [...defaultIntegrations, ...userIntegrations];
   } else if (typeof userIntegrations === 'function') {
-    integrations = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .arrayify */ .lE)(userIntegrations(defaultIntegrations));
+    integrations = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .arrayify */ .gV)(userIntegrations(defaultIntegrations));
   } else {
     integrations = defaultIntegrations;
   }
@@ -4503,9 +4503,9 @@ function setupIntegration(integration, integrationIndex) {
   integrationIndex[integration.name] = integration;
 
   if (installedIntegrations.indexOf(integration.name) === -1) {
-    integration.setupOnce(_scope_js__WEBPACK_IMPORTED_MODULE_1__/* .addGlobalEventProcessor */ .c, _hub_js__WEBPACK_IMPORTED_MODULE_2__/* .getCurrentHub */ .Gd);
+    integration.setupOnce(_scope_js__WEBPACK_IMPORTED_MODULE_1__/* .addGlobalEventProcessor */ .e, _hub_js__WEBPACK_IMPORTED_MODULE_2__/* .getCurrentHub */ .WS);
     installedIntegrations.push(integration.name);
-    (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_3__/* .logger */ .kg.log(`Integration installed: ${integration.name}`);
+    (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_3__/* .logger */ .QE.log(`Integration installed: ${integration.name}`);
   }
 }
 
@@ -4526,13 +4526,13 @@ function findIndex(arr, callback) {
 
 /***/ }),
 
-/***/ 6286:
+/***/ 6948:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   c: () => (/* binding */ FunctionToString)
+/* harmony export */   A: () => (/* binding */ FunctionToString)
 /* harmony export */ });
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1995);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5324);
 
 
 let originalFunctionToString;
@@ -4561,7 +4561,7 @@ class FunctionToString  {constructor() { FunctionToString.prototype.__init.call(
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       Function.prototype.toString = function ( ...args) {
-        const context = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .getOriginalFunction */ .HK)(this) || this;
+        const context = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .getOriginalFunction */ ._k)(this) || this;
         return originalFunctionToString.apply(context, args);
       };
     } catch (e) {
@@ -4576,16 +4576,16 @@ class FunctionToString  {constructor() { FunctionToString.prototype.__init.call(
 
 /***/ }),
 
-/***/ 1061:
+/***/ 8256:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   QD: () => (/* binding */ InboundFilters)
+/* harmony export */   qC: () => (/* binding */ InboundFilters)
 /* harmony export */ });
 /* unused harmony exports _mergeOptions, _shouldDropEvent */
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8536);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3699);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9660);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(832);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2503);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9268);
 
 
 // "Script error." is hard coded into browsers for errors that it can't read.
@@ -4667,27 +4667,27 @@ function _mergeOptions(
 function _shouldDropEvent(event, options) {
   if (options.ignoreInternal && _isSentryError(event)) {
     (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) &&
-      _sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .logger */ .kg.warn(`Event dropped due to being internal Sentry Error.\nEvent: ${(0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .getEventDescription */ .jH)(event)}`);
+      _sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .logger */ .QE.warn(`Event dropped due to being internal Sentry Error.\nEvent: ${(0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .getEventDescription */ .y_)(event)}`);
     return true;
   }
   if (_isIgnoredError(event, options.ignoreErrors)) {
     (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) &&
-      _sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .logger */ .kg.warn(
-        `Event dropped due to being matched by \`ignoreErrors\` option.\nEvent: ${(0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .getEventDescription */ .jH)(event)}`,
+      _sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .logger */ .QE.warn(
+        `Event dropped due to being matched by \`ignoreErrors\` option.\nEvent: ${(0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .getEventDescription */ .y_)(event)}`,
       );
     return true;
   }
   if (_isIgnoredTransaction(event, options.ignoreTransactions)) {
     (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) &&
-      _sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .logger */ .kg.warn(
-        `Event dropped due to being matched by \`ignoreTransactions\` option.\nEvent: ${(0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .getEventDescription */ .jH)(event)}`,
+      _sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .logger */ .QE.warn(
+        `Event dropped due to being matched by \`ignoreTransactions\` option.\nEvent: ${(0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .getEventDescription */ .y_)(event)}`,
       );
     return true;
   }
   if (_isDeniedUrl(event, options.denyUrls)) {
     (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) &&
-      _sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .logger */ .kg.warn(
-        `Event dropped due to being matched by \`denyUrls\` option.\nEvent: ${(0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .getEventDescription */ .jH)(
+      _sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .logger */ .QE.warn(
+        `Event dropped due to being matched by \`denyUrls\` option.\nEvent: ${(0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .getEventDescription */ .y_)(
           event,
         )}.\nUrl: ${_getEventFilterUrl(event)}`,
       );
@@ -4695,8 +4695,8 @@ function _shouldDropEvent(event, options) {
   }
   if (!_isAllowedUrl(event, options.allowUrls)) {
     (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) &&
-      _sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .logger */ .kg.warn(
-        `Event dropped due to not being matched by \`allowUrls\` option.\nEvent: ${(0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .getEventDescription */ .jH)(
+      _sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .logger */ .QE.warn(
+        `Event dropped due to not being matched by \`allowUrls\` option.\nEvent: ${(0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .getEventDescription */ .y_)(
           event,
         )}.\nUrl: ${_getEventFilterUrl(event)}`,
       );
@@ -4711,7 +4711,7 @@ function _isIgnoredError(event, ignoreErrors) {
     return false;
   }
 
-  return _getPossibleEventMessages(event).some(message => (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .stringMatchesSomePattern */ .U0)(message, ignoreErrors));
+  return _getPossibleEventMessages(event).some(message => (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .stringMatchesSomePattern */ .ER)(message, ignoreErrors));
 }
 
 function _isIgnoredTransaction(event, ignoreTransactions) {
@@ -4720,7 +4720,7 @@ function _isIgnoredTransaction(event, ignoreTransactions) {
   }
 
   const name = event.transaction;
-  return name ? (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .stringMatchesSomePattern */ .U0)(name, ignoreTransactions) : false;
+  return name ? (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .stringMatchesSomePattern */ .ER)(name, ignoreTransactions) : false;
 }
 
 function _isDeniedUrl(event, denyUrls) {
@@ -4729,7 +4729,7 @@ function _isDeniedUrl(event, denyUrls) {
     return false;
   }
   const url = _getEventFilterUrl(event);
-  return !url ? false : (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .stringMatchesSomePattern */ .U0)(url, denyUrls);
+  return !url ? false : (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .stringMatchesSomePattern */ .ER)(url, denyUrls);
 }
 
 function _isAllowedUrl(event, allowUrls) {
@@ -4738,7 +4738,7 @@ function _isAllowedUrl(event, allowUrls) {
     return true;
   }
   const url = _getEventFilterUrl(event);
-  return !url ? true : (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .stringMatchesSomePattern */ .U0)(url, allowUrls);
+  return !url ? true : (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .stringMatchesSomePattern */ .ER)(url, allowUrls);
 }
 
 function _getPossibleEventMessages(event) {
@@ -4751,7 +4751,7 @@ function _getPossibleEventMessages(event) {
       const { type = '', value = '' } = (values && values[values.length - 1]) || {};
       return [`${value}`, `${type}: ${value}`];
     } catch (oO) {
-      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .logger */ .kg.error(`Cannot extract message for event ${(0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .getEventDescription */ .jH)(event)}`);
+      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .logger */ .QE.error(`Cannot extract message for event ${(0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .getEventDescription */ .y_)(event)}`);
       return [];
     }
   }
@@ -4792,7 +4792,7 @@ function _getEventFilterUrl(event) {
     }
     return frames ? _getLastValidUrl(frames) : null;
   } catch (oO) {
-    (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .logger */ .kg.error(`Cannot extract url for event ${(0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .getEventDescription */ .jH)(event)}`);
+    (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .logger */ .QE.error(`Cannot extract url for event ${(0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .getEventDescription */ .y_)(event)}`);
     return null;
   }
 }
@@ -4803,20 +4803,20 @@ function _getEventFilterUrl(event) {
 
 /***/ }),
 
-/***/ 1877:
+/***/ 6528:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   c: () => (/* binding */ addGlobalEventProcessor),
-/* harmony export */   s: () => (/* binding */ Scope)
+/* harmony export */   e: () => (/* binding */ addGlobalEventProcessor),
+/* harmony export */   k: () => (/* binding */ Scope)
 /* harmony export */ });
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1757);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7790);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7946);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8536);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(3699);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(63);
-/* harmony import */ var _session_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8364);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6484);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2244);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7000);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(832);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2503);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(4616);
+/* harmony import */ var _session_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5728);
 
 
 
@@ -4928,7 +4928,7 @@ class Scope  {
    setUser(user) {
     this._user = user || {};
     if (this._session) {
-      (0,_session_js__WEBPACK_IMPORTED_MODULE_0__/* .updateSession */ .CT)(this._session, { user });
+      (0,_session_js__WEBPACK_IMPORTED_MODULE_0__/* .updateSession */ .mM)(this._session, { user });
     }
     this._notifyScopeListeners();
     return this;
@@ -5118,7 +5118,7 @@ class Scope  {
       if (captureContext._requestSession) {
         this._requestSession = captureContext._requestSession;
       }
-    } else if ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .isPlainObject */ .PO)(captureContext)) {
+    } else if ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .isPlainObject */ .oF)(captureContext)) {
       // eslint-disable-next-line no-param-reassign
       captureContext = captureContext ;
       this._tags = { ...this._tags, ...captureContext.tags };
@@ -5173,7 +5173,7 @@ class Scope  {
     }
 
     const mergedBreadcrumb = {
-      timestamp: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .dateTimestampInSeconds */ .yW)(),
+      timestamp: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .dateTimestampInSeconds */ .CG)(),
       ...breadcrumb,
     };
     this._breadcrumbs = [...this._breadcrumbs, mergedBreadcrumb].slice(-maxCrumbs);
@@ -5294,7 +5294,7 @@ class Scope  {
     hint,
     index = 0,
   ) {
-    return new _sentry_utils__WEBPACK_IMPORTED_MODULE_3__/* .SyncPromise */ .cW((resolve, reject) => {
+    return new _sentry_utils__WEBPACK_IMPORTED_MODULE_3__/* .SyncPromise */ .Gg((resolve, reject) => {
       const processor = processors[index];
       if (event === null || typeof processor !== 'function') {
         resolve(event);
@@ -5304,9 +5304,9 @@ class Scope  {
         (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) &&
           processor.id &&
           result === null &&
-          _sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .logger */ .kg.log(`Event processor "${processor.id}" dropped event`);
+          _sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .logger */ .QE.log(`Event processor "${processor.id}" dropped event`);
 
-        if ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .isThenable */ .J8)(result)) {
+        if ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .isThenable */ .Oe)(result)) {
           void result
             .then(final => this._notifyEventProcessors(processors, final, hint, index + 1).then(resolve))
             .then(null, reject);
@@ -5341,7 +5341,7 @@ class Scope  {
    */
    _applyFingerprint(event) {
     // Make sure it's an array first and we actually have something in place
-    event.fingerprint = event.fingerprint ? (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_5__/* .arrayify */ .lE)(event.fingerprint) : [];
+    event.fingerprint = event.fingerprint ? (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_5__/* .arrayify */ .gV)(event.fingerprint) : [];
 
     // If we have something on the scope, then merge it with event
     if (this._fingerprint) {
@@ -5359,7 +5359,7 @@ class Scope  {
  * Returns the global event processors.
  */
 function getGlobalEventProcessors() {
-  return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .getGlobalSingleton */ .YO)('globalEventProcessors', () => []);
+  return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .getGlobalSingleton */ .aG)('globalEventProcessors', () => []);
 }
 
 /**
@@ -5376,14 +5376,14 @@ function addGlobalEventProcessor(callback) {
 
 /***/ }),
 
-/***/ 6853:
+/***/ 7504:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   M: () => (/* binding */ initAndBind)
+/* harmony export */   g: () => (/* binding */ initAndBind)
 /* harmony export */ });
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8536);
-/* harmony import */ var _hub_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6465);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(832);
+/* harmony import */ var _hub_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5400);
 
 
 
@@ -5402,14 +5402,14 @@ function initAndBind(
 ) {
   if (options.debug === true) {
     if ((typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__)) {
-      _sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .logger */ .kg.enable();
+      _sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .logger */ .QE.enable();
     } else {
       // use `console.warn` rather than `logger.warn` since by non-debug bundles have all `logger.x` statements stripped
       // eslint-disable-next-line no-console
       console.warn('[Sentry] Cannot initialize SDK with `debug` option using a non-debug bundle.');
     }
   }
-  const hub = (0,_hub_js__WEBPACK_IMPORTED_MODULE_1__/* .getCurrentHub */ .Gd)();
+  const hub = (0,_hub_js__WEBPACK_IMPORTED_MODULE_1__/* .getCurrentHub */ .WS)();
   const scope = hub.getScope();
   scope.update(options.initialScope);
 
@@ -5423,17 +5423,17 @@ function initAndBind(
 
 /***/ }),
 
-/***/ 8364:
+/***/ 5728:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   CT: () => (/* binding */ updateSession),
-/* harmony export */   Hv: () => (/* binding */ makeSession),
-/* harmony export */   RJ: () => (/* binding */ closeSession)
+/* harmony export */   mM: () => (/* binding */ updateSession),
+/* harmony export */   yG: () => (/* binding */ makeSession),
+/* harmony export */   yK: () => (/* binding */ closeSession)
 /* harmony export */ });
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7790);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3699);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1995);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2244);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2503);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5324);
 
 
 /**
@@ -5446,10 +5446,10 @@ function initAndBind(
  */
 function makeSession(context) {
   // Both timestamp and started are in seconds since the UNIX epoch.
-  const startingTime = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .timestampInSeconds */ .ph)();
+  const startingTime = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .timestampInSeconds */ .Go)();
 
   const session = {
-    sid: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .uuid4 */ .DM)(),
+    sid: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .uuid4 */ .OW)(),
     init: true,
     timestamp: startingTime,
     started: startingTime,
@@ -5490,14 +5490,14 @@ function updateSession(session, context = {}) {
     }
   }
 
-  session.timestamp = context.timestamp || (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .timestampInSeconds */ .ph)();
+  session.timestamp = context.timestamp || (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .timestampInSeconds */ .Go)();
 
   if (context.ignoreDuration) {
     session.ignoreDuration = context.ignoreDuration;
   }
   if (context.sid) {
     // Good enough uuid validation. — Kamil
-    session.sid = context.sid.length === 32 ? context.sid : (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .uuid4 */ .DM)();
+    session.sid = context.sid.length === 32 ? context.sid : (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .uuid4 */ .OW)();
   }
   if (context.init !== undefined) {
     session.init = context.init;
@@ -5568,7 +5568,7 @@ function closeSession(session, status) {
  * @returns a JSON object of the passed session
  */
 function sessionToJSON(session) {
-  return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .dropUndefinedKeys */ .Jr)({
+  return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .dropUndefinedKeys */ .Sy)({
     sid: `${session.sid}`,
     init: session.init,
     // Make sure that sec is converted to ms for date constructor
@@ -5593,19 +5593,19 @@ function sessionToJSON(session) {
 
 /***/ }),
 
-/***/ 1518:
+/***/ 1800:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   q: () => (/* binding */ createTransport)
+/* harmony export */   i: () => (/* binding */ createTransport)
 /* harmony export */ });
 /* unused harmony export DEFAULT_TRANSPORT_BUFFER_SIZE */
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8963);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6894);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1630);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7946);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8536);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(4388);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6952);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(172);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4104);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7000);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(832);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(8388);
 
 
 const DEFAULT_TRANSPORT_BUFFER_SIZE = 30;
@@ -5619,7 +5619,7 @@ const DEFAULT_TRANSPORT_BUFFER_SIZE = 30;
 function createTransport(
   options,
   makeRequest,
-  buffer = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .makePromiseBuffer */ .x)(
+  buffer = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .makePromiseBuffer */ .o)(
     options.bufferSize || DEFAULT_TRANSPORT_BUFFER_SIZE,
   ),
 ) {
@@ -5630,9 +5630,9 @@ function createTransport(
     const filteredEnvelopeItems = [];
 
     // Drop rate limited items from envelope
-    (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .forEachEnvelopeItem */ .gv)(envelope, (item, type) => {
-      const envelopeItemDataCategory = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .envelopeItemTypeToDataCategory */ .mL)(type);
-      if ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .isRateLimited */ .Q)(rateLimits, envelopeItemDataCategory)) {
+    (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .forEachEnvelopeItem */ .ay)(envelope, (item, type) => {
+      const envelopeItemDataCategory = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .envelopeItemTypeToDataCategory */ .qA)(type);
+      if ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .isRateLimited */ .sJ)(rateLimits, envelopeItemDataCategory)) {
         const event = getEventForEnvelopeItem(item, type);
         options.recordDroppedEvent('ratelimit_backoff', envelopeItemDataCategory, event);
       } else {
@@ -5642,29 +5642,29 @@ function createTransport(
 
     // Skip sending if envelope is empty after filtering out rate limited events
     if (filteredEnvelopeItems.length === 0) {
-      return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_3__/* .resolvedSyncPromise */ .WD)();
+      return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_3__/* .resolvedSyncPromise */ .ig)();
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const filteredEnvelope = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .createEnvelope */ .Jd)(envelope[0], filteredEnvelopeItems );
+    const filteredEnvelope = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .createEnvelope */ .Ks)(envelope[0], filteredEnvelopeItems );
 
     // Creates client report for each item in an envelope
     const recordEnvelopeLoss = (reason) => {
-      (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .forEachEnvelopeItem */ .gv)(filteredEnvelope, (item, type) => {
+      (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .forEachEnvelopeItem */ .ay)(filteredEnvelope, (item, type) => {
         const event = getEventForEnvelopeItem(item, type);
-        options.recordDroppedEvent(reason, (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .envelopeItemTypeToDataCategory */ .mL)(type), event);
+        options.recordDroppedEvent(reason, (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .envelopeItemTypeToDataCategory */ .qA)(type), event);
       });
     };
 
     const requestTask = () =>
-      makeRequest({ body: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .serializeEnvelope */ .V$)(filteredEnvelope, options.textEncoder) }).then(
+      makeRequest({ body: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .serializeEnvelope */ .AX)(filteredEnvelope, options.textEncoder) }).then(
         response => {
           // We don't want to throw on NOK responses, but we want to at least log them
           if (response.statusCode !== undefined && (response.statusCode < 200 || response.statusCode >= 300)) {
-            (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .logger */ .kg.warn(`Sentry responded with status code ${response.statusCode} to sent event.`);
+            (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .logger */ .QE.warn(`Sentry responded with status code ${response.statusCode} to sent event.`);
           }
 
-          rateLimits = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .updateRateLimits */ .WG)(rateLimits, response);
+          rateLimits = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__/* .updateRateLimits */ .Yf)(rateLimits, response);
           return response;
         },
         error => {
@@ -5676,10 +5676,10 @@ function createTransport(
     return buffer.add(requestTask).then(
       result => result,
       error => {
-        if (error instanceof _sentry_utils__WEBPACK_IMPORTED_MODULE_5__/* .SentryError */ .b) {
-          (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .logger */ .kg.error('Skipped sending event because buffer is full.');
+        if (error instanceof _sentry_utils__WEBPACK_IMPORTED_MODULE_5__/* .SentryError */ .C) {
+          (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _sentry_utils__WEBPACK_IMPORTED_MODULE_4__/* .logger */ .QE.error('Skipped sending event because buffer is full.');
           recordEnvelopeLoss('queue_overflow');
-          return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_3__/* .resolvedSyncPromise */ .WD)();
+          return (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_3__/* .resolvedSyncPromise */ .ig)();
         } else {
           throw error;
         }
@@ -5711,21 +5711,21 @@ function getEventForEnvelopeItem(item, type) {
 
 /***/ }),
 
-/***/ 8738:
+/***/ 2292:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   R: () => (/* binding */ prepareEvent)
+/* harmony export */   G: () => (/* binding */ prepareEvent)
 /* harmony export */ });
 /* unused harmony export applyDebugMetadata */
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3699);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7790);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7946);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9660);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(63);
-/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(8035);
-/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6417);
-/* harmony import */ var _scope_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1877);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2503);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2244);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7000);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9268);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(4616);
+/* harmony import */ var _sentry_utils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(6760);
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3528);
+/* harmony import */ var _scope_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6528);
 
 
 
@@ -5756,8 +5756,8 @@ function prepareEvent(
   const { normalizeDepth = 3, normalizeMaxBreadth = 1000 } = options;
   const prepared = {
     ...event,
-    event_id: event.event_id || hint.event_id || (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .uuid4 */ .DM)(),
-    timestamp: event.timestamp || (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .dateTimestampInSeconds */ .yW)(),
+    event_id: event.event_id || hint.event_id || (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_0__/* .uuid4 */ .OW)(),
+    timestamp: event.timestamp || (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__/* .dateTimestampInSeconds */ .CG)(),
   };
   const integrations = hint.integrations || options.integrations.map(i => i.name);
 
@@ -5773,11 +5773,11 @@ function prepareEvent(
   // This allows us to prevent unnecessary copying of data if `captureContext` is not provided.
   let finalScope = scope;
   if (hint.captureContext) {
-    finalScope = _scope_js__WEBPACK_IMPORTED_MODULE_2__/* .Scope */ .s.clone(finalScope).update(hint.captureContext);
+    finalScope = _scope_js__WEBPACK_IMPORTED_MODULE_2__/* .Scope */ .k.clone(finalScope).update(hint.captureContext);
   }
 
   // We prepare the result here with a resolved Event.
-  let result = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_3__/* .resolvedSyncPromise */ .WD)(prepared);
+  let result = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_3__/* .resolvedSyncPromise */ .ig)(prepared);
 
   // This should be the last thing called, since we want that
   // {@link Hub.addEventProcessor} gets the finished prepared event.
@@ -5818,7 +5818,7 @@ function applyClientOptions(event, options) {
   const { environment, release, dist, maxValueLength = 250 } = options;
 
   if (!('environment' in event)) {
-    event.environment = 'environment' in options ? environment : _constants_js__WEBPACK_IMPORTED_MODULE_4__/* .DEFAULT_ENVIRONMENT */ .J;
+    event.environment = 'environment' in options ? environment : _constants_js__WEBPACK_IMPORTED_MODULE_4__/* .DEFAULT_ENVIRONMENT */ .a;
   }
 
   if (event.release === undefined && release !== undefined) {
@@ -5830,17 +5830,17 @@ function applyClientOptions(event, options) {
   }
 
   if (event.message) {
-    event.message = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_5__/* .truncate */ .$G)(event.message, maxValueLength);
+    event.message = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_5__/* .truncate */ .E3)(event.message, maxValueLength);
   }
 
   const exception = event.exception && event.exception.values && event.exception.values[0];
   if (exception && exception.value) {
-    exception.value = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_5__/* .truncate */ .$G)(exception.value, maxValueLength);
+    exception.value = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_5__/* .truncate */ .E3)(exception.value, maxValueLength);
   }
 
   const request = event.request;
   if (request && request.url) {
-    request.url = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_5__/* .truncate */ .$G)(request.url, maxValueLength);
+    request.url = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_5__/* .truncate */ .E3)(request.url, maxValueLength);
   }
 }
 
@@ -5850,7 +5850,7 @@ const debugIdStackParserCache = new WeakMap();
  * Applies debug metadata images to the event in order to apply source maps by looking up their debug ID.
  */
 function applyDebugMetadata(event, stackParser) {
-  const debugIdMap = _sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .GLOBAL_OBJ */ .n2._sentryDebugIds;
+  const debugIdMap = _sentry_utils__WEBPACK_IMPORTED_MODULE_6__/* .GLOBAL_OBJ */ .eg._sentryDebugIds;
 
   if (!debugIdMap) {
     return;
@@ -5949,18 +5949,18 @@ function normalizeEvent(event, depth, maxBreadth) {
       breadcrumbs: event.breadcrumbs.map(b => ({
         ...b,
         ...(b.data && {
-          data: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_7__/* .normalize */ .Fv)(b.data, depth, maxBreadth),
+          data: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_7__/* .normalize */ .Cs)(b.data, depth, maxBreadth),
         }),
       })),
     }),
     ...(event.user && {
-      user: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_7__/* .normalize */ .Fv)(event.user, depth, maxBreadth),
+      user: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_7__/* .normalize */ .Cs)(event.user, depth, maxBreadth),
     }),
     ...(event.contexts && {
-      contexts: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_7__/* .normalize */ .Fv)(event.contexts, depth, maxBreadth),
+      contexts: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_7__/* .normalize */ .Cs)(event.contexts, depth, maxBreadth),
     }),
     ...(event.extra && {
-      extra: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_7__/* .normalize */ .Fv)(event.extra, depth, maxBreadth),
+      extra: (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_7__/* .normalize */ .Cs)(event.extra, depth, maxBreadth),
     }),
   };
 
@@ -5976,7 +5976,7 @@ function normalizeEvent(event, depth, maxBreadth) {
 
     // event.contexts.trace.data may contain circular/dangerous data so we need to normalize it
     if (event.contexts.trace.data) {
-      normalized.contexts.trace.data = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_7__/* .normalize */ .Fv)(event.contexts.trace.data, depth, maxBreadth);
+      normalized.contexts.trace.data = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_7__/* .normalize */ .Cs)(event.contexts.trace.data, depth, maxBreadth);
     }
   }
 
@@ -5985,7 +5985,7 @@ function normalizeEvent(event, depth, maxBreadth) {
     normalized.spans = event.spans.map(span => {
       // We cannot use the spread operator here because `toJSON` on `span` is non-enumerable
       if (span.data) {
-        span.data = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_7__/* .normalize */ .Fv)(span.data, depth, maxBreadth);
+        span.data = (0,_sentry_utils__WEBPACK_IMPORTED_MODULE_7__/* .normalize */ .Cs)(span.data, depth, maxBreadth);
       }
       return span;
     });
@@ -6000,11 +6000,11 @@ function normalizeEvent(event, depth, maxBreadth) {
 
 /***/ }),
 
-/***/ 1476:
+/***/ 4960:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   J: () => (/* binding */ SDK_VERSION)
+/* harmony export */   S: () => (/* binding */ SDK_VERSION)
 /* harmony export */ });
 const SDK_VERSION = '7.54.0';
 
@@ -6014,21 +6014,21 @@ const SDK_VERSION = '7.54.0';
 
 /***/ }),
 
-/***/ 4194:
+/***/ 1744:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Rt: () => (/* binding */ htmlTreeAsString),
-/* harmony export */   l4: () => (/* binding */ getLocationHref)
+/* harmony export */   IN: () => (/* binding */ htmlTreeAsString),
+/* harmony export */   s5: () => (/* binding */ getLocationHref)
 /* harmony export */ });
 /* unused harmony export getDomElement */
-/* harmony import */ var _is_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1757);
-/* harmony import */ var _worldwide_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(63);
+/* harmony import */ var _is_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6484);
+/* harmony import */ var _worldwide_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4616);
 
 
 
 // eslint-disable-next-line deprecation/deprecation
-const WINDOW = (0,_worldwide_js__WEBPACK_IMPORTED_MODULE_0__/* .getGlobalObject */ .Rf)();
+const WINDOW = (0,_worldwide_js__WEBPACK_IMPORTED_MODULE_0__/* .getGlobalObject */ .mm)();
 
 const DEFAULT_MAX_STRING_LENGTH = 80;
 
@@ -6121,7 +6121,7 @@ function _htmlElementAsString(el, keyAttrs) {
 
     // eslint-disable-next-line prefer-const
     className = elem.className;
-    if (className && (0,_is_js__WEBPACK_IMPORTED_MODULE_1__/* .isString */ .HD)(className)) {
+    if (className && (0,_is_js__WEBPACK_IMPORTED_MODULE_1__/* .isString */ .ct)(className)) {
       classes = className.split(/\s+/);
       for (i = 0; i < classes.length; i++) {
         out.push(`.${classes[i]}`);
@@ -6180,14 +6180,14 @@ function getDomElement(selector) {
 
 /***/ }),
 
-/***/ 250:
+/***/ 7488:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   y: () => (/* binding */ createClientReportEnvelope)
 /* harmony export */ });
-/* harmony import */ var _envelope_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6894);
-/* harmony import */ var _time_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7790);
+/* harmony import */ var _envelope_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(172);
+/* harmony import */ var _time_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2244);
 
 
 
@@ -6204,11 +6204,11 @@ function createClientReportEnvelope(
   const clientReportItem = [
     { type: 'client_report' },
     {
-      timestamp: timestamp || (0,_time_js__WEBPACK_IMPORTED_MODULE_0__/* .dateTimestampInSeconds */ .yW)(),
+      timestamp: timestamp || (0,_time_js__WEBPACK_IMPORTED_MODULE_0__/* .dateTimestampInSeconds */ .CG)(),
       discarded_events,
     },
   ];
-  return (0,_envelope_js__WEBPACK_IMPORTED_MODULE_1__/* .createEnvelope */ .Jd)(dsn ? { dsn } : {}, [clientReportItem]);
+  return (0,_envelope_js__WEBPACK_IMPORTED_MODULE_1__/* .createEnvelope */ .Ks)(dsn ? { dsn } : {}, [clientReportItem]);
 }
 
 
@@ -6217,15 +6217,15 @@ function createClientReportEnvelope(
 
 /***/ }),
 
-/***/ 3135:
+/***/ 4640:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   RA: () => (/* binding */ dsnToString),
-/* harmony export */   vK: () => (/* binding */ makeDsn)
+/* harmony export */   AD: () => (/* binding */ makeDsn),
+/* harmony export */   CK: () => (/* binding */ dsnToString)
 /* harmony export */ });
 /* unused harmony export dsnFromString */
-/* harmony import */ var _logger_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8536);
+/* harmony import */ var _logger_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(832);
 
 
 /** Regular expression used to parse a Dsn. */
@@ -6310,7 +6310,7 @@ function validateDsn(dsn) {
   const requiredComponents = ['protocol', 'publicKey', 'host', 'projectId'];
   const hasMissingRequiredComponent = requiredComponents.find(component => {
     if (!dsn[component]) {
-      _logger_js__WEBPACK_IMPORTED_MODULE_0__/* .logger */ .kg.error(`Invalid Sentry Dsn: ${component} missing`);
+      _logger_js__WEBPACK_IMPORTED_MODULE_0__/* .logger */ .QE.error(`Invalid Sentry Dsn: ${component} missing`);
       return true;
     }
     return false;
@@ -6321,17 +6321,17 @@ function validateDsn(dsn) {
   }
 
   if (!projectId.match(/^\d+$/)) {
-    _logger_js__WEBPACK_IMPORTED_MODULE_0__/* .logger */ .kg.error(`Invalid Sentry Dsn: Invalid projectId ${projectId}`);
+    _logger_js__WEBPACK_IMPORTED_MODULE_0__/* .logger */ .QE.error(`Invalid Sentry Dsn: Invalid projectId ${projectId}`);
     return false;
   }
 
   if (!isValidProtocol(protocol)) {
-    _logger_js__WEBPACK_IMPORTED_MODULE_0__/* .logger */ .kg.error(`Invalid Sentry Dsn: Invalid protocol ${protocol}`);
+    _logger_js__WEBPACK_IMPORTED_MODULE_0__/* .logger */ .QE.error(`Invalid Sentry Dsn: Invalid protocol ${protocol}`);
     return false;
   }
 
   if (port && isNaN(parseInt(port, 10))) {
-    _logger_js__WEBPACK_IMPORTED_MODULE_0__/* .logger */ .kg.error(`Invalid Sentry Dsn: Invalid port ${port}`);
+    _logger_js__WEBPACK_IMPORTED_MODULE_0__/* .logger */ .QE.error(`Invalid Sentry Dsn: Invalid port ${port}`);
     return false;
   }
 
@@ -6356,12 +6356,12 @@ function makeDsn(from) {
 
 /***/ }),
 
-/***/ 4285:
+/***/ 8020:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   S: () => (/* binding */ getSDKSource),
-/* harmony export */   n: () => (/* binding */ isBrowserBundle)
+/* harmony export */   C: () => (/* binding */ getSDKSource),
+/* harmony export */   q: () => (/* binding */ isBrowserBundle)
 /* harmony export */ });
 /*
  * This module exists for optimizations in the build process through rollup and terser.  We define some global
@@ -6401,23 +6401,23 @@ function getSDKSource() {
 
 /***/ }),
 
-/***/ 6894:
+/***/ 172:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   BO: () => (/* binding */ addItemToEnvelope),
-/* harmony export */   Cd: () => (/* binding */ createEventEnvelopeHeaders),
-/* harmony export */   HY: () => (/* binding */ getSdkMetadataForEnvelopeHeader),
-/* harmony export */   Jd: () => (/* binding */ createEnvelope),
-/* harmony export */   V$: () => (/* binding */ serializeEnvelope),
-/* harmony export */   gv: () => (/* binding */ forEachEnvelopeItem),
-/* harmony export */   mL: () => (/* binding */ envelopeItemTypeToDataCategory),
-/* harmony export */   zQ: () => (/* binding */ createAttachmentEnvelopeItem)
+/* harmony export */   AX: () => (/* binding */ serializeEnvelope),
+/* harmony export */   Ks: () => (/* binding */ createEnvelope),
+/* harmony export */   aA: () => (/* binding */ createAttachmentEnvelopeItem),
+/* harmony export */   ay: () => (/* binding */ forEachEnvelopeItem),
+/* harmony export */   ck: () => (/* binding */ getSdkMetadataForEnvelopeHeader),
+/* harmony export */   kN: () => (/* binding */ addItemToEnvelope),
+/* harmony export */   mE: () => (/* binding */ createEventEnvelopeHeaders),
+/* harmony export */   qA: () => (/* binding */ envelopeItemTypeToDataCategory)
 /* harmony export */ });
 /* unused harmony exports envelopeContainsItemType, parseEnvelope */
-/* harmony import */ var _dsn_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3135);
-/* harmony import */ var _normalize_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8035);
-/* harmony import */ var _object_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1995);
+/* harmony import */ var _dsn_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4640);
+/* harmony import */ var _normalize_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6760);
+/* harmony import */ var _object_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5324);
 
 
 
@@ -6512,7 +6512,7 @@ function serializeEnvelope(envelope, textEncoder) {
         // In case, despite all our efforts to keep `payload` circular-dependency-free, `JSON.strinify()` still
         // fails, we try again after normalizing it again with infinite normalization depth. This of course has a
         // performance impact but in this case a performance hit is better than throwing.
-        stringifiedPayload = JSON.stringify((0,_normalize_js__WEBPACK_IMPORTED_MODULE_0__/* .normalize */ .Fv)(payload));
+        stringifiedPayload = JSON.stringify((0,_normalize_js__WEBPACK_IMPORTED_MODULE_0__/* .normalize */ .Cs)(payload));
       }
       append(stringifiedPayload);
     }
@@ -6585,7 +6585,7 @@ function createAttachmentEnvelopeItem(
   const buffer = typeof attachment.data === 'string' ? encodeUTF8(attachment.data, textEncoder) : attachment.data;
 
   return [
-    (0,_object_js__WEBPACK_IMPORTED_MODULE_1__/* .dropUndefinedKeys */ .Jr)({
+    (0,_object_js__WEBPACK_IMPORTED_MODULE_1__/* .dropUndefinedKeys */ .Sy)({
       type: 'attachment',
       length: buffer.length,
       filename: attachment.filename,
@@ -6641,9 +6641,9 @@ function createEventEnvelopeHeaders(
     event_id: event.event_id ,
     sent_at: new Date().toISOString(),
     ...(sdkInfo && { sdk: sdkInfo }),
-    ...(!!tunnel && { dsn: (0,_dsn_js__WEBPACK_IMPORTED_MODULE_2__/* .dsnToString */ .RA)(dsn) }),
+    ...(!!tunnel && { dsn: (0,_dsn_js__WEBPACK_IMPORTED_MODULE_2__/* .dsnToString */ .CK)(dsn) }),
     ...(dynamicSamplingContext && {
-      trace: (0,_object_js__WEBPACK_IMPORTED_MODULE_1__/* .dropUndefinedKeys */ .Jr)({ ...dynamicSamplingContext }),
+      trace: (0,_object_js__WEBPACK_IMPORTED_MODULE_1__/* .dropUndefinedKeys */ .Sy)({ ...dynamicSamplingContext }),
     }),
   };
 }
@@ -6654,11 +6654,11 @@ function createEventEnvelopeHeaders(
 
 /***/ }),
 
-/***/ 4388:
+/***/ 8388:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   b: () => (/* binding */ SentryError)
+/* harmony export */   C: () => (/* binding */ SentryError)
 /* harmony export */ });
 /** An error emitted by Sentry SDKs and related utilities. */
 class SentryError extends Error {
@@ -6681,21 +6681,21 @@ class SentryError extends Error {
 
 /***/ }),
 
-/***/ 4005:
+/***/ 9588:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   oq: () => (/* binding */ addInstrumentationHandler),
-/* harmony export */   xU: () => (/* binding */ SENTRY_XHR_DATA_KEY)
+/* harmony export */   Ou: () => (/* binding */ SENTRY_XHR_DATA_KEY),
+/* harmony export */   cS: () => (/* binding */ addInstrumentationHandler)
 /* harmony export */ });
 /* unused harmony export parseFetchArgs */
-/* harmony import */ var _is_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1757);
-/* harmony import */ var _logger_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8536);
-/* harmony import */ var _object_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1995);
-/* harmony import */ var _stacktrace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9038);
-/* harmony import */ var _supports_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9798);
-/* harmony import */ var _worldwide_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(63);
-/* harmony import */ var _vendor_supportsHistory_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7318);
+/* harmony import */ var _is_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6484);
+/* harmony import */ var _logger_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(832);
+/* harmony import */ var _object_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5324);
+/* harmony import */ var _stacktrace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6192);
+/* harmony import */ var _supports_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8036);
+/* harmony import */ var _worldwide_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4616);
+/* harmony import */ var _vendor_supportsHistory_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(2240);
 
 
 
@@ -6705,7 +6705,7 @@ class SentryError extends Error {
 
 
 // eslint-disable-next-line deprecation/deprecation
-const WINDOW = (0,_worldwide_js__WEBPACK_IMPORTED_MODULE_0__/* .getGlobalObject */ .Rf)();
+const WINDOW = (0,_worldwide_js__WEBPACK_IMPORTED_MODULE_0__/* .getGlobalObject */ .mm)();
 
 const SENTRY_XHR_DATA_KEY = '__sentry_xhr_v2__';
 
@@ -6754,7 +6754,7 @@ function instrument(type) {
       instrumentUnhandledRejection();
       break;
     default:
-      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _logger_js__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .kg.warn('unknown instrumentation type:', type);
+      (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && _logger_js__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .QE.warn('unknown instrumentation type:', type);
       return;
   }
 }
@@ -6781,8 +6781,8 @@ function triggerHandlers(type, data) {
       handler(data);
     } catch (e) {
       (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) &&
-        _logger_js__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .kg.error(
-          `Error while triggering instrumentation handler.\nType: ${type}\nName: ${(0,_stacktrace_js__WEBPACK_IMPORTED_MODULE_2__/* .getFunctionName */ .$P)(handler)}\nError:`,
+        _logger_js__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .QE.error(
+          `Error while triggering instrumentation handler.\nType: ${type}\nName: ${(0,_stacktrace_js__WEBPACK_IMPORTED_MODULE_2__/* .getFunctionName */ .kJ)(handler)}\nError:`,
           e,
         );
     }
@@ -6795,12 +6795,12 @@ function instrumentConsole() {
     return;
   }
 
-  _logger_js__WEBPACK_IMPORTED_MODULE_1__/* .CONSOLE_LEVELS */ .RU.forEach(function (level) {
+  _logger_js__WEBPACK_IMPORTED_MODULE_1__/* .CONSOLE_LEVELS */ .Cq.forEach(function (level) {
     if (!(level in WINDOW.console)) {
       return;
     }
 
-    (0,_object_js__WEBPACK_IMPORTED_MODULE_3__/* .fill */ .hl)(WINDOW.console, level, function (originalConsoleMethod) {
+    (0,_object_js__WEBPACK_IMPORTED_MODULE_3__/* .fill */ .ym)(WINDOW.console, level, function (originalConsoleMethod) {
       return function (...args) {
         triggerHandlers('console', { args, level });
 
@@ -6815,11 +6815,11 @@ function instrumentConsole() {
 
 /** JSDoc */
 function instrumentFetch() {
-  if (!(0,_supports_js__WEBPACK_IMPORTED_MODULE_4__/* .supportsNativeFetch */ .t$)()) {
+  if (!(0,_supports_js__WEBPACK_IMPORTED_MODULE_4__/* .supportsNativeFetch */ .T0)()) {
     return;
   }
 
-  (0,_object_js__WEBPACK_IMPORTED_MODULE_3__/* .fill */ .hl)(WINDOW, 'fetch', function (originalFetch) {
+  (0,_object_js__WEBPACK_IMPORTED_MODULE_3__/* .fill */ .ym)(WINDOW, 'fetch', function (originalFetch) {
     return function (...args) {
       const { method, url } = parseFetchArgs(args);
 
@@ -6918,19 +6918,19 @@ function instrumentXHR() {
 
   const xhrproto = XMLHttpRequest.prototype;
 
-  (0,_object_js__WEBPACK_IMPORTED_MODULE_3__/* .fill */ .hl)(xhrproto, 'open', function (originalOpen) {
+  (0,_object_js__WEBPACK_IMPORTED_MODULE_3__/* .fill */ .ym)(xhrproto, 'open', function (originalOpen) {
     return function ( ...args) {
       const url = args[1];
       const xhrInfo = (this[SENTRY_XHR_DATA_KEY] = {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        method: (0,_is_js__WEBPACK_IMPORTED_MODULE_5__/* .isString */ .HD)(args[0]) ? args[0].toUpperCase() : args[0],
+        method: (0,_is_js__WEBPACK_IMPORTED_MODULE_5__/* .isString */ .ct)(args[0]) ? args[0].toUpperCase() : args[0],
         url: args[1],
         request_headers: {},
       });
 
       // if Sentry key appears in URL, don't capture it as a request
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      if ((0,_is_js__WEBPACK_IMPORTED_MODULE_5__/* .isString */ .HD)(url) && xhrInfo.method === 'POST' && url.match(/sentry_key/)) {
+      if ((0,_is_js__WEBPACK_IMPORTED_MODULE_5__/* .isString */ .ct)(url) && xhrInfo.method === 'POST' && url.match(/sentry_key/)) {
         this.__sentry_own_request__ = true;
       }
 
@@ -6961,7 +6961,7 @@ function instrumentXHR() {
       };
 
       if ('onreadystatechange' in this && typeof this.onreadystatechange === 'function') {
-        (0,_object_js__WEBPACK_IMPORTED_MODULE_3__/* .fill */ .hl)(this, 'onreadystatechange', function (original) {
+        (0,_object_js__WEBPACK_IMPORTED_MODULE_3__/* .fill */ .ym)(this, 'onreadystatechange', function (original) {
           return function ( ...readyStateArgs) {
             onreadystatechangeHandler();
             return original.apply(this, readyStateArgs);
@@ -6974,7 +6974,7 @@ function instrumentXHR() {
       // Intercepting `setRequestHeader` to access the request headers of XHR instance.
       // This will only work for user/library defined headers, not for the default/browser-assigned headers.
       // Request cookies are also unavailable for XHR, as `Cookie` header can't be defined by `setRequestHeader`.
-      (0,_object_js__WEBPACK_IMPORTED_MODULE_3__/* .fill */ .hl)(this, 'setRequestHeader', function (original) {
+      (0,_object_js__WEBPACK_IMPORTED_MODULE_3__/* .fill */ .ym)(this, 'setRequestHeader', function (original) {
         return function ( ...setRequestHeaderArgs) {
           const [header, value] = setRequestHeaderArgs ;
 
@@ -6992,7 +6992,7 @@ function instrumentXHR() {
     };
   });
 
-  (0,_object_js__WEBPACK_IMPORTED_MODULE_3__/* .fill */ .hl)(xhrproto, 'send', function (originalSend) {
+  (0,_object_js__WEBPACK_IMPORTED_MODULE_3__/* .fill */ .ym)(xhrproto, 'send', function (originalSend) {
     return function ( ...args) {
       const sentryXhrData = this[SENTRY_XHR_DATA_KEY];
       if (sentryXhrData && args[0] !== undefined) {
@@ -7014,7 +7014,7 @@ let lastHref;
 
 /** JSDoc */
 function instrumentHistory() {
-  if (!(0,_vendor_supportsHistory_js__WEBPACK_IMPORTED_MODULE_6__/* .supportsHistory */ .B)()) {
+  if (!(0,_vendor_supportsHistory_js__WEBPACK_IMPORTED_MODULE_6__/* .supportsHistory */ .I)()) {
     return;
   }
 
@@ -7059,8 +7059,8 @@ function instrumentHistory() {
     };
   }
 
-  (0,_object_js__WEBPACK_IMPORTED_MODULE_3__/* .fill */ .hl)(WINDOW.history, 'pushState', historyReplacementFunction);
-  (0,_object_js__WEBPACK_IMPORTED_MODULE_3__/* .fill */ .hl)(WINDOW.history, 'replaceState', historyReplacementFunction);
+  (0,_object_js__WEBPACK_IMPORTED_MODULE_3__/* .fill */ .ym)(WINDOW.history, 'pushState', historyReplacementFunction);
+  (0,_object_js__WEBPACK_IMPORTED_MODULE_3__/* .fill */ .ym)(WINDOW.history, 'replaceState', historyReplacementFunction);
 }
 
 const debounceDuration = 1000;
@@ -7208,7 +7208,7 @@ function instrumentDOM() {
       return;
     }
 
-    (0,_object_js__WEBPACK_IMPORTED_MODULE_3__/* .fill */ .hl)(proto, 'addEventListener', function (originalAddEventListener) {
+    (0,_object_js__WEBPACK_IMPORTED_MODULE_3__/* .fill */ .ym)(proto, 'addEventListener', function (originalAddEventListener) {
       return function (
 
         type,
@@ -7238,7 +7238,7 @@ function instrumentDOM() {
       };
     });
 
-    (0,_object_js__WEBPACK_IMPORTED_MODULE_3__/* .fill */ .hl)(
+    (0,_object_js__WEBPACK_IMPORTED_MODULE_3__/* .fill */ .ym)(
       proto,
       'removeEventListener',
       function (originalRemoveEventListener) {
@@ -7331,24 +7331,24 @@ function instrumentUnhandledRejection() {
 
 /***/ }),
 
-/***/ 1757:
+/***/ 6484:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Cy: () => (/* binding */ isSyntheticEvent),
-/* harmony export */   HD: () => (/* binding */ isString),
-/* harmony export */   J8: () => (/* binding */ isThenable),
-/* harmony export */   Kj: () => (/* binding */ isRegExp),
-/* harmony export */   PO: () => (/* binding */ isPlainObject),
-/* harmony export */   TX: () => (/* binding */ isDOMError),
-/* harmony export */   V9: () => (/* binding */ isInstanceOf),
-/* harmony export */   VW: () => (/* binding */ isErrorEvent),
-/* harmony export */   VZ: () => (/* binding */ isError),
-/* harmony export */   cO: () => (/* binding */ isEvent),
-/* harmony export */   fm: () => (/* binding */ isDOMException),
-/* harmony export */   i2: () => (/* binding */ isNaN),
-/* harmony export */   kK: () => (/* binding */ isElement),
-/* harmony export */   pt: () => (/* binding */ isPrimitive)
+/* harmony export */   K7: () => (/* binding */ isSyntheticEvent),
+/* harmony export */   KI: () => (/* binding */ isElement),
+/* harmony export */   Oe: () => (/* binding */ isThenable),
+/* harmony export */   QX: () => (/* binding */ isRegExp),
+/* harmony export */   Qn: () => (/* binding */ isDOMException),
+/* harmony export */   SO: () => (/* binding */ isEvent),
+/* harmony export */   Sc: () => (/* binding */ isDOMError),
+/* harmony export */   WO: () => (/* binding */ isNaN),
+/* harmony export */   aG: () => (/* binding */ isInstanceOf),
+/* harmony export */   ct: () => (/* binding */ isString),
+/* harmony export */   cz: () => (/* binding */ isErrorEvent),
+/* harmony export */   eU: () => (/* binding */ isError),
+/* harmony export */   oF: () => (/* binding */ isPlainObject),
+/* harmony export */   od: () => (/* binding */ isPrimitive)
 /* harmony export */ });
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const objectToString = Object.prototype.toString;
@@ -7533,15 +7533,15 @@ function isInstanceOf(wat, base) {
 
 /***/ }),
 
-/***/ 8536:
+/***/ 832:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Cf: () => (/* binding */ consoleSandbox),
-/* harmony export */   RU: () => (/* binding */ CONSOLE_LEVELS),
-/* harmony export */   kg: () => (/* binding */ logger)
+/* harmony export */   Cq: () => (/* binding */ CONSOLE_LEVELS),
+/* harmony export */   QD: () => (/* binding */ consoleSandbox),
+/* harmony export */   QE: () => (/* binding */ logger)
 /* harmony export */ });
-/* harmony import */ var _worldwide_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(63);
+/* harmony import */ var _worldwide_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4616);
 
 
 /** Prefix for logging strings */
@@ -7556,11 +7556,11 @@ const CONSOLE_LEVELS = ['debug', 'info', 'warn', 'error', 'log', 'assert', 'trac
  * @returns The results of the callback
  */
 function consoleSandbox(callback) {
-  if (!("console" in _worldwide_js__WEBPACK_IMPORTED_MODULE_0__/* .GLOBAL_OBJ */ .n2)) {
+  if (!("console" in _worldwide_js__WEBPACK_IMPORTED_MODULE_0__/* .GLOBAL_OBJ */ .eg)) {
     return callback();
   }
 
-  const originalConsole = _worldwide_js__WEBPACK_IMPORTED_MODULE_0__/* .GLOBAL_OBJ */ .n2.console ;
+  const originalConsole = _worldwide_js__WEBPACK_IMPORTED_MODULE_0__/* .GLOBAL_OBJ */ .eg.console ;
   const wrappedLevels = {};
 
   // Restore all wrapped console methods
@@ -7601,7 +7601,7 @@ function makeLogger() {
       logger[name] = (...args) => {
         if (enabled) {
           consoleSandbox(() => {
-            _worldwide_js__WEBPACK_IMPORTED_MODULE_0__/* .GLOBAL_OBJ */ .n2.console[name](`${PREFIX}[${name}]:`, ...args);
+            _worldwide_js__WEBPACK_IMPORTED_MODULE_0__/* .GLOBAL_OBJ */ .eg.console[name](`${PREFIX}[${name}]:`, ...args);
           });
         }
       };
@@ -7618,7 +7618,7 @@ function makeLogger() {
 // Ensure we only have a single logger instance, even if multiple versions of @sentry/utils are being used
 let logger;
 if ((typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__)) {
-  logger = (0,_worldwide_js__WEBPACK_IMPORTED_MODULE_0__/* .getGlobalSingleton */ .YO)('logger', makeLogger);
+  logger = (0,_worldwide_js__WEBPACK_IMPORTED_MODULE_0__/* .getGlobalSingleton */ .aG)('logger', makeLogger);
 } else {
   logger = makeLogger();
 }
@@ -7629,11 +7629,11 @@ if ((typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__)) {
 
 /***/ }),
 
-/***/ 4048:
+/***/ 7344:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   i: () => (/* binding */ memoBuilder)
+/* harmony export */   a: () => (/* binding */ memoBuilder)
 /* harmony export */ });
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -7684,20 +7684,20 @@ function memoBuilder() {
 
 /***/ }),
 
-/***/ 3699:
+/***/ 2503:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   DM: () => (/* binding */ uuid4),
-/* harmony export */   Db: () => (/* binding */ addExceptionTypeValue),
-/* harmony export */   EG: () => (/* binding */ addExceptionMechanism),
-/* harmony export */   YO: () => (/* binding */ checkOrSetAlreadyCaught),
-/* harmony export */   jH: () => (/* binding */ getEventDescription),
-/* harmony export */   lE: () => (/* binding */ arrayify)
+/* harmony export */   NP: () => (/* binding */ addExceptionTypeValue),
+/* harmony export */   OW: () => (/* binding */ uuid4),
+/* harmony export */   gV: () => (/* binding */ arrayify),
+/* harmony export */   kT: () => (/* binding */ checkOrSetAlreadyCaught),
+/* harmony export */   qW: () => (/* binding */ addExceptionMechanism),
+/* harmony export */   y_: () => (/* binding */ getEventDescription)
 /* harmony export */ });
 /* unused harmony exports addContextToFrame, parseSemver */
-/* harmony import */ var _object_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1995);
-/* harmony import */ var _worldwide_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(63);
+/* harmony import */ var _object_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5324);
+/* harmony import */ var _worldwide_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4616);
 
 
 
@@ -7708,7 +7708,7 @@ function memoBuilder() {
  * @returns string Generated UUID4.
  */
 function uuid4() {
-  const gbl = _worldwide_js__WEBPACK_IMPORTED_MODULE_0__/* .GLOBAL_OBJ */ .n2 ;
+  const gbl = _worldwide_js__WEBPACK_IMPORTED_MODULE_0__/* .GLOBAL_OBJ */ .eg ;
   const crypto = gbl.crypto || gbl.msCrypto;
 
   if (crypto && crypto.randomUUID) {
@@ -7875,7 +7875,7 @@ function checkOrSetAlreadyCaught(exception) {
   try {
     // set it this way rather than by assignment so that it's not ennumerable and therefore isn't recorded by the
     // `ExtraErrorData` integration
-    (0,_object_js__WEBPACK_IMPORTED_MODULE_1__/* .addNonEnumerableProperty */ .xp)(exception , '__sentry_captured__', true);
+    (0,_object_js__WEBPACK_IMPORTED_MODULE_1__/* .addNonEnumerableProperty */ .QB)(exception , '__sentry_captured__', true);
   } catch (err) {
     // `exception` is a primitive, so we can't mark it seen
   }
@@ -7899,15 +7899,15 @@ function arrayify(maybeArray) {
 
 /***/ }),
 
-/***/ 7392:
+/***/ 1576:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   KV: () => (/* binding */ isNodeEnv),
-/* harmony export */   l$: () => (/* binding */ dynamicRequire)
+/* harmony export */   ao: () => (/* binding */ isNodeEnv),
+/* harmony export */   iq: () => (/* binding */ dynamicRequire)
 /* harmony export */ });
 /* unused harmony export loadModule */
-/* harmony import */ var _env_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4285);
+/* harmony import */ var _env_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8020);
 /* module decorator */ module = __webpack_require__.hmd(module);
 
 
@@ -7925,7 +7925,7 @@ function isNodeEnv() {
   // explicitly check for browser bundles as those can be optimized statically
   // by terser/rollup.
   return (
-    !(0,_env_js__WEBPACK_IMPORTED_MODULE_0__/* .isBrowserBundle */ .n)() &&
+    !(0,_env_js__WEBPACK_IMPORTED_MODULE_0__/* .isBrowserBundle */ .q)() &&
     Object.prototype.toString.call(typeof process !== 'undefined' ? process : 0) === '[object process]'
   );
 }
@@ -7979,18 +7979,18 @@ function loadModule(moduleName) {
 
 /***/ }),
 
-/***/ 8035:
+/***/ 6760:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Fv: () => (/* binding */ normalize),
-/* harmony export */   Qy: () => (/* binding */ normalizeToSize)
+/* harmony export */   Cs: () => (/* binding */ normalize),
+/* harmony export */   yY: () => (/* binding */ normalizeToSize)
 /* harmony export */ });
 /* unused harmony export walk */
-/* harmony import */ var _is_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1757);
-/* harmony import */ var _memo_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4048);
-/* harmony import */ var _object_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1995);
-/* harmony import */ var _stacktrace_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9038);
+/* harmony import */ var _is_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6484);
+/* harmony import */ var _memo_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7344);
+/* harmony import */ var _object_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5324);
+/* harmony import */ var _stacktrace_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6192);
 
 
 
@@ -8057,14 +8057,14 @@ function visit(
   value,
   depth = +Infinity,
   maxProperties = +Infinity,
-  memo = (0,_memo_js__WEBPACK_IMPORTED_MODULE_0__/* .memoBuilder */ .i)(),
+  memo = (0,_memo_js__WEBPACK_IMPORTED_MODULE_0__/* .memoBuilder */ .a)(),
 ) {
   const [memoize, unmemoize] = memo;
 
   // Get the simple cases out of the way first
   if (
     value == null || // this matches null and undefined -> eqeq not eqeqeq
-    (['number', 'boolean', 'string'].includes(typeof value) && !(0,_is_js__WEBPACK_IMPORTED_MODULE_1__/* .isNaN */ .i2)(value))
+    (['number', 'boolean', 'string'].includes(typeof value) && !(0,_is_js__WEBPACK_IMPORTED_MODULE_1__/* .isNaN */ .WO)(value))
   ) {
     return value ;
   }
@@ -8125,7 +8125,7 @@ function visit(
 
   // Before we begin, convert`Error` and`Event` instances into plain objects, since some of each of their relevant
   // properties are non-enumerable and otherwise would get missed.
-  const visitable = (0,_object_js__WEBPACK_IMPORTED_MODULE_2__/* .convertToPlainObject */ .Sh)(value );
+  const visitable = (0,_object_js__WEBPACK_IMPORTED_MODULE_2__/* .convertToPlainObject */ .cZ)(value );
 
   for (const visitKey in visitable) {
     // Avoid iterating over fields in the prototype if they've somehow been exposed to enumeration.
@@ -8195,7 +8195,7 @@ function stringifyValue(
     }
 
     // React's SyntheticEvent thingy
-    if ((0,_is_js__WEBPACK_IMPORTED_MODULE_1__/* .isSyntheticEvent */ .Cy)(value)) {
+    if ((0,_is_js__WEBPACK_IMPORTED_MODULE_1__/* .isSyntheticEvent */ .K7)(value)) {
       return '[SyntheticEvent]';
     }
 
@@ -8204,7 +8204,7 @@ function stringifyValue(
     }
 
     if (typeof value === 'function') {
-      return `[Function: ${(0,_stacktrace_js__WEBPACK_IMPORTED_MODULE_3__/* .getFunctionName */ .$P)(value)}]`;
+      return `[Function: ${(0,_stacktrace_js__WEBPACK_IMPORTED_MODULE_3__/* .getFunctionName */ .kJ)(value)}]`;
     }
 
     if (typeof value === 'symbol') {
@@ -8258,23 +8258,23 @@ function jsonSize(value) {
 
 /***/ }),
 
-/***/ 1995:
+/***/ 5324:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   $Q: () => (/* binding */ markFunctionWrapped),
-/* harmony export */   HK: () => (/* binding */ getOriginalFunction),
-/* harmony export */   Jr: () => (/* binding */ dropUndefinedKeys),
-/* harmony export */   Sh: () => (/* binding */ convertToPlainObject),
-/* harmony export */   _j: () => (/* binding */ urlEncode),
-/* harmony export */   hl: () => (/* binding */ fill),
-/* harmony export */   xp: () => (/* binding */ addNonEnumerableProperty),
-/* harmony export */   zf: () => (/* binding */ extractExceptionKeysForMessage)
+/* harmony export */   OW: () => (/* binding */ urlEncode),
+/* harmony export */   QB: () => (/* binding */ addNonEnumerableProperty),
+/* harmony export */   Ql: () => (/* binding */ markFunctionWrapped),
+/* harmony export */   Sy: () => (/* binding */ dropUndefinedKeys),
+/* harmony export */   _k: () => (/* binding */ getOriginalFunction),
+/* harmony export */   cZ: () => (/* binding */ convertToPlainObject),
+/* harmony export */   ym: () => (/* binding */ fill),
+/* harmony export */   yq: () => (/* binding */ extractExceptionKeysForMessage)
 /* harmony export */ });
 /* unused harmony export objectify */
-/* harmony import */ var _browser_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4194);
-/* harmony import */ var _is_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1757);
-/* harmony import */ var _string_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9660);
+/* harmony import */ var _browser_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1744);
+/* harmony import */ var _is_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6484);
+/* harmony import */ var _string_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9268);
 
 
 
@@ -8375,14 +8375,14 @@ function urlEncode(object) {
 function convertToPlainObject(value)
 
  {
-  if ((0,_is_js__WEBPACK_IMPORTED_MODULE_0__/* .isError */ .VZ)(value)) {
+  if ((0,_is_js__WEBPACK_IMPORTED_MODULE_0__/* .isError */ .eU)(value)) {
     return {
       message: value.message,
       name: value.name,
       stack: value.stack,
       ...getOwnProperties(value),
     };
-  } else if ((0,_is_js__WEBPACK_IMPORTED_MODULE_0__/* .isEvent */ .cO)(value)) {
+  } else if ((0,_is_js__WEBPACK_IMPORTED_MODULE_0__/* .isEvent */ .SO)(value)) {
     const newObj
 
  = {
@@ -8392,7 +8392,7 @@ function convertToPlainObject(value)
       ...getOwnProperties(value),
     };
 
-    if (typeof CustomEvent !== 'undefined' && (0,_is_js__WEBPACK_IMPORTED_MODULE_0__/* .isInstanceOf */ .V9)(value, CustomEvent)) {
+    if (typeof CustomEvent !== 'undefined' && (0,_is_js__WEBPACK_IMPORTED_MODULE_0__/* .isInstanceOf */ .aG)(value, CustomEvent)) {
       newObj.detail = value.detail;
     }
 
@@ -8405,7 +8405,7 @@ function convertToPlainObject(value)
 /** Creates a string representation of the target of an `Event` object */
 function serializeEventTarget(target) {
   try {
-    return (0,_is_js__WEBPACK_IMPORTED_MODULE_0__/* .isElement */ .kK)(target) ? (0,_browser_js__WEBPACK_IMPORTED_MODULE_1__/* .htmlTreeAsString */ .Rt)(target) : Object.prototype.toString.call(target);
+    return (0,_is_js__WEBPACK_IMPORTED_MODULE_0__/* .isElement */ .KI)(target) ? (0,_browser_js__WEBPACK_IMPORTED_MODULE_1__/* .htmlTreeAsString */ .IN)(target) : Object.prototype.toString.call(target);
   } catch (_oO) {
     return '<unknown>';
   }
@@ -8440,7 +8440,7 @@ function extractExceptionKeysForMessage(exception, maxLength = 40) {
   }
 
   if (keys[0].length >= maxLength) {
-    return (0,_string_js__WEBPACK_IMPORTED_MODULE_2__/* .truncate */ .$G)(keys[0], maxLength);
+    return (0,_string_js__WEBPACK_IMPORTED_MODULE_2__/* .truncate */ .E3)(keys[0], maxLength);
   }
 
   for (let includedKeys = keys.length; includedKeys > 0; includedKeys--) {
@@ -8451,7 +8451,7 @@ function extractExceptionKeysForMessage(exception, maxLength = 40) {
     if (includedKeys === keys.length) {
       return serialized;
     }
-    return (0,_string_js__WEBPACK_IMPORTED_MODULE_2__/* .truncate */ .$G)(serialized, maxLength);
+    return (0,_string_js__WEBPACK_IMPORTED_MODULE_2__/* .truncate */ .E3)(serialized, maxLength);
   }
 
   return '';
@@ -8474,7 +8474,7 @@ function dropUndefinedKeys(inputValue) {
 }
 
 function _dropUndefinedKeys(inputValue, memoizationMap) {
-  if ((0,_is_js__WEBPACK_IMPORTED_MODULE_0__/* .isPlainObject */ .PO)(inputValue)) {
+  if ((0,_is_js__WEBPACK_IMPORTED_MODULE_0__/* .isPlainObject */ .oF)(inputValue)) {
     // If this node has already been visited due to a circular reference, return the object it was mapped to in the new object
     const memoVal = memoizationMap.get(inputValue);
     if (memoVal !== undefined) {
@@ -8558,14 +8558,14 @@ function objectify(wat) {
 
 /***/ }),
 
-/***/ 8963:
+/***/ 6952:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   x: () => (/* binding */ makePromiseBuffer)
+/* harmony export */   o: () => (/* binding */ makePromiseBuffer)
 /* harmony export */ });
-/* harmony import */ var _error_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4388);
-/* harmony import */ var _syncpromise_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7946);
+/* harmony import */ var _error_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8388);
+/* harmony import */ var _syncpromise_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7000);
 
 
 
@@ -8602,7 +8602,7 @@ function makePromiseBuffer(limit) {
    */
   function add(taskProducer) {
     if (!isReady()) {
-      return (0,_syncpromise_js__WEBPACK_IMPORTED_MODULE_0__/* .rejectedSyncPromise */ .$2)(new _error_js__WEBPACK_IMPORTED_MODULE_1__/* .SentryError */ .b('Not adding Promise because buffer limit was reached.'));
+      return (0,_syncpromise_js__WEBPACK_IMPORTED_MODULE_0__/* .rejectedSyncPromise */ .qE)(new _error_js__WEBPACK_IMPORTED_MODULE_1__/* .SentryError */ .C('Not adding Promise because buffer limit was reached.'));
     }
 
     // start the task and add its promise to the queue
@@ -8633,7 +8633,7 @@ function makePromiseBuffer(limit) {
    * `false` otherwise
    */
   function drain(timeout) {
-    return new _syncpromise_js__WEBPACK_IMPORTED_MODULE_0__/* .SyncPromise */ .cW((resolve, reject) => {
+    return new _syncpromise_js__WEBPACK_IMPORTED_MODULE_0__/* .SyncPromise */ .Gg((resolve, reject) => {
       let counter = buffer.length;
 
       if (!counter) {
@@ -8649,7 +8649,7 @@ function makePromiseBuffer(limit) {
 
       // if all promises resolve in time, cancel the timer and resolve to `true`
       buffer.forEach(item => {
-        void (0,_syncpromise_js__WEBPACK_IMPORTED_MODULE_0__/* .resolvedSyncPromise */ .WD)(item).then(() => {
+        void (0,_syncpromise_js__WEBPACK_IMPORTED_MODULE_0__/* .resolvedSyncPromise */ .ig)(item).then(() => {
           if (!--counter) {
             clearTimeout(capturedSetTimeout);
             resolve(true);
@@ -8672,12 +8672,12 @@ function makePromiseBuffer(limit) {
 
 /***/ }),
 
-/***/ 1630:
+/***/ 4104:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Q: () => (/* binding */ isRateLimited),
-/* harmony export */   WG: () => (/* binding */ updateRateLimits)
+/* harmony export */   Yf: () => (/* binding */ updateRateLimits),
+/* harmony export */   sJ: () => (/* binding */ isRateLimited)
 /* harmony export */ });
 /* unused harmony exports DEFAULT_RETRY_AFTER, disabledUntil, parseRetryAfterHeader */
 // Intentionally keeping the key broad, as we don't know for sure what rate limit headers get returned from backend
@@ -8781,11 +8781,11 @@ function updateRateLimits(
 
 /***/ }),
 
-/***/ 8653:
+/***/ 9640:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   VT: () => (/* binding */ severityLevelFromString)
+/* harmony export */   iy: () => (/* binding */ severityLevelFromString)
 /* harmony export */ });
 /* unused harmony exports severityFromString, validSeverityLevels */
 // Note: Ideally the `SeverityLevel` type would be derived from `validSeverityLevels`, but that would mean either
@@ -8828,13 +8828,13 @@ function severityLevelFromString(level) {
 
 /***/ }),
 
-/***/ 9038:
+/***/ 6192:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   $P: () => (/* binding */ getFunctionName),
-/* harmony export */   Sq: () => (/* binding */ stackParserFromStackParserOptions),
-/* harmony export */   pE: () => (/* binding */ createStackParser)
+/* harmony export */   M$: () => (/* binding */ stackParserFromStackParserOptions),
+/* harmony export */   i4: () => (/* binding */ createStackParser),
+/* harmony export */   kJ: () => (/* binding */ getFunctionName)
 /* harmony export */ });
 /* unused harmony exports nodeStackLineParser, stripSentryFramesAndReverse */
 
@@ -8977,16 +8977,16 @@ function nodeStackLineParser(getModule) {
 
 /***/ }),
 
-/***/ 9660:
+/***/ 9268:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   $G: () => (/* binding */ truncate),
-/* harmony export */   U0: () => (/* binding */ stringMatchesSomePattern),
-/* harmony export */   nK: () => (/* binding */ safeJoin)
+/* harmony export */   E3: () => (/* binding */ truncate),
+/* harmony export */   ER: () => (/* binding */ stringMatchesSomePattern),
+/* harmony export */   Y9: () => (/* binding */ safeJoin)
 /* harmony export */ });
 /* unused harmony exports isMatchingPattern, snipLine */
-/* harmony import */ var _is_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1757);
+/* harmony import */ var _is_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6484);
 
 
 /**
@@ -9085,14 +9085,14 @@ function isMatchingPattern(
   pattern,
   requireExactStringMatch = false,
 ) {
-  if (!(0,_is_js__WEBPACK_IMPORTED_MODULE_0__/* .isString */ .HD)(value)) {
+  if (!(0,_is_js__WEBPACK_IMPORTED_MODULE_0__/* .isString */ .ct)(value)) {
     return false;
   }
 
-  if ((0,_is_js__WEBPACK_IMPORTED_MODULE_0__/* .isRegExp */ .Kj)(pattern)) {
+  if ((0,_is_js__WEBPACK_IMPORTED_MODULE_0__/* .isRegExp */ .QX)(pattern)) {
     return pattern.test(value);
   }
-  if ((0,_is_js__WEBPACK_IMPORTED_MODULE_0__/* .isString */ .HD)(pattern)) {
+  if ((0,_is_js__WEBPACK_IMPORTED_MODULE_0__/* .isString */ .ct)(pattern)) {
     return requireExactStringMatch ? value === pattern : value.includes(pattern);
   }
 
@@ -9123,22 +9123,22 @@ function stringMatchesSomePattern(
 
 /***/ }),
 
-/***/ 9798:
+/***/ 8036:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Ak: () => (/* binding */ supportsFetch),
-/* harmony export */   Du: () => (/* binding */ isNativeFetch),
-/* harmony export */   t$: () => (/* binding */ supportsNativeFetch)
+/* harmony export */   Gk: () => (/* binding */ supportsFetch),
+/* harmony export */   MD: () => (/* binding */ isNativeFetch),
+/* harmony export */   T0: () => (/* binding */ supportsNativeFetch)
 /* harmony export */ });
 /* unused harmony exports supportsDOMError, supportsDOMException, supportsErrorEvent, supportsReferrerPolicy, supportsReportingObserver */
-/* harmony import */ var _logger_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8536);
-/* harmony import */ var _worldwide_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(63);
+/* harmony import */ var _logger_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(832);
+/* harmony import */ var _worldwide_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4616);
 
 
 
 // eslint-disable-next-line deprecation/deprecation
-const WINDOW = (0,_worldwide_js__WEBPACK_IMPORTED_MODULE_0__/* .getGlobalObject */ .Rf)();
+const WINDOW = (0,_worldwide_js__WEBPACK_IMPORTED_MODULE_0__/* .getGlobalObject */ .mm)();
 
 /**
  * Tells whether current environment supports ErrorEvent objects
@@ -9250,7 +9250,7 @@ function supportsNativeFetch() {
       doc.head.removeChild(sandbox);
     } catch (err) {
       (typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) &&
-        _logger_js__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .kg.warn('Could not create sandbox iframe for pure fetch check, bailing to window.fetch: ', err);
+        _logger_js__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .QE.warn('Could not create sandbox iframe for pure fetch check, bailing to window.fetch: ', err);
     }
   }
 
@@ -9299,15 +9299,15 @@ function supportsReferrerPolicy() {
 
 /***/ }),
 
-/***/ 7946:
+/***/ 7000:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   $2: () => (/* binding */ rejectedSyncPromise),
-/* harmony export */   WD: () => (/* binding */ resolvedSyncPromise),
-/* harmony export */   cW: () => (/* binding */ SyncPromise)
+/* harmony export */   Gg: () => (/* binding */ SyncPromise),
+/* harmony export */   ig: () => (/* binding */ resolvedSyncPromise),
+/* harmony export */   qE: () => (/* binding */ rejectedSyncPromise)
 /* harmony export */ });
-/* harmony import */ var _is_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1757);
+/* harmony import */ var _is_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6484);
 
 
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
@@ -9458,7 +9458,7 @@ class SyncPromise {
       return;
     }
 
-    if ((0,_is_js__WEBPACK_IMPORTED_MODULE_0__/* .isThenable */ .J8)(value)) {
+    if ((0,_is_js__WEBPACK_IMPORTED_MODULE_0__/* .isThenable */ .Oe)(value)) {
       void (value ).then(this._resolve, this._reject);
       return;
     }
@@ -9503,22 +9503,22 @@ class SyncPromise {
 
 /***/ }),
 
-/***/ 7790:
+/***/ 2244:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   ph: () => (/* binding */ timestampInSeconds),
-/* harmony export */   yW: () => (/* binding */ dateTimestampInSeconds)
+/* harmony export */   CG: () => (/* binding */ dateTimestampInSeconds),
+/* harmony export */   Go: () => (/* binding */ timestampInSeconds)
 /* harmony export */ });
 /* unused harmony exports _browserPerformanceTimeOriginMode, browserPerformanceTimeOrigin, timestampWithMs, usingPerformanceAPI */
-/* harmony import */ var _node_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7392);
-/* harmony import */ var _worldwide_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(63);
+/* harmony import */ var _node_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1576);
+/* harmony import */ var _worldwide_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4616);
 /* module decorator */ module = __webpack_require__.hmd(module);
 
 
 
 // eslint-disable-next-line deprecation/deprecation
-const WINDOW = (0,_worldwide_js__WEBPACK_IMPORTED_MODULE_0__/* .getGlobalObject */ .Rf)();
+const WINDOW = (0,_worldwide_js__WEBPACK_IMPORTED_MODULE_0__/* .getGlobalObject */ .mm)();
 
 /**
  * An object that can return the current timestamp in seconds since the UNIX epoch.
@@ -9587,7 +9587,7 @@ function getBrowserPerformance() {
  */
 function getNodePerformance() {
   try {
-    const perfHooks = (0,_node_js__WEBPACK_IMPORTED_MODULE_1__/* .dynamicRequire */ .l$)(module, 'perf_hooks') ;
+    const perfHooks = (0,_node_js__WEBPACK_IMPORTED_MODULE_1__/* .dynamicRequire */ .iq)(module, 'perf_hooks') ;
     return perfHooks.performance;
   } catch (_) {
     return undefined;
@@ -9597,7 +9597,7 @@ function getNodePerformance() {
 /**
  * The Performance API implementation for the current platform, if available.
  */
-const platformPerformance = (0,_node_js__WEBPACK_IMPORTED_MODULE_1__/* .isNodeEnv */ .KV)() ? getNodePerformance() : getBrowserPerformance();
+const platformPerformance = (0,_node_js__WEBPACK_IMPORTED_MODULE_1__/* .isNodeEnv */ .ao)() ? getNodePerformance() : getBrowserPerformance();
 
 const timestampSource =
   platformPerformance === undefined
@@ -9701,11 +9701,11 @@ const browserPerformanceTimeOrigin = (() => {
 
 /***/ }),
 
-/***/ 3483:
+/***/ 2256:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   en: () => (/* binding */ parseUrl)
+/* harmony export */   UX: () => (/* binding */ parseUrl)
 /* harmony export */ });
 /* unused harmony exports getNumberOfUrlSegments, getSanitizedUrlString, stripUrlQueryAndFragment */
 /**
@@ -9784,19 +9784,19 @@ function getSanitizedUrlString(url) {
 
 /***/ }),
 
-/***/ 7318:
+/***/ 2240:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   B: () => (/* binding */ supportsHistory)
+/* harmony export */   I: () => (/* binding */ supportsHistory)
 /* harmony export */ });
-/* harmony import */ var _worldwide_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(63);
+/* harmony import */ var _worldwide_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4616);
 
 
 // Based on https://github.com/angular/angular.js/pull/13945/files
 
 // eslint-disable-next-line deprecation/deprecation
-const WINDOW = (0,_worldwide_js__WEBPACK_IMPORTED_MODULE_0__/* .getGlobalObject */ .Rf)();
+const WINDOW = (0,_worldwide_js__WEBPACK_IMPORTED_MODULE_0__/* .getGlobalObject */ .mm)();
 
 /**
  * Tells whether current environment supports History API
@@ -9824,13 +9824,13 @@ function supportsHistory() {
 
 /***/ }),
 
-/***/ 63:
+/***/ 4616:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Rf: () => (/* binding */ getGlobalObject),
-/* harmony export */   YO: () => (/* binding */ getGlobalSingleton),
-/* harmony export */   n2: () => (/* binding */ GLOBAL_OBJ)
+/* harmony export */   aG: () => (/* binding */ getGlobalSingleton),
+/* harmony export */   eg: () => (/* binding */ GLOBAL_OBJ),
+/* harmony export */   mm: () => (/* binding */ getGlobalObject)
 /* harmony export */ });
 /** Internal global with common properties and Sentry extensions  */
 
@@ -9906,14 +9906,14 @@ function getGlobalSingleton(name, creator, obj) {
 
 /***/ }),
 
-/***/ 6989:
+/***/ 4632:
 /***/ ((module) => {
 
 module.exports = window["wp"]["apiFetch"];
 
 /***/ }),
 
-/***/ 2694:
+/***/ 720:
 /***/ ((module) => {
 
 module.exports = window["wp"]["hooks"];
@@ -10010,11 +10010,11 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _sentry_browser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2456);
-/* harmony import */ var _sentry_browser__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2642);
-/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6989);
+/* harmony import */ var _sentry_browser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8864);
+/* harmony import */ var _sentry_browser__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1060);
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4632);
 /* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2694);
+/* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(720);
 /* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__);
 
 
@@ -10029,7 +10029,7 @@ const headErrors = window._jsErr || [];
 const headErrorHandler = window._headJsErrorHandler;
 function activateSentry() {
   const SENTRY_RELEASE_NAME = window.A8C_ETK_ErrorReporting_Config.releaseName;
-  _sentry_browser__WEBPACK_IMPORTED_MODULE_2__/* .init */ .S1({
+  _sentry_browser__WEBPACK_IMPORTED_MODULE_2__/* .init */ ._6({
     dsn: 'https://658ae291b00242148af6b76494d4a49a@o248881.ingest.sentry.io/5876245',
     release: SENTRY_RELEASE_NAME
   });
@@ -10037,12 +10037,12 @@ function activateSentry() {
   // Capture exceptions from Gutenberg React Error Boundaries
   (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__.addAction)('editor.ErrorBoundary.errorLogged', 'etk/error-reporting', error => {
     // error is the exception's error object
-    _sentry_browser__WEBPACK_IMPORTED_MODULE_3__/* .captureException */ .Tb(error);
+    _sentry_browser__WEBPACK_IMPORTED_MODULE_3__/* .captureException */ .wx(error);
   });
 
   // We still need to report the head errors, if any.
-  headErrors.forEach(error => _sentry_browser__WEBPACK_IMPORTED_MODULE_3__/* .captureException */ .Tb(error));
-  _sentry_browser__WEBPACK_IMPORTED_MODULE_2__/* .flush */ .yl().then(() => delete window._jsErr);
+  headErrors.forEach(error => _sentry_browser__WEBPACK_IMPORTED_MODULE_3__/* .captureException */ .wx(error));
+  _sentry_browser__WEBPACK_IMPORTED_MODULE_2__/* .flush */ .q2().then(() => delete window._jsErr);
 }
 
 // Activate the home-brew error-reporting

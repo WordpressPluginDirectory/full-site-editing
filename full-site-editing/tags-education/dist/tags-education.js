@@ -1,15 +1,15 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 7266:
+/***/ 6612:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (/* binding */ compile)
+/* harmony export */   c: () => (/* binding */ compile)
 /* harmony export */ });
-/* harmony import */ var _tannin_postfix__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5854);
-/* harmony import */ var _tannin_evaluate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(730);
+/* harmony import */ var _tannin_postfix__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4180);
+/* harmony import */ var _tannin_evaluate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1200);
 
 
 
@@ -33,22 +33,22 @@
  * @return {(variables?:{[variable:string]:*})=>*} Compiled evaluator.
  */
 function compile( expression ) {
-	var terms = (0,_tannin_postfix__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)( expression );
+	var terms = (0,_tannin_postfix__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c)( expression );
 
 	return function( variables ) {
-		return (0,_tannin_evaluate__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)( terms, variables );
+		return (0,_tannin_evaluate__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .c)( terms, variables );
 	};
 }
 
 
 /***/ }),
 
-/***/ 730:
+/***/ 1200:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (/* binding */ evaluate)
+/* harmony export */   c: () => (/* binding */ evaluate)
 /* harmony export */ });
 /**
  * Operator callback functions.
@@ -164,14 +164,14 @@ function evaluate( postfix, variables ) {
 
 /***/ }),
 
-/***/ 1184:
+/***/ 5212:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (/* binding */ pluralForms)
+/* harmony export */   c: () => (/* binding */ pluralForms)
 /* harmony export */ });
-/* harmony import */ var _tannin_compile__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7266);
+/* harmony import */ var _tannin_compile__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6612);
 
 
 /**
@@ -184,7 +184,7 @@ function evaluate( postfix, variables ) {
  * @return {Function} Evaluator function.
  */
 function pluralForms( expression ) {
-	var evaluate = (0,_tannin_compile__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)( expression );
+	var evaluate = (0,_tannin_compile__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c)( expression );
 
 	return function( n ) {
 		return +evaluate( { n: n } );
@@ -194,12 +194,12 @@ function pluralForms( expression ) {
 
 /***/ }),
 
-/***/ 5854:
+/***/ 4180:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (/* binding */ postfix)
+/* harmony export */   c: () => (/* binding */ postfix)
 /* harmony export */ });
 var PRECEDENCE, OPENERS, TERMINATORS, PATTERN;
 
@@ -329,12 +329,12 @@ function postfix( expression ) {
 
 /***/ }),
 
-/***/ 6668:
+/***/ 6808:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (/* binding */ sprintf)
+/* harmony export */   c: () => (/* binding */ sprintf)
 /* harmony export */ });
 /**
  * Regular expression matching format placeholder syntax.
@@ -473,7 +473,7 @@ function sprintf( string, args ) {
 
 /***/ }),
 
-/***/ 3421:
+/***/ 3980:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -683,7 +683,7 @@ function tryDecode(str, decode) {
 
 /***/ }),
 
-/***/ 5881:
+/***/ 9392:
 /***/ ((module) => {
 
 /**
@@ -852,7 +852,7 @@ function plural(ms, msAbs, n, name) {
 
 /***/ }),
 
-/***/ 2699:
+/***/ 2928:
 /***/ ((module) => {
 
 "use strict";
@@ -1357,14 +1357,14 @@ function eventTargetAgnosticAddListener(emitter, name, listener, flags) {
 
 /***/ }),
 
-/***/ 4495:
+/***/ 9252:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 
-var utils = __webpack_require__(212);
-var assert = __webpack_require__(9561);
+var utils = __webpack_require__(3067);
+var assert = __webpack_require__(5192);
 
 function BlockHash() {
   this.pending = null;
@@ -1457,15 +1457,15 @@ BlockHash.prototype._pad = function pad() {
 
 /***/ }),
 
-/***/ 5079:
+/***/ 1672:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var utils = __webpack_require__(212);
-var common = __webpack_require__(4495);
-var shaCommon = __webpack_require__(713);
+var utils = __webpack_require__(3067);
+var common = __webpack_require__(9252);
+var shaCommon = __webpack_require__(4681);
 
 var rotl32 = utils.rotl32;
 var sum32 = utils.sum32;
@@ -1539,16 +1539,16 @@ SHA1.prototype._digest = function digest(enc) {
 
 /***/ }),
 
-/***/ 8032:
+/***/ 1704:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var utils = __webpack_require__(212);
-var common = __webpack_require__(4495);
-var shaCommon = __webpack_require__(713);
-var assert = __webpack_require__(9561);
+var utils = __webpack_require__(3067);
+var common = __webpack_require__(9252);
+var shaCommon = __webpack_require__(4681);
+var assert = __webpack_require__(5192);
 
 var sum32 = utils.sum32;
 var sum32_4 = utils.sum32_4;
@@ -1652,13 +1652,13 @@ SHA256.prototype._digest = function digest(enc) {
 
 /***/ }),
 
-/***/ 713:
+/***/ 4681:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 
-var utils = __webpack_require__(212);
+var utils = __webpack_require__(3067);
 var rotr32 = utils.rotr32;
 
 function ft_1(s, x, y, z) {
@@ -1709,14 +1709,14 @@ exports.g1_256 = g1_256;
 
 /***/ }),
 
-/***/ 212:
+/***/ 3067:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 
-var assert = __webpack_require__(9561);
-var inherits = __webpack_require__(1285);
+var assert = __webpack_require__(5192);
+var inherits = __webpack_require__(912);
 
 exports.inherits = inherits;
 
@@ -1995,7 +1995,7 @@ exports.shr64_lo = shr64_lo;
 
 /***/ }),
 
-/***/ 1285:
+/***/ 912:
 /***/ ((module) => {
 
 if (typeof Object.create === 'function') {
@@ -2029,11 +2029,11 @@ if (typeof Object.create === 'function') {
 
 /***/ }),
 
-/***/ 7839:
+/***/ 2608:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var events = __webpack_require__(2699)
-var inherits = __webpack_require__(1285)
+var events = __webpack_require__(2928)
+var inherits = __webpack_require__(912)
 
 module.exports = LRU
 
@@ -2181,7 +2181,7 @@ LRU.prototype.evict = function () {
 
 /***/ }),
 
-/***/ 9561:
+/***/ 5192:
 /***/ ((module) => {
 
 module.exports = assert;
@@ -2199,14 +2199,14 @@ assert.equal = function assertEqual(l, r, msg) {
 
 /***/ }),
 
-/***/ 9830:
+/***/ 2888:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (/* binding */ Tannin)
+/* harmony export */   c: () => (/* binding */ Tannin)
 /* harmony export */ });
-/* harmony import */ var _tannin_plural_forms__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1184);
+/* harmony import */ var _tannin_plural_forms__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5212);
 
 
 /**
@@ -2365,7 +2365,7 @@ Tannin.prototype.getPluralForm = function( domain, n ) {
 				config.plural_forms
 			);
 
-			pf = (0,_tannin_plural_forms__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)( plural );
+			pf = (0,_tannin_plural_forms__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c)( plural );
 		}
 
 		getPluralForm = this.pluralForms[ domain ] = pf;
@@ -2424,21 +2424,21 @@ Tannin.prototype.dcnpgettext = function( domain, context, singular, plural, n ) 
 
 /***/ }),
 
-/***/ 2641:
+/***/ 5256:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9307);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8496);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6115);
-/* harmony import */ var _automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7498);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5609);
+/* harmony import */ var _automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9280);
+/* harmony import */ var _automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(3868);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7287);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4333);
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2976);
 /* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(2694);
+/* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(720);
 /* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(5736);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(3396);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__);
 
 
@@ -2448,10 +2448,10 @@ Tannin.prototype.dcnpgettext = function( domain, context, singular, plural, n ) 
 
 
 const __ = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__;
-const trackTagsEducationLinkClick = () => (0,_automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__/* .recordTracksEvent */ .jN)('wpcom_block_editor_tags_education_link_click');
+const trackTagsEducationLinkClick = () => (0,_automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__/* .recordTracksEvent */ .__)('wpcom_block_editor_tags_education_link_click');
 const addTagsEducationLink = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__.createHigherOrderComponent)(PostTaxonomyType => {
   return props => {
-    const localizeUrl = (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_6__/* .useLocalizeUrl */ .Iu)();
+    const localizeUrl = (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_6__/* .useLocalizeUrl */ .ae)();
     if (props.slug !== 'post_tag') {
       return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(PostTaxonomyType, props);
     }
@@ -2472,22 +2472,23 @@ const addTagsEducationLink = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__.
 
 /***/ }),
 
-/***/ 6115:
+/***/ 9280:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   jN: () => (/* reexport safe */ _tracks__WEBPACK_IMPORTED_MODULE_7__.jN)
+/* harmony export */   __: () => (/* reexport safe */ _tracks__WEBPACK_IMPORTED_MODULE_8__.__)
 /* harmony export */ });
-/* harmony import */ var _utils_do_not_track__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1694);
-/* harmony import */ var _utils_current_user__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6209);
-/* harmony import */ var _page_view_params__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9377);
-/* harmony import */ var _utils_get_tracking_prefs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2552);
-/* harmony import */ var _utils_set_tracking_prefs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(825);
-/* harmony import */ var _utils_is_country_in_gdpr_zone__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6326);
-/* harmony import */ var _utils_is_region_in_ccpa_zone__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(2286);
-/* harmony import */ var _tracks__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(9792);
-/* harmony import */ var _train_tracks__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(3722);
+/* harmony import */ var _utils_do_not_track__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8940);
+/* harmony import */ var _utils_current_user__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1188);
+/* harmony import */ var _page_view_params__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4063);
+/* harmony import */ var _utils_get_tracking_prefs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9716);
+/* harmony import */ var _utils_set_tracking_prefs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1387);
+/* harmony import */ var _utils_is_country_in_gdpr_zone__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9492);
+/* harmony import */ var _utils_is_region_in_ccpa_zone__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(4980);
+/* harmony import */ var _utils_is_region_in_sts_zone__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(6392);
+/* harmony import */ var _tracks__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(2447);
+/* harmony import */ var _train_tracks__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(480);
 /**
  * Re-export
  */
@@ -2501,9 +2502,10 @@ const addTagsEducationLink = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__.
 
 
 
+
 /***/ }),
 
-/***/ 9377:
+/***/ 4063:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -2541,23 +2543,23 @@ function getMostRecentUrlPath() {
 
 /***/ }),
 
-/***/ 9792:
+/***/ 2447:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   jN: () => (/* binding */ recordTracksEvent)
+/* harmony export */   __: () => (/* binding */ recordTracksEvent)
 /* harmony export */ });
 /* unused harmony exports getTracksLoadPromise, pushEventToTracksQueue, analyticsEvents, getTracksAnonymousUserId, initializeAnalytics, identifyUser, signalUserFromAnotherProduct, recordTracksPageView, recordTracksPageViewWithPageParams, getGenericSuperPropsGetter */
-/* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2699);
+/* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2928);
 /* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(events__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _automattic_load_script__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4898);
-/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3421);
-/* harmony import */ var _page_view_params__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9377);
-/* harmony import */ var _utils_current_user__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6209);
-/* harmony import */ var _utils_debug__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9358);
-/* harmony import */ var _utils_do_not_track__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1694);
-/* harmony import */ var _utils_get_tracking_prefs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(2552);
+/* harmony import */ var _automattic_load_script__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8680);
+/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3980);
+/* harmony import */ var _page_view_params__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4063);
+/* harmony import */ var _utils_current_user__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1188);
+/* harmony import */ var _utils_debug__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2412);
+/* harmony import */ var _utils_do_not_track__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(8940);
+/* harmony import */ var _utils_get_tracking_prefs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(9716);
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 
@@ -2584,7 +2586,7 @@ let _superProps; // Added to all Tracks events.
 let _loadTracksResult = Promise.resolve(); // default value for non-BOM environments.
 
 if (typeof document !== 'undefined') {
-  _loadTracksResult = (0,_automattic_load_script__WEBPACK_IMPORTED_MODULE_1__/* .loadScript */ .ve)('//stats.wp.com/w.js?67');
+  _loadTracksResult = (0,_automattic_load_script__WEBPACK_IMPORTED_MODULE_1__/* .loadScript */ .aU)('//stats.wp.com/w.js?67');
 }
 function createRandomId(randomBytesLength = 9) {
   if (false) {}
@@ -2708,15 +2710,15 @@ function signalUserFromAnotherProduct(userId, userIdType) {
 }
 function recordTracksEvent(eventName, eventProperties) {
   eventProperties = eventProperties || {};
-  const trackingPrefs = (0,_utils_get_tracking_prefs__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .ZP)();
+  const trackingPrefs = (0,_utils_get_tracking_prefs__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .cp)();
   if (!trackingPrefs?.buckets.analytics) {
-    (0,_utils_debug__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z)('Analytics has been disabled - Ignoring event "%s" with actual props %o', eventName, eventProperties);
+    (0,_utils_debug__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .c)('Analytics has been disabled - Ignoring event "%s" with actual props %o', eventName, eventProperties);
     return;
   }
   if (false) {}
-  (0,_utils_debug__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z)('Record event "%s" called with props %o', eventName, eventProperties);
+  (0,_utils_debug__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .c)('Record event "%s" called with props %o', eventName, eventProperties);
   if (!eventName.startsWith('calypso_') && !eventName.startsWith('jetpack_') && !eventName.startsWith('wpcom_dsp_widget_') && !EVENT_NAME_EXCEPTIONS.includes(eventName)) {
-    (0,_utils_debug__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z)('- Event name must be prefixed by "calypso_", "jetpack_", or added to `EVENT_NAME_EXCEPTIONS`');
+    (0,_utils_debug__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .c)('- Event name must be prefixed by "calypso_", "jetpack_", or added to `EVENT_NAME_EXCEPTIONS`');
     return;
   }
   if (_superProps) {
@@ -2730,7 +2732,7 @@ function recordTracksEvent(eventName, eventProperties) {
   // Remove properties that have an undefined value
   // This allows a caller to easily remove properties from the recorded set by setting them to undefined
   eventProperties = Object.fromEntries(Object.entries(eventProperties).filter(([, val]) => typeof val !== 'undefined'));
-  (0,_utils_debug__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z)('Recording event "%s" with actual props %o', eventName, eventProperties);
+  (0,_utils_debug__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .c)('Recording event "%s" with actual props %o', eventName, eventProperties);
   pushEventToTracksQueue(['recordEvent', eventName, eventProperties]);
   analyticsEvents.emit('record-event', eventName, eventProperties);
 }
@@ -2788,12 +2790,12 @@ function getGenericSuperPropsGetter(config) {
 
 /***/ }),
 
-/***/ 3722:
+/***/ 480:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* unused harmony exports recordTrainTracksRender, recordTrainTracksInteract, getNewRailcarId */
-/* harmony import */ var _tracks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9792);
+/* harmony import */ var _tracks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2447);
 
 
 function recordTrainTracksRender({
@@ -2842,12 +2844,12 @@ function getNewRailcarId(suffix = 'recommendation') {
 
 /***/ }),
 
-/***/ 6209:
+/***/ 1188:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* unused harmony exports getCurrentUser, setCurrentUser */
-/* harmony import */ var _hash_pii__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4);
+/* harmony import */ var _hash_pii__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4016);
 
 
 /**
@@ -2887,14 +2889,14 @@ function setCurrentUser(currentUser) {
 
 /***/ }),
 
-/***/ 9358:
+/***/ 2412:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   c: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8049);
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9868);
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_0__);
 
 
@@ -2905,12 +2907,12 @@ function setCurrentUser(currentUser) {
 
 /***/ }),
 
-/***/ 1694:
+/***/ 8940:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* unused harmony export default */
-/* harmony import */ var _debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9358);
+/* harmony import */ var _debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2412);
 
 
 /**
@@ -2929,17 +2931,17 @@ function getDoNotTrack() {
 
 /***/ }),
 
-/***/ 2552:
+/***/ 9716:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   ZP: () => (/* binding */ getTrackingPrefs)
+/* harmony export */   cp: () => (/* binding */ getTrackingPrefs)
 /* harmony export */ });
 /* unused harmony exports TRACKING_PREFS_COOKIE_V1, TRACKING_PREFS_COOKIE_V2, parseTrackingPrefs */
-/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3421);
-/* harmony import */ var _is_country_in_gdpr_zone__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6326);
-/* harmony import */ var _is_region_in_ccpa_zone__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2286);
+/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3980);
+/* harmony import */ var _is_country_in_gdpr_zone__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9492);
+/* harmony import */ var _is_region_in_ccpa_zone__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4980);
 
 
 
@@ -3007,8 +3009,8 @@ function getTrackingPrefs() {
     return prefsAllowAll;
   }
   const cookies = cookie__WEBPACK_IMPORTED_MODULE_0__.parse(document.cookie);
-  const isCountryGdpr = (0,_is_country_in_gdpr_zone__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)(cookies.country_code);
-  const isCountryCcpa = (0,_is_region_in_ccpa_zone__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z)(cookies.country_code, cookies.region);
+  const isCountryGdpr = (0,_is_country_in_gdpr_zone__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .c)(cookies.country_code);
+  const isCountryCcpa = (0,_is_region_in_ccpa_zone__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .c)(cookies.country_code, cookies.region);
   if (!isCountryGdpr && !isCountryCcpa) {
     return prefsAllowAll;
   }
@@ -3039,12 +3041,12 @@ function getTrackingPrefs() {
 
 /***/ }),
 
-/***/ 4:
+/***/ 4016:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* unused harmony export default */
-/* harmony import */ var hash_js_lib_hash_sha_256__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8032);
+/* harmony import */ var hash_js_lib_hash_sha_256__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1704);
 /* harmony import */ var hash_js_lib_hash_sha_256__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(hash_js_lib_hash_sha_256__WEBPACK_IMPORTED_MODULE_0__);
 
 
@@ -3060,12 +3062,12 @@ function hashPii(data) {
 
 /***/ }),
 
-/***/ 6326:
+/***/ 9492:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (/* binding */ isCountryInGdprZone)
+/* harmony export */   c: () => (/* binding */ isCountryInGdprZone)
 /* harmony export */ });
 const GDPR_COUNTRIES = [
 // European Member countries
@@ -3150,12 +3152,12 @@ function isCountryInGdprZone(countryCode) {
 
 /***/ }),
 
-/***/ 2286:
+/***/ 4980:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (/* binding */ isRegionInCcpaZone)
+/* harmony export */   c: () => (/* binding */ isRegionInCcpaZone)
 /* harmony export */ });
 const CCPA_US_REGIONS = ['california',
 // CA
@@ -3165,7 +3167,23 @@ const CCPA_US_REGIONS = ['california',
 // CT
 'utah',
 // UT
-'virginia' // VA
+'virginia',
+// VA
+'texas',
+// TX
+'tennessee',
+// TN
+'oregon',
+// OR
+'new jersey',
+// NJ
+'montana',
+// MT
+'iowa',
+// IA
+'indiana',
+// IN
+'delaware' // DE
 ];
 
 /**
@@ -3187,12 +3205,54 @@ function isRegionInCcpaZone(countryCode, region) {
 
 /***/ }),
 
-/***/ 825:
+/***/ 6392:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* unused harmony export default */
+const STS_US_REGIONS = (/* unused pure expression or super */ null && (['california',
+// CA
+'florida',
+// FL
+'maryland',
+// MD
+'massachusetts',
+// MA
+'new hampshire',
+// NH
+'nevada',
+// NV
+'pennsylvania',
+// PA
+'washington' // WA
+]));
+
+/**
+ * Returns a boolean telling whether a region is in an STS (session tracking sensitive) zone.
+ * @param countryCode The country code to check (it needs to be 'US' for STS to apply)
+ * @param region The region to look for.
+ * @returns Whether the region is in the STS zone
+ */
+
+function isRegionInStsZone(countryCode, region) {
+  if ('US' !== countryCode) {
+    return false;
+  }
+  if ('unknown' === region) {
+    // If we don't know the region, assume it's not in an STS zone.
+    return true;
+  }
+  return region !== undefined && STS_US_REGIONS.includes(region.toLowerCase());
+}
+
+/***/ }),
+
+/***/ 1387:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
-/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3421);
-/* harmony import */ var _get_tracking_prefs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2552);
+/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3980);
+/* harmony import */ var _get_tracking_prefs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9716);
 
 
 const COOKIE_MAX_AGE = (/* unused pure expression or super */ null && (60 * 60 * 24 * (365.25 / 2))); /* six months; 365.25 -> avg days in year */
@@ -3219,38 +3279,38 @@ const setTrackingPrefs = newPrefs => {
 
 /***/ }),
 
-/***/ 4724:
+/***/ 7408:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   c: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(914);
+/* harmony import */ var _i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7560);
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new _i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z());
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new _i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c());
 
 /***/ }),
 
-/***/ 914:
+/***/ 7560:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   c: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2699);
+/* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2928);
 /* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(events__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _automattic_interpolate_components__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(2594);
-/* harmony import */ var _tannin_sprintf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(6668);
-/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8049);
+/* harmony import */ var _automattic_interpolate_components__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(7556);
+/* harmony import */ var _tannin_sprintf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(6808);
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9868);
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var hash_js_lib_hash_sha_1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5079);
+/* harmony import */ var hash_js_lib_hash_sha_1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1672);
 /* harmony import */ var hash_js_lib_hash_sha_1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(hash_js_lib_hash_sha_1__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var lru__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7839);
+/* harmony import */ var lru__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2608);
 /* harmony import */ var lru__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lru__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var tannin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9830);
-/* harmony import */ var _number_format__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(3);
+/* harmony import */ var tannin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(2888);
+/* harmony import */ var _number_format__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7696);
 
 
 
@@ -3406,7 +3466,7 @@ I18N.prototype.numberFormat = function (number, options = {}) {
   const decimals = typeof options === 'number' ? options : options.decimals || 0;
   const decPoint = options.decPoint || this.state.numberFormatSettings.decimal_point || '.';
   const thousandsSep = options.thousandsSep || this.state.numberFormatSettings.thousands_sep || ',';
-  return (0,_number_format__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z)(number, decimals, decPoint, thousandsSep);
+  return (0,_number_format__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .c)(number, decimals, decPoint, thousandsSep);
 };
 I18N.prototype.configure = function (options) {
   Object.assign(this, options || {});
@@ -3482,7 +3542,7 @@ I18N.prototype.setLocale = function (localeData) {
   // - the translation for the special string "ltr" (standard in Core, not present in Calypso)
   // - or the `momentjs_locale.textDirection` property present in Calypso translation files
   this.state.textDirection = this.state.locale['text direction\u0004ltr']?.[0] || this.state.locale['']?.momentjs_locale?.textDirection;
-  this.state.tannin = new tannin__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z({
+  this.state.tannin = new tannin__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .c({
     [domain_key]: this.state.locale
   });
 
@@ -3568,7 +3628,7 @@ I18N.prototype.translate = function () {
     const sprintfArgs = Array.isArray(options.args) ? options.args.slice(0) : [options.args];
     sprintfArgs.unshift(translation);
     try {
-      translation = (0,_tannin_sprintf__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z)(...sprintfArgs);
+      translation = (0,_tannin_sprintf__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .c)(...sprintfArgs);
     } catch (error) {
       if (!window || !window.console) {
         return;
@@ -3584,7 +3644,7 @@ I18N.prototype.translate = function () {
 
   // interpolate any components
   if (options.components) {
-    translation = (0,_automattic_interpolate_components__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z)({
+    translation = (0,_automattic_interpolate_components__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .c)({
       mixedString: translation,
       components: options.components,
       throwErrors: this.throwErrors
@@ -3622,15 +3682,15 @@ I18N.prototype.registerTranslateHook = function (callback) {
 
 /***/ }),
 
-/***/ 1481:
+/***/ 4064:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Yj: () => (/* binding */ getLocaleSlug)
+/* harmony export */   ug: () => (/* binding */ getLocaleSlug)
 /* harmony export */ });
 /* unused harmony exports numberFormat, translate, configure, setLocale, getLocale, getLocaleVariant, isRtl, addTranslations, reRenderTranslations, registerComponentUpdateHook, registerTranslateHook, state, stateObserver, on, off, emit */
-/* harmony import */ var _default_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4724);
+/* harmony import */ var _default_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7408);
 
 
 
@@ -3642,32 +3702,32 @@ I18N.prototype.registerTranslateHook = function (callback) {
 
 // Export the default instance's properties and bound methods for convenience
 // These should be deprecated eventually, exposing only the default `i18n` instance
-const numberFormat = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.numberFormat.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
-const translate = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.translate.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
-const configure = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.configure.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
-const setLocale = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.setLocale.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
-const getLocale = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.getLocale.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
-const getLocaleSlug = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.getLocaleSlug.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
-const getLocaleVariant = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.getLocaleVariant.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
-const isRtl = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.isRtl.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
-const addTranslations = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.addTranslations.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
-const reRenderTranslations = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.reRenderTranslations.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
-const registerComponentUpdateHook = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.registerComponentUpdateHook.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
-const registerTranslateHook = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.registerTranslateHook.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
-const state = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.state;
-const stateObserver = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.stateObserver;
-const on = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.on.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
-const off = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.off.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
-const emit = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.emit.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
+const numberFormat = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.numberFormat.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const translate = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.translate.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const configure = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.configure.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const setLocale = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.setLocale.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const getLocale = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.getLocale.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const getLocaleSlug = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.getLocaleSlug.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const getLocaleVariant = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.getLocaleVariant.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const isRtl = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.isRtl.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const addTranslations = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.addTranslations.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const reRenderTranslations = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.reRenderTranslations.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const registerComponentUpdateHook = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.registerComponentUpdateHook.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const registerTranslateHook = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.registerTranslateHook.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const state = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.state;
+const stateObserver = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.stateObserver;
+const on = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.on.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const off = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.off.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const emit = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.emit.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
 
 /***/ }),
 
-/***/ 3:
+/***/ 7696:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (/* binding */ number_format)
+/* harmony export */   c: () => (/* binding */ number_format)
 /* harmony export */ });
 /*
  * Exposes number format capability
@@ -3701,21 +3761,21 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 
 /***/ }),
 
-/***/ 849:
+/***/ 5604:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   bU: () => (/* binding */ useLocale)
+/* harmony export */   y_: () => (/* binding */ useLocale)
 /* harmony export */ });
 /* unused harmony exports localeContext, LocaleProvider, withLocale, useIsEnglishLocale, useHasEnTranslation */
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9307);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8496);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4333);
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2976);
 /* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5736);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3396);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9196);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1280);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
 
 
@@ -3828,21 +3888,21 @@ function useHasEnTranslation() {
 
 /***/ }),
 
-/***/ 4655:
+/***/ 1776:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   GG: () => (/* binding */ localesWithBlog),
-/* harmony export */   Xb: () => (/* binding */ localesToSubdomains),
-/* harmony export */   _r: () => (/* binding */ jetpackComLocales),
-/* harmony export */   dH: () => (/* binding */ localesWithGoBlog),
-/* harmony export */   hI: () => (/* binding */ supportSiteLocales),
-/* harmony export */   iT: () => (/* binding */ localesWithPrivacyPolicy),
-/* harmony export */   mL: () => (/* binding */ forumLocales),
-/* harmony export */   vS: () => (/* binding */ magnificentNonEnLocales),
-/* harmony export */   xh: () => (/* binding */ localesForPricePlans),
-/* harmony export */   xn: () => (/* binding */ localesWithCookiePolicy)
+/* harmony export */   GC: () => (/* binding */ localesWithBlog),
+/* harmony export */   QR: () => (/* binding */ jetpackComLocales),
+/* harmony export */   YP: () => (/* binding */ localesToSubdomains),
+/* harmony export */   aI: () => (/* binding */ localesWithCookiePolicy),
+/* harmony export */   aY: () => (/* binding */ localesForPricePlans),
+/* harmony export */   fh: () => (/* binding */ magnificentNonEnLocales),
+/* harmony export */   i: () => (/* binding */ supportSiteLocales),
+/* harmony export */   s7: () => (/* binding */ localesWithGoBlog),
+/* harmony export */   sj: () => (/* binding */ localesWithPrivacyPolicy),
+/* harmony export */   yO: () => (/* binding */ forumLocales)
 /* harmony export */ });
 /* unused harmony exports i18nDefaultLocaleSlug, englishLocales, livechatSupportLocales */
 /**
@@ -3887,23 +3947,23 @@ const jetpackComLocales = ['en', 'ar', 'de', 'es', 'fr', 'he', 'id', 'it', 'ja',
 
 /***/ }),
 
-/***/ 7498:
+/***/ 3868:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Iu: () => (/* binding */ useLocalizeUrl)
+/* harmony export */   ae: () => (/* binding */ useLocalizeUrl)
 /* harmony export */ });
 /* unused harmony exports urlLocalizationMapping, localizeUrl, withLocalizeUrl */
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9307);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8496);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4333);
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2976);
 /* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1481);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9196);
+/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4064);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1280);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _locale_context__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(849);
-/* harmony import */ var _locales__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4655);
+/* harmony import */ var _locale_context__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(5604);
+/* harmony import */ var _locales__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1776);
 
 
 
@@ -3912,13 +3972,13 @@ const jetpackComLocales = ['en', 'ar', 'de', 'es', 'fr', 'he', 'id', 'it', 'ja',
 
 const INVALID_URL = `http://__domain__.invalid`;
 function getDefaultLocale() {
-  return (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_3__/* .getLocaleSlug */ .Yj)?.() ?? 'en';
+  return (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_3__/* .getLocaleSlug */ .ug)?.() ?? 'en';
 }
 const setLocalizedUrlHost = (hostname, validLocales = []) => (url, locale) => {
   if (validLocales.includes(locale) && locale !== 'en') {
     // Avoid changing the hostname when the locale is set via the path.
     if (url.pathname.substr(0, locale.length + 2) !== '/' + locale + '/') {
-      url.host = `${_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesToSubdomains */ .Xb[locale] || locale}.${hostname}`;
+      url.host = `${_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesToSubdomains */ .YP[locale] || locale}.${hostname}`;
     }
   }
   return url;
@@ -3963,9 +4023,9 @@ const suffixLocalizedUrlPath = (validLocales = [], limitPathMatch = null) => (ur
   return prefixOrSuffixLocalizedUrlPath(validLocales, limitPathMatch, 'suffix')(url, localeSlug);
 };
 const urlLocalizationMapping = {
-  'wordpress.com/support/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .supportSiteLocales */ .hI),
-  'wordpress.com/forums/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .forumLocales */ .mL),
-  'wordpress.com/blog/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesWithBlog */ .GG, /^\/blog\/?$/),
+  'wordpress.com/support/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .supportSiteLocales */ .i),
+  'wordpress.com/forums/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .forumLocales */ .yO),
+  'wordpress.com/blog/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesWithBlog */ .GC, /^\/blog\/?$/),
   'wordpress.com/go/': (url, localeSlug) => {
     // Rewrite non-home URLs (e.g. posts) only for Spanish, because that's
     // the only language into which we're currently translating content.
@@ -3973,24 +4033,24 @@ const urlLocalizationMapping = {
     if (!isHome && 'es' !== localeSlug) {
       return url;
     }
-    return prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesWithGoBlog */ .dH)(url, localeSlug);
+    return prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesWithGoBlog */ .s7)(url, localeSlug);
   },
-  'wordpress.com/tos/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .vS),
-  'wordpress.com/wp-admin/': setLocalizedUrlHost('wordpress.com', _locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .vS),
-  'wordpress.com/wp-login.php': setLocalizedUrlHost('wordpress.com', _locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .vS),
-  'jetpack.com': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .jetpackComLocales */ ._r),
-  'en.support.wordpress.com': setLocalizedWpComPath('/support', _locales__WEBPACK_IMPORTED_MODULE_4__/* .supportSiteLocales */ .hI),
-  'en.blog.wordpress.com': setLocalizedWpComPath('/blog', _locales__WEBPACK_IMPORTED_MODULE_4__/* .localesWithBlog */ .GG, /^\/$/),
-  'apps.wordpress.com': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .vS),
-  'en.forums.wordpress.com': setLocalizedWpComPath('/forums', _locales__WEBPACK_IMPORTED_MODULE_4__/* .forumLocales */ .mL),
-  'automattic.com/privacy/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesWithPrivacyPolicy */ .iT),
-  'automattic.com/cookies/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesWithCookiePolicy */ .xn),
+  'wordpress.com/tos/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .fh),
+  'wordpress.com/wp-admin/': setLocalizedUrlHost('wordpress.com', _locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .fh),
+  'wordpress.com/wp-login.php': setLocalizedUrlHost('wordpress.com', _locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .fh),
+  'jetpack.com': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .jetpackComLocales */ .QR),
+  'en.support.wordpress.com': setLocalizedWpComPath('/support', _locales__WEBPACK_IMPORTED_MODULE_4__/* .supportSiteLocales */ .i),
+  'en.blog.wordpress.com': setLocalizedWpComPath('/blog', _locales__WEBPACK_IMPORTED_MODULE_4__/* .localesWithBlog */ .GC, /^\/$/),
+  'apps.wordpress.com': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .fh),
+  'en.forums.wordpress.com': setLocalizedWpComPath('/forums', _locales__WEBPACK_IMPORTED_MODULE_4__/* .forumLocales */ .yO),
+  'automattic.com/privacy/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesWithPrivacyPolicy */ .sj),
+  'automattic.com/cookies/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesWithCookiePolicy */ .aI),
   'wordpress.com/help/contact/': (url, localeSlug, isLoggedIn) => {
     if (isLoggedIn) {
       return url;
     }
     url.pathname = url.pathname.replace(/\/help\//, '/support/');
-    return prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .supportSiteLocales */ .hI)(url, localeSlug);
+    return prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .supportSiteLocales */ .i)(url, localeSlug);
   },
   'wordpress.com': (url, localeSlug) => {
     // Don't rewrite checkout and me URLs.
@@ -4001,29 +4061,29 @@ const urlLocalizationMapping = {
     if (/\/([a-z0-9-]+\.)+[a-z]{2,}\/?$/.test(url.pathname)) {
       return url;
     }
-    return prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .vS)(url, localeSlug);
+    return prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .fh)(url, localeSlug);
   },
   'wordpress.com/theme/': (url, localeSlug, isLoggedIn) => {
-    return isLoggedIn ? url : prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .vS)(url, localeSlug);
+    return isLoggedIn ? url : prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .fh)(url, localeSlug);
   },
   'wordpress.com/themes/': (url, localeSlug, isLoggedIn) => {
-    return isLoggedIn ? url : prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .vS)(url, localeSlug);
+    return isLoggedIn ? url : prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .fh)(url, localeSlug);
   },
   'wordpress.com/plugins/': (url, localeSlug, isLoggedIn) => {
-    return isLoggedIn ? url : prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .vS)(url, localeSlug);
+    return isLoggedIn ? url : prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .fh)(url, localeSlug);
   },
   'wordpress.com/log-in/': (url, localeSlug, isLoggedIn) => {
-    return isLoggedIn ? url : suffixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .vS)(url, localeSlug);
+    return isLoggedIn ? url : suffixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .fh)(url, localeSlug);
   },
   'wordpress.com/start/': (url, localeSlug, isLoggedIn) => {
-    return isLoggedIn ? url : suffixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .vS)(url, localeSlug);
+    return isLoggedIn ? url : suffixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .fh)(url, localeSlug);
   },
   'wordpress.com/plans/': (url, localeSlug, isLoggedIn) => {
     // if logged in, or url.pathname contains characters after `/plans/`, don't rewrite
-    return isLoggedIn || url.pathname !== '/plans/' ? url : prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesForPricePlans */ .xh)(url, localeSlug);
+    return isLoggedIn || url.pathname !== '/plans/' ? url : prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesForPricePlans */ .aY)(url, localeSlug);
   },
   'wordpress.com/setup/': (url, localeSlug, isLoggedIn) => {
-    return isLoggedIn ? url : suffixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .vS)(url, localeSlug);
+    return isLoggedIn ? url : suffixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .fh)(url, localeSlug);
   }
 };
 function hasTrailingSlash(urlString) {
@@ -4089,7 +4149,7 @@ function localizeUrl(fullUrl, locale = getDefaultLocale(), isLoggedIn = true, pr
   return fullUrl;
 }
 function useLocalizeUrl() {
-  const providerLocale = (0,_locale_context__WEBPACK_IMPORTED_MODULE_5__/* .useLocale */ .bU)();
+  const providerLocale = (0,_locale_context__WEBPACK_IMPORTED_MODULE_5__/* .useLocale */ .y_)();
   return (0,react__WEBPACK_IMPORTED_MODULE_2__.useCallback)((fullUrl, locale, isLoggedIn, preserveTrailingSlashVariation) => {
     if (locale) {
       return localizeUrl(fullUrl, locale, isLoggedIn, preserveTrailingSlashVariation);
@@ -4110,16 +4170,16 @@ const withLocalizeUrl = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_1__.creat
 
 /***/ }),
 
-/***/ 2594:
+/***/ 7556:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (/* binding */ interpolate)
+/* harmony export */   c: () => (/* binding */ interpolate)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9196);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1280);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _tokenize__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1310);
+/* harmony import */ var _tokenize__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6360);
 
 
 function getCloseIndex(openIndex, tokens) {
@@ -4210,7 +4270,7 @@ function interpolate(options) {
     }
     return mixedString;
   }
-  const tokens = (0,_tokenize__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)(mixedString);
+  const tokens = (0,_tokenize__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .c)(mixedString);
   try {
     return buildChildren(tokens, components);
   } catch (error) {
@@ -4223,12 +4283,12 @@ function interpolate(options) {
 
 /***/ }),
 
-/***/ 1310:
+/***/ 6360:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (/* binding */ tokenize)
+/* harmony export */   c: () => (/* binding */ tokenize)
 /* harmony export */ });
 function identifyToken(item) {
   // {{/example}}
@@ -4264,18 +4324,18 @@ function tokenize(mixedString) {
 
 /***/ }),
 
-/***/ 3340:
+/***/ 6656:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Yt: () => (/* binding */ handleRequestError),
-/* harmony export */   _W: () => (/* binding */ handleRequestSuccess),
-/* harmony export */   hg: () => (/* binding */ isLoading),
-/* harmony export */   lZ: () => (/* binding */ addScriptCallback)
+/* harmony export */   K0: () => (/* binding */ isLoading),
+/* harmony export */   OO: () => (/* binding */ handleRequestSuccess),
+/* harmony export */   Ux: () => (/* binding */ handleRequestError),
+/* harmony export */   sr: () => (/* binding */ addScriptCallback)
 /* harmony export */ });
 /* unused harmony exports getCallbacksMap, removeScriptCallback, removeScriptCallbacks, removeAllScriptCallbacks, executeCallbacks */
-/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8049);
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9868);
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_0__);
 
 const debug = debug__WEBPACK_IMPORTED_MODULE_0___default()('lib/load-script/callback-handler');
@@ -4349,17 +4409,17 @@ function handleRequestError() {
 
 /***/ }),
 
-/***/ 5606:
+/***/ 7748:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   C: () => (/* binding */ createScriptElement),
-/* harmony export */   k: () => (/* binding */ attachToHead)
+/* harmony export */   U: () => (/* binding */ attachToHead),
+/* harmony export */   m: () => (/* binding */ createScriptElement)
 /* harmony export */ });
-/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8049);
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9868);
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _callback_handler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3340);
+/* harmony import */ var _callback_handler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6656);
 
 
 const debug = debug__WEBPACK_IMPORTED_MODULE_0___default()('lib/load-script/dom-operations');
@@ -4368,8 +4428,8 @@ function createScriptElement(url, args) {
   const script = document.createElement('script');
   script.src = url;
   script.type = 'text/javascript';
-  script.onload = _callback_handler__WEBPACK_IMPORTED_MODULE_1__/* .handleRequestSuccess */ ._W;
-  script.onerror = _callback_handler__WEBPACK_IMPORTED_MODULE_1__/* .handleRequestError */ .Yt;
+  script.onload = _callback_handler__WEBPACK_IMPORTED_MODULE_1__/* .handleRequestSuccess */ .OO;
+  script.onerror = _callback_handler__WEBPACK_IMPORTED_MODULE_1__/* .handleRequestError */ .Ux;
   script.async = true;
   if (args) {
     Object.entries(args).forEach(([key, value]) => script[key] = value);
@@ -4383,18 +4443,18 @@ function attachToHead(element) {
 
 /***/ }),
 
-/***/ 4898:
+/***/ 8680:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   ve: () => (/* binding */ loadScript)
+/* harmony export */   aU: () => (/* binding */ loadScript)
 /* harmony export */ });
 /* unused harmony exports JQUERY_URL, loadjQueryDependentScript */
-/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8049);
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9868);
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _callback_handler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3340);
-/* harmony import */ var _dom_operations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5606);
+/* harmony import */ var _callback_handler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6656);
+/* harmony import */ var _dom_operations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7748);
 /**
  * A little module for loading a external script
  *
@@ -4419,22 +4479,22 @@ const JQUERY_URL = 'https://s0.wp.com/wp-includes/js/jquery/jquery.js';
 
 function loadScript(url, callback, args) {
   // If this script is not currently being loaded, create a script element and attach to document head.
-  const shouldLoadScript = !(0,_callback_handler__WEBPACK_IMPORTED_MODULE_1__/* .isLoading */ .hg)(url);
+  const shouldLoadScript = !(0,_callback_handler__WEBPACK_IMPORTED_MODULE_1__/* .isLoading */ .K0)(url);
   if (shouldLoadScript) {
     // the onload/onerror callbacks are guaranteed to be called asynchronously, so it's ok to first
     // add the element and only then attach callbacks, as long as it happens in one event loop tick.
-    (0,_dom_operations__WEBPACK_IMPORTED_MODULE_2__/* .attachToHead */ .k)((0,_dom_operations__WEBPACK_IMPORTED_MODULE_2__/* .createScriptElement */ .C)(url, args));
+    (0,_dom_operations__WEBPACK_IMPORTED_MODULE_2__/* .attachToHead */ .U)((0,_dom_operations__WEBPACK_IMPORTED_MODULE_2__/* .createScriptElement */ .m)(url, args));
   }
 
   // if callback is provided, behave traditionally
   if (typeof callback === 'function') {
-    (0,_callback_handler__WEBPACK_IMPORTED_MODULE_1__/* .addScriptCallback */ .lZ)(url, callback);
+    (0,_callback_handler__WEBPACK_IMPORTED_MODULE_1__/* .addScriptCallback */ .sr)(url, callback);
     return;
   }
 
   // but if not, return a Promise
   return new Promise((resolve, reject) => {
-    (0,_callback_handler__WEBPACK_IMPORTED_MODULE_1__/* .addScriptCallback */ .lZ)(url, error => {
+    (0,_callback_handler__WEBPACK_IMPORTED_MODULE_1__/* .addScriptCallback */ .sr)(url, error => {
       if (error === null) {
         resolve();
       } else {
@@ -4463,7 +4523,7 @@ function loadjQueryDependentScript(url, callback, args) {
 
 /***/ }),
 
-/***/ 8049:
+/***/ 9868:
 /***/ ((module, exports, __webpack_require__) => {
 
 /* eslint-env browser */
@@ -4632,7 +4692,7 @@ function localstorage() {
     // XXX (@Qix-) should we be logging these?
   }
 }
-module.exports = __webpack_require__(2632)(exports);
+module.exports = __webpack_require__(404)(exports);
 const {
   formatters
 } = module.exports;
@@ -4651,7 +4711,7 @@ formatters.j = function (v) {
 
 /***/ }),
 
-/***/ 2632:
+/***/ 404:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /**
@@ -4666,7 +4726,7 @@ function setup(env) {
   createDebug.disable = disable;
   createDebug.enable = enable;
   createDebug.enabled = enabled;
-  createDebug.humanize = __webpack_require__(5881);
+  createDebug.humanize = __webpack_require__(9392);
   createDebug.destroy = destroy;
   Object.keys(env).forEach(key => {
     createDebug[key] = env[key];
@@ -4901,7 +4961,7 @@ module.exports = setup;
 
 /***/ }),
 
-/***/ 9196:
+/***/ 1280:
 /***/ ((module) => {
 
 "use strict";
@@ -4909,7 +4969,7 @@ module.exports = window["React"];
 
 /***/ }),
 
-/***/ 5609:
+/***/ 7287:
 /***/ ((module) => {
 
 "use strict";
@@ -4917,7 +4977,7 @@ module.exports = window["wp"]["components"];
 
 /***/ }),
 
-/***/ 4333:
+/***/ 2976:
 /***/ ((module) => {
 
 "use strict";
@@ -4925,7 +4985,7 @@ module.exports = window["wp"]["compose"];
 
 /***/ }),
 
-/***/ 9307:
+/***/ 8496:
 /***/ ((module) => {
 
 "use strict";
@@ -4933,7 +4993,7 @@ module.exports = window["wp"]["element"];
 
 /***/ }),
 
-/***/ 2694:
+/***/ 720:
 /***/ ((module) => {
 
 "use strict";
@@ -4941,7 +5001,7 @@ module.exports = window["wp"]["hooks"];
 
 /***/ }),
 
-/***/ 5736:
+/***/ 3396:
 /***/ ((module) => {
 
 "use strict";
@@ -5022,7 +5082,7 @@ var __webpack_exports__ = {};
 (() => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _src_add_tags_education_link__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2641);
+/* harmony import */ var _src_add_tags_education_link__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5256);
 
 })();
 

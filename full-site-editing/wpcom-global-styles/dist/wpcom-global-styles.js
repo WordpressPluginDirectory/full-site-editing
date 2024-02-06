@@ -1,15 +1,15 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 7266:
+/***/ 6612:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (/* binding */ compile)
+/* harmony export */   c: () => (/* binding */ compile)
 /* harmony export */ });
-/* harmony import */ var _tannin_postfix__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5854);
-/* harmony import */ var _tannin_evaluate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(730);
+/* harmony import */ var _tannin_postfix__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4180);
+/* harmony import */ var _tannin_evaluate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1200);
 
 
 
@@ -33,22 +33,22 @@
  * @return {(variables?:{[variable:string]:*})=>*} Compiled evaluator.
  */
 function compile( expression ) {
-	var terms = (0,_tannin_postfix__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)( expression );
+	var terms = (0,_tannin_postfix__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c)( expression );
 
 	return function( variables ) {
-		return (0,_tannin_evaluate__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)( terms, variables );
+		return (0,_tannin_evaluate__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .c)( terms, variables );
 	};
 }
 
 
 /***/ }),
 
-/***/ 730:
+/***/ 1200:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (/* binding */ evaluate)
+/* harmony export */   c: () => (/* binding */ evaluate)
 /* harmony export */ });
 /**
  * Operator callback functions.
@@ -164,14 +164,14 @@ function evaluate( postfix, variables ) {
 
 /***/ }),
 
-/***/ 1184:
+/***/ 5212:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (/* binding */ pluralForms)
+/* harmony export */   c: () => (/* binding */ pluralForms)
 /* harmony export */ });
-/* harmony import */ var _tannin_compile__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7266);
+/* harmony import */ var _tannin_compile__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6612);
 
 
 /**
@@ -184,7 +184,7 @@ function evaluate( postfix, variables ) {
  * @return {Function} Evaluator function.
  */
 function pluralForms( expression ) {
-	var evaluate = (0,_tannin_compile__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)( expression );
+	var evaluate = (0,_tannin_compile__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c)( expression );
 
 	return function( n ) {
 		return +evaluate( { n: n } );
@@ -194,12 +194,12 @@ function pluralForms( expression ) {
 
 /***/ }),
 
-/***/ 5854:
+/***/ 4180:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (/* binding */ postfix)
+/* harmony export */   c: () => (/* binding */ postfix)
 /* harmony export */ });
 var PRECEDENCE, OPENERS, TERMINATORS, PATTERN;
 
@@ -329,12 +329,12 @@ function postfix( expression ) {
 
 /***/ }),
 
-/***/ 6668:
+/***/ 6808:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (/* binding */ sprintf)
+/* harmony export */   c: () => (/* binding */ sprintf)
 /* harmony export */ });
 /**
  * Regular expression matching format placeholder syntax.
@@ -473,7 +473,7 @@ function sprintf( string, args ) {
 
 /***/ }),
 
-/***/ 2779:
+/***/ 6484:
 /***/ ((module, exports) => {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -539,7 +539,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 /***/ }),
 
-/***/ 3421:
+/***/ 3980:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -749,7 +749,7 @@ function tryDecode(str, decode) {
 
 /***/ }),
 
-/***/ 5881:
+/***/ 9392:
 /***/ ((module) => {
 
 /**
@@ -918,7 +918,7 @@ function plural(ms, msAbs, n, name) {
 
 /***/ }),
 
-/***/ 2699:
+/***/ 2928:
 /***/ ((module) => {
 
 "use strict";
@@ -1423,14 +1423,14 @@ function eventTargetAgnosticAddListener(emitter, name, listener, flags) {
 
 /***/ }),
 
-/***/ 4495:
+/***/ 9252:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 
-var utils = __webpack_require__(212);
-var assert = __webpack_require__(9561);
+var utils = __webpack_require__(3067);
+var assert = __webpack_require__(5192);
 
 function BlockHash() {
   this.pending = null;
@@ -1523,15 +1523,15 @@ BlockHash.prototype._pad = function pad() {
 
 /***/ }),
 
-/***/ 5079:
+/***/ 1672:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var utils = __webpack_require__(212);
-var common = __webpack_require__(4495);
-var shaCommon = __webpack_require__(713);
+var utils = __webpack_require__(3067);
+var common = __webpack_require__(9252);
+var shaCommon = __webpack_require__(4681);
 
 var rotl32 = utils.rotl32;
 var sum32 = utils.sum32;
@@ -1605,16 +1605,16 @@ SHA1.prototype._digest = function digest(enc) {
 
 /***/ }),
 
-/***/ 8032:
+/***/ 1704:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var utils = __webpack_require__(212);
-var common = __webpack_require__(4495);
-var shaCommon = __webpack_require__(713);
-var assert = __webpack_require__(9561);
+var utils = __webpack_require__(3067);
+var common = __webpack_require__(9252);
+var shaCommon = __webpack_require__(4681);
+var assert = __webpack_require__(5192);
 
 var sum32 = utils.sum32;
 var sum32_4 = utils.sum32_4;
@@ -1718,13 +1718,13 @@ SHA256.prototype._digest = function digest(enc) {
 
 /***/ }),
 
-/***/ 713:
+/***/ 4681:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 
-var utils = __webpack_require__(212);
+var utils = __webpack_require__(3067);
 var rotr32 = utils.rotr32;
 
 function ft_1(s, x, y, z) {
@@ -1775,14 +1775,14 @@ exports.g1_256 = g1_256;
 
 /***/ }),
 
-/***/ 212:
+/***/ 3067:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 
-var assert = __webpack_require__(9561);
-var inherits = __webpack_require__(1285);
+var assert = __webpack_require__(5192);
+var inherits = __webpack_require__(912);
 
 exports.inherits = inherits;
 
@@ -2061,7 +2061,7 @@ exports.shr64_lo = shr64_lo;
 
 /***/ }),
 
-/***/ 1285:
+/***/ 912:
 /***/ ((module) => {
 
 if (typeof Object.create === 'function') {
@@ -2095,11 +2095,11 @@ if (typeof Object.create === 'function') {
 
 /***/ }),
 
-/***/ 7839:
+/***/ 2608:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var events = __webpack_require__(2699)
-var inherits = __webpack_require__(1285)
+var events = __webpack_require__(2928)
+var inherits = __webpack_require__(912)
 
 module.exports = LRU
 
@@ -2247,7 +2247,7 @@ LRU.prototype.evict = function () {
 
 /***/ }),
 
-/***/ 1612:
+/***/ 9440:
 /***/ (() => {
 
 "use strict";
@@ -2256,7 +2256,7 @@ LRU.prototype.evict = function () {
 
 /***/ }),
 
-/***/ 2131:
+/***/ 7120:
 /***/ (() => {
 
 "use strict";
@@ -2265,7 +2265,7 @@ LRU.prototype.evict = function () {
 
 /***/ }),
 
-/***/ 9561:
+/***/ 5192:
 /***/ ((module) => {
 
 module.exports = assert;
@@ -2283,14 +2283,14 @@ assert.equal = function assertEqual(l, r, msg) {
 
 /***/ }),
 
-/***/ 9830:
+/***/ 2888:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (/* binding */ Tannin)
+/* harmony export */   c: () => (/* binding */ Tannin)
 /* harmony export */ });
-/* harmony import */ var _tannin_plural_forms__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1184);
+/* harmony import */ var _tannin_plural_forms__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5212);
 
 
 /**
@@ -2449,7 +2449,7 @@ Tannin.prototype.getPluralForm = function( domain, n ) {
 				config.plural_forms
 			);
 
-			pf = (0,_tannin_plural_forms__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)( plural );
+			pf = (0,_tannin_plural_forms__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c)( plural );
 		}
 
 		getPluralForm = this.pluralForms[ domain ] = pf;
@@ -2508,29 +2508,29 @@ Tannin.prototype.dcnpgettext = function( domain, context, singular, plural, n ) 
 
 /***/ }),
 
-/***/ 1093:
+/***/ 568:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   c: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9307);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8496);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6115);
-/* harmony import */ var _automattic_calypso_products__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(4112);
-/* harmony import */ var _automattic_calypso_products__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(7904);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5609);
+/* harmony import */ var _automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9280);
+/* harmony import */ var _automattic_calypso_products__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(4840);
+/* harmony import */ var _automattic_calypso_products__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(7252);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7287);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9818);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7752);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5736);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3396);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9196);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1280);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _image_svg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(9731);
-/* harmony import */ var _use_canvas__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(9773);
-/* harmony import */ var _modal_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(1612);
+/* harmony import */ var _image_svg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(9000);
+/* harmony import */ var _use_canvas__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(108);
+/* harmony import */ var _modal_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(9440);
 
 /* global wpcomGlobalStyles */
 
@@ -2549,7 +2549,7 @@ const GlobalStylesModal = () => {
   const isSiteEditor = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => !!select('core/edit-site'), []);
   const {
     viewCanvasPath
-  } = (0,_use_canvas__WEBPACK_IMPORTED_MODULE_7__/* .useCanvas */ .$)();
+  } = (0,_use_canvas__WEBPACK_IMPORTED_MODULE_7__/* .useCanvas */ .Q)();
   const isVisible = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => {
     if (!isSiteEditor) {
       return false;
@@ -2572,21 +2572,21 @@ const GlobalStylesModal = () => {
   }, [setPreference, isSiteEditor]);
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (isVisible) {
-      (0,_automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__/* .recordTracksEvent */ .jN)('calypso_global_styles_gating_modal_show', {
+      (0,_automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__/* .recordTracksEvent */ .__)('calypso_global_styles_gating_modal_show', {
         context: 'site-editor'
       });
     }
   }, [isVisible]);
   const closeModal = () => {
     dismissModal();
-    (0,_automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__/* .recordTracksEvent */ .jN)('calypso_global_styles_gating_modal_dismiss', {
+    (0,_automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__/* .recordTracksEvent */ .__)('calypso_global_styles_gating_modal_dismiss', {
       context: 'site-editor'
     });
   };
   if (!isSiteEditor || !isVisible) {
     return null;
   }
-  const planName = (0,_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_9__/* .getPlan */ .Wh)(_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_10__/* .PLAN_PREMIUM */ .xf).getTitle();
+  const planName = (0,_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_9__/* .getPlan */ .iK)(_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_10__/* .PLAN_PREMIUM */ .gh).getTitle();
   const description = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)( /* translators: %s is the short-form Premium plan name */
   __("Change all of your site's fonts, colors and more. Available on the %s plan.", 'full-site-editing'), planName);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Modal, {
@@ -2612,7 +2612,7 @@ const GlobalStylesModal = () => {
     variant: "primary",
     href: wpcomGlobalStyles.upgradeUrl,
     target: "_top",
-    onClick: () => (0,_automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__/* .recordTracksEvent */ .jN)('calypso_global_styles_gating_modal_upgrade_click', {
+    onClick: () => (0,_automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__/* .recordTracksEvent */ .__)('calypso_global_styles_gating_modal_upgrade_click', {
       context: 'site-editor'
     })
   }, __('Upgrade plan', 'full-site-editing')))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -2626,32 +2626,32 @@ const GlobalStylesModal = () => {
 
 /***/ }),
 
-/***/ 7172:
+/***/ 9632:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (/* binding */ GlobalStylesNotices)
+/* harmony export */   c: () => (/* binding */ GlobalStylesNotices)
 /* harmony export */ });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9307);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8496);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6115);
-/* harmony import */ var _automattic_calypso_products__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(4112);
-/* harmony import */ var _automattic_calypso_products__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(7904);
-/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(4010);
-/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(372);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5609);
+/* harmony import */ var _automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9280);
+/* harmony import */ var _automattic_calypso_products__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(4840);
+/* harmony import */ var _automattic_calypso_products__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(7252);
+/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(96);
+/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(7388);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7287);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9818);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7752);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5736);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3396);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2779);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6484);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _use_canvas__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(9773);
-/* harmony import */ var _use_global_styles_config__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(7210);
-/* harmony import */ var _use_preview__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(807);
-/* harmony import */ var _notice_scss__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(2131);
+/* harmony import */ var _use_canvas__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(108);
+/* harmony import */ var _use_global_styles_config__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(8475);
+/* harmony import */ var _use_preview__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(1204);
+/* harmony import */ var _notice_scss__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(7120);
 
 /* global wpcomGlobalStyles */
 
@@ -2668,7 +2668,7 @@ const __ = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__;
 
 
 const GLOBAL_STYLES_VIEW_NOTICE_SELECTOR = 'wpcom-global-styles-notice-container';
-const trackEvent = (eventName, isSiteEditor = true) => (0,_automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__/* .recordTracksEvent */ .jN)(eventName, {
+const trackEvent = (eventName, isSiteEditor = true) => (0,_automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__/* .recordTracksEvent */ .__)(eventName, {
   context: isSiteEditor ? 'site-editor' : 'post-editor',
   blog_id: wpcomGlobalStyles.wpcomBlogId
 });
@@ -2676,7 +2676,7 @@ function GlobalStylesWarningNotice() {
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     trackEvent('calypso_global_styles_gating_notice_view_canvas_show');
   }, []);
-  const planName = (0,_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_10__/* .getPlan */ .Wh)(_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_11__/* .PLAN_PREMIUM */ .xf).getTitle();
+  const planName = (0,_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_10__/* .getPlan */ .iK)(_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_11__/* .PLAN_PREMIUM */ .gh).getTitle();
   const upgradeTranslation = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)( /* translators: %s is the short-form Premium plan name */
   __('Your site includes premium styles that are only visible to visitors after <a>upgrading to the %s plan or higher</a>.', 'full-site-editing'), planName);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Notice, {
@@ -2694,11 +2694,11 @@ function GlobalStylesWarningNotice() {
 function GlobalStylesViewNotice() {
   const {
     canvas
-  } = (0,_use_canvas__WEBPACK_IMPORTED_MODULE_6__/* .useCanvas */ .$)();
+  } = (0,_use_canvas__WEBPACK_IMPORTED_MODULE_6__/* .useCanvas */ .Q)();
   const [isRendered, setIsRendered] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const {
     globalStylesInUse
-  } = (0,_use_global_styles_config__WEBPACK_IMPORTED_MODULE_7__/* .useGlobalStylesConfig */ .Y)();
+  } = (0,_use_global_styles_config__WEBPACK_IMPORTED_MODULE_7__/* .useGlobalStylesConfig */ .U)();
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (!globalStylesInUse) {
       document.querySelector(`.${GLOBAL_STYLES_VIEW_NOTICE_SELECTOR}`)?.remove();
@@ -2732,10 +2732,10 @@ function GlobalStylesEditNotice() {
   const {
     globalStylesInUse,
     globalStylesId
-  } = (0,_use_global_styles_config__WEBPACK_IMPORTED_MODULE_7__/* .useGlobalStylesConfig */ .Y)();
+  } = (0,_use_global_styles_config__WEBPACK_IMPORTED_MODULE_7__/* .useGlobalStylesConfig */ .U)();
   const {
     canvas
-  } = (0,_use_canvas__WEBPACK_IMPORTED_MODULE_6__/* .useCanvas */ .$)();
+  } = (0,_use_canvas__WEBPACK_IMPORTED_MODULE_6__/* .useCanvas */ .Q)();
   const {
     isSiteEditor,
     isPostEditor
@@ -2746,7 +2746,7 @@ function GlobalStylesEditNotice() {
   const {
     previewPostWithoutCustomStyles,
     canPreviewPost
-  } = (0,_use_preview__WEBPACK_IMPORTED_MODULE_8__/* .usePreview */ .u)();
+  } = (0,_use_preview__WEBPACK_IMPORTED_MODULE_8__/* .usePreview */ .m)();
   const {
     createWarningNotice,
     removeNotice
@@ -2800,7 +2800,7 @@ function GlobalStylesEditNotice() {
       noDefaultClasses: true,
       className: isSiteEditor ? '' : 'wpcom-global-styles-action-has-icon wpcom-global-styles-action-is-external wpcom-global-styles-action-is-support'
     });
-    const planName = (0,_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_10__/* .getPlan */ .Wh)(_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_11__/* .PLAN_PREMIUM */ .xf).getTitle();
+    const planName = (0,_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_10__/* .getPlan */ .iK)(_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_11__/* .PLAN_PREMIUM */ .gh).getTitle();
     createWarningNotice((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)( /* translators: %s is the short-form Premium plan name */
     __('Your site includes premium styles that are only visible to visitors after upgrading to the %s plan or higher.', 'full-site-editing'), planName), {
       id: NOTICE_ID,
@@ -2822,14 +2822,14 @@ function GlobalStylesEditNotice() {
   return null;
 }
 function GlobalStylesNotices() {
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_tanstack_react_query__WEBPACK_IMPORTED_MODULE_12__/* .QueryClientProvider */ .aH, {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_tanstack_react_query__WEBPACK_IMPORTED_MODULE_12__/* .QueryClientProvider */ .K6, {
     client: new _tanstack_react_query__WEBPACK_IMPORTED_MODULE_13__/* .QueryClient */ .S()
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(GlobalStylesViewNotice, null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(GlobalStylesEditNotice, null));
 }
 
 /***/ }),
 
-/***/ 7915:
+/***/ 4100:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 /* exported __webpack_public_path__ */
@@ -2846,11 +2846,11 @@ if ( true && window.wpcomGlobalStyles?.assetsUrl) {
 
 /***/ }),
 
-/***/ 6421:
+/***/ 3648:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9818);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7752);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
 
 const DEFAULT_STATE = {
@@ -2880,16 +2880,16 @@ const DEFAULT_STATE = {
 
 /***/ }),
 
-/***/ 9773:
+/***/ 108:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   $: () => (/* binding */ useCanvas)
+/* harmony export */   Q: () => (/* binding */ useCanvas)
 /* harmony export */ });
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9818);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7752);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9307);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8496);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
 
 
@@ -2920,14 +2920,14 @@ function useCanvas() {
 
 /***/ }),
 
-/***/ 7210:
+/***/ 8475:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Y: () => (/* binding */ useGlobalStylesConfig)
+/* harmony export */   U: () => (/* binding */ useGlobalStylesConfig)
 /* harmony export */ });
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9818);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7752);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
 
 function useGlobalStylesConfig() {
@@ -2954,22 +2954,22 @@ function useGlobalStylesConfig() {
 
 /***/ }),
 
-/***/ 807:
+/***/ 1204:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   u: () => (/* binding */ usePreview)
+/* harmony export */   m: () => (/* binding */ usePreview)
 /* harmony export */ });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9307);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8496);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5609);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7287);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9818);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7752);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5736);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3396);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6483);
+/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7204);
 /* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_url__WEBPACK_IMPORTED_MODULE_4__);
 
 
@@ -3130,22 +3130,23 @@ function usePreview() {
 
 /***/ }),
 
-/***/ 6115:
+/***/ 9280:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   jN: () => (/* reexport safe */ _tracks__WEBPACK_IMPORTED_MODULE_7__.jN)
+/* harmony export */   __: () => (/* reexport safe */ _tracks__WEBPACK_IMPORTED_MODULE_8__.__)
 /* harmony export */ });
-/* harmony import */ var _utils_do_not_track__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1694);
-/* harmony import */ var _utils_current_user__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6209);
-/* harmony import */ var _page_view_params__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9377);
-/* harmony import */ var _utils_get_tracking_prefs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2552);
-/* harmony import */ var _utils_set_tracking_prefs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(825);
-/* harmony import */ var _utils_is_country_in_gdpr_zone__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6326);
-/* harmony import */ var _utils_is_region_in_ccpa_zone__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(2286);
-/* harmony import */ var _tracks__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(9792);
-/* harmony import */ var _train_tracks__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(3722);
+/* harmony import */ var _utils_do_not_track__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8940);
+/* harmony import */ var _utils_current_user__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1188);
+/* harmony import */ var _page_view_params__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4063);
+/* harmony import */ var _utils_get_tracking_prefs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9716);
+/* harmony import */ var _utils_set_tracking_prefs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1387);
+/* harmony import */ var _utils_is_country_in_gdpr_zone__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9492);
+/* harmony import */ var _utils_is_region_in_ccpa_zone__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(4980);
+/* harmony import */ var _utils_is_region_in_sts_zone__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(6392);
+/* harmony import */ var _tracks__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(2447);
+/* harmony import */ var _train_tracks__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(480);
 /**
  * Re-export
  */
@@ -3159,9 +3160,10 @@ function usePreview() {
 
 
 
+
 /***/ }),
 
-/***/ 9377:
+/***/ 4063:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3199,23 +3201,23 @@ function getMostRecentUrlPath() {
 
 /***/ }),
 
-/***/ 9792:
+/***/ 2447:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   jN: () => (/* binding */ recordTracksEvent)
+/* harmony export */   __: () => (/* binding */ recordTracksEvent)
 /* harmony export */ });
 /* unused harmony exports getTracksLoadPromise, pushEventToTracksQueue, analyticsEvents, getTracksAnonymousUserId, initializeAnalytics, identifyUser, signalUserFromAnotherProduct, recordTracksPageView, recordTracksPageViewWithPageParams, getGenericSuperPropsGetter */
-/* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2699);
+/* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2928);
 /* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(events__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _automattic_load_script__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4898);
-/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3421);
-/* harmony import */ var _page_view_params__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9377);
-/* harmony import */ var _utils_current_user__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6209);
-/* harmony import */ var _utils_debug__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9358);
-/* harmony import */ var _utils_do_not_track__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1694);
-/* harmony import */ var _utils_get_tracking_prefs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(2552);
+/* harmony import */ var _automattic_load_script__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8680);
+/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3980);
+/* harmony import */ var _page_view_params__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4063);
+/* harmony import */ var _utils_current_user__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1188);
+/* harmony import */ var _utils_debug__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2412);
+/* harmony import */ var _utils_do_not_track__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(8940);
+/* harmony import */ var _utils_get_tracking_prefs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(9716);
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 
@@ -3242,7 +3244,7 @@ let _superProps; // Added to all Tracks events.
 let _loadTracksResult = Promise.resolve(); // default value for non-BOM environments.
 
 if (typeof document !== 'undefined') {
-  _loadTracksResult = (0,_automattic_load_script__WEBPACK_IMPORTED_MODULE_1__/* .loadScript */ .ve)('//stats.wp.com/w.js?67');
+  _loadTracksResult = (0,_automattic_load_script__WEBPACK_IMPORTED_MODULE_1__/* .loadScript */ .aU)('//stats.wp.com/w.js?67');
 }
 function createRandomId(randomBytesLength = 9) {
   if (false) {}
@@ -3366,15 +3368,15 @@ function signalUserFromAnotherProduct(userId, userIdType) {
 }
 function recordTracksEvent(eventName, eventProperties) {
   eventProperties = eventProperties || {};
-  const trackingPrefs = (0,_utils_get_tracking_prefs__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .ZP)();
+  const trackingPrefs = (0,_utils_get_tracking_prefs__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .cp)();
   if (!trackingPrefs?.buckets.analytics) {
-    (0,_utils_debug__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z)('Analytics has been disabled - Ignoring event "%s" with actual props %o', eventName, eventProperties);
+    (0,_utils_debug__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .c)('Analytics has been disabled - Ignoring event "%s" with actual props %o', eventName, eventProperties);
     return;
   }
   if (false) {}
-  (0,_utils_debug__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z)('Record event "%s" called with props %o', eventName, eventProperties);
+  (0,_utils_debug__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .c)('Record event "%s" called with props %o', eventName, eventProperties);
   if (!eventName.startsWith('calypso_') && !eventName.startsWith('jetpack_') && !eventName.startsWith('wpcom_dsp_widget_') && !EVENT_NAME_EXCEPTIONS.includes(eventName)) {
-    (0,_utils_debug__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z)('- Event name must be prefixed by "calypso_", "jetpack_", or added to `EVENT_NAME_EXCEPTIONS`');
+    (0,_utils_debug__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .c)('- Event name must be prefixed by "calypso_", "jetpack_", or added to `EVENT_NAME_EXCEPTIONS`');
     return;
   }
   if (_superProps) {
@@ -3388,7 +3390,7 @@ function recordTracksEvent(eventName, eventProperties) {
   // Remove properties that have an undefined value
   // This allows a caller to easily remove properties from the recorded set by setting them to undefined
   eventProperties = Object.fromEntries(Object.entries(eventProperties).filter(([, val]) => typeof val !== 'undefined'));
-  (0,_utils_debug__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z)('Recording event "%s" with actual props %o', eventName, eventProperties);
+  (0,_utils_debug__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .c)('Recording event "%s" with actual props %o', eventName, eventProperties);
   pushEventToTracksQueue(['recordEvent', eventName, eventProperties]);
   analyticsEvents.emit('record-event', eventName, eventProperties);
 }
@@ -3446,12 +3448,12 @@ function getGenericSuperPropsGetter(config) {
 
 /***/ }),
 
-/***/ 3722:
+/***/ 480:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* unused harmony exports recordTrainTracksRender, recordTrainTracksInteract, getNewRailcarId */
-/* harmony import */ var _tracks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9792);
+/* harmony import */ var _tracks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2447);
 
 
 function recordTrainTracksRender({
@@ -3500,12 +3502,12 @@ function getNewRailcarId(suffix = 'recommendation') {
 
 /***/ }),
 
-/***/ 6209:
+/***/ 1188:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* unused harmony exports getCurrentUser, setCurrentUser */
-/* harmony import */ var _hash_pii__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4);
+/* harmony import */ var _hash_pii__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4016);
 
 
 /**
@@ -3545,14 +3547,14 @@ function setCurrentUser(currentUser) {
 
 /***/ }),
 
-/***/ 9358:
+/***/ 2412:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   c: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8049);
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9868);
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_0__);
 
 
@@ -3563,12 +3565,12 @@ function setCurrentUser(currentUser) {
 
 /***/ }),
 
-/***/ 1694:
+/***/ 8940:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* unused harmony export default */
-/* harmony import */ var _debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9358);
+/* harmony import */ var _debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2412);
 
 
 /**
@@ -3587,17 +3589,17 @@ function getDoNotTrack() {
 
 /***/ }),
 
-/***/ 2552:
+/***/ 9716:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   ZP: () => (/* binding */ getTrackingPrefs)
+/* harmony export */   cp: () => (/* binding */ getTrackingPrefs)
 /* harmony export */ });
 /* unused harmony exports TRACKING_PREFS_COOKIE_V1, TRACKING_PREFS_COOKIE_V2, parseTrackingPrefs */
-/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3421);
-/* harmony import */ var _is_country_in_gdpr_zone__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6326);
-/* harmony import */ var _is_region_in_ccpa_zone__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2286);
+/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3980);
+/* harmony import */ var _is_country_in_gdpr_zone__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9492);
+/* harmony import */ var _is_region_in_ccpa_zone__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4980);
 
 
 
@@ -3665,8 +3667,8 @@ function getTrackingPrefs() {
     return prefsAllowAll;
   }
   const cookies = cookie__WEBPACK_IMPORTED_MODULE_0__.parse(document.cookie);
-  const isCountryGdpr = (0,_is_country_in_gdpr_zone__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)(cookies.country_code);
-  const isCountryCcpa = (0,_is_region_in_ccpa_zone__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z)(cookies.country_code, cookies.region);
+  const isCountryGdpr = (0,_is_country_in_gdpr_zone__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .c)(cookies.country_code);
+  const isCountryCcpa = (0,_is_region_in_ccpa_zone__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .c)(cookies.country_code, cookies.region);
   if (!isCountryGdpr && !isCountryCcpa) {
     return prefsAllowAll;
   }
@@ -3697,12 +3699,12 @@ function getTrackingPrefs() {
 
 /***/ }),
 
-/***/ 4:
+/***/ 4016:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* unused harmony export default */
-/* harmony import */ var hash_js_lib_hash_sha_256__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8032);
+/* harmony import */ var hash_js_lib_hash_sha_256__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1704);
 /* harmony import */ var hash_js_lib_hash_sha_256__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(hash_js_lib_hash_sha_256__WEBPACK_IMPORTED_MODULE_0__);
 
 
@@ -3718,12 +3720,12 @@ function hashPii(data) {
 
 /***/ }),
 
-/***/ 6326:
+/***/ 9492:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (/* binding */ isCountryInGdprZone)
+/* harmony export */   c: () => (/* binding */ isCountryInGdprZone)
 /* harmony export */ });
 const GDPR_COUNTRIES = [
 // European Member countries
@@ -3808,12 +3810,12 @@ function isCountryInGdprZone(countryCode) {
 
 /***/ }),
 
-/***/ 2286:
+/***/ 4980:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (/* binding */ isRegionInCcpaZone)
+/* harmony export */   c: () => (/* binding */ isRegionInCcpaZone)
 /* harmony export */ });
 const CCPA_US_REGIONS = ['california',
 // CA
@@ -3823,7 +3825,23 @@ const CCPA_US_REGIONS = ['california',
 // CT
 'utah',
 // UT
-'virginia' // VA
+'virginia',
+// VA
+'texas',
+// TX
+'tennessee',
+// TN
+'oregon',
+// OR
+'new jersey',
+// NJ
+'montana',
+// MT
+'iowa',
+// IA
+'indiana',
+// IN
+'delaware' // DE
 ];
 
 /**
@@ -3845,12 +3863,54 @@ function isRegionInCcpaZone(countryCode, region) {
 
 /***/ }),
 
-/***/ 825:
+/***/ 6392:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* unused harmony export default */
+const STS_US_REGIONS = (/* unused pure expression or super */ null && (['california',
+// CA
+'florida',
+// FL
+'maryland',
+// MD
+'massachusetts',
+// MA
+'new hampshire',
+// NH
+'nevada',
+// NV
+'pennsylvania',
+// PA
+'washington' // WA
+]));
+
+/**
+ * Returns a boolean telling whether a region is in an STS (session tracking sensitive) zone.
+ * @param countryCode The country code to check (it needs to be 'US' for STS to apply)
+ * @param region The region to look for.
+ * @returns Whether the region is in the STS zone
+ */
+
+function isRegionInStsZone(countryCode, region) {
+  if ('US' !== countryCode) {
+    return false;
+  }
+  if ('unknown' === region) {
+    // If we don't know the region, assume it's not in an STS zone.
+    return true;
+  }
+  return region !== undefined && STS_US_REGIONS.includes(region.toLowerCase());
+}
+
+/***/ }),
+
+/***/ 1387:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
-/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3421);
-/* harmony import */ var _get_tracking_prefs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2552);
+/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3980);
+/* harmony import */ var _get_tracking_prefs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9716);
 
 
 const COOKIE_MAX_AGE = (/* unused pure expression or super */ null && (60 * 60 * 24 * (365.25 / 2))); /* six months; 365.25 -> avg days in year */
@@ -3877,12 +3937,12 @@ const setTrackingPrefs = newPrefs => {
 
 /***/ }),
 
-/***/ 9770:
+/***/ 7768:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   c: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // TODO: Revisit whether it is useful for the Desktop app to override the following properties:
 // signup_url, login_url, logout_url and discover_logged_out_redirect_url
@@ -3920,17 +3980,17 @@ const features = {
 
 /***/ }),
 
-/***/ 899:
+/***/ 996:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   _k: () => (/* binding */ isEnabled)
+/* harmony export */   K4: () => (/* binding */ isEnabled)
 /* harmony export */ });
 /* unused harmony exports isCalypsoLive, enabledFeatures, enable, disable */
-/* harmony import */ var _automattic_create_calypso_config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(544);
-/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3421);
-/* harmony import */ var _desktop__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9770);
+/* harmony import */ var _automattic_create_calypso_config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1392);
+/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3980);
+/* harmony import */ var _desktop__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7768);
 
 
 
@@ -3946,7 +4006,7 @@ if (!window.configData) {
 const isDesktop = window.electron !== undefined;
 let configData;
 if (isDesktop) {
-  configData = (0,_desktop__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z)(window.configData);
+  configData = (0,_desktop__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .c)(window.configData);
 } else {
   configData = window.configData;
 }
@@ -3991,7 +4051,7 @@ if ( false || flagEnvironments.includes(configData.env_id) || isCalypsoLive()) {
     applyFlags(decodeURIComponent(match[1]), 'URL');
   }
 }
-const configApi = (0,_automattic_create_calypso_config__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)(configData);
+const configApi = (0,_automattic_create_calypso_config__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c)(configData);
 /* unused harmony default export */ var __WEBPACK_DEFAULT_EXPORT__ = ((/* unused pure expression or super */ null && (configApi)));
 const isEnabled = configApi.isEnabled;
 const enabledFeatures = configApi.enabledFeatures;
@@ -4000,30 +4060,30 @@ const disable = configApi.disable;
 
 /***/ }),
 
-/***/ 2006:
+/***/ 3180:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   $N: () => (/* binding */ FEATURE_CANCELLATION_JETPACK_ESSENTIALS),
-/* harmony export */   BS: () => (/* binding */ FEATURE_CANCELLATION_SFTP_AND_DATABASE),
-/* harmony export */   E9: () => (/* binding */ FEATURE_CANCELLATION_PREMIUM_THEMES),
-/* harmony export */   KG: () => (/* binding */ FEATURE_CANCELLATION_MANAGED_HOSTINGS),
-/* harmony export */   NV: () => (/* binding */ FEATURE_CANCELLATION_SEO_TOOLS),
-/* harmony export */   Ox: () => (/* binding */ FEATURE_CANCELLATION_EMAIL_SUPPORT),
-/* harmony export */   ST: () => (/* binding */ FEATURE_CANCELLATION_SHIPPING_CARRIERS),
-/* harmony export */   ZJ: () => (/* binding */ FEATURE_CANCELLATION_BACKUPS_AND_RESTORE),
-/* harmony export */   Zs: () => (/* binding */ FEATURE_CANCELLATION_SECURITY_AND_SPAM),
-/* harmony export */   _o: () => (/* binding */ FEATURE_CANCELLATION_SEO_AND_SOCIAL),
-/* harmony export */   bh: () => (/* binding */ FEATURE_CANCELLATION_ACCEPT_PAYMENTS),
-/* harmony export */   ec: () => (/* binding */ FEATURE_CANCELLATION_PREMIUM_DESIGN),
-/* harmony export */   j_: () => (/* binding */ FEATURE_CANCELLATION_COLLECT_PAYMENTS),
-/* harmony export */   kK: () => (/* binding */ FEATURE_CANCELLATION_LIVE_CHAT),
-/* harmony export */   pF: () => (/* binding */ FEATURE_CANCELLATION_HIGH_QUALITY_VIDEOS),
-/* harmony export */   pG: () => (/* binding */ FEATURE_CANCELLATION_EARN_AD_REVENUE),
-/* harmony export */   qK: () => (/* binding */ FEATURE_CANCELLATION_GOOGLE_ANALYTICS),
-/* harmony export */   vD: () => (/* binding */ FEATURE_CANCELLATION_AD_FREE_SITE),
-/* harmony export */   yc: () => (/* binding */ FEATURE_CANCELLATION_PLUGINS)
+/* harmony export */   Ep: () => (/* binding */ FEATURE_CANCELLATION_PREMIUM_DESIGN),
+/* harmony export */   Et: () => (/* binding */ FEATURE_CANCELLATION_MANAGED_HOSTINGS),
+/* harmony export */   Gq: () => (/* binding */ FEATURE_CANCELLATION_COLLECT_PAYMENTS),
+/* harmony export */   Ip: () => (/* binding */ FEATURE_CANCELLATION_GOOGLE_ANALYTICS),
+/* harmony export */   Oi: () => (/* binding */ FEATURE_CANCELLATION_SHIPPING_CARRIERS),
+/* harmony export */   Qj: () => (/* binding */ FEATURE_CANCELLATION_SECURITY_AND_SPAM),
+/* harmony export */   W6: () => (/* binding */ FEATURE_CANCELLATION_SFTP_AND_DATABASE),
+/* harmony export */   YR: () => (/* binding */ FEATURE_CANCELLATION_PLUGINS),
+/* harmony export */   cz: () => (/* binding */ FEATURE_CANCELLATION_BACKUPS_AND_RESTORE),
+/* harmony export */   em: () => (/* binding */ FEATURE_CANCELLATION_EMAIL_SUPPORT),
+/* harmony export */   gf: () => (/* binding */ FEATURE_CANCELLATION_LIVE_CHAT),
+/* harmony export */   kN: () => (/* binding */ FEATURE_CANCELLATION_ACCEPT_PAYMENTS),
+/* harmony export */   mI: () => (/* binding */ FEATURE_CANCELLATION_JETPACK_ESSENTIALS),
+/* harmony export */   qM: () => (/* binding */ FEATURE_CANCELLATION_HIGH_QUALITY_VIDEOS),
+/* harmony export */   sb: () => (/* binding */ FEATURE_CANCELLATION_EARN_AD_REVENUE),
+/* harmony export */   u: () => (/* binding */ FEATURE_CANCELLATION_PREMIUM_THEMES),
+/* harmony export */   uY: () => (/* binding */ FEATURE_CANCELLATION_AD_FREE_SITE),
+/* harmony export */   wh: () => (/* binding */ FEATURE_CANCELLATION_SEO_AND_SOCIAL),
+/* harmony export */   wz: () => (/* binding */ FEATURE_CANCELLATION_SEO_TOOLS)
 /* harmony export */ });
 /* unused harmony exports FEATURE_CANCELLATION_BACKUPS, FEATURE_CANCELLATION_UNLIMITED_TRAFFIC */
 // Cancellation flow related features
@@ -4051,318 +4111,318 @@ const FEATURE_CANCELLATION_UNLIMITED_TRAFFIC = 'cancellation-unlimited-traffic';
 
 /***/ }),
 
-/***/ 1862:
+/***/ 3076:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   $23: () => (/* binding */ FEATURE_SHIPPING_CARRIERS),
-/* harmony export */   $4: () => (/* binding */ FEATURE_COLLECT_PAYMENTS_V2),
-/* harmony export */   $G1: () => (/* binding */ FEATURE_CLOUDFLARE_ANALYTICS),
-/* harmony export */   $NZ: () => (/* binding */ FEATURE_BLANK),
-/* harmony export */   $PM: () => (/* binding */ FEATURE_BACKUP_STORAGE_SPACE_UNLIMITED),
-/* harmony export */   $QL: () => (/* binding */ FEATURE_EASY_SITE_MIGRATION),
-/* harmony export */   $iz: () => (/* binding */ FEATURE_AUTOMATED_SALES_TAXES),
-/* harmony export */   $mN: () => (/* binding */ FEATURE_P2_3GB_STORAGE),
-/* harmony export */   $pY: () => (/* binding */ FEATURE_JETPACK_BACKUP_T1_YEARLY),
-/* harmony export */   $vg: () => (/* binding */ FEATURE_PREMIUM_CUSTOMIZABE_THEMES),
-/* harmony export */   $xY: () => (/* binding */ FEATURE_ACCEPT_PAYMENTS),
-/* harmony export */   AH6: () => (/* binding */ FEATURE_LIST_UNLIMITED_PRODUCTS),
-/* harmony export */   ALM: () => (/* binding */ FEATURE_FREE_WORDPRESS_THEMES),
-/* harmony export */   AQq: () => (/* binding */ FEATURE_MULTI_SITE),
-/* harmony export */   ARL: () => (/* binding */ FEATURE_SYNC_WITH_PINTEREST),
-/* harmony export */   AXh: () => (/* binding */ FEATURE_WOOCOMMERCE_MOBILE_APP),
-/* harmony export */   Ai8: () => (/* binding */ FEATURE_BLOG_DOMAIN),
-/* harmony export */   AvT: () => (/* binding */ FEATURE_JETPACK_SOCIAL_BASIC),
-/* harmony export */   Ayy: () => (/* binding */ FEATURE_JETPACK_BOOST),
-/* harmony export */   Azg: () => (/* binding */ FEATURE_JETPACK_BACKUP_T0_YEARLY),
-/* harmony export */   B2h: () => (/* binding */ FEATURE_ADVANCED_SEO),
-/* harmony export */   B4: () => (/* binding */ FEATURE_PLUGIN_AUTOUPDATE_JP),
-/* harmony export */   BEQ: () => (/* binding */ FEATURE_GLOBAL_EDGE_CACHING),
-/* harmony export */   BPG: () => (/* binding */ FEATURE_CDN),
-/* harmony export */   Ce5: () => (/* binding */ FEATURE_OFFER_BULK_DISCOUNTS),
-/* harmony export */   Cr_: () => (/* binding */ FEATURE_CART_ABANDONMENT_EMAILS),
-/* harmony export */   Crh: () => (/* binding */ FEATURE_CUSTOM_MARKETING_AUTOMATION),
-/* harmony export */   CtJ: () => (/* binding */ FEATURE_ANTISPAM_V2),
-/* harmony export */   DEy: () => (/* binding */ WPCOM_FEATURES_BACKUPS),
-/* harmony export */   DJ3: () => (/* binding */ FEATURE_JETPACK_CRM_MONTHLY),
-/* harmony export */   DJK: () => (/* binding */ FEATURE_FREE_SSL_CERTIFICATE),
-/* harmony export */   DU6: () => (/* binding */ FEATURE_PAYMENT_TRANSACTION_FEES_8),
-/* harmony export */   DUl: () => (/* binding */ FEATURE_COMMISSION_FEE_STANDARD_FEATURES),
-/* harmony export */   Do2: () => (/* binding */ FEATURE_ECOMMERCE_MARKETING),
-/* harmony export */   DtS: () => (/* binding */ FEATURE_JETPACK_30_DAY_ARCHIVE_ACTIVITY_LOG),
-/* harmony export */   DwI: () => (/* binding */ FEATURE_BACKUP_DAILY_V2),
-/* harmony export */   E30: () => (/* binding */ FEATURE_ONE_CLICK_THREAT_RESOLUTION),
-/* harmony export */   E5t: () => (/* binding */ FEATURE_13GB_STORAGE),
-/* harmony export */   EBu: () => (/* binding */ FEATURE_MEMBERSHIPS),
-/* harmony export */   EDT: () => (/* binding */ FEATURE_PREMIUM_CONTENT_BLOCK),
-/* harmony export */   EZ7: () => (/* binding */ FEATURE_SECURITY_BRUTE_FORCE),
-/* harmony export */   E_W: () => (/* binding */ FEATURE_INTERNATIONAL_PAYMENTS),
-/* harmony export */   Eb2: () => (/* binding */ FEATURE_CUSTOM_DOMAIN),
-/* harmony export */   Ej: () => (/* binding */ FEATURE_WORDADS_INSTANT),
-/* harmony export */   F$l: () => (/* binding */ FEATURE_TRAFFIC_TOOLS),
-/* harmony export */   FKL: () => (/* binding */ FEATURE_EXTENSIONS),
-/* harmony export */   FNU: () => (/* binding */ WPCOM_FEATURES_ATOMIC),
-/* harmony export */   FR0: () => (/* binding */ FEATURE_JETPACK_SCAN_DAILY_MONTHLY),
-/* harmony export */   FZm: () => (/* binding */ FEATURE_SMART_REDIRECTS),
-/* harmony export */   FiJ: () => (/* binding */ FEATURE_MANAGED_HOSTING),
-/* harmony export */   GWM: () => (/* binding */ FEATURE_CUSTOM_STORE),
-/* harmony export */   GwK: () => (/* binding */ FEATURE_JETPACK_VIDEOPRESS),
-/* harmony export */   HBO: () => (/* binding */ FEATURE_UNLTD_SOCIAL_MEDIA_JP),
-/* harmony export */   HPg: () => (/* binding */ FEATURE_EMAIL_FORWARDING_EXTENDED_LIMIT),
-/* harmony export */   HXS: () => (/* binding */ FEATURE_RECURRING_PAYMENTS),
-/* harmony export */   H_y: () => (/* binding */ FEATURE_CPUS),
-/* harmony export */   Hdl: () => (/* binding */ FEATURE_BANDWIDTH),
-/* harmony export */   HpB: () => (/* binding */ FEATURE_PRODUCT_BACKUP_REALTIME_V2),
-/* harmony export */   Hrz: () => (/* binding */ FEATURE_REAL_TIME_ANALYTICS),
-/* harmony export */   IFj: () => (/* binding */ FEATURE_SENSEI_HOSTING),
-/* harmony export */   IhT: () => (/* binding */ FEATURE_EMAIL_LIVE_CHAT_SUPPORT_ALL_DAYS),
-/* harmony export */   IxF: () => (/* binding */ FEATURE_STREAMLINED_CHECKOUT),
-/* harmony export */   J8D: () => (/* binding */ FEATURE_PREMIUM_SUPPORT),
-/* harmony export */   JQK: () => (/* binding */ FEATURE_WORDPRESS_CMS),
-/* harmony export */   JRF: () => (/* binding */ FEATURE_PAYMENT_TRANSACTION_FEES_0_WOO),
-/* harmony export */   JT_: () => (/* binding */ FEATURE_JETPACK_BOOST_BI_YEARLY),
-/* harmony export */   JU8: () => (/* binding */ FEATURE_SELL_INTERNATIONALLY),
-/* harmony export */   JqD: () => (/* binding */ FEATURE_P2_UNLIMITED_USERS),
-/* harmony export */   KgS: () => (/* binding */ FEATURE_AUTOMATED_EMAIL_TRIGGERS),
-/* harmony export */   KlX: () => (/* binding */ FEATURE_3GB_STORAGE),
-/* harmony export */   L2R: () => (/* binding */ FEATURE_JETPACK_BACKUP_T2_MONTHLY),
-/* harmony export */   L2_: () => (/* binding */ FEATURE_BACKUP_ARCHIVE_UNLIMITED),
-/* harmony export */   LiS: () => (/* binding */ FEATURE_EMAIL_LIVE_CHAT_SUPPORT),
-/* harmony export */   Ly9: () => (/* binding */ WPCOM_FEATURES_ANTISPAM),
-/* harmony export */   MBA: () => (/* binding */ FEATURE_STATS_JP),
-/* harmony export */   MCU: () => (/* binding */ FEATURE_FREE_DOMAIN),
-/* harmony export */   MRS: () => (/* binding */ FEATURE_PAYMENT_TRANSACTION_FEES_4),
-/* harmony export */   MpJ: () => (/* binding */ FEATURE_PAYMENT_TRANSACTION_FEES_0),
-/* harmony export */   Mrh: () => (/* binding */ FEATURE_JETPACK_SEARCH_BI_YEARLY),
-/* harmony export */   N5t: () => (/* binding */ FEATURE_LIVE_CHAT_SUPPORT_BUSINESS_DAYS),
-/* harmony export */   N64: () => (/* binding */ FEATURE_DISPLAY_PRODUCTS_BRAND),
-/* harmony export */   NHK: () => (/* binding */ FEATURE_WOOCOMMERCE_STORE),
-/* harmony export */   NtL: () => (/* binding */ FEATURE_SITE_ACTIVITY_LOG_JP),
-/* harmony export */   NxG: () => (/* binding */ FEATURE_PRODUCT_ADD_ONS),
-/* harmony export */   O05: () => (/* binding */ FEATURE_WOOCOMMERCE),
-/* harmony export */   OFy: () => (/* binding */ FEATURE_NEWSLETTER_IMPORT_SUBSCRIBERS_FREE),
-/* harmony export */   OJ1: () => (/* binding */ FEATURE_JETPACK_BACKUP_T0_MONTHLY),
-/* harmony export */   OMq: () => (/* binding */ FEATURE_UNLIMITED_PRODUCTS),
-/* harmony export */   PE6: () => (/* binding */ FEATURE_CHECKOUT),
-/* harmony export */   PSd: () => (/* binding */ FEATURE_LIVE_SHIPPING_RATES),
-/* harmony export */   PUy: () => (/* binding */ FEATURE_ALL_PREMIUM_FEATURES_JETPACK),
-/* harmony export */   Pm5: () => (/* binding */ FEATURE_PREMIUM_STORE_THEMES),
-/* harmony export */   Pnf: () => (/* binding */ FEATURE_SHIPPING_INTEGRATIONS),
-/* harmony export */   Q1W: () => (/* binding */ FEATURE_FREE_BLOG_DOMAIN),
-/* harmony export */   Q3C: () => (/* binding */ FEATURE_NO_BRANDING),
-/* harmony export */   QFD: () => (/* binding */ FEATURE_SENSEI_INTERACTIVE),
-/* harmony export */   QNW: () => (/* binding */ FEATURE_VIDEO_UPLOADS_JETPACK_PRO),
-/* harmony export */   QWL: () => (/* binding */ FEATURE_PROMOTE_ON_TIKTOK),
-/* harmony export */   Q_7: () => (/* binding */ FEATURE_LTD_SOCIAL_MEDIA_JP),
-/* harmony export */   QfP: () => (/* binding */ FEATURE_PREMIUM_THEMES),
-/* harmony export */   R2o: () => (/* binding */ FEATURE_FREE_THEMES_SIGNUP),
-/* harmony export */   R9R: () => (/* binding */ FEATURE_ISOLATED_INFRA),
-/* harmony export */   RF_: () => (/* binding */ FEATURE_PAYPAL_JP),
-/* harmony export */   Rp9: () => (/* binding */ FEATURE_AUTOMATED_RESTORES),
-/* harmony export */   S9g: () => (/* binding */ FEATURE_MARKETING_AUTOMATION),
-/* harmony export */   SH3: () => (/* binding */ FEATURE_JETPACK_SOCIAL_ADVANCED_BI_YEARLY),
-/* harmony export */   SLH: () => (/* binding */ FEATURE_50GB_STORAGE),
-/* harmony export */   SMt: () => (/* binding */ FEATURE_UPTIME_MONITOR_JP),
-/* harmony export */   SZ6: () => (/* binding */ FEATURE_MONETISE),
-/* harmony export */   S_M: () => (/* binding */ FEATURE_P2_13GB_STORAGE),
-/* harmony export */   SoP: () => (/* binding */ FEATURE_EMAIL_MARKETING),
-/* harmony export */   SsD: () => (/* binding */ FEATURE_UNLIMITED_ADMINS),
-/* harmony export */   T$h: () => (/* binding */ FEATURE_JETPACK_ANTI_SPAM_MONTHLY),
-/* harmony export */   T3v: () => (/* binding */ FEATURE_100GB_STORAGE_ADD_ON),
-/* harmony export */   TBQ: () => (/* binding */ FEATURE_JETPACK_BACKUP_DAILY_MONTHLY),
-/* harmony export */   TFL: () => (/* binding */ FEATURE_SHARES_SOCIAL_MEDIA_JP),
-/* harmony export */   TNr: () => (/* binding */ FEATURE_STORE_DESIGN),
-/* harmony export */   TZT: () => (/* binding */ FEATURE_JETPACK_BACKUP_REALTIME_MONTHLY),
-/* harmony export */   TaL: () => (/* binding */ FEATURE_PAYMENT_TRANSACTION_FEES_0_ALL),
-/* harmony export */   Tez: () => (/* binding */ FEATURE_LIVE_CHAT_SUPPORT),
-/* harmony export */   Tmz: () => (/* binding */ FEATURE_UPLOAD_THEMES),
-/* harmony export */   Tsj: () => (/* binding */ FEATURE_FAST_DNS),
-/* harmony export */   Tx8: () => (/* binding */ FEATURE_EARN_AD),
-/* harmony export */   UAg: () => (/* binding */ FEATURE_BURST),
-/* harmony export */   UQo: () => (/* binding */ FEATURE_SELL_60_COUNTRIES),
-/* harmony export */   U_2: () => (/* binding */ FEATURE_COMMUNITY_SUPPORT),
-/* harmony export */   Uwp: () => (/* binding */ FEATURE_ALL_FREE_FEATURES),
-/* harmony export */   V09: () => (/* binding */ FEATURE_INSTALL_PLUGINS),
-/* harmony export */   V1I: () => (/* binding */ FEATURE_JETPACK_SCAN_DAILY),
-/* harmony export */   V1k: () => (/* binding */ FEATURE_JETPACK_BACKUP_DAILY),
-/* harmony export */   V37: () => (/* binding */ FEATURE_SPAM_AKISMET_PLUS),
-/* harmony export */   VOS: () => (/* binding */ FEATURE_JETPACK_ANTI_SPAM_BI_YEARLY),
-/* harmony export */   VUF: () => (/* binding */ FEATURE_INVENTORY_MGMT),
-/* harmony export */   VWq: () => (/* binding */ FEATURE_BULK_DISCOUNTS),
-/* harmony export */   VZW: () => (/* binding */ FEATURE_JETPACK_PRODUCT_BACKUP),
-/* harmony export */   Vhs: () => (/* binding */ FEATURE_UNLIMITED_EMAILS),
-/* harmony export */   Vml: () => (/* binding */ FEATURE_SIMPLE_PAYMENTS),
-/* harmony export */   Vms: () => (/* binding */ FEATURE_GOOGLE_ANALYTICS),
-/* harmony export */   VyO: () => (/* binding */ FEATURE_ALL_PERSONAL_FEATURES),
-/* harmony export */   W4b: () => (/* binding */ FEATURE_6GB_STORAGE),
-/* harmony export */   WML: () => (/* binding */ FEATURE_SENSEI_JETPACK),
-/* harmony export */   Wa6: () => (/* binding */ FEATURE_STOCK_NOTIFS),
-/* harmony export */   WgD: () => (/* binding */ FEATURE_SENSEI_QUIZZES),
-/* harmony export */   Ws3: () => (/* binding */ FEATURE_DISCOUNTED_SHIPPING),
-/* harmony export */   Wxo: () => (/* binding */ FEATURE_WAF_V2),
-/* harmony export */   X2I: () => (/* binding */ FEATURE_PLAN_SECURITY_DAILY),
-/* harmony export */   XMd: () => (/* binding */ FEATURE_AUDIO_UPLOADS),
-/* harmony export */   XZZ: () => (/* binding */ FEATURE_P2_SIMPLE_SEARCH),
-/* harmony export */   XgZ: () => (/* binding */ FEATURE_PRODUCT_SCAN_REALTIME_V2),
-/* harmony export */   Xif: () => (/* binding */ FEATURE_UNLIMITED_PRODUCTS_SERVICES),
-/* harmony export */   Xk_: () => (/* binding */ FEATURE_NO_ADS),
-/* harmony export */   XmH: () => (/* binding */ FEATURE_SENSEI_SUPPORT),
-/* harmony export */   XzA: () => (/* binding */ FEATURE_COMMISSION_FEE_WOO_FEATURES),
-/* harmony export */   YPm: () => (/* binding */ FEATURE_DEV_TOOLS),
-/* harmony export */   Yg_: () => (/* binding */ FEATURE_ABANDONED_CART_RECOVERY),
-/* harmony export */   YmK: () => (/* binding */ FEATURE_WAF),
-/* harmony export */   Z5U: () => (/* binding */ FEATURE_ALL_PREMIUM_FEATURES),
-/* harmony export */   ZTn: () => (/* binding */ FEATURE_STATS_PAID),
-/* harmony export */   ZY2: () => (/* binding */ FEATURE_JETPACK_1_YEAR_ARCHIVE_ACTIVITY_LOG),
-/* harmony export */   ZaE: () => (/* binding */ FEATURE_GROUP_PAYMENT_TRANSACTION_FEES),
-/* harmony export */   Zaf: () => (/* binding */ FEATURE_1GB_STORAGE),
-/* harmony export */   Zjz: () => (/* binding */ FEATURE_REPUBLICIZE),
-/* harmony export */   _3A: () => (/* binding */ FEATURE_SITE_BACKUPS_AND_RESTORE),
-/* harmony export */   _Ms: () => (/* binding */ FEATURE_SITE_STAGING_SITES),
-/* harmony export */   _U0: () => (/* binding */ FEATURE_MARKETPLACE_SYNC_SOCIAL_MEDIA_INTEGRATION),
-/* harmony export */   _Z$: () => (/* binding */ FEATURE_50GB_STORAGE_ADD_ON),
-/* harmony export */   _lW: () => (/* binding */ FEATURE_GOOGLE_ANALYTICS_V3),
-/* harmony export */   _po: () => (/* binding */ FEATURE_DATACENTRE_FAILOVER),
-/* harmony export */   _sL: () => (/* binding */ FEATURE_OFFSITE_BACKUP_VAULTPRESS_REALTIME),
-/* harmony export */   _sk: () => (/* binding */ FEATURE_JETPACK_BACKUP_T1_BI_YEARLY),
-/* harmony export */   _vQ: () => (/* binding */ FEATURE_CLOUD_CRITICAL_CSS),
-/* harmony export */   a9c: () => (/* binding */ FEATURE_PAGES),
-/* harmony export */   aWA: () => (/* binding */ FEATURE_MIN_MAX_QTY),
-/* harmony export */   afj: () => (/* binding */ FEATURE_PRODUCT_BACKUP_DAILY_V2),
-/* harmony export */   alN: () => (/* binding */ FEATURE_STYLE_CUSTOMIZATION),
-/* harmony export */   alZ: () => (/* binding */ FEATURE_PLUGINS_THEMES),
-/* harmony export */   bA$: () => (/* binding */ FEATURE_PAYMENT_TRANSACTION_FEES_2),
-/* harmony export */   bHF: () => (/* binding */ FEATURE_P2_UNLIMITED_POSTS_PAGES),
-/* harmony export */   bJv: () => (/* binding */ FEATURE_P2_PRIORITY_CHAT_EMAIL_SUPPORT),
-/* harmony export */   bcr: () => (/* binding */ FEATURE_WP_UPDATES),
-/* harmony export */   bp9: () => (/* binding */ FEATURE_WORDPRESS_MOBILE_APP),
-/* harmony export */   bsv: () => (/* binding */ FEATURE_JETPACK_BOOST_MONTHLY),
-/* harmony export */   c$s: () => (/* binding */ FEATURE_LIST_PRODUCTS_BY_BRAND),
-/* harmony export */   c74: () => (/* binding */ FEATURE_JETPACK_ADVANCED),
-/* harmony export */   cFx: () => (/* binding */ FEATURE_REALTIME_BACKUPS_JP),
-/* harmony export */   cMD: () => (/* binding */ FEATURE_COLLECT_PAYMENTS_LINK_IN_BIO),
-/* harmony export */   cMf: () => (/* binding */ FEATURE_SENSEI_STORAGE),
-/* harmony export */   cTd: () => (/* binding */ FEATURE_PRODUCT_RECOMMENDATIONS),
-/* harmony export */   cWM: () => (/* binding */ FEATURE_SFTP_DATABASE),
-/* harmony export */   c__: () => (/* binding */ FEATURE_UNLIMITED_TRAFFIC),
-/* harmony export */   cdC: () => (/* binding */ FEATURE_PRODUCT_BUNDLES),
-/* harmony export */   csF: () => (/* binding */ FEATURE_BACKUP_REALTIME_V2),
-/* harmony export */   dXP: () => (/* binding */ FEATURE_BEAUTIFUL_THEMES),
-/* harmony export */   dZ$: () => (/* binding */ FEATURE_PRODUCT_SEARCH_V2),
-/* harmony export */   dmM: () => (/* binding */ FEATURE_EMAIL_LIVE_CHAT_SUPPORT_BUSINESS_DAYS),
-/* harmony export */   eqi: () => (/* binding */ FEATURE_ES_SEARCH_JP),
-/* harmony export */   ewW: () => (/* binding */ FEATURE_JETPACK_SEARCH_MONTHLY),
-/* harmony export */   fDA: () => (/* binding */ FEATURE_TITAN_EMAIL),
-/* harmony export */   fgK: () => (/* binding */ FEATURE_BACK_IN_STOCK_NOTIFICATIONS),
-/* harmony export */   fhe: () => (/* binding */ FEATURE_EMAIL_SUPPORT_SIGNUP),
-/* harmony export */   fp6: () => (/* binding */ PREMIUM_DESIGN_FOR_STORES),
-/* harmony export */   gI6: () => (/* binding */ FEATURE_200GB_STORAGE),
-/* harmony export */   gRD: () => (/* binding */ FEATURE_MANAGE),
-/* harmony export */   gRh: () => (/* binding */ FEATURE_CONNECT_WITH_FACEBOOK),
-/* harmony export */   ggN: () => (/* binding */ FEATURE_GOOGLE_MY_BUSINESS),
-/* harmony export */   ghB: () => (/* binding */ FEATURE_DONATIONS_AND_TIPS_JP),
-/* harmony export */   gqo: () => (/* binding */ FEATURE_JETPACK_ESSENTIAL),
-/* harmony export */   hH1: () => (/* binding */ FEATURE_SOCIAL_MEDIA_TOOLS),
-/* harmony export */   hOf: () => (/* binding */ FEATURE_INTEGRATED_SHIPMENT_TRACKING),
-/* harmony export */   hSm: () => (/* binding */ FEATURE_CONTACT_FORM_JP),
-/* harmony export */   hsL: () => (/* binding */ FEATURE_PRINT_SHIPPING_LABELS),
-/* harmony export */   i9T: () => (/* binding */ FEATURE_ADVERTISE_ON_GOOGLE),
-/* harmony export */   iC0: () => (/* binding */ FEATURE_P2_VIDEO_SHARING),
-/* harmony export */   iC1: () => (/* binding */ FEATURE_JETPACK_SOCIAL_BASIC_MONTHLY),
-/* harmony export */   iRs: () => (/* binding */ FEATURE_USERS),
-/* harmony export */   iTE: () => (/* binding */ FEATURE_VIDEO_UPLOADS),
-/* harmony export */   iW8: () => (/* binding */ FEATURE_PREMIUM_CONTENT_JP),
-/* harmony export */   igx: () => (/* binding */ FEATURE_ALL_FREE_FEATURES_JETPACK),
-/* harmony export */   ikw: () => (/* binding */ WPCOM_FEATURES_SCAN),
-/* harmony export */   ixG: () => (/* binding */ FEATURE_RECOMMEND_ADD_ONS),
-/* harmony export */   j8V: () => (/* binding */ FEATURE_PAID_SUBSCRIBERS_JP),
-/* harmony export */   jDM: () => (/* binding */ FEATURE_FREE_THEMES),
-/* harmony export */   jY: () => (/* binding */ FEATURE_ASSEMBLED_KITS),
-/* harmony export */   jby: () => (/* binding */ FEATURE_SUPPORT_EMAIL),
-/* harmony export */   kI: () => (/* binding */ FEATURE_ALL_BUSINESS_FEATURES),
-/* harmony export */   lRt: () => (/* binding */ FEATURE_WORDADS),
-/* harmony export */   lYf: () => (/* binding */ FEATURE_JETPACK_ALL_BACKUP_SECURITY_FEATURES),
-/* harmony export */   liF: () => (/* binding */ FEATURE_JETPACK_CRM),
-/* harmony export */   ljn: () => (/* binding */ FEATURE_ADVANCED_SEO_TOOLS),
-/* harmony export */   lv3: () => (/* binding */ FEATURE_JETPACK_SEARCH),
-/* harmony export */   m1c: () => (/* binding */ FEATURE_AUTOMATIC_SECURITY_FIXES),
-/* harmony export */   mFq: () => (/* binding */ FEATURE_CUSTOM_ORDER_EMAILS),
-/* harmony export */   mX4: () => (/* binding */ FEATURE_JETPACK_BACKUP_T1_MONTHLY),
-/* harmony export */   n$d: () => (/* binding */ FEATURE_ACTIVITY_LOG_1_YEAR_V2),
-/* harmony export */   n26: () => (/* binding */ WPCOM_FEATURES_INSTALL_PURCHASED_PLUGINS),
-/* harmony export */   n2c: () => (/* binding */ FEATURE_JETPACK_SOCIAL_BASIC_BI_YEARLY),
-/* harmony export */   nCh: () => (/* binding */ FEATURE_ONE_CLICK_RESTORE_V2),
-/* harmony export */   nIy: () => (/* binding */ FEATURE_INVENTORY),
-/* harmony export */   nLo: () => (/* binding */ FEATURE_PAYMENT_TRANSACTION_FEES_2_REGULAR),
-/* harmony export */   nWg: () => (/* binding */ FEATURE_SELL_EGIFTS_AND_VOUCHERS),
-/* harmony export */   nXV: () => (/* binding */ FEATURE_VIDEOPRESS_JP),
-/* harmony export */   n_S: () => (/* binding */ FEATURE_EMAIL_SUPPORT),
-/* harmony export */   nl4: () => (/* binding */ FEATURE_UNLIMITED_SUBSCRIBERS),
-/* harmony export */   nsi: () => (/* binding */ FEATURE_BACKUP_ARCHIVE_30),
-/* harmony export */   oIe: () => (/* binding */ FEATURE_PRODUCT_SCAN_DAILY_V2),
-/* harmony export */   oTu: () => (/* binding */ FEATURE_SELL_SHIP),
-/* harmony export */   oUN: () => (/* binding */ FEATURE_SENSEI_UNLIMITED),
-/* harmony export */   okS: () => (/* binding */ FEATURE_SEO_PREVIEW_TOOLS),
-/* harmony export */   ops: () => (/* binding */ FEATURE_P2_ACTIVITY_OVERVIEW),
-/* harmony export */   p1e: () => (/* binding */ FEATURE_PAYMENT_BUTTONS_JP),
-/* harmony export */   p8y: () => (/* binding */ FEATURE_AUTOMATIC_SALES_TAX),
-/* harmony export */   pOV: () => (/* binding */ FEATURE_AD_FREE_EXPERIENCE),
-/* harmony export */   pgw: () => (/* binding */ FEATURE_DYNAMIC_UPSELLS),
-/* harmony export */   puh: () => (/* binding */ FEATURE_JETPACK_1TB_BACKUP_STORAGE),
-/* harmony export */   q4V: () => (/* binding */ FEATURE_HOSTING),
-/* harmony export */   q6z: () => (/* binding */ FEATURE_SPAM_JP),
-/* harmony export */   qC: () => (/* binding */ FEATURE_SEO_JP),
-/* harmony export */   qbT: () => (/* binding */ FEATURE_SECURITY_MALWARE),
-/* harmony export */   qpv: () => (/* binding */ FEATURE_MIN_MAX_ORDER_QUANTITY),
-/* harmony export */   r$c: () => (/* binding */ FEATURE_INTEGRATED_PAYMENTS),
-/* harmony export */   rDn: () => (/* binding */ FEATURE_CRM_V2),
-/* harmony export */   rV5: () => (/* binding */ FEATURE_JETPACK_VIDEOPRESS_BI_YEARLY),
-/* harmony export */   rdd: () => (/* binding */ FEATURE_P2_MORE_FILE_TYPES),
-/* harmony export */   rlg: () => (/* binding */ FEATURE_SITE_STATS),
-/* harmony export */   rli: () => (/* binding */ FEATURE_ADVANCED_DESIGN_CUSTOMIZATION),
-/* harmony export */   s$V: () => (/* binding */ FEATURE_PAYMENT_TRANSACTION_FEES_10),
-/* harmony export */   s1f: () => (/* binding */ FEATURE_OFFSITE_BACKUP_VAULTPRESS_DAILY),
-/* harmony export */   s2V: () => (/* binding */ FEATURE_THE_READER),
-/* harmony export */   s4b: () => (/* binding */ FEATURE_JETPACK_BACKUP_REALTIME),
-/* harmony export */   sGT: () => (/* binding */ FEATURE_JETPACK_SOCIAL_ADVANCED),
-/* harmony export */   sHn: () => (/* binding */ FEATURE_SECURITY_DDOS),
-/* harmony export */   sKk: () => (/* binding */ FEATURE_GIFT_CARDS),
-/* harmony export */   sQp: () => (/* binding */ FEATURE_JETPACK_PRODUCT_VIDEOPRESS),
-/* harmony export */   sTW: () => (/* binding */ FEATURE_JETPACK_SOCIAL_ADVANCED_MONTHLY),
-/* harmony export */   sYz: () => (/* binding */ FEATURE_WP_SUBDOMAIN_SIGNUP),
-/* harmony export */   tP7: () => (/* binding */ FEATURE_AUTOMATED_BACKUPS_SECURITY_SCAN),
-/* harmony export */   tS0: () => (/* binding */ FEATURE_JETPACK_BACKUP_T2_YEARLY),
-/* harmony export */   uD5: () => (/* binding */ FEATURE_SENSEI_SELL_COURSES),
-/* harmony export */   uT1: () => (/* binding */ FEATURE_NEWSLETTERS_RSS),
-/* harmony export */   vEX: () => (/* binding */ FEATURE_UPLOAD_THEMES_PLUGINS),
-/* harmony export */   vQ$: () => (/* binding */ FEATURE_MALWARE_SCANNING_DAILY_AND_ON_DEMAND),
-/* harmony export */   vcd: () => (/* binding */ FEATURE_POST_EDITS_HISTORY),
-/* harmony export */   vje: () => (/* binding */ FEATURE_P2_CUSTOMIZATION_OPTIONS),
-/* harmony export */   vkU: () => (/* binding */ FEATURE_LIVE_CHAT_SUPPORT_ALL_DAYS),
-/* harmony export */   vqo: () => (/* binding */ FEATURE_ADVANCED_SEO_EXPANDED_ABBR),
-/* harmony export */   w6W: () => (/* binding */ FEATURE_JETPACK_VIDEOPRESS_MONTHLY),
-/* harmony export */   w7L: () => (/* binding */ FEATURE_SCAN_V2),
-/* harmony export */   wJ_: () => (/* binding */ FEATURE_WP_SUBDOMAIN),
-/* harmony export */   wUt: () => (/* binding */ FEATURE_ACTIVITY_LOG),
-/* harmony export */   wwD: () => (/* binding */ FEATURE_STANDARD_SECURITY_TOOLS),
-/* harmony export */   x_7: () => (/* binding */ FEATURE_PAYMENT_BLOCKS),
-/* harmony export */   xjj: () => (/* binding */ FEATURE_UPLOAD_PLUGINS),
-/* harmony export */   xlk: () => (/* binding */ FEATURE_JETPACK_REAL_TIME_MALWARE_SCANNING),
-/* harmony export */   xrd: () => (/* binding */ FEATURE_LOYALTY_PROG),
-/* harmony export */   y03: () => (/* binding */ FEATURE_ACCEPT_PAYMENTS_V2),
-/* harmony export */   y4L: () => (/* binding */ FEATURE_ADD_UNLIMITED_LINKS),
-/* harmony export */   y8T: () => (/* binding */ FEATURE_AI_ASSISTED_PRODUCT_DESCRIPTION),
-/* harmony export */   yjN: () => (/* binding */ FEATURE_P2_ADVANCED_SEARCH),
-/* harmony export */   yjx: () => (/* binding */ FEATURE_ACCEPT_LOCAL_PAYMENTS),
-/* harmony export */   zB_: () => (/* binding */ FEATURE_ALWAYS_ONLINE),
-/* harmony export */   zKd: () => (/* binding */ WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED),
-/* harmony export */   zQV: () => (/* binding */ FEATURE_MALWARE_SCANNING_DAILY),
-/* harmony export */   zh5: () => (/* binding */ FEATURE_SALES_REPORTS),
-/* harmony export */   zrQ: () => (/* binding */ FEATURE_JETPACK_ANTI_SPAM)
+/* harmony export */   $h9: () => (/* binding */ FEATURE_CUSTOM_ORDER_EMAILS),
+/* harmony export */   A1p: () => (/* binding */ FEATURE_FREE_THEMES_SIGNUP),
+/* harmony export */   A5J: () => (/* binding */ FEATURE_AUDIO_UPLOADS),
+/* harmony export */   A7p: () => (/* binding */ FEATURE_3GB_STORAGE),
+/* harmony export */   AGr: () => (/* binding */ WPCOM_FEATURES_SCAN),
+/* harmony export */   AH7: () => (/* binding */ FEATURE_DEV_TOOLS),
+/* harmony export */   AN: () => (/* binding */ FEATURE_JETPACK_BOOST_MONTHLY),
+/* harmony export */   ANj: () => (/* binding */ FEATURE_STANDARD_SECURITY_TOOLS),
+/* harmony export */   APj: () => (/* binding */ FEATURE_ONE_CLICK_RESTORE_V2),
+/* harmony export */   AXt: () => (/* binding */ FEATURE_SELL_INTERNATIONALLY),
+/* harmony export */   Afi: () => (/* binding */ FEATURE_JETPACK_SOCIAL_BASIC_MONTHLY),
+/* harmony export */   AhO: () => (/* binding */ FEATURE_LIVE_SHIPPING_RATES),
+/* harmony export */   Alh: () => (/* binding */ FEATURE_JETPACK_SCAN_DAILY),
+/* harmony export */   Aps: () => (/* binding */ FEATURE_JETPACK_SOCIAL_ADVANCED_BI_YEARLY),
+/* harmony export */   Arm: () => (/* binding */ FEATURE_AUTOMATIC_SECURITY_FIXES),
+/* harmony export */   AxH: () => (/* binding */ FEATURE_JETPACK_BACKUP_T2_MONTHLY),
+/* harmony export */   Az1: () => (/* binding */ FEATURE_UNLIMITED_ADMINS),
+/* harmony export */   BG_: () => (/* binding */ FEATURE_SECURITY_BRUTE_FORCE),
+/* harmony export */   C2J: () => (/* binding */ FEATURE_13GB_STORAGE),
+/* harmony export */   CGY: () => (/* binding */ FEATURE_COMMISSION_FEE_WOO_FEATURES),
+/* harmony export */   CKP: () => (/* binding */ FEATURE_MIN_MAX_ORDER_QUANTITY),
+/* harmony export */   CKd: () => (/* binding */ FEATURE_JETPACK_ALL_BACKUP_SECURITY_FEATURES),
+/* harmony export */   CSt: () => (/* binding */ FEATURE_MANAGED_HOSTING),
+/* harmony export */   Ccb: () => (/* binding */ FEATURE_UNLIMITED_TRAFFIC),
+/* harmony export */   CsJ: () => (/* binding */ FEATURE_ALWAYS_ONLINE),
+/* harmony export */   Csw: () => (/* binding */ FEATURE_JETPACK_VIDEOPRESS_MONTHLY),
+/* harmony export */   E56: () => (/* binding */ FEATURE_PREMIUM_STORE_THEMES),
+/* harmony export */   EZz: () => (/* binding */ FEATURE_COLLECT_PAYMENTS_V2),
+/* harmony export */   ElG: () => (/* binding */ FEATURE_EXTENSIONS),
+/* harmony export */   Enp: () => (/* binding */ FEATURE_JETPACK_SOCIAL_BASIC_BI_YEARLY),
+/* harmony export */   EoQ: () => (/* binding */ FEATURE_ANTISPAM_V2),
+/* harmony export */   EzW: () => (/* binding */ FEATURE_EMAIL_MARKETING),
+/* harmony export */   Ezh: () => (/* binding */ FEATURE_100GB_STORAGE_ADD_ON),
+/* harmony export */   G0J: () => (/* binding */ FEATURE_JETPACK_1_YEAR_ARCHIVE_ACTIVITY_LOG),
+/* harmony export */   G2A: () => (/* binding */ FEATURE_JETPACK_BACKUP_T1_YEARLY),
+/* harmony export */   G6w: () => (/* binding */ FEATURE_REALTIME_BACKUPS_JP),
+/* harmony export */   GCi: () => (/* binding */ FEATURE_BULK_DISCOUNTS),
+/* harmony export */   GSG: () => (/* binding */ FEATURE_SITE_BACKUPS_AND_RESTORE),
+/* harmony export */   GSs: () => (/* binding */ FEATURE_ACCEPT_LOCAL_PAYMENTS),
+/* harmony export */   G_S: () => (/* binding */ FEATURE_DYNAMIC_UPSELLS),
+/* harmony export */   GcI: () => (/* binding */ FEATURE_LIST_PRODUCTS_BY_BRAND),
+/* harmony export */   Go3: () => (/* binding */ FEATURE_EASY_SITE_MIGRATION),
+/* harmony export */   GqV: () => (/* binding */ FEATURE_DISPLAY_PRODUCTS_BRAND),
+/* harmony export */   Gsf: () => (/* binding */ FEATURE_SENSEI_UNLIMITED),
+/* harmony export */   HgJ: () => (/* binding */ FEATURE_P2_UNLIMITED_USERS),
+/* harmony export */   Hnu: () => (/* binding */ FEATURE_RECURRING_PAYMENTS),
+/* harmony export */   I3x: () => (/* binding */ FEATURE_P2_UNLIMITED_POSTS_PAGES),
+/* harmony export */   I5k: () => (/* binding */ FEATURE_SELL_60_COUNTRIES),
+/* harmony export */   IFL: () => (/* binding */ FEATURE_OFFER_BULK_DISCOUNTS),
+/* harmony export */   IHH: () => (/* binding */ FEATURE_EMAIL_LIVE_CHAT_SUPPORT_BUSINESS_DAYS),
+/* harmony export */   IHO: () => (/* binding */ FEATURE_JETPACK_BOOST_BI_YEARLY),
+/* harmony export */   IRv: () => (/* binding */ FEATURE_PRODUCT_SCAN_REALTIME_V2),
+/* harmony export */   IVr: () => (/* binding */ FEATURE_ES_SEARCH_JP),
+/* harmony export */   Ibm: () => (/* binding */ FEATURE_PAYMENT_TRANSACTION_FEES_0_ALL),
+/* harmony export */   IfZ: () => (/* binding */ FEATURE_EMAIL_LIVE_CHAT_SUPPORT),
+/* harmony export */   Il5: () => (/* binding */ FEATURE_JETPACK_1TB_BACKUP_STORAGE),
+/* harmony export */   IlF: () => (/* binding */ FEATURE_JETPACK_SEARCH_MONTHLY),
+/* harmony export */   InZ: () => (/* binding */ FEATURE_INSTALL_PLUGINS),
+/* harmony export */   Ixy: () => (/* binding */ FEATURE_FREE_THEMES),
+/* harmony export */   Iz3: () => (/* binding */ FEATURE_SITE_ACTIVITY_LOG_JP),
+/* harmony export */   IzP: () => (/* binding */ FEATURE_SENSEI_SELL_COURSES),
+/* harmony export */   K27: () => (/* binding */ FEATURE_ASSEMBLED_KITS),
+/* harmony export */   KES: () => (/* binding */ FEATURE_WORDPRESS_MOBILE_APP),
+/* harmony export */   KIt: () => (/* binding */ FEATURE_MALWARE_SCANNING_DAILY),
+/* harmony export */   KM: () => (/* binding */ FEATURE_50GB_STORAGE_ADD_ON),
+/* harmony export */   KST: () => (/* binding */ FEATURE_JETPACK_CRM_MONTHLY),
+/* harmony export */   KYV: () => (/* binding */ FEATURE_GROUP_PAYMENT_TRANSACTION_FEES),
+/* harmony export */   KmV: () => (/* binding */ FEATURE_ECOMMERCE_MARKETING),
+/* harmony export */   Ks4: () => (/* binding */ FEATURE_INTEGRATED_SHIPMENT_TRACKING),
+/* harmony export */   Kwt: () => (/* binding */ FEATURE_P2_3GB_STORAGE),
+/* harmony export */   L5H: () => (/* binding */ FEATURE_GOOGLE_MY_BUSINESS),
+/* harmony export */   M1A: () => (/* binding */ FEATURE_JETPACK_BACKUP_T1_MONTHLY),
+/* harmony export */   M39: () => (/* binding */ FEATURE_SELL_EGIFTS_AND_VOUCHERS),
+/* harmony export */   MLs: () => (/* binding */ FEATURE_PRODUCT_BUNDLES),
+/* harmony export */   MNZ: () => (/* binding */ FEATURE_ALL_PREMIUM_FEATURES),
+/* harmony export */   MQj: () => (/* binding */ FEATURE_WAF),
+/* harmony export */   MT_: () => (/* binding */ FEATURE_NO_BRANDING),
+/* harmony export */   MfS: () => (/* binding */ FEATURE_JETPACK_ANTI_SPAM_BI_YEARLY),
+/* harmony export */   MhI: () => (/* binding */ FEATURE_PAYMENT_TRANSACTION_FEES_10),
+/* harmony export */   Mhk: () => (/* binding */ FEATURE_JETPACK_BACKUP_T2_YEARLY),
+/* harmony export */   Mnw: () => (/* binding */ FEATURE_LIVE_CHAT_SUPPORT),
+/* harmony export */   MrA: () => (/* binding */ FEATURE_SENSEI_SUPPORT),
+/* harmony export */   MzZ: () => (/* binding */ FEATURE_SELL_SHIP),
+/* harmony export */   Mzt: () => (/* binding */ FEATURE_P2_SIMPLE_SEARCH),
+/* harmony export */   O0P: () => (/* binding */ FEATURE_DISCOUNTED_SHIPPING),
+/* harmony export */   O2k: () => (/* binding */ FEATURE_MEMBERSHIPS),
+/* harmony export */   OCZ: () => (/* binding */ FEATURE_THE_READER),
+/* harmony export */   OGc: () => (/* binding */ FEATURE_JETPACK_PRODUCT_BACKUP),
+/* harmony export */   OI8: () => (/* binding */ FEATURE_USERS),
+/* harmony export */   OIX: () => (/* binding */ FEATURE_ACCEPT_PAYMENTS),
+/* harmony export */   Oa_: () => (/* binding */ FEATURE_UPLOAD_PLUGINS),
+/* harmony export */   Oe$: () => (/* binding */ FEATURE_1GB_STORAGE),
+/* harmony export */   PoC: () => (/* binding */ FEATURE_JETPACK_VIDEOPRESS_BI_YEARLY),
+/* harmony export */   Q3G: () => (/* binding */ FEATURE_SPAM_AKISMET_PLUS),
+/* harmony export */   QB3: () => (/* binding */ FEATURE_SOCIAL_MEDIA_TOOLS),
+/* harmony export */   QLg: () => (/* binding */ FEATURE_SITE_STAGING_SITES),
+/* harmony export */   QN9: () => (/* binding */ FEATURE_BACKUP_REALTIME_V2),
+/* harmony export */   QPC: () => (/* binding */ FEATURE_PAGES),
+/* harmony export */   QPM: () => (/* binding */ FEATURE_P2_PRIORITY_CHAT_EMAIL_SUPPORT),
+/* harmony export */   QPk: () => (/* binding */ FEATURE_ACTIVITY_LOG),
+/* harmony export */   QbO: () => (/* binding */ FEATURE_TITAN_EMAIL),
+/* harmony export */   QnF: () => (/* binding */ FEATURE_INVENTORY_MGMT),
+/* harmony export */   Qnn: () => (/* binding */ FEATURE_JETPACK_SOCIAL_ADVANCED_MONTHLY),
+/* harmony export */   Rmd: () => (/* binding */ FEATURE_PREMIUM_CUSTOMIZABE_THEMES),
+/* harmony export */   S6X: () => (/* binding */ FEATURE_WORDADS),
+/* harmony export */   S8s: () => (/* binding */ FEATURE_JETPACK_CRM),
+/* harmony export */   SC1: () => (/* binding */ FEATURE_JETPACK_SOCIAL_BASIC),
+/* harmony export */   SUL: () => (/* binding */ FEATURE_SFTP_DATABASE),
+/* harmony export */   SYj: () => (/* binding */ FEATURE_WOOCOMMERCE_MOBILE_APP),
+/* harmony export */   Skh: () => (/* binding */ FEATURE_FREE_BLOG_DOMAIN),
+/* harmony export */   SsX: () => (/* binding */ FEATURE_DATACENTRE_FAILOVER),
+/* harmony export */   SwE: () => (/* binding */ FEATURE_MIN_MAX_QTY),
+/* harmony export */   U37: () => (/* binding */ FEATURE_JETPACK_VIDEOPRESS),
+/* harmony export */   U3h: () => (/* binding */ FEATURE_CONTACT_FORM_JP),
+/* harmony export */   UNr: () => (/* binding */ FEATURE_SPAM_JP),
+/* harmony export */   UTM: () => (/* binding */ FEATURE_BURST),
+/* harmony export */   UVi: () => (/* binding */ FEATURE_PRODUCT_BACKUP_REALTIME_V2),
+/* harmony export */   UZR: () => (/* binding */ FEATURE_BLANK),
+/* harmony export */   UfU: () => (/* binding */ WPCOM_FEATURES_ANTISPAM),
+/* harmony export */   Umo: () => (/* binding */ FEATURE_PRODUCT_SEARCH_V2),
+/* harmony export */   Unt: () => (/* binding */ WPCOM_FEATURES_BACKUPS),
+/* harmony export */   Upo: () => (/* binding */ FEATURE_ADVANCED_DESIGN_CUSTOMIZATION),
+/* harmony export */   Urh: () => (/* binding */ FEATURE_PLUGINS_THEMES),
+/* harmony export */   UxR: () => (/* binding */ FEATURE_LIVE_CHAT_SUPPORT_BUSINESS_DAYS),
+/* harmony export */   VIX: () => (/* binding */ FEATURE_GOOGLE_ANALYTICS),
+/* harmony export */   W0y: () => (/* binding */ FEATURE_FAST_DNS),
+/* harmony export */   WAM: () => (/* binding */ FEATURE_VIDEO_UPLOADS),
+/* harmony export */   WCp: () => (/* binding */ FEATURE_INTEGRATED_PAYMENTS),
+/* harmony export */   WGB: () => (/* binding */ FEATURE_CART_ABANDONMENT_EMAILS),
+/* harmony export */   WKv: () => (/* binding */ FEATURE_JETPACK_ANTI_SPAM_MONTHLY),
+/* harmony export */   WY9: () => (/* binding */ FEATURE_ABANDONED_CART_RECOVERY),
+/* harmony export */   W_I: () => (/* binding */ FEATURE_STATS_PAID),
+/* harmony export */   W_T: () => (/* binding */ WPCOM_FEATURES_ATOMIC),
+/* harmony export */   Wa5: () => (/* binding */ FEATURE_50GB_STORAGE),
+/* harmony export */   Wan: () => (/* binding */ FEATURE_STREAMLINED_CHECKOUT),
+/* harmony export */   WkS: () => (/* binding */ FEATURE_UPLOAD_THEMES_PLUGINS),
+/* harmony export */   Woh: () => (/* binding */ FEATURE_SENSEI_HOSTING),
+/* harmony export */   X$n: () => (/* binding */ FEATURE_UNLIMITED_PRODUCTS),
+/* harmony export */   XR5: () => (/* binding */ FEATURE_CUSTOM_STORE),
+/* harmony export */   Y$S: () => (/* binding */ FEATURE_ISOLATED_INFRA),
+/* harmony export */   Y$v: () => (/* binding */ FEATURE_JETPACK_SEARCH_BI_YEARLY),
+/* harmony export */   YD0: () => (/* binding */ FEATURE_ALL_PERSONAL_FEATURES),
+/* harmony export */   YDI: () => (/* binding */ FEATURE_JETPACK_BACKUP_DAILY_MONTHLY),
+/* harmony export */   YN7: () => (/* binding */ FEATURE_MONETISE),
+/* harmony export */   YTl: () => (/* binding */ FEATURE_SENSEI_JETPACK),
+/* harmony export */   Yvs: () => (/* binding */ FEATURE_CLOUDFLARE_ANALYTICS),
+/* harmony export */   _6N: () => (/* binding */ FEATURE_JETPACK_BACKUP_DAILY),
+/* harmony export */   _g6: () => (/* binding */ FEATURE_SIMPLE_PAYMENTS),
+/* harmony export */   _sx: () => (/* binding */ FEATURE_BACKUP_DAILY_V2),
+/* harmony export */   _yU: () => (/* binding */ FEATURE_INTERNATIONAL_PAYMENTS),
+/* harmony export */   a0t: () => (/* binding */ FEATURE_FREE_DOMAIN),
+/* harmony export */   aGs: () => (/* binding */ FEATURE_JETPACK_SOCIAL_ADVANCED),
+/* harmony export */   aOS: () => (/* binding */ FEATURE_PAYMENT_TRANSACTION_FEES_4),
+/* harmony export */   a_g: () => (/* binding */ PREMIUM_DESIGN_FOR_STORES),
+/* harmony export */   aav: () => (/* binding */ FEATURE_JETPACK_ESSENTIAL),
+/* harmony export */   aei: () => (/* binding */ FEATURE_SENSEI_INTERACTIVE),
+/* harmony export */   aku: () => (/* binding */ FEATURE_WORDADS_INSTANT),
+/* harmony export */   bAH: () => (/* binding */ FEATURE_OFFSITE_BACKUP_VAULTPRESS_DAILY),
+/* harmony export */   btf: () => (/* binding */ FEATURE_WAF_V2),
+/* harmony export */   c1F: () => (/* binding */ FEATURE_WP_SUBDOMAIN_SIGNUP),
+/* harmony export */   c1k: () => (/* binding */ FEATURE_ADVANCED_SEO_TOOLS),
+/* harmony export */   c1m: () => (/* binding */ FEATURE_UNLIMITED_EMAILS),
+/* harmony export */   c59: () => (/* binding */ FEATURE_WORDPRESS_CMS),
+/* harmony export */   c5G: () => (/* binding */ FEATURE_CUSTOM_MARKETING_AUTOMATION),
+/* harmony export */   c7J: () => (/* binding */ FEATURE_PAYMENT_TRANSACTION_FEES_0_WOO),
+/* harmony export */   cB5: () => (/* binding */ FEATURE_ALL_FREE_FEATURES),
+/* harmony export */   cDP: () => (/* binding */ FEATURE_P2_13GB_STORAGE),
+/* harmony export */   cPz: () => (/* binding */ FEATURE_NEWSLETTER_IMPORT_SUBSCRIBERS_FREE),
+/* harmony export */   cRc: () => (/* binding */ FEATURE_PAYMENT_TRANSACTION_FEES_0),
+/* harmony export */   cgr: () => (/* binding */ FEATURE_COMMUNITY_SUPPORT),
+/* harmony export */   cn4: () => (/* binding */ FEATURE_PAYMENT_BLOCKS),
+/* harmony export */   cvr: () => (/* binding */ FEATURE_P2_MORE_FILE_TYPES),
+/* harmony export */   czK: () => (/* binding */ FEATURE_PAYMENT_TRANSACTION_FEES_2),
+/* harmony export */   dl9: () => (/* binding */ FEATURE_P2_VIDEO_SHARING),
+/* harmony export */   e46: () => (/* binding */ FEATURE_200GB_STORAGE),
+/* harmony export */   e8r: () => (/* binding */ FEATURE_LIVE_CHAT_SUPPORT_ALL_DAYS),
+/* harmony export */   eEd: () => (/* binding */ FEATURE_MULTI_SITE),
+/* harmony export */   eIi: () => (/* binding */ FEATURE_CRM_V2),
+/* harmony export */   eIt: () => (/* binding */ FEATURE_POST_EDITS_HISTORY),
+/* harmony export */   eQJ: () => (/* binding */ FEATURE_SECURITY_DDOS),
+/* harmony export */   eUY: () => (/* binding */ FEATURE_EMAIL_SUPPORT_SIGNUP),
+/* harmony export */   eVB: () => (/* binding */ FEATURE_SHIPPING_INTEGRATIONS),
+/* harmony export */   e_q: () => (/* binding */ FEATURE_SUPPORT_EMAIL),
+/* harmony export */   eah: () => (/* binding */ FEATURE_STATS_JP),
+/* harmony export */   eeD: () => (/* binding */ FEATURE_OFFSITE_BACKUP_VAULTPRESS_REALTIME),
+/* harmony export */   egP: () => (/* binding */ FEATURE_ADVANCED_SEO_EXPANDED_ABBR),
+/* harmony export */   emG: () => (/* binding */ FEATURE_BEAUTIFUL_THEMES),
+/* harmony export */   g7W: () => (/* binding */ FEATURE_JETPACK_BACKUP_T1_BI_YEARLY),
+/* harmony export */   gDm: () => (/* binding */ FEATURE_BANDWIDTH),
+/* harmony export */   gLS: () => (/* binding */ FEATURE_AUTOMATED_EMAIL_TRIGGERS),
+/* harmony export */   gTZ: () => (/* binding */ FEATURE_GOOGLE_ANALYTICS_V3),
+/* harmony export */   gr9: () => (/* binding */ FEATURE_AUTOMATED_SALES_TAXES),
+/* harmony export */   i4$: () => (/* binding */ FEATURE_SEO_JP),
+/* harmony export */   iCo: () => (/* binding */ FEATURE_SHARES_SOCIAL_MEDIA_JP),
+/* harmony export */   iKh: () => (/* binding */ FEATURE_SEO_PREVIEW_TOOLS),
+/* harmony export */   iS_: () => (/* binding */ FEATURE_PAYMENT_TRANSACTION_FEES_2_REGULAR),
+/* harmony export */   iSy: () => (/* binding */ FEATURE_JETPACK_REAL_TIME_MALWARE_SCANNING),
+/* harmony export */   iWg: () => (/* binding */ FEATURE_HOSTING),
+/* harmony export */   ic7: () => (/* binding */ FEATURE_SYNC_WITH_PINTEREST),
+/* harmony export */   igQ: () => (/* binding */ FEATURE_SHIPPING_CARRIERS),
+/* harmony export */   iiq: () => (/* binding */ FEATURE_P2_ADVANCED_SEARCH),
+/* harmony export */   im5: () => (/* binding */ FEATURE_WP_SUBDOMAIN),
+/* harmony export */   imc: () => (/* binding */ FEATURE_JETPACK_30_DAY_ARCHIVE_ACTIVITY_LOG),
+/* harmony export */   iod: () => (/* binding */ FEATURE_LIST_UNLIMITED_PRODUCTS),
+/* harmony export */   jpZ: () => (/* binding */ FEATURE_PRODUCT_RECOMMENDATIONS),
+/* harmony export */   k1W: () => (/* binding */ FEATURE_JETPACK_BOOST),
+/* harmony export */   k1q: () => (/* binding */ FEATURE_STORE_DESIGN),
+/* harmony export */   kD0: () => (/* binding */ FEATURE_JETPACK_ANTI_SPAM),
+/* harmony export */   kFp: () => (/* binding */ FEATURE_AUTOMATIC_SALES_TAX),
+/* harmony export */   kT: () => (/* binding */ FEATURE_PROMOTE_ON_TIKTOK),
+/* harmony export */   kTI: () => (/* binding */ FEATURE_6GB_STORAGE),
+/* harmony export */   kXg: () => (/* binding */ FEATURE_REPUBLICIZE),
+/* harmony export */   kbF: () => (/* binding */ FEATURE_ALL_BUSINESS_FEATURES),
+/* harmony export */   kbu: () => (/* binding */ FEATURE_WP_UPDATES),
+/* harmony export */   kjJ: () => (/* binding */ FEATURE_STYLE_CUSTOMIZATION),
+/* harmony export */   kpo: () => (/* binding */ FEATURE_PRODUCT_BACKUP_DAILY_V2),
+/* harmony export */   kv7: () => (/* binding */ FEATURE_AD_FREE_EXPERIENCE),
+/* harmony export */   kvY: () => (/* binding */ FEATURE_ACCEPT_PAYMENTS_V2),
+/* harmony export */   kv_: () => (/* binding */ FEATURE_CDN),
+/* harmony export */   m2K: () => (/* binding */ FEATURE_VIDEOPRESS_JP),
+/* harmony export */   mEy: () => (/* binding */ FEATURE_UPTIME_MONITOR_JP),
+/* harmony export */   mOf: () => (/* binding */ FEATURE_PREMIUM_SUPPORT),
+/* harmony export */   mU$: () => (/* binding */ FEATURE_UNLIMITED_PRODUCTS_SERVICES),
+/* harmony export */   m_A: () => (/* binding */ FEATURE_ADVANCED_SEO),
+/* harmony export */   mkb: () => (/* binding */ FEATURE_EMAIL_FORWARDING_EXTENDED_LIMIT),
+/* harmony export */   moC: () => (/* binding */ FEATURE_LTD_SOCIAL_MEDIA_JP),
+/* harmony export */   mq1: () => (/* binding */ FEATURE_P2_ACTIVITY_OVERVIEW),
+/* harmony export */   msT: () => (/* binding */ FEATURE_PLUGIN_AUTOUPDATE_JP),
+/* harmony export */   mu5: () => (/* binding */ FEATURE_EMAIL_SUPPORT),
+/* harmony export */   o0c: () => (/* binding */ FEATURE_AI_ASSISTED_PRODUCT_DESCRIPTION),
+/* harmony export */   oL9: () => (/* binding */ FEATURE_PRINT_SHIPPING_LABELS),
+/* harmony export */   oLu: () => (/* binding */ FEATURE_CLOUD_CRITICAL_CSS),
+/* harmony export */   oNo: () => (/* binding */ FEATURE_FREE_SSL_CERTIFICATE),
+/* harmony export */   oXY: () => (/* binding */ FEATURE_BACKUP_STORAGE_SPACE_UNLIMITED),
+/* harmony export */   oXw: () => (/* binding */ FEATURE_PLAN_SECURITY_DAILY),
+/* harmony export */   oZw: () => (/* binding */ FEATURE_RECOMMEND_ADD_ONS),
+/* harmony export */   q29: () => (/* binding */ FEATURE_BACKUP_ARCHIVE_UNLIMITED),
+/* harmony export */   q2R: () => (/* binding */ FEATURE_SENSEI_STORAGE),
+/* harmony export */   q8F: () => (/* binding */ FEATURE_UNLTD_SOCIAL_MEDIA_JP),
+/* harmony export */   q8v: () => (/* binding */ FEATURE_PREMIUM_CONTENT_BLOCK),
+/* harmony export */   qCv: () => (/* binding */ FEATURE_P2_CUSTOMIZATION_OPTIONS),
+/* harmony export */   qIi: () => (/* binding */ FEATURE_LOYALTY_PROG),
+/* harmony export */   qMS: () => (/* binding */ FEATURE_GLOBAL_EDGE_CACHING),
+/* harmony export */   qQM: () => (/* binding */ FEATURE_JETPACK_BACKUP_T0_MONTHLY),
+/* harmony export */   qQo: () => (/* binding */ FEATURE_REAL_TIME_ANALYTICS),
+/* harmony export */   qQy: () => (/* binding */ FEATURE_EARN_AD),
+/* harmony export */   qYP: () => (/* binding */ FEATURE_SMART_REDIRECTS),
+/* harmony export */   qYz: () => (/* binding */ FEATURE_PAYMENT_TRANSACTION_FEES_8),
+/* harmony export */   qg9: () => (/* binding */ FEATURE_SITE_STATS),
+/* harmony export */   qmL: () => (/* binding */ FEATURE_ONE_CLICK_THREAT_RESOLUTION),
+/* harmony export */   qwV: () => (/* binding */ FEATURE_ALL_PREMIUM_FEATURES_JETPACK),
+/* harmony export */   s$2: () => (/* binding */ FEATURE_UNLIMITED_SUBSCRIBERS),
+/* harmony export */   s1L: () => (/* binding */ FEATURE_NEWSLETTERS_RSS),
+/* harmony export */   s38: () => (/* binding */ FEATURE_JETPACK_BACKUP_REALTIME),
+/* harmony export */   s52: () => (/* binding */ FEATURE_CUSTOM_DOMAIN),
+/* harmony export */   s7g: () => (/* binding */ FEATURE_PREMIUM_THEMES),
+/* harmony export */   s8w: () => (/* binding */ FEATURE_SCAN_V2),
+/* harmony export */   s9s: () => (/* binding */ FEATURE_WOOCOMMERCE_STORE),
+/* harmony export */   sFZ: () => (/* binding */ FEATURE_WOOCOMMERCE),
+/* harmony export */   sFc: () => (/* binding */ FEATURE_ALL_FREE_FEATURES_JETPACK),
+/* harmony export */   sH3: () => (/* binding */ FEATURE_UPLOAD_THEMES),
+/* harmony export */   sLd: () => (/* binding */ FEATURE_ACTIVITY_LOG_1_YEAR_V2),
+/* harmony export */   sPk: () => (/* binding */ FEATURE_BACK_IN_STOCK_NOTIFICATIONS),
+/* harmony export */   sVy: () => (/* binding */ FEATURE_ADVERTISE_ON_GOOGLE),
+/* harmony export */   sde: () => (/* binding */ FEATURE_SECURITY_MALWARE),
+/* harmony export */   sfF: () => (/* binding */ FEATURE_STOCK_NOTIFS),
+/* harmony export */   sfk: () => (/* binding */ FEATURE_PAID_SUBSCRIBERS_JP),
+/* harmony export */   sz6: () => (/* binding */ FEATURE_COLLECT_PAYMENTS_LINK_IN_BIO),
+/* harmony export */   szs: () => (/* binding */ FEATURE_JETPACK_ADVANCED),
+/* harmony export */   u0Y: () => (/* binding */ FEATURE_VIDEO_UPLOADS_JETPACK_PRO),
+/* harmony export */   uCi: () => (/* binding */ FEATURE_JETPACK_PRODUCT_VIDEOPRESS),
+/* harmony export */   uIq: () => (/* binding */ FEATURE_AUTOMATED_BACKUPS_SECURITY_SCAN),
+/* harmony export */   uJ8: () => (/* binding */ FEATURE_MARKETING_AUTOMATION),
+/* harmony export */   uOV: () => (/* binding */ FEATURE_NO_ADS),
+/* harmony export */   uQo: () => (/* binding */ FEATURE_PRODUCT_SCAN_DAILY_V2),
+/* harmony export */   uUP: () => (/* binding */ FEATURE_JETPACK_SCAN_DAILY_MONTHLY),
+/* harmony export */   uc$: () => (/* binding */ WPCOM_FEATURES_INSTALL_PURCHASED_PLUGINS),
+/* harmony export */   uo4: () => (/* binding */ FEATURE_TRAFFIC_TOOLS),
+/* harmony export */   uqO: () => (/* binding */ FEATURE_JETPACK_BACKUP_REALTIME_MONTHLY),
+/* harmony export */   uuC: () => (/* binding */ FEATURE_EMAIL_LIVE_CHAT_SUPPORT_ALL_DAYS),
+/* harmony export */   w$W: () => (/* binding */ FEATURE_JETPACK_BACKUP_T0_YEARLY),
+/* harmony export */   w3i: () => (/* binding */ FEATURE_BACKUP_ARCHIVE_30),
+/* harmony export */   w5C: () => (/* binding */ FEATURE_PRODUCT_ADD_ONS),
+/* harmony export */   w7J: () => (/* binding */ FEATURE_MARKETPLACE_SYNC_SOCIAL_MEDIA_INTEGRATION),
+/* harmony export */   wJi: () => (/* binding */ FEATURE_ADD_UNLIMITED_LINKS),
+/* harmony export */   wNd: () => (/* binding */ FEATURE_MALWARE_SCANNING_DAILY_AND_ON_DEMAND),
+/* harmony export */   wPx: () => (/* binding */ FEATURE_MANAGE),
+/* harmony export */   wdE: () => (/* binding */ FEATURE_CONNECT_WITH_FACEBOOK),
+/* harmony export */   wfe: () => (/* binding */ FEATURE_DONATIONS_AND_TIPS_JP),
+/* harmony export */   whZ: () => (/* binding */ FEATURE_FREE_WORDPRESS_THEMES),
+/* harmony export */   whr: () => (/* binding */ FEATURE_PREMIUM_CONTENT_JP),
+/* harmony export */   wpm: () => (/* binding */ FEATURE_AUTOMATED_RESTORES),
+/* harmony export */   wtE: () => (/* binding */ FEATURE_PAYPAL_JP),
+/* harmony export */   wtH: () => (/* binding */ FEATURE_JETPACK_SEARCH),
+/* harmony export */   wxz: () => (/* binding */ FEATURE_BLOG_DOMAIN),
+/* harmony export */   y6H: () => (/* binding */ FEATURE_CHECKOUT),
+/* harmony export */   y8M: () => (/* binding */ FEATURE_GIFT_CARDS),
+/* harmony export */   yKC: () => (/* binding */ FEATURE_CPUS),
+/* harmony export */   yQr: () => (/* binding */ FEATURE_SALES_REPORTS),
+/* harmony export */   yej: () => (/* binding */ FEATURE_PAYMENT_BUTTONS_JP),
+/* harmony export */   ygb: () => (/* binding */ FEATURE_INVENTORY),
+/* harmony export */   yil: () => (/* binding */ FEATURE_SENSEI_QUIZZES),
+/* harmony export */   ymT: () => (/* binding */ WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED),
+/* harmony export */   yuq: () => (/* binding */ FEATURE_COMMISSION_FEE_STANDARD_FEATURES)
 /* harmony export */ });
 /* unused harmony exports FEATURE_SET_PRIMARY_CUSTOM_DOMAIN, FEATURE_LEGACY_STORAGE_200GB, FEATURE_UNLIMITED_STORAGE, FEATURE_SFTP, FEATURE_SSH, FEATURE_VIDEO_UPLOADS_JETPACK_PREMIUM, FEATURE_INSTALL_THEMES, FEATURE_PERFORMANCE, FEATURE_ALL_PERSONAL_FEATURES_JETPACK, FEATURE_DONATIONS, FEATURE_PREMIUM_CONTENT_CONTAINER, FEATURE_SECURITY_SETTINGS, FEATURE_WOOP, FEATURE_STATS_FREE, FEATURE_SEARCH, FEATURE_SEARCH_V2, FEATURE_VIDEO_HOSTING_V2, FEATURE_CRM_INTEGRATED_WITH_WORDPRESS, FEATURE_CRM_LEADS_AND_FUNNEL, FEATURE_CRM_PROPOSALS_AND_INVOICES, FEATURE_CRM_TRACK_TRANSACTIONS, FEATURE_CRM_NO_CONTACT_LIMITS, FEATURE_SECURE_STORAGE_V2, FEATURE_ONE_CLICK_FIX_V2, FEATURE_INSTANT_EMAIL_V2, FEATURE_AKISMET_V2, FEATURE_SPAM_BLOCK_V2, FEATURE_SPAM_10K_PER_MONTH, FEATURE_FILTERING_V2, FEATURE_LANGUAGE_SUPPORT_V2, FEATURE_SPELLING_CORRECTION_V2, FEATURE_SUPPORTS_WOOCOMMERCE_V2, FEATURE_JETPACK_SCAN_BI_YEARLY, FEATURE_JETPACK_VIDEOPRESS_EDITOR, FEATURE_JETPACK_VIDEOPRESS_STORAGE, FEATURE_JETPACK_VIDEOPRESS_UNBRANDED, FEATURE_SOCIAL_SHARES_1000, FEATURE_SOCIAL_ENHANCED_PUBLISHING, FEATURE_SOCIAL_MASTODON_CONNECTION, FEATURE_SOCIAL_INSTAGRAM_CONNECTION, FEATURE_SOCIAL_NEXTDOOR_CONNECTION, FEATURE_JETPACK_MONITOR_MONTHLY, FEATURE_JETPACK_MONITOR_YEARLY, FEATURE_MONITOR_1_MINUTE_CHECK_INTERVAL, FEATURE_MONITOR_MULTIPLE_EMAIL_RECIPIENTS, FEATURE_MONITOR_SMS_NOTIFICATIONS, FEATURE_JETPACK_1GB_BACKUP_STORAGE, FEATURE_JETPACK_10GB_BACKUP_STORAGE, FEATURE_JETPACK_REAL_TIME_CLOUD_BACKUPS, FEATURE_UNLIMITED_USERS, FEATURE_UNLIMITED_POSTS_PAGES, FEATURE_ADDITIONAL_SITES, WPCOM_FEATURES_AI_ASSISTANT, WPCOM_FEATURES_AKISMET, WPCOM_FEATURES_BACKUPS_RESTORE, WPCOM_FEATURES_CDN, WPCOM_FEATURES_CLASSIC_SEARCH, WPCOM_FEATURES_CLOUDFLARE_CDN, WPCOM_FEATURES_COPY_SITE, WPCOM_FEATURES_FULL_ACTIVITY_LOG, WPCOM_FEATURES_INSTALL_PLUGINS, WPCOM_FEATURES_INSTANT_SEARCH, WPCOM_FEATURES_LIVE_SUPPORT, WPCOM_FEATURES_MANAGE_PLUGINS, WPCOM_FEATURES_NO_ADVERTS, WPCOM_FEATURES_NO_WPCOM_BRANDING, WPCOM_FEATURES_PREMIUM_THEMES_LIMITED, WPCOM_FEATURES_PRIORITY_SUPPORT, WPCOM_FEATURES_REAL_TIME_BACKUPS, WPCOM_FEATURES_SEO_PREVIEW_TOOLS, WPCOM_FEATURES_SUBSCRIPTION_GIFTING, WPCOM_FEATURES_LOCKED_MODE, WPCOM_FEATURES_LEGACY_CONTACT, WPCOM_FEATURES_UPLOAD_AUDIO_FILES, WPCOM_FEATURES_UPLOAD_PLUGINS, WPCOM_FEATURES_UPLOAD_VIDEO_FILES, WPCOM_FEATURES_VAULTPRESS_BACKUPS, WPCOM_FEATURES_VIDEOPRESS, WPCOM_FEATURES_VIDEOPRESS_UNLIMITED_STORAGE, WPCOM_FEATURES_VIDEO_HOSTING, WPCOM_FEATURES_WORDADS, WPCOM_FEATURES_CUSTOM_DESIGN, WPCOM_FEATURES_GLOBAL_STYLES, WPCOM_FEATURES_SITE_PREVIEW_LINKS, FEATURE_IMPORT_SUBSCRIBERS, FEATURE_ADD_MULTIPLE_PAGES_NEWSLETTER, FEATURE_COLLECT_PAYMENTS_NEWSLETTER, FEATURE_POST_BY_EMAIL, FEATURE_GOOGLE_ANALYTICS_V2, FEATURE_CUSTOMIZE_THEMES_BUTTONS_COLORS, FEATURE_TRACK_VIEWS_CLICKS, FEATURE_DESIGN_TOOLS, FEATURE_REFERRAL_PROGRAMS, FEATURE_CUSTOMER_BIRTHDAY_EMAILS, FEATURE_LOYALTY_POINTS_PROGRAMS, FEATURE_ASSEMBLED_PRODUCTS_AND_KITS, FEATURE_BRUTE_PROTECT_JP, FEATURE_AUTOMATTIC_DATACENTER_FAILOVER, WPCOM_STORAGE_ADD_ONS, FEATURE_CUSTOM_PRODUCT_KITS, FEATURE_TYPE_JETPACK_ANTI_SPAM, FEATURE_TYPE_JETPACK_ACTIVITY_LOG, FEATURE_TYPE_JETPACK_BACKUP, FEATURE_TYPE_JETPACK_BOOST, FEATURE_TYPE_JETPACK_SCAN, FEATURE_TYPE_JETPACK_SEARCH, FEATURE_TYPE_JETPACK_STATS, FEATURE_TYPE_JETPACK_VIDEOPRESS */
-/* harmony import */ var _jetpack__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(892);
+/* harmony import */ var _jetpack__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6496);
 
 const FEATURE_WP_SUBDOMAIN = 'wordpress-subdomain';
 const FEATURE_BLOG_DOMAIN = 'blog-domain';
@@ -4508,44 +4568,44 @@ const FEATURE_FILTERING_V2 = 'filtering-v2';
 const FEATURE_LANGUAGE_SUPPORT_V2 = 'language-support-v2';
 const FEATURE_SPELLING_CORRECTION_V2 = 'spelling-correction-v2';
 const FEATURE_SUPPORTS_WOOCOMMERCE_V2 = 'supports-woocommerce-v2';
-const FEATURE_JETPACK_BACKUP_DAILY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_BACKUP_DAILY */ .K$;
-const FEATURE_JETPACK_BACKUP_DAILY_MONTHLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_BACKUP_DAILY_MONTHLY */ .Sj;
-const FEATURE_JETPACK_BACKUP_REALTIME = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_BACKUP_REALTIME */ .JD;
-const FEATURE_JETPACK_BACKUP_REALTIME_MONTHLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_BACKUP_REALTIME_MONTHLY */ .AY;
-const FEATURE_JETPACK_BACKUP_T0_YEARLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_BACKUP_T0_YEARLY */ .OH;
-const FEATURE_JETPACK_BACKUP_T0_MONTHLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_BACKUP_T0_MONTHLY */ .Tp;
-const FEATURE_JETPACK_BACKUP_T1_YEARLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_BACKUP_T1_YEARLY */ .oe;
-const FEATURE_JETPACK_BACKUP_T1_BI_YEARLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_BACKUP_T1_BI_YEARLY */ .QZ;
-const FEATURE_JETPACK_BACKUP_T1_MONTHLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_BACKUP_T1_MONTHLY */ .rx;
-const FEATURE_JETPACK_BACKUP_T2_YEARLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_BACKUP_T2_YEARLY */ .EI;
-const FEATURE_JETPACK_BACKUP_T2_MONTHLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_BACKUP_T2_MONTHLY */ .uL;
+const FEATURE_JETPACK_BACKUP_DAILY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_BACKUP_DAILY */ .aI;
+const FEATURE_JETPACK_BACKUP_DAILY_MONTHLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_BACKUP_DAILY_MONTHLY */ .O0;
+const FEATURE_JETPACK_BACKUP_REALTIME = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_BACKUP_REALTIME */ .Gn;
+const FEATURE_JETPACK_BACKUP_REALTIME_MONTHLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_BACKUP_REALTIME_MONTHLY */ .CQ;
+const FEATURE_JETPACK_BACKUP_T0_YEARLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_BACKUP_T0_YEARLY */ .CU;
+const FEATURE_JETPACK_BACKUP_T0_MONTHLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_BACKUP_T0_MONTHLY */ .KW;
+const FEATURE_JETPACK_BACKUP_T1_YEARLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_BACKUP_T1_YEARLY */ .EB;
+const FEATURE_JETPACK_BACKUP_T1_BI_YEARLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_BACKUP_T1_BI_YEARLY */ .Cu;
+const FEATURE_JETPACK_BACKUP_T1_MONTHLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_BACKUP_T1_MONTHLY */ .OA;
+const FEATURE_JETPACK_BACKUP_T2_YEARLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_BACKUP_T2_YEARLY */ .Yg;
+const FEATURE_JETPACK_BACKUP_T2_MONTHLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_BACKUP_T2_MONTHLY */ .w7;
 const FEATURE_JETPACK_SCAN_BI_YEARLY = (/* unused pure expression or super */ null && (PRODUCT_JETPACK_SCAN_BI_YEARLY));
-const FEATURE_JETPACK_SCAN_DAILY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_SCAN */ .pE;
-const FEATURE_JETPACK_SCAN_DAILY_MONTHLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_SCAN_MONTHLY */ .sY;
-const FEATURE_JETPACK_ANTI_SPAM_BI_YEARLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_ANTI_SPAM_BI_YEARLY */ .aG;
-const FEATURE_JETPACK_ANTI_SPAM = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_ANTI_SPAM */ .Sm;
-const FEATURE_JETPACK_ANTI_SPAM_MONTHLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_ANTI_SPAM_MONTHLY */ .PF;
-const FEATURE_JETPACK_SEARCH_BI_YEARLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_SEARCH_BI_YEARLY */ .Eh;
-const FEATURE_JETPACK_SEARCH = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_SEARCH */ .DH;
-const FEATURE_JETPACK_SEARCH_MONTHLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_SEARCH_MONTHLY */ .XG;
-const FEATURE_JETPACK_VIDEOPRESS_BI_YEARLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_VIDEOPRESS_BI_YEARLY */ .vT;
-const FEATURE_JETPACK_VIDEOPRESS = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_VIDEOPRESS */ .nN;
-const FEATURE_JETPACK_VIDEOPRESS_MONTHLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_VIDEOPRESS_MONTHLY */ .qH;
+const FEATURE_JETPACK_SCAN_DAILY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_SCAN */ .oz;
+const FEATURE_JETPACK_SCAN_DAILY_MONTHLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_SCAN_MONTHLY */ .mS;
+const FEATURE_JETPACK_ANTI_SPAM_BI_YEARLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_ANTI_SPAM_BI_YEARLY */ .QZ;
+const FEATURE_JETPACK_ANTI_SPAM = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_ANTI_SPAM */ .uU;
+const FEATURE_JETPACK_ANTI_SPAM_MONTHLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_ANTI_SPAM_MONTHLY */ .s5;
+const FEATURE_JETPACK_SEARCH_BI_YEARLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_SEARCH_BI_YEARLY */ .yO;
+const FEATURE_JETPACK_SEARCH = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_SEARCH */ .Ej;
+const FEATURE_JETPACK_SEARCH_MONTHLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_SEARCH_MONTHLY */ .ee;
+const FEATURE_JETPACK_VIDEOPRESS_BI_YEARLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_VIDEOPRESS_BI_YEARLY */ .QL;
+const FEATURE_JETPACK_VIDEOPRESS = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_VIDEOPRESS */ .If;
+const FEATURE_JETPACK_VIDEOPRESS_MONTHLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_VIDEOPRESS_MONTHLY */ .mu;
 const FEATURE_JETPACK_VIDEOPRESS_EDITOR = 'jetpack-videopress-editor';
 const FEATURE_JETPACK_VIDEOPRESS_STORAGE = 'jetpack-videopress-storage';
 const FEATURE_JETPACK_VIDEOPRESS_UNBRANDED = 'jetpack-videopress-unbranded';
-const FEATURE_JETPACK_CRM = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_CRM */ .Ve;
-const FEATURE_JETPACK_CRM_MONTHLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_CRM_MONTHLY */ .vM;
-const FEATURE_JETPACK_BOOST_BI_YEARLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_BOOST_BI_YEARLY */ .sA;
-const FEATURE_JETPACK_BOOST = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_BOOST */ .GA;
-const FEATURE_JETPACK_BOOST_MONTHLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_BOOST_MONTHLY */ .SZ;
+const FEATURE_JETPACK_CRM = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_CRM */ .Ci;
+const FEATURE_JETPACK_CRM_MONTHLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_CRM_MONTHLY */ ._k;
+const FEATURE_JETPACK_BOOST_BI_YEARLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_BOOST_BI_YEARLY */ .Iv;
+const FEATURE_JETPACK_BOOST = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_BOOST */ .od;
+const FEATURE_JETPACK_BOOST_MONTHLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_BOOST_MONTHLY */ .U3;
 const FEATURE_CLOUD_CRITICAL_CSS = 'cloud-critical-css';
-const FEATURE_JETPACK_SOCIAL_ADVANCED_BI_YEARLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_SOCIAL_ADVANCED_BI_YEARLY */ .XP;
-const FEATURE_JETPACK_SOCIAL_ADVANCED = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_SOCIAL_ADVANCED */ .Im;
-const FEATURE_JETPACK_SOCIAL_ADVANCED_MONTHLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_SOCIAL_ADVANCED_MONTHLY */ .EV;
-const FEATURE_JETPACK_SOCIAL_BASIC_BI_YEARLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_SOCIAL_BASIC_BI_YEARLY */ .Td;
-const FEATURE_JETPACK_SOCIAL_BASIC = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_SOCIAL_BASIC */ .cc;
-const FEATURE_JETPACK_SOCIAL_BASIC_MONTHLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_SOCIAL_BASIC_MONTHLY */ .E9;
+const FEATURE_JETPACK_SOCIAL_ADVANCED_BI_YEARLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_SOCIAL_ADVANCED_BI_YEARLY */ .gd;
+const FEATURE_JETPACK_SOCIAL_ADVANCED = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_SOCIAL_ADVANCED */ .SO;
+const FEATURE_JETPACK_SOCIAL_ADVANCED_MONTHLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_SOCIAL_ADVANCED_MONTHLY */ .rz;
+const FEATURE_JETPACK_SOCIAL_BASIC_BI_YEARLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_SOCIAL_BASIC_BI_YEARLY */ .I1;
+const FEATURE_JETPACK_SOCIAL_BASIC = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_SOCIAL_BASIC */ .MH;
+const FEATURE_JETPACK_SOCIAL_BASIC_MONTHLY = _jetpack__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_JETPACK_SOCIAL_BASIC_MONTHLY */ .Du;
 const FEATURE_SOCIAL_SHARES_1000 = 'social-shares-1000';
 const FEATURE_SOCIAL_ENHANCED_PUBLISHING = 'social-enhanced-publishing';
 const FEATURE_SOCIAL_MASTODON_CONNECTION = 'social-mastodon-connection';
@@ -4813,84 +4873,84 @@ const FEATURE_TYPE_JETPACK_VIDEOPRESS = 'jetpack_videopress';
 
 /***/ }),
 
-/***/ 892:
+/***/ 6496:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   $U: () => (/* binding */ JETPACK_LEGACY_PLANS),
-/* harmony export */   AY: () => (/* binding */ PRODUCT_JETPACK_BACKUP_REALTIME_MONTHLY),
-/* harmony export */   Cg: () => (/* binding */ JETPACK_TAG_FOR_MEMBERSHIP_SITES),
-/* harmony export */   DH: () => (/* binding */ PRODUCT_JETPACK_SEARCH),
-/* harmony export */   Dl: () => (/* binding */ PLAN_JETPACK_SECURITY_DAILY_MONTHLY),
-/* harmony export */   E9: () => (/* binding */ PRODUCT_JETPACK_SOCIAL_BASIC_MONTHLY),
-/* harmony export */   EI: () => (/* binding */ PRODUCT_JETPACK_BACKUP_T2_YEARLY),
-/* harmony export */   EV: () => (/* binding */ PRODUCT_JETPACK_SOCIAL_ADVANCED_MONTHLY),
-/* harmony export */   Eh: () => (/* binding */ PRODUCT_JETPACK_SEARCH_BI_YEARLY),
-/* harmony export */   Et: () => (/* binding */ PLAN_JETPACK_SECURITY_T1_YEARLY),
-/* harmony export */   G$: () => (/* binding */ PLAN_JETPACK_SECURITY_REALTIME_MONTHLY),
-/* harmony export */   GA: () => (/* binding */ PRODUCT_JETPACK_BOOST),
-/* harmony export */   Im: () => (/* binding */ PRODUCT_JETPACK_SOCIAL_ADVANCED),
-/* harmony export */   JD: () => (/* binding */ PRODUCT_JETPACK_BACKUP_REALTIME),
-/* harmony export */   JX: () => (/* binding */ PLAN_JETPACK_COMPLETE_MONTHLY),
-/* harmony export */   K$: () => (/* binding */ PRODUCT_JETPACK_BACKUP_DAILY),
-/* harmony export */   KW: () => (/* binding */ JETPACK_TAG_FOR_SMALL_SITES),
-/* harmony export */   NJ: () => (/* binding */ PLAN_JETPACK_BUSINESS),
-/* harmony export */   OH: () => (/* binding */ PRODUCT_JETPACK_BACKUP_T0_YEARLY),
-/* harmony export */   P5: () => (/* binding */ PLAN_JETPACK_SECURITY_T1_BI_YEARLY),
-/* harmony export */   PF: () => (/* binding */ PRODUCT_JETPACK_ANTI_SPAM_MONTHLY),
-/* harmony export */   QZ: () => (/* binding */ PRODUCT_JETPACK_BACKUP_T1_BI_YEARLY),
-/* harmony export */   Rw: () => (/* binding */ PLAN_JETPACK_STARTER_MONTHLY),
-/* harmony export */   SZ: () => (/* binding */ PRODUCT_JETPACK_BOOST_MONTHLY),
-/* harmony export */   Sj: () => (/* binding */ PRODUCT_JETPACK_BACKUP_DAILY_MONTHLY),
-/* harmony export */   Sm: () => (/* binding */ PRODUCT_JETPACK_ANTI_SPAM),
-/* harmony export */   Td: () => (/* binding */ PRODUCT_JETPACK_SOCIAL_BASIC_BI_YEARLY),
-/* harmony export */   Tp: () => (/* binding */ PRODUCT_JETPACK_BACKUP_T0_MONTHLY),
-/* harmony export */   V$: () => (/* binding */ PRODUCT_JETPACK_CREATOR_BI_YEARLY),
-/* harmony export */   Ve: () => (/* binding */ PRODUCT_JETPACK_CRM),
-/* harmony export */   Vl: () => (/* binding */ PLAN_JETPACK_SECURITY_DAILY),
-/* harmony export */   Wn: () => (/* binding */ JETPACK_TAG_FOR_WOOCOMMERCE_STORES),
-/* harmony export */   XG: () => (/* binding */ PRODUCT_JETPACK_SEARCH_MONTHLY),
-/* harmony export */   XP: () => (/* binding */ PRODUCT_JETPACK_SOCIAL_ADVANCED_BI_YEARLY),
-/* harmony export */   Xz: () => (/* binding */ PLAN_JETPACK_PREMIUM),
-/* harmony export */   YU: () => (/* binding */ PRODUCT_JETPACK_SCAN_BI_YEARLY),
-/* harmony export */   Zo: () => (/* binding */ PRODUCT_JETPACK_STATS_BI_YEARLY),
-/* harmony export */   aG: () => (/* binding */ PRODUCT_JETPACK_ANTI_SPAM_BI_YEARLY),
-/* harmony export */   aS: () => (/* binding */ PLAN_JETPACK_SECURITY_T2_MONTHLY),
-/* harmony export */   ap: () => (/* binding */ PLAN_JETPACK_PERSONAL),
-/* harmony export */   cc: () => (/* binding */ PRODUCT_JETPACK_SOCIAL_BASIC),
-/* harmony export */   dX: () => (/* binding */ PRODUCT_JETPACK_STATS_MONTHLY),
-/* harmony export */   eV: () => (/* binding */ PRODUCT_JETPACK_CREATOR_MONTHLY),
-/* harmony export */   iP: () => (/* binding */ PLAN_JETPACK_COMPLETE_BI_YEARLY),
-/* harmony export */   jI: () => (/* binding */ PLAN_JETPACK_SECURITY_REALTIME),
-/* harmony export */   jj: () => (/* binding */ JETPACK_SECURITY_PLANS),
-/* harmony export */   kY: () => (/* binding */ PRODUCT_JETPACK_STATS_YEARLY),
-/* harmony export */   ki: () => (/* binding */ PLAN_JETPACK_STARTER_YEARLY),
-/* harmony export */   l3: () => (/* binding */ JETPACK_TAG_FOR_BLOGS),
-/* harmony export */   lb: () => (/* binding */ PRODUCT_JETPACK_CREATOR_YEARLY),
-/* harmony export */   lj: () => (/* binding */ PLAN_JETPACK_FREE),
-/* harmony export */   mk: () => (/* binding */ GROUP_JETPACK),
-/* harmony export */   nN: () => (/* binding */ PRODUCT_JETPACK_VIDEOPRESS),
-/* harmony export */   ns: () => (/* binding */ PLAN_JETPACK_PERSONAL_MONTHLY),
-/* harmony export */   oe: () => (/* binding */ PRODUCT_JETPACK_BACKUP_T1_YEARLY),
-/* harmony export */   p2: () => (/* binding */ PLAN_JETPACK_PREMIUM_MONTHLY),
-/* harmony export */   pE: () => (/* binding */ PRODUCT_JETPACK_SCAN),
-/* harmony export */   qH: () => (/* binding */ PRODUCT_JETPACK_VIDEOPRESS_MONTHLY),
-/* harmony export */   rx: () => (/* binding */ PRODUCT_JETPACK_BACKUP_T1_MONTHLY),
-/* harmony export */   s1: () => (/* binding */ PLAN_JETPACK_SECURITY_T2_YEARLY),
-/* harmony export */   sA: () => (/* binding */ PRODUCT_JETPACK_BOOST_BI_YEARLY),
-/* harmony export */   sY: () => (/* binding */ PRODUCT_JETPACK_SCAN_MONTHLY),
-/* harmony export */   sc: () => (/* binding */ PLAN_JETPACK_GOLDEN_TOKEN),
-/* harmony export */   th: () => (/* binding */ PLAN_JETPACK_COMPLETE),
-/* harmony export */   uL: () => (/* binding */ PRODUCT_JETPACK_BACKUP_T2_MONTHLY),
-/* harmony export */   vE: () => (/* binding */ JETPACK_TAG_FOR_NEWS_ORGANISATIONS),
-/* harmony export */   vM: () => (/* binding */ PRODUCT_JETPACK_CRM_MONTHLY),
-/* harmony export */   vT: () => (/* binding */ PRODUCT_JETPACK_VIDEOPRESS_BI_YEARLY),
-/* harmony export */   w2: () => (/* binding */ PLAN_JETPACK_SECURITY_T1_MONTHLY),
-/* harmony export */   yY: () => (/* binding */ PLAN_JETPACK_BUSINESS_MONTHLY)
+/* harmony export */   $n: () => (/* binding */ PLAN_JETPACK_SECURITY_T2_MONTHLY),
+/* harmony export */   AR: () => (/* binding */ PLAN_JETPACK_STARTER_YEARLY),
+/* harmony export */   AX: () => (/* binding */ PLAN_JETPACK_SECURITY_T2_YEARLY),
+/* harmony export */   Aj: () => (/* binding */ PLAN_JETPACK_BUSINESS_MONTHLY),
+/* harmony export */   CQ: () => (/* binding */ PRODUCT_JETPACK_BACKUP_REALTIME_MONTHLY),
+/* harmony export */   CU: () => (/* binding */ PRODUCT_JETPACK_BACKUP_T0_YEARLY),
+/* harmony export */   Ci: () => (/* binding */ PRODUCT_JETPACK_CRM),
+/* harmony export */   Cu: () => (/* binding */ PRODUCT_JETPACK_BACKUP_T1_BI_YEARLY),
+/* harmony export */   Du: () => (/* binding */ PRODUCT_JETPACK_SOCIAL_BASIC_MONTHLY),
+/* harmony export */   EB: () => (/* binding */ PRODUCT_JETPACK_BACKUP_T1_YEARLY),
+/* harmony export */   Ed: () => (/* binding */ PRODUCT_JETPACK_SCAN_BI_YEARLY),
+/* harmony export */   Ej: () => (/* binding */ PRODUCT_JETPACK_SEARCH),
+/* harmony export */   Gn: () => (/* binding */ PRODUCT_JETPACK_BACKUP_REALTIME),
+/* harmony export */   I1: () => (/* binding */ PRODUCT_JETPACK_SOCIAL_BASIC_BI_YEARLY),
+/* harmony export */   If: () => (/* binding */ PRODUCT_JETPACK_VIDEOPRESS),
+/* harmony export */   Il: () => (/* binding */ PLAN_JETPACK_SECURITY_DAILY),
+/* harmony export */   It: () => (/* binding */ PLAN_JETPACK_BUSINESS),
+/* harmony export */   Iv: () => (/* binding */ PRODUCT_JETPACK_BOOST_BI_YEARLY),
+/* harmony export */   K: () => (/* binding */ JETPACK_TAG_FOR_MEMBERSHIP_SITES),
+/* harmony export */   KW: () => (/* binding */ PRODUCT_JETPACK_BACKUP_T0_MONTHLY),
+/* harmony export */   K_: () => (/* binding */ PLAN_JETPACK_COMPLETE),
+/* harmony export */   Ki: () => (/* binding */ PLAN_JETPACK_SECURITY_REALTIME),
+/* harmony export */   MF: () => (/* binding */ PLAN_JETPACK_FREE),
+/* harmony export */   MH: () => (/* binding */ PRODUCT_JETPACK_SOCIAL_BASIC),
+/* harmony export */   Mx: () => (/* binding */ PLAN_JETPACK_SECURITY_DAILY_MONTHLY),
+/* harmony export */   O0: () => (/* binding */ PRODUCT_JETPACK_BACKUP_DAILY_MONTHLY),
+/* harmony export */   OA: () => (/* binding */ PRODUCT_JETPACK_BACKUP_T1_MONTHLY),
+/* harmony export */   Oc: () => (/* binding */ PLAN_JETPACK_PREMIUM_MONTHLY),
+/* harmony export */   Og: () => (/* binding */ PRODUCT_JETPACK_CREATOR_BI_YEARLY),
+/* harmony export */   QL: () => (/* binding */ PRODUCT_JETPACK_VIDEOPRESS_BI_YEARLY),
+/* harmony export */   QX: () => (/* binding */ PLAN_JETPACK_PREMIUM),
+/* harmony export */   QZ: () => (/* binding */ PRODUCT_JETPACK_ANTI_SPAM_BI_YEARLY),
+/* harmony export */   SO: () => (/* binding */ PRODUCT_JETPACK_SOCIAL_ADVANCED),
+/* harmony export */   Sc: () => (/* binding */ PLAN_JETPACK_SECURITY_T1_BI_YEARLY),
+/* harmony export */   U3: () => (/* binding */ PRODUCT_JETPACK_BOOST_MONTHLY),
+/* harmony export */   UD: () => (/* binding */ JETPACK_TAG_FOR_SMALL_SITES),
+/* harmony export */   Ut: () => (/* binding */ JETPACK_SECURITY_PLANS),
+/* harmony export */   Ux: () => (/* binding */ PLAN_JETPACK_COMPLETE_MONTHLY),
+/* harmony export */   WM: () => (/* binding */ JETPACK_TAG_FOR_NEWS_ORGANISATIONS),
+/* harmony export */   Yg: () => (/* binding */ PRODUCT_JETPACK_BACKUP_T2_YEARLY),
+/* harmony export */   Yp: () => (/* binding */ PLAN_JETPACK_SECURITY_T1_YEARLY),
+/* harmony export */   _S: () => (/* binding */ PRODUCT_JETPACK_CREATOR_MONTHLY),
+/* harmony export */   __: () => (/* binding */ PLAN_JETPACK_SECURITY_T1_MONTHLY),
+/* harmony export */   _k: () => (/* binding */ PRODUCT_JETPACK_CRM_MONTHLY),
+/* harmony export */   aI: () => (/* binding */ PRODUCT_JETPACK_BACKUP_DAILY),
+/* harmony export */   cp: () => (/* binding */ PLAN_JETPACK_PERSONAL_MONTHLY),
+/* harmony export */   cx: () => (/* binding */ GROUP_JETPACK),
+/* harmony export */   eA: () => (/* binding */ PLAN_JETPACK_GOLDEN_TOKEN),
+/* harmony export */   ee: () => (/* binding */ PRODUCT_JETPACK_SEARCH_MONTHLY),
+/* harmony export */   g5: () => (/* binding */ JETPACK_TAG_FOR_WOOCOMMERCE_STORES),
+/* harmony export */   gH: () => (/* binding */ JETPACK_TAG_FOR_BLOGS),
+/* harmony export */   gd: () => (/* binding */ PRODUCT_JETPACK_SOCIAL_ADVANCED_BI_YEARLY),
+/* harmony export */   gl: () => (/* binding */ PLAN_JETPACK_COMPLETE_BI_YEARLY),
+/* harmony export */   gn: () => (/* binding */ PRODUCT_JETPACK_CREATOR_YEARLY),
+/* harmony export */   iC: () => (/* binding */ JETPACK_LEGACY_PLANS),
+/* harmony export */   iY: () => (/* binding */ PLAN_JETPACK_SECURITY_REALTIME_MONTHLY),
+/* harmony export */   ie: () => (/* binding */ PLAN_JETPACK_PERSONAL),
+/* harmony export */   kZ: () => (/* binding */ PLAN_JETPACK_STARTER_MONTHLY),
+/* harmony export */   mS: () => (/* binding */ PRODUCT_JETPACK_SCAN_MONTHLY),
+/* harmony export */   mu: () => (/* binding */ PRODUCT_JETPACK_VIDEOPRESS_MONTHLY),
+/* harmony export */   my: () => (/* binding */ PRODUCT_JETPACK_STATS_BI_YEARLY),
+/* harmony export */   od: () => (/* binding */ PRODUCT_JETPACK_BOOST),
+/* harmony export */   oz: () => (/* binding */ PRODUCT_JETPACK_SCAN),
+/* harmony export */   rz: () => (/* binding */ PRODUCT_JETPACK_SOCIAL_ADVANCED_MONTHLY),
+/* harmony export */   s5: () => (/* binding */ PRODUCT_JETPACK_ANTI_SPAM_MONTHLY),
+/* harmony export */   uU: () => (/* binding */ PRODUCT_JETPACK_ANTI_SPAM),
+/* harmony export */   w7: () => (/* binding */ PRODUCT_JETPACK_BACKUP_T2_MONTHLY),
+/* harmony export */   wT: () => (/* binding */ PRODUCT_JETPACK_STATS_MONTHLY),
+/* harmony export */   y6: () => (/* binding */ PRODUCT_JETPACK_STATS_YEARLY),
+/* harmony export */   yO: () => (/* binding */ PRODUCT_JETPACK_SEARCH_BI_YEARLY)
 /* harmony export */ });
 /* unused harmony exports PRODUCT_JETPACK_AI_BI_YEARLY, PRODUCT_JETPACK_AI_MONTHLY, PRODUCT_JETPACK_AI_YEARLY, PRODUCT_JETPACK_BACKUP, PRODUCT_JETPACK_SCAN_REALTIME, PRODUCT_JETPACK_SCAN_REALTIME_MONTHLY, PRODUCT_JETPACK_SEARCH_FREE, PRODUCT_JETPACK_CRM_FREE, PRODUCT_JETPACK_CRM_FREE_MONTHLY, PRODUCT_JETPACK_STATS_PWYW_YEARLY, PRODUCT_JETPACK_STATS_FREE, PRODUCT_JETPACK_MONITOR_YEARLY, PRODUCT_JETPACK_MONITOR_MONTHLY, PRODUCT_JETPACK_MONITOR, PRODUCT_JETPACK_BACKUP_ADDON_STORAGE_10GB_MONTHLY, PRODUCT_JETPACK_BACKUP_ADDON_STORAGE_100GB_MONTHLY, PRODUCT_JETPACK_BACKUP_ADDON_STORAGE_1TB_MONTHLY, PRODUCT_JETPACK_BACKUP_ADDON_STORAGE_3TB_MONTHLY, PRODUCT_JETPACK_BACKUP_ADDON_STORAGE_5TB_MONTHLY, PRODUCT_JETPACK_BACKUP_ADDON_STORAGE_10GB_YEARLY, PRODUCT_JETPACK_BACKUP_ADDON_STORAGE_100GB_YEARLY, PRODUCT_JETPACK_BACKUP_ADDON_STORAGE_1TB_YEARLY, PRODUCT_JETPACK_BACKUP_ADDON_STORAGE_3TB_YEARLY, PRODUCT_JETPACK_BACKUP_ADDON_STORAGE_5TB_YEARLY, PRODUCT_WOOCOMMERCE_BOOKINGS, PRODUCT_WOOCOMMERCE_SUBSCRIPTIONS, PRODUCT_WOOCOMMERCE_PRODUCT_BUNDLES, PRODUCT_WOOCOMMERCE_PRODUCT_ADD_ONS, PRODUCT_WOOCOMMERCE_MINMAX_QUANTITIES, PRODUCT_WOOCOMMERCE_AUTOMATEWOO, JETPACK_BACKUP_PRODUCTS_YEARLY, JETPACK_BACKUP_PRODUCTS_MONTHLY, JETPACK_BACKUP_PRODUCTS, JETPACK_BACKUP_ADDON_MONTHLY, JETPACK_BACKUP_ADDON_YEARLY, JETPACK_BACKUP_ADDON_PRODUCTS, JETPACK_BACKUP_T0_PRODUCTS, JETPACK_BACKUP_T1_PRODUCTS, JETPACK_BACKUP_T2_PRODUCTS, JETPACK_BOOST_PRODUCTS, JETPACK_SCAN_PRODUCTS, JETPACK_SOCIAL_BASIC_PRODUCTS, JETPACK_SOCIAL_ADVANCED_PRODUCTS, JETPACK_SOCIAL_PRODUCTS, JETPACK_STATS_PRODUCTS, JETPACK_ANTI_SPAM_PRODUCTS, JETPACK_SEARCH_PRODUCTS, JETPACK_CRM_PRODUCTS, JETPACK_CRM_FREE_PRODUCTS, JETPACK_VIDEOPRESS_PRODUCTS, JETPACK_MONITOR_PRODUCTS, JETPACK_AI_PRODUCTS, JETPACK_CREATOR_PRODUCTS, WOOCOMMERCE_PRODUCTS, JETPACK_PRODUCTS_LIST, JETPACK_PRODUCTS_BY_TERM, JETPACK_PRODUCT_PRICE_MATRIX, JETPACK_PRODUCT_UPGRADE_MAP, JETPACK_LEGACY_PLANS_MAX_PLUGIN_VERSION, JETPACK_SECURITY_T1_PLANS, JETPACK_SECURITY_T2_PLANS, JETPACK_COMPLETE_PLANS, JETPACK_STARTER_PLANS, JETPACK_MONTHLY_PLANS, JETPACK_RESET_PLANS, JETPACK_RESET_PLANS_BY_TERM, JETPACK_PLANS, JETPACK_PLANS_BY_TERM, BEST_VALUE_PLANS, JETPACK_PLAN_UPGRADE_MAP, JETPACK_STARTER_UPGRADE_MAP, JETPACK_SECURITY_CATEGORY, JETPACK_PERFORMANCE_CATEGORY, JETPACK_GROWTH_CATEGORY, JETPACK_PRODUCT_CATEGORIES, JETPACK_BACKUP_PRODUCT_LANDING_PAGE_URL, JETPACK_SEARCH_PRODUCT_LANDING_PAGE_URL, JETPACK_STATS_PRODUCT_LANDING_PAGE_URL, JETPACK_SCAN_PRODUCT_LANDING_PAGE_URL, JETPACK_ANTI_SPAM_PRODUCT_LANDING_PAGE_URL, JETPACK_BOOST_PRODUCT_LANDING_PAGE_URL, JETPACK_SOCIAL_PRODUCT_LANDING_PAGE_URL, JETPACK_VIDEOPRESS_PRODUCT_LANDING_PAGE_URL, JETPACK_CRM_PRODUCT_LANDING_PAGE_URL, JETPACK_REDIRECT_CHECKOUT_TO_WPADMIN, JETPACK_REDIRECT_URL, JETPACK_RELATED_PRODUCTS_MAP, JETPACK_TAG_FOR_ONLINE_FORUMS, JETPACK_TAG_FOR_VIDEOGRAPHERS, JETPACK_TAG_FOR_EDUCATORS, JETPACK_TAG_FOR_BLOGGERS, JETPACK_TAG_FOR_ALL_SITES, JETPACK_PRODUCT_RECCOMENDATION_MAP */
-/* harmony import */ var _wpcom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7904);
+/* harmony import */ var _wpcom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7252);
 
 const GROUP_JETPACK = 'GROUP_JETPACK';
 
@@ -5004,7 +5064,7 @@ const JETPACK_STATS_PRODUCTS = [PRODUCT_JETPACK_STATS_BI_YEARLY, PRODUCT_JETPACK
 const JETPACK_ANTI_SPAM_PRODUCTS = [PRODUCT_JETPACK_ANTI_SPAM_BI_YEARLY, PRODUCT_JETPACK_ANTI_SPAM, PRODUCT_JETPACK_ANTI_SPAM_MONTHLY];
 
 // Search
-const JETPACK_SEARCH_PRODUCTS = [PRODUCT_JETPACK_SEARCH_BI_YEARLY, PRODUCT_JETPACK_SEARCH, PRODUCT_JETPACK_SEARCH_MONTHLY, _wpcom__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_WPCOM_SEARCH */ .AY, _wpcom__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_WPCOM_SEARCH_MONTHLY */ .MY];
+const JETPACK_SEARCH_PRODUCTS = [PRODUCT_JETPACK_SEARCH_BI_YEARLY, PRODUCT_JETPACK_SEARCH, PRODUCT_JETPACK_SEARCH_MONTHLY, _wpcom__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_WPCOM_SEARCH */ .G8, _wpcom__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_WPCOM_SEARCH_MONTHLY */ ._4];
 
 // CRM
 const JETPACK_CRM_PRODUCTS = [PRODUCT_JETPACK_CRM, PRODUCT_JETPACK_CRM_MONTHLY];
@@ -5034,8 +5094,8 @@ const JETPACK_PRODUCTS_BY_TERM = [{
   yearly: PRODUCT_JETPACK_SEARCH,
   monthly: PRODUCT_JETPACK_SEARCH_MONTHLY
 }, {
-  yearly: _wpcom__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_WPCOM_SEARCH */ .AY,
-  monthly: _wpcom__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_WPCOM_SEARCH_MONTHLY */ .MY
+  yearly: _wpcom__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_WPCOM_SEARCH */ .G8,
+  monthly: _wpcom__WEBPACK_IMPORTED_MODULE_0__/* .PRODUCT_WPCOM_SEARCH_MONTHLY */ ._4
 }, {
   biYearly: PRODUCT_JETPACK_SCAN_BI_YEARLY,
   yearly: PRODUCT_JETPACK_SCAN,
@@ -5326,16 +5386,16 @@ const JETPACK_PRODUCT_RECCOMENDATION_MAP = {
 
 /***/ }),
 
-/***/ 3239:
+/***/ 5264:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   F$: () => (/* binding */ TERM_CENTENNIALLY),
-/* harmony export */   IL: () => (/* binding */ TERM_TRIENNIALLY),
-/* harmony export */   SU: () => (/* binding */ TERM_BIENNIALLY),
-/* harmony export */   ob: () => (/* binding */ TERM_MONTHLY),
-/* harmony export */   w$: () => (/* binding */ TERM_ANNUALLY)
+/* harmony export */   GK: () => (/* binding */ TERM_ANNUALLY),
+/* harmony export */   Gs: () => (/* binding */ TERM_TRIENNIALLY),
+/* harmony export */   So: () => (/* binding */ TERM_BIENNIALLY),
+/* harmony export */   e2: () => (/* binding */ TERM_CENTENNIALLY),
+/* harmony export */   mI: () => (/* binding */ TERM_MONTHLY)
 /* harmony export */ });
 /* unused harmony exports TERM_QUADRENNIALLY, TERM_QUINQUENNIALLY, TERM_SEXENNIALLY, TERM_SEPTENNIALLY, TERM_OCTENNIALLY, TERM_NOVENNIALLY, TERM_DECENNIALLY, TERMS_LIST, URL_FRIENDLY_TERMS_MAPPING, PLAN_MONTHLY_PERIOD, PLAN_ANNUAL_PERIOD, PLAN_BIENNIAL_PERIOD, PLAN_TRIENNIAL_PERIOD, PLAN_QUADRENNIAL_PERIOD, PLAN_QUINQUENNIAL_PERIOD, PLAN_SEXENNIAL_PERIOD, PLAN_SEPTENNIAL_PERIOD, PLAN_OCTENNIAL_PERIOD, PLAN_NOVENNIAL_PERIOD, PLAN_DECENNIAL_PERIOD, PLAN_CENTENNIAL_PERIOD, PERIOD_LIST */
 const TERM_MONTHLY = 'TERM_MONTHLY';
@@ -5382,33 +5442,33 @@ const PERIOD_LIST = [PLAN_MONTHLY_PERIOD, PLAN_ANNUAL_PERIOD, PLAN_BIENNIAL_PERI
 
 /***/ }),
 
-/***/ 5085:
+/***/ 8448:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   $h: () => (/* binding */ TYPE_SECURITY_T2),
-/* harmony export */   Kb: () => (/* binding */ TYPE_PREMIUM),
-/* harmony export */   L7: () => (/* binding */ TYPE_ALL),
-/* harmony export */   M6: () => (/* binding */ TYPE_BLOGGER),
-/* harmony export */   QI: () => (/* binding */ TYPE_P2_PLUS),
-/* harmony export */   Qj: () => (/* binding */ TYPE_BUSINESS),
-/* harmony export */   SW: () => (/* binding */ TYPE_JETPACK_STARTER),
-/* harmony export */   T$: () => (/* binding */ TYPE_WOOEXPRESS_SMALL),
-/* harmony export */   UH: () => (/* binding */ TYPE_FREE),
-/* harmony export */   VH: () => (/* binding */ TYPE_SECURITY_DAILY),
-/* harmony export */   VP: () => (/* binding */ TYPE_SECURITY_REALTIME),
-/* harmony export */   cF: () => (/* binding */ TYPE_100_YEAR),
-/* harmony export */   ci: () => (/* binding */ TYPE_ENTERPRISE_GRID_WPCOM),
-/* harmony export */   h7: () => (/* binding */ TYPE_ECOMMERCE),
-/* harmony export */   iN: () => (/* binding */ TYPE_WOOEXPRESS_MEDIUM),
-/* harmony export */   l8: () => (/* binding */ TYPE_GOLDEN_TOKEN),
-/* harmony export */   lY: () => (/* binding */ TYPE_PRO),
-/* harmony export */   mV: () => (/* binding */ TYPE_PERSONAL),
-/* harmony export */   nk: () => (/* binding */ TYPE_WOO_EXPRESS_PLUS),
-/* harmony export */   qC: () => (/* binding */ TYPE_FLEXIBLE),
-/* harmony export */   w: () => (/* binding */ TYPE_SECURITY_T1),
-/* harmony export */   xg: () => (/* binding */ TYPE_STARTER)
+/* harmony export */   AB: () => (/* binding */ TYPE_WOO_EXPRESS_PLUS),
+/* harmony export */   AH: () => (/* binding */ TYPE_PRO),
+/* harmony export */   Gm: () => (/* binding */ TYPE_BUSINESS),
+/* harmony export */   IB: () => (/* binding */ TYPE_SECURITY_T1),
+/* harmony export */   KK: () => (/* binding */ TYPE_WOOEXPRESS_MEDIUM),
+/* harmony export */   K_: () => (/* binding */ TYPE_ALL),
+/* harmony export */   Km: () => (/* binding */ TYPE_100_YEAR),
+/* harmony export */   MR: () => (/* binding */ TYPE_JETPACK_STARTER),
+/* harmony export */   Qt: () => (/* binding */ TYPE_P2_PLUS),
+/* harmony export */   TM: () => (/* binding */ TYPE_ENTERPRISE_GRID_WPCOM),
+/* harmony export */   Uk: () => (/* binding */ TYPE_SECURITY_T2),
+/* harmony export */   W_: () => (/* binding */ TYPE_FLEXIBLE),
+/* harmony export */   Yb: () => (/* binding */ TYPE_GOLDEN_TOKEN),
+/* harmony export */   _U: () => (/* binding */ TYPE_PERSONAL),
+/* harmony export */   aS: () => (/* binding */ TYPE_SECURITY_DAILY),
+/* harmony export */   hs: () => (/* binding */ TYPE_PREMIUM),
+/* harmony export */   oH: () => (/* binding */ TYPE_WOOEXPRESS_SMALL),
+/* harmony export */   od: () => (/* binding */ TYPE_ECOMMERCE),
+/* harmony export */   ol: () => (/* binding */ TYPE_FREE),
+/* harmony export */   sL: () => (/* binding */ TYPE_STARTER),
+/* harmony export */   sm: () => (/* binding */ TYPE_BLOGGER),
+/* harmony export */   uM: () => (/* binding */ TYPE_SECURITY_REALTIME)
 /* harmony export */ });
 /* unused harmony export TYPES_LIST */
 const TYPE_FREE = 'TYPE_FREE';
@@ -5437,51 +5497,51 @@ const TYPES_LIST = [TYPE_FREE, TYPE_BLOGGER, TYPE_PERSONAL, TYPE_PREMIUM, TYPE_B
 
 /***/ }),
 
-/***/ 7904:
+/***/ 7252:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   A2: () => (/* binding */ PLAN_P2_FREE),
-/* harmony export */   A3: () => (/* binding */ PLAN_ECOMMERCE_3_YEARS),
-/* harmony export */   AY: () => (/* binding */ PRODUCT_WPCOM_SEARCH),
-/* harmony export */   Cq: () => (/* binding */ PLAN_WPCOM_FLEXIBLE),
-/* harmony export */   DN: () => (/* binding */ PLAN_WOOEXPRESS_MEDIUM),
-/* harmony export */   FC: () => (/* binding */ PLAN_ECOMMERCE_TRIAL_MONTHLY),
-/* harmony export */   G6: () => (/* binding */ PLAN_PREMIUM_2_YEARS),
-/* harmony export */   Id: () => (/* binding */ PLAN_WPCOM_STARTER),
-/* harmony export */   JA: () => (/* binding */ PLAN_ECOMMERCE),
-/* harmony export */   Je: () => (/* binding */ PLAN_WOOEXPRESS_MEDIUM_MONTHLY),
-/* harmony export */   MY: () => (/* binding */ PRODUCT_WPCOM_SEARCH_MONTHLY),
-/* harmony export */   Ml: () => (/* binding */ PLAN_P2_PLUS),
-/* harmony export */   OE: () => (/* binding */ PLAN_PREMIUM_MONTHLY),
-/* harmony export */   Qm: () => (/* binding */ PLAN_PERSONAL_2_YEARS),
-/* harmony export */   Rl: () => (/* binding */ PLAN_HOSTING_TRIAL_MONTHLY),
-/* harmony export */   T$: () => (/* binding */ PLAN_MIGRATION_TRIAL_MONTHLY),
-/* harmony export */   TI: () => (/* binding */ PLAN_PERSONAL_3_YEARS),
-/* harmony export */   TW: () => (/* binding */ PLAN_BLOGGER),
-/* harmony export */   Wg: () => (/* binding */ PLAN_BUSINESS_MONTHLY),
-/* harmony export */   _$: () => (/* binding */ PLAN_WOOEXPRESS_SMALL),
-/* harmony export */   _B: () => (/* binding */ PLAN_PREMIUM_3_YEARS),
-/* harmony export */   _d: () => (/* binding */ PLAN_FREE),
-/* harmony export */   _s: () => (/* binding */ PLAN_WPCOM_PRO),
-/* harmony export */   dU: () => (/* binding */ PLAN_WPCOM_PRO_MONTHLY),
-/* harmony export */   f3: () => (/* binding */ PLAN_ECOMMERCE_2_YEARS),
-/* harmony export */   fD: () => (/* binding */ PLAN_100_YEARS),
-/* harmony export */   gt: () => (/* binding */ PLAN_ENTERPRISE_GRID_WPCOM),
-/* harmony export */   hh: () => (/* binding */ PLAN_BUSINESS_3_YEARS),
-/* harmony export */   hq: () => (/* binding */ PLAN_WOOEXPRESS_PLUS),
-/* harmony export */   j2: () => (/* binding */ PLAN_BUSINESS_2_YEARS),
-/* harmony export */   jG: () => (/* binding */ PLAN_WOOEXPRESS_SMALL_MONTHLY),
-/* harmony export */   ln: () => (/* binding */ PLAN_WPCOM_PRO_2_YEARS),
-/* harmony export */   lv: () => (/* binding */ PLAN_ECOMMERCE_MONTHLY),
-/* harmony export */   mi: () => (/* binding */ GROUP_P2),
-/* harmony export */   p7: () => (/* binding */ PLAN_BUSINESS),
-/* harmony export */   sy: () => (/* binding */ PLAN_PERSONAL),
-/* harmony export */   uS: () => (/* binding */ PLAN_BLOGGER_2_YEARS),
-/* harmony export */   w9: () => (/* binding */ GROUP_WPCOM),
-/* harmony export */   wm: () => (/* binding */ PLAN_PERSONAL_MONTHLY),
-/* harmony export */   xf: () => (/* binding */ PLAN_PREMIUM)
+/* harmony export */   AX: () => (/* binding */ PLAN_HOSTING_TRIAL_MONTHLY),
+/* harmony export */   C6: () => (/* binding */ PLAN_WPCOM_FLEXIBLE),
+/* harmony export */   CM: () => (/* binding */ PLAN_BUSINESS),
+/* harmony export */   G8: () => (/* binding */ PRODUCT_WPCOM_SEARCH),
+/* harmony export */   Gs: () => (/* binding */ PLAN_PREMIUM_3_YEARS),
+/* harmony export */   Ko: () => (/* binding */ PLAN_PREMIUM_2_YEARS),
+/* harmony export */   Mv: () => (/* binding */ PLAN_ENTERPRISE_GRID_WPCOM),
+/* harmony export */   Og: () => (/* binding */ GROUP_WPCOM),
+/* harmony export */   QJ: () => (/* binding */ PLAN_WOOEXPRESS_MEDIUM_MONTHLY),
+/* harmony export */   QX: () => (/* binding */ PLAN_P2_PLUS),
+/* harmony export */   S8: () => (/* binding */ PLAN_BLOGGER_2_YEARS),
+/* harmony export */   Si: () => (/* binding */ PLAN_WOOEXPRESS_SMALL),
+/* harmony export */   U7: () => (/* binding */ PLAN_WPCOM_PRO_MONTHLY),
+/* harmony export */   WY: () => (/* binding */ PLAN_MIGRATION_TRIAL_MONTHLY),
+/* harmony export */   W_: () => (/* binding */ PLAN_PERSONAL_2_YEARS),
+/* harmony export */   _4: () => (/* binding */ PRODUCT_WPCOM_SEARCH_MONTHLY),
+/* harmony export */   _I: () => (/* binding */ PLAN_WPCOM_PRO_2_YEARS),
+/* harmony export */   au: () => (/* binding */ PLAN_WOOEXPRESS_MEDIUM),
+/* harmony export */   bh: () => (/* binding */ PLAN_100_YEARS),
+/* harmony export */   cT: () => (/* binding */ GROUP_P2),
+/* harmony export */   cz: () => (/* binding */ PLAN_ECOMMERCE_MONTHLY),
+/* harmony export */   eK: () => (/* binding */ PLAN_PERSONAL_MONTHLY),
+/* harmony export */   g1: () => (/* binding */ PLAN_ECOMMERCE),
+/* harmony export */   gh: () => (/* binding */ PLAN_PREMIUM),
+/* harmony export */   is: () => (/* binding */ PLAN_BUSINESS_MONTHLY),
+/* harmony export */   k$: () => (/* binding */ PLAN_WOOEXPRESS_PLUS),
+/* harmony export */   k3: () => (/* binding */ PLAN_PREMIUM_MONTHLY),
+/* harmony export */   kn: () => (/* binding */ PLAN_ECOMMERCE_2_YEARS),
+/* harmony export */   mG: () => (/* binding */ PLAN_WPCOM_PRO),
+/* harmony export */   mU: () => (/* binding */ PLAN_WPCOM_STARTER),
+/* harmony export */   mo: () => (/* binding */ PLAN_WOOEXPRESS_SMALL_MONTHLY),
+/* harmony export */   oZ: () => (/* binding */ PLAN_FREE),
+/* harmony export */   s5: () => (/* binding */ PLAN_BLOGGER),
+/* harmony export */   sL: () => (/* binding */ PLAN_ECOMMERCE_TRIAL_MONTHLY),
+/* harmony export */   sR: () => (/* binding */ PLAN_P2_FREE),
+/* harmony export */   sp: () => (/* binding */ PLAN_PERSONAL_3_YEARS),
+/* harmony export */   uQ: () => (/* binding */ PLAN_BUSINESS_3_YEARS),
+/* harmony export */   uo: () => (/* binding */ PLAN_BUSINESS_2_YEARS),
+/* harmony export */   wb: () => (/* binding */ PLAN_ECOMMERCE_3_YEARS),
+/* harmony export */   wd: () => (/* binding */ PLAN_PERSONAL)
 /* harmony export */ });
 /* unused harmony exports PRODUCT_NO_ADS, PRODUCT_WPCOM_UNLIMITED_THEMES, PRODUCT_1GB_SPACE, PRODUCT_WPCOM_CUSTOM_DESIGN, WPCOM_SEARCH_PRODUCTS, WPCOM_PRODUCTS, PLAN_HOST_BUNDLE, PLAN_WPCOM_ENTERPRISE, PLAN_CHARGEBACK, PLAN_VIP, WPCOM_PLANS, WPCOM_MONTHLY_PLANS, WOO_EXPRESS_PLANS, WPCOM_PREMIUM_PLANS, WPCOM_DIFM_LITE, PLAN_BUSINESS_ONBOARDING_EXPIRE, PLAN_BUSINESS_2Y_ONBOARDING_EXPIRE */
 const GROUP_WPCOM = 'GROUP_WPCOM';
@@ -5548,15 +5608,15 @@ const PLAN_BUSINESS_2Y_ONBOARDING_EXPIRE = '2022-07-31T00:00:00+00:00';
 
 /***/ }),
 
-/***/ 4112:
+/***/ 4840:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Wh: () => (/* binding */ getPlan)
+/* harmony export */   iK: () => (/* binding */ getPlan)
 /* harmony export */ });
 /* unused harmony exports getPlans, getPlanFeaturesGrouped, getWooExpressFeaturesGrouped, getPlansSlugs, getPlanByPathSlug, getPlanPath, getPlanClass, planHasFeature, planHasAtLeastOneFeature, getAllFeaturesForPlan, planHasSuperiorFeature, shouldFetchSitePlans, getMonthlyPlanByYearly, getYearlyPlanByMonthly, getBiennialPlan, getTriennialPlan, planLevelsMatch, isEcommercePlan, isProPlan, isBusinessPlan, isPremiumPlan, isPersonalPlan, isBloggerPlan, isFreePlan, isFreeHostingTrial, isBusinessTrial, is100YearPlan, isWpcomEnterpriseGridPlan, isWooExpressPlusPlan, isWooExpressMediumPlan, isWooExpressSmallPlan, isWooExpressPlan, isFlexiblePlan, isStarterPlan, isJetpackStarterPlan, isSecurityDailyPlan, isSecurityRealTimePlan, isSecurityT1Plan, isSecurityT2Plan, isCompletePlan, isWpComPlan, isWpComBusinessPlan, isWpComEcommercePlan, isWpComProPlan, isWpComPremiumPlan, isWpComPersonalPlan, isWpComBloggerPlan, isWpComFreePlan, isWpComAnnualPlan, isWpComBiennialPlan, isWpComTriennialPlan, isWpComMonthlyPlan, isJetpackBusinessPlan, isJetpackPremiumPlan, isJetpackPersonalPlan, isJetpackFreePlan, isJetpackOfferResetPlan, isP2FreePlan, isP2PlusPlan, findFirstSimilarPlanKey, findSimilarPlansKeys, findPlansKeys, planMatches, calculateMonthlyPriceForPlan, calculateMonthlyPrice, getBillingMonthsForTerm, getBillingYearsForTerm, getBillingTermForMonths, plansLink, applyTestFiltersToPlansList, applyTestFiltersToProductsList, getPlanTermLabel, getPopularPlanSpec, chooseDefaultCustomerType, planHasJetpackSearch, planHasJetpackClassicSearch */
-/* harmony import */ var _plans_list__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5192);
+/* harmony import */ var _plans_list__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8072);
 
 
 
@@ -5575,12 +5635,12 @@ function getPlansSlugs() {
 }
 function getPlan(planKey) {
   if (typeof planKey !== 'string') {
-    if (Object.values(_plans_list__WEBPACK_IMPORTED_MODULE_0__/* .PLANS_LIST */ .E).includes(planKey)) {
+    if (Object.values(_plans_list__WEBPACK_IMPORTED_MODULE_0__/* .PLANS_LIST */ .y).includes(planKey)) {
       return planKey;
     }
     return undefined;
   }
-  return _plans_list__WEBPACK_IMPORTED_MODULE_0__/* .PLANS_LIST */ .E[planKey];
+  return _plans_list__WEBPACK_IMPORTED_MODULE_0__/* .PLANS_LIST */ .y[planKey];
 }
 function getPlanByPathSlug(pathSlug, group) {
   let plans = Object.values(PLANS_LIST);
@@ -6344,23 +6404,23 @@ function planHasJetpackClassicSearch(plan) {
 
 /***/ }),
 
-/***/ 5192:
+/***/ 8072:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   E: () => (/* binding */ PLANS_LIST)
+/* harmony export */   y: () => (/* binding */ PLANS_LIST)
 /* harmony export */ });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9307);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8496);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(899);
-/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1481);
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3239);
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(892);
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1862);
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7904);
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(5085);
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(2006);
+/* harmony import */ var _automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(996);
+/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4064);
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5264);
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6496);
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(3076);
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7252);
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(8448);
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(3180);
 
 
 
@@ -6371,36 +6431,36 @@ function isValueTruthy(value) {
 function compact(elements) {
   return elements.filter(isValueTruthy);
 }
-const WPComGetBillingTimeframe = () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('per month, billed annually');
-const WPComGetBiennialBillingTimeframe = () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('/month, billed every two years');
-const WPComGetTriennialBillingTimeframe = () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('/month, billed every three years');
+const WPComGetBillingTimeframe = () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('per month, billed annually');
+const WPComGetBiennialBillingTimeframe = () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('/month, billed every two years');
+const WPComGetTriennialBillingTimeframe = () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('/month, billed every three years');
 const getBiAnnualTimeframe = () => ({
-  term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_BIENNIALLY */ .SU,
-  getBillingTimeFrame: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('per 2 years')
+  term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_BIENNIALLY */ .So,
+  getBillingTimeFrame: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('per 2 years')
 });
 const getAnnualTimeframe = () => ({
-  term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .w$,
-  getBillingTimeFrame: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('per year')
+  term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .GK,
+  getBillingTimeFrame: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('per year')
 });
 const getMonthlyTimeframe = () => ({
-  term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .ob,
-  getBillingTimeFrame: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('per month, billed monthly')
+  term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .mI,
+  getBillingTimeFrame: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('per month, billed monthly')
 });
 const getJetpackCommonPlanDetails = () => ({
   getRecommendedFor: () => [{
-    tag: _constants__WEBPACK_IMPORTED_MODULE_4__/* .JETPACK_TAG_FOR_WOOCOMMERCE_STORES */ .Wn,
-    label: (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('WooCommerce stores')
+    tag: _constants__WEBPACK_IMPORTED_MODULE_4__/* .JETPACK_TAG_FOR_WOOCOMMERCE_STORES */ .g5,
+    label: (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('WooCommerce stores')
   }, {
-    tag: _constants__WEBPACK_IMPORTED_MODULE_4__/* .JETPACK_TAG_FOR_NEWS_ORGANISATIONS */ .vE,
-    label: (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('News organizations')
+    tag: _constants__WEBPACK_IMPORTED_MODULE_4__/* .JETPACK_TAG_FOR_NEWS_ORGANISATIONS */ .WM,
+    label: (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('News organizations')
   }, {
-    tag: _constants__WEBPACK_IMPORTED_MODULE_4__/* .JETPACK_TAG_FOR_MEMBERSHIP_SITES */ .Cg,
-    label: (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Membership sites')
+    tag: _constants__WEBPACK_IMPORTED_MODULE_4__/* .JETPACK_TAG_FOR_MEMBERSHIP_SITES */ .K,
+    label: (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Membership sites')
   }]
 });
 const getDotcomPlanDetails = () => ({
   // Features only available for annual plans
-  getAnnualPlansOnlyFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_DOMAIN */ .MCU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_LIVE_CHAT_SUPPORT_ALL_DAYS */ .IhT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_LIVE_CHAT_SUPPORT_BUSINESS_DAYS */ .dmM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Tez, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_BUSINESS_DAYS */ .N5t, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_ALL_DAYS */ .vkU]
+  getAnnualPlansOnlyFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_DOMAIN */ .a0t, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_LIVE_CHAT_SUPPORT_ALL_DAYS */ .uuC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_LIVE_CHAT_SUPPORT_BUSINESS_DAYS */ .IHH, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Mnw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_BUSINESS_DAYS */ .UxR, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_ALL_DAYS */ .e8r]
 });
 
 /* eslint-disable wpcalypso/jsx-classname-namespace */
@@ -6415,172 +6475,172 @@ const plansDescriptionHeadingComponent = {
 
 const getPlanFreeDetails = () => ({
   ...getDotcomPlanDetails(),
-  group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .w9,
-  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_FREE */ .UH,
-  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Free'),
-  getAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for students'),
-  getBlogAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for students'),
-  getPortfolioAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for students'),
-  getStoreAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for students'),
-  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Get a taste of the world’s most popular CMS & blogging software.'),
-  getNewsletterTagLine: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Start fresh or make the switch, bringing your first 100 readers with you.'),
-  getLinkInBioTagLine: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Get started for free with unlimited links and keep track of how many visits you get.'),
-  getBlogOnboardingTagLine: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Not a trial – blog free for as long as you like.'),
-  getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Get a free website and be on your way to publishing your ' + 'first post in less than five minutes.'),
+  group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .Og,
+  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_FREE */ .ol,
+  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Free'),
+  getAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for students'),
+  getBlogAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for students'),
+  getPortfolioAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for students'),
+  getStoreAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for students'),
+  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Get a taste of the world’s most popular CMS & blogging software.'),
+  getNewsletterTagLine: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Start fresh or make the switch, bringing your first 100 readers with you.'),
+  getLinkInBioTagLine: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Get started for free with unlimited links and keep track of how many visits you get.'),
+  getBlogOnboardingTagLine: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Not a trial – blog free for as long as you like.'),
+  getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Get a free website and be on your way to publishing your ' + 'first post in less than five minutes.'),
   getPlanCompareFeatures: () => [
   // pay attention to ordering, shared features should align on /plan page
-  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WP_SUBDOMAIN */ .wJ_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ESSENTIAL */ .gqo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMUNITY_SUPPORT */ .U_2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_THEMES */ .jDM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_3GB_STORAGE */ .KlX],
-  getSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMUNITY_SUPPORT */ .U_2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WP_SUBDOMAIN_SIGNUP */ .sYz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_THEMES_SIGNUP */ .R2o],
-  getBlogSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMUNITY_SUPPORT */ .U_2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WP_SUBDOMAIN_SIGNUP */ .sYz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_THEMES_SIGNUP */ .R2o],
-  getPortfolioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMUNITY_SUPPORT */ .U_2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WP_SUBDOMAIN_SIGNUP */ .sYz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_THEMES_SIGNUP */ .R2o],
-  get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BEAUTIFUL_THEMES */ .dXP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAGES */ .a9c, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_USERS */ .iRs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_POST_EDITS_HISTORY */ .vcd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NEWSLETTERS_RSS */ .uT1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_BRUTE_FORCE */ .EZ7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SMART_REDIRECTS */ .FZm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALWAYS_ONLINE */ .zB_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_10 */ .s$V],
-  get2023PlanComparisonFeatureOverride: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BEAUTIFUL_THEMES */ .dXP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAGES */ .a9c, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_USERS */ .iRs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_POST_EDITS_HISTORY */ .vcd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NEWSLETTERS_RSS */ .uT1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_BRUTE_FORCE */ .EZ7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SMART_REDIRECTS */ .FZm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALWAYS_ONLINE */ .zB_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BANDWIDTH */ .Hdl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_DNS */ .Tsj, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GLOBAL_EDGE_CACHING */ .BEQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CDN */ .BPG, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DATACENTRE_FAILOVER */ ._po, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WP_UPDATES */ .bcr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MULTI_SITE */ .AQq, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_MALWARE */ .qbT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_DDOS */ .sHn, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_10 */ .s$V, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GROUP_PAYMENT_TRANSACTION_FEES */ .ZaE],
-  get2023PricingGridSignupJetpackFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAID_SUBSCRIBERS_JP */ .j8V, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_JP */ .iW8, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DONATIONS_AND_TIPS_JP */ .ghB, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_BUTTONS_JP */ .p1e, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_JP */ .MBA, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SPAM_JP */ .q6z, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LTD_SOCIAL_MEDIA_JP */ .Q_7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CONTACT_FORM_JP */ .hSm],
-  get2023PlanComparisonJetpackFeatureOverride: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAID_SUBSCRIBERS_JP */ .j8V, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DONATIONS_AND_TIPS_JP */ .ghB, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_JP */ .iW8, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_BUTTONS_JP */ .p1e, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_JP */ .MBA, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SPAM_JP */ .q6z, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CONTACT_FORM_JP */ .hSm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_ACTIVITY_LOG_JP */ .NtL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHARES_SOCIAL_MEDIA_JP */ .TFL],
+  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WP_SUBDOMAIN */ .im5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ESSENTIAL */ .aav, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMUNITY_SUPPORT */ .cgr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_THEMES */ .Ixy, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_3GB_STORAGE */ .A7p],
+  getSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMUNITY_SUPPORT */ .cgr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WP_SUBDOMAIN_SIGNUP */ .c1F, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_THEMES_SIGNUP */ .A1p],
+  getBlogSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMUNITY_SUPPORT */ .cgr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WP_SUBDOMAIN_SIGNUP */ .c1F, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_THEMES_SIGNUP */ .A1p],
+  getPortfolioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMUNITY_SUPPORT */ .cgr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WP_SUBDOMAIN_SIGNUP */ .c1F, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_THEMES_SIGNUP */ .A1p],
+  get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BEAUTIFUL_THEMES */ .emG, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAGES */ .QPC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_USERS */ .OI8, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_POST_EDITS_HISTORY */ .eIt, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NEWSLETTERS_RSS */ .s1L, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_BRUTE_FORCE */ .BG_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SMART_REDIRECTS */ .qYP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALWAYS_ONLINE */ .CsJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_10 */ .MhI],
+  get2023PlanComparisonFeatureOverride: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BEAUTIFUL_THEMES */ .emG, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAGES */ .QPC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_USERS */ .OI8, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_POST_EDITS_HISTORY */ .eIt, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NEWSLETTERS_RSS */ .s1L, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_BRUTE_FORCE */ .BG_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SMART_REDIRECTS */ .qYP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALWAYS_ONLINE */ .CsJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BANDWIDTH */ .gDm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_DNS */ .W0y, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GLOBAL_EDGE_CACHING */ .qMS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CDN */ .kv_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DATACENTRE_FAILOVER */ .SsX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WP_UPDATES */ .kbu, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MULTI_SITE */ .eEd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_MALWARE */ .sde, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_DDOS */ .eQJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_10 */ .MhI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GROUP_PAYMENT_TRANSACTION_FEES */ .KYV],
+  get2023PricingGridSignupJetpackFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAID_SUBSCRIBERS_JP */ .sfk, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_JP */ .whr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DONATIONS_AND_TIPS_JP */ .wfe, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_BUTTONS_JP */ .yej, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_JP */ .eah, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SPAM_JP */ .UNr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LTD_SOCIAL_MEDIA_JP */ .moC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CONTACT_FORM_JP */ .U3h],
+  get2023PlanComparisonJetpackFeatureOverride: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAID_SUBSCRIBERS_JP */ .sfk, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DONATIONS_AND_TIPS_JP */ .wfe, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_JP */ .whr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_BUTTONS_JP */ .yej, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_JP */ .eah, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SPAM_JP */ .UNr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CONTACT_FORM_JP */ .U3h, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_ACTIVITY_LOG_JP */ .Iz3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHARES_SOCIAL_MEDIA_JP */ .iCo],
   get2023PricingGridSignupStorageOptions: () => {
     return [{
-      slug: _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_1GB_STORAGE */ .Zaf,
+      slug: _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_1GB_STORAGE */ .Oe$,
       isAddOn: false
     }];
   },
-  get2023PlanComparisonConditionalFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES */ .QfP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHARES_SOCIAL_MEDIA_JP */ .TFL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_STANDARD_FEATURES */ .DUl],
-  getNewsletterSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NEWSLETTER_IMPORT_SUBSCRIBERS_FREE */ .OFy, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_JP */ .iW8, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NEWSLETTERS_RSS */ .uT1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_EMAILS */ .Vhs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_JP */ .MBA, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BANDWIDTH */ .Hdl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LTD_SOCIAL_MEDIA_JP */ .Q_7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_10 */ .s$V],
-  getLinkInBioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BEAUTIFUL_THEMES */ .dXP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAGES */ .a9c, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADD_UNLIMITED_LINKS */ .y4L, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_JP */ .MBA, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALWAYS_ONLINE */ .zB_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CONTACT_FORM_JP */ .hSm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LTD_SOCIAL_MEDIA_JP */ .Q_7],
-  getBlogOnboardingSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BEAUTIFUL_THEMES */ .dXP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAGES */ .a9c, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_USERS */ .iRs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_POST_EDITS_HISTORY */ .vcd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_BRUTE_FORCE */ .EZ7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALWAYS_ONLINE */ .zB_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_THE_READER */ .s2V],
-  getBlogOnboardingSignupJetpackFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NEWSLETTER_IMPORT_SUBSCRIBERS_FREE */ .OFy, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_EMAILS */ .Vhs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NEWSLETTERS_RSS */ .uT1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_JP */ .MBA, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LTD_SOCIAL_MEDIA_JP */ .Q_7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SPAM_JP */ .q6z],
+  get2023PlanComparisonConditionalFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES */ .s7g, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHARES_SOCIAL_MEDIA_JP */ .iCo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_STANDARD_FEATURES */ .yuq],
+  getNewsletterSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NEWSLETTER_IMPORT_SUBSCRIBERS_FREE */ .cPz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_JP */ .whr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NEWSLETTERS_RSS */ .s1L, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_EMAILS */ .c1m, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_JP */ .eah, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BANDWIDTH */ .gDm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LTD_SOCIAL_MEDIA_JP */ .moC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_10 */ .MhI],
+  getLinkInBioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BEAUTIFUL_THEMES */ .emG, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAGES */ .QPC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADD_UNLIMITED_LINKS */ .wJi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_JP */ .eah, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALWAYS_ONLINE */ .CsJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CONTACT_FORM_JP */ .U3h, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LTD_SOCIAL_MEDIA_JP */ .moC],
+  getBlogOnboardingSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BEAUTIFUL_THEMES */ .emG, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAGES */ .QPC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_USERS */ .OI8, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_POST_EDITS_HISTORY */ .eIt, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_BRUTE_FORCE */ .BG_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALWAYS_ONLINE */ .CsJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_THE_READER */ .OCZ],
+  getBlogOnboardingSignupJetpackFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NEWSLETTER_IMPORT_SUBSCRIBERS_FREE */ .cPz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_EMAILS */ .c1m, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NEWSLETTERS_RSS */ .s1L, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_JP */ .eah, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LTD_SOCIAL_MEDIA_JP */ .moC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SPAM_JP */ .UNr],
   getIncludedFeatures: () => [],
   getInferiorFeatures: () => [],
   getCancellationFeatureList: () => ({
     monthly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_MANAGED_HOSTINGS */ .KG, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_AND_SOCIAL */ ._o, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .pG, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SECURITY_AND_SPAM */ .Zs, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_JETPACK_ESSENTIALS */ .$N],
+      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_MANAGED_HOSTINGS */ .Et, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_AND_SOCIAL */ .wh, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .sb, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SECURITY_AND_SPAM */ .Qj, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_JETPACK_ESSENTIALS */ .mI],
       andMore: true
     },
     yearly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_MANAGED_HOSTINGS */ .KG, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_AND_SOCIAL */ ._o, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .pG, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SECURITY_AND_SPAM */ .Zs, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_JETPACK_ESSENTIALS */ .$N],
+      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_MANAGED_HOSTINGS */ .Et, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_AND_SOCIAL */ .wh, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .sb, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SECURITY_AND_SPAM */ .Qj, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_JETPACK_ESSENTIALS */ .mI],
       andMore: true
     },
     withDomain: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_MANAGED_HOSTINGS */ .KG, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_AND_SOCIAL */ ._o, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .pG, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SECURITY_AND_SPAM */ .Zs],
+      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_MANAGED_HOSTINGS */ .Et, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_AND_SOCIAL */ .wh, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .sb, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SECURITY_AND_SPAM */ .Qj],
       andMore: true
     }
   })
 });
 const getPlanBloggerDetails = () => ({
   ...getDotcomPlanDetails(),
-  group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .w9,
-  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_BLOGGER */ .M6,
-  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Blogger'),
+  group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .Og,
+  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_BLOGGER */ .sm,
+  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Blogger'),
   // @TODO not updating copy for now, we need to update it after the first round of design {{{
-  getAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for bloggers'),
-  getBlogAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for bloggers'),
-  getPortfolioAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for bloggers'),
-  getStoreAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for bloggers'),
-  getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('{{strong}}Best for bloggers:{{/strong}} Brand your blog with a custom .blog domain name, and remove all WordPress.com advertising. Receive additional storage space and customer support via email.', plansDescriptionHeadingComponent),
-  getShortDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Brand your blog with a custom .blog domain name, and remove all WordPress.com advertising. Receive additional storage space and customer support via email.'),
+  getAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for bloggers'),
+  getBlogAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for bloggers'),
+  getPortfolioAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for bloggers'),
+  getStoreAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for bloggers'),
+  getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('{{strong}}Best for bloggers:{{/strong}} Brand your blog with a custom .blog domain name, and remove all WordPress.com advertising. Receive additional storage space and customer support via email.', plansDescriptionHeadingComponent),
+  getShortDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Brand your blog with a custom .blog domain name, and remove all WordPress.com advertising. Receive additional storage space and customer support via email.'),
   // }}}
   getPlanCompareFeatures: () => [
   // pay attention to ordering, shared features should align on /plan page
-  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BLOG_DOMAIN */ .Ai8, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ESSENTIAL */ .gqo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT */ .n_S, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_THEMES */ .jDM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_6GB_STORAGE */ .W4b, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .Xk_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MEMBERSHIPS */ .EBu, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_BLOCK */ .EDT],
-  getSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .fhe, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BLOG_DOMAIN */ .Ai8, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_FREE_FEATURES */ .Uwp],
-  getBlogSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_BLOG_DOMAIN */ .Q1W, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .fhe, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_FREE_FEATURES */ .Uwp],
-  getPortfolioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_BLOG_DOMAIN */ .Q1W, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .fhe, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_FREE_FEATURES */ .Uwp],
+  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BLOG_DOMAIN */ .wxz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ESSENTIAL */ .aav, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT */ .mu5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_THEMES */ .Ixy, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_6GB_STORAGE */ .kTI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .uOV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MEMBERSHIPS */ .O2k, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_BLOCK */ .q8v],
+  getSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .eUY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BLOG_DOMAIN */ .wxz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_FREE_FEATURES */ .cB5],
+  getBlogSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_BLOG_DOMAIN */ .Skh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .eUY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_FREE_FEATURES */ .cB5],
+  getPortfolioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_BLOG_DOMAIN */ .Skh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .eUY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_FREE_FEATURES */ .cB5],
   // Features not displayed but used for checking plan abilities
-  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUDIO_UPLOADS */ .XMd],
+  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUDIO_UPLOADS */ .A5J],
   getInferiorFeatures: () => [],
   getCancellationFeatureList: () => ({
     monthly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_AD_FREE_SITE */ .vD, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_COLLECT_PAYMENTS */ .j_, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EMAIL_SUPPORT */ .Ox],
+      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_AD_FREE_SITE */ .uY, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_COLLECT_PAYMENTS */ .Gq, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EMAIL_SUPPORT */ .em],
       andMore: false
     },
     yearly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_AD_FREE_SITE */ .vD, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_COLLECT_PAYMENTS */ .j_, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EMAIL_SUPPORT */ .Ox],
+      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_AD_FREE_SITE */ .uY, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_COLLECT_PAYMENTS */ .Gq, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EMAIL_SUPPORT */ .em],
       andMore: false
     },
     withDomain: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_AD_FREE_SITE */ .vD, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_COLLECT_PAYMENTS */ .j_, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EMAIL_SUPPORT */ .Ox],
+      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_AD_FREE_SITE */ .uY, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_COLLECT_PAYMENTS */ .Gq, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EMAIL_SUPPORT */ .em],
       andMore: false
     }
   })
 });
 const getPlanPersonalDetails = () => ({
   ...getDotcomPlanDetails(),
-  group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .w9,
-  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_PERSONAL */ .mV,
+  group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .Og,
+  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_PERSONAL */ ._U,
   getTitle: () =>
   // translators: Starter is a plan name
-  i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Starter'),
-  getAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for personal use'),
-  getBlogAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for personal use'),
-  getPortfolioAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for personal use'),
-  getStoreAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for personal use'),
-  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Create your home on the web with a custom domain name.'),
-  getNewsletterTagLine: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Monetize your writing, go ad-free, and expand your media content.'),
-  getLinkInBioTagLine: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Take Link In Bio to the next level with gated content, paid subscribers, and an ad-free site.'),
-  getBlogOnboardingTagLine: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Take the next step with gated content, paid subscribers, and an ad-free site.'),
-  getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('{{strong}}Best for personal use:{{/strong}} Boost your' + ' website with a custom domain name, and remove all WordPress.com advertising. ' + 'Unlock unlimited, expert customer support via email.', plansDescriptionHeadingComponent),
-  getShortDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Boost your website with a custom domain name, and remove all WordPress.com advertising. ' + 'Unlock unlimited, expert customer support via email.'),
+  i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Starter'),
+  getAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for personal use'),
+  getBlogAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for personal use'),
+  getPortfolioAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for personal use'),
+  getStoreAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for personal use'),
+  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Create your home on the web with a custom domain name.'),
+  getNewsletterTagLine: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Monetize your writing, go ad-free, and expand your media content.'),
+  getLinkInBioTagLine: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Take Link In Bio to the next level with gated content, paid subscribers, and an ad-free site.'),
+  getBlogOnboardingTagLine: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Take the next step with gated content, paid subscribers, and an ad-free site.'),
+  getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('{{strong}}Best for personal use:{{/strong}} Boost your' + ' website with a custom domain name, and remove all WordPress.com advertising. ' + 'Unlock unlimited, expert customer support via email.', plansDescriptionHeadingComponent),
+  getShortDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Boost your website with a custom domain name, and remove all WordPress.com advertising. ' + 'Unlock unlimited, expert customer support via email.'),
   getPlanCompareFeatures: () => compact([
   // pay attention to ordering, shared features should align on /plan page
-  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ .q4V, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ESSENTIAL */ .gqo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT */ .n_S, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_THEMES */ .jDM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_6GB_STORAGE */ .W4b, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .Xk_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MEMBERSHIPS */ .EBu, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_BLOCK */ .EDT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_8 */ .DU6]),
-  getSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_DOMAIN */ .MCU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .fhe, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_THEMES */ .jDM],
-  getBlogSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_DOMAIN */ .MCU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .fhe, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_FREE_FEATURES */ .Uwp],
-  getPortfolioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_DOMAIN */ .MCU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .fhe, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_FREE_FEATURES */ .Uwp],
-  getSignupCompareAvailableFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ .q4V, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .Xk_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_V2 */ .$4, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .fhe],
-  get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .pOV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_DNS */ .Tsj, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SUPPORT_EMAIL */ .jby, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_8 */ .DU6],
-  get2023PlanComparisonFeatureOverride: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .pOV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_DNS */ .Tsj, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SUPPORT_EMAIL */ .jby, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_8 */ .DU6],
+  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ .iWg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ESSENTIAL */ .aav, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT */ .mu5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_THEMES */ .Ixy, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_6GB_STORAGE */ .kTI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .uOV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MEMBERSHIPS */ .O2k, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_BLOCK */ .q8v, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_8 */ .qYz]),
+  getSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_DOMAIN */ .a0t, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .eUY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_THEMES */ .Ixy],
+  getBlogSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_DOMAIN */ .a0t, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .eUY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_FREE_FEATURES */ .cB5],
+  getPortfolioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_DOMAIN */ .a0t, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .eUY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_FREE_FEATURES */ .cB5],
+  getSignupCompareAvailableFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ .iWg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .uOV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_V2 */ .EZz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .eUY],
+  get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .kv7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_DNS */ .W0y, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SUPPORT_EMAIL */ .e_q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_8 */ .qYz],
+  get2023PlanComparisonFeatureOverride: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .kv7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_DNS */ .W0y, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SUPPORT_EMAIL */ .e_q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_8 */ .qYz],
   get2023PricingGridSignupStorageOptions: () => {
     return [{
-      slug: _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_6GB_STORAGE */ .W4b,
+      slug: _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_6GB_STORAGE */ .kTI,
       isAddOn: false
     }];
   },
-  get2023PlanComparisonConditionalFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES */ .QfP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHARES_SOCIAL_MEDIA_JP */ .TFL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_STANDARD_FEATURES */ .DUl],
-  getNewsletterDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Jumpstart your Newsletter with a custom domain, ad-free experience, and the ability to sell subscriptions, take payments, and collect donations from day one. Backed with email support to help get everything just right.'),
-  getNewsletterSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_SUBSCRIBERS */ .nl4, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SUPPORT_EMAIL */ .jby, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .pOV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_8 */ .DU6],
-  getNewsletterHighlightedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_EMAILS */ .Vhs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .pOV],
-  getLinkInBioDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Stand out and unlock earnings with an ad-free site, custom domain, and the ability to sell subscriptions, take payments, and collect donations. Backed with email support to help get your site just right.'),
-  getLinkInBioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .pOV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SUPPORT_EMAIL */ .jby, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_LINK_IN_BIO */ .cMD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAID_SUBSCRIBERS_JP */ .j8V],
-  getLinkInBioHighlightedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2],
-  getBlogOnboardingSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .pOV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_DNS */ .Tsj, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SUPPORT_EMAIL */ .jby, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_8 */ .DU6],
-  getBlogOnboardingHighlightedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2],
-  getBlogOnboardingSignupJetpackFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_SUBSCRIBERS */ .nl4, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_JP */ .iW8, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAID_SUBSCRIBERS_JP */ .j8V],
-  getCheckoutFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SUPPORT_EMAIL */ .jby, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .pOV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_DNS */ .Tsj, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAID_SUBSCRIBERS_JP */ .j8V],
+  get2023PlanComparisonConditionalFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES */ .s7g, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHARES_SOCIAL_MEDIA_JP */ .iCo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_STANDARD_FEATURES */ .yuq],
+  getNewsletterDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Jumpstart your Newsletter with a custom domain, ad-free experience, and the ability to sell subscriptions, take payments, and collect donations from day one. Backed with email support to help get everything just right.'),
+  getNewsletterSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_SUBSCRIBERS */ .s$2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SUPPORT_EMAIL */ .e_q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .kv7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_8 */ .qYz],
+  getNewsletterHighlightedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_EMAILS */ .c1m, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .kv7],
+  getLinkInBioDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Stand out and unlock earnings with an ad-free site, custom domain, and the ability to sell subscriptions, take payments, and collect donations. Backed with email support to help get your site just right.'),
+  getLinkInBioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .kv7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SUPPORT_EMAIL */ .e_q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_LINK_IN_BIO */ .sz6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAID_SUBSCRIBERS_JP */ .sfk],
+  getLinkInBioHighlightedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52],
+  getBlogOnboardingSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .kv7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_DNS */ .W0y, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SUPPORT_EMAIL */ .e_q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_8 */ .qYz],
+  getBlogOnboardingHighlightedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52],
+  getBlogOnboardingSignupJetpackFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_SUBSCRIBERS */ .s$2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_JP */ .whr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAID_SUBSCRIBERS_JP */ .sfk],
+  getCheckoutFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SUPPORT_EMAIL */ .e_q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .kv7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_DNS */ .W0y, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAID_SUBSCRIBERS_JP */ .sfk],
   // Features not displayed but used for checking plan abilities
-  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUDIO_UPLOADS */ .XMd],
+  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUDIO_UPLOADS */ .A5J],
   getInferiorFeatures: () => [],
   getCancellationFeatureList: () => ({
     monthly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_AD_FREE_SITE */ .vD, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_COLLECT_PAYMENTS */ .j_, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EMAIL_SUPPORT */ .Ox],
+      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_AD_FREE_SITE */ .uY, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_COLLECT_PAYMENTS */ .Gq, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EMAIL_SUPPORT */ .em],
       andMore: false
     },
     yearly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_AD_FREE_SITE */ .vD, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_COLLECT_PAYMENTS */ .j_, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EMAIL_SUPPORT */ .Ox],
+      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_AD_FREE_SITE */ .uY, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_COLLECT_PAYMENTS */ .Gq, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EMAIL_SUPPORT */ .em],
       andMore: false
     },
     withDomain: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_AD_FREE_SITE */ .vD, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_COLLECT_PAYMENTS */ .j_, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EMAIL_SUPPORT */ .Ox],
+      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_AD_FREE_SITE */ .uY, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_COLLECT_PAYMENTS */ .Gq, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EMAIL_SUPPORT */ .em],
       andMore: false
     }
   })
 });
 const getPlanEcommerceDetails = () => ({
   ...getDotcomPlanDetails(),
-  group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .w9,
-  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_ECOMMERCE */ .h7,
+  group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .Og,
+  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_ECOMMERCE */ .od,
   getTitle: () =>
   // translators: Entrepreneur is a plan name
-  i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Entrepreneur'),
-  getAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for online stores'),
-  getBlogAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for online stores'),
-  getPortfolioAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for online stores'),
-  getStoreAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for online stores'),
-  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Create a powerful online store with built-in premium extensions.'),
+  i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Entrepreneur'),
+  getAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for online stores'),
+  getBlogAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for online stores'),
+  getPortfolioAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for online stores'),
+  getStoreAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for online stores'),
+  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Create a powerful online store with built-in premium extensions.'),
   getDescription: () => {
-    return i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('{{strong}}Best for online stores:{{/strong}} Sell products or services with this powerful, ' + 'all-in-one online store experience. This plan includes premium integrations and is extendable, ' + 'so it’ll grow with you as your business grows.', plansDescriptionHeadingComponent);
+    return i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('{{strong}}Best for online stores:{{/strong}} Sell products or services with this powerful, ' + 'all-in-one online store experience. This plan includes premium integrations and is extendable, ' + 'so it’ll grow with you as your business grows.', plansDescriptionHeadingComponent);
   },
-  getShortDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Sell products or services with this powerful, ' + 'all-in-one online store experience. This plan includes premium integrations and is extendable, ' + 'so it’ll grow with you as your business grows.'),
+  getShortDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Sell products or services with this powerful, ' + 'all-in-one online store experience. This plan includes premium integrations and is extendable, ' + 'so it’ll grow with you as your business grows.'),
   getTagline: function () {
-    return i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Learn more about everything included with %(planName)s and take advantage of its powerful marketplace features.', {
+    return i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Learn more about everything included with %(planName)s and take advantage of its powerful marketplace features.', {
       args: {
         planName: this.getTitle()
       }
@@ -6590,22 +6650,22 @@ const getPlanEcommerceDetails = () => ({
     isLoggedInMonthlyPricing
   } = {}) => compact([
   // pay attention to ordering, shared features should align on /plan page
-  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ .q4V, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ADVANCED */ .c74, isLoggedInMonthlyPricing && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT */ .n_S, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ ._k)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .zKd : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_200GB_STORAGE */ .gI6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .Xk_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MEMBERSHIPS */ .EBu, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_BLOCK */ .EDT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .rli, isLoggedInMonthlyPricing && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_ALL_DAYS */ .vkU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ .Vml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .Vms, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .Zjz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .Ej, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS */ .iTE, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .B2h, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_PLUGINS */ .xjj, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES */ .Tmz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SFTP_DATABASE */ .cWM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_BRANDING */ .Q3C, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS */ .$xY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .$23, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_PRODUCTS_SERVICES */ .Xif, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ECOMMERCE_MARKETING */ .Do2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CUSTOMIZABE_THEMES */ .$vg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_0 */ .MpJ]),
-  getPromotedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_200GB_STORAGE */ .gI6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .Xk_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .rli],
-  getSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS */ .$xY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .$23, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_BUSINESS_FEATURES */ .kI],
-  getBlogSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS */ .$xY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .$23, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_BUSINESS_FEATURES */ .kI],
-  getPortfolioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS */ .$xY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .$23, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_BUSINESS_FEATURES */ .kI],
-  getSignupCompareAvailableFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ .q4V, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .Xk_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_V2 */ .$4, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .fhe, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_ALL_DAYS */ .vkU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EARN_AD */ .Tx8, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ ._k)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .zKd : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .Vms, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INSTALL_PLUGINS */ .V09, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_EXPANDED_ABBR */ .vqo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_BACKUPS_AND_RESTORE */ ._3A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SFTP_DATABASE */ .cWM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS */ .$xY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .$23, _constants__WEBPACK_IMPORTED_MODULE_5__/* .PREMIUM_DESIGN_FOR_STORES */ .fp6].filter(isValueTruthy),
-  get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_STORE_THEMES */ .Pm5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STORE_DESIGN */ .TNr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_PRODUCTS */ .OMq, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DISPLAY_PRODUCTS_BRAND */ .N64, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_ADD_ONS */ .NxG, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ASSEMBLED_KITS */ .jY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MIN_MAX_QTY */ .aWA, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STOCK_NOTIFS */ .Wa6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DYNAMIC_UPSELLS */ .pgw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LOYALTY_PROG */ .xrd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_MARKETING_AUTOMATION */ .Crh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BULK_DISCOUNTS */ .VWq, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INVENTORY_MGMT */ .VUF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STREAMLINED_CHECKOUT */ .IxF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SELL_60_COUNTRIES */ .UQo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_INTEGRATIONS */ .Pnf, i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .ZP.hasTranslation('%(commission)d%% transaction fee for all payment features') || ['en', 'en-gb'].includes((0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .getLocaleSlug */ .Yj)() || '') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_0_ALL */ .TaL : _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_0 */ .MpJ],
-  getCheckoutFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Tez, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLUGINS_THEMES */ .alZ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS */ .$xY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .$23, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_PRODUCTS_SERVICES */ .Xif, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LOYALTY_PROG */ .xrd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INVENTORY */ .nIy, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_MARKETING_AUTOMATION */ .Crh],
+  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ .iWg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ADVANCED */ .szs, isLoggedInMonthlyPricing && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT */ .mu5, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .K4)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .ymT : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_200GB_STORAGE */ .e46, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .uOV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MEMBERSHIPS */ .O2k, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_BLOCK */ .q8v, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .Upo, isLoggedInMonthlyPricing && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_ALL_DAYS */ .e8r, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ ._g6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .VIX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .kXg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .aku, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS */ .WAM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .m_A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_PLUGINS */ .Oa_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES */ .sH3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SFTP_DATABASE */ .SUL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_BRANDING */ .MT_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS */ .OIX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .igQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_PRODUCTS_SERVICES */ .mU$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ECOMMERCE_MARKETING */ .KmV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CUSTOMIZABE_THEMES */ .Rmd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_0 */ .cRc]),
+  getPromotedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_200GB_STORAGE */ .e46, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .uOV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .Upo],
+  getSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS */ .OIX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .igQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_BUSINESS_FEATURES */ .kbF],
+  getBlogSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS */ .OIX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .igQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_BUSINESS_FEATURES */ .kbF],
+  getPortfolioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS */ .OIX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .igQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_BUSINESS_FEATURES */ .kbF],
+  getSignupCompareAvailableFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ .iWg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .uOV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_V2 */ .EZz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .eUY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_ALL_DAYS */ .e8r, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EARN_AD */ .qQy, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .K4)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .ymT : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .VIX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INSTALL_PLUGINS */ .InZ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_EXPANDED_ABBR */ .egP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_BACKUPS_AND_RESTORE */ .GSG, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SFTP_DATABASE */ .SUL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS */ .OIX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .igQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .PREMIUM_DESIGN_FOR_STORES */ .a_g].filter(isValueTruthy),
+  get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_STORE_THEMES */ .E56, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STORE_DESIGN */ .k1q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_PRODUCTS */ .X$n, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DISPLAY_PRODUCTS_BRAND */ .GqV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_ADD_ONS */ .w5C, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ASSEMBLED_KITS */ .K27, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MIN_MAX_QTY */ .SwE, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STOCK_NOTIFS */ .sfF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DYNAMIC_UPSELLS */ .G_S, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LOYALTY_PROG */ .qIi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_MARKETING_AUTOMATION */ .c5G, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BULK_DISCOUNTS */ .GCi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INVENTORY_MGMT */ .QnF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STREAMLINED_CHECKOUT */ .Wan, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SELL_60_COUNTRIES */ .I5k, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_INTEGRATIONS */ .eVB, i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .cp.hasTranslation('%(commission)d%% transaction fee for all payment features') || ['en', 'en-gb'].includes((0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .getLocaleSlug */ .ug)() || '') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_0_ALL */ .Ibm : _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_0 */ .cRc],
+  getCheckoutFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Mnw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLUGINS_THEMES */ .Urh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS */ .OIX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .igQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_PRODUCTS_SERVICES */ .mU$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LOYALTY_PROG */ .qIi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INVENTORY */ .ygb, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_MARKETING_AUTOMATION */ .c5G],
   get2023PricingGridSignupJetpackFeatures: () => [],
   get2023PricingGridSignupStorageOptions: (showLegacyStorageFeature, isCurrentPlan) => {
     let storageOptionSlugs = [];
-    const storageAddOns = [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_50GB_STORAGE_ADD_ON */ ._Z$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_100GB_STORAGE_ADD_ON */ .T3v];
+    const storageAddOns = [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_50GB_STORAGE_ADD_ON */ .KM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_100GB_STORAGE_ADD_ON */ .Ezh];
     if (showLegacyStorageFeature && isCurrentPlan) {
-      storageOptionSlugs = [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_200GB_STORAGE */ .gI6];
+      storageOptionSlugs = [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_200GB_STORAGE */ .e46];
     } else {
-      storageOptionSlugs = (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ ._k)('plans/updated-storage-labels') ? [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_50GB_STORAGE */ .SLH, ...storageAddOns] : [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_200GB_STORAGE */ .gI6];
+      storageOptionSlugs = (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .K4)('plans/updated-storage-labels') ? [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_50GB_STORAGE */ .Wa5, ...storageAddOns] : [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_200GB_STORAGE */ .e46];
     }
     return storageOptionSlugs.map(slug => {
       return {
@@ -6614,162 +6674,162 @@ const getPlanEcommerceDetails = () => ({
       };
     });
   },
-  get2023PlanComparisonConditionalFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES */ .QfP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHARES_SOCIAL_MEDIA_JP */ .TFL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_STANDARD_FEATURES */ .DUl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_WOO_FEATURES */ .XzA],
-  getHostingSignupFeatures: term => () => compact([term !== _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .ob && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SELL_SHIP */ .oTu, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_STORE */ .GWM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INVENTORY */ .nIy, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CHECKOUT */ .PE6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS_V2 */ .y03, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SALES_REPORTS */ .zh5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .$23, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EXTENSIONS */ .FKL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BANDWIDTH */ .Hdl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GLOBAL_EDGE_CACHING */ .BEQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BURST */ .UAg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WAF_V2 */ .Wxo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CDN */ .BPG, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CPUS */ .H_y, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DATACENTRE_FAILOVER */ ._po, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_MALWARE */ .qbT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_DDOS */ .sHn]),
+  get2023PlanComparisonConditionalFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES */ .s7g, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHARES_SOCIAL_MEDIA_JP */ .iCo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_STANDARD_FEATURES */ .yuq, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_WOO_FEATURES */ .CGY],
+  getHostingSignupFeatures: term => () => compact([term !== _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .mI && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SELL_SHIP */ .MzZ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_STORE */ .XR5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INVENTORY */ .ygb, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CHECKOUT */ .y6H, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS_V2 */ .kvY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SALES_REPORTS */ .yQr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .igQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EXTENSIONS */ .ElG, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BANDWIDTH */ .gDm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GLOBAL_EDGE_CACHING */ .qMS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BURST */ .UTM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WAF_V2 */ .btf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CDN */ .kv_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CPUS */ .yKC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DATACENTRE_FAILOVER */ .SsX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_MALWARE */ .sde, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_DDOS */ .eQJ]),
   // Features not displayed but used for checking plan abilities
-  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUDIO_UPLOADS */ .XMd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_MY_BUSINESS */ .ggN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CLOUDFLARE_ANALYTICS */ .$G1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_INSTALL_PURCHASED_PLUGINS */ .n26, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES_PLUGINS */ .vEX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_FORWARDING_EXTENDED_LIMIT */ .HPg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .okS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ATOMIC */ .FNU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .ikw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .Ly9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .DEy],
+  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUDIO_UPLOADS */ .A5J, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_MY_BUSINESS */ .L5H, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CLOUDFLARE_ANALYTICS */ .Yvs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_INSTALL_PURCHASED_PLUGINS */ .uc$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES_PLUGINS */ .WkS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_FORWARDING_EXTENDED_LIMIT */ .mkb, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .iKh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ATOMIC */ .W_T, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .AGr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .UfU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .Unt],
   getInferiorFeatures: () => [],
   getCancellationFeatureList: () => ({
     monthly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_ACCEPT_PAYMENTS */ .bh, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SHIPPING_CARRIERS */ .ST, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PREMIUM_DESIGN */ .ec, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PLUGINS */ .yc, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_TOOLS */ .NV],
+      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_ACCEPT_PAYMENTS */ .kN, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SHIPPING_CARRIERS */ .Oi, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PREMIUM_DESIGN */ .Ep, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PLUGINS */ .YR, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_TOOLS */ .wz],
       andMore: true
     },
     yearly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_ACCEPT_PAYMENTS */ .bh, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SHIPPING_CARRIERS */ .ST, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PREMIUM_DESIGN */ .ec, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PLUGINS */ .yc, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_TOOLS */ .NV],
+      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_ACCEPT_PAYMENTS */ .kN, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SHIPPING_CARRIERS */ .Oi, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PREMIUM_DESIGN */ .Ep, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PLUGINS */ .YR, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_TOOLS */ .wz],
       andMore: true
     },
     withDomain: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_ACCEPT_PAYMENTS */ .bh, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SHIPPING_CARRIERS */ .ST, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PREMIUM_DESIGN */ .ec, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PLUGINS */ .yc, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .zKd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SELL_INTERNATIONALLY */ .JU8],
+      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_ACCEPT_PAYMENTS */ .kN, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SHIPPING_CARRIERS */ .Oi, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PREMIUM_DESIGN */ .Ep, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PLUGINS */ .YR, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .ymT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SELL_INTERNATIONALLY */ .AXt],
       andMore: true
     }
   })
 });
-const getWooExpressMediumPlanCompareFeatures = () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WOOCOMMERCE_STORE */ .NHK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WOOCOMMERCE_MOBILE_APP */ .AXh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDPRESS_CMS */ .JQK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDPRESS_MOBILE_APP */ .bp9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_SSL_CERTIFICATE */ .DJK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_BACKUPS_SECURITY_SCAN */ .tP7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .pOV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_ADMINS */ .SsD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Tez, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT */ .n_S, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .zKd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SALES_REPORTS */ .zh5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS_V3 */ ._lW, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIST_UNLIMITED_PRODUCTS */ .AH6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GIFT_CARDS */ .sKk, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MIN_MAX_ORDER_QUANTITY */ .qpv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_BUNDLES */ .cdC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIST_PRODUCTS_BY_BRAND */ .c$s, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_RECOMMENDATIONS */ .cTd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTEGRATED_PAYMENTS */ .r$c, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTERNATIONAL_PAYMENTS */ .E_W, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_SALES_TAXES */ .$iz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_LOCAL_PAYMENTS */ .yjx, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_RECURRING_PAYMENTS */ .HXS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MIN_MAX_ORDER_QUANTITY */ .qpv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PROMOTE_ON_TIKTOK */ .QWL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SYNC_WITH_PINTEREST */ .ARL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CONNECT_WITH_FACEBOOK */ .gRh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACK_IN_STOCK_NOTIFICATIONS */ .fgK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MARKETING_AUTOMATION */ .S9g, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ABANDONED_CART_RECOVERY */ .Yg_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_TOOLS */ .ljn, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVERTISE_ON_GOOGLE */ .i9T, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_ORDER_EMAILS */ .mFq, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTEGRATED_SHIPMENT_TRACKING */ .hOf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_SHIPPING_RATES */ .PSd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DISCOUNTED_SHIPPING */ .Ws3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRINT_SHIPPING_LABELS */ .hsL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AI_ASSISTED_PRODUCT_DESCRIPTION */ .y8T];
-const getWooExpressSmallPlanCompareFeatures = () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WOOCOMMERCE_STORE */ .NHK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WOOCOMMERCE_MOBILE_APP */ .AXh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDPRESS_CMS */ .JQK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDPRESS_MOBILE_APP */ .bp9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_SSL_CERTIFICATE */ .DJK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_BACKUPS_SECURITY_SCAN */ .tP7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .pOV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_ADMINS */ .SsD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Tez, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT */ .n_S, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .zKd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SALES_REPORTS */ .zh5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS_V3 */ ._lW, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIST_UNLIMITED_PRODUCTS */ .AH6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GIFT_CARDS */ .sKk, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIST_PRODUCTS_BY_BRAND */ .c$s, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTEGRATED_PAYMENTS */ .r$c, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTERNATIONAL_PAYMENTS */ .E_W, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_SALES_TAXES */ .$iz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_LOCAL_PAYMENTS */ .yjx, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_RECURRING_PAYMENTS */ .HXS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PROMOTE_ON_TIKTOK */ .QWL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SYNC_WITH_PINTEREST */ .ARL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CONNECT_WITH_FACEBOOK */ .gRh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_TOOLS */ .ljn, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVERTISE_ON_GOOGLE */ .i9T, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_ORDER_EMAILS */ .mFq, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTEGRATED_SHIPMENT_TRACKING */ .hOf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_SHIPPING_RATES */ .PSd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRINT_SHIPPING_LABELS */ .hsL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AI_ASSISTED_PRODUCT_DESCRIPTION */ .y8T];
+const getWooExpressMediumPlanCompareFeatures = () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WOOCOMMERCE_STORE */ .s9s, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WOOCOMMERCE_MOBILE_APP */ .SYj, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDPRESS_CMS */ .c59, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDPRESS_MOBILE_APP */ .KES, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_SSL_CERTIFICATE */ .oNo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_BACKUPS_SECURITY_SCAN */ .uIq, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .kv7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_ADMINS */ .Az1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Mnw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT */ .mu5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .ymT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SALES_REPORTS */ .yQr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS_V3 */ .gTZ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIST_UNLIMITED_PRODUCTS */ .iod, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GIFT_CARDS */ .y8M, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MIN_MAX_ORDER_QUANTITY */ .CKP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_BUNDLES */ .MLs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIST_PRODUCTS_BY_BRAND */ .GcI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_RECOMMENDATIONS */ .jpZ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTEGRATED_PAYMENTS */ .WCp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTERNATIONAL_PAYMENTS */ ._yU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_SALES_TAXES */ .gr9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_LOCAL_PAYMENTS */ .GSs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_RECURRING_PAYMENTS */ .Hnu, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MIN_MAX_ORDER_QUANTITY */ .CKP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PROMOTE_ON_TIKTOK */ .kT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SYNC_WITH_PINTEREST */ .ic7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CONNECT_WITH_FACEBOOK */ .wdE, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACK_IN_STOCK_NOTIFICATIONS */ .sPk, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MARKETING_AUTOMATION */ .uJ8, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ABANDONED_CART_RECOVERY */ .WY9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_TOOLS */ .c1k, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVERTISE_ON_GOOGLE */ .sVy, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_ORDER_EMAILS */ .$h9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTEGRATED_SHIPMENT_TRACKING */ .Ks4, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_SHIPPING_RATES */ .AhO, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DISCOUNTED_SHIPPING */ .O0P, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRINT_SHIPPING_LABELS */ .oL9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AI_ASSISTED_PRODUCT_DESCRIPTION */ .o0c];
+const getWooExpressSmallPlanCompareFeatures = () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WOOCOMMERCE_STORE */ .s9s, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WOOCOMMERCE_MOBILE_APP */ .SYj, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDPRESS_CMS */ .c59, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDPRESS_MOBILE_APP */ .KES, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_SSL_CERTIFICATE */ .oNo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_BACKUPS_SECURITY_SCAN */ .uIq, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .kv7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_ADMINS */ .Az1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Mnw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT */ .mu5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .ymT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SALES_REPORTS */ .yQr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS_V3 */ .gTZ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIST_UNLIMITED_PRODUCTS */ .iod, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GIFT_CARDS */ .y8M, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIST_PRODUCTS_BY_BRAND */ .GcI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTEGRATED_PAYMENTS */ .WCp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTERNATIONAL_PAYMENTS */ ._yU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_SALES_TAXES */ .gr9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_LOCAL_PAYMENTS */ .GSs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_RECURRING_PAYMENTS */ .Hnu, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PROMOTE_ON_TIKTOK */ .kT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SYNC_WITH_PINTEREST */ .ic7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CONNECT_WITH_FACEBOOK */ .wdE, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_TOOLS */ .c1k, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVERTISE_ON_GOOGLE */ .sVy, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_ORDER_EMAILS */ .$h9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTEGRATED_SHIPMENT_TRACKING */ .Ks4, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_SHIPPING_RATES */ .AhO, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRINT_SHIPPING_LABELS */ .oL9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AI_ASSISTED_PRODUCT_DESCRIPTION */ .o0c];
 const getWooExpressPlanCompareFeatures = () => [...getWooExpressSmallPlanCompareFeatures(), ...getWooExpressMediumPlanCompareFeatures()];
 const getPlanWooExpressMediumDetails = () => ({
   ...getPlanEcommerceDetails(),
-  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Performance'),
-  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Accelerate your growth with advanced features.'),
-  get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_200GB_STORAGE */ .gI6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACK_IN_STOCK_NOTIFICATIONS */ .fgK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MARKETING_AUTOMATION */ .S9g, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_EMAIL_TRIGGERS */ .KgS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CART_ABANDONMENT_EMAILS */ .Cr_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_OFFER_BULK_DISCOUNTS */ .Ce5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_RECOMMEND_ADD_ONS */ .ixG, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MIN_MAX_ORDER_QUANTITY */ .qpv],
+  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Performance'),
+  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Accelerate your growth with advanced features.'),
+  get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_200GB_STORAGE */ .e46, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACK_IN_STOCK_NOTIFICATIONS */ .sPk, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MARKETING_AUTOMATION */ .uJ8, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_EMAIL_TRIGGERS */ .gLS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CART_ABANDONMENT_EMAILS */ .WGB, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_OFFER_BULK_DISCOUNTS */ .IFL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_RECOMMEND_ADD_ONS */ .oZw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MIN_MAX_ORDER_QUANTITY */ .CKP],
   getPlanCompareFeatures: () => getWooExpressPlanCompareFeatures(),
   get2023PlanComparisonFeatureOverride: () => getWooExpressMediumPlanCompareFeatures(),
   get2023PricingGridSignupStorageOptions: () => {
     return [{
-      slug: _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_200GB_STORAGE */ .gI6,
+      slug: _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_200GB_STORAGE */ .e46,
       isAddOn: false
     }];
   },
-  getTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Learn more about everything included with Woo Express Performance and take advantage of its powerful marketplace features.')
+  getTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Learn more about everything included with Woo Express Performance and take advantage of its powerful marketplace features.')
 });
 const getPlanWooExpressSmallDetails = () => ({
   ...getPlanEcommerceDetails(),
-  get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_LIVE_CHAT_SUPPORT */ .LiS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_ADMINS */ .SsD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_50GB_STORAGE */ .SLH, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_PRODUCTS_SERVICES */ .Xif, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .zKd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SELL_INTERNATIONALLY */ .JU8, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATIC_SALES_TAX */ .p8y, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_BACKUPS_SECURITY_SCAN */ .tP7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTEGRATED_SHIPMENT_TRACKING */ .hOf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REAL_TIME_ANALYTICS */ .Hrz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SELL_EGIFTS_AND_VOUCHERS */ .nWg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_MARKETING */ .SoP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MARKETPLACE_SYNC_SOCIAL_MEDIA_INTEGRATION */ ._U0, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_TOOLS */ .ljn, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AI_ASSISTED_PRODUCT_DESCRIPTION */ .y8T],
+  get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_LIVE_CHAT_SUPPORT */ .IfZ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_ADMINS */ .Az1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_50GB_STORAGE */ .Wa5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_PRODUCTS_SERVICES */ .mU$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .ymT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SELL_INTERNATIONALLY */ .AXt, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATIC_SALES_TAX */ .kFp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_BACKUPS_SECURITY_SCAN */ .uIq, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTEGRATED_SHIPMENT_TRACKING */ .Ks4, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REAL_TIME_ANALYTICS */ .qQo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SELL_EGIFTS_AND_VOUCHERS */ .M39, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_MARKETING */ .EzW, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MARKETPLACE_SYNC_SOCIAL_MEDIA_INTEGRATION */ .w7J, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_TOOLS */ .c1k, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AI_ASSISTED_PRODUCT_DESCRIPTION */ .o0c],
   getPlanCompareFeatures: () => getWooExpressPlanCompareFeatures(),
   get2023PlanComparisonFeatureOverride: () => getWooExpressSmallPlanCompareFeatures(),
   get2023PricingGridSignupStorageOptions: () => {
     return [{
-      slug: _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_50GB_STORAGE */ .SLH,
+      slug: _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_50GB_STORAGE */ .Wa5,
       isAddOn: false
     }];
   },
-  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Essential'),
-  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Everything you need to set up your store and start selling your products.'),
-  getTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Learn more about everything included with Woo Express Essential and take advantage of its powerful marketplace features.')
+  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Essential'),
+  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Everything you need to set up your store and start selling your products.'),
+  getTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Learn more about everything included with Woo Express Essential and take advantage of its powerful marketplace features.')
 });
 const getPlanPremiumDetails = () => ({
   ...getDotcomPlanDetails(),
-  group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .w9,
-  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_PREMIUM */ .Kb,
+  group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .Og,
+  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_PREMIUM */ .hs,
   getTitle: () =>
   // translators: Explorer is a plan name
-  i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Explorer'),
-  getAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for freelancers'),
-  getBlogAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for freelancers'),
-  getPortfolioAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for freelancers'),
-  getStoreAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for freelancers'),
-  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Build a unique website with powerful design tools.'),
-  getNewsletterTagLine: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Make it even more memorable with premium designs and style customization.'),
-  getLinkInBioTagLine: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Make a great first impression with premium designs and style customization.'),
-  getBlogOnboardingTagLine: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Make it even more memorable with premium designs, 4K video, and style customization.'),
-  getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('{{strong}}Best for freelancers:{{/strong}} Build a unique website with advanced design tools, CSS editing, lots of space for audio and video,' + ' Google Analytics support,' + ' and the ability to monetize your site with ads.', plansDescriptionHeadingComponent),
-  getShortDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Build a unique website with advanced design tools, CSS editing, lots of space for audio and video,' + ' Google Analytics support,' + ' and the ability to monetize your site with ads.'),
+  i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Explorer'),
+  getAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for freelancers'),
+  getBlogAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for freelancers'),
+  getPortfolioAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for freelancers'),
+  getStoreAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for freelancers'),
+  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Build a unique website with powerful design tools.'),
+  getNewsletterTagLine: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Make it even more memorable with premium designs and style customization.'),
+  getLinkInBioTagLine: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Make a great first impression with premium designs and style customization.'),
+  getBlogOnboardingTagLine: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Make it even more memorable with premium designs, 4K video, and style customization.'),
+  getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('{{strong}}Best for freelancers:{{/strong}} Build a unique website with advanced design tools, CSS editing, lots of space for audio and video,' + ' Google Analytics support,' + ' and the ability to monetize your site with ads.', plansDescriptionHeadingComponent),
+  getShortDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Build a unique website with advanced design tools, CSS editing, lots of space for audio and video,' + ' Google Analytics support,' + ' and the ability to monetize your site with ads.'),
   getPlanCompareFeatures: (_, {
     isLoggedInMonthlyPricing
   } = {}) => compact([
   // pay attention to ordering, shared features should align on /plan page
-  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ .q4V, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ESSENTIAL */ .gqo, isLoggedInMonthlyPricing && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT */ .n_S, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ ._k)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .zKd : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_13GB_STORAGE */ .E5t, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .Xk_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MEMBERSHIPS */ .EBu, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_BLOCK */ .EDT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .rli, isLoggedInMonthlyPricing && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_BUSINESS_DAYS */ .N5t, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ .Vml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .Vms, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .Zjz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .Ej, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS */ .iTE, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_4 */ .MRS]),
-  getPromotedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .Xk_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .rli, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_13GB_STORAGE */ .E5t],
-  getSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_BUSINESS_DAYS */ .N5t, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .rli, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_PERSONAL_FEATURES */ .VyO],
+  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ .iWg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ESSENTIAL */ .aav, isLoggedInMonthlyPricing && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT */ .mu5, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .K4)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .ymT : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_13GB_STORAGE */ .C2J, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .uOV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MEMBERSHIPS */ .O2k, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_BLOCK */ .q8v, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .Upo, isLoggedInMonthlyPricing && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_BUSINESS_DAYS */ .UxR, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ ._g6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .VIX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .kXg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .aku, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS */ .WAM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_4 */ .aOS]),
+  getPromotedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .uOV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .Upo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_13GB_STORAGE */ .C2J],
+  getSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_BUSINESS_DAYS */ .UxR, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .Upo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_PERSONAL_FEATURES */ .YD0],
   getTagline: function () {
-    return i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Take your Newsletter further, faster. Get everything included in %(planName)s, plus premium design themes, baked-in video uploads, ad monetization, deep visitor insights from Google Analytics, and live chat support.', {
+    return i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Take your Newsletter further, faster. Get everything included in %(planName)s, plus premium design themes, baked-in video uploads, ad monetization, deep visitor insights from Google Analytics, and live chat support.', {
       args: {
         planName: this.getTitle()
       }
     });
   },
-  getNewsletterSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Tez, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STYLE_CUSTOMIZATION */ .alN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .zKd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLTD_SOCIAL_MEDIA_JP */ .HBO, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEOPRESS_JP */ .nXV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_PAID */ .ZTn, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_4 */ .MRS],
-  getNewsletterHighlightedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_EMAILS */ .Vhs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .pOV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Tez, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REAL_TIME_ANALYTICS */ .Hrz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .zKd],
+  getNewsletterSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Mnw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STYLE_CUSTOMIZATION */ .kjJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .ymT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLTD_SOCIAL_MEDIA_JP */ .q8F, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEOPRESS_JP */ .m2K, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_PAID */ .W_I, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_4 */ .aOS],
+  getNewsletterHighlightedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_EMAILS */ .c1m, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .kv7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Mnw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REAL_TIME_ANALYTICS */ .qQo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .ymT],
   getLinkInBioDescription: function () {
-    return i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Take your site further, faster. Get everything included in %(planName)s, plus premium design themes, baked-in video uploads, ad monetization, deep visitor insights from Google Analytics, and live chat support.', {
+    return i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Take your site further, faster. Get everything included in %(planName)s, plus premium design themes, baked-in video uploads, ad monetization, deep visitor insights from Google Analytics, and live chat support.', {
       args: {
         planName: this.getTitle()
       }
     });
   },
-  getLinkInBioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Tez, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .zKd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STYLE_CUSTOMIZATION */ .alN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEOPRESS_JP */ .nXV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLTD_SOCIAL_MEDIA_JP */ .HBO, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS */ .lRt, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_PAID */ .ZTn],
-  getLinkInBioHighlightedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2],
-  getBlogOnboardingSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .zKd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STYLE_CUSTOMIZATION */ .alN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Tez, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS */ .lRt, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_4 */ .MRS],
-  getBlogOnboardingHighlightedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2],
-  getBlogOnboardingSignupJetpackFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEOPRESS_JP */ .nXV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLTD_SOCIAL_MEDIA_JP */ .HBO, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_ACTIVITY_LOG_JP */ .NtL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_PAID */ .ZTn],
-  getBlogSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MONETISE */ .SZ6, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ ._k)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .zKd : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_PERSONAL_FEATURES */ .VyO].filter(isValueTruthy),
-  getPortfolioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .rli, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ ._k)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .zKd : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_PERSONAL_FEATURES */ .VyO].filter(isValueTruthy),
-  getSignupCompareAvailableFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ .q4V, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .Xk_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_V2 */ .$4, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .fhe, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_BUSINESS_DAYS */ .N5t, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EARN_AD */ .Tx8, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ ._k)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .zKd : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .Vms].filter(isValueTruthy),
-  get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Tez, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .zKd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS */ .lRt, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STYLE_CUSTOMIZATION */ .alN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_4 */ .MRS],
-  getCheckoutFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Tez, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .zKd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS */ .lRt, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STYLE_CUSTOMIZATION */ .alN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_PAID */ .ZTn, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEOPRESS_JP */ .nXV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLTD_SOCIAL_MEDIA_JP */ .HBO, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_ACTIVITY_LOG_JP */ .NtL],
-  get2023PricingGridSignupJetpackFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEOPRESS_JP */ .nXV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLTD_SOCIAL_MEDIA_JP */ .HBO, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_ACTIVITY_LOG_JP */ .NtL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_PAID */ .ZTn],
+  getLinkInBioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Mnw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .ymT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STYLE_CUSTOMIZATION */ .kjJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEOPRESS_JP */ .m2K, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLTD_SOCIAL_MEDIA_JP */ .q8F, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS */ .S6X, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_PAID */ .W_I],
+  getLinkInBioHighlightedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52],
+  getBlogOnboardingSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .ymT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STYLE_CUSTOMIZATION */ .kjJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Mnw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS */ .S6X, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_4 */ .aOS],
+  getBlogOnboardingHighlightedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52],
+  getBlogOnboardingSignupJetpackFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEOPRESS_JP */ .m2K, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLTD_SOCIAL_MEDIA_JP */ .q8F, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_ACTIVITY_LOG_JP */ .Iz3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_PAID */ .W_I],
+  getBlogSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MONETISE */ .YN7, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .K4)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .ymT : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_PERSONAL_FEATURES */ .YD0].filter(isValueTruthy),
+  getPortfolioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .Upo, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .K4)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .ymT : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_PERSONAL_FEATURES */ .YD0].filter(isValueTruthy),
+  getSignupCompareAvailableFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ .iWg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .uOV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_V2 */ .EZz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .eUY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_BUSINESS_DAYS */ .UxR, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EARN_AD */ .qQy, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .K4)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .ymT : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .VIX].filter(isValueTruthy),
+  get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Mnw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .ymT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS */ .S6X, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STYLE_CUSTOMIZATION */ .kjJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_4 */ .aOS],
+  getCheckoutFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Mnw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .ymT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS */ .S6X, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STYLE_CUSTOMIZATION */ .kjJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_PAID */ .W_I, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEOPRESS_JP */ .m2K, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLTD_SOCIAL_MEDIA_JP */ .q8F, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_ACTIVITY_LOG_JP */ .Iz3],
+  get2023PricingGridSignupJetpackFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEOPRESS_JP */ .m2K, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLTD_SOCIAL_MEDIA_JP */ .q8F, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_ACTIVITY_LOG_JP */ .Iz3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_PAID */ .W_I],
   get2023PricingGridSignupStorageOptions: () => {
     return [{
-      slug: _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_13GB_STORAGE */ .E5t,
+      slug: _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_13GB_STORAGE */ .C2J,
       isAddOn: false
     }];
   },
-  get2023PlanComparisonConditionalFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES */ .QfP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHARES_SOCIAL_MEDIA_JP */ .TFL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_STANDARD_FEATURES */ .DUl],
-  get2023PlanComparisonJetpackFeatureOverride: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYPAL_JP */ .RF_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEOPRESS_JP */ .nXV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_PAID */ .ZTn],
+  get2023PlanComparisonConditionalFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES */ .s7g, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHARES_SOCIAL_MEDIA_JP */ .iCo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_STANDARD_FEATURES */ .yuq],
+  get2023PlanComparisonJetpackFeatureOverride: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYPAL_JP */ .wtE, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEOPRESS_JP */ .m2K, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_PAID */ .W_I],
   // Features not displayed but used for checking plan abilities
-  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUDIO_UPLOADS */ .XMd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CLOUDFLARE_ANALYTICS */ .$G1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .ikw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .Ly9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .DEy],
+  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUDIO_UPLOADS */ .A5J, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CLOUDFLARE_ANALYTICS */ .Yvs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .AGr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .UfU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .Unt],
   getInferiorFeatures: () => [],
   getCancellationFeatureList: () => ({
     monthly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .pG, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PREMIUM_THEMES */ .E9, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_GOOGLE_ANALYTICS */ .qK, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_AD_FREE_SITE */ .vD, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_COLLECT_PAYMENTS */ .j_, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EMAIL_SUPPORT */ .Ox],
+      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .sb, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PREMIUM_THEMES */ .u, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_GOOGLE_ANALYTICS */ .Ip, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_AD_FREE_SITE */ .uY, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_COLLECT_PAYMENTS */ .Gq, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EMAIL_SUPPORT */ .em],
       andMore: false
     },
     yearly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_LIVE_CHAT */ .kK, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .pG, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PREMIUM_THEMES */ .E9, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_GOOGLE_ANALYTICS */ .qK, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_AD_FREE_SITE */ .vD, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_COLLECT_PAYMENTS */ .j_],
+      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_LIVE_CHAT */ .gf, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .sb, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PREMIUM_THEMES */ .u, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_GOOGLE_ANALYTICS */ .Ip, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_AD_FREE_SITE */ .uY, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_COLLECT_PAYMENTS */ .Gq],
       andMore: false
     },
     withDomain: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .pG, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PREMIUM_THEMES */ .E9, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_GOOGLE_ANALYTICS */ .qK, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_COLLECT_PAYMENTS */ .j_, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_AD_FREE_SITE */ .vD],
+      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .sb, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PREMIUM_THEMES */ .u, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_GOOGLE_ANALYTICS */ .Ip, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_COLLECT_PAYMENTS */ .Gq, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_AD_FREE_SITE */ .uY],
       andMore: false
     }
   })
 });
 const getPlanBusinessDetails = () => ({
   ...getDotcomPlanDetails(),
-  group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .w9,
-  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_BUSINESS */ .Qj,
+  group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .Og,
+  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_BUSINESS */ .Gm,
   getTitle: () =>
   // translators: Creator is a plan name
-  i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Creator'),
-  getAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for small businesses'),
-  getBlogAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for small businesses'),
-  getPortfolioAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for small businesses'),
-  getStoreAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('The plan for small businesses'),
-  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Unlock the power of WordPress with plugins and cloud tools.'),
-  getBlogOnboardingTagLine: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Expand your blog with plugins and powerful tools to help you scale.'),
-  getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('{{strong}}Best for small businesses:{{/strong}} Power your' + ' business website with custom plugins and themes,' + ' %(nmOfGB)s GB storage, and the ability to remove WordPress.com branding.', {
+  i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Creator'),
+  getAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for small businesses'),
+  getBlogAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for small businesses'),
+  getPortfolioAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for small businesses'),
+  getStoreAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('The plan for small businesses'),
+  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Unlock the power of WordPress with plugins and cloud tools.'),
+  getBlogOnboardingTagLine: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Expand your blog with plugins and powerful tools to help you scale.'),
+  getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('{{strong}}Best for small businesses:{{/strong}} Power your' + ' business website with custom plugins and themes,' + ' %(nmOfGB)s GB storage, and the ability to remove WordPress.com branding.', {
     ...plansDescriptionHeadingComponent,
     args: {
-      nmOfGB: (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ ._k)('plans/updated-storage-labels') ? '50' : '200'
+      nmOfGB: (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .K4)('plans/updated-storage-labels') ? '50' : '200'
     }
   }),
-  getShortDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Power your business website with custom plugins and themes,' + ' %(nmOfGB)s GB storage, and the ability to remove WordPress.com branding.', {
+  getShortDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Power your business website with custom plugins and themes,' + ' %(nmOfGB)s GB storage, and the ability to remove WordPress.com branding.', {
     args: {
-      nmOfGB: (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ ._k)('plans/updated-storage-labels') ? '50' : '200'
+      nmOfGB: (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .K4)('plans/updated-storage-labels') ? '50' : '200'
     }
   }),
   getTagline: function () {
-    return i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Learn more about everything included with %(planName)s and take advantage of its powerful marketplace features.', {
+    return i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Learn more about everything included with %(planName)s and take advantage of its powerful marketplace features.', {
       args: {
         planName: this.getTitle()
       }
@@ -6779,23 +6839,23 @@ const getPlanBusinessDetails = () => ({
     isLoggedInMonthlyPricing
   } = {}) => compact([
   // pay attention to ordering, shared features should align on /plan page
-  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ .q4V, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ADVANCED */ .c74, isLoggedInMonthlyPricing && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT */ .n_S, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ ._k)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .zKd : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_50GB_STORAGE */ .SLH, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .Xk_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MEMBERSHIPS */ .EBu, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_BLOCK */ .EDT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .rli, isLoggedInMonthlyPricing && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_ALL_DAYS */ .vkU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ .Vml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .Vms, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .Zjz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .Ej, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS */ .iTE, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .B2h, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_PLUGINS */ .xjj, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES */ .Tmz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SFTP_DATABASE */ .cWM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_BRANDING */ .Q3C, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_2 */ .bA$]),
-  getPromotedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_200GB_STORAGE */ .gI6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .Xk_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .rli, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS */ .iTE],
-  getSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES_PLUGINS */ .vEX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_TOOLS */ .ljn, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_PREMIUM_FEATURES */ .Z5U],
-  getBlogSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES_PLUGINS */ .vEX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_TOOLS */ .ljn, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_PREMIUM_FEATURES */ .Z5U],
-  getPortfolioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES_PLUGINS */ .vEX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_200GB_STORAGE */ .gI6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_PREMIUM_FEATURES */ .Z5U],
-  getSignupCompareAvailableFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ .q4V, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .Xk_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_V2 */ .$4, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .fhe, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_ALL_DAYS */ .vkU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EARN_AD */ .Tx8, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ ._k)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .zKd : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .Vms, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INSTALL_PLUGINS */ .V09, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_EXPANDED_ABBR */ .vqo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_BACKUPS_AND_RESTORE */ ._3A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SFTP_DATABASE */ .cWM].filter(isValueTruthy),
-  get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLUGINS_THEMES */ .alZ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BANDWIDTH */ .Hdl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GLOBAL_EDGE_CACHING */ .BEQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BURST */ .UAg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WAF_V2 */ .Wxo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CDN */ .BPG, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CPUS */ .H_y, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DATACENTRE_FAILOVER */ ._po, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ISOLATED_INFRA */ .R9R, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_MALWARE */ .qbT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_DDOS */ .sHn, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DEV_TOOLS */ .YPm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_STAGING_SITES */ ._Ms, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WP_UPDATES */ .bcr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MULTI_SITE */ .AQq, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_2_REGULAR */ .nLo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_0_WOO */ .JRF],
-  getCheckoutFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLUGINS_THEMES */ .alZ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BANDWIDTH */ .Hdl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CDN */ .BPG, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_TOOLS */ .ljn, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Tez, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DEV_TOOLS */ .YPm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REALTIME_BACKUPS_JP */ .cFx, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_ACTIVITY_LOG_JP */ .NtL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_DDOS */ .sHn, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_STAGING_SITES */ ._Ms],
-  get2023PricingGridSignupJetpackFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REALTIME_BACKUPS_JP */ .cFx, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ONE_CLICK_RESTORE_V2 */ .nCh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPTIME_MONITOR_JP */ .SMt, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ES_SEARCH_JP */ .eqi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLUGIN_AUTOUPDATE_JP */ .B4, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_JP */ .qC],
-  get2023PlanComparisonConditionalFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES */ .QfP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_STORE_THEMES */ .Pm5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STORE_DESIGN */ .TNr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_PRODUCTS */ .OMq, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DISPLAY_PRODUCTS_BRAND */ .N64, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_ADD_ONS */ .NxG, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ASSEMBLED_KITS */ .jY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MIN_MAX_QTY */ .aWA, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STOCK_NOTIFS */ .Wa6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DYNAMIC_UPSELLS */ .pgw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LOYALTY_PROG */ .xrd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_MARKETING_AUTOMATION */ .Crh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BULK_DISCOUNTS */ .VWq, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INVENTORY_MGMT */ .VUF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STREAMLINED_CHECKOUT */ .IxF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SELL_60_COUNTRIES */ .UQo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_INTEGRATIONS */ .Pnf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHARES_SOCIAL_MEDIA_JP */ .TFL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_STANDARD_FEATURES */ .DUl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_WOO_FEATURES */ .XzA],
+  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ .iWg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ADVANCED */ .szs, isLoggedInMonthlyPricing && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT */ .mu5, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .K4)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .ymT : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_50GB_STORAGE */ .Wa5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .uOV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MEMBERSHIPS */ .O2k, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_BLOCK */ .q8v, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .Upo, isLoggedInMonthlyPricing && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_ALL_DAYS */ .e8r, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ ._g6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .VIX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .kXg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .aku, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS */ .WAM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .m_A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_PLUGINS */ .Oa_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES */ .sH3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SFTP_DATABASE */ .SUL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_BRANDING */ .MT_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_2 */ .czK]),
+  getPromotedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_200GB_STORAGE */ .e46, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .uOV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .Upo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS */ .WAM],
+  getSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES_PLUGINS */ .WkS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_TOOLS */ .c1k, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_PREMIUM_FEATURES */ .MNZ],
+  getBlogSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES_PLUGINS */ .WkS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_TOOLS */ .c1k, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_PREMIUM_FEATURES */ .MNZ],
+  getPortfolioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES_PLUGINS */ .WkS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_200GB_STORAGE */ .e46, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_PREMIUM_FEATURES */ .MNZ],
+  getSignupCompareAvailableFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ .iWg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .uOV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_V2 */ .EZz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .eUY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_ALL_DAYS */ .e8r, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EARN_AD */ .qQy, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .K4)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .ymT : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .VIX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INSTALL_PLUGINS */ .InZ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_EXPANDED_ABBR */ .egP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_BACKUPS_AND_RESTORE */ .GSG, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SFTP_DATABASE */ .SUL].filter(isValueTruthy),
+  get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLUGINS_THEMES */ .Urh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BANDWIDTH */ .gDm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GLOBAL_EDGE_CACHING */ .qMS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BURST */ .UTM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WAF_V2 */ .btf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CDN */ .kv_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CPUS */ .yKC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DATACENTRE_FAILOVER */ .SsX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ISOLATED_INFRA */ .Y$S, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_MALWARE */ .sde, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_DDOS */ .eQJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DEV_TOOLS */ .AH7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_STAGING_SITES */ .QLg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WP_UPDATES */ .kbu, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MULTI_SITE */ .eEd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_2_REGULAR */ .iS_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_0_WOO */ .c7J],
+  getCheckoutFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLUGINS_THEMES */ .Urh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BANDWIDTH */ .gDm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CDN */ .kv_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_TOOLS */ .c1k, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Mnw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DEV_TOOLS */ .AH7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REALTIME_BACKUPS_JP */ .G6w, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_ACTIVITY_LOG_JP */ .Iz3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_DDOS */ .eQJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_STAGING_SITES */ .QLg],
+  get2023PricingGridSignupJetpackFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REALTIME_BACKUPS_JP */ .G6w, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ONE_CLICK_RESTORE_V2 */ .APj, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPTIME_MONITOR_JP */ .mEy, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ES_SEARCH_JP */ .IVr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLUGIN_AUTOUPDATE_JP */ .msT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_JP */ .i4$],
+  get2023PlanComparisonConditionalFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES */ .s7g, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_STORE_THEMES */ .E56, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STORE_DESIGN */ .k1q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_PRODUCTS */ .X$n, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DISPLAY_PRODUCTS_BRAND */ .GqV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_ADD_ONS */ .w5C, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ASSEMBLED_KITS */ .K27, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MIN_MAX_QTY */ .SwE, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STOCK_NOTIFS */ .sfF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DYNAMIC_UPSELLS */ .G_S, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LOYALTY_PROG */ .qIi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_MARKETING_AUTOMATION */ .c5G, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BULK_DISCOUNTS */ .GCi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INVENTORY_MGMT */ .QnF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STREAMLINED_CHECKOUT */ .Wan, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SELL_60_COUNTRIES */ .I5k, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_INTEGRATIONS */ .eVB, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHARES_SOCIAL_MEDIA_JP */ .iCo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_STANDARD_FEATURES */ .yuq, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_WOO_FEATURES */ .CGY],
   get2023PricingGridSignupStorageOptions: showLegacyStorageFeature => {
     let storageOptionSlugs = [];
-    const storageAddOns = [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_50GB_STORAGE_ADD_ON */ ._Z$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_100GB_STORAGE_ADD_ON */ .T3v];
+    const storageAddOns = [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_50GB_STORAGE_ADD_ON */ .KM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_100GB_STORAGE_ADD_ON */ .Ezh];
     if (showLegacyStorageFeature) {
-      storageOptionSlugs = [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_200GB_STORAGE */ .gI6];
+      storageOptionSlugs = [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_200GB_STORAGE */ .e46];
     } else {
-      storageOptionSlugs = (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ ._k)('plans/updated-storage-labels') ? [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_50GB_STORAGE */ .SLH, ...storageAddOns] : [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_200GB_STORAGE */ .gI6];
+      storageOptionSlugs = (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .K4)('plans/updated-storage-labels') ? [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_50GB_STORAGE */ .Wa5, ...storageAddOns] : [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_200GB_STORAGE */ .e46];
     }
     return storageOptionSlugs.map(slug => {
       return {
@@ -6804,51 +6864,51 @@ const getPlanBusinessDetails = () => ({
       };
     });
   },
-  getHostingSignupFeatures: term => () => compact([term !== _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .ob && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLUGINS_THEMES */ .alZ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BANDWIDTH */ .Hdl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GLOBAL_EDGE_CACHING */ .BEQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BURST */ .UAg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WAF_V2 */ .Wxo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CDN */ .BPG, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CPUS */ .H_y, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DATACENTRE_FAILOVER */ ._po, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ISOLATED_INFRA */ .R9R, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_MALWARE */ .qbT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_DDOS */ .sHn, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DEV_TOOLS */ .YPm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_STAGING_SITES */ ._Ms, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WP_UPDATES */ .bcr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MULTI_SITE */ .AQq]),
-  getBlogOnboardingSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLUGINS_THEMES */ .alZ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_MALWARE */ .qbT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WP_UPDATES */ .bcr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_2 */ .bA$],
-  getBlogOnboardingSignupJetpackFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_JP */ .qC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLUGIN_AUTOUPDATE_JP */ .B4, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REALTIME_BACKUPS_JP */ .cFx, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ONE_CLICK_RESTORE_V2 */ .nCh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ES_SEARCH_JP */ .eqi],
+  getHostingSignupFeatures: term => () => compact([term !== _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .mI && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLUGINS_THEMES */ .Urh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BANDWIDTH */ .gDm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GLOBAL_EDGE_CACHING */ .qMS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BURST */ .UTM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WAF_V2 */ .btf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CDN */ .kv_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CPUS */ .yKC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DATACENTRE_FAILOVER */ .SsX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ISOLATED_INFRA */ .Y$S, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_MALWARE */ .sde, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_DDOS */ .eQJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DEV_TOOLS */ .AH7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_STAGING_SITES */ .QLg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WP_UPDATES */ .kbu, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MULTI_SITE */ .eEd]),
+  getBlogOnboardingSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLUGINS_THEMES */ .Urh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_MALWARE */ .sde, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WP_UPDATES */ .kbu, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_2 */ .czK],
+  getBlogOnboardingSignupJetpackFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_JP */ .i4$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLUGIN_AUTOUPDATE_JP */ .msT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REALTIME_BACKUPS_JP */ .G6w, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ONE_CLICK_RESTORE_V2 */ .APj, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ES_SEARCH_JP */ .IVr],
   // Features not displayed but used for checking plan abilities
-  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUDIO_UPLOADS */ .XMd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_MY_BUSINESS */ .ggN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CLOUDFLARE_ANALYTICS */ .$G1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_INSTALL_PURCHASED_PLUGINS */ .n26, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_FORWARDING_EXTENDED_LIMIT */ .HPg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .okS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ATOMIC */ .FNU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .ikw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .Ly9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .DEy],
+  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUDIO_UPLOADS */ .A5J, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_MY_BUSINESS */ .L5H, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CLOUDFLARE_ANALYTICS */ .Yvs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_INSTALL_PURCHASED_PLUGINS */ .uc$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_FORWARDING_EXTENDED_LIMIT */ .mkb, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .iKh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ATOMIC */ .W_T, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .AGr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .UfU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .Unt],
   getInferiorFeatures: () => [],
   getCancellationFeatureList: () => ({
     monthly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PLUGINS */ .yc, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_TOOLS */ .NV, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_BACKUPS_AND_RESTORE */ .ZJ, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SFTP_AND_DATABASE */ .BS, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EMAIL_SUPPORT */ .Ox],
+      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PLUGINS */ .YR, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_TOOLS */ .wz, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_BACKUPS_AND_RESTORE */ .cz, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SFTP_AND_DATABASE */ .W6, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EMAIL_SUPPORT */ .em],
       andMore: true
     },
     yearly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PLUGINS */ .yc, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_TOOLS */ .NV, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_BACKUPS_AND_RESTORE */ .ZJ, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SFTP_AND_DATABASE */ .BS, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_LIVE_CHAT */ .kK],
+      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PLUGINS */ .YR, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_TOOLS */ .wz, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_BACKUPS_AND_RESTORE */ .cz, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SFTP_AND_DATABASE */ .W6, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_LIVE_CHAT */ .gf],
       andMore: true
     },
     withDomain: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PLUGINS */ .yc, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_TOOLS */ .NV, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_BACKUPS_AND_RESTORE */ .ZJ, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SFTP_AND_DATABASE */ .BS],
+      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PLUGINS */ .YR, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_TOOLS */ .wz, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_BACKUPS_AND_RESTORE */ .cz, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SFTP_AND_DATABASE */ .W6],
       andMore: true
     }
   }),
-  getSenseiFeatures: term => () => compact([term !== _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .ob && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, term !== _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .ob && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_SUPPORT */ .XmH, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_UNLIMITED */ .oUN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_INTERACTIVE */ .QFD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_QUIZZES */ .WgD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_SELL_COURSES */ .uD5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_STORAGE */ .cMf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_HOSTING */ .IFj, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_JETPACK */ .WML]),
-  getSenseiHighlightedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_SUPPORT */ .XmH]
+  getSenseiFeatures: term => () => compact([term !== _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .mI && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, term !== _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .mI && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_SUPPORT */ .MrA, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_UNLIMITED */ .Gsf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_INTERACTIVE */ .aei, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_QUIZZES */ .yil, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_SELL_COURSES */ .IzP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_STORAGE */ .q2R, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_HOSTING */ .Woh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_JETPACK */ .YTl]),
+  getSenseiHighlightedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_SUPPORT */ .MrA]
 });
 const getPlanProDetails = () => ({
   ...getDotcomPlanDetails(),
-  group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .w9,
-  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_PRO */ .lY,
-  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('WordPress Pro'),
-  getTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('This plan gives you access to our most powerful features at an affordable price for an unmatched value you won’t get anywhere else. No longer available to new users.'),
-  getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('You’ve got our best deal on hosting! ' + 'Your Pro plan includes access to all the most popular features WordPress.com has to offer, including premium themes and access to over 50,000 plugins. ' + 'As an existing customer, you can keep your site on this plan as long as your subscription remains active.'),
-  getSubTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Unlimited features. Unbeatable value.'),
-  getPlanCompareFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_TRAFFIC */ .c__, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MANAGED_HOSTING */ .FiJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_THEMES */ .jDM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .zKd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INSTALL_PLUGINS */ .V09, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_INSTALL_PURCHASED_PLUGINS */ .n26, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_SUPPORT */ .J8D, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WOOCOMMERCE */ .O05, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_50GB_STORAGE */ .SLH, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .Xk_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .B2h, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_ADMINS */ .SsD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS */ .iTE, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_BLOCKS */ .x_7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SOCIAL_MEDIA_TOOLS */ .hH1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_TITAN_EMAIL */ .fDA, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MONETISE */ .SZ6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SFTP_DATABASE */ .cWM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_BACKUPS_AND_RESTORE */ ._3A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ESSENTIAL */ .gqo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ .Vml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .Ej, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .Vms],
-  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_EXPANDED_ABBR */ .vqo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUDIO_UPLOADS */ .XMd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CLOUDFLARE_ANALYTICS */ .$G1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_V2 */ .$4, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EARN_AD */ .Tx8, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_FORWARDING_EXTENDED_LIMIT */ .HPg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .Vms, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_MY_BUSINESS */ .ggN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ .q4V, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .rli, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MEMBERSHIPS */ .EBu, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_BRANDING */ .Q3C, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .Zjz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_BLOCK */ .EDT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .okS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SFTP_DATABASE */ .cWM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_BACKUPS_AND_RESTORE */ ._3A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_PLUGINS */ .xjj, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES */ .Tmz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES_PLUGINS */ .vEX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ATOMIC */ .FNU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .ikw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .Ly9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .DEy],
-  getPlanCancellationDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Heads up — you are currently on a legacy plan that is no longer available for new subscribers. ' + 'Your Pro plan includes access to all the most popular features WordPress.com has to offer, ' + 'including premium themes and access to over 50,000 plugins. As an existing Pro plan subscriber, ' + 'you can keep your site on this legacy plan as long as your subscription remains active. ' + 'If canceled, the WordPress.com Pro plan can no longer be added to your account.'),
+  group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .Og,
+  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_PRO */ .AH,
+  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('WordPress Pro'),
+  getTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('This plan gives you access to our most powerful features at an affordable price for an unmatched value you won’t get anywhere else. No longer available to new users.'),
+  getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('You’ve got our best deal on hosting! ' + 'Your Pro plan includes access to all the most popular features WordPress.com has to offer, including premium themes and access to over 50,000 plugins. ' + 'As an existing customer, you can keep your site on this plan as long as your subscription remains active.'),
+  getSubTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Unlimited features. Unbeatable value.'),
+  getPlanCompareFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_TRAFFIC */ .Ccb, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MANAGED_HOSTING */ .CSt, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_THEMES */ .Ixy, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .ymT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INSTALL_PLUGINS */ .InZ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_INSTALL_PURCHASED_PLUGINS */ .uc$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_SUPPORT */ .mOf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WOOCOMMERCE */ .sFZ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_50GB_STORAGE */ .Wa5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .uOV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .m_A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_ADMINS */ .Az1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS */ .WAM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_BLOCKS */ .cn4, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SOCIAL_MEDIA_TOOLS */ .QB3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_TITAN_EMAIL */ .QbO, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MONETISE */ .YN7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SFTP_DATABASE */ .SUL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_BACKUPS_AND_RESTORE */ .GSG, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ESSENTIAL */ .aav, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ ._g6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .aku, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .VIX],
+  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_EXPANDED_ABBR */ .egP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUDIO_UPLOADS */ .A5J, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CLOUDFLARE_ANALYTICS */ .Yvs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_V2 */ .EZz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EARN_AD */ .qQy, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_FORWARDING_EXTENDED_LIMIT */ .mkb, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .VIX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_MY_BUSINESS */ .L5H, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ .iWg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .Upo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MEMBERSHIPS */ .O2k, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_BRANDING */ .MT_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .kXg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_BLOCK */ .q8v, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .iKh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SFTP_DATABASE */ .SUL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_BACKUPS_AND_RESTORE */ .GSG, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_PLUGINS */ .Oa_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES */ .sH3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES_PLUGINS */ .WkS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ATOMIC */ .W_T, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .AGr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .UfU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .Unt],
+  getPlanCancellationDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Heads up — you are currently on a legacy plan that is no longer available for new subscribers. ' + 'Your Pro plan includes access to all the most popular features WordPress.com has to offer, ' + 'including premium themes and access to over 50,000 plugins. As an existing Pro plan subscriber, ' + 'you can keep your site on this legacy plan as long as your subscription remains active. ' + 'If canceled, the WordPress.com Pro plan can no longer be added to your account.'),
   getCancellationFeatureList: () => ({
     monthly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PLUGINS */ .yc, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PREMIUM_THEMES */ .E9, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .pG, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_HIGH_QUALITY_VIDEOS */ .pF, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SFTP_AND_DATABASE */ .BS],
+      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PLUGINS */ .YR, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PREMIUM_THEMES */ .u, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .sb, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_HIGH_QUALITY_VIDEOS */ .qM, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SFTP_AND_DATABASE */ .W6],
       andMore: true
     },
     yearly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PLUGINS */ .yc, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PREMIUM_THEMES */ .E9, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .pG, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_HIGH_QUALITY_VIDEOS */ .pF, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SFTP_AND_DATABASE */ .BS],
+      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PLUGINS */ .YR, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PREMIUM_THEMES */ .u, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .sb, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_HIGH_QUALITY_VIDEOS */ .qM, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SFTP_AND_DATABASE */ .W6],
       andMore: true
     },
     withDomain: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PLUGINS */ .yc, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PREMIUM_THEMES */ .E9, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .pG, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_HIGH_QUALITY_VIDEOS */ .pF],
+      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PLUGINS */ .YR, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PREMIUM_THEMES */ .u, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .sb, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_HIGH_QUALITY_VIDEOS */ .qM],
       andMore: true
     }
   })
@@ -6858,10 +6918,10 @@ const getPlanProDetails = () => ({
 // Woo Express Plus gets its own column in the plans grid.
 const getPlanWooExpressPlusDetails = () => ({
   ...getDotcomPlanDetails(),
-  group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .w9,
-  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_WOO_EXPRESS_PLUS */ .nk,
-  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Plus'),
-  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('For fast-growing businesses that need access to the most powerful tools.'),
+  group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .Og,
+  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_WOO_EXPRESS_PLUS */ .AB,
+  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Plus'),
+  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('For fast-growing businesses that need access to the most powerful tools.'),
   getDescription: () => '',
   get2023PricingGridSignupWpcomFeatures: () => [],
   get2023PricingGridSignupJetpackFeatures: () => [],
@@ -6873,70 +6933,70 @@ const getPlanWooExpressPlusDetails = () => ({
 // Check pdgrnI-1Qp-p2 for more details.
 const get2023EnterprisGrideDetails = () => ({
   ...getDotcomPlanDetails(),
-  group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .w9,
-  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_ENTERPRISE_GRID_WPCOM */ .ci,
-  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Enterprise'),
-  getAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for enterprises'),
-  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Deliver an unmatched performance with the highest security standards on our enterprise content platform.'),
+  group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .Og,
+  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_ENTERPRISE_GRID_WPCOM */ .TM,
+  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Enterprise'),
+  getAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for enterprises'),
+  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Deliver an unmatched performance with the highest security standards on our enterprise content platform.'),
   getDescription: () => '',
   get2023PricingGridSignupWpcomFeatures: () => [],
   get2023PricingGridSignupJetpackFeatures: () => [],
   get2023PricingGridSignupStorageOptions: () => []
 });
 const getJetpackPersonalDetails = () => ({
-  group: _constants__WEBPACK_IMPORTED_MODULE_4__/* .GROUP_JETPACK */ .mk,
-  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_PERSONAL */ .mV,
-  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Personal'),
-  availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_FREE */ .lj].includes(plan),
-  getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('{{strong}}Best for personal use:{{/strong}} Security essentials for your WordPress site, including ' + 'automated backups and priority support.', plansDescriptionHeadingComponent),
-  getTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Your data is being securely backed up and you have access to priority support.'),
-  getPlanCardFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_DAILY_V2 */ .DwI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ANTISPAM_V2 */ .CtJ],
-  getBillingTimeFrame: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('per year'),
-  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_OFFSITE_BACKUP_VAULTPRESS_DAILY */ .s1f, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_ARCHIVE_30 */ .nsi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_STORAGE_SPACE_UNLIMITED */ .$PM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_RESTORES */ .Rp9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SPAM_AKISMET_PLUS */ .V37, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EASY_SITE_MIGRATION */ .$QL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_SUPPORT */ .J8D, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY */ .V1k, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY_MONTHLY */ .TBQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_BI_YEARLY */ .VOS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM */ .zrQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_MONTHLY */ .T$h, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .okS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .B2h, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_OFFSITE_BACKUP_VAULTPRESS_DAILY */ .s1f, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SPAM_AKISMET_PLUS */ .V37, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACTIVITY_LOG */ .wUt, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_SUPPORT */ .J8D, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_FREE_FEATURES_JETPACK */ .igx, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .Ly9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .DEy]
+  group: _constants__WEBPACK_IMPORTED_MODULE_4__/* .GROUP_JETPACK */ .cx,
+  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_PERSONAL */ ._U,
+  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Personal'),
+  availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_FREE */ .MF].includes(plan),
+  getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('{{strong}}Best for personal use:{{/strong}} Security essentials for your WordPress site, including ' + 'automated backups and priority support.', plansDescriptionHeadingComponent),
+  getTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Your data is being securely backed up and you have access to priority support.'),
+  getPlanCardFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_DAILY_V2 */ ._sx, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ANTISPAM_V2 */ .EoQ],
+  getBillingTimeFrame: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('per year'),
+  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_OFFSITE_BACKUP_VAULTPRESS_DAILY */ .bAH, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_ARCHIVE_30 */ .w3i, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_STORAGE_SPACE_UNLIMITED */ .oXY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_RESTORES */ .wpm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SPAM_AKISMET_PLUS */ .Q3G, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EASY_SITE_MIGRATION */ .Go3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_SUPPORT */ .mOf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY */ ._6N, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY_MONTHLY */ .YDI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_BI_YEARLY */ .MfS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM */ .kD0, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_MONTHLY */ .WKv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .iKh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .m_A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_OFFSITE_BACKUP_VAULTPRESS_DAILY */ .bAH, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SPAM_AKISMET_PLUS */ .Q3G, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACTIVITY_LOG */ .QPk, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_SUPPORT */ .mOf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_FREE_FEATURES_JETPACK */ .sFc, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .UfU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .Unt]
 });
 const getJetpackPremiumDetails = () => ({
-  group: _constants__WEBPACK_IMPORTED_MODULE_4__/* .GROUP_JETPACK */ .mk,
-  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_PREMIUM */ .Kb,
-  availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_FREE */ .lj, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_PERSONAL */ .ap, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_PERSONAL_MONTHLY */ .ns].includes(plan),
-  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Premium'),
-  getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('{{strong}}Best for small businesses:{{/strong}} Comprehensive, automated scanning for security vulnerabilities, ' + 'fast video hosting, and marketing automation.', plansDescriptionHeadingComponent),
-  getTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Your site is being secured and you have access to marketing tools and priority support.'),
-  getPlanCardFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_DAILY_V2 */ .DwI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SCAN_V2 */ .w7L, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ANTISPAM_V2 */ .CtJ],
+  group: _constants__WEBPACK_IMPORTED_MODULE_4__/* .GROUP_JETPACK */ .cx,
+  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_PREMIUM */ .hs,
+  availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_FREE */ .MF, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_PERSONAL */ .ie, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_PERSONAL_MONTHLY */ .cp].includes(plan),
+  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Premium'),
+  getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('{{strong}}Best for small businesses:{{/strong}} Comprehensive, automated scanning for security vulnerabilities, ' + 'fast video hosting, and marketing automation.', plansDescriptionHeadingComponent),
+  getTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Your site is being secured and you have access to marketing tools and priority support.'),
+  getPlanCardFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_DAILY_V2 */ ._sx, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SCAN_V2 */ .s8w, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ANTISPAM_V2 */ .EoQ],
   getIncludedFeatures: () => compact([
   // pay attention to ordering, shared features should align on /plan page
-  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_OFFSITE_BACKUP_VAULTPRESS_DAILY */ .s1f, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_ARCHIVE_30 */ .nsi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_STORAGE_SPACE_UNLIMITED */ .$PM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_RESTORES */ .Rp9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SPAM_AKISMET_PLUS */ .V37, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EASY_SITE_MIGRATION */ .$QL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_SUPPORT */ .J8D, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .Zjz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ .Vml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .Ej, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS_JETPACK_PRO */ .QNW, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MALWARE_SCANNING_DAILY */ .zQV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .B2h, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .Vms, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY */ .V1k, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY_MONTHLY */ .TBQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY */ .V1I, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY_MONTHLY */ .FR0, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_BI_YEARLY */ .VOS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM */ .zrQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_MONTHLY */ .T$h, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_VIDEOPRESS_BI_YEARLY */ .rV5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_VIDEOPRESS */ .GwK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_VIDEOPRESS_MONTHLY */ .w6W, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .okS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_OFFSITE_BACKUP_VAULTPRESS_DAILY */ .s1f, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SPAM_AKISMET_PLUS */ .V37, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MALWARE_SCANNING_DAILY */ .zQV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATIC_SECURITY_FIXES */ .m1c, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS_JETPACK_PRO */ .QNW, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .Ej, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .B2h, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_FREE_FEATURES_JETPACK */ .igx, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .ikw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .Ly9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .DEy])
+  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_OFFSITE_BACKUP_VAULTPRESS_DAILY */ .bAH, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_ARCHIVE_30 */ .w3i, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_STORAGE_SPACE_UNLIMITED */ .oXY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_RESTORES */ .wpm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SPAM_AKISMET_PLUS */ .Q3G, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EASY_SITE_MIGRATION */ .Go3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_SUPPORT */ .mOf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .kXg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ ._g6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .aku, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS_JETPACK_PRO */ .u0Y, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MALWARE_SCANNING_DAILY */ .KIt, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .m_A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .VIX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY */ ._6N, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY_MONTHLY */ .YDI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY */ .Alh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY_MONTHLY */ .uUP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_BI_YEARLY */ .MfS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM */ .kD0, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_MONTHLY */ .WKv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_VIDEOPRESS_BI_YEARLY */ .PoC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_VIDEOPRESS */ .U37, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_VIDEOPRESS_MONTHLY */ .Csw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .iKh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_OFFSITE_BACKUP_VAULTPRESS_DAILY */ .bAH, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SPAM_AKISMET_PLUS */ .Q3G, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MALWARE_SCANNING_DAILY */ .KIt, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATIC_SECURITY_FIXES */ .Arm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS_JETPACK_PRO */ .u0Y, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .aku, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .m_A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_FREE_FEATURES_JETPACK */ .sFc, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .AGr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .UfU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .Unt])
 });
 const getJetpackBusinessDetails = () => ({
-  group: _constants__WEBPACK_IMPORTED_MODULE_4__/* .GROUP_JETPACK */ .mk,
-  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_BUSINESS */ .Qj,
-  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Professional'),
-  availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_FREE */ .lj, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_PREMIUM */ .Xz, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_PREMIUM_MONTHLY */ .p2, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_PERSONAL */ .ap, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_PERSONAL_MONTHLY */ .ns].includes(plan),
-  getDescription: () => (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ ._k)('themes/premium') ? i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('{{strong}}Best for organizations:{{/strong}} The most powerful WordPress sites.', plansDescriptionHeadingComponent) : i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('{{strong}}Best for organizations:{{/strong}} The most powerful WordPress sites: real-time backups ' + 'and premium themes.', plansDescriptionHeadingComponent),
-  getTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('You have the full suite of security and performance tools.'),
-  getPlanCardFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_REALTIME_V2 */ .csF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_SCAN_REALTIME_V2 */ .XgZ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ANTISPAM_V2 */ .CtJ],
+  group: _constants__WEBPACK_IMPORTED_MODULE_4__/* .GROUP_JETPACK */ .cx,
+  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_BUSINESS */ .Gm,
+  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Professional'),
+  availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_FREE */ .MF, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_PREMIUM */ .QX, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_PREMIUM_MONTHLY */ .Oc, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_PERSONAL */ .ie, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_PERSONAL_MONTHLY */ .cp].includes(plan),
+  getDescription: () => (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .K4)('themes/premium') ? i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('{{strong}}Best for organizations:{{/strong}} The most powerful WordPress sites.', plansDescriptionHeadingComponent) : i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('{{strong}}Best for organizations:{{/strong}} The most powerful WordPress sites: real-time backups ' + 'and premium themes.', plansDescriptionHeadingComponent),
+  getTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('You have the full suite of security and performance tools.'),
+  getPlanCardFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_REALTIME_V2 */ .QN9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_SCAN_REALTIME_V2 */ .IRv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ANTISPAM_V2 */ .EoQ],
   getIncludedFeatures: () => compact([
   // pay attention to ordering, shared features should align on /plan page
-  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_OFFSITE_BACKUP_VAULTPRESS_REALTIME */ ._sL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_ARCHIVE_UNLIMITED */ .L2_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_STORAGE_SPACE_UNLIMITED */ .$PM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_RESTORES */ .Rp9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SPAM_AKISMET_PLUS */ .V37, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EASY_SITE_MIGRATION */ .$QL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_SUPPORT */ .J8D, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .Zjz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ .Vml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .Ej, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS_JETPACK_PRO */ .QNW, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MALWARE_SCANNING_DAILY_AND_ON_DEMAND */ .vQ$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ONE_CLICK_THREAT_RESOLUTION */ .E30, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .B2h, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .Vms, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_REALTIME */ .s4b, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_REALTIME_MONTHLY */ .TZT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY */ .V1I, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY_MONTHLY */ .FR0, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_BI_YEARLY */ .VOS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM */ .zrQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_MONTHLY */ .T$h, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_VIDEOPRESS_BI_YEARLY */ .rV5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_VIDEOPRESS */ .GwK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_VIDEOPRESS_MONTHLY */ .w6W, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .okS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_OFFSITE_BACKUP_VAULTPRESS_REALTIME */ ._sL, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ ._k)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .zKd : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_PREMIUM_FEATURES_JETPACK */ .PUy, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .ikw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .Ly9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .DEy]),
-  getInferiorFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY */ .V1k, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY_MONTHLY */ .TBQ]
+  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_OFFSITE_BACKUP_VAULTPRESS_REALTIME */ .eeD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_ARCHIVE_UNLIMITED */ .q29, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_STORAGE_SPACE_UNLIMITED */ .oXY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_RESTORES */ .wpm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SPAM_AKISMET_PLUS */ .Q3G, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EASY_SITE_MIGRATION */ .Go3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_SUPPORT */ .mOf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .kXg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ ._g6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .aku, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS_JETPACK_PRO */ .u0Y, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MALWARE_SCANNING_DAILY_AND_ON_DEMAND */ .wNd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ONE_CLICK_THREAT_RESOLUTION */ .qmL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .m_A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .VIX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_REALTIME */ .s38, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_REALTIME_MONTHLY */ .uqO, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY */ .Alh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY_MONTHLY */ .uUP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_BI_YEARLY */ .MfS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM */ .kD0, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_MONTHLY */ .WKv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_VIDEOPRESS_BI_YEARLY */ .PoC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_VIDEOPRESS */ .U37, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_VIDEOPRESS_MONTHLY */ .Csw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .iKh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_OFFSITE_BACKUP_VAULTPRESS_REALTIME */ .eeD, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .K4)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .ymT : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_PREMIUM_FEATURES_JETPACK */ .qwV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .AGr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .UfU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .Unt]),
+  getInferiorFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY */ ._6N, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY_MONTHLY */ .YDI]
 });
 const getPlanJetpackSecurityDailyDetails = () => ({
-  group: _constants__WEBPACK_IMPORTED_MODULE_4__/* .GROUP_JETPACK */ .mk,
-  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_SECURITY_DAILY */ .VH,
-  getTitle: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Security {{em}}Daily{{/em}}', {
+  group: _constants__WEBPACK_IMPORTED_MODULE_4__/* .GROUP_JETPACK */ .cx,
+  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_SECURITY_DAILY */ .aS,
+  getTitle: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Security {{em}}Daily{{/em}}', {
     components: {
       em: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("em", null)
     }
   }),
-  availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_FREE */ .lj, ..._constants__WEBPACK_IMPORTED_MODULE_4__/* .JETPACK_LEGACY_PLANS */ .$U].includes(plan),
-  getDescription: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('All of the essential Jetpack Security features in one package including VaultPress Backup, Scan, Akismet Anti-spam and more.'),
-  getTagline: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Best for sites with occasional updates'),
-  getPlanCardFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_BACKUP_DAILY_V2 */ .afj, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_SCAN_DAILY_V2 */ .oIe, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ANTISPAM_V2 */ .CtJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WAF */ .YmK],
-  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY */ .V1k, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY_MONTHLY */ .TBQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY */ .V1I, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY_MONTHLY */ .FR0, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_BI_YEARLY */ .VOS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM */ .zrQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_MONTHLY */ .T$h, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_ARCHIVE_30 */ .nsi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .Zjz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .B2h, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .okS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ .Vml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .Ej, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .Vms, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_SUPPORT */ .J8D, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .ikw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .Ly9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .DEy]
+  availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_FREE */ .MF, ..._constants__WEBPACK_IMPORTED_MODULE_4__/* .JETPACK_LEGACY_PLANS */ .iC].includes(plan),
+  getDescription: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('All of the essential Jetpack Security features in one package including VaultPress Backup, Scan, Akismet Anti-spam and more.'),
+  getTagline: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Best for sites with occasional updates'),
+  getPlanCardFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_BACKUP_DAILY_V2 */ .kpo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_SCAN_DAILY_V2 */ .uQo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ANTISPAM_V2 */ .EoQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WAF */ .MQj],
+  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY */ ._6N, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY_MONTHLY */ .YDI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY */ .Alh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY_MONTHLY */ .uUP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_BI_YEARLY */ .MfS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM */ .kD0, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_MONTHLY */ .WKv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_ARCHIVE_30 */ .w3i, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .kXg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .m_A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .iKh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ ._g6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .aku, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .VIX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_SUPPORT */ .mOf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .AGr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .UfU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .Unt]
 });
 const getPlanJetpackSecurityRealtimeDetails = () => ({
-  group: _constants__WEBPACK_IMPORTED_MODULE_4__/* .GROUP_JETPACK */ .mk,
-  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_SECURITY_REALTIME */ .VP,
-  getTitle: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Security {{em}}Real-time{{/em}}', {
+  group: _constants__WEBPACK_IMPORTED_MODULE_4__/* .GROUP_JETPACK */ .cx,
+  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_SECURITY_REALTIME */ .uM,
+  getTitle: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Security {{em}}Real-time{{/em}}', {
     components: {
       em: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("em", {
         style: {
@@ -6945,75 +7005,75 @@ const getPlanJetpackSecurityRealtimeDetails = () => ({
       })
     }
   }),
-  availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_FREE */ .lj, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_DAILY */ .Vl, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_DAILY_MONTHLY */ .Dl, ..._constants__WEBPACK_IMPORTED_MODULE_4__/* .JETPACK_LEGACY_PLANS */ .$U].includes(plan),
-  getDescription: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Get next-level protection with real-time backups, real-time scan and all essential security tools.'),
-  getTagline: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Best for sites with frequent updates'),
-  getPlanCardFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLAN_SECURITY_DAILY */ .X2I, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_BACKUP_REALTIME_V2 */ .HpB, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_SCAN_REALTIME_V2 */ .XgZ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACTIVITY_LOG_1_YEAR_V2 */ .n$d],
-  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_REALTIME */ .s4b, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_REALTIME_MONTHLY */ .TZT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY */ .V1I, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY_MONTHLY */ .FR0, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_BI_YEARLY */ .VOS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM */ .zrQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_MONTHLY */ .T$h, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_ARCHIVE_UNLIMITED */ .L2_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS_JETPACK_PRO */ .QNW, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .Zjz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .B2h, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .okS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ .Vml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .Ej, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .Vms, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_SUPPORT */ .J8D, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .ikw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .Ly9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .DEy],
-  getInferiorFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY */ .V1k, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY_MONTHLY */ .TBQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_ARCHIVE_30 */ .nsi]
+  availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_FREE */ .MF, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_DAILY */ .Il, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_DAILY_MONTHLY */ .Mx, ..._constants__WEBPACK_IMPORTED_MODULE_4__/* .JETPACK_LEGACY_PLANS */ .iC].includes(plan),
+  getDescription: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Get next-level protection with real-time backups, real-time scan and all essential security tools.'),
+  getTagline: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Best for sites with frequent updates'),
+  getPlanCardFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLAN_SECURITY_DAILY */ .oXw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_BACKUP_REALTIME_V2 */ .UVi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_SCAN_REALTIME_V2 */ .IRv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACTIVITY_LOG_1_YEAR_V2 */ .sLd],
+  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_REALTIME */ .s38, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_REALTIME_MONTHLY */ .uqO, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY */ .Alh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY_MONTHLY */ .uUP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_BI_YEARLY */ .MfS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM */ .kD0, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_MONTHLY */ .WKv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_ARCHIVE_UNLIMITED */ .q29, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS_JETPACK_PRO */ .u0Y, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .kXg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .m_A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .iKh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ ._g6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .aku, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .VIX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_SUPPORT */ .mOf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .AGr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .UfU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .Unt],
+  getInferiorFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY */ ._6N, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY_MONTHLY */ .YDI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_ARCHIVE_30 */ .w3i]
 });
 const getPlanJetpackSecurityT1Details = () => ({
   ...getJetpackCommonPlanDetails(),
-  group: _constants__WEBPACK_IMPORTED_MODULE_4__/* .GROUP_JETPACK */ .mk,
-  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_SECURITY_T1 */ .w,
-  getTitle: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Security', {
+  group: _constants__WEBPACK_IMPORTED_MODULE_4__/* .GROUP_JETPACK */ .cx,
+  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_SECURITY_T1 */ .IB,
+  getTitle: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Security', {
     context: 'Jetpack product name'
   }),
-  availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_FREE */ .lj, ..._constants__WEBPACK_IMPORTED_MODULE_4__/* .JETPACK_LEGACY_PLANS */ .$U].includes(plan),
-  getDescription: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Easy-to-use, comprehensive WordPress site security including backups, malware scanning, and spam protection.'),
-  getFeaturedDescription: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('This bundle includes:{{ul}}{{li}}VaultPress Backup (10GB){{/li}}{{li}}Scan{{/li}}{{li}}Akismet Anti-spam (10k API calls/mo){{/li}}{{/ul}}', {
+  availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_FREE */ .MF, ..._constants__WEBPACK_IMPORTED_MODULE_4__/* .JETPACK_LEGACY_PLANS */ .iC].includes(plan),
+  getDescription: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Easy-to-use, comprehensive WordPress site security including backups, malware scanning, and spam protection.'),
+  getFeaturedDescription: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('This bundle includes:{{ul}}{{li}}VaultPress Backup (10GB){{/li}}{{li}}Scan{{/li}}{{li}}Akismet Anti-spam (10k API calls/mo){{/li}}{{/ul}}', {
     components: {
       ul: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", null),
       li: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", null)
     },
     comment: '{{ul}}{{ul/}} represents an unordered list, and {{li}}{/li} represents a list item'
   }),
-  getLightboxDescription: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Easy-to-use, comprehensive WordPress site security including backups, malware scanning, and spam protection.{{br/}}Includes VaultPress Backup, Jetpack Scan, and Akismet Anti-spam.', {
+  getLightboxDescription: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Easy-to-use, comprehensive WordPress site security including backups, malware scanning, and spam protection.{{br/}}Includes VaultPress Backup, Jetpack Scan, and Akismet Anti-spam.', {
     components: {
       br: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("br", null)
     },
     comment: '{{br/}} represents a line break'
   }),
-  getPlanCardFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_PRODUCT_BACKUP */ .VZW, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_REAL_TIME_MALWARE_SCANNING */ .xlk, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ANTISPAM_V2 */ .CtJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WAF */ .YmK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_30_DAY_ARCHIVE_ACTIVITY_LOG */ .DtS],
-  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_T1_BI_YEARLY */ ._sk, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_T1_YEARLY */ .$pY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_T1_MONTHLY */ .mX4, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY */ .V1I, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY_MONTHLY */ .FR0, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_BI_YEARLY */ .VOS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM */ .zrQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_MONTHLY */ .T$h, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_ARCHIVE_UNLIMITED */ .L2_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS_JETPACK_PRO */ .QNW, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .Zjz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .B2h, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .okS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ .Vml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .Ej, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .Vms, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_SUPPORT */ .J8D, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .ikw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .Ly9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .DEy],
-  getBenefits: () => [(0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Protect your revenue stream and content'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Learn about issues before your customers are impacted'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Restore your site in one click from desktop or mobile'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Fix your site without a developer'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Protect Woo order and customer data'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Save time manually reviewing spam'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Best-in-class support from WordPress experts')],
-  getInferiorFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY */ .V1k, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY_MONTHLY */ .TBQ]
+  getPlanCardFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_PRODUCT_BACKUP */ .OGc, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_REAL_TIME_MALWARE_SCANNING */ .iSy, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ANTISPAM_V2 */ .EoQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WAF */ .MQj, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_30_DAY_ARCHIVE_ACTIVITY_LOG */ .imc],
+  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_T1_BI_YEARLY */ .g7W, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_T1_YEARLY */ .G2A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_T1_MONTHLY */ .M1A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY */ .Alh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY_MONTHLY */ .uUP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_BI_YEARLY */ .MfS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM */ .kD0, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_MONTHLY */ .WKv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_ARCHIVE_UNLIMITED */ .q29, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS_JETPACK_PRO */ .u0Y, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .kXg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .m_A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .iKh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ ._g6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .aku, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .VIX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_SUPPORT */ .mOf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .AGr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .UfU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .Unt],
+  getBenefits: () => [(0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Protect your revenue stream and content'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Learn about issues before your customers are impacted'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Restore your site in one click from desktop or mobile'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Fix your site without a developer'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Protect Woo order and customer data'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Save time manually reviewing spam'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Best-in-class support from WordPress experts')],
+  getInferiorFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY */ ._6N, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY_MONTHLY */ .YDI]
 });
 const getPlanJetpackSecurityT2Details = () => ({
   ...getPlanJetpackSecurityT1Details(),
-  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_SECURITY_T2 */ .$h,
-  getPlanCardFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLAN_SECURITY_DAILY */ .X2I, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_BACKUP_REALTIME_V2 */ .HpB, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_SCAN_REALTIME_V2 */ .XgZ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WAF */ .YmK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_1_YEAR_ARCHIVE_ACTIVITY_LOG */ .ZY2],
-  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_T2_YEARLY */ .tS0, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_T2_MONTHLY */ .L2R, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY */ .V1I, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY_MONTHLY */ .FR0, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_BI_YEARLY */ .VOS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM */ .zrQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_MONTHLY */ .T$h, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_ARCHIVE_UNLIMITED */ .L2_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS_JETPACK_PRO */ .QNW, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .Zjz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .B2h, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .okS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ .Vml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .Ej, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .Vms, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_SUPPORT */ .J8D, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .ikw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .Ly9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .DEy],
-  getInferiorFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY */ .V1k, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY_MONTHLY */ .TBQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_ARCHIVE_30 */ .nsi]
+  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_SECURITY_T2 */ .Uk,
+  getPlanCardFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLAN_SECURITY_DAILY */ .oXw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_BACKUP_REALTIME_V2 */ .UVi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_SCAN_REALTIME_V2 */ .IRv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WAF */ .MQj, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_1_YEAR_ARCHIVE_ACTIVITY_LOG */ .G0J],
+  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_T2_YEARLY */ .Mhk, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_T2_MONTHLY */ .AxH, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY */ .Alh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY_MONTHLY */ .uUP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_BI_YEARLY */ .MfS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM */ .kD0, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_MONTHLY */ .WKv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_ARCHIVE_UNLIMITED */ .q29, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS_JETPACK_PRO */ .u0Y, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .kXg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .m_A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .iKh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ ._g6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .aku, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .VIX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_SUPPORT */ .mOf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .AGr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .UfU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .Unt],
+  getInferiorFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY */ ._6N, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY_MONTHLY */ .YDI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_ARCHIVE_30 */ .w3i]
 });
 const getPlanJetpackCompleteDetails = () => ({
   ...getJetpackCommonPlanDetails(),
-  group: _constants__WEBPACK_IMPORTED_MODULE_4__/* .GROUP_JETPACK */ .mk,
-  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_ALL */ .L7,
-  getTitle: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Complete', {
+  group: _constants__WEBPACK_IMPORTED_MODULE_4__/* .GROUP_JETPACK */ .cx,
+  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_ALL */ .K_,
+  getTitle: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Complete', {
     context: 'Jetpack plan name'
   }),
-  availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_FREE */ .lj, ..._constants__WEBPACK_IMPORTED_MODULE_4__/* .JETPACK_SECURITY_PLANS */ .jj, ..._constants__WEBPACK_IMPORTED_MODULE_4__/* .JETPACK_LEGACY_PLANS */ .$U].includes(plan),
-  getDescription: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Get the full power of Jetpack with all Security, Performance, Growth, and Design tools.'),
-  getFeaturedDescription: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Get the full Jetpack suite with real-time security tools, improved site performance, and tools to grow your business.'),
-  getLightboxDescription: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Full Jetpack suite with real-time security, instant site search, ad-free video, all CRM extensions, and extra storage for backups and video.'),
-  getTagline: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('For best-in-class WordPress sites'),
-  getPlanCardFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ALL_BACKUP_SECURITY_FEATURES */ .lYf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_1TB_BACKUP_STORAGE */ .puh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_PRODUCT_VIDEOPRESS */ .sQp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_SEARCH_V2 */ .dZ$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CRM_V2 */ .rDn, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_1_YEAR_ARCHIVE_ACTIVITY_LOG */ .ZY2],
-  getIncludedFeatures: () => compact([_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_T2_YEARLY */ .tS0, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_T2_MONTHLY */ .L2R, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY */ .V1I, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY_MONTHLY */ .FR0, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_BI_YEARLY */ .VOS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM */ .zrQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_MONTHLY */ .T$h, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SEARCH_BI_YEARLY */ .Mrh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SEARCH */ .lv3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SEARCH_MONTHLY */ .ewW, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_CRM */ .liF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_CRM_MONTHLY */ .DJ3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_ARCHIVE_UNLIMITED */ .L2_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS_JETPACK_PRO */ .QNW, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BOOST_BI_YEARLY */ .JT_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BOOST */ .Ayy, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BOOST_MONTHLY */ .bsv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SOCIAL_ADVANCED_BI_YEARLY */ .SH3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SOCIAL_ADVANCED */ .sGT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SOCIAL_ADVANCED_MONTHLY */ .sTW, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_VIDEOPRESS_BI_YEARLY */ .rV5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_VIDEOPRESS */ .GwK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_VIDEOPRESS_MONTHLY */ .w6W, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CLOUD_CRITICAL_CSS */ ._vQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .Zjz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .B2h, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .okS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ .Vml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .Ej, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .Vms, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ ._k)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .zKd : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_SUPPORT */ .J8D, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .ikw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .Ly9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .DEy, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_PAID */ .ZTn]),
-  getInferiorFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY */ .V1k, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY_MONTHLY */ .TBQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_ARCHIVE_30 */ .nsi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SOCIAL_BASIC_BI_YEARLY */ .n2c, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SOCIAL_BASIC */ .AvT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SOCIAL_BASIC_MONTHLY */ .iC1],
-  getBenefits: () => [(0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Protect your revenue stream and content'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Learn about issues before your customers are impacted'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Restore your site in one click from desktop or mobile'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Fix your site without a developer'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Protect Woo order and customer data'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Save time manually reviewing spam'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Grow your business with video, social, and CRM tools'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Best-in-class support from WordPress experts')]
+  availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_FREE */ .MF, ..._constants__WEBPACK_IMPORTED_MODULE_4__/* .JETPACK_SECURITY_PLANS */ .Ut, ..._constants__WEBPACK_IMPORTED_MODULE_4__/* .JETPACK_LEGACY_PLANS */ .iC].includes(plan),
+  getDescription: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Get the full power of Jetpack with all Security, Performance, Growth, and Design tools.'),
+  getFeaturedDescription: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Get the full Jetpack suite with real-time security tools, improved site performance, and tools to grow your business.'),
+  getLightboxDescription: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Full Jetpack suite with real-time security, instant site search, ad-free video, all CRM extensions, and extra storage for backups and video.'),
+  getTagline: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('For best-in-class WordPress sites'),
+  getPlanCardFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ALL_BACKUP_SECURITY_FEATURES */ .CKd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_1TB_BACKUP_STORAGE */ .Il5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_PRODUCT_VIDEOPRESS */ .uCi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_SEARCH_V2 */ .Umo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CRM_V2 */ .eIi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_1_YEAR_ARCHIVE_ACTIVITY_LOG */ .G0J],
+  getIncludedFeatures: () => compact([_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_T2_YEARLY */ .Mhk, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_T2_MONTHLY */ .AxH, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY */ .Alh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY_MONTHLY */ .uUP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_BI_YEARLY */ .MfS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM */ .kD0, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_MONTHLY */ .WKv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SEARCH_BI_YEARLY */ .Y$v, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SEARCH */ .wtH, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SEARCH_MONTHLY */ .IlF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_CRM */ .S8s, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_CRM_MONTHLY */ .KST, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_ARCHIVE_UNLIMITED */ .q29, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS_JETPACK_PRO */ .u0Y, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BOOST_BI_YEARLY */ .IHO, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BOOST */ .k1W, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BOOST_MONTHLY */ .AN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SOCIAL_ADVANCED_BI_YEARLY */ .Aps, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SOCIAL_ADVANCED */ .aGs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SOCIAL_ADVANCED_MONTHLY */ .Qnn, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_VIDEOPRESS_BI_YEARLY */ .PoC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_VIDEOPRESS */ .U37, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_VIDEOPRESS_MONTHLY */ .Csw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CLOUD_CRITICAL_CSS */ .oLu, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .kXg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .m_A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .iKh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ ._g6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .aku, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .VIX, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .K4)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .ymT : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_SUPPORT */ .mOf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .AGr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .UfU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .Unt, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_PAID */ .W_I]),
+  getInferiorFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY */ ._6N, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY_MONTHLY */ .YDI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_ARCHIVE_30 */ .w3i, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SOCIAL_BASIC_BI_YEARLY */ .Enp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SOCIAL_BASIC */ .SC1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SOCIAL_BASIC_MONTHLY */ .Afi],
+  getBenefits: () => [(0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Protect your revenue stream and content'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Learn about issues before your customers are impacted'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Restore your site in one click from desktop or mobile'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Fix your site without a developer'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Protect Woo order and customer data'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Save time manually reviewing spam'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Grow your business with video, social, and CRM tools'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Best-in-class support from WordPress experts')]
 });
 const getPlanJetpackStarterDetails = () => ({
   ...getJetpackCommonPlanDetails(),
-  group: _constants__WEBPACK_IMPORTED_MODULE_4__/* .GROUP_JETPACK */ .mk,
-  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_JETPACK_STARTER */ .SW,
-  getTitle: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Starter', {
+  group: _constants__WEBPACK_IMPORTED_MODULE_4__/* .GROUP_JETPACK */ .cx,
+  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_JETPACK_STARTER */ .MR,
+  getTitle: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Starter', {
     context: 'Jetpack product name'
   }),
-  availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_FREE */ .lj, ..._constants__WEBPACK_IMPORTED_MODULE_4__/* .JETPACK_LEGACY_PLANS */ .$U].includes(plan),
-  getTagline: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Essential security tools: real-time backups and comment spam protection.'),
-  getDescription: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Essential security tools: real-time backups and comment spam protection.'),
-  getFeaturedDescription: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('This bundle includes:{{ul}}{{li}}VaultPress Backup (1GB){{/li}}{{li}}Akismet Anti-spam (1k API calls/mo){{/li}}{{/ul}}', {
+  availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_FREE */ .MF, ..._constants__WEBPACK_IMPORTED_MODULE_4__/* .JETPACK_LEGACY_PLANS */ .iC].includes(plan),
+  getTagline: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Essential security tools: real-time backups and comment spam protection.'),
+  getDescription: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Essential security tools: real-time backups and comment spam protection.'),
+  getFeaturedDescription: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('This bundle includes:{{ul}}{{li}}VaultPress Backup (1GB){{/li}}{{li}}Akismet Anti-spam (1k API calls/mo){{/li}}{{/ul}}', {
     components: {
       ul: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", null),
       li: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", null)
@@ -7021,667 +7081,667 @@ const getPlanJetpackStarterDetails = () => ({
     comment: '{{ul}}{{ul/}} represents an unordered list, and {{li}}{/li} represents a list item'
   }),
   getRecommendedFor: () => [{
-    tag: _constants__WEBPACK_IMPORTED_MODULE_4__/* .JETPACK_TAG_FOR_SMALL_SITES */ .KW,
-    label: (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Small sites')
+    tag: _constants__WEBPACK_IMPORTED_MODULE_4__/* .JETPACK_TAG_FOR_SMALL_SITES */ .UD,
+    label: (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Small sites')
   }, {
-    tag: _constants__WEBPACK_IMPORTED_MODULE_4__/* .JETPACK_TAG_FOR_BLOGS */ .l3,
-    label: (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Blogs')
+    tag: _constants__WEBPACK_IMPORTED_MODULE_4__/* .JETPACK_TAG_FOR_BLOGS */ .gH,
+    label: (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Blogs')
   }],
-  getLightboxDescription: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Essential security tools: real-time backups and comment spam protection.'),
-  getPlanCardFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_PRODUCT_BACKUP */ .VZW, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ANTISPAM_V2 */ .CtJ],
-  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_T0_YEARLY */ .Azg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_T0_MONTHLY */ .OJ1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_BI_YEARLY */ .VOS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM */ .zrQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_MONTHLY */ .T$h, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_ARCHIVE_UNLIMITED */ .L2_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS_JETPACK_PRO */ .QNW, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .Zjz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .B2h, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .okS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ .Vml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .Ej, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .Vms, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_SUPPORT */ .J8D, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .Ly9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .DEy],
-  getBenefits: () => [(0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Protect your revenue stream and content'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Restore your site in one click from desktop or mobile'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Fix your site without a developer'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Protect Woo order and customer data'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Save time manually reviewing spam'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Best-in-class support from WordPress experts')],
-  getInferiorFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY */ .V1k, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY_MONTHLY */ .TBQ]
+  getLightboxDescription: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Essential security tools: real-time backups and comment spam protection.'),
+  getPlanCardFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_PRODUCT_BACKUP */ .OGc, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ANTISPAM_V2 */ .EoQ],
+  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_T0_YEARLY */ .w$W, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_T0_MONTHLY */ .qQM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_BI_YEARLY */ .MfS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM */ .kD0, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ANTI_SPAM_MONTHLY */ .WKv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_ARCHIVE_UNLIMITED */ .q29, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS_JETPACK_PRO */ .u0Y, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .kXg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .m_A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .iKh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ ._g6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .aku, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .VIX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_SUPPORT */ .mOf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .UfU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .Unt],
+  getBenefits: () => [(0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Protect your revenue stream and content'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Restore your site in one click from desktop or mobile'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Fix your site without a developer'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Protect Woo order and customer data'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Save time manually reviewing spam'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Best-in-class support from WordPress experts')],
+  getInferiorFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY */ ._6N, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY_MONTHLY */ .YDI]
 });
 const getPlanJetpackGoldenTokenDetails = () => ({
-  group: _constants__WEBPACK_IMPORTED_MODULE_4__/* .GROUP_JETPACK */ .mk,
-  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_GOLDEN_TOKEN */ .l8,
-  getTitle: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Golden Token', {
+  group: _constants__WEBPACK_IMPORTED_MODULE_4__/* .GROUP_JETPACK */ .cx,
+  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_GOLDEN_TOKEN */ .Yb,
+  getTitle: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Golden Token', {
     context: 'The name of a Jetpack plan awarded to amazing WordPress sites'
   }),
-  availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_FREE */ .lj, ..._constants__WEBPACK_IMPORTED_MODULE_4__/* .JETPACK_LEGACY_PLANS */ .$U].includes(plan),
-  getDescription: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('The Golden Token provides a lifetime license for Backup and Scan.'),
-  getTagline: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('A lifetime of Jetpack powers for your website'),
-  getPlanCardFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_BACKUP_REALTIME_V2 */ .HpB, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_SCAN_REALTIME_V2 */ .XgZ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACTIVITY_LOG_1_YEAR_V2 */ .n$d],
-  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_REALTIME */ .s4b, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_REALTIME_MONTHLY */ .TZT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY */ .V1I, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY_MONTHLY */ .FR0, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_ARCHIVE_UNLIMITED */ .L2_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS_JETPACK_PRO */ .QNW, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .Zjz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .B2h, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .okS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ .Vml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .Ej, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .Vms, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_SUPPORT */ .J8D, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .ikw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .DEy],
-  getInferiorFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY */ .V1k, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY_MONTHLY */ .TBQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_ARCHIVE_30 */ .nsi]
+  availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_FREE */ .MF, ..._constants__WEBPACK_IMPORTED_MODULE_4__/* .JETPACK_LEGACY_PLANS */ .iC].includes(plan),
+  getDescription: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('The Golden Token provides a lifetime license for Backup and Scan.'),
+  getTagline: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('A lifetime of Jetpack powers for your website'),
+  getPlanCardFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_BACKUP_REALTIME_V2 */ .UVi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_SCAN_REALTIME_V2 */ .IRv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACTIVITY_LOG_1_YEAR_V2 */ .sLd],
+  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_REALTIME */ .s38, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_REALTIME_MONTHLY */ .uqO, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY */ .Alh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY_MONTHLY */ .uUP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_ARCHIVE_UNLIMITED */ .q29, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS_JETPACK_PRO */ .u0Y, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .kXg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .m_A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .iKh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ ._g6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .aku, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .VIX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_SUPPORT */ .mOf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .AGr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .Unt],
+  getInferiorFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY */ ._6N, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY_MONTHLY */ .YDI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACKUP_ARCHIVE_30 */ .w3i]
 });
 
 // DO NOT import. Use `getPlan` instead.
 const PLANS_LIST = {
-  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ]: {
     ...getPlanFreeDetails(),
-    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .w$,
-    getBillingTimeFrame: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('No expiration date'),
+    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .GK,
+    getBillingTimeFrame: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('No expiration date'),
     getProductId: () => 1,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ,
     getPathSlug: () => 'beginner'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .TW]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .s5]: {
     ...getPlanBloggerDetails(),
-    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .w$,
+    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .GK,
     getBillingTimeFrame: WPComGetBillingTimeframe,
-    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d].includes(plan),
+    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ].includes(plan),
     getProductId: () => 1010,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .TW,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .s5,
     getPathSlug: () => 'blogger'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .uS]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .S8]: {
     ...getPlanBloggerDetails(),
-    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_BIENNIALLY */ .SU,
+    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_BIENNIALLY */ .So,
     getBillingTimeFrame: WPComGetBiennialBillingTimeframe,
-    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .TW].includes(plan),
+    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .s5].includes(plan),
     getProductId: () => 1030,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .uS,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .S8,
     getPathSlug: () => 'blogger-2-years'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .wm]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .eK]: {
     ...getPlanPersonalDetails(),
     ...getMonthlyTimeframe(),
-    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .TW, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .uS].includes(plan),
+    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .s5, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .S8].includes(plan),
     getProductId: () => 1019,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .wm,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .eK,
     getPathSlug: () => 'personal-monthly'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .sy]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .wd]: {
     ...getPlanPersonalDetails(),
-    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .w$,
+    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .GK,
     getBillingTimeFrame: WPComGetBillingTimeframe,
-    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .TW, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .uS, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .wm].includes(plan),
+    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .s5, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .S8, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .eK].includes(plan),
     getProductId: () => 1009,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .sy,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .wd,
     getPathSlug: () => 'personal'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .Qm]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .W_]: {
     ...getPlanPersonalDetails(),
-    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_BIENNIALLY */ .SU,
+    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_BIENNIALLY */ .So,
     getBillingTimeFrame: WPComGetBiennialBillingTimeframe,
-    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .TW, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .uS, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .wm, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .sy].includes(plan),
+    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .s5, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .S8, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .eK, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .wd].includes(plan),
     getProductId: () => 1029,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .Qm,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .W_,
     getPathSlug: () => 'personal-2-years'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_3_YEARS */ .TI]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_3_YEARS */ .sp]: {
     ...getPlanPersonalDetails(),
-    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_TRIENNIALLY */ .IL,
+    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_TRIENNIALLY */ .Gs,
     getBillingTimeFrame: WPComGetTriennialBillingTimeframe,
-    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .TW, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .uS, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .wm, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .sy, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .Qm].includes(plan),
+    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .s5, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .S8, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .eK, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .wd, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .W_].includes(plan),
     getProductId: () => 1049,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_3_YEARS */ .TI,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_3_YEARS */ .sp,
     getPathSlug: () => 'personal-3-years'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_MONTHLY */ .OE]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_MONTHLY */ .k3]: {
     ...getPlanPremiumDetails(),
     ...getMonthlyTimeframe(),
-    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .TW, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .uS, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .wm, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .sy, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .Qm].includes(plan),
+    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .s5, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .S8, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .eK, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .wd, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .W_].includes(plan),
     getProductId: () => 1013,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_MONTHLY */ .OE,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_MONTHLY */ .k3,
     getPathSlug: () => 'premium-monthly'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM */ .xf]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM */ .gh]: {
     ...getPlanPremiumDetails(),
-    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .w$,
+    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .GK,
     getBillingTimeFrame: WPComGetBillingTimeframe,
-    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .TW, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .uS, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .wm, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .sy, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .Qm, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_MONTHLY */ .OE, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_STARTER */ .Id].includes(plan),
+    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .s5, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .S8, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .eK, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .wd, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .W_, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_MONTHLY */ .k3, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_STARTER */ .mU].includes(plan),
     getProductId: () => 1003,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM */ .xf,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM */ .gh,
     getPathSlug: () => 'premium'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_2_YEARS */ .G6]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_2_YEARS */ .Ko]: {
     ...getPlanPremiumDetails(),
-    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_BIENNIALLY */ .SU,
+    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_BIENNIALLY */ .So,
     getBillingTimeFrame: WPComGetBiennialBillingTimeframe,
-    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .TW, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .uS, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .wm, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .sy, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .Qm, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_MONTHLY */ .OE, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM */ .xf].includes(plan),
+    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .s5, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .S8, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .eK, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .wd, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .W_, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_MONTHLY */ .k3, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM */ .gh].includes(plan),
     getProductId: () => 1023,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_2_YEARS */ .G6,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_2_YEARS */ .Ko,
     getPathSlug: () => 'premium-2-years'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_3_YEARS */ ._B]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_3_YEARS */ .Gs]: {
     ...getPlanPremiumDetails(),
-    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_TRIENNIALLY */ .IL,
+    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_TRIENNIALLY */ .Gs,
     getBillingTimeFrame: WPComGetTriennialBillingTimeframe,
-    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .TW, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .uS, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .wm, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .sy, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .Qm, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_3_YEARS */ .TI, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_MONTHLY */ .OE, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM */ .xf, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_2_YEARS */ .G6].includes(plan),
+    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .s5, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .S8, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .eK, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .wd, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .W_, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_3_YEARS */ .sp, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_MONTHLY */ .k3, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM */ .gh, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_2_YEARS */ .Ko].includes(plan),
     getProductId: () => 1043,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_3_YEARS */ ._B,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_3_YEARS */ .Gs,
     getPathSlug: () => 'premium-3-years'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_MONTHLY */ .Wg]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_MONTHLY */ .is]: {
     ...getPlanBusinessDetails(),
     ...getMonthlyTimeframe(),
-    availableFor: plan => (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ ._k)('upgrades/wpcom-monthly-plans') && [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .TW, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .uS, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .wm, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .sy, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .Qm, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_MONTHLY */ .OE, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM */ .xf, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_2_YEARS */ .G6, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_MONTHLY */ .dU, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_MIGRATION_TRIAL_MONTHLY */ .T$, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY */ .Rl].includes(plan),
+    availableFor: plan => (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .K4)('upgrades/wpcom-monthly-plans') && [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .s5, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .S8, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .eK, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .wd, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .W_, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_MONTHLY */ .k3, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM */ .gh, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_2_YEARS */ .Ko, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_MONTHLY */ .U7, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_MIGRATION_TRIAL_MONTHLY */ .WY, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY */ .AX].includes(plan),
     getProductId: () => 1018,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_MONTHLY */ .Wg,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_MONTHLY */ .is,
     getPathSlug: () => 'business-monthly'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS */ .p7]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS */ .CM]: {
     ...getPlanBusinessDetails(),
-    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .w$,
+    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .GK,
     getBillingTimeFrame: WPComGetBillingTimeframe,
-    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_STARTER */ .Id, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO */ ._s, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .TW, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .uS, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .wm, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .sy, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .Qm, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_MONTHLY */ .OE, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM */ .xf, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_2_YEARS */ .G6, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_MONTHLY */ .Wg, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_MONTHLY */ .dU, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_MIGRATION_TRIAL_MONTHLY */ .T$, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY */ .Rl].includes(plan),
+    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_STARTER */ .mU, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO */ .mG, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .s5, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .S8, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .eK, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .wd, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .W_, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_MONTHLY */ .k3, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM */ .gh, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_2_YEARS */ .Ko, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_MONTHLY */ .is, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_MONTHLY */ .U7, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_MIGRATION_TRIAL_MONTHLY */ .WY, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY */ .AX].includes(plan),
     getProductId: () => 1008,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS */ .p7,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS */ .CM,
     getPathSlug: () => 'business'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_2_YEARS */ .j2]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_2_YEARS */ .uo]: {
     ...getPlanBusinessDetails(),
-    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_BIENNIALLY */ .SU,
+    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_BIENNIALLY */ .So,
     getBillingTimeFrame: WPComGetBiennialBillingTimeframe,
-    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_STARTER */ .Id, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .TW, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .uS, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .wm, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .sy, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .Qm, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_MONTHLY */ .OE, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM */ .xf, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_2_YEARS */ .G6, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS */ .p7, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_MONTHLY */ .Wg, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_MONTHLY */ .dU, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO */ ._s, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_2_YEARS */ .ln, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_MIGRATION_TRIAL_MONTHLY */ .T$, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY */ .Rl].includes(plan),
+    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_STARTER */ .mU, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .s5, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .S8, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .eK, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .wd, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .W_, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_MONTHLY */ .k3, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM */ .gh, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_2_YEARS */ .Ko, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS */ .CM, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_MONTHLY */ .is, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_MONTHLY */ .U7, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO */ .mG, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_2_YEARS */ ._I, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_MIGRATION_TRIAL_MONTHLY */ .WY, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY */ .AX].includes(plan),
     getProductId: () => 1028,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_2_YEARS */ .j2,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_2_YEARS */ .uo,
     getPathSlug: () => 'business-2-years'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_3_YEARS */ .hh]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_3_YEARS */ .uQ]: {
     ...getPlanBusinessDetails(),
-    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_TRIENNIALLY */ .IL,
+    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_TRIENNIALLY */ .Gs,
     getBillingTimeFrame: WPComGetTriennialBillingTimeframe,
-    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_STARTER */ .Id, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .TW, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .uS, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .wm, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .sy, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .Qm, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_3_YEARS */ .TI, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_MONTHLY */ .OE, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM */ .xf, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_2_YEARS */ .G6, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_3_YEARS */ ._B, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS */ .p7, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_MONTHLY */ .Wg, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_2_YEARS */ .j2, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_MONTHLY */ .dU, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO */ ._s, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_2_YEARS */ .ln, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_MIGRATION_TRIAL_MONTHLY */ .T$, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY */ .Rl].includes(plan),
+    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_STARTER */ .mU, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .s5, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .S8, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .eK, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .wd, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .W_, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_3_YEARS */ .sp, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_MONTHLY */ .k3, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM */ .gh, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_2_YEARS */ .Ko, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_3_YEARS */ .Gs, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS */ .CM, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_MONTHLY */ .is, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_2_YEARS */ .uo, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_MONTHLY */ .U7, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO */ .mG, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_2_YEARS */ ._I, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_MIGRATION_TRIAL_MONTHLY */ .WY, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY */ .AX].includes(plan),
     getProductId: () => 1048,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_3_YEARS */ .hh,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_3_YEARS */ .uQ,
     getPathSlug: () => 'business-3-years'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_100_YEARS */ .fD]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_100_YEARS */ .bh]: {
     ...getPlanBusinessDetails(),
-    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_CENTENNIALLY */ .F$,
-    group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .w9,
-    type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_100_YEAR */ .cF,
+    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_CENTENNIALLY */ .e2,
+    group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .Og,
+    type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_100_YEAR */ .Km,
     // Todo: ¯\_(ツ)_/¯ on the copy.
-    getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('100-Year Plan'),
-    getAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for long-term thinkers'),
-    getBlogAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for long-term thinkers'),
-    getPortfolioAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for long-term thinkers'),
-    getStoreAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for long-term thinkers'),
-    getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('A plan to leave a lasting mark on the web.'),
-    getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('A plan to leave a lasting mark on the web.'),
-    getShortDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('A plan to leave a lasting mark on the web.'),
-    getTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('A plan to leave a lasting mark on the web.'),
-    getBlogOnboardingTagLine: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('A plan to leave a lasting mark on the web.'),
+    getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('100-Year Plan'),
+    getAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for long-term thinkers'),
+    getBlogAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for long-term thinkers'),
+    getPortfolioAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for long-term thinkers'),
+    getStoreAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for long-term thinkers'),
+    getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('A plan to leave a lasting mark on the web.'),
+    getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('A plan to leave a lasting mark on the web.'),
+    getShortDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('A plan to leave a lasting mark on the web.'),
+    getTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('A plan to leave a lasting mark on the web.'),
+    getBlogOnboardingTagLine: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('A plan to leave a lasting mark on the web.'),
     getBillingTimeFrame: WPComGetBillingTimeframe,
-    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_STARTER */ .Id, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO */ ._s, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .TW, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .uS, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .wm, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .sy, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .Qm, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_MONTHLY */ .OE, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM */ .xf, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_2_YEARS */ .G6, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_MONTHLY */ .Wg, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_MONTHLY */ .dU, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_MIGRATION_TRIAL_MONTHLY */ .T$, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY */ .Rl].includes(plan),
+    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_STARTER */ .mU, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO */ .mG, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .s5, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .S8, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .eK, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .wd, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .W_, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_MONTHLY */ .k3, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM */ .gh, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_2_YEARS */ .Ko, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_MONTHLY */ .is, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_MONTHLY */ .U7, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_MIGRATION_TRIAL_MONTHLY */ .WY, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY */ .AX].includes(plan),
     getProductId: () => 1061,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_100_YEARS */ .fD,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_100_YEARS */ .bh,
     getPathSlug: () => 'wp_bundle_hundred_year'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_MONTHLY */ .lv]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_MONTHLY */ .cz]: {
     ...getPlanEcommerceDetails(),
     ...getMonthlyTimeframe(),
-    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .TW, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .uS, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .wm, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .sy, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .Qm, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_MONTHLY */ .OE, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM */ .xf, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_2_YEARS */ .G6, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_MONTHLY */ .Wg, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS */ .p7, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_2_YEARS */ .j2, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_MONTHLY */ .dU, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_TRIAL_MONTHLY */ .FC, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_MIGRATION_TRIAL_MONTHLY */ .T$, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY */ .Rl].includes(plan),
+    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .s5, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .S8, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .eK, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .wd, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .W_, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_MONTHLY */ .k3, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM */ .gh, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_2_YEARS */ .Ko, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_MONTHLY */ .is, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS */ .CM, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_2_YEARS */ .uo, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_MONTHLY */ .U7, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_TRIAL_MONTHLY */ .sL, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_MIGRATION_TRIAL_MONTHLY */ .WY, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY */ .AX].includes(plan),
     getProductId: () => 1021,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_MONTHLY */ .lv,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_MONTHLY */ .cz,
     getPathSlug: () => 'ecommerce-monthly'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE */ .JA]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE */ .g1]: {
     ...getPlanEcommerceDetails(),
-    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .w$,
+    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .GK,
     getBillingTimeFrame: WPComGetBillingTimeframe,
-    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_STARTER */ .Id, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO */ ._s, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .TW, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .uS, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .wm, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .sy, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .Qm, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_MONTHLY */ .OE, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM */ .xf, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_2_YEARS */ .G6, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_MONTHLY */ .Wg, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS */ .p7, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_2_YEARS */ .j2, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_MONTHLY */ .lv, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_MONTHLY */ .dU, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_TRIAL_MONTHLY */ .FC, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_MIGRATION_TRIAL_MONTHLY */ .T$, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY */ .Rl].includes(plan),
+    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_STARTER */ .mU, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO */ .mG, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .s5, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .S8, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .eK, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .wd, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .W_, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_MONTHLY */ .k3, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM */ .gh, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_2_YEARS */ .Ko, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_MONTHLY */ .is, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS */ .CM, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_2_YEARS */ .uo, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_MONTHLY */ .cz, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_MONTHLY */ .U7, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_TRIAL_MONTHLY */ .sL, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_MIGRATION_TRIAL_MONTHLY */ .WY, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY */ .AX].includes(plan),
     getProductId: () => 1011,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE */ .JA,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE */ .g1,
     getPathSlug: () => 'ecommerce'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_2_YEARS */ .f3]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_2_YEARS */ .kn]: {
     ...getPlanEcommerceDetails(),
-    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_BIENNIALLY */ .SU,
+    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_BIENNIALLY */ .So,
     getBillingTimeFrame: WPComGetBiennialBillingTimeframe,
-    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_STARTER */ .Id, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_MONTHLY */ .dU, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO */ ._s, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_2_YEARS */ .ln, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .TW, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .uS, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .wm, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .sy, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .Qm, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_MONTHLY */ .OE, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM */ .xf, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_2_YEARS */ .G6, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_MONTHLY */ .Wg, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS */ .p7, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_2_YEARS */ .j2, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_MONTHLY */ .lv, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE */ .JA, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_TRIAL_MONTHLY */ .FC, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_MIGRATION_TRIAL_MONTHLY */ .T$, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY */ .Rl].includes(plan),
+    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_STARTER */ .mU, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_MONTHLY */ .U7, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO */ .mG, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_2_YEARS */ ._I, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .s5, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .S8, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .eK, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .wd, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .W_, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_MONTHLY */ .k3, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM */ .gh, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_2_YEARS */ .Ko, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_MONTHLY */ .is, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS */ .CM, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_2_YEARS */ .uo, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_MONTHLY */ .cz, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE */ .g1, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_TRIAL_MONTHLY */ .sL, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_MIGRATION_TRIAL_MONTHLY */ .WY, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY */ .AX].includes(plan),
     getProductId: () => 1031,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_2_YEARS */ .f3,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_2_YEARS */ .kn,
     getPathSlug: () => 'ecommerce-2-years'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_MEDIUM_MONTHLY */ .Je]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_MEDIUM_MONTHLY */ .QJ]: {
     ...getPlanWooExpressMediumDetails(),
     ...getMonthlyTimeframe(),
-    type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_WOOEXPRESS_MEDIUM */ .iN,
-    getBillingTimeFrame: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('per month'),
-    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_TRIAL_MONTHLY */ .FC, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_SMALL_MONTHLY */ .jG].includes(plan),
+    type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_WOOEXPRESS_MEDIUM */ .KK,
+    getBillingTimeFrame: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('per month'),
+    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_TRIAL_MONTHLY */ .sL, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_SMALL_MONTHLY */ .mo].includes(plan),
     getProductId: () => 1053,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_MEDIUM_MONTHLY */ .Je,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_MEDIUM_MONTHLY */ .QJ,
     getPathSlug: () => 'wooexpress-medium-monthly'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_MEDIUM */ .DN]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_MEDIUM */ .au]: {
     ...getPlanWooExpressMediumDetails(),
-    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .w$,
+    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .GK,
     getBillingTimeFrame: WPComGetBillingTimeframe,
-    type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_WOOEXPRESS_MEDIUM */ .iN,
-    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_MEDIUM_MONTHLY */ .Je, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_TRIAL_MONTHLY */ .FC, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_SMALL */ ._$, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_SMALL_MONTHLY */ .jG].includes(plan),
+    type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_WOOEXPRESS_MEDIUM */ .KK,
+    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_MEDIUM_MONTHLY */ .QJ, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_TRIAL_MONTHLY */ .sL, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_SMALL */ .Si, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_SMALL_MONTHLY */ .mo].includes(plan),
     getProductId: () => 1055,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_MEDIUM */ .DN,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_MEDIUM */ .au,
     getPathSlug: () => 'wooexpress-medium-yearly'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_SMALL_MONTHLY */ .jG]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_SMALL_MONTHLY */ .mo]: {
     ...getPlanWooExpressSmallDetails(),
     ...getMonthlyTimeframe(),
-    type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_WOOEXPRESS_SMALL */ .T$,
-    getBillingTimeFrame: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('per month'),
-    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_TRIAL_MONTHLY */ .FC].includes(plan),
+    type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_WOOEXPRESS_SMALL */ .oH,
+    getBillingTimeFrame: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('per month'),
+    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_TRIAL_MONTHLY */ .sL].includes(plan),
     getProductId: () => 1054,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_SMALL_MONTHLY */ .jG,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_SMALL_MONTHLY */ .mo,
     getPathSlug: () => 'wooexpress-small-monthly'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_SMALL */ ._$]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_SMALL */ .Si]: {
     ...getPlanWooExpressSmallDetails(),
-    type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_WOOEXPRESS_SMALL */ .T$,
-    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .w$,
+    type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_WOOEXPRESS_SMALL */ .oH,
+    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .GK,
     getBillingTimeFrame: WPComGetBillingTimeframe,
-    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_SMALL_MONTHLY */ .jG, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_TRIAL_MONTHLY */ .FC].includes(plan),
+    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_SMALL_MONTHLY */ .mo, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_TRIAL_MONTHLY */ .sL].includes(plan),
     getProductId: () => 1056,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_SMALL */ ._$,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_SMALL */ .Si,
     getPathSlug: () => 'wooexpress-small-yearly'
   },
   // Not a real plan. This is used to show the Plus offering in the Woo Express plans grid
-  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_PLUS */ .hq]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_PLUS */ .k$]: {
     ...getPlanWooExpressPlusDetails(),
-    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .w$,
+    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .GK,
     getBillingTimeFrame: () => '',
     getProductId: () => 0,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_PLUS */ .hq
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WOOEXPRESS_PLUS */ .k$
   },
   // Not a real plan. This is used to show the Enterprise (VIP) offering in
   // the main plans grid as part of pdgrnI-1Qp-p2.
-  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ENTERPRISE_GRID_WPCOM */ .gt]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ENTERPRISE_GRID_WPCOM */ .Mv]: {
     ...get2023EnterprisGrideDetails(),
-    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .w$,
+    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .GK,
     getBillingTimeFrame: () => '',
     getProductId: () => 0,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ENTERPRISE_GRID_WPCOM */ .gt,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ENTERPRISE_GRID_WPCOM */ .Mv,
     getPathSlug: () => 'enterprise'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_3_YEARS */ .A3]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_3_YEARS */ .wb]: {
     ...getPlanEcommerceDetails(),
-    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_TRIENNIALLY */ .IL,
+    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_TRIENNIALLY */ .Gs,
     getBillingTimeFrame: WPComGetTriennialBillingTimeframe,
-    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_STARTER */ .Id, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_MONTHLY */ .dU, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO */ ._s, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_2_YEARS */ .ln, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .TW, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .uS, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .wm, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .sy, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .Qm, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_3_YEARS */ .TI, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_MONTHLY */ .OE, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM */ .xf, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_2_YEARS */ .G6, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_3_YEARS */ ._B, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_MONTHLY */ .Wg, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS */ .p7, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_2_YEARS */ .j2, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_3_YEARS */ .hh, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_MONTHLY */ .lv, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE */ .JA, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_2_YEARS */ .f3, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_TRIAL_MONTHLY */ .FC, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_MIGRATION_TRIAL_MONTHLY */ .T$, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY */ .Rl].includes(plan),
+    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_STARTER */ .mU, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_MONTHLY */ .U7, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO */ .mG, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_2_YEARS */ ._I, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER */ .s5, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLOGGER_2_YEARS */ .S8, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_MONTHLY */ .eK, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL */ .wd, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_2_YEARS */ .W_, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PERSONAL_3_YEARS */ .sp, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_MONTHLY */ .k3, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM */ .gh, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_2_YEARS */ .Ko, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_PREMIUM_3_YEARS */ .Gs, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_MONTHLY */ .is, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS */ .CM, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_2_YEARS */ .uo, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BUSINESS_3_YEARS */ .uQ, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_MONTHLY */ .cz, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE */ .g1, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_2_YEARS */ .kn, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_TRIAL_MONTHLY */ .sL, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_MIGRATION_TRIAL_MONTHLY */ .WY, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY */ .AX].includes(plan),
     getProductId: () => 1051,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_3_YEARS */ .A3,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_3_YEARS */ .wb,
     getPathSlug: () => 'ecommerce-3-years'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_FREE */ .lj]: {
-    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .w$,
-    group: _constants__WEBPACK_IMPORTED_MODULE_4__/* .GROUP_JETPACK */ .mk,
-    type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_FREE */ .UH,
-    getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Free'),
+  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_FREE */ .MF]: {
+    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .GK,
+    group: _constants__WEBPACK_IMPORTED_MODULE_4__/* .GROUP_JETPACK */ .cx,
+    type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_FREE */ .ol,
+    getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Free'),
     getProductId: () => 2002,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_FREE */ .lj,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_FREE */ .MF,
     getTagline: (siteFeatures = []) => {
-      const hasSiteJetpackBackup = siteFeatures.some(feature => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY */ .V1k, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY_MONTHLY */ .TBQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_REALTIME */ .s4b, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_REALTIME_MONTHLY */ .TZT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_T1_BI_YEARLY */ ._sk, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_T1_YEARLY */ .$pY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_T1_MONTHLY */ .mX4, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_T2_YEARLY */ .tS0, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_T2_MONTHLY */ .L2R].includes(feature));
-      const hasSiteJetpackScan = siteFeatures.some(feature => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY */ .V1I, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY_MONTHLY */ .FR0].includes(feature));
+      const hasSiteJetpackBackup = siteFeatures.some(feature => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY */ ._6N, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_DAILY_MONTHLY */ .YDI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_REALTIME */ .s38, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_REALTIME_MONTHLY */ .uqO, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_T1_BI_YEARLY */ .g7W, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_T1_YEARLY */ .G2A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_T1_MONTHLY */ .M1A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_T2_YEARLY */ .Mhk, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_BACKUP_T2_MONTHLY */ .AxH].includes(feature));
+      const hasSiteJetpackScan = siteFeatures.some(feature => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY */ .Alh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SCAN_DAILY_MONTHLY */ .uUP].includes(feature));
       if (hasSiteJetpackBackup && hasSiteJetpackScan) {
-        return i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Upgrade your site to access additional features, including spam protection and priority support.');
+        return i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Upgrade your site to access additional features, including spam protection and priority support.');
       } else if (hasSiteJetpackBackup) {
-        return i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Upgrade your site to access additional features, including spam protection, security scanning, and priority support.');
+        return i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Upgrade your site to access additional features, including spam protection, security scanning, and priority support.');
       } else if (hasSiteJetpackScan) {
-        return i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Upgrade your site to access additional features, including spam protection, backups, and priority support.');
+        return i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Upgrade your site to access additional features, including spam protection, backups, and priority support.');
       }
-      return i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Upgrade your site for additional features, including spam protection, backups, security scanning, and priority support.');
+      return i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Upgrade your site for additional features, including spam protection, backups, security scanning, and priority support.');
     },
-    getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('The features most needed by WordPress sites' + ' — perfectly packaged and optimized for everyone.'),
-    getBillingTimeFrame: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('for life'),
-    getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STANDARD_SECURITY_TOOLS */ .wwD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_STATS */ .rlg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_TRAFFIC_TOOLS */ .F$l, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MANAGE */ .gRD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .B2h, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .okS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_WORDPRESS_THEMES */ .ALM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_STATS */ .rlg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STANDARD_SECURITY_TOOLS */ .wwD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_TRAFFIC_TOOLS */ .F$l, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BLANK */ .$NZ]
+    getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('The features most needed by WordPress sites' + ' — perfectly packaged and optimized for everyone.'),
+    getBillingTimeFrame: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('for life'),
+    getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STANDARD_SECURITY_TOOLS */ .ANj, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_STATS */ .qg9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_TRAFFIC_TOOLS */ .uo4, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MANAGE */ .wPx, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .m_A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .iKh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_WORDPRESS_THEMES */ .whZ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_STATS */ .qg9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STANDARD_SECURITY_TOOLS */ .ANj, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_TRAFFIC_TOOLS */ .uo4, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BLANK */ .UZR]
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_PREMIUM */ .Xz]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_PREMIUM */ .QX]: {
     ...getJetpackPremiumDetails(),
     ...getAnnualTimeframe(),
     getProductId: () => 2000,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_PREMIUM */ .Xz,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_PREMIUM */ .QX,
     getPathSlug: () => 'premium'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_PREMIUM_MONTHLY */ .p2]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_PREMIUM_MONTHLY */ .Oc]: {
     ...getJetpackPremiumDetails(),
     ...getMonthlyTimeframe(),
     getProductId: () => 2003,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_PREMIUM_MONTHLY */ .p2,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_PREMIUM_MONTHLY */ .Oc,
     getPathSlug: () => 'premium-monthly'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_PERSONAL */ .ap]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_PERSONAL */ .ie]: {
     ...getJetpackPersonalDetails(),
     ...getAnnualTimeframe(),
     getProductId: () => 2005,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_PERSONAL */ .ap,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_PERSONAL */ .ie,
     getPathSlug: () => 'jetpack-personal'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_PERSONAL_MONTHLY */ .ns]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_PERSONAL_MONTHLY */ .cp]: {
     ...getJetpackPersonalDetails(),
     ...getMonthlyTimeframe(),
     getProductId: () => 2006,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_PERSONAL_MONTHLY */ .ns,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_PERSONAL_MONTHLY */ .cp,
     getPathSlug: () => 'jetpack-personal-monthly'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_BUSINESS */ .NJ]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_BUSINESS */ .It]: {
     ...getJetpackBusinessDetails(),
     ...getAnnualTimeframe(),
     getProductId: () => 2001,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_BUSINESS */ .NJ,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_BUSINESS */ .It,
     getPathSlug: () => 'professional'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_BUSINESS_MONTHLY */ .yY]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_BUSINESS_MONTHLY */ .Aj]: {
     ...getJetpackBusinessDetails(),
     ...getMonthlyTimeframe(),
     getProductId: () => 2004,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_BUSINESS_MONTHLY */ .yY,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_BUSINESS_MONTHLY */ .Aj,
     getPathSlug: () => 'professional-monthly'
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_DAILY */ .Vl]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_DAILY */ .Il]: {
     ...getPlanJetpackSecurityDailyDetails(),
     ...getAnnualTimeframe(),
-    getMonthlySlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_DAILY_MONTHLY */ .Dl,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_DAILY */ .Vl,
+    getMonthlySlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_DAILY_MONTHLY */ .Mx,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_DAILY */ .Il,
     getPathSlug: () => 'security-daily',
     getProductId: () => 2010
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_DAILY_MONTHLY */ .Dl]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_DAILY_MONTHLY */ .Mx]: {
     ...getPlanJetpackSecurityDailyDetails(),
     ...getMonthlyTimeframe(),
-    getAnnualSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_DAILY */ .Vl,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_DAILY_MONTHLY */ .Dl,
+    getAnnualSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_DAILY */ .Il,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_DAILY_MONTHLY */ .Mx,
     getPathSlug: () => 'security-daily-monthly',
     getProductId: () => 2011
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_REALTIME */ .jI]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_REALTIME */ .Ki]: {
     ...getPlanJetpackSecurityRealtimeDetails(),
     ...getAnnualTimeframe(),
-    getMonthlySlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_REALTIME_MONTHLY */ .G$,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_REALTIME */ .jI,
+    getMonthlySlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_REALTIME_MONTHLY */ .iY,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_REALTIME */ .Ki,
     getPathSlug: () => 'security-realtime',
     getProductId: () => 2012
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_REALTIME_MONTHLY */ .G$]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_REALTIME_MONTHLY */ .iY]: {
     ...getPlanJetpackSecurityRealtimeDetails(),
     ...getMonthlyTimeframe(),
-    getAnnualSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_REALTIME */ .jI,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_REALTIME_MONTHLY */ .G$,
+    getAnnualSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_REALTIME */ .Ki,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_REALTIME_MONTHLY */ .iY,
     getPathSlug: () => 'security-realtime-monthly',
     getProductId: () => 2013
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_COMPLETE_BI_YEARLY */ .iP]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_COMPLETE_BI_YEARLY */ .gl]: {
     ...getPlanJetpackCompleteDetails(),
     ...getBiAnnualTimeframe(),
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_COMPLETE_BI_YEARLY */ .iP,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_COMPLETE_BI_YEARLY */ .gl,
     getPathSlug: () => 'complete-bi-yearly',
     getProductId: () => 2035,
-    getProductsIncluded: () => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_BACKUP_T2_YEARLY */ .EI, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_SCAN_BI_YEARLY */ .YU, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_ANTI_SPAM_BI_YEARLY */ .aG, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_VIDEOPRESS_BI_YEARLY */ .vT, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_BOOST_BI_YEARLY */ .sA, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_SOCIAL_ADVANCED_BI_YEARLY */ .XP, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_SEARCH_BI_YEARLY */ .Eh, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_STATS_BI_YEARLY */ .Zo, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_CRM */ .Ve, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_CREATOR_BI_YEARLY */ .V$],
-    getWhatIsIncluded: () => [(0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('VaultPress Backup: Real-time backups as you edit'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('1TB (1,000GB) of cloud storage'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('1-year activity log archive'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Unlimited one-click restores from the last 1 year'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Scan: Real-time malware scanning and one-click fixes'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Akismet: Comment and form spam protection (60k API calls/mo)'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('VideoPress: 1TB of ad-free video hosting'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Boost: Automatic CSS generation'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Site Search: Up to 100k records and 100k requests/mo.'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Social: Get unlimited shares and share as a post by attaching images or videos.'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('CRM: Entrepreneur with 30 extensions')]
+    getProductsIncluded: () => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_BACKUP_T2_YEARLY */ .Yg, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_SCAN_BI_YEARLY */ .Ed, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_ANTI_SPAM_BI_YEARLY */ .QZ, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_VIDEOPRESS_BI_YEARLY */ .QL, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_BOOST_BI_YEARLY */ .Iv, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_SOCIAL_ADVANCED_BI_YEARLY */ .gd, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_SEARCH_BI_YEARLY */ .yO, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_STATS_BI_YEARLY */ .my, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_CRM */ .Ci, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_CREATOR_BI_YEARLY */ .Og],
+    getWhatIsIncluded: () => [(0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('VaultPress Backup: Real-time backups as you edit'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('1TB (1,000GB) of cloud storage'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('1-year activity log archive'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Unlimited one-click restores from the last 1 year'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Scan: Real-time malware scanning and one-click fixes'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Akismet: Comment and form spam protection (60k API calls/mo)'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('VideoPress: 1TB of ad-free video hosting'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Boost: Automatic CSS generation'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Site Search: Up to 100k records and 100k requests/mo.'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Social: Get unlimited shares and share as a post by attaching images or videos.'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('CRM: Entrepreneur with 30 extensions')]
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_COMPLETE */ .th]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_COMPLETE */ .K_]: {
     ...getPlanJetpackCompleteDetails(),
     ...getAnnualTimeframe(),
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_COMPLETE */ .th,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_COMPLETE */ .K_,
     getPathSlug: () => 'complete',
     getProductId: () => 2014,
-    getMonthlySlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_COMPLETE_MONTHLY */ .JX,
-    getProductsIncluded: () => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_BACKUP_T2_YEARLY */ .EI, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_SCAN */ .pE, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_ANTI_SPAM */ .Sm, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_VIDEOPRESS */ .nN, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_BOOST */ .GA, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_SOCIAL_ADVANCED */ .Im, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_SEARCH */ .DH, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_STATS_YEARLY */ .kY, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_CRM */ .Ve, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_CREATOR_YEARLY */ .lb],
-    getWhatIsIncluded: () => [(0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('VaultPress Backup: Real-time backups as you edit'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('1TB (1,000GB) of cloud storage'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('1-year activity log archive'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Unlimited one-click restores from the last 1 year'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Scan: Real-time malware scanning and one-click fixes'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Akismet: Comment and form spam protection (60k API calls/mo)'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('VideoPress: 1TB of ad-free video hosting'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Boost: Automatic CSS generation'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Site Search: Up to 100k records and 100k requests/mo.'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Social: Get unlimited shares and share as a post by attaching images or videos.'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('CRM: Entrepreneur with 30 extensions')]
+    getMonthlySlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_COMPLETE_MONTHLY */ .Ux,
+    getProductsIncluded: () => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_BACKUP_T2_YEARLY */ .Yg, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_SCAN */ .oz, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_ANTI_SPAM */ .uU, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_VIDEOPRESS */ .If, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_BOOST */ .od, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_SOCIAL_ADVANCED */ .SO, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_SEARCH */ .Ej, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_STATS_YEARLY */ .y6, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_CRM */ .Ci, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_CREATOR_YEARLY */ .gn],
+    getWhatIsIncluded: () => [(0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('VaultPress Backup: Real-time backups as you edit'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('1TB (1,000GB) of cloud storage'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('1-year activity log archive'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Unlimited one-click restores from the last 1 year'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Scan: Real-time malware scanning and one-click fixes'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Akismet: Comment and form spam protection (60k API calls/mo)'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('VideoPress: 1TB of ad-free video hosting'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Boost: Automatic CSS generation'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Site Search: Up to 100k records and 100k requests/mo.'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Social: Get unlimited shares and share as a post by attaching images or videos.'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('CRM: Entrepreneur with 30 extensions')]
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_COMPLETE_MONTHLY */ .JX]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_COMPLETE_MONTHLY */ .Ux]: {
     ...getPlanJetpackCompleteDetails(),
     ...getMonthlyTimeframe(),
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_COMPLETE_MONTHLY */ .JX,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_COMPLETE_MONTHLY */ .Ux,
     getPathSlug: () => 'complete-monthly',
     getProductId: () => 2015,
-    getAnnualSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_COMPLETE */ .th,
-    getProductsIncluded: () => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_BACKUP_T2_MONTHLY */ .uL, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_SCAN_MONTHLY */ .sY, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_ANTI_SPAM_MONTHLY */ .PF, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_VIDEOPRESS_MONTHLY */ .qH, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_BOOST_MONTHLY */ .SZ, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_SOCIAL_ADVANCED_MONTHLY */ .EV, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_SEARCH_MONTHLY */ .XG, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_STATS_MONTHLY */ .dX, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_CRM_MONTHLY */ .vM, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_CREATOR_MONTHLY */ .eV],
-    getWhatIsIncluded: () => [(0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('VaultPress Backup: Real-time backups as you edit'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('1TB (1,000GB) of cloud storage'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('1-year activity log archive'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Unlimited one-click restores from the last 1-year'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Scan: Real-time malware scanning and one-click fixes'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Akismet: Comment and form spam protection (60k API calls/mo)'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('VideoPress: 1TB of ad-free video hosting'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Boost: Automatic CSS generation'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Site Search: Up to 100k records and 100k requests/mo.'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Social: Get unlimited shares and share as a post by attaching images or videos.'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('CRM: Entrepreneur with 30 extensions')]
+    getAnnualSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_COMPLETE */ .K_,
+    getProductsIncluded: () => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_BACKUP_T2_MONTHLY */ .w7, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_SCAN_MONTHLY */ .mS, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_ANTI_SPAM_MONTHLY */ .s5, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_VIDEOPRESS_MONTHLY */ .mu, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_BOOST_MONTHLY */ .U3, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_SOCIAL_ADVANCED_MONTHLY */ .rz, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_SEARCH_MONTHLY */ .ee, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_STATS_MONTHLY */ .wT, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_CRM_MONTHLY */ ._k, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_CREATOR_MONTHLY */ ._S],
+    getWhatIsIncluded: () => [(0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('VaultPress Backup: Real-time backups as you edit'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('1TB (1,000GB) of cloud storage'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('1-year activity log archive'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Unlimited one-click restores from the last 1-year'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Scan: Real-time malware scanning and one-click fixes'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Akismet: Comment and form spam protection (60k API calls/mo)'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('VideoPress: 1TB of ad-free video hosting'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Boost: Automatic CSS generation'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Site Search: Up to 100k records and 100k requests/mo.'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Social: Get unlimited shares and share as a post by attaching images or videos.'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('CRM: Entrepreneur with 30 extensions')]
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_T1_BI_YEARLY */ .P5]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_T1_BI_YEARLY */ .Sc]: {
     ...getPlanJetpackSecurityT1Details(),
     ...getBiAnnualTimeframe(),
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_T1_BI_YEARLY */ .P5,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_T1_BI_YEARLY */ .Sc,
     getPathSlug: () => 'security-20gb-bi-yearly',
     getProductId: () => 2034,
-    getProductsIncluded: () => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_BACKUP_T1_BI_YEARLY */ .QZ, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_SCAN_BI_YEARLY */ .YU, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_ANTI_SPAM_BI_YEARLY */ .aG],
-    getWhatIsIncluded: () => [(0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('VaultPress Backup: Real-time backups as you edit'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('10GB of cloud storage'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('30-day activity log archive'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Unlimited one-click restores from the last 30 days'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Scan: Real-time malware scanning and one-click fixes'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Akismet: Comment and form spam protection (10k API calls/mo)')]
+    getProductsIncluded: () => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_BACKUP_T1_BI_YEARLY */ .Cu, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_SCAN_BI_YEARLY */ .Ed, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_ANTI_SPAM_BI_YEARLY */ .QZ],
+    getWhatIsIncluded: () => [(0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('VaultPress Backup: Real-time backups as you edit'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('10GB of cloud storage'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('30-day activity log archive'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Unlimited one-click restores from the last 30 days'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Scan: Real-time malware scanning and one-click fixes'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Akismet: Comment and form spam protection (10k API calls/mo)')]
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_T1_YEARLY */ .Et]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_T1_YEARLY */ .Yp]: {
     ...getPlanJetpackSecurityT1Details(),
     ...getAnnualTimeframe(),
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_T1_YEARLY */ .Et,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_T1_YEARLY */ .Yp,
     getPathSlug: () => 'security-20gb-yearly',
     getProductId: () => 2016,
-    getProductsIncluded: () => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_BACKUP_T1_YEARLY */ .oe, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_SCAN */ .pE, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_ANTI_SPAM */ .Sm],
-    getWhatIsIncluded: () => [(0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('VaultPress Backup: Real-time backups as you edit'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('10GB of cloud storage'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('30-day activity log archive'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Unlimited one-click restores from the last 30 days'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Scan: Real-time malware scanning and one-click fixes'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Akismet: Comment and form spam protection (10k API calls/mo)')]
+    getProductsIncluded: () => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_BACKUP_T1_YEARLY */ .EB, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_SCAN */ .oz, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_ANTI_SPAM */ .uU],
+    getWhatIsIncluded: () => [(0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('VaultPress Backup: Real-time backups as you edit'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('10GB of cloud storage'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('30-day activity log archive'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Unlimited one-click restores from the last 30 days'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Scan: Real-time malware scanning and one-click fixes'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Akismet: Comment and form spam protection (10k API calls/mo)')]
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_T1_MONTHLY */ .w2]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_T1_MONTHLY */ .__]: {
     ...getPlanJetpackSecurityT1Details(),
     ...getMonthlyTimeframe(),
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_T1_MONTHLY */ .w2,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_T1_MONTHLY */ .__,
     getPathSlug: () => 'security-20gb-monthly',
     getProductId: () => 2017,
-    getProductsIncluded: () => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_BACKUP_T1_MONTHLY */ .rx, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_SCAN_MONTHLY */ .sY, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_ANTI_SPAM_MONTHLY */ .PF],
-    getWhatIsIncluded: () => [(0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('VaultPress Backup: Real-time backups as you edit'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('10GB of cloud storage'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('30-day activity log archive'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Unlimited one-click restores from the last 30 days'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Scan: Real-time malware scanning and one-click fixes'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Akismet: Comment and form spam protection (10k API calls/mo)')]
+    getProductsIncluded: () => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_BACKUP_T1_MONTHLY */ .OA, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_SCAN_MONTHLY */ .mS, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_ANTI_SPAM_MONTHLY */ .s5],
+    getWhatIsIncluded: () => [(0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('VaultPress Backup: Real-time backups as you edit'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('10GB of cloud storage'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('30-day activity log archive'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Unlimited one-click restores from the last 30 days'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Scan: Real-time malware scanning and one-click fixes'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Akismet: Comment and form spam protection (10k API calls/mo)')]
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_T2_YEARLY */ .s1]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_T2_YEARLY */ .AX]: {
     ...getPlanJetpackSecurityT2Details(),
     ...getAnnualTimeframe(),
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_T2_YEARLY */ .s1,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_T2_YEARLY */ .AX,
     getPathSlug: () => 'security-1tb-yearly',
     getProductId: () => 2019,
-    getProductsIncluded: () => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_BACKUP_T2_YEARLY */ .EI, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_SCAN */ .pE, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_ANTI_SPAM */ .Sm],
-    getWhatIsIncluded: () => [(0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('VaultPress Backup: Real-time backups as you edit'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('{{strong}}1TB (1,000GB){{/strong}} of cloud storage', {
+    getProductsIncluded: () => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_BACKUP_T2_YEARLY */ .Yg, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_SCAN */ .oz, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_ANTI_SPAM */ .uU],
+    getWhatIsIncluded: () => [(0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('VaultPress Backup: Real-time backups as you edit'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('{{strong}}1TB (1,000GB){{/strong}} of cloud storage', {
       components: {
         strong: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null)
       }
-    }), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('{{strong}}1-year{{/strong}} activity log archive', {
+    }), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('{{strong}}1-year{{/strong}} activity log archive', {
       components: {
         strong: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null)
       }
-    }), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Unlimited one-click restores from the last {{strong}}1 year{{/strong}}', {
+    }), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Unlimited one-click restores from the last {{strong}}1 year{{/strong}}', {
       components: {
         strong: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null)
       }
-    }), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Scan: Real-time malware scanning and one-click fixes'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Akismet: Comment and form spam protection (10k API calls/mo)')]
+    }), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Scan: Real-time malware scanning and one-click fixes'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Akismet: Comment and form spam protection (10k API calls/mo)')]
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_T2_MONTHLY */ .aS]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_T2_MONTHLY */ .$n]: {
     ...getPlanJetpackSecurityT2Details(),
     ...getMonthlyTimeframe(),
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_T2_MONTHLY */ .aS,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_SECURITY_T2_MONTHLY */ .$n,
     getPathSlug: () => 'security-1tb-monthly',
     getProductId: () => 2020,
-    getProductsIncluded: () => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_BACKUP_T2_MONTHLY */ .uL, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_SCAN_MONTHLY */ .sY, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_ANTI_SPAM_MONTHLY */ .PF],
-    getWhatIsIncluded: () => [(0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('VaultPress Backup: Real-time backups as you edit'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('{{strong}}1TB (1,000GB){{/strong}} of cloud storage', {
+    getProductsIncluded: () => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_BACKUP_T2_MONTHLY */ .w7, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_SCAN_MONTHLY */ .mS, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_ANTI_SPAM_MONTHLY */ .s5],
+    getWhatIsIncluded: () => [(0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('VaultPress Backup: Real-time backups as you edit'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('{{strong}}1TB (1,000GB){{/strong}} of cloud storage', {
       components: {
         strong: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null)
       }
-    }), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('{{strong}}1-year{{/strong}} activity log archive', {
+    }), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('{{strong}}1-year{{/strong}} activity log archive', {
       components: {
         strong: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null)
       }
-    }), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Unlimited one-click restores from the last {{strong}}1 year{{/strong}}', {
+    }), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Unlimited one-click restores from the last {{strong}}1 year{{/strong}}', {
       components: {
         strong: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null)
       }
-    }), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Scan: Real-time malware scanning and one-click fixes'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Akismet: Comment and form spam protection (10k API calls/mo)')]
+    }), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Scan: Real-time malware scanning and one-click fixes'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Akismet: Comment and form spam protection (10k API calls/mo)')]
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_STARTER_YEARLY */ .ki]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_STARTER_YEARLY */ .AR]: {
     ...getPlanJetpackStarterDetails(),
     ...getAnnualTimeframe(),
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_STARTER_YEARLY */ .ki,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_STARTER_YEARLY */ .AR,
     getPathSlug: () => 'starter-yearly',
     getProductId: () => 2030,
-    getProductsIncluded: () => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_BACKUP_T0_YEARLY */ .OH, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_ANTI_SPAM */ .Sm],
-    getWhatIsIncluded: () => [(0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('VaultPress Backup: Real-time backups as you edit'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('1GB of cloud storage'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('30-day activity log archive'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Unlimited one-click restores from the last 30 days'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Akismet: Comment and form spam protection (1k API calls/mo)')]
+    getProductsIncluded: () => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_BACKUP_T0_YEARLY */ .CU, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_ANTI_SPAM */ .uU],
+    getWhatIsIncluded: () => [(0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('VaultPress Backup: Real-time backups as you edit'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('1GB of cloud storage'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('30-day activity log archive'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Unlimited one-click restores from the last 30 days'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Akismet: Comment and form spam protection (1k API calls/mo)')]
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_STARTER_MONTHLY */ .Rw]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_STARTER_MONTHLY */ .kZ]: {
     ...getPlanJetpackStarterDetails(),
     ...getMonthlyTimeframe(),
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_STARTER_MONTHLY */ .Rw,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_STARTER_MONTHLY */ .kZ,
     getPathSlug: () => 'starter-monthly',
     getProductId: () => 2031,
-    getProductsIncluded: () => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_BACKUP_T0_MONTHLY */ .Tp, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_ANTI_SPAM_MONTHLY */ .PF],
-    getWhatIsIncluded: () => [(0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('VaultPress Backup: Real-time backups as you edit'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('1GB of cloud storage'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('30-day activity log archive'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Unlimited one-click restores from the last 30 days'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('Akismet: Comment and form spam protection (1k API calls/mo)')]
+    getProductsIncluded: () => [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_BACKUP_T0_MONTHLY */ .KW, _constants__WEBPACK_IMPORTED_MODULE_4__/* .PRODUCT_JETPACK_ANTI_SPAM_MONTHLY */ .s5],
+    getWhatIsIncluded: () => [(0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('VaultPress Backup: Real-time backups as you edit'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('1GB of cloud storage'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('30-day activity log archive'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Unlimited one-click restores from the last 30 days'), (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('Akismet: Comment and form spam protection (1k API calls/mo)')]
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_GOLDEN_TOKEN */ .sc]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_GOLDEN_TOKEN */ .eA]: {
     ...getPlanJetpackGoldenTokenDetails(),
     ...getAnnualTimeframe(),
-    getMonthlySlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_GOLDEN_TOKEN */ .sc,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_GOLDEN_TOKEN */ .sc,
+    getMonthlySlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_GOLDEN_TOKEN */ .eA,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_4__/* .PLAN_JETPACK_GOLDEN_TOKEN */ .eA,
     getPathSlug: () => 'golden-token',
     getProductId: () => 2900
   },
-  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_P2_PLUS */ .Ml]: {
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_P2_PLUS */ .QX]: {
     ...getDotcomPlanDetails(),
-    group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_P2 */ .mi,
-    type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_P2_PLUS */ .QI,
-    getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('P2+'),
+    group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_P2 */ .cT,
+    type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_P2_PLUS */ .Qt,
+    getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('P2+'),
     getDescription: () => '',
-    getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('{{strong}}Best for professionals:{{/strong}} Enhance your P2 with more space for audio and video, advanced search, an activity overview panel, and priority customer support.', plansDescriptionHeadingComponent),
-    getShortDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Some short description'),
-    get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_13GB_STORAGE */ .S_M, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_ADVANCED_SEARCH */ .yjN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_VIDEO_SHARING */ .iC0, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_MORE_FILE_TYPES */ .rdd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_PRIORITY_CHAT_EMAIL_SUPPORT */ .bJv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_ACTIVITY_OVERVIEW */ .ops],
+    getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('{{strong}}Best for professionals:{{/strong}} Enhance your P2 with more space for audio and video, advanced search, an activity overview panel, and priority customer support.', plansDescriptionHeadingComponent),
+    getShortDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Some short description'),
+    get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_13GB_STORAGE */ .cDP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_ADVANCED_SEARCH */ .iiq, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_VIDEO_SHARING */ .dl9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_MORE_FILE_TYPES */ .cvr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_PRIORITY_CHAT_EMAIL_SUPPORT */ .QPM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_ACTIVITY_OVERVIEW */ .mq1],
     get2023PricingGridSignupStorageOptions: () => {
       return [{
-        slug: _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_13GB_STORAGE */ .S_M,
+        slug: _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_13GB_STORAGE */ .cDP,
         isAddOn: false
       }];
     },
     getPlanCompareFeatures: () => [
     // pay attention to ordering, shared features should align on /plan page
-    _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_13GB_STORAGE */ .S_M, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_ADVANCED_SEARCH */ .yjN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_VIDEO_SHARING */ .iC0, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_MORE_FILE_TYPES */ .rdd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_PRIORITY_CHAT_EMAIL_SUPPORT */ .bJv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_ACTIVITY_OVERVIEW */ .ops],
+    _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_13GB_STORAGE */ .cDP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_ADVANCED_SEARCH */ .iiq, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_VIDEO_SHARING */ .dl9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_MORE_FILE_TYPES */ .cvr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_PRIORITY_CHAT_EMAIL_SUPPORT */ .QPM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_ACTIVITY_OVERVIEW */ .mq1],
     // TODO: update this once we put P2+ in the signup.
-    getSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .fhe],
+    getSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .eUY],
     // TODO: no idea about this, copied from the WP.com Premium plan.
     // Features not displayed but used for checking plan abilities
-    getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUDIO_UPLOADS */ .XMd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SEARCH_BI_YEARLY */ .Mrh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SEARCH */ .lv3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SEARCH_MONTHLY */ .ewW],
+    getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUDIO_UPLOADS */ .A5J, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SEARCH_BI_YEARLY */ .Y$v, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SEARCH */ .wtH, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SEARCH_MONTHLY */ .IlF],
     getInferiorFeatures: () => [],
     // TODO: Calypso requires this prop but we probably don't need it. Refactor Calypso?
-    getAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Best for bloggers'),
+    getAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Best for bloggers'),
     ...getMonthlyTimeframe(),
-    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d].includes(plan),
+    availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ].includes(plan),
     //TODO: only for P2 sites.
     getProductId: () => 1040,
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_P2_PLUS */ .Ml,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_P2_PLUS */ .QX,
     getPathSlug: () => 'p2-plus',
-    getBillingTimeFrame: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .Iu)('per user per month')
+    getBillingTimeFrame: () => (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .translate */ .GS)('per user per month')
   }
 };
-PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_P2_FREE */ .A2] = {
-  ...PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d],
-  group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_P2 */ .mi,
-  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('{{strong}}Best for small groups:{{/strong}} All the features needed to share, discuss, review, and collaborate with your team in one spot, without interruptions.', plansDescriptionHeadingComponent),
-  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('P2 Free'),
-  get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_3GB_STORAGE */ .$mN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_UNLIMITED_USERS */ .JqD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_UNLIMITED_POSTS_PAGES */ .bHF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_SIMPLE_SEARCH */ .XZZ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_CUSTOMIZATION_OPTIONS */ .vje],
+PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_P2_FREE */ .sR] = {
+  ...PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ],
+  group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_P2 */ .cT,
+  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('{{strong}}Best for small groups:{{/strong}} All the features needed to share, discuss, review, and collaborate with your team in one spot, without interruptions.', plansDescriptionHeadingComponent),
+  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('P2 Free'),
+  get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_3GB_STORAGE */ .Kwt, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_UNLIMITED_USERS */ .HgJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_UNLIMITED_POSTS_PAGES */ .I3x, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_SIMPLE_SEARCH */ .Mzt, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_CUSTOMIZATION_OPTIONS */ .qCv],
   get2023PricingGridSignupStorageOptions: () => {
     return [{
-      slug: _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_3GB_STORAGE */ .$mN,
+      slug: _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_3GB_STORAGE */ .Kwt,
       isAddOn: false
     }];
   },
   getPlanCompareFeatures: () => [
   // pay attention to ordering, shared features should align on /plan page
-  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_3GB_STORAGE */ .$mN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_UNLIMITED_USERS */ .JqD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_UNLIMITED_POSTS_PAGES */ .bHF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_SIMPLE_SEARCH */ .XZZ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_CUSTOMIZATION_OPTIONS */ .vje]
+  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_3GB_STORAGE */ .Kwt, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_UNLIMITED_USERS */ .HgJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_UNLIMITED_POSTS_PAGES */ .I3x, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_SIMPLE_SEARCH */ .Mzt, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_CUSTOMIZATION_OPTIONS */ .qCv]
 };
 
 // Brand new WPCOM plans
-PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_STARTER */ .Id] = {
+PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_STARTER */ .mU] = {
   ...getDotcomPlanDetails(),
-  group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .w9,
-  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_STARTER */ .xg,
-  term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .w$,
-  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('WordPress Starter'),
+  group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .Og,
+  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_STARTER */ .sL,
+  term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .GK,
+  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('WordPress Starter'),
   getProductId: () => 1033,
-  getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_STARTER */ .Id,
+  getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_STARTER */ .mU,
   getPathSlug: () => 'starter',
-  getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .ZP.hasTranslation('Start with a custom domain name, simple payments, and extra storage.') || ['en', 'en-gb'].includes((0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .getLocaleSlug */ .Yj)() || '') ? i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Start with a custom domain name, simple payments, and extra storage.') : i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Start your WordPress.com website. Limited functionality and storage.'),
-  getSubTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Essential features. Freedom to grow.'),
-  getBillingTimeFrame: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('per month, billed yearly'),
-  getPlanCompareFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_TRAFFIC */ .c__, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MANAGED_HOSTING */ .FiJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_THEMES */ .jDM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .Eb2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_ADMINS */ .SsD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_6GB_STORAGE */ .W4b, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .Vms, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_BLOCKS */ .x_7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_TITAN_EMAIL */ .fDA],
-  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_INSTALL_PURCHASED_PLUGINS */ .n26],
+  getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .cp.hasTranslation('Start with a custom domain name, simple payments, and extra storage.') || ['en', 'en-gb'].includes((0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .getLocaleSlug */ .ug)() || '') ? i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Start with a custom domain name, simple payments, and extra storage.') : i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Start your WordPress.com website. Limited functionality and storage.'),
+  getSubTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Essential features. Freedom to grow.'),
+  getBillingTimeFrame: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('per month, billed yearly'),
+  getPlanCompareFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_TRAFFIC */ .Ccb, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MANAGED_HOSTING */ .CSt, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_THEMES */ .Ixy, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .s52, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_ADMINS */ .Az1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_6GB_STORAGE */ .kTI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .VIX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_BLOCKS */ .cn4, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_TITAN_EMAIL */ .QbO],
+  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_INSTALL_PURCHASED_PLUGINS */ .uc$],
   getCancellationFeatureList: () => ({
     monthly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_MANAGED_HOSTINGS */ .KG, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_AND_SOCIAL */ ._o, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .pG, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SECURITY_AND_SPAM */ .Zs, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_JETPACK_ESSENTIALS */ .$N],
+      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_MANAGED_HOSTINGS */ .Et, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_AND_SOCIAL */ .wh, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .sb, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SECURITY_AND_SPAM */ .Qj, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_JETPACK_ESSENTIALS */ .mI],
       andMore: true
     },
     yearly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_MANAGED_HOSTINGS */ .KG, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_AND_SOCIAL */ ._o, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .pG, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SECURITY_AND_SPAM */ .Zs, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_JETPACK_ESSENTIALS */ .$N],
+      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_MANAGED_HOSTINGS */ .Et, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_AND_SOCIAL */ .wh, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .sb, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SECURITY_AND_SPAM */ .Qj, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_JETPACK_ESSENTIALS */ .mI],
       andMore: true
     },
     withDomain: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_MANAGED_HOSTINGS */ .KG, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_AND_SOCIAL */ ._o, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .pG, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SECURITY_AND_SPAM */ .Zs],
+      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_MANAGED_HOSTINGS */ .Et, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_AND_SOCIAL */ .wh, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .sb, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SECURITY_AND_SPAM */ .Qj],
       andMore: true
     }
   })
 };
-PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_FLEXIBLE */ .Cq] = {
+PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_FLEXIBLE */ .C6] = {
   // Inherits the free plan
-  ...PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d],
-  group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .w9,
-  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_FLEXIBLE */ .qC,
-  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('WordPress Free'),
-  getBillingTimeFrame: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('upgrade when you need'),
-  getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Start your free WordPress.com website. Limited functionality and storage.'),
-  getPlanCompareFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_1GB_STORAGE */ .Zaf]
+  ...PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ],
+  group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .Og,
+  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_FLEXIBLE */ .W_,
+  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('WordPress Free'),
+  getBillingTimeFrame: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('upgrade when you need'),
+  getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Start your free WordPress.com website. Limited functionality and storage.'),
+  getPlanCompareFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_1GB_STORAGE */ .Oe$]
 };
-PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO */ ._s] = {
+PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO */ .mG] = {
   ...getPlanProDetails(),
-  term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .w$,
+  term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .GK,
   getProductId: () => 1032,
-  getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO */ ._s,
+  getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO */ .mG,
   getPathSlug: () => 'pro',
-  getBillingTimeFrame: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('per month, billed yearly')
+  getBillingTimeFrame: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('per month, billed yearly')
 };
-PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_MONTHLY */ .dU] = {
+PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_MONTHLY */ .U7] = {
   ...getPlanProDetails(),
   ...getMonthlyTimeframe(),
-  availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d].includes(plan),
+  availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ].includes(plan),
   getProductId: () => 1034,
-  getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_MONTHLY */ .dU,
+  getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_MONTHLY */ .U7,
   getPathSlug: () => 'pro-monthly'
 };
-PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_2_YEARS */ .ln] = {
+PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_2_YEARS */ ._I] = {
   ...getPlanProDetails(),
-  term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_BIENNIALLY */ .SU,
-  availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ ._d, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_STARTER */ .Id, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO */ ._s, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_MONTHLY */ .dU].includes(plan),
+  term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_BIENNIALLY */ .So,
+  availableFor: plan => [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_FREE */ .oZ, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_STARTER */ .mU, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO */ .mG, _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_MONTHLY */ .U7].includes(plan),
   getProductId: () => 1035,
-  getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_2_YEARS */ .ln,
+  getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_PRO_2_YEARS */ ._I,
   getPathSlug: () => 'pro-2-years',
   getBillingTimeFrame: WPComGetBiennialBillingTimeframe
 };
-PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_TRIAL_MONTHLY */ .FC] = {
+PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_TRIAL_MONTHLY */ .sL] = {
   ...getDotcomPlanDetails(),
-  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_ECOMMERCE */ .h7,
-  group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .w9,
+  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_ECOMMERCE */ .od,
+  group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .Og,
   getProductId: () => 1052,
-  getPathSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_TRIAL_MONTHLY */ .FC,
-  term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .ob,
-  getBillingTimeFrame: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('free trial'),
-  getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_TRIAL_MONTHLY */ .FC,
-  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Entrepreneur free trial'),
-  getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Entrepreneur free trial'),
-  getTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Get a taste of the world’s most popular eCommerce software.')
+  getPathSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_TRIAL_MONTHLY */ .sL,
+  term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .mI,
+  getBillingTimeFrame: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('free trial'),
+  getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_TRIAL_MONTHLY */ .sL,
+  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Entrepreneur free trial'),
+  getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Entrepreneur free trial'),
+  getTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Get a taste of the world’s most popular eCommerce software.')
 };
-if ((0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ ._k)('plans/migration-trial')) {
-  PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_MIGRATION_TRIAL_MONTHLY */ .T$] = {
+if ((0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .K4)('plans/migration-trial')) {
+  PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_MIGRATION_TRIAL_MONTHLY */ .WY] = {
     ...getPlanBusinessDetails(),
-    type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_BUSINESS */ .Qj,
-    group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .w9,
+    type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_BUSINESS */ .Gm,
+    group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .Og,
     getProductId: () => 1057,
-    getPathSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_MIGRATION_TRIAL_MONTHLY */ .T$,
-    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .ob,
-    getBillingTimeFrame: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('free trial'),
-    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_MIGRATION_TRIAL_MONTHLY */ .T$,
-    getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Creator Trial')
+    getPathSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_MIGRATION_TRIAL_MONTHLY */ .WY,
+    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .mI,
+    getBillingTimeFrame: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('free trial'),
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_MIGRATION_TRIAL_MONTHLY */ .WY,
+    getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Creator Trial')
   };
 }
-PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY */ .Rl] = {
+PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY */ .AX] = {
   ...getPlanBusinessDetails(),
-  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Try all the features of our Creator plan.'),
-  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_BUSINESS */ .Qj,
-  group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .w9,
+  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Try all the features of our Creator plan.'),
+  type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_BUSINESS */ .Gm,
+  group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .Og,
   getProductId: () => 1058,
-  getPathSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY */ .Rl,
-  term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .ob,
-  getBillingTimeFrame: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Try it for 3 days'),
-  getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY */ .Rl,
-  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Creator Trial'),
-  getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Hosting free trial'),
-  getTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .ZP.translate('Get a taste of unlimited performance and unbeatable uptime')
+  getPathSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY */ .AX,
+  term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .mI,
+  getBillingTimeFrame: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Try it for 3 days'),
+  getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY */ .AX,
+  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Creator Trial'),
+  getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Hosting free trial'),
+  getTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .cp.translate('Get a taste of unlimited performance and unbeatable uptime')
 };
 
 /***/ }),
 
-/***/ 544:
+/***/ 1392:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   c: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /**
  * Returns configuration value for given key
@@ -7781,38 +7841,38 @@ const disable = data => feature => {
 
 /***/ }),
 
-/***/ 4724:
+/***/ 7408:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   c: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(914);
+/* harmony import */ var _i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7560);
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new _i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z());
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new _i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c());
 
 /***/ }),
 
-/***/ 914:
+/***/ 7560:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   c: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2699);
+/* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2928);
 /* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(events__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _automattic_interpolate_components__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(2594);
-/* harmony import */ var _tannin_sprintf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(6668);
-/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8049);
+/* harmony import */ var _automattic_interpolate_components__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(7556);
+/* harmony import */ var _tannin_sprintf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(6808);
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9868);
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var hash_js_lib_hash_sha_1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5079);
+/* harmony import */ var hash_js_lib_hash_sha_1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1672);
 /* harmony import */ var hash_js_lib_hash_sha_1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(hash_js_lib_hash_sha_1__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var lru__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7839);
+/* harmony import */ var lru__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2608);
 /* harmony import */ var lru__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lru__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var tannin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9830);
-/* harmony import */ var _number_format__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(3);
+/* harmony import */ var tannin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(2888);
+/* harmony import */ var _number_format__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7696);
 
 
 
@@ -7968,7 +8028,7 @@ I18N.prototype.numberFormat = function (number, options = {}) {
   const decimals = typeof options === 'number' ? options : options.decimals || 0;
   const decPoint = options.decPoint || this.state.numberFormatSettings.decimal_point || '.';
   const thousandsSep = options.thousandsSep || this.state.numberFormatSettings.thousands_sep || ',';
-  return (0,_number_format__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z)(number, decimals, decPoint, thousandsSep);
+  return (0,_number_format__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .c)(number, decimals, decPoint, thousandsSep);
 };
 I18N.prototype.configure = function (options) {
   Object.assign(this, options || {});
@@ -8044,7 +8104,7 @@ I18N.prototype.setLocale = function (localeData) {
   // - the translation for the special string "ltr" (standard in Core, not present in Calypso)
   // - or the `momentjs_locale.textDirection` property present in Calypso translation files
   this.state.textDirection = this.state.locale['text direction\u0004ltr']?.[0] || this.state.locale['']?.momentjs_locale?.textDirection;
-  this.state.tannin = new tannin__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z({
+  this.state.tannin = new tannin__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .c({
     [domain_key]: this.state.locale
   });
 
@@ -8130,7 +8190,7 @@ I18N.prototype.translate = function () {
     const sprintfArgs = Array.isArray(options.args) ? options.args.slice(0) : [options.args];
     sprintfArgs.unshift(translation);
     try {
-      translation = (0,_tannin_sprintf__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z)(...sprintfArgs);
+      translation = (0,_tannin_sprintf__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .c)(...sprintfArgs);
     } catch (error) {
       if (!window || !window.console) {
         return;
@@ -8146,7 +8206,7 @@ I18N.prototype.translate = function () {
 
   // interpolate any components
   if (options.components) {
-    translation = (0,_automattic_interpolate_components__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z)({
+    translation = (0,_automattic_interpolate_components__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .c)({
       mixedString: translation,
       components: options.components,
       throwErrors: this.throwErrors
@@ -8184,17 +8244,17 @@ I18N.prototype.registerTranslateHook = function (callback) {
 
 /***/ }),
 
-/***/ 1481:
+/***/ 4064:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Iu: () => (/* binding */ translate),
-/* harmony export */   Yj: () => (/* binding */ getLocaleSlug),
-/* harmony export */   ZP: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   GS: () => (/* binding */ translate),
+/* harmony export */   cp: () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   ug: () => (/* binding */ getLocaleSlug)
 /* harmony export */ });
 /* unused harmony exports numberFormat, configure, setLocale, getLocale, getLocaleVariant, isRtl, addTranslations, reRenderTranslations, registerComponentUpdateHook, registerTranslateHook, state, stateObserver, on, off, emit */
-/* harmony import */ var _default_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4724);
+/* harmony import */ var _default_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7408);
 
 
 
@@ -8202,36 +8262,36 @@ I18N.prototype.registerTranslateHook = function (callback) {
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
 
 // Export the default instance's properties and bound methods for convenience
 // These should be deprecated eventually, exposing only the default `i18n` instance
-const numberFormat = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.numberFormat.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
-const translate = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.translate.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
-const configure = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.configure.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
-const setLocale = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.setLocale.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
-const getLocale = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.getLocale.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
-const getLocaleSlug = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.getLocaleSlug.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
-const getLocaleVariant = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.getLocaleVariant.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
-const isRtl = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.isRtl.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
-const addTranslations = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.addTranslations.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
-const reRenderTranslations = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.reRenderTranslations.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
-const registerComponentUpdateHook = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.registerComponentUpdateHook.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
-const registerTranslateHook = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.registerTranslateHook.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
-const state = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.state;
-const stateObserver = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.stateObserver;
-const on = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.on.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
-const off = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.off.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
-const emit = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z.emit.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z);
+const numberFormat = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.numberFormat.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const translate = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.translate.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const configure = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.configure.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const setLocale = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.setLocale.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const getLocale = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.getLocale.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const getLocaleSlug = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.getLocaleSlug.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const getLocaleVariant = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.getLocaleVariant.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const isRtl = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.isRtl.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const addTranslations = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.addTranslations.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const reRenderTranslations = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.reRenderTranslations.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const registerComponentUpdateHook = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.registerComponentUpdateHook.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const registerTranslateHook = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.registerTranslateHook.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const state = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.state;
+const stateObserver = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.stateObserver;
+const on = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.on.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const off = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.off.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const emit = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.emit.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
 
 /***/ }),
 
-/***/ 3:
+/***/ 7696:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (/* binding */ number_format)
+/* harmony export */   c: () => (/* binding */ number_format)
 /* harmony export */ });
 /*
  * Exposes number format capability
@@ -8265,16 +8325,16 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 
 /***/ }),
 
-/***/ 2594:
+/***/ 7556:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (/* binding */ interpolate)
+/* harmony export */   c: () => (/* binding */ interpolate)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9196);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1280);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _tokenize__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1310);
+/* harmony import */ var _tokenize__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6360);
 
 
 function getCloseIndex(openIndex, tokens) {
@@ -8365,7 +8425,7 @@ function interpolate(options) {
     }
     return mixedString;
   }
-  const tokens = (0,_tokenize__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)(mixedString);
+  const tokens = (0,_tokenize__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .c)(mixedString);
   try {
     return buildChildren(tokens, components);
   } catch (error) {
@@ -8378,12 +8438,12 @@ function interpolate(options) {
 
 /***/ }),
 
-/***/ 1310:
+/***/ 6360:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (/* binding */ tokenize)
+/* harmony export */   c: () => (/* binding */ tokenize)
 /* harmony export */ });
 function identifyToken(item) {
   // {{/example}}
@@ -8419,18 +8479,18 @@ function tokenize(mixedString) {
 
 /***/ }),
 
-/***/ 3340:
+/***/ 6656:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Yt: () => (/* binding */ handleRequestError),
-/* harmony export */   _W: () => (/* binding */ handleRequestSuccess),
-/* harmony export */   hg: () => (/* binding */ isLoading),
-/* harmony export */   lZ: () => (/* binding */ addScriptCallback)
+/* harmony export */   K0: () => (/* binding */ isLoading),
+/* harmony export */   OO: () => (/* binding */ handleRequestSuccess),
+/* harmony export */   Ux: () => (/* binding */ handleRequestError),
+/* harmony export */   sr: () => (/* binding */ addScriptCallback)
 /* harmony export */ });
 /* unused harmony exports getCallbacksMap, removeScriptCallback, removeScriptCallbacks, removeAllScriptCallbacks, executeCallbacks */
-/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8049);
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9868);
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_0__);
 
 const debug = debug__WEBPACK_IMPORTED_MODULE_0___default()('lib/load-script/callback-handler');
@@ -8504,17 +8564,17 @@ function handleRequestError() {
 
 /***/ }),
 
-/***/ 5606:
+/***/ 7748:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   C: () => (/* binding */ createScriptElement),
-/* harmony export */   k: () => (/* binding */ attachToHead)
+/* harmony export */   U: () => (/* binding */ attachToHead),
+/* harmony export */   m: () => (/* binding */ createScriptElement)
 /* harmony export */ });
-/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8049);
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9868);
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _callback_handler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3340);
+/* harmony import */ var _callback_handler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6656);
 
 
 const debug = debug__WEBPACK_IMPORTED_MODULE_0___default()('lib/load-script/dom-operations');
@@ -8523,8 +8583,8 @@ function createScriptElement(url, args) {
   const script = document.createElement('script');
   script.src = url;
   script.type = 'text/javascript';
-  script.onload = _callback_handler__WEBPACK_IMPORTED_MODULE_1__/* .handleRequestSuccess */ ._W;
-  script.onerror = _callback_handler__WEBPACK_IMPORTED_MODULE_1__/* .handleRequestError */ .Yt;
+  script.onload = _callback_handler__WEBPACK_IMPORTED_MODULE_1__/* .handleRequestSuccess */ .OO;
+  script.onerror = _callback_handler__WEBPACK_IMPORTED_MODULE_1__/* .handleRequestError */ .Ux;
   script.async = true;
   if (args) {
     Object.entries(args).forEach(([key, value]) => script[key] = value);
@@ -8538,18 +8598,18 @@ function attachToHead(element) {
 
 /***/ }),
 
-/***/ 4898:
+/***/ 8680:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   ve: () => (/* binding */ loadScript)
+/* harmony export */   aU: () => (/* binding */ loadScript)
 /* harmony export */ });
 /* unused harmony exports JQUERY_URL, loadjQueryDependentScript */
-/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8049);
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9868);
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _callback_handler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3340);
-/* harmony import */ var _dom_operations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5606);
+/* harmony import */ var _callback_handler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6656);
+/* harmony import */ var _dom_operations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7748);
 /**
  * A little module for loading a external script
  *
@@ -8574,22 +8634,22 @@ const JQUERY_URL = 'https://s0.wp.com/wp-includes/js/jquery/jquery.js';
 
 function loadScript(url, callback, args) {
   // If this script is not currently being loaded, create a script element and attach to document head.
-  const shouldLoadScript = !(0,_callback_handler__WEBPACK_IMPORTED_MODULE_1__/* .isLoading */ .hg)(url);
+  const shouldLoadScript = !(0,_callback_handler__WEBPACK_IMPORTED_MODULE_1__/* .isLoading */ .K0)(url);
   if (shouldLoadScript) {
     // the onload/onerror callbacks are guaranteed to be called asynchronously, so it's ok to first
     // add the element and only then attach callbacks, as long as it happens in one event loop tick.
-    (0,_dom_operations__WEBPACK_IMPORTED_MODULE_2__/* .attachToHead */ .k)((0,_dom_operations__WEBPACK_IMPORTED_MODULE_2__/* .createScriptElement */ .C)(url, args));
+    (0,_dom_operations__WEBPACK_IMPORTED_MODULE_2__/* .attachToHead */ .U)((0,_dom_operations__WEBPACK_IMPORTED_MODULE_2__/* .createScriptElement */ .m)(url, args));
   }
 
   // if callback is provided, behave traditionally
   if (typeof callback === 'function') {
-    (0,_callback_handler__WEBPACK_IMPORTED_MODULE_1__/* .addScriptCallback */ .lZ)(url, callback);
+    (0,_callback_handler__WEBPACK_IMPORTED_MODULE_1__/* .addScriptCallback */ .sr)(url, callback);
     return;
   }
 
   // but if not, return a Promise
   return new Promise((resolve, reject) => {
-    (0,_callback_handler__WEBPACK_IMPORTED_MODULE_1__/* .addScriptCallback */ .lZ)(url, error => {
+    (0,_callback_handler__WEBPACK_IMPORTED_MODULE_1__/* .addScriptCallback */ .sr)(url, error => {
       if (error === null) {
         resolve();
       } else {
@@ -8618,7 +8678,7 @@ function loadjQueryDependentScript(url, callback, args) {
 
 /***/ }),
 
-/***/ 8049:
+/***/ 9868:
 /***/ ((module, exports, __webpack_require__) => {
 
 /* eslint-env browser */
@@ -8787,7 +8847,7 @@ function localstorage() {
     // XXX (@Qix-) should we be logging these?
   }
 }
-module.exports = __webpack_require__(2632)(exports);
+module.exports = __webpack_require__(404)(exports);
 const {
   formatters
 } = module.exports;
@@ -8806,7 +8866,7 @@ formatters.j = function (v) {
 
 /***/ }),
 
-/***/ 2632:
+/***/ 404:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /**
@@ -8821,7 +8881,7 @@ function setup(env) {
   createDebug.disable = disable;
   createDebug.enable = enable;
   createDebug.enabled = enabled;
-  createDebug.humanize = __webpack_require__(5881);
+  createDebug.humanize = __webpack_require__(9392);
   createDebug.destroy = destroy;
   Object.keys(env).forEach(key => {
     createDebug[key] = env[key];
@@ -9056,7 +9116,7 @@ module.exports = setup;
 
 /***/ }),
 
-/***/ 9731:
+/***/ 9000:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -9064,7 +9124,7 @@ module.exports = __webpack_require__.p + "images/image-f40c6b2b12b942b650ea.svg"
 
 /***/ }),
 
-/***/ 9196:
+/***/ 1280:
 /***/ ((module) => {
 
 "use strict";
@@ -9072,7 +9132,7 @@ module.exports = window["React"];
 
 /***/ }),
 
-/***/ 5609:
+/***/ 7287:
 /***/ ((module) => {
 
 "use strict";
@@ -9080,7 +9140,7 @@ module.exports = window["wp"]["components"];
 
 /***/ }),
 
-/***/ 9818:
+/***/ 7752:
 /***/ ((module) => {
 
 "use strict";
@@ -9088,7 +9148,7 @@ module.exports = window["wp"]["data"];
 
 /***/ }),
 
-/***/ 7701:
+/***/ 5404:
 /***/ ((module) => {
 
 "use strict";
@@ -9096,7 +9156,7 @@ module.exports = window["wp"]["domReady"];
 
 /***/ }),
 
-/***/ 9307:
+/***/ 8496:
 /***/ ((module) => {
 
 "use strict";
@@ -9104,7 +9164,7 @@ module.exports = window["wp"]["element"];
 
 /***/ }),
 
-/***/ 5736:
+/***/ 3396:
 /***/ ((module) => {
 
 "use strict";
@@ -9112,7 +9172,7 @@ module.exports = window["wp"]["i18n"];
 
 /***/ }),
 
-/***/ 8817:
+/***/ 9676:
 /***/ ((module) => {
 
 "use strict";
@@ -9120,7 +9180,7 @@ module.exports = window["wp"]["plugins"];
 
 /***/ }),
 
-/***/ 6483:
+/***/ 7204:
 /***/ ((module) => {
 
 "use strict";
@@ -9128,27 +9188,27 @@ module.exports = window["wp"]["url"];
 
 /***/ }),
 
-/***/ 5777:
+/***/ 4600:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   j: () => (/* binding */ focusManager)
+/* harmony export */   m: () => (/* binding */ focusManager)
 /* harmony export */ });
 /* unused harmony export FocusManager */
-/* harmony import */ var _subscribable_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3248);
-/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8298);
+/* harmony import */ var _subscribable_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7156);
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4348);
 // src/focusManager.ts
 
 
-var FocusManager = class extends _subscribable_js__WEBPACK_IMPORTED_MODULE_0__/* .Subscribable */ .l {
+var FocusManager = class extends _subscribable_js__WEBPACK_IMPORTED_MODULE_0__/* .Subscribable */ .Q {
   #focused;
   #cleanup;
   #setup;
   constructor() {
     super();
     this.#setup = (onFocus) => {
-      if (!_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .isServer */ .sk && window.addEventListener) {
+      if (!_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .isServer */ .oj && window.addEventListener) {
         const listener = () => onFocus();
         window.addEventListener("visibilitychange", listener, false);
         return () => {
@@ -9205,15 +9265,15 @@ var focusManager = new FocusManager();
 
 /***/ }),
 
-/***/ 3620:
+/***/ 5208:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Gm: () => (/* binding */ infiniteQueryBehavior)
+/* harmony export */   Cg: () => (/* binding */ infiniteQueryBehavior)
 /* harmony export */ });
 /* unused harmony exports hasNextPage, hasPreviousPage */
-/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8298);
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4348);
 // src/infiniteQueryBehavior.ts
 
 function infiniteQueryBehavior(pages) {
@@ -9262,7 +9322,7 @@ function infiniteQueryBehavior(pages) {
             queryFnContext
           );
           const { maxPages } = context.options;
-          const addTo = previous ? _utils_js__WEBPACK_IMPORTED_MODULE_0__/* .addToStart */ .Ht : _utils_js__WEBPACK_IMPORTED_MODULE_0__/* .addToEnd */ .VX;
+          const addTo = previous ? _utils_js__WEBPACK_IMPORTED_MODULE_0__/* .addToStart */ .i8 : _utils_js__WEBPACK_IMPORTED_MODULE_0__/* .addToEnd */ .kx;
           return {
             pages: addTo(data.pages, page, maxPages),
             pageParams: addTo(data.pageParams, param, maxPages)
@@ -9341,22 +9401,22 @@ function hasPreviousPage(options, data) {
 
 /***/ }),
 
-/***/ 457:
+/***/ 6152:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   m: () => (/* binding */ Mutation)
+/* harmony export */   e: () => (/* binding */ Mutation)
 /* harmony export */ });
 /* unused harmony export getDefaultState */
-/* harmony import */ var _notifyManager_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1895);
-/* harmony import */ var _removable_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9085);
-/* harmony import */ var _retryer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6087);
+/* harmony import */ var _notifyManager_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4);
+/* harmony import */ var _removable_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2120);
+/* harmony import */ var _retryer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2312);
 // src/mutation.ts
 
 
 
-var Mutation = class extends _removable_js__WEBPACK_IMPORTED_MODULE_0__/* .Removable */ .F {
+var Mutation = class extends _removable_js__WEBPACK_IMPORTED_MODULE_0__/* .Removable */ .o {
   constructor(config) {
     super();
     this.mutationId = config.mutationId;
@@ -9413,7 +9473,7 @@ var Mutation = class extends _removable_js__WEBPACK_IMPORTED_MODULE_0__/* .Remov
   }
   async execute(variables) {
     const executeMutation = () => {
-      this.#retryer = (0,_retryer_js__WEBPACK_IMPORTED_MODULE_1__/* .createRetryer */ .Mz)({
+      this.#retryer = (0,_retryer_js__WEBPACK_IMPORTED_MODULE_1__/* .createRetryer */ .uI)({
         fn: () => {
           if (!this.options.mutationFn) {
             return Promise.reject(new Error("No mutationFn found"));
@@ -9529,7 +9589,7 @@ var Mutation = class extends _removable_js__WEBPACK_IMPORTED_MODULE_0__/* .Remov
             failureCount: 0,
             failureReason: null,
             error: null,
-            isPaused: !(0,_retryer_js__WEBPACK_IMPORTED_MODULE_1__/* .canFetch */ .Kw)(this.options.networkMode),
+            isPaused: !(0,_retryer_js__WEBPACK_IMPORTED_MODULE_1__/* .canFetch */ .ot)(this.options.networkMode),
             status: "pending",
             variables: action.variables,
             submittedAt: Date.now()
@@ -9557,7 +9617,7 @@ var Mutation = class extends _removable_js__WEBPACK_IMPORTED_MODULE_0__/* .Remov
       }
     };
     this.state = reducer(this.state);
-    _notifyManager_js__WEBPACK_IMPORTED_MODULE_2__/* .notifyManager */ .V.batch(() => {
+    _notifyManager_js__WEBPACK_IMPORTED_MODULE_2__/* .notifyManager */ .y.batch(() => {
       this.#observers.forEach((observer) => {
         observer.onMutationUpdate(action);
       });
@@ -9587,23 +9647,23 @@ function getDefaultState() {
 
 /***/ }),
 
-/***/ 1750:
+/***/ 4648:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   L: () => (/* binding */ MutationCache)
+/* harmony export */   y: () => (/* binding */ MutationCache)
 /* harmony export */ });
-/* harmony import */ var _notifyManager_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1895);
-/* harmony import */ var _mutation_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(457);
-/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8298);
-/* harmony import */ var _subscribable_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3248);
+/* harmony import */ var _notifyManager_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4);
+/* harmony import */ var _mutation_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6152);
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4348);
+/* harmony import */ var _subscribable_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7156);
 // src/mutationCache.ts
 
 
 
 
-var MutationCache = class extends _subscribable_js__WEBPACK_IMPORTED_MODULE_0__/* .Subscribable */ .l {
+var MutationCache = class extends _subscribable_js__WEBPACK_IMPORTED_MODULE_0__/* .Subscribable */ .Q {
   constructor(config = {}) {
     super();
     this.config = config;
@@ -9614,7 +9674,7 @@ var MutationCache = class extends _subscribable_js__WEBPACK_IMPORTED_MODULE_0__/
   #mutationId;
   #resuming;
   build(client, options, state) {
-    const mutation = new _mutation_js__WEBPACK_IMPORTED_MODULE_1__/* .Mutation */ .m({
+    const mutation = new _mutation_js__WEBPACK_IMPORTED_MODULE_1__/* .Mutation */ .e({
       mutationCache: this,
       mutationId: ++this.#mutationId,
       options: client.defaultMutationOptions(options),
@@ -9632,7 +9692,7 @@ var MutationCache = class extends _subscribable_js__WEBPACK_IMPORTED_MODULE_0__/
     this.notify({ type: "removed", mutation });
   }
   clear() {
-    _notifyManager_js__WEBPACK_IMPORTED_MODULE_2__/* .notifyManager */ .V.batch(() => {
+    _notifyManager_js__WEBPACK_IMPORTED_MODULE_2__/* .notifyManager */ .y.batch(() => {
       this.#mutations.forEach((mutation) => {
         this.remove(mutation);
       });
@@ -9644,16 +9704,16 @@ var MutationCache = class extends _subscribable_js__WEBPACK_IMPORTED_MODULE_0__/
   find(filters) {
     const defaultedFilters = { exact: true, ...filters };
     return this.#mutations.find(
-      (mutation) => (0,_utils_js__WEBPACK_IMPORTED_MODULE_3__/* .matchMutation */ .X7)(defaultedFilters, mutation)
+      (mutation) => (0,_utils_js__WEBPACK_IMPORTED_MODULE_3__/* .matchMutation */ .Yn)(defaultedFilters, mutation)
     );
   }
   findAll(filters = {}) {
     return this.#mutations.filter(
-      (mutation) => (0,_utils_js__WEBPACK_IMPORTED_MODULE_3__/* .matchMutation */ .X7)(filters, mutation)
+      (mutation) => (0,_utils_js__WEBPACK_IMPORTED_MODULE_3__/* .matchMutation */ .Yn)(filters, mutation)
     );
   }
   notify(event) {
-    _notifyManager_js__WEBPACK_IMPORTED_MODULE_2__/* .notifyManager */ .V.batch(() => {
+    _notifyManager_js__WEBPACK_IMPORTED_MODULE_2__/* .notifyManager */ .y.batch(() => {
       this.listeners.forEach((listener) => {
         listener(event);
       });
@@ -9662,9 +9722,9 @@ var MutationCache = class extends _subscribable_js__WEBPACK_IMPORTED_MODULE_0__/
   resumePausedMutations() {
     this.#resuming = (this.#resuming ?? Promise.resolve()).then(() => {
       const pausedMutations = this.#mutations.filter((x) => x.state.isPaused);
-      return _notifyManager_js__WEBPACK_IMPORTED_MODULE_2__/* .notifyManager */ .V.batch(
+      return _notifyManager_js__WEBPACK_IMPORTED_MODULE_2__/* .notifyManager */ .y.batch(
         () => pausedMutations.reduce(
-          (promise, mutation) => promise.then(() => mutation.continue().catch(_utils_js__WEBPACK_IMPORTED_MODULE_3__/* .noop */ .ZT)),
+          (promise, mutation) => promise.then(() => mutation.continue().catch(_utils_js__WEBPACK_IMPORTED_MODULE_3__/* .noop */ .Kw)),
           Promise.resolve()
         )
       );
@@ -9679,12 +9739,12 @@ var MutationCache = class extends _subscribable_js__WEBPACK_IMPORTED_MODULE_0__/
 
 /***/ }),
 
-/***/ 1895:
+/***/ 4:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   V: () => (/* binding */ notifyManager)
+/* harmony export */   y: () => (/* binding */ notifyManager)
 /* harmony export */ });
 /* unused harmony export createNotifyManager */
 // src/notifyManager.ts
@@ -9764,27 +9824,27 @@ var notifyManager = createNotifyManager();
 
 /***/ }),
 
-/***/ 3965:
+/***/ 632:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   N: () => (/* binding */ onlineManager)
+/* harmony export */   q: () => (/* binding */ onlineManager)
 /* harmony export */ });
 /* unused harmony export OnlineManager */
-/* harmony import */ var _subscribable_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3248);
-/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8298);
+/* harmony import */ var _subscribable_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7156);
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4348);
 // src/onlineManager.ts
 
 
-var OnlineManager = class extends _subscribable_js__WEBPACK_IMPORTED_MODULE_0__/* .Subscribable */ .l {
+var OnlineManager = class extends _subscribable_js__WEBPACK_IMPORTED_MODULE_0__/* .Subscribable */ .Q {
   #online = true;
   #cleanup;
   #setup;
   constructor() {
     super();
     this.#setup = (onOnline) => {
-      if (!_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .isServer */ .sk && window.addEventListener) {
+      if (!_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .isServer */ .oj && window.addEventListener) {
         const onlineListener = () => onOnline(true);
         const offlineListener = () => onOnline(false);
         window.addEventListener("online", onlineListener, false);
@@ -9832,23 +9892,23 @@ var onlineManager = new OnlineManager();
 
 /***/ }),
 
-/***/ 681:
+/***/ 1288:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   A: () => (/* binding */ Query)
+/* harmony export */   M: () => (/* binding */ Query)
 /* harmony export */ });
-/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8298);
-/* harmony import */ var _notifyManager_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1895);
-/* harmony import */ var _retryer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6087);
-/* harmony import */ var _removable_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9085);
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4348);
+/* harmony import */ var _notifyManager_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4);
+/* harmony import */ var _retryer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2312);
+/* harmony import */ var _removable_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2120);
 // src/query.ts
 
 
 
 
-var Query = class extends _removable_js__WEBPACK_IMPORTED_MODULE_0__/* .Removable */ .F {
+var Query = class extends _removable_js__WEBPACK_IMPORTED_MODULE_0__/* .Removable */ .o {
   constructor(config) {
     super();
     this.#abortSignalConsumed = false;
@@ -9883,7 +9943,7 @@ var Query = class extends _removable_js__WEBPACK_IMPORTED_MODULE_0__/* .Removabl
     }
   }
   setData(newData, options) {
-    const data = (0,_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .replaceData */ .oE)(this.state.data, newData, this.options);
+    const data = (0,_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .replaceData */ .Cs)(this.state.data, newData, this.options);
     this.#dispatch({
       data,
       type: "success",
@@ -9898,7 +9958,7 @@ var Query = class extends _removable_js__WEBPACK_IMPORTED_MODULE_0__/* .Removabl
   cancel(options) {
     const promise = this.#promise;
     this.#retryer?.cancel(options);
-    return promise ? promise.then(_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .noop */ .ZT).catch(_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .noop */ .ZT) : Promise.resolve();
+    return promise ? promise.then(_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .noop */ .Kw).catch(_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .noop */ .Kw) : Promise.resolve();
   }
   destroy() {
     super.destroy();
@@ -9920,7 +9980,7 @@ var Query = class extends _removable_js__WEBPACK_IMPORTED_MODULE_0__/* .Removabl
     return this.state.isInvalidated || !this.state.dataUpdatedAt || this.#observers.some((observer) => observer.getCurrentResult().isStale);
   }
   isStaleByTime(staleTime = 0) {
-    return this.state.isInvalidated || !this.state.dataUpdatedAt || !(0,_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .timeUntilStale */ .Kp)(this.state.dataUpdatedAt, staleTime);
+    return this.state.isInvalidated || !this.state.dataUpdatedAt || !(0,_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .timeUntilStale */ .ob)(this.state.dataUpdatedAt, staleTime);
   }
   onFocus() {
     const observer = this.#observers.find((x) => x.shouldFetchOnWindowFocus());
@@ -10032,13 +10092,13 @@ var Query = class extends _removable_js__WEBPACK_IMPORTED_MODULE_0__/* .Removabl
       this.#dispatch({ type: "fetch", meta: context.fetchOptions?.meta });
     }
     const onError = (error) => {
-      if (!((0,_retryer_js__WEBPACK_IMPORTED_MODULE_2__/* .isCancelledError */ .DV)(error) && error.silent)) {
+      if (!((0,_retryer_js__WEBPACK_IMPORTED_MODULE_2__/* .isCancelledError */ .qu)(error) && error.silent)) {
         this.#dispatch({
           type: "error",
           error
         });
       }
-      if (!(0,_retryer_js__WEBPACK_IMPORTED_MODULE_2__/* .isCancelledError */ .DV)(error)) {
+      if (!(0,_retryer_js__WEBPACK_IMPORTED_MODULE_2__/* .isCancelledError */ .qu)(error)) {
         this.#cache.config.onError?.(
           error,
           this
@@ -10054,7 +10114,7 @@ var Query = class extends _removable_js__WEBPACK_IMPORTED_MODULE_0__/* .Removabl
       }
       this.isFetchingOptimistic = false;
     };
-    this.#retryer = (0,_retryer_js__WEBPACK_IMPORTED_MODULE_2__/* .createRetryer */ .Mz)({
+    this.#retryer = (0,_retryer_js__WEBPACK_IMPORTED_MODULE_2__/* .createRetryer */ .uI)({
       fn: context.fetchFn,
       abort: abortController.abort.bind(abortController),
       onSuccess: (data) => {
@@ -10117,7 +10177,7 @@ var Query = class extends _removable_js__WEBPACK_IMPORTED_MODULE_0__/* .Removabl
             fetchFailureCount: 0,
             fetchFailureReason: null,
             fetchMeta: action.meta ?? null,
-            fetchStatus: (0,_retryer_js__WEBPACK_IMPORTED_MODULE_2__/* .canFetch */ .Kw)(this.options.networkMode) ? "fetching" : "paused",
+            fetchStatus: (0,_retryer_js__WEBPACK_IMPORTED_MODULE_2__/* .canFetch */ .ot)(this.options.networkMode) ? "fetching" : "paused",
             ...!state.dataUpdatedAt && {
               error: null,
               status: "pending"
@@ -10140,7 +10200,7 @@ var Query = class extends _removable_js__WEBPACK_IMPORTED_MODULE_0__/* .Removabl
           };
         case "error":
           const error = action.error;
-          if ((0,_retryer_js__WEBPACK_IMPORTED_MODULE_2__/* .isCancelledError */ .DV)(error) && error.revert && this.#revertState) {
+          if ((0,_retryer_js__WEBPACK_IMPORTED_MODULE_2__/* .isCancelledError */ .qu)(error) && error.revert && this.#revertState) {
             return { ...this.#revertState, fetchStatus: "idle" };
           }
           return {
@@ -10166,7 +10226,7 @@ var Query = class extends _removable_js__WEBPACK_IMPORTED_MODULE_0__/* .Removabl
       }
     };
     this.state = reducer(this.state);
-    _notifyManager_js__WEBPACK_IMPORTED_MODULE_3__/* .notifyManager */ .V.batch(() => {
+    _notifyManager_js__WEBPACK_IMPORTED_MODULE_3__/* .notifyManager */ .y.batch(() => {
       this.#observers.forEach((observer) => {
         observer.onQueryUpdate();
       });
@@ -10198,23 +10258,23 @@ function getDefaultState(options) {
 
 /***/ }),
 
-/***/ 6275:
+/***/ 8768:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   t: () => (/* binding */ QueryCache)
+/* harmony export */   c: () => (/* binding */ QueryCache)
 /* harmony export */ });
-/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8298);
-/* harmony import */ var _query_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(681);
-/* harmony import */ var _notifyManager_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1895);
-/* harmony import */ var _subscribable_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3248);
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4348);
+/* harmony import */ var _query_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1288);
+/* harmony import */ var _notifyManager_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4);
+/* harmony import */ var _subscribable_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7156);
 // src/queryCache.ts
 
 
 
 
-var QueryCache = class extends _subscribable_js__WEBPACK_IMPORTED_MODULE_0__/* .Subscribable */ .l {
+var QueryCache = class extends _subscribable_js__WEBPACK_IMPORTED_MODULE_0__/* .Subscribable */ .Q {
   constructor(config = {}) {
     super();
     this.config = config;
@@ -10223,10 +10283,10 @@ var QueryCache = class extends _subscribable_js__WEBPACK_IMPORTED_MODULE_0__/* .
   #queries;
   build(client, options, state) {
     const queryKey = options.queryKey;
-    const queryHash = options.queryHash ?? (0,_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .hashQueryKeyByOptions */ .Rm)(queryKey, options);
+    const queryHash = options.queryHash ?? (0,_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .hashQueryKeyByOptions */ .oX)(queryKey, options);
     let query = this.get(queryHash);
     if (!query) {
-      query = new _query_js__WEBPACK_IMPORTED_MODULE_2__/* .Query */ .A({
+      query = new _query_js__WEBPACK_IMPORTED_MODULE_2__/* .Query */ .M({
         cache: this,
         queryKey,
         queryHash,
@@ -10258,7 +10318,7 @@ var QueryCache = class extends _subscribable_js__WEBPACK_IMPORTED_MODULE_0__/* .
     }
   }
   clear() {
-    _notifyManager_js__WEBPACK_IMPORTED_MODULE_3__/* .notifyManager */ .V.batch(() => {
+    _notifyManager_js__WEBPACK_IMPORTED_MODULE_3__/* .notifyManager */ .y.batch(() => {
       this.getAll().forEach((query) => {
         this.remove(query);
       });
@@ -10273,29 +10333,29 @@ var QueryCache = class extends _subscribable_js__WEBPACK_IMPORTED_MODULE_0__/* .
   find(filters) {
     const defaultedFilters = { exact: true, ...filters };
     return this.getAll().find(
-      (query) => (0,_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .matchQuery */ ._x)(defaultedFilters, query)
+      (query) => (0,_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .matchQuery */ ._W)(defaultedFilters, query)
     );
   }
   findAll(filters = {}) {
     const queries = this.getAll();
-    return Object.keys(filters).length > 0 ? queries.filter((query) => (0,_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .matchQuery */ ._x)(filters, query)) : queries;
+    return Object.keys(filters).length > 0 ? queries.filter((query) => (0,_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .matchQuery */ ._W)(filters, query)) : queries;
   }
   notify(event) {
-    _notifyManager_js__WEBPACK_IMPORTED_MODULE_3__/* .notifyManager */ .V.batch(() => {
+    _notifyManager_js__WEBPACK_IMPORTED_MODULE_3__/* .notifyManager */ .y.batch(() => {
       this.listeners.forEach((listener) => {
         listener(event);
       });
     });
   }
   onFocus() {
-    _notifyManager_js__WEBPACK_IMPORTED_MODULE_3__/* .notifyManager */ .V.batch(() => {
+    _notifyManager_js__WEBPACK_IMPORTED_MODULE_3__/* .notifyManager */ .y.batch(() => {
       this.getAll().forEach((query) => {
         query.onFocus();
       });
     });
   }
   onOnline() {
-    _notifyManager_js__WEBPACK_IMPORTED_MODULE_3__/* .notifyManager */ .V.batch(() => {
+    _notifyManager_js__WEBPACK_IMPORTED_MODULE_3__/* .notifyManager */ .y.batch(() => {
       this.getAll().forEach((query) => {
         query.onOnline();
       });
@@ -10307,20 +10367,20 @@ var QueryCache = class extends _subscribable_js__WEBPACK_IMPORTED_MODULE_0__/* .
 
 /***/ }),
 
-/***/ 372:
+/***/ 7388:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   S: () => (/* binding */ QueryClient)
 /* harmony export */ });
-/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8298);
-/* harmony import */ var _queryCache_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6275);
-/* harmony import */ var _mutationCache_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1750);
-/* harmony import */ var _focusManager_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5777);
-/* harmony import */ var _onlineManager_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3965);
-/* harmony import */ var _notifyManager_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1895);
-/* harmony import */ var _infiniteQueryBehavior_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(3620);
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4348);
+/* harmony import */ var _queryCache_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8768);
+/* harmony import */ var _mutationCache_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4648);
+/* harmony import */ var _focusManager_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4600);
+/* harmony import */ var _onlineManager_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(632);
+/* harmony import */ var _notifyManager_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(4);
+/* harmony import */ var _infiniteQueryBehavior_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(5208);
 // src/queryClient.ts
 
 
@@ -10339,8 +10399,8 @@ var QueryClient = class {
   #unsubscribeFocus;
   #unsubscribeOnline;
   constructor(config = {}) {
-    this.#queryCache = config.queryCache || new _queryCache_js__WEBPACK_IMPORTED_MODULE_0__/* .QueryCache */ .t();
-    this.#mutationCache = config.mutationCache || new _mutationCache_js__WEBPACK_IMPORTED_MODULE_1__/* .MutationCache */ .L();
+    this.#queryCache = config.queryCache || new _queryCache_js__WEBPACK_IMPORTED_MODULE_0__/* .QueryCache */ .c();
+    this.#mutationCache = config.mutationCache || new _mutationCache_js__WEBPACK_IMPORTED_MODULE_1__/* .MutationCache */ .y();
     this.#defaultOptions = config.defaultOptions || {};
     this.#queryDefaults = /* @__PURE__ */ new Map();
     this.#mutationDefaults = /* @__PURE__ */ new Map();
@@ -10350,14 +10410,14 @@ var QueryClient = class {
     this.#mountCount++;
     if (this.#mountCount !== 1)
       return;
-    this.#unsubscribeFocus = _focusManager_js__WEBPACK_IMPORTED_MODULE_2__/* .focusManager */ .j.subscribe(() => {
-      if (_focusManager_js__WEBPACK_IMPORTED_MODULE_2__/* .focusManager */ .j.isFocused()) {
+    this.#unsubscribeFocus = _focusManager_js__WEBPACK_IMPORTED_MODULE_2__/* .focusManager */ .m.subscribe(() => {
+      if (_focusManager_js__WEBPACK_IMPORTED_MODULE_2__/* .focusManager */ .m.isFocused()) {
         this.resumePausedMutations();
         this.#queryCache.onFocus();
       }
     });
-    this.#unsubscribeOnline = _onlineManager_js__WEBPACK_IMPORTED_MODULE_3__/* .onlineManager */ .N.subscribe(() => {
-      if (_onlineManager_js__WEBPACK_IMPORTED_MODULE_3__/* .onlineManager */ .N.isOnline()) {
+    this.#unsubscribeOnline = _onlineManager_js__WEBPACK_IMPORTED_MODULE_3__/* .onlineManager */ .q.subscribe(() => {
+      if (_onlineManager_js__WEBPACK_IMPORTED_MODULE_3__/* .onlineManager */ .q.isOnline()) {
         this.resumePausedMutations();
         this.#queryCache.onOnline();
       }
@@ -10394,7 +10454,7 @@ var QueryClient = class {
   setQueryData(queryKey, updater, options) {
     const query = this.#queryCache.find({ queryKey });
     const prevData = query?.state.data;
-    const data = (0,_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .functionalUpdate */ .SE)(updater, prevData);
+    const data = (0,_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .functionalUpdate */ .iY)(updater, prevData);
     if (typeof data === "undefined") {
       return void 0;
     }
@@ -10402,7 +10462,7 @@ var QueryClient = class {
     return this.#queryCache.build(this, defaultedOptions).setData(data, { ...options, manual: true });
   }
   setQueriesData(filters, updater, options) {
-    return _notifyManager_js__WEBPACK_IMPORTED_MODULE_5__/* .notifyManager */ .V.batch(
+    return _notifyManager_js__WEBPACK_IMPORTED_MODULE_5__/* .notifyManager */ .y.batch(
       () => this.getQueryCache().findAll(filters).map(({ queryKey }) => [
         queryKey,
         this.setQueryData(queryKey, updater, options)
@@ -10414,7 +10474,7 @@ var QueryClient = class {
   }
   removeQueries(filters) {
     const queryCache = this.#queryCache;
-    _notifyManager_js__WEBPACK_IMPORTED_MODULE_5__/* .notifyManager */ .V.batch(() => {
+    _notifyManager_js__WEBPACK_IMPORTED_MODULE_5__/* .notifyManager */ .y.batch(() => {
       queryCache.findAll(filters).forEach((query) => {
         queryCache.remove(query);
       });
@@ -10426,7 +10486,7 @@ var QueryClient = class {
       type: "active",
       ...filters
     };
-    return _notifyManager_js__WEBPACK_IMPORTED_MODULE_5__/* .notifyManager */ .V.batch(() => {
+    return _notifyManager_js__WEBPACK_IMPORTED_MODULE_5__/* .notifyManager */ .y.batch(() => {
       queryCache.findAll(filters).forEach((query) => {
         query.reset();
       });
@@ -10435,13 +10495,13 @@ var QueryClient = class {
   }
   cancelQueries(filters = {}, cancelOptions = {}) {
     const defaultedCancelOptions = { revert: true, ...cancelOptions };
-    const promises = _notifyManager_js__WEBPACK_IMPORTED_MODULE_5__/* .notifyManager */ .V.batch(
+    const promises = _notifyManager_js__WEBPACK_IMPORTED_MODULE_5__/* .notifyManager */ .y.batch(
       () => this.#queryCache.findAll(filters).map((query) => query.cancel(defaultedCancelOptions))
     );
-    return Promise.all(promises).then(_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .noop */ .ZT).catch(_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .noop */ .ZT);
+    return Promise.all(promises).then(_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .noop */ .Kw).catch(_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .noop */ .Kw);
   }
   invalidateQueries(filters = {}, options = {}) {
-    return _notifyManager_js__WEBPACK_IMPORTED_MODULE_5__/* .notifyManager */ .V.batch(() => {
+    return _notifyManager_js__WEBPACK_IMPORTED_MODULE_5__/* .notifyManager */ .y.batch(() => {
       this.#queryCache.findAll(filters).forEach((query) => {
         query.invalidate();
       });
@@ -10460,16 +10520,16 @@ var QueryClient = class {
       ...options,
       cancelRefetch: options?.cancelRefetch ?? true
     };
-    const promises = _notifyManager_js__WEBPACK_IMPORTED_MODULE_5__/* .notifyManager */ .V.batch(
+    const promises = _notifyManager_js__WEBPACK_IMPORTED_MODULE_5__/* .notifyManager */ .y.batch(
       () => this.#queryCache.findAll(filters).filter((query) => !query.isDisabled()).map((query) => {
         let promise = query.fetch(void 0, fetchOptions);
         if (!fetchOptions.throwOnError) {
-          promise = promise.catch(_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .noop */ .ZT);
+          promise = promise.catch(_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .noop */ .Kw);
         }
         return query.state.fetchStatus === "paused" ? Promise.resolve() : promise;
       })
     );
-    return Promise.all(promises).then(_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .noop */ .ZT);
+    return Promise.all(promises).then(_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .noop */ .Kw);
   }
   fetchQuery(options) {
     const defaultedOptions = this.defaultQueryOptions(options);
@@ -10480,14 +10540,14 @@ var QueryClient = class {
     return query.isStaleByTime(defaultedOptions.staleTime) ? query.fetch(defaultedOptions) : Promise.resolve(query.state.data);
   }
   prefetchQuery(options) {
-    return this.fetchQuery(options).then(_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .noop */ .ZT).catch(_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .noop */ .ZT);
+    return this.fetchQuery(options).then(_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .noop */ .Kw).catch(_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .noop */ .Kw);
   }
   fetchInfiniteQuery(options) {
-    options.behavior = (0,_infiniteQueryBehavior_js__WEBPACK_IMPORTED_MODULE_6__/* .infiniteQueryBehavior */ .Gm)(options.pages);
+    options.behavior = (0,_infiniteQueryBehavior_js__WEBPACK_IMPORTED_MODULE_6__/* .infiniteQueryBehavior */ .Cg)(options.pages);
     return this.fetchQuery(options);
   }
   prefetchInfiniteQuery(options) {
-    return this.fetchInfiniteQuery(options).then(_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .noop */ .ZT).catch(_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .noop */ .ZT);
+    return this.fetchInfiniteQuery(options).then(_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .noop */ .Kw).catch(_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .noop */ .Kw);
   }
   resumePausedMutations() {
     return this.#mutationCache.resumePausedMutations();
@@ -10505,7 +10565,7 @@ var QueryClient = class {
     this.#defaultOptions = options;
   }
   setQueryDefaults(queryKey, options) {
-    this.#queryDefaults.set((0,_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .hashKey */ .Ym)(queryKey), {
+    this.#queryDefaults.set((0,_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .hashKey */ .Gg)(queryKey), {
       queryKey,
       defaultOptions: options
     });
@@ -10514,14 +10574,14 @@ var QueryClient = class {
     const defaults = [...this.#queryDefaults.values()];
     let result = {};
     defaults.forEach((queryDefault) => {
-      if ((0,_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .partialMatchKey */ .to)(queryKey, queryDefault.queryKey)) {
+      if ((0,_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .partialMatchKey */ .GS)(queryKey, queryDefault.queryKey)) {
         result = { ...result, ...queryDefault.defaultOptions };
       }
     });
     return result;
   }
   setMutationDefaults(mutationKey, options) {
-    this.#mutationDefaults.set((0,_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .hashKey */ .Ym)(mutationKey), {
+    this.#mutationDefaults.set((0,_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .hashKey */ .Gg)(mutationKey), {
       mutationKey,
       defaultOptions: options
     });
@@ -10530,7 +10590,7 @@ var QueryClient = class {
     const defaults = [...this.#mutationDefaults.values()];
     let result = {};
     defaults.forEach((queryDefault) => {
-      if ((0,_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .partialMatchKey */ .to)(mutationKey, queryDefault.mutationKey)) {
+      if ((0,_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .partialMatchKey */ .GS)(mutationKey, queryDefault.mutationKey)) {
         result = { ...result, ...queryDefault.defaultOptions };
       }
     });
@@ -10547,7 +10607,7 @@ var QueryClient = class {
       _defaulted: true
     };
     if (!defaultedOptions.queryHash) {
-      defaultedOptions.queryHash = (0,_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .hashQueryKeyByOptions */ .Rm)(
+      defaultedOptions.queryHash = (0,_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .hashQueryKeyByOptions */ .oX)(
         defaultedOptions.queryKey,
         defaultedOptions
       );
@@ -10584,14 +10644,14 @@ var QueryClient = class {
 
 /***/ }),
 
-/***/ 9085:
+/***/ 2120:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   F: () => (/* binding */ Removable)
+/* harmony export */   o: () => (/* binding */ Removable)
 /* harmony export */ });
-/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8298);
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4348);
 // src/removable.ts
 
 var Removable = class {
@@ -10601,7 +10661,7 @@ var Removable = class {
   }
   scheduleGc() {
     this.clearGcTimeout();
-    if ((0,_utils_js__WEBPACK_IMPORTED_MODULE_0__/* .isValidTimeout */ .PN)(this.gcTime)) {
+    if ((0,_utils_js__WEBPACK_IMPORTED_MODULE_0__/* .isValidTimeout */ .AT)(this.gcTime)) {
       this.#gcTimeout = setTimeout(() => {
         this.optionalRemove();
       }, this.gcTime);
@@ -10610,7 +10670,7 @@ var Removable = class {
   updateGcTime(newGcTime) {
     this.gcTime = Math.max(
       this.gcTime || 0,
-      newGcTime ?? (_utils_js__WEBPACK_IMPORTED_MODULE_0__/* .isServer */ .sk ? Infinity : 5 * 60 * 1e3)
+      newGcTime ?? (_utils_js__WEBPACK_IMPORTED_MODULE_0__/* .isServer */ .oj ? Infinity : 5 * 60 * 1e3)
     );
   }
   clearGcTimeout() {
@@ -10625,19 +10685,19 @@ var Removable = class {
 
 /***/ }),
 
-/***/ 6087:
+/***/ 2312:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   DV: () => (/* binding */ isCancelledError),
-/* harmony export */   Kw: () => (/* binding */ canFetch),
-/* harmony export */   Mz: () => (/* binding */ createRetryer)
+/* harmony export */   ot: () => (/* binding */ canFetch),
+/* harmony export */   qu: () => (/* binding */ isCancelledError),
+/* harmony export */   uI: () => (/* binding */ createRetryer)
 /* harmony export */ });
 /* unused harmony export CancelledError */
-/* harmony import */ var _focusManager_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5777);
-/* harmony import */ var _onlineManager_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3965);
-/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8298);
+/* harmony import */ var _focusManager_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4600);
+/* harmony import */ var _onlineManager_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(632);
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4348);
 // src/retryer.ts
 
 
@@ -10646,7 +10706,7 @@ function defaultRetryDelay(failureCount) {
   return Math.min(1e3 * 2 ** failureCount, 3e4);
 }
 function canFetch(networkMode) {
-  return (networkMode ?? "online") === "online" ? _onlineManager_js__WEBPACK_IMPORTED_MODULE_0__/* .onlineManager */ .N.isOnline() : true;
+  return (networkMode ?? "online") === "online" ? _onlineManager_js__WEBPACK_IMPORTED_MODULE_0__/* .onlineManager */ .q.isOnline() : true;
 }
 var CancelledError = class {
   constructor(options) {
@@ -10680,7 +10740,7 @@ function createRetryer(config) {
   const continueRetry = () => {
     isRetryCancelled = false;
   };
-  const shouldPause = () => !_focusManager_js__WEBPACK_IMPORTED_MODULE_1__/* .focusManager */ .j.isFocused() || config.networkMode !== "always" && !_onlineManager_js__WEBPACK_IMPORTED_MODULE_0__/* .onlineManager */ .N.isOnline();
+  const shouldPause = () => !_focusManager_js__WEBPACK_IMPORTED_MODULE_1__/* .focusManager */ .m.isFocused() || config.networkMode !== "always" && !_onlineManager_js__WEBPACK_IMPORTED_MODULE_0__/* .onlineManager */ .q.isOnline();
   const resolve = (value) => {
     if (!isResolved) {
       isResolved = true;
@@ -10728,7 +10788,7 @@ function createRetryer(config) {
       if (isResolved) {
         return;
       }
-      const retry = config.retry ?? (_utils_js__WEBPACK_IMPORTED_MODULE_2__/* .isServer */ .sk ? 0 : 3);
+      const retry = config.retry ?? (_utils_js__WEBPACK_IMPORTED_MODULE_2__/* .isServer */ .oj ? 0 : 3);
       const retryDelay = config.retryDelay ?? defaultRetryDelay;
       const delay = typeof retryDelay === "function" ? retryDelay(failureCount, error) : retryDelay;
       const shouldRetry = retry === true || typeof retry === "number" && failureCount < retry || typeof retry === "function" && retry(failureCount, error);
@@ -10738,7 +10798,7 @@ function createRetryer(config) {
       }
       failureCount++;
       config.onFail?.(failureCount, error);
-      (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__/* .sleep */ ._v)(delay).then(() => {
+      (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__/* .sleep */ .W_)(delay).then(() => {
         if (shouldPause()) {
           return pause();
         }
@@ -10773,12 +10833,12 @@ function createRetryer(config) {
 
 /***/ }),
 
-/***/ 3248:
+/***/ 7156:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   l: () => (/* binding */ Subscribable)
+/* harmony export */   Q: () => (/* binding */ Subscribable)
 /* harmony export */ });
 // src/subscribable.ts
 var Subscribable = class {
@@ -10807,25 +10867,25 @@ var Subscribable = class {
 
 /***/ }),
 
-/***/ 8298:
+/***/ 4348:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Ht: () => (/* binding */ addToStart),
-/* harmony export */   Kp: () => (/* binding */ timeUntilStale),
-/* harmony export */   PN: () => (/* binding */ isValidTimeout),
-/* harmony export */   Rm: () => (/* binding */ hashQueryKeyByOptions),
-/* harmony export */   SE: () => (/* binding */ functionalUpdate),
-/* harmony export */   VX: () => (/* binding */ addToEnd),
-/* harmony export */   X7: () => (/* binding */ matchMutation),
-/* harmony export */   Ym: () => (/* binding */ hashKey),
-/* harmony export */   ZT: () => (/* binding */ noop),
-/* harmony export */   _v: () => (/* binding */ sleep),
-/* harmony export */   _x: () => (/* binding */ matchQuery),
-/* harmony export */   oE: () => (/* binding */ replaceData),
-/* harmony export */   sk: () => (/* binding */ isServer),
-/* harmony export */   to: () => (/* binding */ partialMatchKey)
+/* harmony export */   AT: () => (/* binding */ isValidTimeout),
+/* harmony export */   Cs: () => (/* binding */ replaceData),
+/* harmony export */   GS: () => (/* binding */ partialMatchKey),
+/* harmony export */   Gg: () => (/* binding */ hashKey),
+/* harmony export */   Kw: () => (/* binding */ noop),
+/* harmony export */   W_: () => (/* binding */ sleep),
+/* harmony export */   Yn: () => (/* binding */ matchMutation),
+/* harmony export */   _W: () => (/* binding */ matchQuery),
+/* harmony export */   i8: () => (/* binding */ addToStart),
+/* harmony export */   iY: () => (/* binding */ functionalUpdate),
+/* harmony export */   kx: () => (/* binding */ addToEnd),
+/* harmony export */   oX: () => (/* binding */ hashQueryKeyByOptions),
+/* harmony export */   ob: () => (/* binding */ timeUntilStale),
+/* harmony export */   oj: () => (/* binding */ isServer)
 /* harmony export */ });
 /* unused harmony exports isPlainArray, isPlainObject, keepPreviousData, replaceEqualDeep, shallowEqualObjects */
 // src/utils.ts
@@ -11012,15 +11072,15 @@ function addToStart(items, item, max = 0) {
 
 /***/ }),
 
-/***/ 4010:
+/***/ 96:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   aH: () => (/* binding */ QueryClientProvider)
+/* harmony export */   K6: () => (/* binding */ QueryClientProvider)
 /* harmony export */ });
 /* unused harmony exports QueryClientContext, useQueryClient */
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9196);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1280);
 "use client";
 
 // src/QueryClientProvider.tsx
@@ -11163,19 +11223,19 @@ var __webpack_exports__ = {};
 (() => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9307);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8496);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _public_path__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7915);
+/* harmony import */ var _public_path__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4100);
 /* harmony import */ var _public_path__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_public_path__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(4010);
-/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(372);
-/* harmony import */ var _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7701);
+/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(96);
+/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(7388);
+/* harmony import */ var _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5404);
 /* harmony import */ var _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8817);
+/* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9676);
 /* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_plugins__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _modal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1093);
-/* harmony import */ var _notices__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7172);
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(6421);
+/* harmony import */ var _modal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(568);
+/* harmony import */ var _notices__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9632);
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(3648);
 
 /*** THIS MUST BE THE FIRST THING EVALUATED IN THIS SCRIPT *****/
 
@@ -11187,9 +11247,9 @@ __webpack_require__.r(__webpack_exports__);
 
 const showGlobalStylesComponents = () => {
   (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_3__.registerPlugin)('wpcom-global-styles', {
-    render: () => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_tanstack_react_query__WEBPACK_IMPORTED_MODULE_7__/* .QueryClientProvider */ .aH, {
+    render: () => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_tanstack_react_query__WEBPACK_IMPORTED_MODULE_7__/* .QueryClientProvider */ .K6, {
       client: new _tanstack_react_query__WEBPACK_IMPORTED_MODULE_8__/* .QueryClient */ .S()
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_modal__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_notices__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, null))
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_modal__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .c, null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_notices__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .c, null))
   });
 };
 _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_2___default()(() => {

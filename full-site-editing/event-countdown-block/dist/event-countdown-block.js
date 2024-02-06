@@ -2,7 +2,7 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 129:
+/***/ 468:
 /***/ (() => {
 
 // extracted by mini-css-extract-plugin
@@ -10,7 +10,7 @@
 
 /***/ }),
 
-/***/ 448:
+/***/ 288:
 /***/ (() => {
 
 // extracted by mini-css-extract-plugin
@@ -18,23 +18,23 @@
 
 /***/ }),
 
-/***/ 829:
+/***/ 92:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   c: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(307);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(496);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(609);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(287);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_date__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(771);
+/* harmony import */ var _wordpress_date__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(824);
 /* harmony import */ var _wordpress_date__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_date__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(736);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(396);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(292);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(840);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _icon__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(515);
+/* harmony import */ var _icon__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(216);
 
 /* eslint-disable wpcalypso/jsx-classname-namespace */
 // disabled CSS class rule due to existing code already
@@ -84,7 +84,7 @@ const edit = ({
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Placeholder, {
     label: __('Event Countdown', 'full-site-editing'),
     instructions: __('Count down to an event. Set a title and pick a time and date.', 'full-site-editing'),
-    icon: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icon__WEBPACK_IMPORTED_MODULE_5__/* .EventCountdownIcon */ .p, null),
+    icon: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icon__WEBPACK_IMPORTED_MODULE_5__/* .EventCountdownIcon */ .k, null),
     className: className
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, __('Title:', 'full-site-editing')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("br", null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "text",
@@ -119,15 +119,15 @@ const edit = ({
 
 /***/ }),
 
-/***/ 515:
+/***/ 216:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   p: () => (/* binding */ EventCountdownIcon)
+/* harmony export */   k: () => (/* binding */ EventCountdownIcon)
 /* harmony export */ });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(307);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(496);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(609);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(287);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
 
 
@@ -142,18 +142,18 @@ const EventCountdownIcon = () => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_
 
 /***/ }),
 
-/***/ 196:
+/***/ 424:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
-/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(981);
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(172);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(736);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(396);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(829);
-/* harmony import */ var _icon__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(515);
-/* harmony import */ var _view__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(674);
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(129);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(448);
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(92);
+/* harmony import */ var _icon__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(216);
+/* harmony import */ var _view__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(108);
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(468);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(288);
 
 
 const __ = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__;
@@ -165,7 +165,7 @@ const __ = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__;
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)('jetpack/event-countdown', {
   title: __('Event Countdown', 'full-site-editing'),
   description: __('Count down to your favorite next thing, and celebrate with fireworks when the time is right!', 'full-site-editing'),
-  icon: _icon__WEBPACK_IMPORTED_MODULE_3__/* .EventCountdownIcon */ .p,
+  icon: _icon__WEBPACK_IMPORTED_MODULE_3__/* .EventCountdownIcon */ .k,
   category: 'widgets',
   supports: {
     align: ['wide', 'full']
@@ -188,14 +188,14 @@ const __ = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__;
   },
   edit: props => {
     if (props.isSelected) {
-      return (0,_edit__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z)(props);
+      return (0,_edit__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .c)(props);
     }
-    return (0,_view__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z)({
+    return (0,_view__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .c)({
       ...props,
       isEditView: true
     });
   },
-  save: _view__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z,
+  save: _view__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .c,
   deprecated: [{
     attributes: {
       eventTitle: {
@@ -208,21 +208,21 @@ const __ = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__;
       }
     },
     // the new `view` function can handle the deprecated attributes
-    save: _view__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z
+    save: _view__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .c
   }]
 });
 
 /***/ }),
 
-/***/ 674:
+/***/ 108:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   c: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(307);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(496);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(736);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(396);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
 
 /* eslint-disable wpcalypso/jsx-classname-namespace */
@@ -288,42 +288,42 @@ const view = ({
 
 /***/ }),
 
-/***/ 292:
+/***/ 840:
 /***/ ((module) => {
 
 module.exports = window["moment"];
 
 /***/ }),
 
-/***/ 981:
+/***/ 172:
 /***/ ((module) => {
 
 module.exports = window["wp"]["blocks"];
 
 /***/ }),
 
-/***/ 609:
+/***/ 287:
 /***/ ((module) => {
 
 module.exports = window["wp"]["components"];
 
 /***/ }),
 
-/***/ 771:
+/***/ 824:
 /***/ ((module) => {
 
 module.exports = window["wp"]["date"];
 
 /***/ }),
 
-/***/ 307:
+/***/ 496:
 /***/ ((module) => {
 
 module.exports = window["wp"]["element"];
 
 /***/ }),
 
-/***/ 736:
+/***/ 396:
 /***/ ((module) => {
 
 module.exports = window["wp"]["i18n"];
@@ -402,7 +402,7 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _blocks_src_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(196);
+/* harmony import */ var _blocks_src_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(424);
 
 })();
 

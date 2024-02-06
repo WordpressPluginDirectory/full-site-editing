@@ -2,7 +2,7 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 706:
+/***/ 8536:
 /***/ (() => {
 
 // extracted by mini-css-extract-plugin
@@ -10,10 +10,10 @@
 
 /***/ }),
 
-/***/ 8439:
+/***/ 5760:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
-/* harmony import */ var _view_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(706);
+/* harmony import */ var _view_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8536);
 /**
  * VIEW
  * JavaScript used on front of site.
@@ -240,7 +240,7 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _synced_newspack_blocks_blocks_homepage_articles_view__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8439);
+/* harmony import */ var _synced_newspack_blocks_blocks_homepage_articles_view__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5760);
 
 })();
 
