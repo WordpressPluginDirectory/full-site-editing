@@ -10823,6 +10823,7 @@ const urlLocalizationMapping = {
   'wordpress.com/wp-admin/': setLocalizedUrlHost('wordpress.com', _locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .fh),
   'wordpress.com/wp-login.php': setLocalizedUrlHost('wordpress.com', _locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .fh),
   'jetpack.com': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .jetpackComLocales */ .QR),
+  'cloud.jetpack.com': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .jetpackComLocales */ .QR),
   'en.support.wordpress.com': setLocalizedWpComPath('/support', _locales__WEBPACK_IMPORTED_MODULE_4__/* .supportSiteLocales */ .i),
   'en.blog.wordpress.com': setLocalizedWpComPath('/blog', _locales__WEBPACK_IMPORTED_MODULE_4__/* .localesWithBlog */ .GC, /^\/$/),
   'apps.wordpress.com': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .fh),
@@ -13868,9 +13869,9 @@ function reject(xhr, err, headers) {
 
 // list of valid origins for wpcom requests.
 // taken from wpcom-proxy-request (rest-proxy/provider-v2.0.js)
-const wpcomAllowedOrigins = (/* unused pure expression or super */ null && (['https://wordpress.com', 'https://cloud.jetpack.com', 'http://wpcalypso.wordpress.com',
+const wpcomAllowedOrigins = (/* unused pure expression or super */ null && (['https://wordpress.com', 'https://cloud.jetpack.com', 'https://agencies.automattic.com', 'http://wpcalypso.wordpress.com',
 // for running docker on dev instances
-'http://widgets.wp.com', 'https://widgets.wp.com', 'https://dev-mc.a8c.com', 'https://mc.a8c.com', 'https://dserve.a8c.com', 'http://calypso.localhost:3000', 'https://calypso.localhost:3000', 'http://jetpack.cloud.localhost:3000', 'https://jetpack.cloud.localhost:3000', 'http://calypso.localhost:3001', 'https://calypso.localhost:3001', 'https://calypso.live', 'http://127.0.0.1:41050', 'http://send.linguine.localhost:3000']));
+'http://widgets.wp.com', 'https://widgets.wp.com', 'https://dev-mc.a8c.com', 'https://mc.a8c.com', 'https://dserve.a8c.com', 'http://calypso.localhost:3000', 'https://calypso.localhost:3000', 'http://jetpack.cloud.localhost:3000', 'https://jetpack.cloud.localhost:3000', 'http://agencies.localhost:3000', 'https://agencies.localhost:3000', 'http://calypso.localhost:3001', 'https://calypso.localhost:3001', 'https://calypso.live', 'http://127.0.0.1:41050', 'http://send.linguine.localhost:3000']));
 
 /**
  * Shelved from rest-proxy/provider-v2.0.js.

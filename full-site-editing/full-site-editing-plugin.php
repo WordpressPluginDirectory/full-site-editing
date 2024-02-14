@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WordPress.com Editing Toolkit
  * Description: Enhances your page creation workflow within the Block Editor.
- * Version: 4.12316
+ * Version: 4.12911
  * Author: Automattic
  * Author URI: https://automattic.com/wordpress-plugins/
  * License: GPLv2 or later
@@ -42,7 +42,7 @@ namespace A8C\FSE;
  *
  * @var string
  */
-define( 'A8C_ETK_PLUGIN_VERSION', '4.12316' );
+define( 'A8C_ETK_PLUGIN_VERSION', '4.12911' );
 
 // Always include these helper files for dotcom FSE.
 require_once __DIR__ . '/dotcom-fse/helpers.php';
@@ -304,9 +304,9 @@ function load_help_center() {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
 
-		// This doesn't work if Jetpack is an mu-plugin.
+		// This should still work if Jetpack is an mu-plugin.
 		// Since this isn't running in WPCOM this shouldn't matter.
-		if ( ! is_plugin_active( 'jetpack/jetpack.php' ) ) {
+		if ( ! defined( 'JETPACK__VERSION' ) ) {
 			return false;
 		}
 	}

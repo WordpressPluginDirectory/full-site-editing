@@ -4032,7 +4032,7 @@ function applyFlags(flagsString, modificationMethod) {
     }
   });
 }
-const flagEnvironments = ['wpcalypso', 'horizon', 'stage', 'jetpack-cloud-stage'];
+const flagEnvironments = ['wpcalypso', 'horizon', 'stage', 'jetpack-cloud-stage', 'a8c-for-agencies-stage'];
 if ( false || flagEnvironments.includes(configData.env_id) || isCalypsoLive()) {
   const cookies = cookie__WEBPACK_IMPORTED_MODULE_1__.parse(document.cookie);
   if (cookies.flags) {

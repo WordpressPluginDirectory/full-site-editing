@@ -2758,6 +2758,10 @@ const blockInfoMapping = {
   'jetpack/paywall': {
     link: 'https://wordpress.com/support/paid-newsletters/#use-the-paywall-block',
     postId: 168381
+  },
+  'jetpack/sharing-buttons': {
+    link: 'https://wordpress.com/support/wordpress-editor/blocks/sharing-buttons-block/',
+    postId: 330003
   }
 };
 const blockInfoWithVariations = {
@@ -4505,6 +4509,7 @@ const urlLocalizationMapping = {
   'wordpress.com/wp-admin/': setLocalizedUrlHost('wordpress.com', _locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .fh),
   'wordpress.com/wp-login.php': setLocalizedUrlHost('wordpress.com', _locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .fh),
   'jetpack.com': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .jetpackComLocales */ .QR),
+  'cloud.jetpack.com': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .jetpackComLocales */ .QR),
   'en.support.wordpress.com': setLocalizedWpComPath('/support', _locales__WEBPACK_IMPORTED_MODULE_4__/* .supportSiteLocales */ .i),
   'en.blog.wordpress.com': setLocalizedWpComPath('/blog', _locales__WEBPACK_IMPORTED_MODULE_4__/* .localesWithBlog */ .GC, /^\/$/),
   'apps.wordpress.com': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .fh),
