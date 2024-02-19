@@ -2762,6 +2762,10 @@ const blockInfoMapping = {
   'jetpack/sharing-buttons': {
     link: 'https://wordpress.com/support/wordpress-editor/blocks/sharing-buttons-block/',
     postId: 330003
+  },
+  'jetpack/like': {
+    link: 'https://wordpress.com/support/likes/',
+    postId: 7294
   }
 };
 const blockInfoWithVariations = {
