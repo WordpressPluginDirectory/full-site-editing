@@ -5509,6 +5509,7 @@ const TYPES_LIST = [TYPE_FREE, TYPE_BLOGGER, TYPE_PERSONAL, TYPE_PREMIUM, TYPE_B
 /* harmony export */   CM: () => (/* binding */ PLAN_BUSINESS),
 /* harmony export */   G8: () => (/* binding */ PRODUCT_WPCOM_SEARCH),
 /* harmony export */   Gs: () => (/* binding */ PLAN_PREMIUM_3_YEARS),
+/* harmony export */   Ij: () => (/* binding */ PLAN_BLUEHOST_CLOUD),
 /* harmony export */   Ko: () => (/* binding */ PLAN_PREMIUM_2_YEARS),
 /* harmony export */   Mv: () => (/* binding */ PLAN_ENTERPRISE_GRID_WPCOM),
 /* harmony export */   Og: () => (/* binding */ GROUP_WPCOM),
@@ -5535,13 +5536,16 @@ const TYPES_LIST = [TYPE_FREE, TYPE_BLOGGER, TYPE_PERSONAL, TYPE_PREMIUM, TYPE_B
 /* harmony export */   mG: () => (/* binding */ PLAN_WPCOM_PRO),
 /* harmony export */   mU: () => (/* binding */ PLAN_WPCOM_STARTER),
 /* harmony export */   mo: () => (/* binding */ PLAN_WOOEXPRESS_SMALL_MONTHLY),
+/* harmony export */   o5: () => (/* binding */ PLAN_BLUEHOST_CLOUD_3Y),
 /* harmony export */   oZ: () => (/* binding */ PLAN_FREE),
 /* harmony export */   s5: () => (/* binding */ PLAN_BLOGGER),
 /* harmony export */   sL: () => (/* binding */ PLAN_ECOMMERCE_TRIAL_MONTHLY),
 /* harmony export */   sR: () => (/* binding */ PLAN_P2_FREE),
 /* harmony export */   sp: () => (/* binding */ PLAN_PERSONAL_3_YEARS),
 /* harmony export */   uQ: () => (/* binding */ PLAN_BUSINESS_3_YEARS),
+/* harmony export */   uW: () => (/* binding */ PLAN_BLUEHOST_CLOUD_2Y),
 /* harmony export */   uo: () => (/* binding */ PLAN_BUSINESS_2_YEARS),
+/* harmony export */   w$: () => (/* binding */ PLAN_BLUEHOST_CLOUD_MONTHLY),
 /* harmony export */   wb: () => (/* binding */ PLAN_ECOMMERCE_3_YEARS),
 /* harmony export */   wd: () => (/* binding */ PLAN_PERSONAL)
 /* harmony export */ });
@@ -5598,9 +5602,13 @@ const PLAN_WPCOM_PRO_MONTHLY = 'pro-plan-monthly';
 const PLAN_WPCOM_PRO_2_YEARS = 'pro-plan-2y';
 const PLAN_WPCOM_STARTER = 'starter-plan';
 const PLAN_ENTERPRISE_GRID_WPCOM = 'plan-enterprise-grid-wpcom'; // Not a real plan; we show the VIP section in the plans grid as part of pdgrnI-1Qp-p2.
+const PLAN_BLUEHOST_CLOUD = 'bluehost-cloud-bundle'; // Not a real plan; we show the bluehost section in the landing pages as part of pau2Xa-5rG-p2.
+const PLAN_BLUEHOST_CLOUD_MONTHLY = 'bluehost-cloud-bundle-monthly'; // Not a real plan; we show the bluehost section in the landing pages as part of pau2Xa-5rG-p2.
+const PLAN_BLUEHOST_CLOUD_2Y = 'bluehost-cloud-bundle-2y'; // Not a real plan; we show the bluehost section in the landing pages as part of pau2Xa-5rG-p2.
+const PLAN_BLUEHOST_CLOUD_3Y = 'bluehost-cloud-bundle-3y'; // Not a real plan; we show the bluehost section in the landing pages as part of pau2Xa-5rG-p2.
 const PLAN_MIGRATION_TRIAL_MONTHLY = 'wp_bundle_migration_trial_monthly';
 const PLAN_HOSTING_TRIAL_MONTHLY = 'wp_bundle_hosting_trial_monthly';
-const WPCOM_PLANS = [PLAN_BUSINESS_MONTHLY, PLAN_BUSINESS, PLAN_BUSINESS_2_YEARS, PLAN_BUSINESS_3_YEARS, PLAN_100_YEARS, PLAN_PREMIUM_MONTHLY, PLAN_PREMIUM, PLAN_PREMIUM_2_YEARS, PLAN_PREMIUM_3_YEARS, PLAN_PERSONAL_MONTHLY, PLAN_PERSONAL, PLAN_PERSONAL_2_YEARS, PLAN_PERSONAL_3_YEARS, PLAN_BLOGGER, PLAN_BLOGGER_2_YEARS, PLAN_ECOMMERCE_MONTHLY, PLAN_ECOMMERCE, PLAN_ECOMMERCE_2_YEARS, PLAN_ECOMMERCE_3_YEARS, PLAN_ECOMMERCE_TRIAL_MONTHLY, PLAN_MIGRATION_TRIAL_MONTHLY, PLAN_HOSTING_TRIAL_MONTHLY, PLAN_FREE, PLAN_HOST_BUNDLE, PLAN_WPCOM_ENTERPRISE, PLAN_CHARGEBACK, PLAN_VIP, PLAN_P2_PLUS, PLAN_P2_FREE, PLAN_WPCOM_FLEXIBLE, PLAN_WPCOM_PRO, PLAN_WPCOM_PRO_MONTHLY, PLAN_WPCOM_PRO_2_YEARS, PLAN_WPCOM_STARTER, PLAN_ENTERPRISE_GRID_WPCOM, PLAN_WOOEXPRESS_MEDIUM, PLAN_WOOEXPRESS_MEDIUM_MONTHLY, PLAN_WOOEXPRESS_SMALL, PLAN_WOOEXPRESS_SMALL_MONTHLY, PLAN_WOOEXPRESS_PLUS];
+const WPCOM_PLANS = [PLAN_BUSINESS_MONTHLY, PLAN_BUSINESS, PLAN_BUSINESS_2_YEARS, PLAN_BUSINESS_3_YEARS, PLAN_100_YEARS, PLAN_PREMIUM_MONTHLY, PLAN_PREMIUM, PLAN_PREMIUM_2_YEARS, PLAN_PREMIUM_3_YEARS, PLAN_PERSONAL_MONTHLY, PLAN_PERSONAL, PLAN_PERSONAL_2_YEARS, PLAN_PERSONAL_3_YEARS, PLAN_BLOGGER, PLAN_BLOGGER_2_YEARS, PLAN_ECOMMERCE_MONTHLY, PLAN_ECOMMERCE, PLAN_ECOMMERCE_2_YEARS, PLAN_ECOMMERCE_3_YEARS, PLAN_ECOMMERCE_TRIAL_MONTHLY, PLAN_MIGRATION_TRIAL_MONTHLY, PLAN_HOSTING_TRIAL_MONTHLY, PLAN_FREE, PLAN_HOST_BUNDLE, PLAN_WPCOM_ENTERPRISE, PLAN_BLUEHOST_CLOUD, PLAN_BLUEHOST_CLOUD_MONTHLY, PLAN_BLUEHOST_CLOUD_2Y, PLAN_BLUEHOST_CLOUD_3Y, PLAN_CHARGEBACK, PLAN_VIP, PLAN_P2_PLUS, PLAN_P2_FREE, PLAN_WPCOM_FLEXIBLE, PLAN_WPCOM_PRO, PLAN_WPCOM_PRO_MONTHLY, PLAN_WPCOM_PRO_2_YEARS, PLAN_WPCOM_STARTER, PLAN_ENTERPRISE_GRID_WPCOM, PLAN_WOOEXPRESS_MEDIUM, PLAN_WOOEXPRESS_MEDIUM_MONTHLY, PLAN_WOOEXPRESS_SMALL, PLAN_WOOEXPRESS_SMALL_MONTHLY, PLAN_WOOEXPRESS_PLUS];
 const WPCOM_MONTHLY_PLANS = [PLAN_BUSINESS_MONTHLY, PLAN_PREMIUM_MONTHLY, PLAN_PERSONAL_MONTHLY, PLAN_ECOMMERCE_MONTHLY, PLAN_ECOMMERCE_TRIAL_MONTHLY, PLAN_MIGRATION_TRIAL_MONTHLY, PLAN_HOSTING_TRIAL_MONTHLY, PLAN_WOOEXPRESS_MEDIUM_MONTHLY, PLAN_WOOEXPRESS_SMALL_MONTHLY, PLAN_WOOEXPRESS_PLUS, PLAN_WPCOM_PRO_MONTHLY, PLAN_ENTERPRISE_GRID_WPCOM, PLAN_FREE];
 const WOO_EXPRESS_PLANS = [PLAN_WOOEXPRESS_MEDIUM, PLAN_WOOEXPRESS_MEDIUM_MONTHLY, PLAN_WOOEXPRESS_SMALL, PLAN_WOOEXPRESS_SMALL_MONTHLY, PLAN_WOOEXPRESS_PLUS];
 const WPCOM_PREMIUM_PLANS = [PLAN_PREMIUM_MONTHLY, PLAN_PREMIUM, PLAN_PREMIUM_2_YEARS, PLAN_PREMIUM_3_YEARS];
@@ -7347,6 +7355,36 @@ const PLANS_LIST = {
     getProductId: () => 0,
     getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ENTERPRISE_GRID_WPCOM */ .Mv,
     getPathSlug: () => 'enterprise'
+  },
+  // Not a real plan. This is used to show the Bluehost cloud offering
+  // in the landing pages for now
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLUEHOST_CLOUD */ .Ij]: {
+    ...get2023EnterprisGrideDetails(),
+    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_ANNUALLY */ .GK,
+    getBillingTimeFrame: () => '',
+    getProductId: () => 0,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLUEHOST_CLOUD */ .Ij
+  },
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLUEHOST_CLOUD_MONTHLY */ .w$]: {
+    ...get2023EnterprisGrideDetails(),
+    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .mI,
+    getBillingTimeFrame: () => '',
+    getProductId: () => 0,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLUEHOST_CLOUD_MONTHLY */ .w$
+  },
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLUEHOST_CLOUD_2Y */ .uW]: {
+    ...get2023EnterprisGrideDetails(),
+    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_BIENNIALLY */ .So,
+    getBillingTimeFrame: () => '',
+    getProductId: () => 0,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLUEHOST_CLOUD_2Y */ .uW
+  },
+  [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLUEHOST_CLOUD_3Y */ .o5]: {
+    ...get2023EnterprisGrideDetails(),
+    term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_TRIENNIALLY */ .Gs,
+    getBillingTimeFrame: () => '',
+    getProductId: () => 0,
+    getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_BLUEHOST_CLOUD_3Y */ .o5
   },
   [_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_3_YEARS */ .wb]: {
     ...getPlanEcommerceDetails(),

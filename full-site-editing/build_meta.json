@@ -1,6 +1,6 @@
 {
-  "build_number": "4.13387",
-  "cache_buster": "c8a01c9d234",
-  "commit_hash": "c8a01c9d234cd18fbb117cc471048609cb3a12f2",
-  "commit_url": "https://github.com/Automattic/wp-calypso/commit/c8a01c9d234cd18fbb117cc471048609cb3a12f2"
+  "build_number": "4.13440",
+  "cache_buster": "1d7225169b6",
+  "commit_hash": "1d7225169b6466162396476f1a4cea8ae33195ec",
+  "commit_url": "https://github.com/Automattic/wp-calypso/commit/1d7225169b6466162396476f1a4cea8ae33195ec"
 }
