@@ -13228,6 +13228,9 @@ const mediaQueryOptions = {
   '>660px': {
     min: 660
   },
+  '>=782px': {
+    min: 781
+  },
   '>782px': {
     min: 782
   },
