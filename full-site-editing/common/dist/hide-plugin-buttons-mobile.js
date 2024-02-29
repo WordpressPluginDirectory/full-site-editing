@@ -2,7 +2,7 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 8134:
+/***/ 838:
 /***/ (() => {
 
 // extracted by mini-css-extract-plugin
@@ -53,7 +53,7 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _hide_plugin_buttons_mobile_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8134);
+/* harmony import */ var _hide_plugin_buttons_mobile_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(838);
 
 })();
 

@@ -1,15 +1,15 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 612:
+/***/ 620:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   c: () => (/* binding */ compile)
+/* harmony export */   A: () => (/* binding */ compile)
 /* harmony export */ });
-/* harmony import */ var _tannin_postfix__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(180);
-/* harmony import */ var _tannin_evaluate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(200);
+/* harmony import */ var _tannin_postfix__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(412);
+/* harmony import */ var _tannin_evaluate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(336);
 
 
 
@@ -33,22 +33,22 @@
  * @return {(variables?:{[variable:string]:*})=>*} Compiled evaluator.
  */
 function compile( expression ) {
-	var terms = (0,_tannin_postfix__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c)( expression );
+	var terms = (0,_tannin_postfix__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( expression );
 
 	return function( variables ) {
-		return (0,_tannin_evaluate__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .c)( terms, variables );
+		return (0,_tannin_evaluate__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)( terms, variables );
 	};
 }
 
 
 /***/ }),
 
-/***/ 200:
+/***/ 336:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   c: () => (/* binding */ evaluate)
+/* harmony export */   A: () => (/* binding */ evaluate)
 /* harmony export */ });
 /**
  * Operator callback functions.
@@ -164,14 +164,14 @@ function evaluate( postfix, variables ) {
 
 /***/ }),
 
-/***/ 212:
+/***/ 43:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   c: () => (/* binding */ pluralForms)
+/* harmony export */   A: () => (/* binding */ pluralForms)
 /* harmony export */ });
-/* harmony import */ var _tannin_compile__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(612);
+/* harmony import */ var _tannin_compile__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(620);
 
 
 /**
@@ -184,7 +184,7 @@ function evaluate( postfix, variables ) {
  * @return {Function} Evaluator function.
  */
 function pluralForms( expression ) {
-	var evaluate = (0,_tannin_compile__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c)( expression );
+	var evaluate = (0,_tannin_compile__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( expression );
 
 	return function( n ) {
 		return +evaluate( { n: n } );
@@ -194,12 +194,12 @@ function pluralForms( expression ) {
 
 /***/ }),
 
-/***/ 180:
+/***/ 412:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   c: () => (/* binding */ postfix)
+/* harmony export */   A: () => (/* binding */ postfix)
 /* harmony export */ });
 var PRECEDENCE, OPENERS, TERMINATORS, PATTERN;
 
@@ -329,12 +329,12 @@ function postfix( expression ) {
 
 /***/ }),
 
-/***/ 808:
+/***/ 315:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   c: () => (/* binding */ sprintf)
+/* harmony export */   A: () => (/* binding */ sprintf)
 /* harmony export */ });
 /**
  * Regular expression matching format placeholder syntax.
@@ -473,7 +473,7 @@ function sprintf( string, args ) {
 
 /***/ }),
 
-/***/ 392:
+/***/ 437:
 /***/ ((module) => {
 
 /**
@@ -642,7 +642,7 @@ function plural(ms, msAbs, n, name) {
 
 /***/ }),
 
-/***/ 928:
+/***/ 46:
 /***/ ((module) => {
 
 "use strict";
@@ -1147,14 +1147,14 @@ function eventTargetAgnosticAddListener(emitter, name, listener, flags) {
 
 /***/ }),
 
-/***/ 252:
+/***/ 191:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 
-var utils = __webpack_require__(67);
-var assert = __webpack_require__(192);
+var utils = __webpack_require__(461);
+var assert = __webpack_require__(784);
 
 function BlockHash() {
   this.pending = null;
@@ -1247,15 +1247,15 @@ BlockHash.prototype._pad = function pad() {
 
 /***/ }),
 
-/***/ 672:
+/***/ 986:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var utils = __webpack_require__(67);
-var common = __webpack_require__(252);
-var shaCommon = __webpack_require__(681);
+var utils = __webpack_require__(461);
+var common = __webpack_require__(191);
+var shaCommon = __webpack_require__(600);
 
 var rotl32 = utils.rotl32;
 var sum32 = utils.sum32;
@@ -1329,13 +1329,13 @@ SHA1.prototype._digest = function digest(enc) {
 
 /***/ }),
 
-/***/ 681:
+/***/ 600:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 
-var utils = __webpack_require__(67);
+var utils = __webpack_require__(461);
 var rotr32 = utils.rotr32;
 
 function ft_1(s, x, y, z) {
@@ -1386,14 +1386,14 @@ exports.g1_256 = g1_256;
 
 /***/ }),
 
-/***/ 67:
+/***/ 461:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 
-var assert = __webpack_require__(192);
-var inherits = __webpack_require__(912);
+var assert = __webpack_require__(784);
+var inherits = __webpack_require__(615);
 
 exports.inherits = inherits;
 
@@ -1672,7 +1672,7 @@ exports.shr64_lo = shr64_lo;
 
 /***/ }),
 
-/***/ 912:
+/***/ 615:
 /***/ ((module) => {
 
 if (typeof Object.create === 'function') {
@@ -1706,11 +1706,11 @@ if (typeof Object.create === 'function') {
 
 /***/ }),
 
-/***/ 608:
+/***/ 327:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var events = __webpack_require__(928)
-var inherits = __webpack_require__(912)
+var events = __webpack_require__(46)
+var inherits = __webpack_require__(615)
 
 module.exports = LRU
 
@@ -1858,7 +1858,7 @@ LRU.prototype.evict = function () {
 
 /***/ }),
 
-/***/ 848:
+/***/ 186:
 /***/ (() => {
 
 "use strict";
@@ -1867,7 +1867,7 @@ LRU.prototype.evict = function () {
 
 /***/ }),
 
-/***/ 192:
+/***/ 784:
 /***/ ((module) => {
 
 module.exports = assert;
@@ -1885,14 +1885,14 @@ assert.equal = function assertEqual(l, r, msg) {
 
 /***/ }),
 
-/***/ 888:
+/***/ 714:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   c: () => (/* binding */ Tannin)
+/* harmony export */   A: () => (/* binding */ Tannin)
 /* harmony export */ });
-/* harmony import */ var _tannin_plural_forms__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(212);
+/* harmony import */ var _tannin_plural_forms__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(43);
 
 
 /**
@@ -2051,7 +2051,7 @@ Tannin.prototype.getPluralForm = function( domain, n ) {
 				config.plural_forms
 			);
 
-			pf = (0,_tannin_plural_forms__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c)( plural );
+			pf = (0,_tannin_plural_forms__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( plural );
 		}
 
 		getPluralForm = this.pluralForms[ domain ] = pf;
@@ -2110,14 +2110,14 @@ Tannin.prototype.dcnpgettext = function( domain, context, singular, plural, n ) 
 
 /***/ }),
 
-/***/ 284:
+/***/ 776:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
-/* harmony import */ var _automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(868);
-/* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(720);
+/* harmony import */ var _automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(355);
+/* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(619);
 /* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(848);
+/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(186);
 
 
 
@@ -2126,21 +2126,21 @@ function overrideCoreDocumentationLinksToWpcom(translation, text) {
     case 'https://wordpress.org/support/article/excerpt/':
     case 'https://wordpress.org/support/article/settings-sidebar/#excerpt':
     case 'https://wordpress.org/documentation/article/page-post-settings-sidebar/#excerpt':
-      return (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_2__/* .localizeUrl */ .wd)('https://wordpress.com/support/excerpts/', window.wpcomDocumentationLinksLocale);
+      return (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_2__/* .localizeUrl */ .rm)('https://wordpress.com/support/excerpts/', window.wpcomDocumentationLinksLocale);
     case 'https://wordpress.org/support/article/writing-posts/#post-field-descriptions':
     case 'https://wordpress.org/support/article/settings-sidebar/#permalink':
     case 'https://wordpress.org/documentation/article/page-post-settings-sidebar/#permalink':
-      return (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_2__/* .localizeUrl */ .wd)('https://wordpress.com/support/permalinks-and-slugs/', window.wpcomDocumentationLinksLocale);
+      return (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_2__/* .localizeUrl */ .rm)('https://wordpress.com/support/permalinks-and-slugs/', window.wpcomDocumentationLinksLocale);
     case 'https://wordpress.org/support/article/wordpress-editor/':
-      return (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_2__/* .localizeUrl */ .wd)('https://wordpress.com/support/wordpress-editor/', window.wpcomDocumentationLinksLocale);
+      return (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_2__/* .localizeUrl */ .rm)('https://wordpress.com/support/wordpress-editor/', window.wpcomDocumentationLinksLocale);
     case 'https://wordpress.org/support/article/site-editor/':
-      return (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_2__/* .localizeUrl */ .wd)('https://wordpress.com/support/site-editor/', window.wpcomDocumentationLinksLocale);
+      return (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_2__/* .localizeUrl */ .rm)('https://wordpress.com/support/site-editor/', window.wpcomDocumentationLinksLocale);
     case 'https://wordpress.org/support/article/block-based-widgets-editor/':
-      return (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_2__/* .localizeUrl */ .wd)('https://wordpress.com/support/widgets/', window.wpcomDocumentationLinksLocale);
+      return (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_2__/* .localizeUrl */ .rm)('https://wordpress.com/support/widgets/', window.wpcomDocumentationLinksLocale);
     case 'https://wordpress.org/plugins/classic-widgets/':
-      return (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_2__/* .localizeUrl */ .wd)('https://wordpress.com/plugins/classic-widgets', window.wpcomDocumentationLinksLocale);
+      return (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_2__/* .localizeUrl */ .rm)('https://wordpress.com/plugins/classic-widgets', window.wpcomDocumentationLinksLocale);
     case 'https://wordpress.org/support/article/styles-overview/':
-      return (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_2__/* .localizeUrl */ .wd)('https://wordpress.com/support/using-styles/', window.wpcomDocumentationLinksLocale);
+      return (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_2__/* .localizeUrl */ .rm)('https://wordpress.com/support/using-styles/', window.wpcomDocumentationLinksLocale);
   }
   return translation;
 }
@@ -2162,38 +2162,38 @@ if (window?._currentSiteType === 'simple') {
 
 /***/ }),
 
-/***/ 408:
+/***/ 118:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   c: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(560);
+/* harmony import */ var _i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(434);
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new _i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c());
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new _i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A());
 
 /***/ }),
 
-/***/ 560:
+/***/ 434:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   c: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(928);
+/* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(46);
 /* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(events__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _automattic_interpolate_components__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(556);
-/* harmony import */ var _tannin_sprintf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(808);
-/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(632);
+/* harmony import */ var _automattic_interpolate_components__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(540);
+/* harmony import */ var _tannin_sprintf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(315);
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(90);
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var hash_js_lib_hash_sha_1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(672);
+/* harmony import */ var hash_js_lib_hash_sha_1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(986);
 /* harmony import */ var hash_js_lib_hash_sha_1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(hash_js_lib_hash_sha_1__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var lru__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(608);
+/* harmony import */ var lru__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(327);
 /* harmony import */ var lru__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lru__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var tannin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(888);
-/* harmony import */ var _number_format__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(696);
+/* harmony import */ var tannin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(714);
+/* harmony import */ var _number_format__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(15);
 
 
 
@@ -2349,7 +2349,7 @@ I18N.prototype.numberFormat = function (number, options = {}) {
   const decimals = typeof options === 'number' ? options : options.decimals || 0;
   const decPoint = options.decPoint || this.state.numberFormatSettings.decimal_point || '.';
   const thousandsSep = options.thousandsSep || this.state.numberFormatSettings.thousands_sep || ',';
-  return (0,_number_format__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .c)(number, decimals, decPoint, thousandsSep);
+  return (0,_number_format__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(number, decimals, decPoint, thousandsSep);
 };
 I18N.prototype.configure = function (options) {
   Object.assign(this, options || {});
@@ -2425,7 +2425,7 @@ I18N.prototype.setLocale = function (localeData) {
   // - the translation for the special string "ltr" (standard in Core, not present in Calypso)
   // - or the `momentjs_locale.textDirection` property present in Calypso translation files
   this.state.textDirection = this.state.locale['text direction\u0004ltr']?.[0] || this.state.locale['']?.momentjs_locale?.textDirection;
-  this.state.tannin = new tannin__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .c({
+  this.state.tannin = new tannin__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A({
     [domain_key]: this.state.locale
   });
 
@@ -2511,7 +2511,7 @@ I18N.prototype.translate = function () {
     const sprintfArgs = Array.isArray(options.args) ? options.args.slice(0) : [options.args];
     sprintfArgs.unshift(translation);
     try {
-      translation = (0,_tannin_sprintf__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .c)(...sprintfArgs);
+      translation = (0,_tannin_sprintf__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(...sprintfArgs);
     } catch (error) {
       if (!window || !window.console) {
         return;
@@ -2527,7 +2527,7 @@ I18N.prototype.translate = function () {
 
   // interpolate any components
   if (options.components) {
-    translation = (0,_automattic_interpolate_components__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .c)({
+    translation = (0,_automattic_interpolate_components__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A)({
       mixedString: translation,
       components: options.components,
       throwErrors: this.throwErrors
@@ -2565,15 +2565,15 @@ I18N.prototype.registerTranslateHook = function (callback) {
 
 /***/ }),
 
-/***/ 64:
+/***/ 744:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   ug: () => (/* binding */ getLocaleSlug)
+/* harmony export */   yb: () => (/* binding */ getLocaleSlug)
 /* harmony export */ });
 /* unused harmony exports numberFormat, translate, configure, setLocale, getLocale, getLocaleVariant, isRtl, addTranslations, reRenderTranslations, registerComponentUpdateHook, registerTranslateHook, state, stateObserver, on, off, emit */
-/* harmony import */ var _default_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(408);
+/* harmony import */ var _default_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(118);
 
 
 
@@ -2585,32 +2585,32 @@ I18N.prototype.registerTranslateHook = function (callback) {
 
 // Export the default instance's properties and bound methods for convenience
 // These should be deprecated eventually, exposing only the default `i18n` instance
-const numberFormat = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.numberFormat.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
-const translate = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.translate.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
-const configure = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.configure.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
-const setLocale = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.setLocale.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
-const getLocale = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.getLocale.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
-const getLocaleSlug = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.getLocaleSlug.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
-const getLocaleVariant = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.getLocaleVariant.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
-const isRtl = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.isRtl.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
-const addTranslations = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.addTranslations.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
-const reRenderTranslations = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.reRenderTranslations.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
-const registerComponentUpdateHook = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.registerComponentUpdateHook.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
-const registerTranslateHook = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.registerTranslateHook.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
-const state = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.state;
-const stateObserver = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.stateObserver;
-const on = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.on.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
-const off = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.off.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
-const emit = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c.emit.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c);
+const numberFormat = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.numberFormat.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
+const translate = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.translate.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
+const configure = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.configure.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
+const setLocale = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.setLocale.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
+const getLocale = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.getLocale.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
+const getLocaleSlug = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.getLocaleSlug.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
+const getLocaleVariant = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.getLocaleVariant.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
+const isRtl = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.isRtl.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
+const addTranslations = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.addTranslations.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
+const reRenderTranslations = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.reRenderTranslations.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
+const registerComponentUpdateHook = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.registerComponentUpdateHook.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
+const registerTranslateHook = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.registerTranslateHook.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
+const state = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.state;
+const stateObserver = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.stateObserver;
+const on = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.on.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
+const off = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.off.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
+const emit = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.emit.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
 
 /***/ }),
 
-/***/ 696:
+/***/ 15:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   c: () => (/* binding */ number_format)
+/* harmony export */   A: () => (/* binding */ number_format)
 /* harmony export */ });
 /*
  * Exposes number format capability
@@ -2644,21 +2644,21 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 
 /***/ }),
 
-/***/ 604:
+/***/ 706:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   y_: () => (/* binding */ useLocale)
+/* harmony export */   Ym: () => (/* binding */ useLocale)
 /* harmony export */ });
 /* unused harmony exports localeContext, LocaleProvider, withLocale, useIsEnglishLocale, useHasEnTranslation */
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(496);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(87);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(976);
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(491);
 /* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(396);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(723);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(280);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(609);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
 
 
@@ -2771,21 +2771,21 @@ function useHasEnTranslation() {
 
 /***/ }),
 
-/***/ 776:
+/***/ 903:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   GC: () => (/* binding */ localesWithBlog),
-/* harmony export */   QR: () => (/* binding */ jetpackComLocales),
-/* harmony export */   YP: () => (/* binding */ localesToSubdomains),
-/* harmony export */   aI: () => (/* binding */ localesWithCookiePolicy),
-/* harmony export */   aY: () => (/* binding */ localesForPricePlans),
-/* harmony export */   fh: () => (/* binding */ magnificentNonEnLocales),
-/* harmony export */   i: () => (/* binding */ supportSiteLocales),
-/* harmony export */   s7: () => (/* binding */ localesWithGoBlog),
-/* harmony export */   sj: () => (/* binding */ localesWithPrivacyPolicy),
-/* harmony export */   yO: () => (/* binding */ forumLocales)
+/* harmony export */   BS: () => (/* binding */ forumLocales),
+/* harmony export */   Cx: () => (/* binding */ localesWithGoBlog),
+/* harmony export */   K8: () => (/* binding */ localesWithCookiePolicy),
+/* harmony export */   S9: () => (/* binding */ localesWithPrivacyPolicy),
+/* harmony export */   Sc: () => (/* binding */ localesWithBlog),
+/* harmony export */   Sj: () => (/* binding */ localesToSubdomains),
+/* harmony export */   Ws: () => (/* binding */ localesForPricePlans),
+/* harmony export */   _J: () => (/* binding */ supportSiteLocales),
+/* harmony export */   lW: () => (/* binding */ magnificentNonEnLocales),
+/* harmony export */   rh: () => (/* binding */ jetpackComLocales)
 /* harmony export */ });
 /* unused harmony exports i18nDefaultLocaleSlug, englishLocales, livechatSupportLocales */
 /**
@@ -2830,23 +2830,23 @@ const jetpackComLocales = ['en', 'ar', 'de', 'es', 'fr', 'he', 'id', 'it', 'ja',
 
 /***/ }),
 
-/***/ 868:
+/***/ 355:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   wd: () => (/* binding */ localizeUrl)
+/* harmony export */   rm: () => (/* binding */ localizeUrl)
 /* harmony export */ });
 /* unused harmony exports urlLocalizationMapping, useLocalizeUrl, withLocalizeUrl */
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(496);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(87);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(976);
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(491);
 /* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(64);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(280);
+/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(744);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(609);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _locale_context__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(604);
-/* harmony import */ var _locales__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(776);
+/* harmony import */ var _locale_context__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(706);
+/* harmony import */ var _locales__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(903);
 
 
 
@@ -2855,13 +2855,13 @@ const jetpackComLocales = ['en', 'ar', 'de', 'es', 'fr', 'he', 'id', 'it', 'ja',
 
 const INVALID_URL = `http://__domain__.invalid`;
 function getDefaultLocale() {
-  return (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_3__/* .getLocaleSlug */ .ug)?.() ?? 'en';
+  return (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_3__/* .getLocaleSlug */ .yb)?.() ?? 'en';
 }
 const setLocalizedUrlHost = (hostname, validLocales = []) => (url, locale) => {
   if (validLocales.includes(locale) && locale !== 'en') {
     // Avoid changing the hostname when the locale is set via the path.
     if (url.pathname.substr(0, locale.length + 2) !== '/' + locale + '/') {
-      url.host = `${_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesToSubdomains */ .YP[locale] || locale}.${hostname}`;
+      url.host = `${_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesToSubdomains */ .Sj[locale] || locale}.${hostname}`;
     }
   }
   return url;
@@ -2906,9 +2906,9 @@ const suffixLocalizedUrlPath = (validLocales = [], limitPathMatch = null) => (ur
   return prefixOrSuffixLocalizedUrlPath(validLocales, limitPathMatch, 'suffix')(url, localeSlug);
 };
 const urlLocalizationMapping = {
-  'wordpress.com/support/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .supportSiteLocales */ .i),
-  'wordpress.com/forums/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .forumLocales */ .yO),
-  'wordpress.com/blog/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesWithBlog */ .GC, /^\/blog\/?$/),
+  'wordpress.com/support/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .supportSiteLocales */ ._J),
+  'wordpress.com/forums/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .forumLocales */ .BS),
+  'wordpress.com/blog/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesWithBlog */ .Sc, /^\/blog\/?$/),
   'wordpress.com/go/': (url, localeSlug) => {
     // Rewrite non-home URLs (e.g. posts) only for Spanish, because that's
     // the only language into which we're currently translating content.
@@ -2916,25 +2916,25 @@ const urlLocalizationMapping = {
     if (!isHome && 'es' !== localeSlug) {
       return url;
     }
-    return prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesWithGoBlog */ .s7)(url, localeSlug);
+    return prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesWithGoBlog */ .Cx)(url, localeSlug);
   },
-  'wordpress.com/tos/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .fh),
-  'wordpress.com/wp-admin/': setLocalizedUrlHost('wordpress.com', _locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .fh),
-  'wordpress.com/wp-login.php': setLocalizedUrlHost('wordpress.com', _locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .fh),
-  'jetpack.com': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .jetpackComLocales */ .QR),
-  'cloud.jetpack.com': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .jetpackComLocales */ .QR),
-  'en.support.wordpress.com': setLocalizedWpComPath('/support', _locales__WEBPACK_IMPORTED_MODULE_4__/* .supportSiteLocales */ .i),
-  'en.blog.wordpress.com': setLocalizedWpComPath('/blog', _locales__WEBPACK_IMPORTED_MODULE_4__/* .localesWithBlog */ .GC, /^\/$/),
-  'apps.wordpress.com': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .fh),
-  'en.forums.wordpress.com': setLocalizedWpComPath('/forums', _locales__WEBPACK_IMPORTED_MODULE_4__/* .forumLocales */ .yO),
-  'automattic.com/privacy/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesWithPrivacyPolicy */ .sj),
-  'automattic.com/cookies/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesWithCookiePolicy */ .aI),
+  'wordpress.com/tos/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .lW),
+  'wordpress.com/wp-admin/': setLocalizedUrlHost('wordpress.com', _locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .lW),
+  'wordpress.com/wp-login.php': setLocalizedUrlHost('wordpress.com', _locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .lW),
+  'jetpack.com': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .jetpackComLocales */ .rh),
+  'cloud.jetpack.com': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .jetpackComLocales */ .rh),
+  'en.support.wordpress.com': setLocalizedWpComPath('/support', _locales__WEBPACK_IMPORTED_MODULE_4__/* .supportSiteLocales */ ._J),
+  'en.blog.wordpress.com': setLocalizedWpComPath('/blog', _locales__WEBPACK_IMPORTED_MODULE_4__/* .localesWithBlog */ .Sc, /^\/$/),
+  'apps.wordpress.com': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .lW),
+  'en.forums.wordpress.com': setLocalizedWpComPath('/forums', _locales__WEBPACK_IMPORTED_MODULE_4__/* .forumLocales */ .BS),
+  'automattic.com/privacy/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesWithPrivacyPolicy */ .S9),
+  'automattic.com/cookies/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesWithCookiePolicy */ .K8),
   'wordpress.com/help/contact/': (url, localeSlug, isLoggedIn) => {
     if (isLoggedIn) {
       return url;
     }
     url.pathname = url.pathname.replace(/\/help\//, '/support/');
-    return prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .supportSiteLocales */ .i)(url, localeSlug);
+    return prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .supportSiteLocales */ ._J)(url, localeSlug);
   },
   'wordpress.com': (url, localeSlug) => {
     // Don't rewrite checkout and me URLs.
@@ -2945,29 +2945,29 @@ const urlLocalizationMapping = {
     if (/\/([a-z0-9-]+\.)+[a-z]{2,}\/?$/.test(url.pathname)) {
       return url;
     }
-    return prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .fh)(url, localeSlug);
+    return prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .lW)(url, localeSlug);
   },
   'wordpress.com/theme/': (url, localeSlug, isLoggedIn) => {
-    return isLoggedIn ? url : prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .fh)(url, localeSlug);
+    return isLoggedIn ? url : prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .lW)(url, localeSlug);
   },
   'wordpress.com/themes/': (url, localeSlug, isLoggedIn) => {
-    return isLoggedIn ? url : prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .fh)(url, localeSlug);
+    return isLoggedIn ? url : prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .lW)(url, localeSlug);
   },
   'wordpress.com/plugins/': (url, localeSlug, isLoggedIn) => {
-    return isLoggedIn ? url : prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .fh)(url, localeSlug);
+    return isLoggedIn ? url : prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .lW)(url, localeSlug);
   },
   'wordpress.com/log-in/': (url, localeSlug, isLoggedIn) => {
-    return isLoggedIn ? url : suffixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .fh)(url, localeSlug);
+    return isLoggedIn ? url : suffixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .lW)(url, localeSlug);
   },
   'wordpress.com/start/': (url, localeSlug, isLoggedIn) => {
-    return isLoggedIn ? url : suffixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .fh)(url, localeSlug);
+    return isLoggedIn ? url : suffixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .lW)(url, localeSlug);
   },
   'wordpress.com/plans/': (url, localeSlug, isLoggedIn) => {
     // if logged in, or url.pathname contains characters after `/plans/`, don't rewrite
-    return isLoggedIn || url.pathname !== '/plans/' ? url : prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesForPricePlans */ .aY)(url, localeSlug);
+    return isLoggedIn || url.pathname !== '/plans/' ? url : prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesForPricePlans */ .Ws)(url, localeSlug);
   },
   'wordpress.com/setup/': (url, localeSlug, isLoggedIn) => {
-    return isLoggedIn ? url : suffixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .fh)(url, localeSlug);
+    return isLoggedIn ? url : suffixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .lW)(url, localeSlug);
   }
 };
 function hasTrailingSlash(urlString) {
@@ -3033,7 +3033,7 @@ function localizeUrl(fullUrl, locale = getDefaultLocale(), isLoggedIn = true, pr
   return fullUrl;
 }
 function useLocalizeUrl() {
-  const providerLocale = (0,_locale_context__WEBPACK_IMPORTED_MODULE_5__/* .useLocale */ .y_)();
+  const providerLocale = (0,_locale_context__WEBPACK_IMPORTED_MODULE_5__/* .useLocale */ .Ym)();
   return (0,react__WEBPACK_IMPORTED_MODULE_2__.useCallback)((fullUrl, locale, isLoggedIn, preserveTrailingSlashVariation) => {
     if (locale) {
       return localizeUrl(fullUrl, locale, isLoggedIn, preserveTrailingSlashVariation);
@@ -3054,16 +3054,16 @@ const withLocalizeUrl = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_1__.creat
 
 /***/ }),
 
-/***/ 556:
+/***/ 540:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   c: () => (/* binding */ interpolate)
+/* harmony export */   A: () => (/* binding */ interpolate)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(280);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(609);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _tokenize__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(360);
+/* harmony import */ var _tokenize__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(935);
 
 
 function getCloseIndex(openIndex, tokens) {
@@ -3154,7 +3154,7 @@ function interpolate(options) {
     }
     return mixedString;
   }
-  const tokens = (0,_tokenize__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .c)(mixedString);
+  const tokens = (0,_tokenize__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(mixedString);
   try {
     return buildChildren(tokens, components);
   } catch (error) {
@@ -3167,12 +3167,12 @@ function interpolate(options) {
 
 /***/ }),
 
-/***/ 360:
+/***/ 935:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   c: () => (/* binding */ tokenize)
+/* harmony export */   A: () => (/* binding */ tokenize)
 /* harmony export */ });
 function identifyToken(item) {
   // {{/example}}
@@ -3208,7 +3208,7 @@ function tokenize(mixedString) {
 
 /***/ }),
 
-/***/ 632:
+/***/ 90:
 /***/ ((module, exports, __webpack_require__) => {
 
 /* eslint-env browser */
@@ -3377,7 +3377,7 @@ function localstorage() {
     // XXX (@Qix-) should we be logging these?
   }
 }
-module.exports = __webpack_require__(404)(exports);
+module.exports = __webpack_require__(869)(exports);
 const {
   formatters
 } = module.exports;
@@ -3396,7 +3396,7 @@ formatters.j = function (v) {
 
 /***/ }),
 
-/***/ 404:
+/***/ 869:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /**
@@ -3411,7 +3411,7 @@ function setup(env) {
   createDebug.disable = disable;
   createDebug.enable = enable;
   createDebug.enabled = enabled;
-  createDebug.humanize = __webpack_require__(392);
+  createDebug.humanize = __webpack_require__(437);
   createDebug.destroy = destroy;
   Object.keys(env).forEach(key => {
     createDebug[key] = env[key];
@@ -3646,7 +3646,7 @@ module.exports = setup;
 
 /***/ }),
 
-/***/ 280:
+/***/ 609:
 /***/ ((module) => {
 
 "use strict";
@@ -3654,7 +3654,7 @@ module.exports = window["React"];
 
 /***/ }),
 
-/***/ 976:
+/***/ 491:
 /***/ ((module) => {
 
 "use strict";
@@ -3662,7 +3662,7 @@ module.exports = window["wp"]["compose"];
 
 /***/ }),
 
-/***/ 496:
+/***/ 87:
 /***/ ((module) => {
 
 "use strict";
@@ -3670,7 +3670,7 @@ module.exports = window["wp"]["element"];
 
 /***/ }),
 
-/***/ 720:
+/***/ 619:
 /***/ ((module) => {
 
 "use strict";
@@ -3678,7 +3678,7 @@ module.exports = window["wp"]["hooks"];
 
 /***/ }),
 
-/***/ 396:
+/***/ 723:
 /***/ ((module) => {
 
 "use strict";
@@ -3759,7 +3759,7 @@ var __webpack_exports__ = {};
 (() => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _src__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(284);
+/* harmony import */ var _src__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(776);
 
 })();
 
