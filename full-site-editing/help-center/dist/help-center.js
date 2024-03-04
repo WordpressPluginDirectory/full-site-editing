@@ -57655,12 +57655,15 @@ function getContextResults(section, siteIntent) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   fetchSeenWhatsNewAnnouncements: () => (/* binding */ fetchSeenWhatsNewAnnouncements),
 /* harmony export */   receiveHasSeenWhatsNewModal: () => (/* binding */ receiveHasSeenWhatsNewModal),
+/* harmony export */   receiveSeenWhatsNewAnnouncements: () => (/* binding */ receiveSeenWhatsNewAnnouncements),
 /* harmony export */   resetStore: () => (/* binding */ resetStore),
 /* harmony export */   setHasSeenWhatsNewModal: () => (/* binding */ setHasSeenWhatsNewModal),
 /* harmony export */   setInitialRoute: () => (/* binding */ setInitialRoute),
 /* harmony export */   setIsMinimized: () => (/* binding */ setIsMinimized),
 /* harmony export */   setMessage: () => (/* binding */ setMessage),
+/* harmony export */   setSeenWhatsNewAnnouncements: () => (/* binding */ setSeenWhatsNewAnnouncements),
 /* harmony export */   setShowHelpCenter: () => (/* binding */ setShowHelpCenter),
 /* harmony export */   setShowMessagingChat: () => (/* binding */ setShowMessagingChat),
 /* harmony export */   setShowMessagingLauncher: () => (/* binding */ setShowMessagingLauncher),
@@ -57684,6 +57687,25 @@ const receiveHasSeenWhatsNewModal = value => ({
   type: 'HELP_CENTER_SET_SEEN_WHATS_NEW_MODAL',
   value
 });
+const receiveSeenWhatsNewAnnouncements = value => ({
+  type: 'HELP_CENTER_SET_SEEN_WHATS_NEW_ANNOUNCEMENTS',
+  value
+});
+function* fetchSeenWhatsNewAnnouncements() {
+  let response;
+  if ((0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_1__/* .canAccessWpcomApis */ .IH)()) {
+    response = yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ .S)({
+      path: `/whats-new/seen-announcement-ids`,
+      apiNamespace: 'wpcom/v2'
+    });
+  } else {
+    response = yield (0,_wordpress_data_controls__WEBPACK_IMPORTED_MODULE_0__.apiFetch)({
+      global: true,
+      path: `/wpcom/v2/whats-new/seen-announcement-ids`
+    });
+  }
+  return receiveSeenWhatsNewAnnouncements(response.seen_announcement_ids);
+}
 function* setHasSeenWhatsNewModal(value) {
   let response;
   if ((0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_1__/* .canAccessWpcomApis */ .IH)()) {
@@ -57706,6 +57728,29 @@ function* setHasSeenWhatsNewModal(value) {
     });
   }
   return receiveHasSeenWhatsNewModal(response.has_seen_whats_new_modal);
+}
+function* setSeenWhatsNewAnnouncements(ids) {
+  let response;
+  if ((0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_1__/* .canAccessWpcomApis */ .IH)()) {
+    response = yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ .S)({
+      path: `/whats-new/seen-announcement-ids`,
+      apiNamespace: 'wpcom/v2',
+      method: 'POST',
+      body: {
+        seen_announcement_ids: ids
+      }
+    });
+  } else {
+    response = yield (0,_wordpress_data_controls__WEBPACK_IMPORTED_MODULE_0__.apiFetch)({
+      global: true,
+      path: `/wpcom/v2/whats-new/seen-announcement-ids`,
+      method: 'POST',
+      data: {
+        seen_announcement_ids: ids
+      }
+    });
+  }
+  return receiveSeenWhatsNewAnnouncements(response.seen_announcement_ids);
 }
 const setSite = site => ({
   type: 'HELP_CENTER_SET_SITE',
@@ -57885,6 +57930,13 @@ const hasSeenWhatsNewModal = (state, action) => {
   }
   return state;
 };
+const seenWhatsNewAnnouncements = (state, action) => {
+  switch (action.type) {
+    case 'HELP_CENTER_SET_SEEN_WHATS_NEW_ANNOUNCEMENTS':
+      return action.value;
+  }
+  return state;
+};
 const isMinimized = (state = false, action) => {
   switch (action.type) {
     case 'HELP_CENTER_SET_MINIMIZED':
@@ -57956,6 +58008,7 @@ const reducer = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.combineReducers)
   userDeclaredSite,
   userDeclaredSiteUrl,
   hasSeenWhatsNewModal,
+  seenWhatsNewAnnouncements,
   isMinimized,
   unreadCount,
   initialRoute
@@ -57974,6 +58027,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   getInitialRoute: () => (/* binding */ getInitialRoute),
 /* harmony export */   getIsMinimized: () => (/* binding */ getIsMinimized),
 /* harmony export */   getMessage: () => (/* binding */ getMessage),
+/* harmony export */   getSeenWhatsNewAnnouncements: () => (/* binding */ getSeenWhatsNewAnnouncements),
 /* harmony export */   getSite: () => (/* binding */ getSite),
 /* harmony export */   getSubject: () => (/* binding */ getSubject),
 /* harmony export */   getUnreadCount: () => (/* binding */ getUnreadCount),
@@ -57994,6 +58048,7 @@ const getUserDeclaredSite = state => state.userDeclaredSite;
 const getUnreadCount = state => state.unreadCount;
 const getIsMinimized = state => state.isMinimized;
 const getHasSeenWhatsNewModal = state => state.hasSeenWhatsNewModal;
+const getSeenWhatsNewAnnouncements = state => state.seenWhatsNewAnnouncements;
 const getInitialRoute = state => state.initialRoute;
 
 /***/ }),
@@ -62128,24 +62183,25 @@ const HelpCenterLaunchpad = () => {
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(98948);
-/* harmony import */ var _automattic_calypso_products__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(76277);
-/* harmony import */ var _automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(355);
-/* harmony import */ var _automattic_whats_new__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(60422);
+/* harmony import */ var _automattic_calypso_products__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(76277);
+/* harmony import */ var _automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(355);
+/* harmony import */ var _automattic_whats_new__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(60422);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(56427);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(47143);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(64446);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(88065);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(98735);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(71042);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(97636);
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(64446);
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(88065);
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(98735);
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(71042);
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(97636);
 /* harmony import */ var _wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(23634);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(20759);
 /* harmony import */ var calypso_state_purchases_selectors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(32703);
 /* harmony import */ var calypso_state_ui_selectors__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(65284);
-/* harmony import */ var _icons__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(66867);
-/* harmony import */ var _stores__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(29575);
+/* harmony import */ var calypso_state_ui_selectors__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(62542);
+/* harmony import */ var _icons__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(66867);
+/* harmony import */ var _stores__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(29575);
 
 /* eslint-disable no-restricted-imports */
 /* eslint-disable wpcalypso/jsx-classname-namespace */
@@ -62176,18 +62232,19 @@ const HelpCenterMoreResources = () => {
   } = (0,_wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_5__/* .useI18n */ .s9)();
   const sectionName = (0,react_redux__WEBPACK_IMPORTED_MODULE_4__/* .useSelector */ .d4)(calypso_state_ui_selectors__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A);
   const purchases = (0,react_redux__WEBPACK_IMPORTED_MODULE_4__/* .useSelector */ .d4)(calypso_state_purchases_selectors__WEBPACK_IMPORTED_MODULE_7__/* .getUserPurchases */ ._);
+  const siteId = (0,react_redux__WEBPACK_IMPORTED_MODULE_4__/* .useSelector */ .d4)(calypso_state_ui_selectors__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A);
   const purchaseSlugs = purchases && purchases.map(purchase => purchase.productSlug);
-  const isBusinessOrEcomPlanUser = !!(purchaseSlugs && (purchaseSlugs.some(_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_8__/* .isWpComBusinessPlan */ .cA) || purchaseSlugs.some(_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_8__/* .isWpComEcommercePlan */ .kE)));
+  const isBusinessOrEcomPlanUser = !!(purchaseSlugs && (purchaseSlugs.some(_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_9__/* .isWpComBusinessPlan */ .cA) || purchaseSlugs.some(_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_9__/* .isWpComEcommercePlan */ .kE)));
   const {
     hasSeenWhatsNewModal,
     doneLoading
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => ({
-    hasSeenWhatsNewModal: select(_stores__WEBPACK_IMPORTED_MODULE_9__/* .HELP_CENTER_STORE */ .qO).getHasSeenWhatsNewModal(),
-    doneLoading: select('core/data').hasFinishedResolution(_stores__WEBPACK_IMPORTED_MODULE_9__/* .HELP_CENTER_STORE */ .qO, 'getHasSeenWhatsNewModal', [])
+    hasSeenWhatsNewModal: select(_stores__WEBPACK_IMPORTED_MODULE_10__/* .HELP_CENTER_STORE */ .qO).getHasSeenWhatsNewModal(),
+    doneLoading: select('core/data').hasFinishedResolution(_stores__WEBPACK_IMPORTED_MODULE_10__/* .HELP_CENTER_STORE */ .qO, 'getHasSeenWhatsNewModal', [])
   }), []);
   const {
     setHasSeenWhatsNewModal
-  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useDispatch)(_stores__WEBPACK_IMPORTED_MODULE_9__/* .HELP_CENTER_STORE */ .qO);
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useDispatch)(_stores__WEBPACK_IMPORTED_MODULE_10__/* .HELP_CENTER_STORE */ .qO);
   const showWhatsNewDot = doneLoading && !hasSeenWhatsNewModal;
   const [showGuide, setShowGuide] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const trackMoreResourcesButtonClick = resource => {
@@ -62225,48 +62282,48 @@ const HelpCenterMoreResources = () => {
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "inline-help__resource-cell"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
-    href: (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_10__/* .localizeUrl */ .rm)('https://wordpress.com/support'),
+    href: (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_11__/* .localizeUrl */ .rm)('https://wordpress.com/support'),
     rel: "noreferrer",
     target: "_blank",
     className: "inline-help__format-list-numbered",
     onClick: () => trackMoreResourcesButtonClick('support-documentation')
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A,
-    size: 24
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, __('Support Guides', "full-site-editing")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A,
+    size: 24
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, __('Support Guides', "full-site-editing")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A,
     size: 20
   })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
     className: "inline-help__resource-item"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "inline-help__resource-cell"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
-    href: (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_10__/* .localizeUrl */ .rm)('https://wordpress.com/webinars/'),
+    href: (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_11__/* .localizeUrl */ .rm)('https://wordpress.com/webinars/'),
     rel: "noreferrer",
     target: "_blank",
     onClick: () => trackLearnButtonClick('webinairs'),
     className: "inline-help__capture-video"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A,
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A,
     size: 24
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, __('Webinars', "full-site-editing")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A,
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, __('Webinars', "full-site-editing")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A,
     size: 20
   })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
     className: "inline-help__resource-item"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "inline-help__resource-cell"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
-    href: (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_10__/* .localizeUrl */ .rm)('https://wordpress.com/courses/'),
+    href: (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_11__/* .localizeUrl */ .rm)('https://wordpress.com/courses/'),
     rel: "noreferrer",
     target: "_blank",
     onClick: () => trackLearnButtonClick('courses'),
     className: "inline-help__institution"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A,
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A,
     size: 24
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, __('Courses', "full-site-editing")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A,
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, __('Courses', "full-site-editing")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A,
     size: 20
   })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
     className: "inline-help__resource-item"
@@ -62276,15 +62333,16 @@ const HelpCenterMoreResources = () => {
     variant: "link",
     onClick: handleWhatsNewClick,
     className: "inline-help__new-releases"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
-    icon: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null),
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    icon: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null),
     size: 24
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, __("What's New", "full-site-editing")), showWhatsNewDot && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, __("What's New", "full-site-editing")), showWhatsNewDot && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     className: "inline-help__new-releases_dot",
     icon: circle,
     size: 16
-  }))))), showGuide && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_whats_new__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
-    onClose: () => setShowGuide(false)
+  }))))), showGuide && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_whats_new__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .Ay, {
+    onClose: () => setShowGuide(false),
+    siteId: siteId?.toString() || ''
   }));
 };
 
@@ -69398,23 +69456,63 @@ const Guide = ({
 
 /***/ }),
 
+/***/ 59192:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   f: () => (/* binding */ useWhatsNewAnnouncementsQuery)
+/* harmony export */ });
+/* harmony import */ var _automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(16706);
+/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(35223);
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1455);
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(41445);
+/* eslint-disable no-restricted-imports */
+
+
+
+
+/**
+ * Get the "whats new" announcements
+ * @returns Returns the result of querying the "whats new" list endpoint
+ */
+const useWhatsNewAnnouncementsQuery = siteId => {
+  const locale = (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_1__/* .useLocale */ .Ym)();
+  return (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_2__/* .useQuery */ .I)({
+    queryKey: [`WhatsNewAnnouncements-${locale}-${siteId}`],
+    queryFn: async () => (0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_3__/* .canAccessWpcomApis */ .IH)() ? await (0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Ay)({
+      path: `/whats-new/list?_locale=${locale}&site_id=${siteId}`,
+      apiNamespace: 'wpcom/v2'
+    }) : await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
+      global: true,
+      path: `/wpcom/v2/block-editor/whats-new-list?_locale=${locale}&site_id=${siteId}`
+    }),
+    refetchOnWindowFocus: false
+  });
+};
+
+/***/ }),
+
 /***/ 60422:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   Ay: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* unused harmony export HELP_CENTER_STORE */
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(16706);
-/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(35223);
-/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1455);
-/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(41445);
+/* harmony import */ var _automattic_data_stores__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(86811);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(47143);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(51609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _components_guide__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(5073);
+/* harmony import */ var _hooks_use_whats_new_announcements_query__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(59192);
 /* harmony import */ var _whats_new_page__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(10736);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(52559);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(52559);
 
 /* eslint-disable no-restricted-imports */
 
@@ -69424,24 +69522,26 @@ const Guide = ({
 
 
 
+const HELP_CENTER_STORE = _automattic_data_stores__WEBPACK_IMPORTED_MODULE_4__/* .register */ .k();
+
 const WhatsNewGuide = ({
-  onClose
+  onClose,
+  siteId
 }) => {
-  const locale = (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_3__/* .useLocale */ .Ym)();
+  const {
+    setSeenWhatsNewAnnouncements
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.useDispatch)(HELP_CENTER_STORE);
   const {
     data,
     isLoading
-  } = (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_4__/* .useQuery */ .I)({
-    queryKey: ['WhatsNewAnnouncements'],
-    queryFn: async () => (0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_5__/* .canAccessWpcomApis */ .IH)() ? await (0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Ay)({
-      path: `/whats-new/list?_locale=${locale}`,
-      apiNamespace: 'wpcom/v2'
-    }) : await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1___default()({
-      global: true,
-      path: `/wpcom/v2/block-editor/whats-new-list?_locale=${locale}`
-    }),
-    refetchOnWindowFocus: false
-  });
+  } = (0,_hooks_use_whats_new_announcements_query__WEBPACK_IMPORTED_MODULE_5__/* .useWhatsNewAnnouncementsQuery */ .f)(siteId);
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
+    // check for whether the announcement has been seen already.
+    if (data && data.length) {
+      const announcementIds = data.map(item => item.announcementId);
+      setSeenWhatsNewAnnouncements(announcementIds);
+    }
+  }, [data, setSeenWhatsNewAnnouncements]);
   if (!data || isLoading) {
     return null;
   }

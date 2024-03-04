@@ -1842,6 +1842,7 @@ const __ = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__;
 
 
 function WhatsNewMenuItem() {
+  const siteId = window.whatsNewData?.currentSiteId;
   const [showGuide, setShowGuide] = (0,react__WEBPACK_IMPORTED_MODULE_7__.useState)(false);
   const {
     setHasSeenWhatsNewModal
@@ -1861,8 +1862,9 @@ function WhatsNewMenuItem() {
     name: "ToolsMoreMenuGroup"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.MenuItem, {
     onClick: openWhatsNew
-  }, __("What's new", 'full-site-editing'))), showGuide && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_whats_new__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-    onClose: closeWhatsNew
+  }, __("What's new", 'full-site-editing'))), showGuide && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_whats_new__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+    onClose: closeWhatsNew,
+    siteId: siteId
   }));
 }
 /* unused harmony default export */ var __WEBPACK_DEFAULT_EXPORT__ = ((/* unused pure expression or super */ null && (WhatsNewMenuItem)));
@@ -2735,6 +2737,582 @@ const PaginationControl = ({
 
 /***/ }),
 
+/***/ 3228:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   fetchSeenWhatsNewAnnouncements: () => (/* binding */ fetchSeenWhatsNewAnnouncements),
+/* harmony export */   receiveHasSeenWhatsNewModal: () => (/* binding */ receiveHasSeenWhatsNewModal),
+/* harmony export */   receiveSeenWhatsNewAnnouncements: () => (/* binding */ receiveSeenWhatsNewAnnouncements),
+/* harmony export */   resetStore: () => (/* binding */ resetStore),
+/* harmony export */   setHasSeenWhatsNewModal: () => (/* binding */ setHasSeenWhatsNewModal),
+/* harmony export */   setInitialRoute: () => (/* binding */ setInitialRoute),
+/* harmony export */   setIsMinimized: () => (/* binding */ setIsMinimized),
+/* harmony export */   setMessage: () => (/* binding */ setMessage),
+/* harmony export */   setSeenWhatsNewAnnouncements: () => (/* binding */ setSeenWhatsNewAnnouncements),
+/* harmony export */   setShowHelpCenter: () => (/* binding */ setShowHelpCenter),
+/* harmony export */   setShowMessagingChat: () => (/* binding */ setShowMessagingChat),
+/* harmony export */   setShowMessagingLauncher: () => (/* binding */ setShowMessagingLauncher),
+/* harmony export */   setShowMessagingWidget: () => (/* binding */ setShowMessagingWidget),
+/* harmony export */   setShowSupportDoc: () => (/* binding */ setShowSupportDoc),
+/* harmony export */   setSite: () => (/* binding */ setSite),
+/* harmony export */   setSubject: () => (/* binding */ setSubject),
+/* harmony export */   setUnreadCount: () => (/* binding */ setUnreadCount),
+/* harmony export */   setUserDeclaredSite: () => (/* binding */ setUserDeclaredSite),
+/* harmony export */   setUserDeclaredSiteUrl: () => (/* binding */ setUserDeclaredSiteUrl),
+/* harmony export */   startHelpCenterChat: () => (/* binding */ startHelpCenterChat)
+/* harmony export */ });
+/* harmony import */ var _wordpress_data_controls__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6161);
+/* harmony import */ var _wordpress_data_controls__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data_controls__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1445);
+/* harmony import */ var _wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2413);
+
+
+
+const receiveHasSeenWhatsNewModal = value => ({
+  type: 'HELP_CENTER_SET_SEEN_WHATS_NEW_MODAL',
+  value
+});
+const receiveSeenWhatsNewAnnouncements = value => ({
+  type: 'HELP_CENTER_SET_SEEN_WHATS_NEW_ANNOUNCEMENTS',
+  value
+});
+function* fetchSeenWhatsNewAnnouncements() {
+  let response;
+  if ((0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_1__/* .canAccessWpcomApis */ .IH)()) {
+    response = yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ .S)({
+      path: `/whats-new/seen-announcement-ids`,
+      apiNamespace: 'wpcom/v2'
+    });
+  } else {
+    response = yield (0,_wordpress_data_controls__WEBPACK_IMPORTED_MODULE_0__.apiFetch)({
+      global: true,
+      path: `/wpcom/v2/whats-new/seen-announcement-ids`
+    });
+  }
+  return receiveSeenWhatsNewAnnouncements(response.seen_announcement_ids);
+}
+function* setHasSeenWhatsNewModal(value) {
+  let response;
+  if ((0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_1__/* .canAccessWpcomApis */ .IH)()) {
+    response = yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ .S)({
+      path: `/block-editor/has-seen-whats-new-modal`,
+      apiNamespace: 'wpcom/v2',
+      method: 'PUT',
+      body: {
+        has_seen_whats_new_modal: value
+      }
+    });
+  } else {
+    response = yield (0,_wordpress_data_controls__WEBPACK_IMPORTED_MODULE_0__.apiFetch)({
+      global: true,
+      path: `/wpcom/v2/block-editor/has-seen-whats-new-modal`,
+      method: 'PUT',
+      data: {
+        has_seen_whats_new_modal: value
+      }
+    });
+  }
+  return receiveHasSeenWhatsNewModal(response.has_seen_whats_new_modal);
+}
+function* setSeenWhatsNewAnnouncements(ids) {
+  let response;
+  if ((0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_1__/* .canAccessWpcomApis */ .IH)()) {
+    response = yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ .S)({
+      path: `/whats-new/seen-announcement-ids`,
+      apiNamespace: 'wpcom/v2',
+      method: 'POST',
+      body: {
+        seen_announcement_ids: ids
+      }
+    });
+  } else {
+    response = yield (0,_wordpress_data_controls__WEBPACK_IMPORTED_MODULE_0__.apiFetch)({
+      global: true,
+      path: `/wpcom/v2/whats-new/seen-announcement-ids`,
+      method: 'POST',
+      data: {
+        seen_announcement_ids: ids
+      }
+    });
+  }
+  return receiveSeenWhatsNewAnnouncements(response.seen_announcement_ids);
+}
+const setSite = site => ({
+  type: 'HELP_CENTER_SET_SITE',
+  site
+});
+const setUnreadCount = count => ({
+  type: 'HELP_CENTER_SET_UNREAD_COUNT',
+  count
+});
+const setInitialRoute = route => ({
+  type: 'HELP_CENTER_SET_INITIAL_ROUTE',
+  route
+});
+const setIsMinimized = minimized => ({
+  type: 'HELP_CENTER_SET_MINIMIZED',
+  minimized
+});
+const setShowMessagingLauncher = show => ({
+  type: 'HELP_CENTER_SET_SHOW_MESSAGING_LAUNCHER',
+  show
+});
+const setShowMessagingWidget = show => ({
+  type: 'HELP_CENTER_SET_SHOW_MESSAGING_WIDGET',
+  show
+});
+const setShowHelpCenter = function* (show) {
+  if (!show) {
+    yield setInitialRoute(undefined);
+    yield setIsMinimized(false);
+  } else {
+    yield setShowMessagingWidget(false);
+  }
+  return {
+    type: 'HELP_CENTER_SET_SHOW',
+    show
+  };
+};
+const setSubject = subject => ({
+  type: 'HELP_CENTER_SET_SUBJECT',
+  subject
+});
+const setMessage = message => ({
+  type: 'HELP_CENTER_SET_MESSAGE',
+  message
+});
+const setUserDeclaredSiteUrl = url => ({
+  type: 'HELP_CENTER_SET_USER_DECLARED_SITE_URL',
+  url
+});
+const setUserDeclaredSite = site => ({
+  type: 'HELP_CENTER_SET_USER_DECLARED_SITE',
+  site
+});
+const resetStore = () => ({
+  type: 'HELP_CENTER_RESET_STORE'
+});
+const startHelpCenterChat = function* (site, message) {
+  yield setInitialRoute('/contact-form?mode=CHAT');
+  yield setSite(site);
+  yield setMessage(message);
+  yield setShowHelpCenter(true);
+};
+const setShowMessagingChat = function* () {
+  yield setShowHelpCenter(false);
+  yield setShowMessagingLauncher(true);
+  yield setShowMessagingWidget(true);
+  yield resetStore();
+};
+const setShowSupportDoc = function* (link, postId, blogId) {
+  const params = new URLSearchParams({
+    link,
+    postId: String(postId),
+    ...(blogId && {
+      blogId: String(blogId)
+    }),
+    // Conditionally add blogId if it exists, the default is support blog
+    cacheBuster: String(Date.now())
+  });
+  yield setInitialRoute(`/post/?${params}`);
+  yield setShowHelpCenter(true);
+};
+
+/***/ }),
+
+/***/ 5382:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   U: () => (/* binding */ STORE_KEY)
+/* harmony export */ });
+const STORE_KEY = 'automattic/help-center';
+
+/***/ }),
+
+/***/ 9192:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   k: () => (/* binding */ register)
+/* harmony export */ });
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7143);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_data_controls__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6161);
+/* harmony import */ var _wordpress_data_controls__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data_controls__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _plugins__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2920);
+/* harmony import */ var _wpcom_request_controls__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(2413);
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3228);
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5382);
+/* harmony import */ var _reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2049);
+/* harmony import */ var _selectors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1801);
+
+
+
+
+
+
+
+
+let isRegistered = false;
+function register() {
+  (0,_plugins__WEBPACK_IMPORTED_MODULE_2__/* .registerPlugins */ .I)();
+  if (!isRegistered) {
+    (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.registerStore)(_constants__WEBPACK_IMPORTED_MODULE_3__/* .STORE_KEY */ .U, {
+      actions: _actions__WEBPACK_IMPORTED_MODULE_4__,
+      reducer: _reducer__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A,
+      controls: {
+        ..._wordpress_data_controls__WEBPACK_IMPORTED_MODULE_1__.controls,
+        ..._wpcom_request_controls__WEBPACK_IMPORTED_MODULE_6__/* .controls */ .ne
+      },
+      selectors: _selectors__WEBPACK_IMPORTED_MODULE_7__,
+      persist: ['site', 'message', 'userDeclaredSite', 'userDeclaredSiteUrl', 'subject']
+    });
+    isRegistered = true;
+  }
+  return _constants__WEBPACK_IMPORTED_MODULE_3__/* .STORE_KEY */ .U;
+}
+
+/***/ }),
+
+/***/ 2049:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7143);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
+
+const showHelpCenter = (state, action) => {
+  switch (action.type) {
+    case 'HELP_CENTER_SET_SHOW':
+      return action.show;
+  }
+  return state;
+};
+const showMessagingLauncher = (state, action) => {
+  switch (action.type) {
+    case 'HELP_CENTER_SET_SHOW_MESSAGING_LAUNCHER':
+      return action.show;
+  }
+  return state;
+};
+const showMessagingWidget = (state, action) => {
+  switch (action.type) {
+    case 'HELP_CENTER_SET_SHOW_MESSAGING_WIDGET':
+      return action.show;
+  }
+  return state;
+};
+const hasSeenWhatsNewModal = (state, action) => {
+  switch (action.type) {
+    case 'HELP_CENTER_SET_SEEN_WHATS_NEW_MODAL':
+      return action.value;
+  }
+  return state;
+};
+const seenWhatsNewAnnouncements = (state, action) => {
+  switch (action.type) {
+    case 'HELP_CENTER_SET_SEEN_WHATS_NEW_ANNOUNCEMENTS':
+      return action.value;
+  }
+  return state;
+};
+const isMinimized = (state = false, action) => {
+  switch (action.type) {
+    case 'HELP_CENTER_SET_MINIMIZED':
+      return action.minimized;
+  }
+  return state;
+};
+const site = (state, action) => {
+  if (action.type === 'HELP_CENTER_RESET_STORE') {
+    return undefined;
+  } else if (action.type === 'HELP_CENTER_SET_SITE') {
+    return action.site;
+  }
+  return state;
+};
+const subject = (state, action) => {
+  if (action.type === 'HELP_CENTER_RESET_STORE') {
+    return undefined;
+  } else if (action.type === 'HELP_CENTER_SET_SUBJECT') {
+    return action.subject;
+  }
+  return state;
+};
+const unreadCount = (state = 0, action) => {
+  if (action.type === 'HELP_CENTER_SET_UNREAD_COUNT') {
+    return action.count;
+  } else if (action.type === 'HELP_CENTER_RESET_STORE') {
+    return 0;
+  }
+  return state;
+};
+const message = (state, action) => {
+  if (action.type === 'HELP_CENTER_RESET_STORE') {
+    return undefined;
+  } else if (action.type === 'HELP_CENTER_SET_MESSAGE') {
+    return action.message;
+  }
+  return state;
+};
+const userDeclaredSiteUrl = (state, action) => {
+  if (action.type === 'HELP_CENTER_RESET_STORE') {
+    return undefined;
+  } else if (action.type === 'HELP_CENTER_SET_USER_DECLARED_SITE_URL') {
+    return action.url;
+  }
+  return state;
+};
+const userDeclaredSite = (state, action) => {
+  if (action.type === 'HELP_CENTER_RESET_STORE') {
+    return undefined;
+  } else if (action.type === 'HELP_CENTER_SET_USER_DECLARED_SITE') {
+    return action.site;
+  }
+  return state;
+};
+const initialRoute = (state, action) => {
+  if (action.type === 'HELP_CENTER_SET_INITIAL_ROUTE') {
+    return action.route;
+  }
+  return state;
+};
+const reducer = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.combineReducers)({
+  showHelpCenter,
+  showMessagingLauncher,
+  showMessagingWidget,
+  site,
+  subject,
+  message,
+  userDeclaredSite,
+  userDeclaredSiteUrl,
+  hasSeenWhatsNewModal,
+  seenWhatsNewAnnouncements,
+  isMinimized,
+  unreadCount,
+  initialRoute
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (reducer);
+
+/***/ }),
+
+/***/ 1801:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getHasSeenWhatsNewModal: () => (/* binding */ getHasSeenWhatsNewModal),
+/* harmony export */   getInitialRoute: () => (/* binding */ getInitialRoute),
+/* harmony export */   getIsMinimized: () => (/* binding */ getIsMinimized),
+/* harmony export */   getMessage: () => (/* binding */ getMessage),
+/* harmony export */   getSeenWhatsNewAnnouncements: () => (/* binding */ getSeenWhatsNewAnnouncements),
+/* harmony export */   getSite: () => (/* binding */ getSite),
+/* harmony export */   getSubject: () => (/* binding */ getSubject),
+/* harmony export */   getUnreadCount: () => (/* binding */ getUnreadCount),
+/* harmony export */   getUserDeclaredSite: () => (/* binding */ getUserDeclaredSite),
+/* harmony export */   getUserDeclaredSiteUrl: () => (/* binding */ getUserDeclaredSiteUrl),
+/* harmony export */   isHelpCenterShown: () => (/* binding */ isHelpCenterShown),
+/* harmony export */   isMessagingLauncherShown: () => (/* binding */ isMessagingLauncherShown),
+/* harmony export */   isMessagingWidgetShown: () => (/* binding */ isMessagingWidgetShown)
+/* harmony export */ });
+const isHelpCenterShown = state => state.showHelpCenter;
+const isMessagingLauncherShown = state => state.showMessagingLauncher;
+const isMessagingWidgetShown = state => state.showMessagingWidget;
+const getSite = state => state.site;
+const getSubject = state => state.subject;
+const getMessage = state => state.message;
+const getUserDeclaredSiteUrl = state => state.userDeclaredSiteUrl;
+const getUserDeclaredSite = state => state.userDeclaredSite;
+const getUnreadCount = state => state.unreadCount;
+const getIsMinimized = state => state.isMinimized;
+const getHasSeenWhatsNewModal = state => state.hasSeenWhatsNewModal;
+const getSeenWhatsNewAnnouncements = state => state.seenWhatsNewAnnouncements;
+const getInitialRoute = state => state.initialRoute;
+
+/***/ }),
+
+/***/ 2920:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   I: () => (/* binding */ registerPlugins)
+/* harmony export */ });
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7143);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _one_week_persistence_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5726);
+
+
+let isRegistered = false;
+const registerPlugins = () => {
+  if (isRegistered) {
+    return;
+  }
+  isRegistered = true;
+
+  /**
+   * Register plugins for data-stores
+   */
+  (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.use)(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.plugins.persistence, _one_week_persistence_config__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A);
+};
+
+/***/ }),
+
+/***/ 5726:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/*
+    Defines the options used for the @wp/data persistence plugin, 
+    which include a persistent storage implementation to add data expiration handling.
+*/
+const storageKey = 'WPCOM_7_DAYS_PERSISTENCE';
+const PERSISTENCE_INTERVAL = 7 * 24 * 3600000; // days * hours in days * ms in hour
+const STORAGE_KEY = storageKey;
+const STORAGE_TS_KEY = storageKey + '_TS';
+
+// A plain object fallback if localStorage is not available
+const objStore = {};
+const objStorage = {
+  getItem(key) {
+    if (objStore.hasOwnProperty(key)) {
+      return objStore[key];
+    }
+    return null;
+  },
+  setItem(key, value) {
+    objStore[key] = String(value);
+  },
+  removeItem(key) {
+    delete objStore[key];
+  }
+};
+
+// Make sure localStorage support exists
+const localStorageSupport = () => {
+  try {
+    window.localStorage.setItem('WP_ONBOARD_TEST', '1');
+    window.localStorage.removeItem('WP_ONBOARD_TEST');
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
+// Choose the right storage implementation
+const storageHandler = localStorageSupport() ? window.localStorage : objStorage;
+
+// Persisted data expires after seven days
+const isNotExpired = timestampStr => {
+  const timestamp = Number(timestampStr);
+  return Boolean(timestamp) && timestamp + PERSISTENCE_INTERVAL > Date.now();
+};
+
+// Check for "fresh" query param
+const hasFreshParam = () => {
+  return new URLSearchParams(window.location.search).has('fresh');
+};
+
+// Handle data expiration by providing a storage object override to the @wp/data persistence plugin.
+const storage = {
+  getItem(key) {
+    const timestamp = storageHandler.getItem(STORAGE_TS_KEY);
+    if (timestamp && isNotExpired(timestamp) && !hasFreshParam()) {
+      return storageHandler.getItem(key);
+    }
+    storageHandler.removeItem(STORAGE_KEY);
+    storageHandler.removeItem(STORAGE_TS_KEY);
+    return null;
+  },
+  setItem(key, value) {
+    storageHandler.setItem(STORAGE_TS_KEY, JSON.stringify(Date.now()));
+    storageHandler.setItem(key, value);
+  }
+};
+const persistOptions = {
+  storageKey: STORAGE_KEY,
+  storage
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (persistOptions);
+
+/***/ }),
+
+/***/ 2413:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   S: () => (/* binding */ wpcomRequest),
+/* harmony export */   ne: () => (/* binding */ controls)
+/* harmony export */ });
+/* unused harmony exports fetchAndParse, reloadProxy, requestAllBlogsAccess, wait */
+/* harmony import */ var wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1445);
+
+const wpcomRequest = request => ({
+  type: 'WPCOM_REQUEST',
+  request
+});
+
+/**
+ * Action for performing a fetching using `window.fetch()` and parsing the response body.
+ * It's different from `apiFetch()` from
+ * `@wordpress/data-controls` in that it doesn't use any middleware to add extra parameters.
+ * @param resource the resource you wish to fetch
+ * @param options request options
+ */
+const fetchAndParse = (resource, options) => ({
+  type: 'FETCH_AND_PARSE',
+  resource,
+  options
+});
+const reloadProxy = () => ({
+  type: 'RELOAD_PROXY'
+});
+const requestAllBlogsAccess = () => ({
+  type: 'REQUEST_ALL_BLOGS_ACCESS'
+});
+const wait = ms => ({
+  type: 'WAIT',
+  ms
+});
+const controls = {
+  WPCOM_REQUEST: ({
+    request
+  }) => (0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Ay)(request),
+  FETCH_AND_PARSE: async ({
+    resource,
+    options
+  }) => {
+    const response = await window.fetch(resource, options);
+    return {
+      ok: response.ok,
+      body: await response.json()
+    };
+  },
+  RELOAD_PROXY: () => {
+    (0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_0__/* .reloadProxy */ .wf)();
+  },
+  REQUEST_ALL_BLOGS_ACCESS: () => (0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_0__/* .requestAllBlogsAccess */ .gn)(),
+  WAIT: ({
+    ms
+  }) => new Promise(resolve => setTimeout(resolve, ms))
+};
+
+/***/ }),
+
 /***/ 6706:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -3162,23 +3740,63 @@ const Guide = ({
 
 /***/ }),
 
+/***/ 6811:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   f: () => (/* binding */ useWhatsNewAnnouncementsQuery)
+/* harmony export */ });
+/* harmony import */ var _automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6706);
+/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5223);
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1455);
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1445);
+/* eslint-disable no-restricted-imports */
+
+
+
+
+/**
+ * Get the "whats new" announcements
+ * @returns Returns the result of querying the "whats new" list endpoint
+ */
+const useWhatsNewAnnouncementsQuery = siteId => {
+  const locale = (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_1__/* .useLocale */ .Ym)();
+  return (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_2__/* .useQuery */ .I)({
+    queryKey: [`WhatsNewAnnouncements-${locale}-${siteId}`],
+    queryFn: async () => (0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_3__/* .canAccessWpcomApis */ .IH)() ? await (0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Ay)({
+      path: `/whats-new/list?_locale=${locale}&site_id=${siteId}`,
+      apiNamespace: 'wpcom/v2'
+    }) : await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
+      global: true,
+      path: `/wpcom/v2/block-editor/whats-new-list?_locale=${locale}&site_id=${siteId}`
+    }),
+    refetchOnWindowFocus: false
+  });
+};
+
+/***/ }),
+
 /***/ 422:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   Ay: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* unused harmony export HELP_CENTER_STORE */
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6706);
-/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5223);
-/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1455);
-/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1445);
+/* harmony import */ var _automattic_data_stores__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9192);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7143);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _components_guide__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(5073);
+/* harmony import */ var _hooks_use_whats_new_announcements_query__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6811);
 /* harmony import */ var _whats_new_page__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(736);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2559);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2559);
 
 /* eslint-disable no-restricted-imports */
 
@@ -3188,24 +3806,26 @@ const Guide = ({
 
 
 
+const HELP_CENTER_STORE = _automattic_data_stores__WEBPACK_IMPORTED_MODULE_4__/* .register */ .k();
+
 const WhatsNewGuide = ({
-  onClose
+  onClose,
+  siteId
 }) => {
-  const locale = (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_3__/* .useLocale */ .Ym)();
+  const {
+    setSeenWhatsNewAnnouncements
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.useDispatch)(HELP_CENTER_STORE);
   const {
     data,
     isLoading
-  } = (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_4__/* .useQuery */ .I)({
-    queryKey: ['WhatsNewAnnouncements'],
-    queryFn: async () => (0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_5__/* .canAccessWpcomApis */ .IH)() ? await (0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Ay)({
-      path: `/whats-new/list?_locale=${locale}`,
-      apiNamespace: 'wpcom/v2'
-    }) : await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1___default()({
-      global: true,
-      path: `/wpcom/v2/block-editor/whats-new-list?_locale=${locale}`
-    }),
-    refetchOnWindowFocus: false
-  });
+  } = (0,_hooks_use_whats_new_announcements_query__WEBPACK_IMPORTED_MODULE_5__/* .useWhatsNewAnnouncementsQuery */ .f)(siteId);
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
+    // check for whether the announcement has been seen already.
+    if (data && data.length) {
+      const announcementIds = data.map(item => item.announcementId);
+      setSeenWhatsNewAnnouncements(announcementIds);
+    }
+  }, [data, setSeenWhatsNewAnnouncements]);
   if (!data || isLoading) {
     return null;
   }
@@ -3299,9 +3919,10 @@ const WhatsNewPage = ({
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Ay: () => (__WEBPACK_DEFAULT_EXPORT__),
-/* harmony export */   IH: () => (/* binding */ canAccessWpcomApis)
+/* harmony export */   IH: () => (/* binding */ canAccessWpcomApis),
+/* harmony export */   gn: () => (/* binding */ requestAllBlogsAccess),
+/* harmony export */   wf: () => (/* binding */ reloadProxy)
 /* harmony export */ });
-/* unused harmony exports requestAllBlogsAccess, reloadProxy */
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2090);
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7981);
@@ -4570,6 +5191,14 @@ module.exports = window["wp"]["compose"];
 
 "use strict";
 module.exports = window["wp"]["data"];
+
+/***/ }),
+
+/***/ 6161:
+/***/ ((module) => {
+
+"use strict";
+module.exports = window["wp"]["dataControls"];
 
 /***/ }),
 
