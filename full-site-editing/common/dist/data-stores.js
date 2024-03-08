@@ -6593,6 +6593,7 @@ function register(clientCreds) {
  */
 
 
+
 /***/ }),
 
 /***/ 1355:
@@ -7313,6 +7314,7 @@ let MigrationStatus = /*#__PURE__*/function (MigrationStatus) {
   MigrationStatus["BACKING_UP_QUEUED"] = "backing-up-queued";
   MigrationStatus["RESTORING"] = "restoring";
   MigrationStatus["DONE"] = "done";
+  MigrationStatus["DONE_USER"] = "done-user";
   MigrationStatus["ERROR"] = "error";
   return MigrationStatus;
 }({});
