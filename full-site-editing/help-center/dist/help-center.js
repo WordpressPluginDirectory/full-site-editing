@@ -26812,7 +26812,11 @@ class FormTextInput extends react__WEBPACK_IMPORTED_MODULE_2__.PureComponent {
   isError: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().bool),
   isValid: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().bool),
   selectOnFocus: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().bool),
-  className: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().string)
+  className: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().string),
+  name: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().string),
+  value: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().any),
+  placeholder: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().any),
+  onChange: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().func)
 });
 
 /***/ }),
@@ -45700,7 +45704,7 @@ const updateSiteMigrationMeta = (siteId, migrationStatus, migrationErrorStatus, 
 /* harmony export */   d: () => (/* binding */ SITE_REQUEST_OPTIONS)
 /* harmony export */ });
 const SITE_REQUEST_FIELDS = ['ID', 'URL', 'capabilities', 'icon', 'is_multisite', 'is_private', 'is_coming_soon', 'is_vip', 'jetpack', 'jetpack_modules', 'name', 'options', 'plan', 'products', 'single_user_site', 'visible', 'lang', 'launch_status', 'site_migration', 'site_owner', 'is_core_site_editor_enabled', 'is_wpcom_atomic', 'is_wpcom_staging_site', 'was_ecommerce_trial', 'was_migration_trial', 'was_upgraded_from_trial', 'was_hosting_trial', 'description', 'user_interactions'].join();
-const SITE_REQUEST_OPTIONS = ['admin_url', 'advanced_seo_front_page_description', 'advanced_seo_title_formats', 'allowed_file_types', 'anchor_podcast', 'created_at', 'default_comment_status', 'default_ping_status', 'default_post_format', 'design_type', 'editing_toolkit_is_active', 'frame_nonce', 'gmt_offset', 'has_pending_automated_transfer', 'is_automated_transfer', 'is_cloud_eligible', 'is_domain_only', 'is_mapped_domain', 'is_redirect', 'is_wpcom_atomic', 'is_wpcom_store', 'is_wpforteams_site', 'p2_hub_blog_id', 'jetpack_frame_nonce', 'jetpack_version', 'main_network_site', 'page_on_front', 'page_for_posts', 'podcasting_archive', 'podcasting_category_id', 'publicize_permanently_disabled', 'restricted_tld', 'show_on_front', 'site_segment', 'software_version', 'timezone', 'updated_at', 'upgraded_filetypes_enabled', 'unmapped_url', 'verification_services_codes', 'videopress_enabled', 'woocommerce_is_active', 'wordads', 'site_creation_flow', 'site_source_slug', 'is_difm_lite_in_progress', 'site_intent', 'launchpad_screen', 'launchpad_checklist_tasks_statuses', 'wpcom_production_blog_id', 'wpcom_staging_blog_ids', 'can_blaze', 'is_commercial', 'wpcom_admin_interface', 'wpcom_classic_early_release'].join();
+const SITE_REQUEST_OPTIONS = ['admin_url', 'advanced_seo_front_page_description', 'advanced_seo_title_formats', 'allowed_file_types', 'anchor_podcast', 'created_at', 'default_comment_status', 'default_ping_status', 'default_post_format', 'design_type', 'editing_toolkit_is_active', 'frame_nonce', 'gmt_offset', 'has_pending_automated_transfer', 'is_automated_transfer', 'is_cloud_eligible', 'is_domain_only', 'is_mapped_domain', 'is_redirect', 'is_wpcom_atomic', 'is_wpcom_store', 'is_wpforteams_site', 'p2_hub_blog_id', 'jetpack_frame_nonce', 'jetpack_version', 'main_network_site', 'page_on_front', 'page_for_posts', 'podcasting_archive', 'podcasting_category_id', 'publicize_permanently_disabled', 'restricted_tld', 'show_on_front', 'site_segment', 'software_version', 'timezone', 'updated_at', 'upgraded_filetypes_enabled', 'unmapped_url', 'verification_services_codes', 'videopress_enabled', 'woocommerce_is_active', 'wordads', 'site_creation_flow', 'site_source_slug', 'is_difm_lite_in_progress', 'site_intent', 'launchpad_screen', 'launchpad_checklist_tasks_statuses', 'wpcom_production_blog_id', 'wpcom_staging_blog_ids', 'can_blaze', 'is_commercial', 'is_commercial_reasons', 'wpcom_admin_interface', 'wpcom_classic_early_release'].join();
 
 /***/ }),
 
@@ -49935,57 +49939,6 @@ function camelOrSnakeSlug(product) {
 
 /***/ }),
 
-/***/ 51689:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   J1: () => (/* binding */ FEATURE_CANCELLATION_MANAGED_HOSTINGS),
-/* harmony export */   Kn: () => (/* binding */ FEATURE_CANCELLATION_COLLECT_PAYMENTS),
-/* harmony export */   Lg: () => (/* binding */ FEATURE_CANCELLATION_EARN_AD_REVENUE),
-/* harmony export */   MN: () => (/* binding */ FEATURE_CANCELLATION_SHIPPING_CARRIERS),
-/* harmony export */   Qb: () => (/* binding */ FEATURE_CANCELLATION_JETPACK_ESSENTIALS),
-/* harmony export */   Ql: () => (/* binding */ FEATURE_CANCELLATION_ACCEPT_PAYMENTS),
-/* harmony export */   Ue: () => (/* binding */ FEATURE_CANCELLATION_EMAIL_SUPPORT),
-/* harmony export */   Wd: () => (/* binding */ FEATURE_CANCELLATION_PLUGINS),
-/* harmony export */   XM: () => (/* binding */ FEATURE_CANCELLATION_SFTP_AND_DATABASE),
-/* harmony export */   ZJ: () => (/* binding */ FEATURE_CANCELLATION_SEO_TOOLS),
-/* harmony export */   cm: () => (/* binding */ FEATURE_CANCELLATION_GOOGLE_ANALYTICS),
-/* harmony export */   gW: () => (/* binding */ FEATURE_CANCELLATION_PREMIUM_THEMES),
-/* harmony export */   gk: () => (/* binding */ FEATURE_CANCELLATION_PREMIUM_DESIGN),
-/* harmony export */   jg: () => (/* binding */ FEATURE_CANCELLATION_LIVE_CHAT),
-/* harmony export */   os: () => (/* binding */ FEATURE_CANCELLATION_BACKUPS_AND_RESTORE),
-/* harmony export */   tQ: () => (/* binding */ FEATURE_CANCELLATION_SEO_AND_SOCIAL),
-/* harmony export */   vV: () => (/* binding */ FEATURE_CANCELLATION_HIGH_QUALITY_VIDEOS),
-/* harmony export */   wr: () => (/* binding */ FEATURE_CANCELLATION_AD_FREE_SITE),
-/* harmony export */   y9: () => (/* binding */ FEATURE_CANCELLATION_SECURITY_AND_SPAM)
-/* harmony export */ });
-/* unused harmony exports FEATURE_CANCELLATION_BACKUPS, FEATURE_CANCELLATION_UNLIMITED_TRAFFIC */
-// Cancellation flow related features
-const FEATURE_CANCELLATION_ACCEPT_PAYMENTS = 'cancellation-accept-payments';
-const FEATURE_CANCELLATION_AD_FREE_SITE = 'cancellation-ad-free';
-const FEATURE_CANCELLATION_BACKUPS = 'cancellation-backups';
-const FEATURE_CANCELLATION_BACKUPS_AND_RESTORE = 'cancellation-backups-restore';
-const FEATURE_CANCELLATION_COLLECT_PAYMENTS = 'cancellation-collect-payments';
-const FEATURE_CANCELLATION_EARN_AD_REVENUE = 'cancellation-ad-revenue';
-const FEATURE_CANCELLATION_EMAIL_SUPPORT = 'cancellation-email-support';
-const FEATURE_CANCELLATION_GOOGLE_ANALYTICS = 'cancellation-google-analytics';
-const FEATURE_CANCELLATION_HIGH_QUALITY_VIDEOS = 'cancellation-hq-videos';
-const FEATURE_CANCELLATION_JETPACK_ESSENTIALS = 'cancellation-jetpack-essentials';
-const FEATURE_CANCELLATION_LIVE_CHAT = 'cancellation-live-chat';
-const FEATURE_CANCELLATION_MANAGED_HOSTINGS = 'cancellation-managed-hostings';
-const FEATURE_CANCELLATION_PLUGINS = 'cancellation-plugins';
-const FEATURE_CANCELLATION_PREMIUM_DESIGN = 'cancellation-premium-design';
-const FEATURE_CANCELLATION_PREMIUM_THEMES = 'cancellation-premium-themes';
-const FEATURE_CANCELLATION_SECURITY_AND_SPAM = 'cancellation-security-and-spam';
-const FEATURE_CANCELLATION_SEO_TOOLS = 'cancellation-seo-tools';
-const FEATURE_CANCELLATION_SEO_AND_SOCIAL = 'cancellation-seo-social';
-const FEATURE_CANCELLATION_SFTP_AND_DATABASE = 'cancellation-sfpt-database';
-const FEATURE_CANCELLATION_SHIPPING_CARRIERS = 'cancellation-shipping-carriers';
-const FEATURE_CANCELLATION_UNLIMITED_TRAFFIC = 'cancellation-unlimited-traffic';
-
-/***/ }),
-
 /***/ 11421:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -52391,7 +52344,6 @@ function planHasJetpackClassicSearch(plan) {
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(11421);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(52400);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(49433);
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(51689);
 
 
 
@@ -52480,21 +52432,7 @@ const getPlanFreeDetails = () => ({
   getBlogOnboardingSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BEAUTIFUL_THEMES */ .EPC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAGES */ .ko5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_USERS */ .e5F, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_POST_EDITS_HISTORY */ .b9l, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_BRUTE_FORCE */ .LKS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALWAYS_ONLINE */ .P25, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_THE_READER */ .vbh],
   getBlogOnboardingSignupJetpackFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NEWSLETTER_IMPORT_SUBSCRIBERS_FREE */ .GRF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_EMAILS */ .Zvm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NEWSLETTERS_RSS */ .jdY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_JP */ .WoS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LTD_SOCIAL_MEDIA_JP */ .yD$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SPAM_JP */ .y33],
   getIncludedFeatures: () => [],
-  getInferiorFeatures: () => [],
-  getCancellationFeatureList: () => ({
-    monthly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_MANAGED_HOSTINGS */ .J1, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_AND_SOCIAL */ .tQ, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .Lg, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SECURITY_AND_SPAM */ .y9, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_JETPACK_ESSENTIALS */ .Qb],
-      andMore: true
-    },
-    yearly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_MANAGED_HOSTINGS */ .J1, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_AND_SOCIAL */ .tQ, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .Lg, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SECURITY_AND_SPAM */ .y9, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_JETPACK_ESSENTIALS */ .Qb],
-      andMore: true
-    },
-    withDomain: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_MANAGED_HOSTINGS */ .J1, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_AND_SOCIAL */ .tQ, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .Lg, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SECURITY_AND_SPAM */ .y9],
-      andMore: true
-    }
-  })
+  getInferiorFeatures: () => []
 });
 const getPlanBloggerDetails = () => ({
   ...getDotcomPlanDetails(),
@@ -52517,21 +52455,7 @@ const getPlanBloggerDetails = () => ({
   getPortfolioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_BLOG_DOMAIN */ .MaQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .RZD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_FREE_FEATURES */ .wIu],
   // Features not displayed but used for checking plan abilities
   getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUDIO_UPLOADS */ .R_9],
-  getInferiorFeatures: () => [],
-  getCancellationFeatureList: () => ({
-    monthly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_AD_FREE_SITE */ .wr, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_COLLECT_PAYMENTS */ .Kn, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EMAIL_SUPPORT */ .Ue],
-      andMore: false
-    },
-    yearly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_AD_FREE_SITE */ .wr, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_COLLECT_PAYMENTS */ .Kn, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EMAIL_SUPPORT */ .Ue],
-      andMore: false
-    },
-    withDomain: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_AD_FREE_SITE */ .wr, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_COLLECT_PAYMENTS */ .Kn, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EMAIL_SUPPORT */ .Ue],
-      andMore: false
-    }
-  })
+  getInferiorFeatures: () => []
 });
 const getPlanPersonalDetails = () => ({
   ...getDotcomPlanDetails(),
@@ -52578,21 +52502,7 @@ const getPlanPersonalDetails = () => ({
   getCheckoutFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SUPPORT_EMAIL */ .EOS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .dBh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_DNS */ .uoN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAID_SUBSCRIBERS_JP */ .N3t],
   // Features not displayed but used for checking plan abilities
   getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUDIO_UPLOADS */ .R_9],
-  getInferiorFeatures: () => [],
-  getCancellationFeatureList: () => ({
-    monthly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_AD_FREE_SITE */ .wr, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_COLLECT_PAYMENTS */ .Kn, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EMAIL_SUPPORT */ .Ue],
-      andMore: false
-    },
-    yearly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_AD_FREE_SITE */ .wr, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_COLLECT_PAYMENTS */ .Kn, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EMAIL_SUPPORT */ .Ue],
-      andMore: false
-    },
-    withDomain: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_AD_FREE_SITE */ .wr, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_COLLECT_PAYMENTS */ .Kn, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EMAIL_SUPPORT */ .Ue],
-      andMore: false
-    }
-  })
+  getInferiorFeatures: () => []
 });
 const getPlanEcommerceDetails = () => ({
   ...getDotcomPlanDetails(),
@@ -52649,21 +52559,7 @@ const getPlanEcommerceDetails = () => ({
   getHostingSignupFeatures: term => () => compact([term !== _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .he && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SELL_SHIP */ .Jmr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_STORE */ .j6z, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INVENTORY */ .Y_U, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CHECKOUT */ .iPI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS_V2 */ .LVB, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SALES_REPORTS */ .GNY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .mEY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EXTENSIONS */ .AR4, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BANDWIDTH */ .Tuf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GLOBAL_EDGE_CACHING */ .vz3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BURST */ .eCG, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WAF_V2 */ .$5r, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CDN */ .xq9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CPUS */ .lS7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DATACENTRE_FAILOVER */ .qot, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_MALWARE */ .QXs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_DDOS */ .HU_]),
   // Features not displayed but used for checking plan abilities
   getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUDIO_UPLOADS */ .R_9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_MY_BUSINESS */ .hVU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CLOUDFLARE_ANALYTICS */ .swD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_INSTALL_PURCHASED_PLUGINS */ .Qqh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES_PLUGINS */ .hQm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_FORWARDING_EXTENDED_LIMIT */ .eAf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .emy, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ATOMIC */ .DF1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .Jgn, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .Rs_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .ZzH],
-  getInferiorFeatures: () => [],
-  getCancellationFeatureList: () => ({
-    monthly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_ACCEPT_PAYMENTS */ .Ql, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SHIPPING_CARRIERS */ .MN, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PREMIUM_DESIGN */ .gk, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PLUGINS */ .Wd, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_TOOLS */ .ZJ],
-      andMore: true
-    },
-    yearly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_ACCEPT_PAYMENTS */ .Ql, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SHIPPING_CARRIERS */ .MN, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PREMIUM_DESIGN */ .gk, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PLUGINS */ .Wd, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_TOOLS */ .ZJ],
-      andMore: true
-    },
-    withDomain: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_ACCEPT_PAYMENTS */ .Ql, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SHIPPING_CARRIERS */ .MN, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PREMIUM_DESIGN */ .gk, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PLUGINS */ .Wd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SELL_INTERNATIONALLY */ .yT6],
-      andMore: true
-    }
-  })
+  getInferiorFeatures: () => []
 });
 const getWooExpressMediumPlanCompareFeatures = () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WOOCOMMERCE_STORE */ .WI4, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WOOCOMMERCE_MOBILE_APP */ .fZL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDPRESS_CMS */ .nYV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDPRESS_MOBILE_APP */ .u_9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_SSL_CERTIFICATE */ .p0N, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_BACKUPS_SECURITY_SCAN */ .lu6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .dBh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_ADMINS */ .uVr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Dml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT */ .u7c, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SALES_REPORTS */ .GNY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS_V3 */ .S4e, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIST_UNLIMITED_PRODUCTS */ .Nno, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GIFT_CARDS */ .KAl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MIN_MAX_ORDER_QUANTITY */ .QvK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_BUNDLES */ .jwP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIST_PRODUCTS_BY_BRAND */ .Doi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_RECOMMENDATIONS */ .ceT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTEGRATED_PAYMENTS */ .hXr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTERNATIONAL_PAYMENTS */ .Ckc, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_SALES_TAXES */ .H7I, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_LOCAL_PAYMENTS */ .M7I, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_RECURRING_PAYMENTS */ .xEy, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MIN_MAX_ORDER_QUANTITY */ .QvK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PROMOTE_ON_TIKTOK */ .BGp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SYNC_WITH_PINTEREST */ .l58, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CONNECT_WITH_FACEBOOK */ .e7z, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACK_IN_STOCK_NOTIFICATIONS */ .LUJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MARKETING_AUTOMATION */ .KUL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ABANDONED_CART_RECOVERY */ .fPv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_TOOLS */ .gQ2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVERTISE_ON_GOOGLE */ .Ncs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_ORDER_EMAILS */ .qRK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTEGRATED_SHIPMENT_TRACKING */ .YQh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_SHIPPING_RATES */ .fgV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DISCOUNTED_SHIPPING */ .XuE, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRINT_SHIPPING_LABELS */ .gmv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AI_ASSISTED_PRODUCT_DESCRIPTION */ .y$v];
 const getWooExpressSmallPlanCompareFeatures = () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WOOCOMMERCE_STORE */ .WI4, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WOOCOMMERCE_MOBILE_APP */ .fZL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDPRESS_CMS */ .nYV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDPRESS_MOBILE_APP */ .u_9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_SSL_CERTIFICATE */ .p0N, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_BACKUPS_SECURITY_SCAN */ .lu6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .dBh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_ADMINS */ .uVr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Dml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT */ .u7c, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SALES_REPORTS */ .GNY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS_V3 */ .S4e, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIST_UNLIMITED_PRODUCTS */ .Nno, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GIFT_CARDS */ .KAl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIST_PRODUCTS_BY_BRAND */ .Doi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTEGRATED_PAYMENTS */ .hXr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTERNATIONAL_PAYMENTS */ .Ckc, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_SALES_TAXES */ .H7I, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_LOCAL_PAYMENTS */ .M7I, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_RECURRING_PAYMENTS */ .xEy, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PROMOTE_ON_TIKTOK */ .BGp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SYNC_WITH_PINTEREST */ .l58, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CONNECT_WITH_FACEBOOK */ .e7z, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_TOOLS */ .gQ2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVERTISE_ON_GOOGLE */ .Ncs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_ORDER_EMAILS */ .qRK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTEGRATED_SHIPMENT_TRACKING */ .YQh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_SHIPPING_RATES */ .fgV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRINT_SHIPPING_LABELS */ .gmv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AI_ASSISTED_PRODUCT_DESCRIPTION */ .y$v];
@@ -52759,21 +52655,7 @@ const getPlanPremiumDetails = () => ({
   get2023PlanComparisonJetpackFeatureOverride: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYPAL_JP */ .O6g, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEOPRESS_JP */ .HKK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_PAID */ .iQ_],
   // Features not displayed but used for checking plan abilities
   getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUDIO_UPLOADS */ .R_9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CLOUDFLARE_ANALYTICS */ .swD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .Jgn, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .Rs_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .ZzH],
-  getInferiorFeatures: () => [],
-  getCancellationFeatureList: () => ({
-    monthly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .Lg, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PREMIUM_THEMES */ .gW, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_GOOGLE_ANALYTICS */ .cm, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_AD_FREE_SITE */ .wr, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_COLLECT_PAYMENTS */ .Kn, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EMAIL_SUPPORT */ .Ue],
-      andMore: false
-    },
-    yearly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_LIVE_CHAT */ .jg, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .Lg, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PREMIUM_THEMES */ .gW, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_GOOGLE_ANALYTICS */ .cm, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_AD_FREE_SITE */ .wr, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_COLLECT_PAYMENTS */ .Kn],
-      andMore: false
-    },
-    withDomain: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .Lg, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PREMIUM_THEMES */ .gW, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_GOOGLE_ANALYTICS */ .cm, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_COLLECT_PAYMENTS */ .Kn, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_AD_FREE_SITE */ .wr],
-      andMore: false
-    }
-  })
+  getInferiorFeatures: () => []
 });
 const getPlanBusinessDetails = () => ({
   ...getDotcomPlanDetails(),
@@ -52841,20 +52723,6 @@ const getPlanBusinessDetails = () => ({
   // Features not displayed but used for checking plan abilities
   getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUDIO_UPLOADS */ .R_9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_MY_BUSINESS */ .hVU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CLOUDFLARE_ANALYTICS */ .swD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_INSTALL_PURCHASED_PLUGINS */ .Qqh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_FORWARDING_EXTENDED_LIMIT */ .eAf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .emy, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ATOMIC */ .DF1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .Jgn, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .Rs_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .ZzH],
   getInferiorFeatures: () => [],
-  getCancellationFeatureList: () => ({
-    monthly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PLUGINS */ .Wd, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_TOOLS */ .ZJ, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_BACKUPS_AND_RESTORE */ .os, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SFTP_AND_DATABASE */ .XM, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EMAIL_SUPPORT */ .Ue],
-      andMore: true
-    },
-    yearly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PLUGINS */ .Wd, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_TOOLS */ .ZJ, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_BACKUPS_AND_RESTORE */ .os, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SFTP_AND_DATABASE */ .XM, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_LIVE_CHAT */ .jg],
-      andMore: true
-    },
-    withDomain: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PLUGINS */ .Wd, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_TOOLS */ .ZJ, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_BACKUPS_AND_RESTORE */ .os, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SFTP_AND_DATABASE */ .XM],
-      andMore: true
-    }
-  }),
   getSenseiFeatures: term => () => compact([term !== _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .he && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, term !== _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .he && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_SUPPORT */ .Hc$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_UNLIMITED */ .BFp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_INTERACTIVE */ .Uvw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_QUIZZES */ .ndR, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_SELL_COURSES */ .V82, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_STORAGE */ .LHc, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_HOSTING */ .iNP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_JETPACK */ .A6]),
   getSenseiHighlightedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SENSEI_SUPPORT */ .Hc$]
 });
@@ -52868,21 +52736,7 @@ const getPlanProDetails = () => ({
   getSubTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Unlimited features. Unbeatable value.'),
   getPlanCompareFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_TRAFFIC */ .l5Q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MANAGED_HOSTING */ .CR9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_THEMES */ .vCo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INSTALL_PLUGINS */ .m51, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_INSTALL_PURCHASED_PLUGINS */ .Qqh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_SUPPORT */ .Vrh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WOOCOMMERCE */ .sWw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_50GB_STORAGE */ .KGH, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .MZU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .W5X, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_ADMINS */ .uVr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS */ .M$n, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_BLOCKS */ .DyV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SOCIAL_MEDIA_TOOLS */ .Ywz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_TITAN_EMAIL */ .ZxR, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MONETISE */ .aC2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SFTP_DATABASE */ .bnw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_BACKUPS_AND_RESTORE */ ._vw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ESSENTIAL */ .BfV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ .irI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .oIC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .AOP],
   getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_EXPANDED_ABBR */ .kPp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUDIO_UPLOADS */ .R_9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CLOUDFLARE_ANALYTICS */ .swD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_V2 */ .R7Q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EARN_AD */ .eYY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_FORWARDING_EXTENDED_LIMIT */ .eAf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .AOP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_MY_BUSINESS */ .hVU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ ._22, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .$lI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MEMBERSHIPS */ .JLP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_BRANDING */ .jPE, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .whx, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_BLOCK */ .Tgp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .emy, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SFTP_DATABASE */ .bnw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_BACKUPS_AND_RESTORE */ ._vw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_PLUGINS */ .e00, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES */ .Mo5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES_PLUGINS */ .hQm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ATOMIC */ .DF1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .Jgn, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .Rs_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .ZzH],
-  getPlanCancellationDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Heads up — you are currently on a legacy plan that is no longer available for new subscribers. ' + 'Your Pro plan includes access to all the most popular features WordPress.com has to offer, ' + 'including premium themes and access to over 50,000 plugins. As an existing Pro plan subscriber, ' + 'you can keep your site on this legacy plan as long as your subscription remains active. ' + 'If canceled, the WordPress.com Pro plan can no longer be added to your account.'),
-  getCancellationFeatureList: () => ({
-    monthly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PLUGINS */ .Wd, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PREMIUM_THEMES */ .gW, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .Lg, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_HIGH_QUALITY_VIDEOS */ .vV, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SFTP_AND_DATABASE */ .XM],
-      andMore: true
-    },
-    yearly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PLUGINS */ .Wd, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PREMIUM_THEMES */ .gW, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .Lg, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_HIGH_QUALITY_VIDEOS */ .vV, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SFTP_AND_DATABASE */ .XM],
-      andMore: true
-    },
-    withDomain: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PLUGINS */ .Wd, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_PREMIUM_THEMES */ .gW, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .Lg, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_HIGH_QUALITY_VIDEOS */ .vV],
-      andMore: true
-    }
-  })
+  getPlanCancellationDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Heads up — you are currently on a legacy plan that is no longer available for new subscribers. ' + 'Your Pro plan includes access to all the most popular features WordPress.com has to offer, ' + 'including premium themes and access to over 50,000 plugins. As an existing Pro plan subscriber, ' + 'you can keep your site on this legacy plan as long as your subscription remains active. ' + 'If canceled, the WordPress.com Pro plan can no longer be added to your account.')
 });
 
 // The following is not a real plan, we are adding it here so that
@@ -53643,21 +53497,7 @@ PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_STARTER */ .BC]
   getSubTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Essential features. Freedom to grow.'),
   getBillingTimeFrame: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('per month, billed yearly'),
   getPlanCompareFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_TRAFFIC */ .l5Q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MANAGED_HOSTING */ .CR9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_THEMES */ .vCo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_ADMINS */ .uVr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_6GB_STORAGE */ .TEv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .AOP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_BLOCKS */ .DyV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_TITAN_EMAIL */ .ZxR],
-  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_INSTALL_PURCHASED_PLUGINS */ .Qqh],
-  getCancellationFeatureList: () => ({
-    monthly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_MANAGED_HOSTINGS */ .J1, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_AND_SOCIAL */ .tQ, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .Lg, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SECURITY_AND_SPAM */ .y9, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_JETPACK_ESSENTIALS */ .Qb],
-      andMore: true
-    },
-    yearly: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_MANAGED_HOSTINGS */ .J1, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_AND_SOCIAL */ .tQ, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .Lg, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SECURITY_AND_SPAM */ .y9, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_JETPACK_ESSENTIALS */ .Qb],
-      andMore: true
-    },
-    withDomain: {
-      featureList: [_constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_MANAGED_HOSTINGS */ .J1, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SEO_AND_SOCIAL */ .tQ, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_EARN_AD_REVENUE */ .Lg, _constants__WEBPACK_IMPORTED_MODULE_8__/* .FEATURE_CANCELLATION_SECURITY_AND_SPAM */ .y9],
-      andMore: true
-    }
-  })
+  getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_INSTALL_PURCHASED_PLUGINS */ .Qqh]
 };
 PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_WPCOM_FLEXIBLE */ .LP] = {
   // Inherits the free plan
