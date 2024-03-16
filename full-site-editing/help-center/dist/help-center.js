@@ -7868,38 +7868,26 @@ module.exports = function callBoundIntrinsic(name, allowMissing) {
 
 var bind = __webpack_require__(79138);
 var GetIntrinsic = __webpack_require__(528);
+var setFunctionLength = __webpack_require__(26108);
 
+var $TypeError = __webpack_require__(3468);
 var $apply = GetIntrinsic('%Function.prototype.apply%');
 var $call = GetIntrinsic('%Function.prototype.call%');
 var $reflectApply = GetIntrinsic('%Reflect.apply%', true) || bind.call($call, $apply);
 
-var $gOPD = GetIntrinsic('%Object.getOwnPropertyDescriptor%', true);
-var $defineProperty = GetIntrinsic('%Object.defineProperty%', true);
+var $defineProperty = __webpack_require__(64940);
 var $max = GetIntrinsic('%Math.max%');
 
-if ($defineProperty) {
-	try {
-		$defineProperty({}, 'a', { value: 1 });
-	} catch (e) {
-		// IE 8 has a broken defineProperty
-		$defineProperty = null;
-	}
-}
-
 module.exports = function callBind(originalFunction) {
-	var func = $reflectApply(bind, $call, arguments);
-	if ($gOPD && $defineProperty) {
-		var desc = $gOPD(func, 'length');
-		if (desc.configurable) {
-			// original length, plus the receiver, minus any additional arguments (after the receiver)
-			$defineProperty(
-				func,
-				'length',
-				{ value: 1 + $max(0, originalFunction.length - (arguments.length - 1)) }
-			);
-		}
+	if (typeof originalFunction !== 'function') {
+		throw new $TypeError('a function is required');
 	}
-	return func;
+	var func = $reflectApply(bind, $call, arguments);
+	return setFunctionLength(
+		func,
+		1 + $max(0, originalFunction.length - (arguments.length - 1)),
+		true
+	);
 };
 
 var applyBind = function applyBind() {
@@ -10321,6 +10309,178 @@ module.exports = function deepFreeze (o) {
 
 /***/ }),
 
+/***/ 70686:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var $defineProperty = __webpack_require__(64940);
+
+var $SyntaxError = __webpack_require__(5731);
+var $TypeError = __webpack_require__(3468);
+
+var gopd = __webpack_require__(69336);
+
+/** @type {import('.')} */
+module.exports = function defineDataProperty(
+	obj,
+	property,
+	value
+) {
+	if (!obj || (typeof obj !== 'object' && typeof obj !== 'function')) {
+		throw new $TypeError('`obj` must be an object or a function`');
+	}
+	if (typeof property !== 'string' && typeof property !== 'symbol') {
+		throw new $TypeError('`property` must be a string or a symbol`');
+	}
+	if (arguments.length > 3 && typeof arguments[3] !== 'boolean' && arguments[3] !== null) {
+		throw new $TypeError('`nonEnumerable`, if provided, must be a boolean or null');
+	}
+	if (arguments.length > 4 && typeof arguments[4] !== 'boolean' && arguments[4] !== null) {
+		throw new $TypeError('`nonWritable`, if provided, must be a boolean or null');
+	}
+	if (arguments.length > 5 && typeof arguments[5] !== 'boolean' && arguments[5] !== null) {
+		throw new $TypeError('`nonConfigurable`, if provided, must be a boolean or null');
+	}
+	if (arguments.length > 6 && typeof arguments[6] !== 'boolean') {
+		throw new $TypeError('`loose`, if provided, must be a boolean');
+	}
+
+	var nonEnumerable = arguments.length > 3 ? arguments[3] : null;
+	var nonWritable = arguments.length > 4 ? arguments[4] : null;
+	var nonConfigurable = arguments.length > 5 ? arguments[5] : null;
+	var loose = arguments.length > 6 ? arguments[6] : false;
+
+	/* @type {false | TypedPropertyDescriptor<unknown>} */
+	var desc = !!gopd && gopd(obj, property);
+
+	if ($defineProperty) {
+		$defineProperty(obj, property, {
+			configurable: nonConfigurable === null && desc ? desc.configurable : !nonConfigurable,
+			enumerable: nonEnumerable === null && desc ? desc.enumerable : !nonEnumerable,
+			value: value,
+			writable: nonWritable === null && desc ? desc.writable : !nonWritable
+		});
+	} else if (loose || (!nonEnumerable && !nonWritable && !nonConfigurable)) {
+		// must fall back to [[Set]], and was not explicitly asked to make non-enumerable, non-writable, or non-configurable
+		obj[property] = value; // eslint-disable-line no-param-reassign
+	} else {
+		throw new $SyntaxError('This environment does not support defining a property as non-configurable, non-writable, or non-enumerable.');
+	}
+};
+
+
+/***/ }),
+
+/***/ 64940:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var GetIntrinsic = __webpack_require__(528);
+
+/** @type {import('.')} */
+var $defineProperty = GetIntrinsic('%Object.defineProperty%', true) || false;
+if ($defineProperty) {
+	try {
+		$defineProperty({}, 'a', { value: 1 });
+	} catch (e) {
+		// IE 8 has a broken defineProperty
+		$defineProperty = false;
+	}
+}
+
+module.exports = $defineProperty;
+
+
+/***/ }),
+
+/***/ 29110:
+/***/ ((module) => {
+
+"use strict";
+
+
+/** @type {import('./eval')} */
+module.exports = EvalError;
+
+
+/***/ }),
+
+/***/ 29838:
+/***/ ((module) => {
+
+"use strict";
+
+
+/** @type {import('.')} */
+module.exports = Error;
+
+
+/***/ }),
+
+/***/ 61155:
+/***/ ((module) => {
+
+"use strict";
+
+
+/** @type {import('./range')} */
+module.exports = RangeError;
+
+
+/***/ }),
+
+/***/ 94943:
+/***/ ((module) => {
+
+"use strict";
+
+
+/** @type {import('./ref')} */
+module.exports = ReferenceError;
+
+
+/***/ }),
+
+/***/ 5731:
+/***/ ((module) => {
+
+"use strict";
+
+
+/** @type {import('./syntax')} */
+module.exports = SyntaxError;
+
+
+/***/ }),
+
+/***/ 3468:
+/***/ ((module) => {
+
+"use strict";
+
+
+/** @type {import('./type')} */
+module.exports = TypeError;
+
+
+/***/ }),
+
+/***/ 32140:
+/***/ ((module) => {
+
+"use strict";
+
+
+/** @type {import('./uri')} */
+module.exports = URIError;
+
+
+/***/ }),
+
 /***/ 50046:
 /***/ ((module) => {
 
@@ -11283,9 +11443,15 @@ module.exports = gen
 
 var undefined;
 
-var $SyntaxError = SyntaxError;
+var $Error = __webpack_require__(29838);
+var $EvalError = __webpack_require__(29110);
+var $RangeError = __webpack_require__(61155);
+var $ReferenceError = __webpack_require__(94943);
+var $SyntaxError = __webpack_require__(5731);
+var $TypeError = __webpack_require__(3468);
+var $URIError = __webpack_require__(32140);
+
 var $Function = Function;
-var $TypeError = TypeError;
 
 // eslint-disable-next-line consistent-return
 var getEvalledConstructor = function (expressionSyntax) {
@@ -11337,6 +11503,7 @@ var needsEval = {};
 var TypedArray = typeof Uint8Array === 'undefined' || !getProto ? undefined : getProto(Uint8Array);
 
 var INTRINSICS = {
+	__proto__: null,
 	'%AggregateError%': typeof AggregateError === 'undefined' ? undefined : AggregateError,
 	'%Array%': Array,
 	'%ArrayBuffer%': typeof ArrayBuffer === 'undefined' ? undefined : ArrayBuffer,
@@ -11357,9 +11524,9 @@ var INTRINSICS = {
 	'%decodeURIComponent%': decodeURIComponent,
 	'%encodeURI%': encodeURI,
 	'%encodeURIComponent%': encodeURIComponent,
-	'%Error%': Error,
+	'%Error%': $Error,
 	'%eval%': eval, // eslint-disable-line no-eval
-	'%EvalError%': EvalError,
+	'%EvalError%': $EvalError,
 	'%Float32Array%': typeof Float32Array === 'undefined' ? undefined : Float32Array,
 	'%Float64Array%': typeof Float64Array === 'undefined' ? undefined : Float64Array,
 	'%FinalizationRegistry%': typeof FinalizationRegistry === 'undefined' ? undefined : FinalizationRegistry,
@@ -11381,8 +11548,8 @@ var INTRINSICS = {
 	'%parseInt%': parseInt,
 	'%Promise%': typeof Promise === 'undefined' ? undefined : Promise,
 	'%Proxy%': typeof Proxy === 'undefined' ? undefined : Proxy,
-	'%RangeError%': RangeError,
-	'%ReferenceError%': ReferenceError,
+	'%RangeError%': $RangeError,
+	'%ReferenceError%': $ReferenceError,
 	'%Reflect%': typeof Reflect === 'undefined' ? undefined : Reflect,
 	'%RegExp%': RegExp,
 	'%Set%': typeof Set === 'undefined' ? undefined : Set,
@@ -11399,7 +11566,7 @@ var INTRINSICS = {
 	'%Uint8ClampedArray%': typeof Uint8ClampedArray === 'undefined' ? undefined : Uint8ClampedArray,
 	'%Uint16Array%': typeof Uint16Array === 'undefined' ? undefined : Uint16Array,
 	'%Uint32Array%': typeof Uint32Array === 'undefined' ? undefined : Uint32Array,
-	'%URIError%': URIError,
+	'%URIError%': $URIError,
 	'%WeakMap%': typeof WeakMap === 'undefined' ? undefined : WeakMap,
 	'%WeakRef%': typeof WeakRef === 'undefined' ? undefined : WeakRef,
 	'%WeakSet%': typeof WeakSet === 'undefined' ? undefined : WeakSet
@@ -11441,6 +11608,7 @@ var doEval = function doEval(name) {
 };
 
 var LEGACY_ALIASES = {
+	__proto__: null,
 	'%ArrayBufferPrototype%': ['ArrayBuffer', 'prototype'],
 	'%ArrayPrototype%': ['Array', 'prototype'],
 	'%ArrayProto_entries%': ['Array', 'prototype', 'entries'],
@@ -11495,7 +11663,7 @@ var LEGACY_ALIASES = {
 };
 
 var bind = __webpack_require__(79138);
-var hasOwn = __webpack_require__(92571);
+var hasOwn = __webpack_require__(78554);
 var $concat = bind.call(Function.call, Array.prototype.concat);
 var $spliceApply = bind.call(Function.apply, Array.prototype.splice);
 var $replace = bind.call(Function.call, String.prototype.replace);
@@ -11902,6 +12070,36 @@ module.exports = $gOPD;
 
 /***/ }),
 
+/***/ 17239:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var $defineProperty = __webpack_require__(64940);
+
+var hasPropertyDescriptors = function hasPropertyDescriptors() {
+	return !!$defineProperty;
+};
+
+hasPropertyDescriptors.hasArrayLengthDefineBug = function hasArrayLengthDefineBug() {
+	// node v0.6 has a bug where array lengths can be Set but not Defined
+	if (!$defineProperty) {
+		return null;
+	}
+	try {
+		return $defineProperty([], 'length', { value: 1 }).length !== 1;
+	} catch (e) {
+		// In Firefox 4-22, defining length on an array throws an exception.
+		return true;
+	}
+};
+
+module.exports = hasPropertyDescriptors;
+
+
+/***/ }),
+
 /***/ 66869:
 /***/ ((module) => {
 
@@ -11909,13 +12107,17 @@ module.exports = $gOPD;
 
 
 var test = {
+	__proto__: null,
 	foo: {}
 };
 
 var $Object = Object;
 
+/** @type {import('.')} */
 module.exports = function hasProto() {
-	return { __proto__: test }.foo === test.foo && !({ __proto__: null } instanceof $Object);
+	// @ts-expect-error: TS errors on an inherited property for some reason
+	return { __proto__: test }.foo === test.foo
+		&& !(test instanceof $Object);
 };
 
 
@@ -12000,22 +12202,10 @@ module.exports = function hasSymbols() {
 
 var hasSymbols = __webpack_require__(62908);
 
+/** @type {import('.')} */
 module.exports = function hasToStringTagShams() {
 	return hasSymbols() && !!Symbol.toStringTag;
 };
-
-
-/***/ }),
-
-/***/ 92571:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var bind = __webpack_require__(79138);
-
-module.exports = bind.call(Function.call, Object.prototype.hasOwnProperty);
 
 
 /***/ }),
@@ -12654,6 +12844,22 @@ function shr64_lo(ah, al, num) {
   return r >>> 0;
 }
 exports.shr64_lo = shr64_lo;
+
+
+/***/ }),
+
+/***/ 78554:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var call = Function.prototype.call;
+var $hasOwn = Object.prototype.hasOwnProperty;
+var bind = __webpack_require__(79138);
+
+/** @type {import('.')} */
+module.exports = bind.call(call, $hasOwn);
 
 
 /***/ }),
@@ -13827,63 +14033,11 @@ module.exports = isProperty
 "use strict";
 
 
-var forEach = __webpack_require__(80705);
-var availableTypedArrays = __webpack_require__(14834);
-var callBound = __webpack_require__(79818);
+var whichTypedArray = __webpack_require__(52730);
 
-var $toString = callBound('Object.prototype.toString');
-var hasToStringTag = __webpack_require__(51913)();
-var gOPD = __webpack_require__(69336);
-
-var g = typeof globalThis === 'undefined' ? window : globalThis;
-var typedArrays = availableTypedArrays();
-
-var $indexOf = callBound('Array.prototype.indexOf', true) || function indexOf(array, value) {
-	for (var i = 0; i < array.length; i += 1) {
-		if (array[i] === value) {
-			return i;
-		}
-	}
-	return -1;
-};
-var $slice = callBound('String.prototype.slice');
-var toStrTags = {};
-var getPrototypeOf = Object.getPrototypeOf; // require('getprototypeof');
-if (hasToStringTag && gOPD && getPrototypeOf) {
-	forEach(typedArrays, function (typedArray) {
-		var arr = new g[typedArray]();
-		if (Symbol.toStringTag in arr) {
-			var proto = getPrototypeOf(arr);
-			var descriptor = gOPD(proto, Symbol.toStringTag);
-			if (!descriptor) {
-				var superProto = getPrototypeOf(proto);
-				descriptor = gOPD(superProto, Symbol.toStringTag);
-			}
-			toStrTags[typedArray] = descriptor.get;
-		}
-	});
-}
-
-var tryTypedArrays = function tryAllTypedArrays(value) {
-	var anyTrue = false;
-	forEach(toStrTags, function (getter, typedArray) {
-		if (!anyTrue) {
-			try {
-				anyTrue = getter.call(value) === typedArray;
-			} catch (e) { /**/ }
-		}
-	});
-	return anyTrue;
-};
-
+/** @type {import('.')} */
 module.exports = function isTypedArray(value) {
-	if (!value || typeof value !== 'object') { return false; }
-	if (!hasToStringTag || !(Symbol.toStringTag in value)) {
-		var tag = $slice($toString(value), 8, -1);
-		return $indexOf(typedArrays, tag) > -1;
-	}
-	if (!gOPD) { return false; }
-	return tryTypedArrays(value);
+	return !!whichTypedArray(value);
 };
 
 
@@ -14873,6 +15027,14 @@ module.exports = function inspect_(obj, options, depth, seen) {
     if (isString(obj)) {
         return markBoxed(inspect(String(obj)));
     }
+    // note: in IE 8, sometimes `global !== window` but both are the prototypes of each other
+    /* eslint-env browser */
+    if ( true && obj === window) {
+        return '{ [object Window] }';
+    }
+    if (obj === window) {
+        return '{ [object globalThis] }';
+    }
     if (!isDate(obj) && !isRegExp(obj)) {
         var ys = arrObjKeys(obj, inspect);
         var isPlainObject = gPO ? gPO(obj) === Object.prototype : obj instanceof Object || obj.constructor === Object;
@@ -15148,6 +15310,30 @@ function arrObjKeys(obj, inspect) {
     }
     return xs;
 }
+
+
+/***/ }),
+
+/***/ 69501:
+/***/ ((module) => {
+
+"use strict";
+
+
+/** @type {import('.')} */
+module.exports = [
+	'Float32Array',
+	'Float64Array',
+	'Int8Array',
+	'Int16Array',
+	'Int32Array',
+	'Uint8Array',
+	'Uint8ClampedArray',
+	'Uint16Array',
+	'Uint32Array',
+	'BigInt64Array',
+	'BigUint64Array'
+];
 
 
 /***/ }),
@@ -23567,6 +23753,56 @@ mixkey(Math.random(), pool);
 
 /***/ }),
 
+/***/ 26108:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var GetIntrinsic = __webpack_require__(528);
+var define = __webpack_require__(70686);
+var hasDescriptors = __webpack_require__(17239)();
+var gOPD = __webpack_require__(69336);
+
+var $TypeError = __webpack_require__(3468);
+var $floor = GetIntrinsic('%Math.floor%');
+
+/** @type {import('.')} */
+module.exports = function setFunctionLength(fn, length) {
+	if (typeof fn !== 'function') {
+		throw new $TypeError('`fn` is not a function');
+	}
+	if (typeof length !== 'number' || length < 0 || length > 0xFFFFFFFF || $floor(length) !== length) {
+		throw new $TypeError('`length` must be a positive 32-bit integer');
+	}
+
+	var loose = arguments.length > 2 && !!arguments[2];
+
+	var functionLengthIsConfigurable = true;
+	var functionLengthIsWritable = true;
+	if ('length' in fn && gOPD) {
+		var desc = gOPD(fn, 'length');
+		if (desc && !desc.configurable) {
+			functionLengthIsConfigurable = false;
+		}
+		if (desc && !desc.writable) {
+			functionLengthIsWritable = false;
+		}
+	}
+
+	if (functionLengthIsConfigurable || functionLengthIsWritable || !loose) {
+		if (hasDescriptors) {
+			define(/** @type {Parameters<define>[0]} */ (fn), 'length', length, true, true);
+		} else {
+			define(/** @type {Parameters<define>[0]} */ (fn), 'length', length);
+		}
+	}
+	return fn;
+};
+
+
+/***/ }),
+
 /***/ 77575:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -25521,7 +25757,8 @@ function HelpCenterContent() {
     }),
     label: "Help",
     "aria-pressed": show ? true : false,
-    "aria-expanded": show ? true : false
+    "aria-expanded": show ? true : false,
+    size: "compact"
   }));
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, isDesktop && showHelpIcon && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(PinnedItems, {
     scope: "core/edit-post"
@@ -29052,6 +29289,12 @@ function setupGtag() {
     window.dataLayer.push(arguments);
   };
   window.gtag('js', new Date());
+  window.gtag('consent', 'default', {
+    ad_storage: 'granted',
+    analytics_storage: 'granted',
+    ad_user_data: 'granted',
+    ad_personalization: 'granted'
+  });
 }
 function setupWpcomGoogleAdsGtag() {
   setupGtag();
@@ -51536,11 +51779,12 @@ function isGSuiteProductSlug(productSlug) {
 /* harmony export */   kE: () => (/* binding */ isWpComEcommercePlan),
 /* harmony export */   uM: () => (/* binding */ getPlanTermLabel)
 /* harmony export */ });
-/* unused harmony exports getPlans, getPlanFeaturesGrouped, getWooExpressFeaturesGrouped, getPlansSlugs, getPlanByPathSlug, getPlanPath, getPlanClass, planHasFeature, planHasAtLeastOneFeature, getAllFeaturesForPlan, planHasSuperiorFeature, shouldFetchSitePlans, getMonthlyPlanByYearly, getYearlyPlanByMonthly, getBiennialPlan, getTriennialPlan, planLevelsMatch, isEcommercePlan, isProPlan, isBusinessPlan, isPremiumPlan, isPersonalPlan, isBloggerPlan, isFreePlan, isFreeHostingTrial, isBusinessTrial, is100YearPlan, isWpcomEnterpriseGridPlan, isWooExpressPlusPlan, isWooExpressMediumPlan, isWooExpressSmallPlan, isWooExpressPlan, isFlexiblePlan, isStarterPlan, isJetpackStarterPlan, isSecurityDailyPlan, isSecurityRealTimePlan, isSecurityT1Plan, isSecurityT2Plan, isCompletePlan, isWpComPlan, isWpComProPlan, isWpComPremiumPlan, isWpComPersonalPlan, isWpComBloggerPlan, isWpComFreePlan, isWpComAnnualPlan, isWpComBiennialPlan, isWpComTriennialPlan, isWpComMonthlyPlan, isJetpackBusinessPlan, isJetpackPremiumPlan, isJetpackPersonalPlan, isJetpackFreePlan, isJetpackOfferResetPlan, isP2FreePlan, isP2PlusPlan, findFirstSimilarPlanKey, findSimilarPlansKeys, findPlansKeys, planMatches, calculateMonthlyPriceForPlan, calculateMonthlyPrice, getBillingMonthsForTerm, getBillingYearsForTerm, getBillingTermForMonths, plansLink, applyTestFiltersToPlansList, applyTestFiltersToProductsList, getPopularPlanSpec, chooseDefaultCustomerType, planHasJetpackSearch, planHasJetpackClassicSearch */
+/* unused harmony exports getPlans, getPlanFeaturesGrouped, getWooExpressFeaturesGrouped, getPlansSlugs, getPlanByPathSlug, getPlanPath, getPlanClass, planHasFeature, planHasAtLeastOneFeature, getAllFeaturesForPlan, planHasSuperiorFeature, shouldFetchSitePlans, getMonthlyPlanByYearly, getYearlyPlanByMonthly, getBiennialPlan, getTriennialPlan, planLevelsMatch, isEcommercePlan, isProPlan, isBusinessPlan, isPremiumPlan, isPersonalPlan, isBloggerPlan, isFreePlan, isFreeHostingTrial, isBusinessTrial, is100YearPlan, isWpcomEnterpriseGridPlan, isWooExpressPlusPlan, isWooExpressMediumPlan, isWooExpressSmallPlan, isWooExpressPlan, isFlexiblePlan, isStarterPlan, isJetpackStarterPlan, isSecurityDailyPlan, isSecurityRealTimePlan, isSecurityT1Plan, isSecurityT2Plan, isCompletePlan, isWpComPlan, isWpComProPlan, isWpComPremiumPlan, isWpComPersonalPlan, isWpComBloggerPlan, isWpComFreePlan, isWpComAnnualPlan, isWpComBiennialPlan, isWpComTriennialPlan, isWpComMonthlyPlan, isJetpackBusinessPlan, isJetpackPremiumPlan, isJetpackPersonalPlan, isJetpackFreePlan, isJetpackOfferResetPlan, isP2FreePlan, isP2PlusPlan, findFirstSimilarPlanKey, findSimilarPlansKeys, findPlansKeys, planMatches, calculateMonthlyPriceForPlan, calculateMonthlyPrice, getBillingMonthsForTerm, getBillingYearsForTerm, getBillingTermForMonths, plansLink, applyTestFiltersToPlansList, applyTestFiltersToProductsList, getPopularPlanSpec, chooseDefaultCustomerType, planHasJetpackSearch, planHasJetpackClassicSearch, getFeaturesList, getPlanFeaturesObject, isValidFeatureKey, getFeatureByKey */
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(49433);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(52400);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(82895);
 /* harmony import */ var _plans_list__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96257);
+
 
 
 
@@ -52324,6 +52568,21 @@ const planHasJetpackSearch = planSlug => planHasFeature(planSlug, FEATURE_JETPAC
  */
 function planHasJetpackClassicSearch(plan) {
   return plan && (isJetpackBusiness(plan) || isBusiness(plan) || isEnterprise(plan) || isEcommerce(plan) || isPro(plan) || isVipPlan(plan));
+}
+function getFeaturesList() {
+  return FEATURES_LIST;
+}
+const getPlanFeaturesObject = planFeaturesList => {
+  if (!planFeaturesList) {
+    return [];
+  }
+  return planFeaturesList.map(featuresConst => FEATURES_LIST[featuresConst]);
+};
+function isValidFeatureKey(feature) {
+  return !!FEATURES_LIST[feature];
+}
+function getFeatureByKey(feature) {
+  return FEATURES_LIST[feature];
 }
 
 /***/ }),
@@ -58944,6 +59203,7 @@ function register(clientCreds) {
 
 
 
+
 /***/ }),
 
 /***/ 11355:
@@ -59701,6 +59961,14 @@ let MigrationStatusError = /*#__PURE__*/function (MigrationStatusError) {
   MigrationStatusError["UNKNOWN"] = "error-unknown";
   return MigrationStatusError;
 }({});
+
+/**
+ * Site media storage from `/sites/[ siteIdOrSlug ]/media-storage` endpoint
+ */
+
+/**
+ * Site media storage transformed for frontend use
+ */
 
 /***/ }),
 
@@ -79281,6 +79549,7 @@ var callBind = __webpack_require__(28498);
 var callBound = __webpack_require__(79818);
 var gOPD = __webpack_require__(69336);
 
+/** @type {(O: object) => string} */
 var $toString = callBound('Object.prototype.toString');
 var hasToStringTag = __webpack_require__(51913)();
 
@@ -79290,6 +79559,7 @@ var typedArrays = availableTypedArrays();
 var $slice = callBound('String.prototype.slice');
 var getPrototypeOf = Object.getPrototypeOf; // require('getprototypeof');
 
+/** @type {<T = unknown>(array: readonly T[], value: unknown) => number} */
 var $indexOf = callBound('Array.prototype.indexOf', true) || function indexOf(array, value) {
 	for (var i = 0; i < array.length; i += 1) {
 		if (array[i] === value) {
@@ -79298,57 +79568,82 @@ var $indexOf = callBound('Array.prototype.indexOf', true) || function indexOf(ar
 	}
 	return -1;
 };
+
+/** @typedef {(receiver: import('.').TypedArray) => string | typeof Uint8Array.prototype.slice.call | typeof Uint8Array.prototype.set.call} Getter */
+/** @type {{ [k in `\$${import('.').TypedArrayName}`]?: Getter } & { __proto__: null }} */
 var cache = { __proto__: null };
 if (hasToStringTag && gOPD && getPrototypeOf) {
 	forEach(typedArrays, function (typedArray) {
 		var arr = new g[typedArray]();
 		if (Symbol.toStringTag in arr) {
 			var proto = getPrototypeOf(arr);
+			// @ts-expect-error TS won't narrow inside a closure
 			var descriptor = gOPD(proto, Symbol.toStringTag);
 			if (!descriptor) {
 				var superProto = getPrototypeOf(proto);
+				// @ts-expect-error TS won't narrow inside a closure
 				descriptor = gOPD(superProto, Symbol.toStringTag);
 			}
+			// @ts-expect-error TODO: fix
 			cache['$' + typedArray] = callBind(descriptor.get);
 		}
 	});
 } else {
 	forEach(typedArrays, function (typedArray) {
 		var arr = new g[typedArray]();
-		cache['$' + typedArray] = callBind(arr.slice);
+		var fn = arr.slice || arr.set;
+		if (fn) {
+			// @ts-expect-error TODO: fix
+			cache['$' + typedArray] = callBind(fn);
+		}
 	});
 }
 
+/** @type {(value: object) => false | import('.').TypedArrayName} */
 var tryTypedArrays = function tryAllTypedArrays(value) {
-	var found = false;
-	forEach(cache, function (getter, typedArray) {
-		if (!found) {
-			try {
-				if ('$' + getter(value) === typedArray) {
-					found = $slice(typedArray, 1);
-				}
-			} catch (e) { /**/ }
+	/** @type {ReturnType<typeof tryAllTypedArrays>} */ var found = false;
+	forEach(
+		// eslint-disable-next-line no-extra-parens
+		/** @type {Record<`\$${TypedArrayName}`, Getter>} */ /** @type {any} */ (cache),
+		/** @type {(getter: Getter, name: `\$${import('.').TypedArrayName}`) => void} */
+		function (getter, typedArray) {
+			if (!found) {
+				try {
+				// @ts-expect-error TODO: fix
+					if ('$' + getter(value) === typedArray) {
+						found = $slice(typedArray, 1);
+					}
+				} catch (e) { /**/ }
+			}
 		}
-	});
+	);
 	return found;
 };
 
+/** @type {(value: object) => false | import('.').TypedArrayName} */
 var trySlices = function tryAllSlices(value) {
-	var found = false;
-	forEach(cache, function (getter, name) {
-		if (!found) {
-			try {
-				getter(value);
-				found = $slice(name, 1);
-			} catch (e) { /**/ }
+	/** @type {ReturnType<typeof tryAllSlices>} */ var found = false;
+	forEach(
+		// eslint-disable-next-line no-extra-parens
+		/** @type {Record<`\$${TypedArrayName}`, Getter>} */ /** @type {any} */ (cache),
+		/** @type {(getter: typeof cache, name: `\$${import('.').TypedArrayName}`) => void} */ function (getter, name) {
+			if (!found) {
+				try {
+					// @ts-expect-error TODO: fix
+					getter(value);
+					found = $slice(name, 1);
+				} catch (e) { /**/ }
+			}
 		}
-	});
+	);
 	return found;
 };
 
+/** @type {import('.')} */
 module.exports = function whichTypedArray(value) {
 	if (!value || typeof value !== 'object') { return false; }
 	if (!hasToStringTag) {
+		/** @type {string} */
 		var tag = $slice($toString(value), 8, -1);
 		if ($indexOf(typedArrays, tag) > -1) {
 			return tag;
@@ -79698,31 +79993,21 @@ module.exports = window["wp"]["warning"];
 /***/ }),
 
 /***/ 14834:
-/***/ ((module) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var possibleNames = [
-	'BigInt64Array',
-	'BigUint64Array',
-	'Float32Array',
-	'Float64Array',
-	'Int16Array',
-	'Int32Array',
-	'Int8Array',
-	'Uint16Array',
-	'Uint32Array',
-	'Uint8Array',
-	'Uint8ClampedArray'
-];
+var possibleNames = __webpack_require__(69501);
 
 var g = typeof globalThis === 'undefined' ? window : globalThis;
 
+/** @type {import('.')} */
 module.exports = function availableTypedArrays() {
-	var out = [];
+	var /** @type {ReturnType<typeof availableTypedArrays>} */ out = [];
 	for (var i = 0; i < possibleNames.length; i++) {
 		if (typeof g[possibleNames[i]] === 'function') {
+			// @ts-expect-error
 			out[out.length] = possibleNames[i];
 		}
 	}

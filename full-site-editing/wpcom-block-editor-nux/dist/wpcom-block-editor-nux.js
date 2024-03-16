@@ -11634,18 +11634,24 @@ const TourKitFrame = ({
     };
   }, [config, currentStepIndex]);
   const handleNextStepProgression = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useCallback)(() => {
+    let newStepIndex = currentStepIndex;
     if (lastStepIndex > currentStepIndex) {
-      setCurrentStepIndex(currentStepIndex + 1);
+      newStepIndex = currentStepIndex + 1;
+      setCurrentStepIndex(newStepIndex);
     }
-    handleCallback(currentStepIndex, config.options?.callbacks?.onNextStep);
+    handleCallback(newStepIndex, config.options?.callbacks?.onNextStep);
   }, [config.options?.callbacks?.onNextStep, currentStepIndex, lastStepIndex]);
   const handlePreviousStepProgression = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useCallback)(() => {
-    currentStepIndex && setCurrentStepIndex(currentStepIndex - 1);
-    handleCallback(currentStepIndex, config.options?.callbacks?.onPreviousStep);
+    let newStepIndex = currentStepIndex;
+    if (currentStepIndex > 0) {
+      newStepIndex = currentStepIndex - 1;
+      setCurrentStepIndex(newStepIndex);
+    }
+    handleCallback(newStepIndex, config.options?.callbacks?.onPreviousStep);
   }, [config.options?.callbacks?.onPreviousStep, currentStepIndex]);
   const handleGoToStep = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useCallback)(stepIndex => {
     setCurrentStepIndex(stepIndex);
-    handleCallback(currentStepIndex, config.options?.callbacks?.onGoToStep);
+    handleCallback(stepIndex, config.options?.callbacks?.onGoToStep);
   }, [config.options?.callbacks?.onGoToStep, currentStepIndex]);
   const handleMinimize = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useCallback)(() => {
     setIsMinimized(true);
@@ -11725,6 +11731,11 @@ const TourKitFrame = ({
     'is-visible': tourReady
   }, (0,_utils__WEBPACK_IMPORTED_MODULE_5__/* .classParser */ .e)(config.options?.classNames));
   (0,_hooks_use_step_tracking__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(currentStepIndex, config.options?.callbacks?.onStepViewOnce);
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (config.options?.callbacks?.onStepView) {
+      handleCallback(currentStepIndex, config.options?.callbacks?.onStepView);
+    }
+  }, [config.options?.callbacks?.onStepView, currentStepIndex]);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_keyboard_navigation__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     onMinimize: handleMinimize,
     onDismiss: handleDismiss,

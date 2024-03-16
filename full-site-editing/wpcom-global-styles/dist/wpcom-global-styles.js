@@ -5599,8 +5599,9 @@ const PLAN_BUSINESS_2Y_ONBOARDING_EXPIRE = '2022-07-31T00:00:00+00:00';
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   U7: () => (/* binding */ getPlan)
 /* harmony export */ });
-/* unused harmony exports getPlans, getPlanFeaturesGrouped, getWooExpressFeaturesGrouped, getPlansSlugs, getPlanByPathSlug, getPlanPath, getPlanClass, planHasFeature, planHasAtLeastOneFeature, getAllFeaturesForPlan, planHasSuperiorFeature, shouldFetchSitePlans, getMonthlyPlanByYearly, getYearlyPlanByMonthly, getBiennialPlan, getTriennialPlan, planLevelsMatch, isEcommercePlan, isProPlan, isBusinessPlan, isPremiumPlan, isPersonalPlan, isBloggerPlan, isFreePlan, isFreeHostingTrial, isBusinessTrial, is100YearPlan, isWpcomEnterpriseGridPlan, isWooExpressPlusPlan, isWooExpressMediumPlan, isWooExpressSmallPlan, isWooExpressPlan, isFlexiblePlan, isStarterPlan, isJetpackStarterPlan, isSecurityDailyPlan, isSecurityRealTimePlan, isSecurityT1Plan, isSecurityT2Plan, isCompletePlan, isWpComPlan, isWpComBusinessPlan, isWpComEcommercePlan, isWpComProPlan, isWpComPremiumPlan, isWpComPersonalPlan, isWpComBloggerPlan, isWpComFreePlan, isWpComAnnualPlan, isWpComBiennialPlan, isWpComTriennialPlan, isWpComMonthlyPlan, isJetpackBusinessPlan, isJetpackPremiumPlan, isJetpackPersonalPlan, isJetpackFreePlan, isJetpackOfferResetPlan, isP2FreePlan, isP2PlusPlan, findFirstSimilarPlanKey, findSimilarPlansKeys, findPlansKeys, planMatches, calculateMonthlyPriceForPlan, calculateMonthlyPrice, getBillingMonthsForTerm, getBillingYearsForTerm, getBillingTermForMonths, plansLink, applyTestFiltersToPlansList, applyTestFiltersToProductsList, getPlanTermLabel, getPopularPlanSpec, chooseDefaultCustomerType, planHasJetpackSearch, planHasJetpackClassicSearch */
+/* unused harmony exports getPlans, getPlanFeaturesGrouped, getWooExpressFeaturesGrouped, getPlansSlugs, getPlanByPathSlug, getPlanPath, getPlanClass, planHasFeature, planHasAtLeastOneFeature, getAllFeaturesForPlan, planHasSuperiorFeature, shouldFetchSitePlans, getMonthlyPlanByYearly, getYearlyPlanByMonthly, getBiennialPlan, getTriennialPlan, planLevelsMatch, isEcommercePlan, isProPlan, isBusinessPlan, isPremiumPlan, isPersonalPlan, isBloggerPlan, isFreePlan, isFreeHostingTrial, isBusinessTrial, is100YearPlan, isWpcomEnterpriseGridPlan, isWooExpressPlusPlan, isWooExpressMediumPlan, isWooExpressSmallPlan, isWooExpressPlan, isFlexiblePlan, isStarterPlan, isJetpackStarterPlan, isSecurityDailyPlan, isSecurityRealTimePlan, isSecurityT1Plan, isSecurityT2Plan, isCompletePlan, isWpComPlan, isWpComBusinessPlan, isWpComEcommercePlan, isWpComProPlan, isWpComPremiumPlan, isWpComPersonalPlan, isWpComBloggerPlan, isWpComFreePlan, isWpComAnnualPlan, isWpComBiennialPlan, isWpComTriennialPlan, isWpComMonthlyPlan, isJetpackBusinessPlan, isJetpackPremiumPlan, isJetpackPersonalPlan, isJetpackFreePlan, isJetpackOfferResetPlan, isP2FreePlan, isP2PlusPlan, findFirstSimilarPlanKey, findSimilarPlansKeys, findPlansKeys, planMatches, calculateMonthlyPriceForPlan, calculateMonthlyPrice, getBillingMonthsForTerm, getBillingYearsForTerm, getBillingTermForMonths, plansLink, applyTestFiltersToPlansList, applyTestFiltersToProductsList, getPlanTermLabel, getPopularPlanSpec, chooseDefaultCustomerType, planHasJetpackSearch, planHasJetpackClassicSearch, getFeaturesList, getPlanFeaturesObject, isValidFeatureKey, getFeatureByKey */
 /* harmony import */ var _plans_list__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6257);
+
 
 
 
@@ -6384,6 +6385,21 @@ const planHasJetpackSearch = planSlug => planHasFeature(planSlug, FEATURE_JETPAC
  */
 function planHasJetpackClassicSearch(plan) {
   return plan && (isJetpackBusiness(plan) || isBusiness(plan) || isEnterprise(plan) || isEcommerce(plan) || isPro(plan) || isVipPlan(plan));
+}
+function getFeaturesList() {
+  return FEATURES_LIST;
+}
+const getPlanFeaturesObject = planFeaturesList => {
+  if (!planFeaturesList) {
+    return [];
+  }
+  return planFeaturesList.map(featuresConst => FEATURES_LIST[featuresConst]);
+};
+function isValidFeatureKey(feature) {
+  return !!FEATURES_LIST[feature];
+}
+function getFeatureByKey(feature) {
+  return FEATURES_LIST[feature];
 }
 
 /***/ }),
