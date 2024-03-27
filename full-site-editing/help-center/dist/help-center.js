@@ -44045,9 +44045,28 @@ function items(state = {}, action) {
   switch (action.type) {
     case calypso_state_reader_action_types__WEBPACK_IMPORTED_MODULE_1__/* .READER_POSTS_RECEIVE */ .um:
       const posts = action.posts || action.payload.posts;
+      const postsByKey = {};
+
+      // Keep track of all the feed_item_ID that have the same global_ID.
+      // See: https://github.com/Automattic/wp-calypso/pull/88408
+      posts.forEach(post => {
+        const {
+          feed_item_IDs = []
+        } = state[post.global_ID] ?? {};
+        const {
+          feed_item_ID,
+          global_ID
+        } = post;
+        postsByKey[global_ID] = {
+          ...post,
+          ...(feed_item_ID && {
+            feed_item_IDs: feed_item_IDs.length ? [...new Set([...feed_item_IDs, feed_item_ID])] : [feed_item_ID]
+          })
+        };
+      });
       return {
         ...state,
-        ...(0,lodash__WEBPACK_IMPORTED_MODULE_0__.keyBy)(posts, 'global_ID')
+        ...postsByKey
       };
     case calypso_state_reader_action_types__WEBPACK_IMPORTED_MODULE_1__/* .READER_SEEN_MARK_AS_SEEN_RECEIVE */ .JD:
     case calypso_state_reader_action_types__WEBPACK_IMPORTED_MODULE_1__/* .READER_SEEN_MARK_ALL_AS_SEEN_RECEIVE */ .R$:
@@ -44121,7 +44140,32 @@ function seen(state = {}, action) {
 function getPostById(state, postGlobalId) {
   return state.reader.posts.items[postGlobalId];
 }
-const getPostMapByPostKey = (0,_automattic_tree_select__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(state => [state.reader.posts.items], ([posts]) => (0,lodash__WEBPACK_IMPORTED_MODULE_0__.keyBy)(posts, post => (0,calypso_reader_post_key__WEBPACK_IMPORTED_MODULE_3__/* .keyToString */ .ii)((0,calypso_reader_post_key__WEBPACK_IMPORTED_MODULE_3__/* .keyForPost */ .bf)(post))));
+const getPostMapByPostKey = (0,_automattic_tree_select__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(state => [state.reader.posts.items], ([posts]) => {
+  const postMap = {};
+  Object.values(posts).forEach(post => {
+    const {
+      feed_item_IDs = []
+    } = post ?? {};
+
+    // Default case when the post matches only one feed_item_ID, if available.
+    if (feed_item_IDs.length <= 1) {
+      postMap[(0,calypso_reader_post_key__WEBPACK_IMPORTED_MODULE_3__/* .keyToString */ .ii)((0,calypso_reader_post_key__WEBPACK_IMPORTED_MODULE_3__/* .keyForPost */ .bf)(post))] = post;
+      return;
+    }
+
+    // Edge case when the post matches multiple feed_item_IDs.
+    // Insert one entry per feed_item_ID to the post map.
+    // See: https://github.com/Automattic/wp-calypso/pull/88408
+    feed_item_IDs.forEach(feed_item_ID => {
+      const postKey = (0,calypso_reader_post_key__WEBPACK_IMPORTED_MODULE_3__/* .keyForPost */ .bf)({
+        feed_ID: post.feed_ID,
+        feed_item_ID
+      });
+      postMap[(0,calypso_reader_post_key__WEBPACK_IMPORTED_MODULE_3__/* .keyToString */ .ii)(postKey)] = post;
+    });
+  });
+  return postMap;
+});
 const getPostByKey = (state, postKey) => {
   if (!postKey || !(0,calypso_reader_post_key__WEBPACK_IMPORTED_MODULE_3__/* .keyToString */ .ii)(postKey)) {
     return null;
@@ -61299,7 +61343,7 @@ const HelpCenterContactPage = ({
     enabled: renderChat.render
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: classnames__WEBPACK_IMPORTED_MODULE_4___default()('help-center-contact-page__boxes')
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__/* .Link */ .N_, {
+  }, !renderEmail.render && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__/* .Link */ .N_, {
     to: forumUrl,
     onClick: contactOptionsEventMap['forum']
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
