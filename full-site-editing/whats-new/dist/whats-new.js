@@ -2743,15 +2743,12 @@ const PaginationControl = ({
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   fetchSeenWhatsNewAnnouncements: () => (/* binding */ fetchSeenWhatsNewAnnouncements),
 /* harmony export */   receiveHasSeenWhatsNewModal: () => (/* binding */ receiveHasSeenWhatsNewModal),
-/* harmony export */   receiveSeenWhatsNewAnnouncements: () => (/* binding */ receiveSeenWhatsNewAnnouncements),
 /* harmony export */   resetStore: () => (/* binding */ resetStore),
 /* harmony export */   setHasSeenWhatsNewModal: () => (/* binding */ setHasSeenWhatsNewModal),
 /* harmony export */   setInitialRoute: () => (/* binding */ setInitialRoute),
 /* harmony export */   setIsMinimized: () => (/* binding */ setIsMinimized),
 /* harmony export */   setMessage: () => (/* binding */ setMessage),
-/* harmony export */   setSeenWhatsNewAnnouncements: () => (/* binding */ setSeenWhatsNewAnnouncements),
 /* harmony export */   setShowHelpCenter: () => (/* binding */ setShowHelpCenter),
 /* harmony export */   setShowMessagingChat: () => (/* binding */ setShowMessagingChat),
 /* harmony export */   setShowMessagingLauncher: () => (/* binding */ setShowMessagingLauncher),
@@ -2775,25 +2772,6 @@ const receiveHasSeenWhatsNewModal = value => ({
   type: 'HELP_CENTER_SET_SEEN_WHATS_NEW_MODAL',
   value
 });
-const receiveSeenWhatsNewAnnouncements = value => ({
-  type: 'HELP_CENTER_SET_SEEN_WHATS_NEW_ANNOUNCEMENTS',
-  value
-});
-function* fetchSeenWhatsNewAnnouncements() {
-  let response;
-  if ((0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_1__/* .canAccessWpcomApis */ .IH)()) {
-    response = yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ .S)({
-      path: `/whats-new/seen-announcement-ids`,
-      apiNamespace: 'wpcom/v2'
-    });
-  } else {
-    response = yield (0,_wordpress_data_controls__WEBPACK_IMPORTED_MODULE_0__.apiFetch)({
-      global: true,
-      path: `/wpcom/v2/whats-new/seen-announcement-ids`
-    });
-  }
-  return receiveSeenWhatsNewAnnouncements(response.seen_announcement_ids);
-}
 function* setHasSeenWhatsNewModal(value) {
   let response;
   if ((0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_1__/* .canAccessWpcomApis */ .IH)()) {
@@ -2816,29 +2794,6 @@ function* setHasSeenWhatsNewModal(value) {
     });
   }
   return receiveHasSeenWhatsNewModal(response.has_seen_whats_new_modal);
-}
-function* setSeenWhatsNewAnnouncements(ids) {
-  let response;
-  if ((0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_1__/* .canAccessWpcomApis */ .IH)()) {
-    response = yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ .S)({
-      path: `/whats-new/seen-announcement-ids`,
-      apiNamespace: 'wpcom/v2',
-      method: 'POST',
-      body: {
-        seen_announcement_ids: ids
-      }
-    });
-  } else {
-    response = yield (0,_wordpress_data_controls__WEBPACK_IMPORTED_MODULE_0__.apiFetch)({
-      global: true,
-      path: `/wpcom/v2/whats-new/seen-announcement-ids`,
-      method: 'POST',
-      data: {
-        seen_announcement_ids: ids
-      }
-    });
-  }
-  return receiveSeenWhatsNewAnnouncements(response.seen_announcement_ids);
 }
 const setSite = site => ({
   type: 'HELP_CENTER_SET_SITE',
@@ -3018,13 +2973,6 @@ const hasSeenWhatsNewModal = (state, action) => {
   }
   return state;
 };
-const seenWhatsNewAnnouncements = (state, action) => {
-  switch (action.type) {
-    case 'HELP_CENTER_SET_SEEN_WHATS_NEW_ANNOUNCEMENTS':
-      return action.value;
-  }
-  return state;
-};
 const isMinimized = (state = false, action) => {
   switch (action.type) {
     case 'HELP_CENTER_SET_MINIMIZED':
@@ -3096,7 +3044,6 @@ const reducer = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.combineReducers)
   userDeclaredSite,
   userDeclaredSiteUrl,
   hasSeenWhatsNewModal,
-  seenWhatsNewAnnouncements,
   isMinimized,
   unreadCount,
   initialRoute
@@ -3115,7 +3062,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   getInitialRoute: () => (/* binding */ getInitialRoute),
 /* harmony export */   getIsMinimized: () => (/* binding */ getIsMinimized),
 /* harmony export */   getMessage: () => (/* binding */ getMessage),
-/* harmony export */   getSeenWhatsNewAnnouncements: () => (/* binding */ getSeenWhatsNewAnnouncements),
 /* harmony export */   getSite: () => (/* binding */ getSite),
 /* harmony export */   getSubject: () => (/* binding */ getSubject),
 /* harmony export */   getUnreadCount: () => (/* binding */ getUnreadCount),
@@ -3136,7 +3082,6 @@ const getUserDeclaredSite = state => state.userDeclaredSite;
 const getUnreadCount = state => state.unreadCount;
 const getIsMinimized = state => state.isMinimized;
 const getHasSeenWhatsNewModal = state => state.hasSeenWhatsNewModal;
-const getSeenWhatsNewAnnouncements = state => state.seenWhatsNewAnnouncements;
 const getInitialRoute = state => state.initialRoute;
 
 /***/ }),
@@ -3740,6 +3685,108 @@ const Guide = ({
 
 /***/ }),
 
+/***/ 9138:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   R: () => (/* binding */ useSeenWhatsNewAnnouncementsMutation)
+/* harmony export */ });
+/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3402);
+/* harmony import */ var _tanstack_react_query__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(960);
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1455);
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1445);
+/* harmony import */ var _use_seen_whats_new_announcements_query__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(2913);
+/* eslint-disable no-restricted-imports */
+
+
+
+
+/**
+ * Saves the list of "Whats New" announcements that the user has seen
+ * @returns A react-query mutation to save to the "whats-new/seen-announcement-ids" endpoint
+ */
+const useSeenWhatsNewAnnouncementsMutation = () => {
+  const queryClient = (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_1__/* .useQueryClient */ .jE)();
+  return (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_2__/* .useMutation */ .n)({
+    mutationFn: async seenAnnouncenmentIds => {
+      return (0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_3__/* .canAccessWpcomApis */ .IH)() ? await (0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Ay)({
+        path: `/whats-new/seen-announcement-ids`,
+        apiNamespace: 'wpcom/v2',
+        method: 'POST',
+        body: {
+          seen_announcement_ids: seenAnnouncenmentIds
+        }
+      }) : await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
+        global: true,
+        path: `/wpcom/v2/whats-new/seen-announcement-ids`,
+        method: 'POST',
+        data: {
+          seen_announcement_ids: seenAnnouncenmentIds
+        }
+      });
+    },
+    onMutate: async seenAnnouncenmentIds => {
+      await queryClient.cancelQueries({
+        queryKey: [_use_seen_whats_new_announcements_query__WEBPACK_IMPORTED_MODULE_4__/* .SEEN_WHATS_NEW_ANNOUCNEMENT_IDS */ .Y]
+      });
+      queryClient.setQueryData([_use_seen_whats_new_announcements_query__WEBPACK_IMPORTED_MODULE_4__/* .SEEN_WHATS_NEW_ANNOUCNEMENT_IDS */ .Y], seenAnnouncenmentIds);
+      const previousData = queryClient.getQueryData([_use_seen_whats_new_announcements_query__WEBPACK_IMPORTED_MODULE_4__/* .SEEN_WHATS_NEW_ANNOUCNEMENT_IDS */ .Y]);
+      return {
+        previousData
+      };
+    },
+    onError: (error, variables, context) => {
+      queryClient.setQueryData([_use_seen_whats_new_announcements_query__WEBPACK_IMPORTED_MODULE_4__/* .SEEN_WHATS_NEW_ANNOUCNEMENT_IDS */ .Y], context?.previousData);
+    },
+    onSettled: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: [_use_seen_whats_new_announcements_query__WEBPACK_IMPORTED_MODULE_4__/* .SEEN_WHATS_NEW_ANNOUCNEMENT_IDS */ .Y]
+      });
+    }
+  });
+};
+
+/***/ }),
+
+/***/ 2913:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Y: () => (/* binding */ SEEN_WHATS_NEW_ANNOUCNEMENT_IDS)
+/* harmony export */ });
+/* unused harmony export useSeenWhatsNewAnnouncementsQuery */
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1455);
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__);
+/* eslint-disable no-restricted-imports */
+
+
+
+const SEEN_WHATS_NEW_ANNOUCNEMENT_IDS = 'SEEN_WHATS_NEW_ANNOUCNEMENT_IDS';
+
+/**
+ * Get a list of the "Whats New" announcements that the user has seen
+ * @returns Returns the result of querying the "whats-new/seen-announcement-ids" endpoint
+ */
+const useSeenWhatsNewAnnouncementsQuery = () => {
+  return useQuery({
+    queryKey: [SEEN_WHATS_NEW_ANNOUCNEMENT_IDS],
+    queryFn: async () => canAccessWpcomApis() ? await wpcomRequest({
+      path: `/whats-new/seen-announcement-ids`,
+      apiNamespace: 'wpcom/v2'
+    }) : await apiFetch({
+      global: true,
+      path: `/wpcom/v2/whats-new/seen-announcement-ids`
+    }),
+    refetchOnWindowFocus: false,
+    select: data => data.seen_announcement_ids
+  });
+};
+
+/***/ }),
+
 /***/ 6811:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -3788,15 +3835,14 @@ const useWhatsNewAnnouncementsQuery = siteId => {
 /* unused harmony export HELP_CENTER_STORE */
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _automattic_data_stores__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9192);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7143);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _automattic_data_stores__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9192);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _components_guide__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(5073);
-/* harmony import */ var _hooks_use_whats_new_announcements_query__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6811);
+/* harmony import */ var _hooks_use_seen_whats_new_announcements_mutation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9138);
+/* harmony import */ var _hooks_use_whats_new_announcements_query__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6811);
 /* harmony import */ var _whats_new_page__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(736);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2559);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2559);
 
 /* eslint-disable no-restricted-imports */
 
@@ -3806,26 +3852,27 @@ const useWhatsNewAnnouncementsQuery = siteId => {
 
 
 
-const HELP_CENTER_STORE = _automattic_data_stores__WEBPACK_IMPORTED_MODULE_4__/* .register */ .k();
+const HELP_CENTER_STORE = _automattic_data_stores__WEBPACK_IMPORTED_MODULE_3__/* .register */ .k();
+
 
 const WhatsNewGuide = ({
   onClose,
   siteId
 }) => {
   const {
-    setSeenWhatsNewAnnouncements
-  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.useDispatch)(HELP_CENTER_STORE);
-  const {
     data,
     isLoading
-  } = (0,_hooks_use_whats_new_announcements_query__WEBPACK_IMPORTED_MODULE_5__/* .useWhatsNewAnnouncementsQuery */ .f)(siteId);
-  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
+  } = (0,_hooks_use_whats_new_announcements_query__WEBPACK_IMPORTED_MODULE_4__/* .useWhatsNewAnnouncementsQuery */ .f)(siteId);
+  const {
+    mutate
+  } = (0,_hooks_use_seen_whats_new_announcements_mutation__WEBPACK_IMPORTED_MODULE_5__/* .useSeenWhatsNewAnnouncementsMutation */ .R)();
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
     // check for whether the announcement has been seen already.
     if (data && data.length) {
       const announcementIds = data.map(item => item.announcementId);
-      setSeenWhatsNewAnnouncements(announcementIds);
+      mutate(announcementIds);
     }
-  }, [data, setSeenWhatsNewAnnouncements]);
+  }, [data, mutate]);
   if (!data || isLoading) {
     return null;
   }
@@ -5452,9 +5499,9 @@ function hasPreviousPage(options, data) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   $: () => (/* binding */ getDefaultState),
 /* harmony export */   s: () => (/* binding */ Mutation)
 /* harmony export */ });
-/* unused harmony export getDefaultState */
 /* harmony import */ var _notifyManager_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8852);
 /* harmony import */ var _removable_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6181);
 /* harmony import */ var _retryer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1089);
@@ -5782,6 +5829,120 @@ var MutationCache = class extends _subscribable_js__WEBPACK_IMPORTED_MODULE_0__/
 };
 
 //# sourceMappingURL=mutationCache.js.map
+
+/***/ }),
+
+/***/ 903:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   _: () => (/* binding */ MutationObserver)
+/* harmony export */ });
+/* harmony import */ var _mutation_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1);
+/* harmony import */ var _notifyManager_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8852);
+/* harmony import */ var _subscribable_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2127);
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4181);
+// src/mutationObserver.ts
+
+
+
+
+var MutationObserver = class extends _subscribable_js__WEBPACK_IMPORTED_MODULE_0__/* .Subscribable */ .Q {
+  constructor(client, options) {
+    super();
+    this.#currentResult = void 0;
+    this.#client = client;
+    this.setOptions(options);
+    this.bindMethods();
+    this.#updateResult();
+  }
+  #client;
+  #currentResult;
+  #currentMutation;
+  #mutateOptions;
+  bindMethods() {
+    this.mutate = this.mutate.bind(this);
+    this.reset = this.reset.bind(this);
+  }
+  setOptions(options) {
+    const prevOptions = this.options;
+    this.options = this.#client.defaultMutationOptions(options);
+    if (!(0,_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .shallowEqualObjects */ .f8)(prevOptions, this.options)) {
+      this.#client.getMutationCache().notify({
+        type: "observerOptionsUpdated",
+        mutation: this.#currentMutation,
+        observer: this
+      });
+    }
+    this.#currentMutation?.setOptions(this.options);
+    if (prevOptions?.mutationKey && this.options.mutationKey && (0,_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .hashKey */ .EN)(prevOptions.mutationKey) !== (0,_utils_js__WEBPACK_IMPORTED_MODULE_1__/* .hashKey */ .EN)(this.options.mutationKey)) {
+      this.reset();
+    }
+  }
+  onUnsubscribe() {
+    if (!this.hasListeners()) {
+      this.#currentMutation?.removeObserver(this);
+    }
+  }
+  onMutationUpdate(action) {
+    this.#updateResult();
+    this.#notify(action);
+  }
+  getCurrentResult() {
+    return this.#currentResult;
+  }
+  reset() {
+    this.#currentMutation?.removeObserver(this);
+    this.#currentMutation = void 0;
+    this.#updateResult();
+    this.#notify();
+  }
+  mutate(variables, options) {
+    this.#mutateOptions = options;
+    this.#currentMutation?.removeObserver(this);
+    this.#currentMutation = this.#client.getMutationCache().build(this.#client, this.options);
+    this.#currentMutation.addObserver(this);
+    return this.#currentMutation.execute(variables);
+  }
+  #updateResult() {
+    const state = this.#currentMutation?.state ?? (0,_mutation_js__WEBPACK_IMPORTED_MODULE_2__/* .getDefaultState */ .$)();
+    this.#currentResult = {
+      ...state,
+      isPending: state.status === "pending",
+      isSuccess: state.status === "success",
+      isError: state.status === "error",
+      isIdle: state.status === "idle",
+      mutate: this.mutate,
+      reset: this.reset
+    };
+  }
+  #notify(action) {
+    _notifyManager_js__WEBPACK_IMPORTED_MODULE_3__/* .notifyManager */ .j.batch(() => {
+      if (this.#mutateOptions && this.hasListeners()) {
+        const variables = this.#currentResult.variables;
+        const context = this.#currentResult.context;
+        if (action?.type === "success") {
+          this.#mutateOptions.onSuccess?.(action.data, variables, context);
+          this.#mutateOptions.onSettled?.(action.data, null, variables, context);
+        } else if (action?.type === "error") {
+          this.#mutateOptions.onError?.(action.error, variables, context);
+          this.#mutateOptions.onSettled?.(
+            void 0,
+            action.error,
+            variables,
+            context
+          );
+        }
+      }
+      this.listeners.forEach((listener) => {
+        listener(this.#currentResult);
+      });
+    });
+  }
+};
+
+//# sourceMappingURL=mutationObserver.js.map
 
 /***/ }),
 
@@ -7802,6 +7963,62 @@ function useBaseQuery(options, Observer, queryClient) {
 }
 
 //# sourceMappingURL=useBaseQuery.js.map
+
+/***/ }),
+
+/***/ 960:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   n: () => (/* binding */ useMutation)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1609);
+/* harmony import */ var _tanstack_query_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(903);
+/* harmony import */ var _tanstack_query_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8852);
+/* harmony import */ var _QueryClientProvider_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3402);
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9873);
+"use client";
+
+// src/useMutation.ts
+
+
+
+
+function useMutation(options, queryClient) {
+  const client = (0,_QueryClientProvider_js__WEBPACK_IMPORTED_MODULE_1__/* .useQueryClient */ .jE)(queryClient);
+  const [observer] = react__WEBPACK_IMPORTED_MODULE_0__.useState(
+    () => new _tanstack_query_core__WEBPACK_IMPORTED_MODULE_2__/* .MutationObserver */ ._(
+      client,
+      options
+    )
+  );
+  react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
+    observer.setOptions(options);
+  }, [observer, options]);
+  const result = react__WEBPACK_IMPORTED_MODULE_0__.useSyncExternalStore(
+    react__WEBPACK_IMPORTED_MODULE_0__.useCallback(
+      (onStoreChange) => observer.subscribe(_tanstack_query_core__WEBPACK_IMPORTED_MODULE_3__/* .notifyManager */ .j.batchCalls(onStoreChange)),
+      [observer]
+    ),
+    () => observer.getCurrentResult(),
+    () => observer.getCurrentResult()
+  );
+  const mutate = react__WEBPACK_IMPORTED_MODULE_0__.useCallback(
+    (variables, mutateOptions) => {
+      observer.mutate(variables, mutateOptions).catch(noop);
+    },
+    [observer]
+  );
+  if (result.error && (0,_utils_js__WEBPACK_IMPORTED_MODULE_4__/* .shouldThrowError */ .G)(observer.options.throwOnError, [result.error])) {
+    throw result.error;
+  }
+  return { ...result, mutate, mutateAsync: result.mutate };
+}
+function noop() {
+}
+
+//# sourceMappingURL=useMutation.js.map
 
 /***/ }),
 

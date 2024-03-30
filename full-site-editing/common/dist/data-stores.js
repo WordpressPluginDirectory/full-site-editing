@@ -6625,15 +6625,17 @@ function createActions(clientCreds) {
     type: 'CLEAR_SITE_SETUP_ERROR',
     siteId
   });
-  const atomicTransferStart = (siteId, softwareSet) => ({
+  const atomicTransferStart = (siteId, softwareSet, transferIntent) => ({
     type: 'ATOMIC_TRANSFER_START',
     siteId,
-    softwareSet
+    softwareSet,
+    transferIntent
   });
-  const atomicTransferSuccess = (siteId, softwareSet) => ({
+  const atomicTransferSuccess = (siteId, softwareSet, transferIntent) => ({
     type: 'ATOMIC_TRANSFER_SUCCESS',
     siteId,
-    softwareSet
+    softwareSet,
+    transferIntent
   });
   const atomicTransferFailure = (siteId, softwareSet, error) => ({
     type: 'ATOMIC_TRANSFER_FAILURE',
@@ -6641,25 +6643,21 @@ function createActions(clientCreds) {
     softwareSet,
     error
   });
-  function* initiateAtomicTransfer(siteId, softwareSet) {
-    yield atomicTransferStart(siteId, softwareSet);
+  function* initiateAtomicTransfer(siteId, softwareSet, transferIntent) {
+    yield atomicTransferStart(siteId, softwareSet, transferIntent);
     try {
+      const body = {
+        context: softwareSet || 'unknown',
+        software_set: softwareSet ? encodeURIComponent(softwareSet) : undefined,
+        transfer_intent: transferIntent ? encodeURIComponent(transferIntent) : undefined
+      };
       yield (0,_wpcom_request_controls__WEBPACK_IMPORTED_MODULE_2__/* .wpcomRequest */ .S)({
         path: `/sites/${encodeURIComponent(siteId)}/atomic/transfers`,
         apiNamespace: 'wpcom/v2',
         method: 'POST',
-        ...(softwareSet ? {
-          body: {
-            software_set: encodeURIComponent(softwareSet),
-            context: softwareSet
-          }
-        } : {
-          body: {
-            context: 'unknown'
-          }
-        })
+        body
       });
-      yield atomicTransferSuccess(siteId, softwareSet);
+      yield atomicTransferSuccess(siteId, softwareSet, transferIntent);
     } catch (_) {
       yield atomicTransferFailure(siteId, softwareSet, _types__WEBPACK_IMPORTED_MODULE_3__/* .AtomicTransferError */ .je.INTERNAL);
     }
@@ -7111,6 +7109,7 @@ const atomicTransferStatus = (state = {}, action) => {
       [action.siteId]: {
         status: _types__WEBPACK_IMPORTED_MODULE_1__/* .AtomicTransferStatus */ .nB.IN_PROGRESS,
         softwareSet: action.softwareSet,
+        transferIntent: action.transferIntent,
         errorCode: undefined
       }
     };
@@ -7121,6 +7120,7 @@ const atomicTransferStatus = (state = {}, action) => {
       [action.siteId]: {
         status: _types__WEBPACK_IMPORTED_MODULE_1__/* .AtomicTransferStatus */ .nB.SUCCESS,
         softwareSet: action.softwareSet,
+        transferIntent: action.transferIntent,
         errorCode: undefined
       }
     };
