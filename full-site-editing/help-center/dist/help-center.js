@@ -10986,6 +10986,131 @@ function eventTargetAgnosticAddListener(emitter, name, listener, flags) {
 
 /***/ }),
 
+/***/ 89710:
+/***/ ((module) => {
+
+"use strict";
+
+
+var hasOwn = Object.prototype.hasOwnProperty;
+var toStr = Object.prototype.toString;
+var defineProperty = Object.defineProperty;
+var gOPD = Object.getOwnPropertyDescriptor;
+
+var isArray = function isArray(arr) {
+	if (typeof Array.isArray === 'function') {
+		return Array.isArray(arr);
+	}
+
+	return toStr.call(arr) === '[object Array]';
+};
+
+var isPlainObject = function isPlainObject(obj) {
+	if (!obj || toStr.call(obj) !== '[object Object]') {
+		return false;
+	}
+
+	var hasOwnConstructor = hasOwn.call(obj, 'constructor');
+	var hasIsPrototypeOf = obj.constructor && obj.constructor.prototype && hasOwn.call(obj.constructor.prototype, 'isPrototypeOf');
+	// Not own constructor property must be Object
+	if (obj.constructor && !hasOwnConstructor && !hasIsPrototypeOf) {
+		return false;
+	}
+
+	// Own properties are enumerated firstly, so to speed up,
+	// if last one is own, then all properties are own.
+	var key;
+	for (key in obj) { /**/ }
+
+	return typeof key === 'undefined' || hasOwn.call(obj, key);
+};
+
+// If name is '__proto__', and Object.defineProperty is available, define __proto__ as an own property on target
+var setProperty = function setProperty(target, options) {
+	if (defineProperty && options.name === '__proto__') {
+		defineProperty(target, options.name, {
+			enumerable: true,
+			configurable: true,
+			value: options.newValue,
+			writable: true
+		});
+	} else {
+		target[options.name] = options.newValue;
+	}
+};
+
+// Return undefined instead of __proto__ if '__proto__' is not an own property
+var getProperty = function getProperty(obj, name) {
+	if (name === '__proto__') {
+		if (!hasOwn.call(obj, name)) {
+			return void 0;
+		} else if (gOPD) {
+			// In early versions of node, obj['__proto__'] is buggy when obj has
+			// __proto__ as an own property. Object.getOwnPropertyDescriptor() works.
+			return gOPD(obj, name).value;
+		}
+	}
+
+	return obj[name];
+};
+
+module.exports = function extend() {
+	var options, name, src, copy, copyIsArray, clone;
+	var target = arguments[0];
+	var i = 1;
+	var length = arguments.length;
+	var deep = false;
+
+	// Handle a deep copy situation
+	if (typeof target === 'boolean') {
+		deep = target;
+		target = arguments[1] || {};
+		// skip the boolean and the target
+		i = 2;
+	}
+	if (target == null || (typeof target !== 'object' && typeof target !== 'function')) {
+		target = {};
+	}
+
+	for (; i < length; ++i) {
+		options = arguments[i];
+		// Only deal with non-null/undefined values
+		if (options != null) {
+			// Extend the base object
+			for (name in options) {
+				src = getProperty(target, name);
+				copy = getProperty(options, name);
+
+				// Prevent never-ending loop
+				if (target !== copy) {
+					// Recurse if we're merging plain objects or arrays
+					if (deep && copy && (isPlainObject(copy) || (copyIsArray = isArray(copy)))) {
+						if (copyIsArray) {
+							copyIsArray = false;
+							clone = src && isArray(src) ? src : [];
+						} else {
+							clone = src && isPlainObject(src) ? src : {};
+						}
+
+						// Never move original objects, clone them
+						setProperty(target, { name: name, newValue: extend(deep, clone, copy) });
+
+					// Don't bring in undefined values
+					} else if (typeof copy !== 'undefined') {
+						setProperty(target, { name: name, newValue: copy });
+					}
+				}
+			}
+		}
+	}
+
+	// Return the modified object
+	return target;
+};
+
+
+/***/ }),
+
 /***/ 56075:
 /***/ ((module) => {
 
@@ -13045,6 +13170,274 @@ if (typeof Object.create === 'function') {
 
 /***/ }),
 
+/***/ 15937:
+/***/ ((module) => {
+
+// http://www.w3.org/TR/CSS21/grammar.html
+// https://github.com/visionmedia/css-parse/pull/49#issuecomment-30088027
+var COMMENT_REGEX = /\/\*[^*]*\*+([^/*][^*]*\*+)*\//g;
+
+var NEWLINE_REGEX = /\n/g;
+var WHITESPACE_REGEX = /^\s*/;
+
+// declaration
+var PROPERTY_REGEX = /^(\*?[-#/*\\\w]+(\[[0-9a-z_-]+\])?)\s*/;
+var COLON_REGEX = /^:\s*/;
+var VALUE_REGEX = /^((?:'(?:\\'|.)*?'|"(?:\\"|.)*?"|\([^)]*?\)|[^};])+)/;
+var SEMICOLON_REGEX = /^[;\s]*/;
+
+// https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String/Trim#Polyfill
+var TRIM_REGEX = /^\s+|\s+$/g;
+
+// strings
+var NEWLINE = '\n';
+var FORWARD_SLASH = '/';
+var ASTERISK = '*';
+var EMPTY_STRING = '';
+
+// types
+var TYPE_COMMENT = 'comment';
+var TYPE_DECLARATION = 'declaration';
+
+/**
+ * @param {String} style
+ * @param {Object} [options]
+ * @return {Object[]}
+ * @throws {TypeError}
+ * @throws {Error}
+ */
+module.exports = function (style, options) {
+  if (typeof style !== 'string') {
+    throw new TypeError('First argument must be a string');
+  }
+
+  if (!style) return [];
+
+  options = options || {};
+
+  /**
+   * Positional.
+   */
+  var lineno = 1;
+  var column = 1;
+
+  /**
+   * Update lineno and column based on `str`.
+   *
+   * @param {String} str
+   */
+  function updatePosition(str) {
+    var lines = str.match(NEWLINE_REGEX);
+    if (lines) lineno += lines.length;
+    var i = str.lastIndexOf(NEWLINE);
+    column = ~i ? str.length - i : column + str.length;
+  }
+
+  /**
+   * Mark position and patch `node.position`.
+   *
+   * @return {Function}
+   */
+  function position() {
+    var start = { line: lineno, column: column };
+    return function (node) {
+      node.position = new Position(start);
+      whitespace();
+      return node;
+    };
+  }
+
+  /**
+   * Store position information for a node.
+   *
+   * @constructor
+   * @property {Object} start
+   * @property {Object} end
+   * @property {undefined|String} source
+   */
+  function Position(start) {
+    this.start = start;
+    this.end = { line: lineno, column: column };
+    this.source = options.source;
+  }
+
+  /**
+   * Non-enumerable source string.
+   */
+  Position.prototype.content = style;
+
+  var errorsList = [];
+
+  /**
+   * Error `msg`.
+   *
+   * @param {String} msg
+   * @throws {Error}
+   */
+  function error(msg) {
+    var err = new Error(
+      options.source + ':' + lineno + ':' + column + ': ' + msg
+    );
+    err.reason = msg;
+    err.filename = options.source;
+    err.line = lineno;
+    err.column = column;
+    err.source = style;
+
+    if (options.silent) {
+      errorsList.push(err);
+    } else {
+      throw err;
+    }
+  }
+
+  /**
+   * Match `re` and return captures.
+   *
+   * @param {RegExp} re
+   * @return {undefined|Array}
+   */
+  function match(re) {
+    var m = re.exec(style);
+    if (!m) return;
+    var str = m[0];
+    updatePosition(str);
+    style = style.slice(str.length);
+    return m;
+  }
+
+  /**
+   * Parse whitespace.
+   */
+  function whitespace() {
+    match(WHITESPACE_REGEX);
+  }
+
+  /**
+   * Parse comments.
+   *
+   * @param {Object[]} [rules]
+   * @return {Object[]}
+   */
+  function comments(rules) {
+    var c;
+    rules = rules || [];
+    while ((c = comment())) {
+      if (c !== false) {
+        rules.push(c);
+      }
+    }
+    return rules;
+  }
+
+  /**
+   * Parse comment.
+   *
+   * @return {Object}
+   * @throws {Error}
+   */
+  function comment() {
+    var pos = position();
+    if (FORWARD_SLASH != style.charAt(0) || ASTERISK != style.charAt(1)) return;
+
+    var i = 2;
+    while (
+      EMPTY_STRING != style.charAt(i) &&
+      (ASTERISK != style.charAt(i) || FORWARD_SLASH != style.charAt(i + 1))
+    ) {
+      ++i;
+    }
+    i += 2;
+
+    if (EMPTY_STRING === style.charAt(i - 1)) {
+      return error('End of comment missing');
+    }
+
+    var str = style.slice(2, i - 2);
+    column += 2;
+    updatePosition(str);
+    style = style.slice(i);
+    column += 2;
+
+    return pos({
+      type: TYPE_COMMENT,
+      comment: str
+    });
+  }
+
+  /**
+   * Parse declaration.
+   *
+   * @return {Object}
+   * @throws {Error}
+   */
+  function declaration() {
+    var pos = position();
+
+    // prop
+    var prop = match(PROPERTY_REGEX);
+    if (!prop) return;
+    comment();
+
+    // :
+    if (!match(COLON_REGEX)) return error("property missing ':'");
+
+    // val
+    var val = match(VALUE_REGEX);
+
+    var ret = pos({
+      type: TYPE_DECLARATION,
+      property: trim(prop[0].replace(COMMENT_REGEX, EMPTY_STRING)),
+      value: val
+        ? trim(val[0].replace(COMMENT_REGEX, EMPTY_STRING))
+        : EMPTY_STRING
+    });
+
+    // ;
+    match(SEMICOLON_REGEX);
+
+    return ret;
+  }
+
+  /**
+   * Parse declarations.
+   *
+   * @return {Object[]}
+   */
+  function declarations() {
+    var decls = [];
+
+    comments(decls);
+
+    // declarations
+    var decl;
+    while ((decl = declaration())) {
+      if (decl !== false) {
+        decls.push(decl);
+        comments(decls);
+      }
+    }
+
+    return decls;
+  }
+
+  whitespace();
+  return declarations();
+};
+
+/**
+ * Trim `str`.
+ *
+ * @param {String} str
+ * @return {String}
+ */
+function trim(str) {
+  return str ? str.replace(TRIM_REGEX, EMPTY_STRING) : EMPTY_STRING;
+}
+
+
+/***/ }),
+
 /***/ 55387:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -14567,6 +14960,15 @@ LRU.prototype.evict = function () {
 
 /***/ }),
 
+/***/ 14082:
+/***/ (() => {
+
+"use strict";
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ 40149:
 /***/ (() => {
 
@@ -14649,6 +15051,15 @@ LRU.prototype.evict = function () {
 /***/ }),
 
 /***/ 56923:
+/***/ (() => {
+
+"use strict";
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ 22274:
 /***/ (() => {
 
 "use strict";
@@ -22689,6 +23100,38 @@ function createMemoryRouter(routes, opts) {
 
 /***/ }),
 
+/***/ 73335:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+/**
+ * @license React
+ * react-jsx-runtime.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+var f=__webpack_require__(51609),k=Symbol.for("react.element"),l=Symbol.for("react.fragment"),m=Object.prototype.hasOwnProperty,n=f.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner,p={key:!0,ref:!0,__self:!0,__source:!0};
+function q(c,a,g){var b,d={},e=null,h=null;void 0!==g&&(e=""+g);void 0!==a.key&&(e=""+a.key);void 0!==a.ref&&(h=a.ref);for(b in a)m.call(a,b)&&!p.hasOwnProperty(b)&&(d[b]=a[b]);if(c&&c.defaultProps)for(b in a=c.defaultProps,a)void 0===d[b]&&(d[b]=a[b]);return{$$typeof:k,type:c,key:e,ref:h,props:d,_owner:n.current}}exports.Fragment=l;exports.jsx=q;exports.jsxs=q;
+
+
+/***/ }),
+
+/***/ 31085:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+if (true) {
+  module.exports = __webpack_require__(73335);
+} else {}
+
+
+/***/ }),
+
 /***/ 64036:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
@@ -25247,6 +25690,57 @@ function clearAll() {
 
 /***/ }),
 
+/***/ 78052:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var inline_style_parser_1 = __importDefault(__webpack_require__(15937));
+/**
+ * Parses inline style to object.
+ *
+ * @param style - Inline style.
+ * @param iterator - Iterator.
+ * @returns - Style object or null.
+ *
+ * @example Parsing inline style to object:
+ *
+ * ```js
+ * import parse from 'style-to-object';
+ * parse('line-height: 42;'); // { 'line-height': '42' }
+ * ```
+ */
+function StyleToObject(style, iterator) {
+    var styleObject = null;
+    if (!style || typeof style !== 'string') {
+        return styleObject;
+    }
+    var declarations = (0, inline_style_parser_1.default)(style);
+    var hasIterator = typeof iterator === 'function';
+    declarations.forEach(function (declaration) {
+        if (declaration.type !== 'declaration') {
+            return;
+        }
+        var property = declaration.property, value = declaration.value;
+        if (hasIterator) {
+            iterator(property, value, declaration);
+        }
+        else if (value) {
+            styleObject = styleObject || {};
+            styleObject[property] = value;
+        }
+    });
+    return styleObject;
+}
+exports["default"] = StyleToObject;
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
 /***/ 52714:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -26071,40 +26565,6 @@ SupportArticleHeader.propTypes = {
 
 /***/ }),
 
-/***/ 68913:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   A: () => (/* binding */ AsyncLoad)
-/* harmony export */ });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-
-
-
-const DEFAULT_PLACEHOLDER = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-  className: "async-load__placeholder"
-});
-function AsyncLoad({
-  placeholder = DEFAULT_PLACEHOLDER,
-  require,
-  ...props
-}) {
-  const Component = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => {
-    // The string is transformed to a function by the `wpcalypso-async` Babel transform
-    const requireCb = require;
-    return /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.lazy)(requireCb);
-  }, [require]);
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_1__.Suspense, {
-    fallback: placeholder
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Component, props));
-}
-
-/***/ }),
-
 /***/ 51632:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -26870,78 +27330,14 @@ class EmbedContainer extends react__WEBPACK_IMPORTED_MODULE_5__.PureComponent {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(24586);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(79812);
-/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(15471);
-/* harmony import */ var _automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(355);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(85744);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(66087);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(39067);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(16437);
 
 
+// We're in the process of migrating to @automattic/components. Because of this, we're using this wrapper
+// component to point references to the old ExternalLink component to the new one in @automattic/components.
+// This allows us to transition in smaller pieces and without risking updates to the old Calypso component in the interim.
 
-
-
-
-
-
-
-
-class ExternalLink extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
-  render() {
-    const classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()('external-link', this.props.className, {
-      'icon-first': this.props.showIconFirst,
-      'has-icon': this.props.icon
-    });
-    const props = {
-      ...(0,lodash__WEBPACK_IMPORTED_MODULE_2__.omit)(this.props, 'icon', 'iconSize', 'showIconFirst', 'iconClassName', 'iconComponent'),
-      className: classes,
-      rel: 'external'
-    };
-    if (this.props.icon) {
-      props.target = '_blank';
-    }
-    if (props.target) {
-      props.rel = props.rel.concat(' noopener noreferrer');
-    }
-    if (props.href) {
-      props.href = (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_4__/* .localizeUrl */ .rm)(props.href);
-    }
-    const iconComponent = this.props.iconComponent || (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_components__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
-      className: this.props.iconClassName,
-      icon: "external",
-      size: this.props.iconSize
-    });
-    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", props, this.props.icon && this.props.showIconFirst && iconComponent, this.props.children, this.props.icon && !this.props.showIconFirst && iconComponent, this.props.icon && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_components__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_7__/* .translate */ .Tl)('(opens in a new tab)', {
-      comment: 'accessibility label for an external link'
-    })));
-  }
-}
-(0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A)(ExternalLink, "defaultProps", {
-  iconSize: 18,
-  showIconFirst: false,
-  iconComponent: null
-});
-(0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A)(ExternalLink, "propTypes", {
-  className: (prop_types__WEBPACK_IMPORTED_MODULE_9___default().string),
-  href: (prop_types__WEBPACK_IMPORTED_MODULE_9___default().string),
-  onClick: (prop_types__WEBPACK_IMPORTED_MODULE_9___default().func),
-  icon: (prop_types__WEBPACK_IMPORTED_MODULE_9___default().bool),
-  iconSize: (prop_types__WEBPACK_IMPORTED_MODULE_9___default().number),
-  target: (prop_types__WEBPACK_IMPORTED_MODULE_9___default().string),
-  showIconFirst: (prop_types__WEBPACK_IMPORTED_MODULE_9___default().bool),
-  iconClassName: (prop_types__WEBPACK_IMPORTED_MODULE_9___default().string),
-  iconComponent: (prop_types__WEBPACK_IMPORTED_MODULE_9___default().object)
-});
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ExternalLink);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_automattic_components__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
 
 /***/ }),
 
@@ -27318,7 +27714,7 @@ class PopoverMenu extends react__WEBPACK_IMPORTED_MODULE_1__.Component {
 /* harmony export */   A: () => (/* binding */ PopoverMenuItem)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(89575);
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(24586);
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(24586);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(79812);
@@ -27330,7 +27726,7 @@ class PopoverMenu extends react__WEBPACK_IMPORTED_MODULE_1__.Component {
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(51609);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var calypso_components_external_link__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(75056);
+/* harmony import */ var calypso_components_external_link__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(75056);
 
 
 
@@ -27344,7 +27740,7 @@ const noop = () => {};
 class PopoverMenuItem extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
   constructor(...args) {
     super(...args);
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(this, "handleMouseOver", event => {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)(this, "handleMouseOver", event => {
       const {
         focusOnHover
       } = this.props;
@@ -27370,7 +27766,7 @@ class PopoverMenuItem extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
     });
     let ItemComponent = this.props.itemComponent;
     if (isExternalLink && href && !disabled) {
-      ItemComponent = calypso_components_external_link__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A;
+      ItemComponent = calypso_components_external_link__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A;
       itemProps.icon = true;
     } else if (href && !disabled) {
       ItemComponent = 'a';
@@ -27391,7 +27787,7 @@ class PopoverMenuItem extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
     }), itemIcon, children);
   }
 }
-(0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(PopoverMenuItem, "propTypes", {
+(0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)(PopoverMenuItem, "propTypes", {
   href: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().string),
   disabled: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().bool),
   className: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().string),
@@ -27403,7 +27799,7 @@ class PopoverMenuItem extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
   isExternalLink: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().bool),
   itemComponent: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().elementType)
 });
-(0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(PopoverMenuItem, "defaultProps", {
+(0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)(PopoverMenuItem, "defaultProps", {
   isSelected: false,
   focusOnHover: true,
   onMouseOver: noop,
@@ -28268,28 +28664,64 @@ function createChainableTypeChecker(validate) {
 
 
 
-const fetchArticlesAPI = (search, locale, sectionName) => {
-  const queryString = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_1__.buildQueryString)({
+const filterOutDuplicatedItems = (articlesResponse, searchResultResponse) => {
+  const articlesIds = articlesResponse.map(result => result.post_id);
+  return searchResultResponse.filter(searchResult => !articlesIds.includes(searchResult.post_id));
+};
+const fetchArticlesAPI = async (search, locale, sectionName, articles) => {
+  let queryString;
+  let articlesResponse = [];
+  let searchResultResponse = [];
+  if (articles) {
+    const {
+      post_ids,
+      blog_id
+    } = articles;
+    queryString = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_1__.buildQueryString)({
+      blog_id: blog_id,
+      post_ids: `${post_ids.join(',')}`
+    });
+    if ((0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_2__/* .canAccessWpcomApis */ .IH)()) {
+      articlesResponse = await (0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Ay)({
+        path: `help/articles?${queryString}`,
+        apiNamespace: 'wpcom/v2/',
+        apiVersion: '2'
+      });
+    } else {
+      articlesResponse = await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
+        global: true,
+        path: `/help-center/articles?${queryString}`
+      });
+    }
+  }
+  queryString = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_1__.buildQueryString)({
     query: search,
     locale,
     section: sectionName
   });
   if ((0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_2__/* .canAccessWpcomApis */ .IH)()) {
-    return (0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Ay)({
+    searchResultResponse = await (0,wpcom_proxy_request__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Ay)({
       path: `help/search/wpcom?${queryString}`,
       apiNamespace: 'wpcom/v2/',
       apiVersion: '2'
     });
+  } else {
+    searchResultResponse = await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
+      global: true,
+      path: `/help-center/search?${queryString}`
+    });
   }
-  return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
-    global: true,
-    path: `/help-center/search?${queryString}`
-  });
+  // Remove articles that are already in the tailored articles.
+  const searchResult = filterOutDuplicatedItems(articlesResponse, searchResultResponse);
+
+  //Add tailored results first then add search results.
+  const combinedResults = [...articlesResponse, ...searchResult];
+  return combinedResults.slice(0, 5);
 };
-const useHelpSearchQuery = (search, locale = 'en', queryOptions = {}, sectionName = '') => {
+const useHelpSearchQuery = (search, locale = 'en', queryOptions = {}, sectionName = '', tailoredArticles) => {
   return (0,_tanstack_react_query__WEBPACK_IMPORTED_MODULE_3__/* .useQuery */ .I)({
-    queryKey: ['help-center-search', search, locale, sectionName],
-    queryFn: () => fetchArticlesAPI(search, locale, sectionName),
+    queryKey: ['help-center-search', search, locale, sectionName, tailoredArticles],
+    queryFn: () => fetchArticlesAPI(search, locale, sectionName, tailoredArticles),
     refetchOnWindowFocus: false,
     ...queryOptions
   });
@@ -28362,6 +28794,7 @@ const isAkismetCheckout = () => 'undefined' !== typeof document && window.locati
 /* harmony export */   Yz: () => (/* binding */ debug),
 /* harmony export */   Zw: () => (/* binding */ TRACKING_IDS),
 /* harmony export */   _V: () => (/* binding */ LINKED_IN_SCRIPT_URL),
+/* harmony export */   bZ: () => (/* binding */ REDDIT_TRACKING_SCRIPT_URL),
 /* harmony export */   cp: () => (/* binding */ DCM_FLOODLIGHT_SESSION_LENGTH_IN_SECONDS),
 /* harmony export */   iQ: () => (/* binding */ GOOGLE_GTAG_SCRIPT_URL),
 /* harmony export */   jH: () => (/* binding */ WOOEXPRESS_AFFILIATE_VENDOR_ID),
@@ -28369,6 +28802,7 @@ const isAkismetCheckout = () => 'undefined' !== typeof document && window.locati
 /* harmony export */   mB: () => (/* binding */ WPCOM_AFFILIATE_VENDOR_ID),
 /* harmony export */   nP: () => (/* binding */ CRITEO_TRACKING_SCRIPT_URL),
 /* harmony export */   sf: () => (/* binding */ TWITTER_TRACKING_SCRIPT_URL),
+/* harmony export */   ts: () => (/* binding */ WPCOM_REDDIT_PIXEL_ID),
 /* harmony export */   xt: () => (/* binding */ ADROLL_PURCHASE_PIXEL_URL_2),
 /* harmony export */   yh: () => (/* binding */ ADROLL_PAGEVIEW_PIXEL_URL_2)
 /* harmony export */ });
@@ -28462,6 +28896,8 @@ const GA_PRODUCT_BRAND_AKISMET = 'Akismet';
 const WOOEXPRESS_AFFILIATE_VENDOR_ID = '67386441';
 const WPCOM_AFFILIATE_VENDOR_ID = '67402';
 const WPCOM_CLARITY_URI = 'https://www.clarity.ms/tag/j0cc1i1dba';
+const REDDIT_TRACKING_SCRIPT_URL = 'https://www.redditstatic.com/ads/pixel.js';
+const WPCOM_REDDIT_PIXEL_ID = 'a2_ehx23cq176s3';
 
 /***/ }),
 
@@ -28827,6 +29263,9 @@ function getTrackingScriptsToLoad() {
   if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_3__/* .mayWeTrackByTracker */ .ct)('clarity')) {
     scripts.push(_constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_CLARITY_URI */ .VC);
   }
+  if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_3__/* .mayWeTrackByTracker */ .ct)('reddit')) {
+    scripts.push(_constants__WEBPACK_IMPORTED_MODULE_5__/* .REDDIT_TRACKING_SCRIPT_URL */ .bZ);
+  }
   return scripts;
 }
 function initLoadedTrackingScripts() {
@@ -28868,6 +29307,13 @@ function initLoadedTrackingScripts() {
       em: currentUser.hashedPii.email
     } : {};
     window.pintrk('load', _constants__WEBPACK_IMPORTED_MODULE_5__/* .TRACKING_IDS */ .Zw.pinterestInit, params);
+  }
+  if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_3__/* .mayWeTrackByTracker */ .ct)('reddit')) {
+    const params = {
+      optOut: false,
+      useDecimalCurrencyValues: true
+    };
+    window.rdt('init', _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_REDDIT_PIXEL_ID */ .ts, params);
   }
   (0,_constants__WEBPACK_IMPORTED_MODULE_5__/* .debug */ .Yz)('loadTrackingScripts: init done');
 }
@@ -29039,6 +29485,12 @@ async function retarget(urlPath) {
     window.adRoll.trackPageview();
   }
 
+  // Reddit
+  if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_0__/* .mayWeTrackByTracker */ .ct)('reddit')) {
+    (0,_constants__WEBPACK_IMPORTED_MODULE_4__/* .debug */ .Yz)('retarget: [Reddit]');
+    window.rdt('track', 'PageVisit');
+  }
+
   // Rate limited retargeting (secondary trackers)
 
   const nowTimestamp = Date.now() / 1000;
@@ -29175,6 +29627,11 @@ function setup() {
     if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .UD)('clarity')) {
       setupClarityGlobal();
     }
+
+    // Reddit
+    if ((0,_tracker_buckets__WEBPACK_IMPORTED_MODULE_1__/* .mayWeInitTracker */ .UD)('reddit')) {
+      setupRedditGlobal();
+    }
   }
 }
 setup();
@@ -29287,6 +29744,16 @@ function setupAdRollGlobal() {
       }
     };
   }
+}
+
+/**
+ * Sets up the base Reddit advertising pixel.
+ */
+function setupRedditGlobal() {
+  window.rdt = window.rdt || function (...args) {
+    window.rdt.sendEvent ? window.rdt.sendEvent(...args) : window.rdt.callQueue.push(args);
+  };
+  window.rdt.callQueue = [];
 }
 function setupGtag() {
   if (window.dataLayer && window.gtag) {
@@ -30147,7 +30614,7 @@ async function trackAffiliateReferral({
 
 
 
-const allAdTrackers = (/* unused pure expression or super */ null && (['bing', 'floodlight', 'googleAds', 'googleTagManager', 'ga', 'gaEnhancedEcommerce', 'hotjar', 'outbrain', 'pinterest', 'twitter', 'facebook', 'quantcast', 'gemini', 'experian', 'iconMedia', 'linkedin', 'criteo', 'pandora', 'quora', 'adroll', 'parsely', 'clarity']));
+const allAdTrackers = (/* unused pure expression or super */ null && (['bing', 'floodlight', 'googleAds', 'googleTagManager', 'ga', 'gaEnhancedEcommerce', 'hotjar', 'outbrain', 'pinterest', 'twitter', 'facebook', 'quantcast', 'gemini', 'experian', 'iconMedia', 'linkedin', 'criteo', 'pandora', 'quora', 'adroll', 'parsely', 'clarity', 'reddit']));
 const sessionAdTrackers = ['hotjar'];
 let Bucket = /*#__PURE__*/function (Bucket) {
   Bucket["ESSENTIAL"] = "essential";
@@ -30170,6 +30637,7 @@ const AdTrackersBuckets = {
   pinterest: Bucket.ADVERTISING,
   twitter: Bucket.ADVERTISING,
   facebook: Bucket.ADVERTISING,
+  reddit: Bucket.ADVERTISING,
   // Advertising trackers (only Jetpack Cloud or on Jetpack Checkout):
   linkedin: (0,calypso_lib_jetpack_is_jetpack_cloud__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)() || (0,_jetpack_is_jetpack_checkout__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)() ? Bucket.ADVERTISING : null,
   // Disabled trackers:
@@ -30202,7 +30670,8 @@ const AdTrackersInitGuards = {
   criteo: () => 'criteo_q' in window,
   quora: () => 'qp' in window,
   adroll: () => 'adRoll' in window,
-  clarity: () => 'clarity' in window
+  clarity: () => 'clarity' in window,
+  reddit: () => 'rdt' in window
 };
 const isTrackerIntialized = tracker => {
   const guardFunction = AdTrackersInitGuards[tracker];
@@ -32017,7 +32486,7 @@ function detectPolls(post, dom) {
 
 /***/ }),
 
-/***/ 31085:
+/***/ 53466:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -36308,7 +36777,7 @@ const actionLogger = next => (...args) => {
 /* harmony export */   zjT: () => (/* binding */ POST_REQUEST_SUCCESS),
 /* harmony export */   zwO: () => (/* binding */ EMAIL_VERIFY_REQUEST_SUCCESS)
 /* harmony export */ });
-/* unused harmony exports ACCOUNT_CLOSE, ACCOUNT_CLOSE_SUCCESS, ACCOUNT_RECOVERY_SETTINGS_DELETE, ACCOUNT_RECOVERY_SETTINGS_DELETE_FAILED, ACCOUNT_RECOVERY_SETTINGS_DELETE_SUCCESS, ACCOUNT_RECOVERY_SETTINGS_FETCH, ACCOUNT_RECOVERY_SETTINGS_FETCH_FAILED, ACCOUNT_RECOVERY_SETTINGS_FETCH_SUCCESS, ACCOUNT_RECOVERY_SETTINGS_RESEND_VALIDATION, ACCOUNT_RECOVERY_SETTINGS_RESEND_VALIDATION_FAILED, ACCOUNT_RECOVERY_SETTINGS_RESEND_VALIDATION_SUCCESS, ACCOUNT_RECOVERY_SETTINGS_UPDATE, ACCOUNT_RECOVERY_SETTINGS_UPDATE_FAILED, ACCOUNT_RECOVERY_SETTINGS_UPDATE_SUCCESS, ACCOUNT_RECOVERY_SETTINGS_VALIDATE_PHONE, ACCOUNT_RECOVERY_SETTINGS_VALIDATE_PHONE_FAILED, ACCOUNT_RECOVERY_SETTINGS_VALIDATE_PHONE_SUCCESS, ACTIVE_PROMOTIONS_RECEIVE, ACTIVE_PROMOTIONS_REQUEST, ACTIVE_PROMOTIONS_REQUEST_FAILURE, ACTIVE_PROMOTIONS_REQUEST_SUCCESS, ACTIVITY_LOG_FILTER_SET, ACTIVITY_LOG_FILTER_UPDATE, ADMIN_MENU_RECEIVE, ADMIN_MENU_REQUEST, ALL_DOMAINS_REQUEST, ALL_DOMAINS_REQUEST_FAILURE, ALL_DOMAINS_REQUEST_SUCCESS, ALL_SITES_STATS_RECEIVE, ANALYTICS_MULTI_TRACK, ATOMIC_TRANSFER_REQUEST, ATOMIC_TRANSFER_SET, ATOMIC_TRANSFER_INITIATE_TRANSFER, ATOMIC_TRANSFER_REQUEST_LATEST, ATOMIC_TRANSFER_SET_LATEST, ATOMIC_SOFTWARE_INITIATE_INSTALL, ATOMIC_SOFTWARE_REQUEST_STATUS, ATOMIC_SOFTWARE_SET_STATUS, ATOMIC_SOFTWARE_SET_ERROR, AUTOMATED_TRANSFER_ELIGIBILITY_REQUEST, AUTOMATED_TRANSFER_ELIGIBILITY_UPDATE, AUTOMATED_TRANSFER_INITIATE_WITH_PLUGIN_ZIP, AUTOMATED_TRANSFER_STATUS_REQUEST, AUTOMATED_TRANSFER_STATUS_REQUEST_FAILURE, AUTOMATED_TRANSFER_STATUS_SET, BILLING_RECEIPT_EMAIL_SEND, BILLING_RECEIPT_EMAIL_SEND_FAILURE, BILLING_RECEIPT_EMAIL_SEND_SUCCESS, BILLING_TRANSACTION_ERROR_CLEAR, BILLING_TRANSACTION_RECEIVE, BILLING_TRANSACTION_REQUEST, BILLING_TRANSACTION_REQUEST_FAILURE, BILLING_TRANSACTION_REQUEST_SUCCESS, BILLING_TRANSACTIONS_FILTER_SET_APP, BILLING_TRANSACTIONS_FILTER_SET_MONTH, BILLING_TRANSACTIONS_FILTER_SET_PAGE, BILLING_TRANSACTIONS_FILTER_SET_QUERY, BILLING_TRANSACTIONS_RECEIVE, BILLING_TRANSACTIONS_REQUEST, BILLING_TRANSACTIONS_REQUEST_FAILURE, BILLING_TRANSACTIONS_REQUEST_SUCCESS, BREADCRUMB_RESET_LIST, BREADCRUMB_UPDATE_LIST, BREADCRUMB_APPEND_ITEM, COMMAND_PALETTE_CLOSE, COMMAND_PALETTE_OPEN, COMMENT_COUNTS_REQUEST, COMMENT_COUNTS_UPDATE, COMMENT_REQUEST, COMMENTS_CHANGE_STATUS, COMMENTS_COUNT_INCREMENT, COMMENTS_COUNT_RECEIVE, COMMENTS_DELETE, COMMENTS_EDIT, COMMENTS_EMPTY, COMMENTS_EMPTY_SUCCESS, COMMENTS_LIKE, COMMENTS_LIST_REQUEST, COMMENTS_QUERY_UPDATE, COMMENTS_RECEIVE, COMMENTS_RECEIVE_ERROR, COMMENTS_REPLY_WRITE, COMMENTS_REQUEST, COMMENTS_SET_ACTIVE_REPLY, COMMENTS_TOGGLE_INLINE_EXPANDED, COMMENTS_UNLIKE, COMMENTS_UPDATES_RECEIVE, COMMENTS_WRITE, COMMENTS_WRITE_ERROR, CONCIERGE_APPOINTMENT_CANCEL, CONCIERGE_APPOINTMENT_CREATE, CONCIERGE_APPOINTMENT_DETAILS_REQUEST, CONCIERGE_APPOINTMENT_DETAILS_UPDATE, CONCIERGE_APPOINTMENT_RESCHEDULE, CONCIERGE_INITIAL_REQUEST, CONCIERGE_INITIAL_UPDATE, CONCIERGE_SIGNUP_FORM_UPDATE, CONCIERGE_UPDATE_BOOKING_STATUS, CONNECTED_APPLICATION_DELETE, CONNECTED_APPLICATION_DELETE_SUCCESS, CONNECTED_APPLICATIONS_RECEIVE, CONNECTED_APPLICATIONS_REQUEST, CONNECTION_LOST, CONNECTION_RESTORED, CONNECTIONS_SET_EXPANDED_SERVICE, COUNTRIES_DOMAINS_FETCH, COUNTRIES_DOMAINS_UPDATED, COUNTRIES_SMS_FETCH, COUNTRIES_SMS_UPDATED, COUNTRIES_WOOCOMMERCE_FETCH, COUNTRIES_WOOCOMMERCE_UPDATED, COUNTRY_STATES_RECEIVE, COUNTRY_STATES_REQUEST, COUNTRY_STATES_REQUEST_FAILURE, COUNTRY_STATES_REQUEST_SUCCESS, CURRENT_USER_FETCH, DOCUMENT_HEAD_LINK_SET, DOCUMENT_HEAD_META_SET, DOCUMENT_HEAD_TITLE_SET, DOCUMENT_HEAD_UNREAD_COUNT_SET, DOMAIN_MANAGEMENT_WHOIS_RECEIVE, DOMAIN_MANAGEMENT_WHOIS_REQUEST, DOMAIN_MANAGEMENT_WHOIS_REQUEST_FAILURE, DOMAIN_MANAGEMENT_WHOIS_REQUEST_SUCCESS, DOMAIN_MANAGEMENT_WHOIS_SAVE, DOMAIN_MANAGEMENT_WHOIS_SAVE_FAILURE, DOMAIN_MANAGEMENT_WHOIS_SAVE_SUCCESS, DOMAIN_MANAGEMENT_WHOIS_UPDATE, DOMAIN_TRANSFER_ACCEPT, DOMAIN_TRANSFER_ACCEPT_COMPLETED, DOMAIN_TRANSFER_CANCEL_REQUEST, DOMAIN_TRANSFER_CANCEL_REQUEST_COMPLETED, DOMAIN_TRANSFER_CANCEL_REQUEST_FAILED, DOMAIN_TRANSFER_CODE_REQUEST, DOMAIN_TRANSFER_CODE_REQUEST_COMPLETED, DOMAIN_TRANSFER_CODE_REQUEST_FAILED, DOMAIN_TRANSFER_DECLINE, DOMAIN_TRANSFER_DECLINE_COMPLETED, DOMAIN_TRANSFER_IPS_TAG_SAVE, DOMAIN_TRANSFER_UPDATE, DOMAIN_TRANSFER_UPDATE_LOCK, DOMAIN_WAPI_INFO_FETCH, DOMAIN_WAPI_INFO_FETCH_FAILURE, DOMAIN_WAPI_INFO_FETCH_SUCCESS, DOMAINS_DNS_ADD, DOMAINS_DNS_ADD_COMPLETED, DOMAINS_DNS_ADD_FAILED, DOMAINS_DNS_APPLY_TEMPLATE_COMPLETED, DOMAINS_DNS_DELETE, DOMAINS_DNS_DELETE_COMPLETED, DOMAINS_DNS_DELETE_FAILED, DOMAINS_DNS_FETCH, DOMAINS_DNS_FETCH_COMPLETED, DOMAINS_DNS_FETCH_FAILED, DOMAINS_DNS_UPDATE, DOMAINS_DNS_UPDATE_COMPLETED, DOMAINS_DNS_UPDATE_FAILED, DOMAINS_SITE_REDIRECT_FETCH, DOMAINS_SITE_REDIRECT_FETCH_COMPLETED, DOMAINS_SITE_REDIRECT_FETCH_FAILED, DOMAINS_SITE_REDIRECT_NOTICE_CLOSE, DOMAINS_SITE_REDIRECT_UPDATE, DOMAINS_SITE_REDIRECT_UPDATE_COMPLETED, DOMAINS_SITE_REDIRECT_UPDATE_FAILED, DOMAINS_REDIRECT_FETCH, DOMAINS_REDIRECT_FETCH_COMPLETED, DOMAINS_REDIRECT_FETCH_FAILED, DOMAINS_REDIRECT_NOTICE_CLOSE, DOMAINS_REDIRECT_UPDATE, DOMAINS_REDIRECT_UPDATE_COMPLETED, DOMAINS_REDIRECT_UPDATE_FAILED, DOMAINS_REDIRECT_DELETE, DOMAINS_REDIRECT_DELETE_COMPLETED, DOMAINS_REDIRECT_DELETE_FAILED, DOMAINS_SUGGESTIONS_RECEIVE, DOMAINS_SUGGESTIONS_REQUEST, DOMAINS_SUGGESTIONS_REQUEST_FAILURE, DOMAINS_SUGGESTIONS_REQUEST_SUCCESS, EDITOR_IFRAME_LOADED, EDITOR_TYPE_REQUEST, EDITOR_TYPE_SET, EMAIL_ACCOUNTS_REQUEST, EMAIL_ACCOUNTS_REQUEST_FAILURE, EMAIL_ACCOUNTS_REQUEST_SUCCESS, EMAIL_FORWARDING_REQUEST, EMAIL_FORWARDING_REQUEST_FAILURE, EMAIL_FORWARDING_REQUEST_SUCCESS, EXPORT_ADVANCED_SETTINGS_FETCH, EXPORT_ADVANCED_SETTINGS_FETCH_FAIL, EXPORT_ADVANCED_SETTINGS_RECEIVE, EXPORT_CLEAR, EXPORT_COMPLETE, EXPORT_FAILURE, EXPORT_MEDIA_REQUEST, EXPORT_POST_TYPE_FIELD_SET, EXPORT_POST_TYPE_SET, EXPORT_START_REQUEST, EXPORT_STARTED, EXPORT_STATUS_FETCH, GOOGLE_MY_BUSINESS_STATS_CHANGE_INTERVAL, GOOGLE_MY_BUSINESS_STATS_FAILURE, GOOGLE_MY_BUSINESS_STATS_RECEIVE, GOOGLE_MY_BUSINESS_STATS_REQUEST, GRAVATAR_RECEIVE_IMAGE_FAILURE, GUIDED_TOUR_PAUSE, GUIDED_TOUR_RESUME, GUTENBERG_IFRAME_ELIGIBLE_SET, HOSTING_CLEAR_CACHE_REQUEST, HOSTING_GEO_AFFINITY_REQUEST, HOSTING_GEO_AFFINITY_SET, HOSTING_PHP_VERSION_REQUEST, HOSTING_PHP_VERSION_SET, HOSTING_PHP_VERSION_SET_REQUEST, HOSTING_RESTORE_DATABASE_PASSWORD, HOSTING_SFTP_PASSWORD_RESET, HOSTING_SFTP_USER_CREATE, HOSTING_SFTP_USER_UPDATE, HOSTING_SFTP_USERS_REQUEST, HOSTING_SFTP_USERS_SET, HOSTING_SSH_ACCESS_REQUEST, HOSTING_SSH_ACCESS_SET, HOSTING_SSH_ACCESS_ENABLE, HOSTING_SSH_ACCESS_DISABLE, HOSTING_STATIC_FILE_404_REQUEST, HOSTING_STATIC_FILE_404_SET, HOSTING_STATIC_FILE_404_SET_REQUEST, HOSTING_WP_VERSION_REQUEST, HOSTING_WP_VERSION_SET, HOSTING_WP_VERSION_SET_REQUEST, I18N_LANGUAGE_NAMES_ADD, I18N_LANGUAGE_NAMES_REQUEST, I18N_LOCALE_SUGGESTIONS_ADD, I18N_LOCALE_SUGGESTIONS_REQUEST, IMAGE_EDITOR_COMPUTED_CROP, IMAGE_EDITOR_CROP, IMAGE_EDITOR_FLIP, IMAGE_EDITOR_IMAGE_HAS_LOADED, IMAGE_EDITOR_ROTATE_COUNTERCLOCKWISE, IMAGE_EDITOR_SET_ASPECT_RATIO, IMAGE_EDITOR_SET_CROP_BOUNDS, IMAGE_EDITOR_SET_DEFAULT_ASPECT_RATIO, IMAGE_EDITOR_SET_FILE_INFO, IMAGE_EDITOR_STATE_RESET, IMAGE_EDITOR_STATE_RESET_ALL, IMPORTS_AUTHORS_SET_MAPPING, IMPORTS_AUTHORS_START_MAPPING, IMPORTS_IMPORT_CANCEL, IMPORTS_IMPORT_LOCK, IMPORTS_IMPORT_RECEIVE, IMPORTS_IMPORT_RECEIVED_RESET, IMPORTS_IMPORT_RESET, IMPORTS_IMPORT_START, IMPORTS_IMPORT_UNLOCK, IMPORTS_START_IMPORTING, IMPORTS_UPLOAD_COMPLETED, IMPORTS_UPLOAD_FAILED, IMPORTS_PRE_UPLOAD_FAILED, IMPORTS_UPLOAD_SET_PROGRESS, IMPORTS_UPLOAD_START, INVITE_ACCEPTED, INVITE_RESEND_REQUEST, INVITE_RESEND_REQUEST_FAILURE, INVITE_RESEND_REQUEST_SUCCESS, INVITES_DELETE_REQUEST, INVITES_DELETE_REQUEST_FAILURE, INVITES_DELETE_REQUEST_SUCCESS, INVITES_REQUEST, INVITES_REQUEST_FAILURE, INVITES_REQUEST_SUCCESS, INVITES_SEND, INVITES_SEND_ERROR, INVITES_SEND_SUCCESS, INVITES_SEND_FAILURE, INVITES_VALIDATE_TOKEN, INVITES_VALIDATE_TOKEN_SUCCESS, INVITES_VALIDATE_TOKEN_FAILURE, JETPACK_BACKUP_PREFLIGHT_TESTS_SET, JETPACK_BACKUP_RETENTION_SET, JETPACK_BACKUP_RETENTION_UPDATE, JETPACK_BACKUP_RETENTION_UPDATE_ERROR, JETPACK_BACKUP_RETENTION_UPDATE_RESET, JETPACK_BACKUP_RETENTION_UPDATE_SUCCESS, JETPACK_BACKUP_BROWSER_ADD_CHILDREN, JETPACK_BACKUP_BROWSER_SET_CHECK_STATE, JETPACK_BACKUP_STAGING_GET_REQUEST, JETPACK_BACKUP_STAGING_GET_REQUEST_FAILURE, JETPACK_BACKUP_STAGING_GET_REQUEST_SUCCESS, JETPACK_BACKUP_STAGING_LIST_REQUEST, JETPACK_BACKUP_STAGING_LIST_REQUEST_FAILURE, JETPACK_BACKUP_STAGING_LIST_REQUEST_SUCCESS, JETPACK_BACKUP_STAGING_SET, JETPACK_BACKUP_STAGING_UPDATE_REQUEST, JETPACK_BACKUP_STAGING_UPDATE_REQUEST_FAILURE, JETPACK_BACKUP_STAGING_UPDATE_REQUEST_SUCCESS, JETPACK_CHECKOUT_UPDATE_SUPPORT_TICKET_RECEIVE, JETPACK_CHECKOUT_UPDATE_SUPPORT_TICKET_REQUEST, JETPACK_CHECKOUT_UPDATE_SUPPORT_TICKET_REQUEST_FAILURE, JETPACK_CHECKOUT_UPDATE_SUPPORT_TICKET_REQUEST_SUCCESS, JETPACK_CONNECTION_STATUS_RECEIVE, JETPACK_CONNECTION_STATUS_REQUEST, JETPACK_CONNECTION_STATUS_REQUEST_FAILURE, JETPACK_CONNECTION_STATUS_REQUEST_SUCCESS, JETPACK_CONNECTION_HEALTH_REQUEST, JETPACK_CONNECTION_HEALTH_REQUEST_FAILURE, JETPACK_CONNECTION_HEALTHY, JETPACK_CONNECTION_MAYBE_UNHEALTHY, JETPACK_CONNECTION_UNHEALTHY, JETPACK_CREDENTIALS_AUTOCONFIGURE, JETPACK_CREDENTIALS_DELETE, JETPACK_CREDENTIALS_GET, JETPACK_CREDENTIALS_GET_FAILURE, JETPACK_CREDENTIALS_GET_SUCCESS, JETPACK_CREDENTIALS_STORE, JETPACK_CREDENTIALS_TEST, JETPACK_CREDENTIALS_TEST_INVALID, JETPACK_CREDENTIALS_TEST_VALID, JETPACK_CREDENTIALS_UPDATE, JETPACK_CREDENTIALS_UPDATE_FAILURE, JETPACK_CREDENTIALS_UPDATE_PROGRESS_START, JETPACK_CREDENTIALS_UPDATE_PROGRESS_UPDATE, JETPACK_CREDENTIALS_UPDATE_RESET, JETPACK_CREDENTIALS_UPDATE_SUCCESS, JETPACK_MODULE_ACTIVATE, JETPACK_MODULE_ACTIVATE_FAILURE, JETPACK_MODULE_ACTIVATE_SUCCESS, JETPACK_MODULE_DEACTIVATE, JETPACK_MODULE_DEACTIVATE_FAILURE, JETPACK_MODULE_DEACTIVATE_SUCCESS, JETPACK_MODULES_RECEIVE, JETPACK_MODULES_REQUEST, JETPACK_MODULES_REQUEST_FAILURE, JETPACK_MODULES_REQUEST_SUCCESS, JETPACK_PARTNER_PORTAL_LICENSE_COUNTS_RECEIVE, JETPACK_PARTNER_PORTAL_LICENSE_COUNTS_REQUEST, JETPACK_PARTNER_PORTAL_LICENSES_RECEIVE, JETPACK_PARTNER_PORTAL_LICENSES_REQUEST, JETPACK_PARTNER_PORTAL_OAUTH_TOKEN_SET, JETPACK_PARTNER_PORTAL_PARTNER_ACTIVE_PARTNER_KEY_UPDATE, JETPACK_PARTNER_PORTAL_PARTNER_RECEIVE, JETPACK_PARTNER_PORTAL_PARTNER_RECEIVE_ERROR, JETPACK_PARTNER_PORTAL_PARTNER_REQUEST, JETPACK_PRODUCT_INSTALL_REQUEST, JETPACK_PRODUCT_INSTALL_STATUS_RECEIVE, JETPACK_PRODUCT_INSTALL_STATUS_REQUEST, JETPACK_REMOTE_INSTALL, JETPACK_REMOTE_INSTALL_FAILURE, JETPACK_REMOTE_INSTALL_SUCCESS, JETPACK_SCAN_ENQUEUE_REQUEST, JETPACK_SCAN_ENQUEUE_REQUEST_FAILURE, JETPACK_SCAN_ENQUEUE_REQUEST_SUCCESS, JETPACK_SCAN_ENQUEUE_UPDATE, JETPACK_SCAN_HISTORY_REQUEST, JETPACK_SCAN_HISTORY_REQUEST_FAILURE, JETPACK_SCAN_HISTORY_REQUEST_SUCCESS, JETPACK_SCAN_HISTORY_UPDATE, JETPACK_SCAN_REQUEST, JETPACK_SCAN_REQUEST_FAILURE, JETPACK_SCAN_REQUEST_SUCCESS, JETPACK_SCAN_THREAT_COUNTS_REQUEST, JETPACK_SCAN_THREAT_COUNTS_REQUEST_FAILURE, JETPACK_SCAN_THREAT_COUNTS_REQUEST_SUCCESS, JETPACK_SCAN_THREAT_COUNTS_UPDATE, JETPACK_SCAN_THREAT_FIX, JETPACK_SCAN_THREAT_IGNORE, JETPACK_SCAN_THREATS_FIX_ALL, JETPACK_SCAN_THREATS_GET_FIX_STATUS, JETPACK_SCAN_UPDATE, JETPACK_SCAN_UPDATE_THREAT, JETPACK_SCAN_UPDATE_THREAT_COMPLETED, JETPACK_SETTINGS_REQUEST, JETPACK_SETTINGS_SAVE, JETPACK_SETTINGS_SAVE_SUCCESS, JETPACK_SETTINGS_UPDATE, JETPACK_SITE_ALERT_THREAT_FIX, JETPACK_SITE_ALERT_THREAT_IGNORE, JETPACK_SYNC_START_ERROR, JETPACK_SYNC_START_REQUEST, JETPACK_SYNC_START_SUCCESS, JETPACK_SYNC_STATUS_ERROR, JETPACK_SYNC_STATUS_REQUEST, JETPACK_SYNC_STATUS_SUCCESS, JETPACK_USER_CONNECTION_CHANGE_OWNER, JETPACK_USER_CONNECTION_DATA_RECEIVE, JETPACK_USER_CONNECTION_DATA_REQUEST, JETPACK_USER_CONNECTION_DATA_REQUEST_FAILURE, JETPACK_USER_CONNECTION_DATA_REQUEST_SUCCESS, JITM_DISMISS, JITM_FETCH, JITM_OPEN_HELP_CENTER, JITM_SET, KEYRING_CONNECTION_DELETE, KEYRING_CONNECTION_DELETE_FAILURE, KEYRING_CONNECTIONS_RECEIVE, KEYRING_CONNECTIONS_REQUEST, KEYRING_CONNECTIONS_REQUEST_FAILURE, KEYRING_CONNECTIONS_REQUEST_SUCCESS, KEYRING_SERVICES_RECEIVE, KEYRING_SERVICES_REQUEST, KEYRING_SERVICES_REQUEST_FAILURE, KEYRING_SERVICES_REQUEST_SUCCESS, LASAGNA_SOCKET_CONNECTED, LASAGNA_SOCKET_DISCONNECTED, LEGAL_REQUEST, LEGAL_SET, LOGIN_AUTH_ACCOUNT_TYPE_REQUEST, LOGIN_AUTH_ACCOUNT_TYPE_REQUEST_FAILURE, LOGIN_AUTH_ACCOUNT_TYPE_REQUEST_SUCCESS, LOGIN_AUTH_ACCOUNT_TYPE_REQUESTING, LOGIN_AUTH_ACCOUNT_TYPE_RESET, LOGIN_EMAIL_SEND, LOGIN_FORM_UPDATE, LOGIN_REQUEST, LOGIN_REQUEST_FAILURE, LOGIN_REQUEST_SUCCESS, MAGIC_LOGIN_HIDE_REQUEST_FORM, MAGIC_LOGIN_HIDE_REQUEST_NOTICE, MAGIC_LOGIN_REQUEST_AUTH_ERROR, MAGIC_LOGIN_REQUEST_AUTH_FETCH, MAGIC_LOGIN_REQUEST_AUTH_SUCCESS, MAGIC_LOGIN_REQUEST_LOGIN_EMAIL_ERROR, MAGIC_LOGIN_REQUEST_LOGIN_EMAIL_FETCH, MAGIC_LOGIN_REQUEST_LOGIN_EMAIL_SUCCESS, MAGIC_LOGIN_RESET_REQUEST_FORM, MAGIC_LOGIN_SHOW_CHECK_YOUR_EMAIL_PAGE, MAGIC_LOGIN_SHOW_INTERSTITIAL_PAGE, MAGIC_LOGIN_SHOW_LINK_EXPIRED, MAILCHIMP_LISTS_LIST, MAILCHIMP_LISTS_RECEIVE, MAILCHIMP_SETTINGS_LIST, MAILCHIMP_SETTINGS_RECEIVE, MAILCHIMP_SETTINGS_UPDATE, MAILCHIMP_SETTINGS_UPDATE_FAILURE, MAILCHIMP_SETTINGS_UPDATE_SUCCESS, MARKETING_CLICK_UPGRADE_NUDGE, MARKETING_JETPACK_SALE_COUPON_FETCH_FAILURE, MARKETING_JETPACK_SALE_COUPON_FETCH, MARKETING_JETPACK_SALE_COUPON_RECEIVE, MARKETPLACE_BILLING_INTERVAL_SELECT, MARKETPLACE_PRODUCTS_REINSTALL_COMPLETED, MARKETPLACE_PRODUCTS_REINSTALL_FAILED, MARKETPLACE_PRODUCTS_REINSTALL_NOT_STARTED, MARKETPLACE_PRODUCTS_REINSTALL_STARTED, MARKETPLACE_PLUGIN_INSTALLATION_STATE_CHANGE, MARKETPLACE_PRIMARY_DOMAIN_SELECT, MARKETPLACE_QUEUE_PRODUCT_INSTALL, MEDIA_CLEAR_SITE, MEDIA_ERRORS_CLEAR, MEDIA_ITEM_CREATE, MEDIA_ITEM_EDIT, MEDIA_ITEM_ERRORS_CLEAR, MEDIA_ITEM_ERRORS_SET, MEDIA_ITEM_REQUEST, MEDIA_ITEM_REQUEST_FAILURE, MEDIA_ITEM_REQUEST_SUCCESS, MEDIA_LIBRARY_SELECTED_ITEMS_UPDATE, MEDIA_RECEIVE, MEDIA_REQUEST, MEDIA_REQUEST_FAILURE, MEDIA_REQUEST_SUCCESS, MEDIA_SET_NEXT_PAGE_HANDLE, MEDIA_SET_QUERY, MEDIA_SOURCE_CHANGE, MEMBERSHIPS_COUPON_ADD, MEMBERSHIPS_COUPON_ADD_FAILURE, MEMBERSHIPS_COUPON_DELETE, MEMBERSHIPS_COUPON_DELETE_FAILURE, MEMBERSHIPS_COUPON_RECEIVE, MEMBERSHIPS_COUPON_UPDATE, MEMBERSHIPS_COUPON_UPDATE_FAILURE, MEMBERSHIPS_COUPONS_LIST, MEMBERSHIPS_COUPONS_RECEIVE, MEMBERSHIPS_GIFT_ADD, MEMBERSHIPS_GIFT_ADD_FAILURE, MEMBERSHIPS_GIFT_DELETE, MEMBERSHIPS_GIFT_DELETE_FAILURE, MEMBERSHIPS_EARNINGS_GET, MEMBERSHIPS_EARNINGS_RECEIVE, MEMBERSHIPS_PRODUCT_ADD, MEMBERSHIPS_PRODUCT_ADD_FAILURE, MEMBERSHIPS_PRODUCT_DELETE, MEMBERSHIPS_PRODUCT_DELETE_FAILURE, MEMBERSHIPS_PRODUCT_RECEIVE, MEMBERSHIPS_PRODUCT_UPDATE, MEMBERSHIPS_PRODUCT_UPDATE_FAILURE, MEMBERSHIPS_PRODUCTS_LIST, MEMBERSHIPS_PRODUCTS_RECEIVE, MEMBERSHIPS_SETTINGS, MEMBERSHIPS_SETTINGS_RECEIVE, MEMBERSHIPS_SUBSCRIBERS_LIST, MEMBERSHIPS_SUBSCRIBERS_RECEIVE, MEMBERSHIPS_SUBSCRIPTION_STOP, MEMBERSHIPS_SUBSCRIPTION_STOP_FAILURE, MEMBERSHIPS_SUBSCRIPTION_STOP_SUCCESS, MEMBERSHIPS_SUBSCRIPTION_UPDATE, MEMBERSHIPS_SUBSCRIPTION_UPDATING, MEMBERSHIPS_SUBSCRIPTION_UPDATING_FAILURE, MEMBERSHIPS_SUBSCRIPTION_UPDATING_SUCCESS, MEMBERSHIPS_SUBSCRIPTIONS_LIST_REQUEST, MEMBERSHIPS_SUBSCRIPTIONS_RECEIVE, MY_SITES_SIDEBAR_SECTION_TOGGLE, MY_SITES_SIDEBAR_SECTIONS_COLLAPSE_ALL, NOTIFICATION_SETTINGS_FETCH, NOTIFICATION_SETTINGS_FETCH_COMPLETE, NOTIFICATION_SETTINGS_FETCH_FAILED, NOTIFICATION_SETTINGS_REQUEST, NOTIFICATION_SETTINGS_SAVE, NOTIFICATION_SETTINGS_SAVE_COMPLETE, NOTIFICATION_SETTINGS_SAVE_FAILED, NOTIFICATION_SETTINGS_TOGGLE_SETTING, NOTIFICATION_SETTINGS_UPDATE, NOTIFICATIONS_FORCE_REFRESH, NOTIFICATIONS_UNSEEN_COUNT_SET, OAUTH2_CLIENT_DATA_RECEIVE, ORDER_TRANSACTION_FETCH, ORDER_TRANSACTION_FETCH_ERROR, ORDER_TRANSACTION_SET, P2_CONNECTION_DELETE, P2_CONNECTION_DELETE_FAILURE, P2_CONNECTIONS_RECEIVE, P2_CONNECTIONS_REQUEST, P2_CONNECTIONS_REQUEST_FAILURE, P2_CONNECTIONS_REQUEST_SUCCESS, PLANS_RECEIVE, PLANS_REQUEST, PLANS_REQUEST_FAILURE, PLANS_REQUEST_SUCCESS, PLUGIN_ACTIVATE_REQUEST, PLUGIN_ACTIVATE_REQUEST_FAILURE, PLUGIN_ACTIVATE_REQUEST_SUCCESS, PLUGIN_AUTOUPDATE_DISABLE_REQUEST, PLUGIN_AUTOUPDATE_DISABLE_REQUEST_FAILURE, PLUGIN_AUTOUPDATE_DISABLE_REQUEST_SUCCESS, PLUGIN_AUTOUPDATE_ENABLE_REQUEST, PLUGIN_AUTOUPDATE_ENABLE_REQUEST_FAILURE, PLUGIN_AUTOUPDATE_ENABLE_REQUEST_SUCCESS, PLUGIN_DEACTIVATE_REQUEST, PLUGIN_DEACTIVATE_REQUEST_FAILURE, PLUGIN_DEACTIVATE_REQUEST_SUCCESS, PLUGIN_INSTALL_REQUEST, PLUGIN_INSTALL_REQUEST_FAILURE, PLUGIN_INSTALL_REQUEST_SUCCESS, PLUGIN_NOTICES_REMOVE, RESET_PLUGIN_NOTICES, PLUGIN_REMOVE_REQUEST, PLUGIN_REMOVE_REQUEST_FAILURE, PLUGIN_REMOVE_REQUEST_SUCCESS, PLUGIN_SETUP_ACTIVATE, PLUGIN_SETUP_CONFIGURE, PLUGIN_SETUP_ERROR, PLUGIN_SETUP_FINISH, PLUGIN_SETUP_INSTALL, PLUGIN_SETUP_INSTRUCTIONS_FETCH, PLUGIN_SETUP_INSTRUCTIONS_RECEIVE, PLUGIN_UPDATE_REQUEST, PLUGIN_UPDATE_REQUEST_FAILURE, PLUGIN_UPDATE_REQUEST_SUCCESS, PLUGIN_ALREADY_UP_TO_DATE, PLUGIN_ACTION_STATUS_UPDATE, PLUGIN_UPLOAD, PLUGIN_UPLOAD_CLEAR, PLUGIN_UPLOAD_COMPLETE, PLUGIN_UPLOAD_ERROR, PLUGIN_UPLOAD_PROGRESS, PLUGINS_ALL_RECEIVE, PLUGINS_ALL_REQUEST, PLUGINS_ALL_REQUEST_FAILURE, PLUGINS_ALL_REQUEST_SUCCESS, PLUGINS_RECEIVE, PLUGINS_REQUEST, PLUGINS_REQUEST_FAILURE, PLUGINS_REQUEST_SUCCESS, PLUGINS_WPORG_LIST_RECEIVE, PLUGINS_WPORG_LIST_REQUEST, PLUGINS_WPORG_PLUGIN_RECEIVE, PLUGINS_WPORG_PLUGIN_REQUEST, POST_RESTORE_SUCCESS, POST_REVISIONS_AUTHORS_REQUEST, POST_REVISIONS_REQUEST, POST_SAVE_FAILURE, POST_STATS_RECEIVE, POST_STATS_REQUEST, POST_STATS_REQUEST_FAILURE, POST_STATS_REQUEST_SUCCESS, POST_TYPES_RECEIVE, POST_TYPES_REQUEST, POST_TYPES_TAXONOMIES_RECEIVE, POST_TYPES_TAXONOMIES_REQUEST, POST_TYPES_TAXONOMIES_REQUEST_FAILURE, POST_TYPES_TAXONOMIES_REQUEST_SUCCESS, PRODUCTS_LIST_RECEIVE, PRODUCTS_LIST_REQUEST, PRODUCTS_LIST_REQUEST_FAILURE, PROMOTE_POST_CAMPAIGNS_FETCH, PROMOTE_POST_CAMPAIGNS_FETCH_DONE, PROMOTE_POST_CAMPAIGN_CANCEL, PUBLICIZE_CONNECTION_CREATE, PUBLICIZE_CONNECTION_CREATE_FAILURE, PUBLICIZE_CONNECTION_DELETE, PUBLICIZE_CONNECTION_DELETE_FAILURE, PUBLICIZE_CONNECTION_RECEIVE, PUBLICIZE_CONNECTION_UPDATE, PUBLICIZE_CONNECTION_UPDATE_FAILURE, PUBLICIZE_CONNECTIONS_RECEIVE, PUBLICIZE_CONNECTIONS_REQUEST, PUBLICIZE_CONNECTIONS_REQUEST_FAILURE, PUBLICIZE_CONNECTIONS_REQUEST_SUCCESS, PUBLICIZE_SHARE, PUBLICIZE_SHARE_ACTION_DELETE, PUBLICIZE_SHARE_ACTION_DELETE_FAILURE, PUBLICIZE_SHARE_ACTION_DELETE_SUCCESS, PUBLICIZE_SHARE_ACTION_SCHEDULE, PUBLICIZE_SHARE_ACTION_SCHEDULE_FAILURE, PUBLICIZE_SHARE_ACTION_SCHEDULE_SUCCESS, PUBLICIZE_SHARE_ACTIONS_PUBLISHED_REQUEST, PUBLICIZE_SHARE_ACTIONS_PUBLISHED_REQUEST_FAILURE, PUBLICIZE_SHARE_ACTIONS_PUBLISHED_REQUEST_SUCCESS, PUBLICIZE_SHARE_ACTIONS_SCHEDULED_REQUEST, PUBLICIZE_SHARE_ACTIONS_SCHEDULED_REQUEST_FAILURE, PUBLICIZE_SHARE_ACTIONS_SCHEDULED_REQUEST_SUCCESS, PUBLICIZE_SHARE_DISMISS, PUBLICIZE_SHARE_FAILURE, PUBLICIZE_SHARE_SUCCESS, PURCHASE_CANCELLATION_OFFER_REQUEST, PURCHASE_CANCELLATION_OFFER_REQUEST_FAILURE, PURCHASE_CANCELLATION_OFFER_RECEIVE, PURCHASE_CANCELLATION_OFFER_APPLY, PURCHASE_CANCELLATION_OFFER_APPLY_SUCCESS, PURCHASE_CANCELLATION_OFFER_APPLY_FAILURE, PUSH_NOTIFICATIONS_API_NOT_READY, PUSH_NOTIFICATIONS_API_READY, PUSH_NOTIFICATIONS_AUTHORIZE, PUSH_NOTIFICATIONS_BLOCK, PUSH_NOTIFICATIONS_MUST_PROMPT, PUSH_NOTIFICATIONS_RECEIVE_REGISTER_DEVICE, PUSH_NOTIFICATIONS_RECEIVE_UNREGISTER_DEVICE, PUSH_NOTIFICATIONS_TOGGLE_ENABLED, PUSH_NOTIFICATIONS_TOGGLE_UNBLOCK_INSTRUCTIONS, RECEIPT_FETCH, RECEIPT_FETCH_COMPLETED, RECEIPT_FETCH_FAILED, REWIND_ACTIVATE_FAILURE, REWIND_ACTIVATE_REQUEST, REWIND_ACTIVATE_SUCCESS, REWIND_ACTIVITY_SHARE_REQUEST, REWIND_BACKUP, REWIND_BACKUP_DISMISS, REWIND_BACKUP_DISMISS_PROGRESS, REWIND_BACKUP_PROGRESS_REQUEST, REWIND_BACKUP_REQUEST, REWIND_BACKUP_SET_DOWNLOAD_ID, REWIND_BACKUP_SITE, REWIND_BACKUP_UPDATE_ERROR, REWIND_BACKUP_UPDATE_PROGRESS, REWIND_BACKUPS_REQUEST, REWIND_BACKUPS_SET, REWIND_CAPABILITIES_REQUEST, REWIND_CAPABILITIES_UPDATE, REWIND_CLONE, REWIND_DEACTIVATE_FAILURE, REWIND_DEACTIVATE_REQUEST, REWIND_DEACTIVATE_SUCCESS, REWIND_GRANULAR_RESTORE, REWIND_GRANULAR_BACKUP_REQUEST, REWIND_POLICIES_REQUEST, REWIND_POLICIES_REQUEST_FAILURE, REWIND_POLICIES_REQUEST_SUCCESS, REWIND_POLICIES_SET, REWIND_RESTORE, REWIND_RESTORE_DISMISS, REWIND_RESTORE_DISMISS_PROGRESS, REWIND_RESTORE_PROGRESS_REQUEST, REWIND_RESTORE_REQUEST, REWIND_RESTORE_UPDATE_PROGRESS, REWIND_SIZE_REQUEST, REWIND_SIZE_REQUEST_FAILURE, REWIND_SIZE_REQUEST_SUCCESS, REWIND_SIZE_SET, REWIND_STAGING_CLONE, REWIND_STATE_REQUEST, REWIND_STATE_UPDATE, REWIND_STORAGE_USAGE_LEVEL_SET, SET_MEDIA_EXPORT_DATA, SIGNUP_COMPLETE_RESET, SIGNUP_CURRENT_FLOW_NAME_SET, SIGNUP_DEPENDENCY_STORE_REMOVE_SITE_SLUG, SIGNUP_DEPENDENCY_STORE_UPDATE, SIGNUP_OPTIONAL_DEPENDENCY_SUGGESTED_USERNAME_SET, SIGNUP_PREVIOUS_FLOW_NAME_SET, SIGNUP_FLOW_ADD_EXCLUDED_STEPS, SIGNUP_FLOW_REMOVE_EXCLUDED_STEPS, SIGNUP_FLOW_RESET_EXCLUDED_STEPS, SIGNUP_PROGRESS_ADD_STEP, SIGNUP_PROGRESS_COMPLETE_STEP, SIGNUP_PROGRESS_INVALIDATE_STEP, SIGNUP_PROGRESS_PROCESS_STEP, SIGNUP_PROGRESS_REMOVE_STEP, SIGNUP_PROGRESS_SAVE_STEP, SIGNUP_PROGRESS_SUBMIT_STEP, SIGNUP_STEPS_DESIGN_TYPE_SET, SIGNUP_STEPS_SITE_GOALS_SET, SIGNUP_STEPS_SITE_VERTICAL_SET, SIGNUP_STEPS_SITE_INFO_COLLECTION_UPDATE, SIGNUP_STEPS_SITE_INFO_UPDATE_CURRENT_INDEX, SIGNUP_STEPS_WEBSITE_CONTENT_INITIALIZE_PAGES, SIGNUP_STEPS_WEBSITE_CONTENT_UPDATE_CURRENT_INDEX, SIGNUP_STEPS_WEBSITE_CONTENT_MEDIA_UPLOAD_STARTED, SIGNUP_STEPS_WEBSITE_CONTENT_MEDIA_UPLOAD_COMPLETED, SIGNUP_STEPS_WEBSITE_FIELD_CHANGED, SIGNUP_STEPS_WEBSITE_CONTENT_MEDIA_UPLOAD_FAILED, SIGNUP_STEPS_WEBSITE_CONTENT_MEDIA_REMOVED, SIGNUP_STEPS_WEBSITE_CONTENT_LOGO_UPLOAD_STARTED, SIGNUP_STEPS_WEBSITE_CONTENT_LOGO_UPLOAD_COMPLETED, SIGNUP_STEPS_WEBSITE_CONTENT_LOGO_UPLOAD_FAILED, SIGNUP_STEPS_SOCIAL_PROFILES_UPDATE, SIGNUP_STEPS_SOCIAL_PROFILES_RESET, SIGNUP_STEPS_WEBSITE_CONTENT_REMOVE_LOGO_URL, SIGNUP_STEPS_WEBSITE_CONTENT_FEEDBACK_CHANGE, SIGNUP_STEPS_WEBSITE_CONTENT_CHANGES_SAVED, SIGNUP_STEPS_WEBSITE_CONTENT_SEARCH_TERMS_CHANGED, SIGNUP_STEPS_USER_EXPERIENCE_SET, SITE_ADDRESS_AVAILABILITY_ERROR, SITE_ADDRESS_AVAILABILITY_ERROR_CLEAR, SITE_ADDRESS_AVAILABILITY_REQUEST, SITE_ADDRESS_AVAILABILITY_SUCCESS, SITE_ADDRESS_CHANGE_REQUEST, SITE_ADDRESS_CHANGE_REQUEST_FAILURE, SITE_ADDRESS_CHANGE_REQUEST_SUCCESS, SITE_CHECKLIST_RECEIVE, SITE_CHECKLIST_REQUEST, SITE_CHECKLIST_TASK_UPDATE, SITE_CONNECTION_STATUS_RECEIVE, SITE_CONNECTION_STATUS_REQUEST, SITE_CONNECTION_STATUS_REQUEST_FAILURE, SITE_CONNECTION_STATUS_REQUEST_SUCCESS, SITE_IMPORTER_IMPORT_FAILURE, SITE_IMPORTER_IMPORT_RESET, SITE_IMPORTER_IMPORT_START, SITE_IMPORTER_IMPORT_SUCCESS, SITE_IMPORTER_IS_SITE_IMPORTABLE_FAILURE, SITE_IMPORTER_IS_SITE_IMPORTABLE_START, SITE_IMPORTER_IS_SITE_IMPORTABLE_SUCCESS, SITE_IMPORTER_VALIDATION_ERROR_SET, SITE_KEYRINGS_DELETE, SITE_KEYRINGS_DELETE_FAILURE, SITE_KEYRINGS_DELETE_SUCCESS, SITE_KEYRINGS_REQUEST, SITE_KEYRINGS_REQUEST_FAILURE, SITE_KEYRINGS_REQUEST_SUCCESS, SITE_KEYRINGS_SAVE_SUCCESS, SITE_KEYRINGS_UPDATE, SITE_KEYRINGS_UPDATE_FAILURE, SITE_KEYRINGS_UPDATE_SUCCESS, SITE_LAUNCH, SITE_PLAN_OWNERSHIP_TRANSFER, SITE_SETTINGS_REQUEST, SITE_SETTINGS_REQUEST_FAILURE, SITE_SETTINGS_REQUEST_SUCCESS, SITE_SETTINGS_SAVE, SITE_SETTINGS_SAVE_FAILURE, SITE_SETTINGS_SAVE_SUCCESS, SITE_STATS_RECEIVE, SITE_STATS_REQUEST, SITE_STATS_REQUEST_FAILURE, SOCIAL_CONNECT_ACCOUNT_REQUEST, SOCIAL_CONNECT_ACCOUNT_REQUEST_FAILURE, SOCIAL_CONNECT_ACCOUNT_REQUEST_SUCCESS, SOCIAL_CONNECT_ACCOUNT_LINKING_CANCEL, SOCIAL_CREATE_ACCOUNT_REQUEST_FAILURE, SOCIAL_HANDOFF_CONNECT_ACCOUNT, SOCIAL_DISCONNECT_ACCOUNT_REQUEST, SOCIAL_DISCONNECT_ACCOUNT_REQUEST_FAILURE, SOCIAL_DISCONNECT_ACCOUNT_REQUEST_SUCCESS, SOCIAL_LOGIN_REQUEST, SOCIAL_LOGIN_REQUEST_FAILURE, SOCIAL_LOGIN_REQUEST_SUCCESS, STATS_CHART_COUNTS_RECEIVE, STATS_CHART_COUNTS_REQUEST, STATS_HIGHLIGHTS_RECEIVE, STATS_HIGHLIGHTS_REQUEST, STATS_UTM_METRICS_REQUEST, STATS_UTM_METRICS_REQUEST_FAILURE, STATS_UTM_METRICS_RECEIVE, STATS_UTM_METRICS_RECEIVE_BY_POST, STATS_UTM_TOP_POSTS_REQUEST, STATS_UTM_TOP_POSTS_RECEIVE, STATS_MODULE_SETTINGS_RECEIVE, STATS_MODULE_SETTINGS_REQUEST, STATS_MODULE_SETTINGS_UPDATE, STATS_MODULE_TOGGLES_RECEIVE, STATS_MODULE_TOGGLES_REQUEST, STATS_MODULE_TOGGLES_UPDATE, STATS_RECENT_POST_VIEWS_RECEIVE, STATS_RECENT_POST_VIEWS_REQUEST, STATS_PAID_STATS_UPSELL_MODAL_TOGGLE, STATS_JETPACK_NOTICE_SETTINGS_RECEIVE, STATS_JETPACK_NOTICE_SETTINGS_REQUEST, STATS_JETPACK_NOTICE_SETTINGS_FAILURE, STORED_CARDS_ADD_COMPLETED, STORED_CARDS_DELETE, STORED_CARDS_DELETE_COMPLETED, STORED_CARDS_DELETE_FAILED, STORED_CARDS_UPDATE_IS_PRIMARY_COMPLETED, STORED_CARDS_UPDATE_IS_BACKUP_COMPLETED, STORED_CARDS_FETCH, STORED_CARDS_FETCH_COMPLETED, STORED_CARDS_FETCH_FAILED, SUPPORT_ARTICLE_DIALOG_CLOSE, SUPPORT_ARTICLE_DIALOG_OPEN, SUPPORT_SESSION_TRANSITION, SITE_STAGING_STATUS_SET, SITE_SYNC_STATUS_SET, SITE_SYNC_TARGET_SITE, SITE_SYNC_SOURCE_SITE, SITE_SYNC_IS_SYNCING_IN_PROGRESS, SITE_SYNC_STATUS_REQUEST, SITE_SYNC_FAILURE, SITE_SYNC_LAST_RESTORE_ID, TERM_REMOVE, TERMS_RECEIVE, TERMS_REQUEST, TERMS_REQUEST_FAILURE, TERMS_REQUEST_SUCCESS, TIMEZONES_RECEIVE, TIMEZONES_REQUEST, TOS_ACCEPT, TWO_FACTOR_AUTHENTICATION_LOGIN_REQUEST, TWO_FACTOR_AUTHENTICATION_LOGIN_REQUEST_FAILURE, TWO_FACTOR_AUTHENTICATION_LOGIN_REQUEST_SUCCESS, TWO_FACTOR_AUTHENTICATION_SEND_SMS_CODE_REQUEST, TWO_FACTOR_AUTHENTICATION_SEND_SMS_CODE_REQUEST_FAILURE, TWO_FACTOR_AUTHENTICATION_SEND_SMS_CODE_REQUEST_SUCCESS, TWO_FACTOR_AUTHENTICATION_UPDATE_NONCE, URL_ANALYZER_ANALYZE, URL_ANALYZER_ANALYZE_DONE, URL_ANALYZER_ANALYZE_SUCCESS, URL_ANALYZER_ANALYZE_ERROR, URL_ANALYZER_RESET_ERROR, URL_ANALYZER_URL_DATA_UPDATE, USER_LICENSES_RECEIVE, USER_LICENSES_REQUEST, USER_LICENSES_REQUEST_SUCCESS, USER_LICENSES_REQUEST_FAILURE, USER_LICENSES_COUNTS_RECEIVE, USER_LICENSES_COUNTS_REQUEST, USER_LICENSES_COUNTS_REQUEST_SUCCESS, USER_LICENSES_COUNTS_REQUEST_FAILURE, USER_PROFILE_LINKS_ADD, USER_PROFILE_LINKS_ADD_DUPLICATE, USER_PROFILE_LINKS_ADD_FAILURE, USER_PROFILE_LINKS_ADD_MALFORMED, USER_PROFILE_LINKS_ADD_SUCCESS, USER_PROFILE_LINKS_DELETE, USER_PROFILE_LINKS_DELETE_FAILURE, USER_PROFILE_LINKS_DELETE_SUCCESS, USER_PROFILE_LINKS_RECEIVE, USER_PROFILE_LINKS_REQUEST, USER_PROFILE_LINKS_RESET_ERRORS, USER_SETTINGS_REQUEST, USER_SETTINGS_REQUEST_FAILURE, USER_SETTINGS_REQUEST_SUCCESS, USER_SETTINGS_SAVE, USER_SETTINGS_SAVE_FAILURE, USER_SETTINGS_SAVE_SUCCESS, USER_SETTINGS_UNSAVED_CLEAR, USER_SETTINGS_UNSAVED_REMOVE, USER_SETTINGS_UNSAVED_SET, USER_SUGGESTIONS_RECEIVE, USER_SUGGESTIONS_REQUEST, USER_SUGGESTIONS_REQUEST_FAILURE, USER_SUGGESTIONS_REQUEST_SUCCESS, VIDEO_EDITOR_SET_POSTER_URL, VIDEO_EDITOR_SHOW_ERROR, VIDEO_EDITOR_SHOW_UPLOAD_PROGRESS, VIDEO_EDITOR_UPDATE_POSTER, VIDEO_EDITOR_REFRESH_POSTER, WORDADS_EARNINGS_RECEIVE, WORDADS_EARNINGS_REQUEST, WORDADS_SETTINGS_RECEIVE, WORDADS_SETTINGS_REQUEST, WORDADS_SETTINGS_SAVE, WORDADS_SETTINGS_SAVE_FAILURE, WORDADS_SETTINGS_SAVE_SUCCESS, WORDADS_SETTINGS_UPDATE, WORDADS_PAYMENTS_RECEIVE, WORDADS_PAYMENTS_REQUEST, WORDADS_SITE_APPROVE_REQUEST, WORDADS_SITE_APPROVE_REQUEST_DISMISS_ERROR, WORDADS_SITE_APPROVE_REQUEST_DISMISS_SUCCESS, WORDADS_SITE_APPROVE_REQUEST_FAILURE, WORDADS_STATUS_RECEIVE, WORDADS_STATUS_REQUEST, EMAIL_STATS_RECEIVE, EMAIL_STATS_REQUEST, EMAIL_STATS_REQUEST_FAILURE, EMAIL_STATS_REQUEST_SUCCESS */
+/* unused harmony exports ACCOUNT_CLOSE, ACCOUNT_CLOSE_SUCCESS, ACCOUNT_RECOVERY_SETTINGS_DELETE, ACCOUNT_RECOVERY_SETTINGS_DELETE_FAILED, ACCOUNT_RECOVERY_SETTINGS_DELETE_SUCCESS, ACCOUNT_RECOVERY_SETTINGS_FETCH, ACCOUNT_RECOVERY_SETTINGS_FETCH_FAILED, ACCOUNT_RECOVERY_SETTINGS_FETCH_SUCCESS, ACCOUNT_RECOVERY_SETTINGS_RESEND_VALIDATION, ACCOUNT_RECOVERY_SETTINGS_RESEND_VALIDATION_FAILED, ACCOUNT_RECOVERY_SETTINGS_RESEND_VALIDATION_SUCCESS, ACCOUNT_RECOVERY_SETTINGS_UPDATE, ACCOUNT_RECOVERY_SETTINGS_UPDATE_FAILED, ACCOUNT_RECOVERY_SETTINGS_UPDATE_SUCCESS, ACCOUNT_RECOVERY_SETTINGS_VALIDATE_PHONE, ACCOUNT_RECOVERY_SETTINGS_VALIDATE_PHONE_FAILED, ACCOUNT_RECOVERY_SETTINGS_VALIDATE_PHONE_SUCCESS, ACTIVE_PROMOTIONS_RECEIVE, ACTIVE_PROMOTIONS_REQUEST, ACTIVE_PROMOTIONS_REQUEST_FAILURE, ACTIVE_PROMOTIONS_REQUEST_SUCCESS, ACTIVITY_LOG_FILTER_SET, ACTIVITY_LOG_FILTER_UPDATE, ADMIN_COLOR_RECEIVE, ADMIN_COLOR_REQUEST, ADMIN_MENU_RECEIVE, ADMIN_MENU_REQUEST, ALL_DOMAINS_REQUEST, ALL_DOMAINS_REQUEST_FAILURE, ALL_DOMAINS_REQUEST_SUCCESS, ALL_SITES_STATS_RECEIVE, ANALYTICS_MULTI_TRACK, ATOMIC_TRANSFER_REQUEST, ATOMIC_TRANSFER_SET, ATOMIC_TRANSFER_INITIATE_TRANSFER, ATOMIC_TRANSFER_REQUEST_LATEST, ATOMIC_TRANSFER_SET_LATEST, ATOMIC_SOFTWARE_INITIATE_INSTALL, ATOMIC_SOFTWARE_REQUEST_STATUS, ATOMIC_SOFTWARE_SET_STATUS, ATOMIC_SOFTWARE_SET_ERROR, AUTOMATED_TRANSFER_ELIGIBILITY_REQUEST, AUTOMATED_TRANSFER_ELIGIBILITY_UPDATE, AUTOMATED_TRANSFER_INITIATE_WITH_PLUGIN_ZIP, AUTOMATED_TRANSFER_STATUS_REQUEST, AUTOMATED_TRANSFER_STATUS_REQUEST_FAILURE, AUTOMATED_TRANSFER_STATUS_SET, BILLING_RECEIPT_EMAIL_SEND, BILLING_RECEIPT_EMAIL_SEND_FAILURE, BILLING_RECEIPT_EMAIL_SEND_SUCCESS, BILLING_TRANSACTION_ERROR_CLEAR, BILLING_TRANSACTION_RECEIVE, BILLING_TRANSACTION_REQUEST, BILLING_TRANSACTION_REQUEST_FAILURE, BILLING_TRANSACTION_REQUEST_SUCCESS, BILLING_TRANSACTIONS_FILTER_SET_APP, BILLING_TRANSACTIONS_FILTER_SET_MONTH, BILLING_TRANSACTIONS_FILTER_SET_PAGE, BILLING_TRANSACTIONS_FILTER_SET_QUERY, BILLING_TRANSACTIONS_RECEIVE, BILLING_TRANSACTIONS_REQUEST, BILLING_TRANSACTIONS_REQUEST_FAILURE, BILLING_TRANSACTIONS_REQUEST_SUCCESS, BREADCRUMB_RESET_LIST, BREADCRUMB_UPDATE_LIST, BREADCRUMB_APPEND_ITEM, COMMAND_PALETTE_CLOSE, COMMAND_PALETTE_OPEN, COMMENT_COUNTS_REQUEST, COMMENT_COUNTS_UPDATE, COMMENT_REQUEST, COMMENTS_CHANGE_STATUS, COMMENTS_COUNT_INCREMENT, COMMENTS_COUNT_RECEIVE, COMMENTS_DELETE, COMMENTS_EDIT, COMMENTS_EMPTY, COMMENTS_EMPTY_SUCCESS, COMMENTS_LIKE, COMMENTS_LIST_REQUEST, COMMENTS_QUERY_UPDATE, COMMENTS_RECEIVE, COMMENTS_RECEIVE_ERROR, COMMENTS_REPLY_WRITE, COMMENTS_REQUEST, COMMENTS_SET_ACTIVE_REPLY, COMMENTS_TOGGLE_INLINE_EXPANDED, COMMENTS_UNLIKE, COMMENTS_UPDATES_RECEIVE, COMMENTS_WRITE, COMMENTS_WRITE_ERROR, CONCIERGE_APPOINTMENT_CANCEL, CONCIERGE_APPOINTMENT_CREATE, CONCIERGE_APPOINTMENT_DETAILS_REQUEST, CONCIERGE_APPOINTMENT_DETAILS_UPDATE, CONCIERGE_APPOINTMENT_RESCHEDULE, CONCIERGE_INITIAL_REQUEST, CONCIERGE_INITIAL_UPDATE, CONCIERGE_SIGNUP_FORM_UPDATE, CONCIERGE_UPDATE_BOOKING_STATUS, CONNECTED_APPLICATION_DELETE, CONNECTED_APPLICATION_DELETE_SUCCESS, CONNECTED_APPLICATIONS_RECEIVE, CONNECTED_APPLICATIONS_REQUEST, CONNECTION_LOST, CONNECTION_RESTORED, CONNECTIONS_SET_EXPANDED_SERVICE, COUNTRIES_DOMAINS_FETCH, COUNTRIES_DOMAINS_UPDATED, COUNTRIES_SMS_FETCH, COUNTRIES_SMS_UPDATED, COUNTRIES_WOOCOMMERCE_FETCH, COUNTRIES_WOOCOMMERCE_UPDATED, COUNTRY_STATES_RECEIVE, COUNTRY_STATES_REQUEST, COUNTRY_STATES_REQUEST_FAILURE, COUNTRY_STATES_REQUEST_SUCCESS, CURRENT_USER_FETCH, DOCUMENT_HEAD_LINK_SET, DOCUMENT_HEAD_META_SET, DOCUMENT_HEAD_TITLE_SET, DOCUMENT_HEAD_UNREAD_COUNT_SET, DOMAIN_MANAGEMENT_WHOIS_RECEIVE, DOMAIN_MANAGEMENT_WHOIS_REQUEST, DOMAIN_MANAGEMENT_WHOIS_REQUEST_FAILURE, DOMAIN_MANAGEMENT_WHOIS_REQUEST_SUCCESS, DOMAIN_MANAGEMENT_WHOIS_SAVE, DOMAIN_MANAGEMENT_WHOIS_SAVE_FAILURE, DOMAIN_MANAGEMENT_WHOIS_SAVE_SUCCESS, DOMAIN_MANAGEMENT_WHOIS_UPDATE, DOMAIN_TRANSFER_ACCEPT, DOMAIN_TRANSFER_ACCEPT_COMPLETED, DOMAIN_TRANSFER_CANCEL_REQUEST, DOMAIN_TRANSFER_CANCEL_REQUEST_COMPLETED, DOMAIN_TRANSFER_CANCEL_REQUEST_FAILED, DOMAIN_TRANSFER_CODE_REQUEST, DOMAIN_TRANSFER_CODE_REQUEST_COMPLETED, DOMAIN_TRANSFER_CODE_REQUEST_FAILED, DOMAIN_TRANSFER_DECLINE, DOMAIN_TRANSFER_DECLINE_COMPLETED, DOMAIN_TRANSFER_IPS_TAG_SAVE, DOMAIN_TRANSFER_UPDATE, DOMAIN_TRANSFER_UPDATE_LOCK, DOMAIN_WAPI_INFO_FETCH, DOMAIN_WAPI_INFO_FETCH_FAILURE, DOMAIN_WAPI_INFO_FETCH_SUCCESS, DOMAINS_DNS_ADD, DOMAINS_DNS_ADD_COMPLETED, DOMAINS_DNS_ADD_FAILED, DOMAINS_DNS_APPLY_TEMPLATE_COMPLETED, DOMAINS_DNS_DELETE, DOMAINS_DNS_DELETE_COMPLETED, DOMAINS_DNS_DELETE_FAILED, DOMAINS_DNS_FETCH, DOMAINS_DNS_FETCH_COMPLETED, DOMAINS_DNS_FETCH_FAILED, DOMAINS_DNS_UPDATE, DOMAINS_DNS_UPDATE_COMPLETED, DOMAINS_DNS_UPDATE_FAILED, DOMAINS_SITE_REDIRECT_FETCH, DOMAINS_SITE_REDIRECT_FETCH_COMPLETED, DOMAINS_SITE_REDIRECT_FETCH_FAILED, DOMAINS_SITE_REDIRECT_NOTICE_CLOSE, DOMAINS_SITE_REDIRECT_UPDATE, DOMAINS_SITE_REDIRECT_UPDATE_COMPLETED, DOMAINS_SITE_REDIRECT_UPDATE_FAILED, DOMAINS_REDIRECT_FETCH, DOMAINS_REDIRECT_FETCH_COMPLETED, DOMAINS_REDIRECT_FETCH_FAILED, DOMAINS_REDIRECT_NOTICE_CLOSE, DOMAINS_REDIRECT_UPDATE, DOMAINS_REDIRECT_UPDATE_COMPLETED, DOMAINS_REDIRECT_UPDATE_FAILED, DOMAINS_REDIRECT_DELETE, DOMAINS_REDIRECT_DELETE_COMPLETED, DOMAINS_REDIRECT_DELETE_FAILED, DOMAINS_SUGGESTIONS_RECEIVE, DOMAINS_SUGGESTIONS_REQUEST, DOMAINS_SUGGESTIONS_REQUEST_FAILURE, DOMAINS_SUGGESTIONS_REQUEST_SUCCESS, EDITOR_IFRAME_LOADED, EDITOR_TYPE_REQUEST, EDITOR_TYPE_SET, EMAIL_ACCOUNTS_REQUEST, EMAIL_ACCOUNTS_REQUEST_FAILURE, EMAIL_ACCOUNTS_REQUEST_SUCCESS, EMAIL_FORWARDING_REQUEST, EMAIL_FORWARDING_REQUEST_FAILURE, EMAIL_FORWARDING_REQUEST_SUCCESS, EXPORT_ADVANCED_SETTINGS_FETCH, EXPORT_ADVANCED_SETTINGS_FETCH_FAIL, EXPORT_ADVANCED_SETTINGS_RECEIVE, EXPORT_CLEAR, EXPORT_COMPLETE, EXPORT_FAILURE, EXPORT_MEDIA_REQUEST, EXPORT_POST_TYPE_FIELD_SET, EXPORT_POST_TYPE_SET, EXPORT_START_REQUEST, EXPORT_STARTED, EXPORT_STATUS_FETCH, GOOGLE_MY_BUSINESS_STATS_CHANGE_INTERVAL, GOOGLE_MY_BUSINESS_STATS_FAILURE, GOOGLE_MY_BUSINESS_STATS_RECEIVE, GOOGLE_MY_BUSINESS_STATS_REQUEST, GRAVATAR_RECEIVE_IMAGE_FAILURE, GUIDED_TOUR_PAUSE, GUIDED_TOUR_RESUME, GUTENBERG_IFRAME_ELIGIBLE_SET, HOSTING_CLEAR_CACHE_REQUEST, HOSTING_GEO_AFFINITY_REQUEST, HOSTING_GEO_AFFINITY_SET, HOSTING_PHP_VERSION_REQUEST, HOSTING_PHP_VERSION_SET, HOSTING_PHP_VERSION_SET_REQUEST, HOSTING_RESTORE_DATABASE_PASSWORD, HOSTING_SFTP_PASSWORD_RESET, HOSTING_SFTP_USER_CREATE, HOSTING_SFTP_USER_UPDATE, HOSTING_SFTP_USERS_REQUEST, HOSTING_SFTP_USERS_SET, HOSTING_SSH_ACCESS_REQUEST, HOSTING_SSH_ACCESS_SET, HOSTING_SSH_ACCESS_ENABLE, HOSTING_SSH_ACCESS_DISABLE, HOSTING_STATIC_FILE_404_REQUEST, HOSTING_STATIC_FILE_404_SET, HOSTING_STATIC_FILE_404_SET_REQUEST, HOSTING_WP_VERSION_REQUEST, HOSTING_WP_VERSION_SET, HOSTING_WP_VERSION_SET_REQUEST, I18N_LANGUAGE_NAMES_ADD, I18N_LANGUAGE_NAMES_REQUEST, I18N_LOCALE_SUGGESTIONS_ADD, I18N_LOCALE_SUGGESTIONS_REQUEST, IMAGE_EDITOR_COMPUTED_CROP, IMAGE_EDITOR_CROP, IMAGE_EDITOR_FLIP, IMAGE_EDITOR_IMAGE_HAS_LOADED, IMAGE_EDITOR_ROTATE_COUNTERCLOCKWISE, IMAGE_EDITOR_SET_ASPECT_RATIO, IMAGE_EDITOR_SET_CROP_BOUNDS, IMAGE_EDITOR_SET_DEFAULT_ASPECT_RATIO, IMAGE_EDITOR_SET_FILE_INFO, IMAGE_EDITOR_STATE_RESET, IMAGE_EDITOR_STATE_RESET_ALL, IMPORTS_AUTHORS_SET_MAPPING, IMPORTS_AUTHORS_START_MAPPING, IMPORTS_IMPORT_CANCEL, IMPORTS_IMPORT_LOCK, IMPORTS_IMPORT_RECEIVE, IMPORTS_IMPORT_RECEIVED_RESET, IMPORTS_IMPORT_RESET, IMPORTS_IMPORT_START, IMPORTS_IMPORT_UNLOCK, IMPORTS_START_IMPORTING, IMPORTS_UPLOAD_COMPLETED, IMPORTS_UPLOAD_FAILED, IMPORTS_PRE_UPLOAD_FAILED, IMPORTS_UPLOAD_SET_PROGRESS, IMPORTS_UPLOAD_START, INVITE_ACCEPTED, INVITE_RESEND_REQUEST, INVITE_RESEND_REQUEST_FAILURE, INVITE_RESEND_REQUEST_SUCCESS, INVITES_DELETE_REQUEST, INVITES_DELETE_REQUEST_FAILURE, INVITES_DELETE_REQUEST_SUCCESS, INVITES_REQUEST, INVITES_REQUEST_FAILURE, INVITES_REQUEST_SUCCESS, INVITES_SEND, INVITES_SEND_ERROR, INVITES_SEND_SUCCESS, INVITES_SEND_FAILURE, INVITES_VALIDATE_TOKEN, INVITES_VALIDATE_TOKEN_SUCCESS, INVITES_VALIDATE_TOKEN_FAILURE, JETPACK_BACKUP_PREFLIGHT_TESTS_SET, JETPACK_BACKUP_RETENTION_SET, JETPACK_BACKUP_RETENTION_UPDATE, JETPACK_BACKUP_RETENTION_UPDATE_ERROR, JETPACK_BACKUP_RETENTION_UPDATE_RESET, JETPACK_BACKUP_RETENTION_UPDATE_SUCCESS, JETPACK_BACKUP_BROWSER_ADD_CHILDREN, JETPACK_BACKUP_BROWSER_SET_CHECK_STATE, JETPACK_BACKUP_STAGING_GET_REQUEST, JETPACK_BACKUP_STAGING_GET_REQUEST_FAILURE, JETPACK_BACKUP_STAGING_GET_REQUEST_SUCCESS, JETPACK_BACKUP_STAGING_LIST_REQUEST, JETPACK_BACKUP_STAGING_LIST_REQUEST_FAILURE, JETPACK_BACKUP_STAGING_LIST_REQUEST_SUCCESS, JETPACK_BACKUP_STAGING_SET, JETPACK_BACKUP_STAGING_UPDATE_REQUEST, JETPACK_BACKUP_STAGING_UPDATE_REQUEST_FAILURE, JETPACK_BACKUP_STAGING_UPDATE_REQUEST_SUCCESS, JETPACK_CHECKOUT_UPDATE_SUPPORT_TICKET_RECEIVE, JETPACK_CHECKOUT_UPDATE_SUPPORT_TICKET_REQUEST, JETPACK_CHECKOUT_UPDATE_SUPPORT_TICKET_REQUEST_FAILURE, JETPACK_CHECKOUT_UPDATE_SUPPORT_TICKET_REQUEST_SUCCESS, JETPACK_CONNECTION_STATUS_RECEIVE, JETPACK_CONNECTION_STATUS_REQUEST, JETPACK_CONNECTION_STATUS_REQUEST_FAILURE, JETPACK_CONNECTION_STATUS_REQUEST_SUCCESS, JETPACK_CONNECTION_HEALTH_REQUEST, JETPACK_CONNECTION_HEALTH_REQUEST_FAILURE, JETPACK_CONNECTION_HEALTHY, JETPACK_CONNECTION_MAYBE_UNHEALTHY, JETPACK_CONNECTION_UNHEALTHY, JETPACK_CREDENTIALS_AUTOCONFIGURE, JETPACK_CREDENTIALS_DELETE, JETPACK_CREDENTIALS_GET, JETPACK_CREDENTIALS_GET_FAILURE, JETPACK_CREDENTIALS_GET_SUCCESS, JETPACK_CREDENTIALS_STORE, JETPACK_CREDENTIALS_TEST, JETPACK_CREDENTIALS_TEST_INVALID, JETPACK_CREDENTIALS_TEST_VALID, JETPACK_CREDENTIALS_UPDATE, JETPACK_CREDENTIALS_UPDATE_FAILURE, JETPACK_CREDENTIALS_UPDATE_PROGRESS_START, JETPACK_CREDENTIALS_UPDATE_PROGRESS_UPDATE, JETPACK_CREDENTIALS_UPDATE_RESET, JETPACK_CREDENTIALS_UPDATE_SUCCESS, JETPACK_MODULE_ACTIVATE, JETPACK_MODULE_ACTIVATE_FAILURE, JETPACK_MODULE_ACTIVATE_SUCCESS, JETPACK_MODULE_DEACTIVATE, JETPACK_MODULE_DEACTIVATE_FAILURE, JETPACK_MODULE_DEACTIVATE_SUCCESS, JETPACK_MODULES_RECEIVE, JETPACK_MODULES_REQUEST, JETPACK_MODULES_REQUEST_FAILURE, JETPACK_MODULES_REQUEST_SUCCESS, JETPACK_PARTNER_PORTAL_LICENSE_COUNTS_RECEIVE, JETPACK_PARTNER_PORTAL_LICENSE_COUNTS_REQUEST, JETPACK_PARTNER_PORTAL_LICENSES_RECEIVE, JETPACK_PARTNER_PORTAL_LICENSES_REQUEST, JETPACK_PARTNER_PORTAL_OAUTH_TOKEN_SET, JETPACK_PARTNER_PORTAL_PARTNER_ACTIVE_PARTNER_KEY_UPDATE, JETPACK_PARTNER_PORTAL_PARTNER_RECEIVE, JETPACK_PARTNER_PORTAL_PARTNER_RECEIVE_ERROR, JETPACK_PARTNER_PORTAL_PARTNER_REQUEST, JETPACK_PRODUCT_INSTALL_REQUEST, JETPACK_PRODUCT_INSTALL_STATUS_RECEIVE, JETPACK_PRODUCT_INSTALL_STATUS_REQUEST, JETPACK_REMOTE_INSTALL, JETPACK_REMOTE_INSTALL_FAILURE, JETPACK_REMOTE_INSTALL_SUCCESS, JETPACK_SCAN_ENQUEUE_REQUEST, JETPACK_SCAN_ENQUEUE_REQUEST_FAILURE, JETPACK_SCAN_ENQUEUE_REQUEST_SUCCESS, JETPACK_SCAN_ENQUEUE_UPDATE, JETPACK_SCAN_HISTORY_REQUEST, JETPACK_SCAN_HISTORY_REQUEST_FAILURE, JETPACK_SCAN_HISTORY_REQUEST_SUCCESS, JETPACK_SCAN_HISTORY_UPDATE, JETPACK_SCAN_REQUEST, JETPACK_SCAN_REQUEST_FAILURE, JETPACK_SCAN_REQUEST_SUCCESS, JETPACK_SCAN_THREAT_COUNTS_REQUEST, JETPACK_SCAN_THREAT_COUNTS_REQUEST_FAILURE, JETPACK_SCAN_THREAT_COUNTS_REQUEST_SUCCESS, JETPACK_SCAN_THREAT_COUNTS_UPDATE, JETPACK_SCAN_THREAT_FIX, JETPACK_SCAN_THREAT_IGNORE, JETPACK_SCAN_THREATS_FIX_ALL, JETPACK_SCAN_THREATS_GET_FIX_STATUS, JETPACK_SCAN_UPDATE, JETPACK_SCAN_UPDATE_THREAT, JETPACK_SCAN_UPDATE_THREAT_COMPLETED, JETPACK_SETTINGS_REQUEST, JETPACK_SETTINGS_SAVE, JETPACK_SETTINGS_SAVE_SUCCESS, JETPACK_SETTINGS_UPDATE, JETPACK_SITE_ALERT_THREAT_FIX, JETPACK_SITE_ALERT_THREAT_IGNORE, JETPACK_SYNC_START_ERROR, JETPACK_SYNC_START_REQUEST, JETPACK_SYNC_START_SUCCESS, JETPACK_SYNC_STATUS_ERROR, JETPACK_SYNC_STATUS_REQUEST, JETPACK_SYNC_STATUS_SUCCESS, JETPACK_USER_CONNECTION_CHANGE_OWNER, JETPACK_USER_CONNECTION_DATA_RECEIVE, JETPACK_USER_CONNECTION_DATA_REQUEST, JETPACK_USER_CONNECTION_DATA_REQUEST_FAILURE, JETPACK_USER_CONNECTION_DATA_REQUEST_SUCCESS, JITM_DISMISS, JITM_FETCH, JITM_OPEN_HELP_CENTER, JITM_SET, KEYRING_CONNECTION_DELETE, KEYRING_CONNECTION_DELETE_FAILURE, KEYRING_CONNECTIONS_RECEIVE, KEYRING_CONNECTIONS_REQUEST, KEYRING_CONNECTIONS_REQUEST_FAILURE, KEYRING_CONNECTIONS_REQUEST_SUCCESS, KEYRING_SERVICES_RECEIVE, KEYRING_SERVICES_REQUEST, KEYRING_SERVICES_REQUEST_FAILURE, KEYRING_SERVICES_REQUEST_SUCCESS, LASAGNA_SOCKET_CONNECTED, LASAGNA_SOCKET_DISCONNECTED, LEGAL_REQUEST, LEGAL_SET, LOGIN_AUTH_ACCOUNT_TYPE_REQUEST, LOGIN_AUTH_ACCOUNT_TYPE_REQUEST_FAILURE, LOGIN_AUTH_ACCOUNT_TYPE_REQUEST_SUCCESS, LOGIN_AUTH_ACCOUNT_TYPE_REQUESTING, LOGIN_AUTH_ACCOUNT_TYPE_RESET, LOGIN_EMAIL_SEND, LOGIN_FORM_UPDATE, LOGIN_REQUEST, LOGIN_REQUEST_FAILURE, LOGIN_REQUEST_SUCCESS, MAGIC_LOGIN_HIDE_REQUEST_FORM, MAGIC_LOGIN_HIDE_REQUEST_NOTICE, MAGIC_LOGIN_REQUEST_AUTH_ERROR, MAGIC_LOGIN_REQUEST_AUTH_FETCH, MAGIC_LOGIN_REQUEST_AUTH_SUCCESS, MAGIC_LOGIN_REQUEST_LOGIN_EMAIL_ERROR, MAGIC_LOGIN_REQUEST_LOGIN_EMAIL_FETCH, MAGIC_LOGIN_REQUEST_LOGIN_EMAIL_SUCCESS, MAGIC_LOGIN_RESET_REQUEST_FORM, MAGIC_LOGIN_SHOW_CHECK_YOUR_EMAIL_PAGE, MAGIC_LOGIN_SHOW_INTERSTITIAL_PAGE, MAGIC_LOGIN_SHOW_LINK_EXPIRED, MAILCHIMP_LISTS_LIST, MAILCHIMP_LISTS_RECEIVE, MAILCHIMP_SETTINGS_LIST, MAILCHIMP_SETTINGS_RECEIVE, MAILCHIMP_SETTINGS_UPDATE, MAILCHIMP_SETTINGS_UPDATE_FAILURE, MAILCHIMP_SETTINGS_UPDATE_SUCCESS, MARKETING_CLICK_UPGRADE_NUDGE, MARKETING_JETPACK_SALE_COUPON_FETCH_FAILURE, MARKETING_JETPACK_SALE_COUPON_FETCH, MARKETING_JETPACK_SALE_COUPON_RECEIVE, MARKETPLACE_BILLING_INTERVAL_SELECT, MARKETPLACE_PRODUCTS_REINSTALL_COMPLETED, MARKETPLACE_PRODUCTS_REINSTALL_FAILED, MARKETPLACE_PRODUCTS_REINSTALL_NOT_STARTED, MARKETPLACE_PRODUCTS_REINSTALL_STARTED, MARKETPLACE_PLUGIN_INSTALLATION_STATE_CHANGE, MARKETPLACE_PRIMARY_DOMAIN_SELECT, MARKETPLACE_QUEUE_PRODUCT_INSTALL, MEDIA_CLEAR_SITE, MEDIA_ERRORS_CLEAR, MEDIA_ITEM_CREATE, MEDIA_ITEM_EDIT, MEDIA_ITEM_ERRORS_CLEAR, MEDIA_ITEM_ERRORS_SET, MEDIA_ITEM_REQUEST, MEDIA_ITEM_REQUEST_FAILURE, MEDIA_ITEM_REQUEST_SUCCESS, MEDIA_LIBRARY_SELECTED_ITEMS_UPDATE, MEDIA_RECEIVE, MEDIA_REQUEST, MEDIA_REQUEST_FAILURE, MEDIA_REQUEST_SUCCESS, MEDIA_SET_NEXT_PAGE_HANDLE, MEDIA_SET_QUERY, MEDIA_SOURCE_CHANGE, MEMBERSHIPS_COUPON_ADD, MEMBERSHIPS_COUPON_ADD_FAILURE, MEMBERSHIPS_COUPON_DELETE, MEMBERSHIPS_COUPON_DELETE_FAILURE, MEMBERSHIPS_COUPON_RECEIVE, MEMBERSHIPS_COUPON_UPDATE, MEMBERSHIPS_COUPON_UPDATE_FAILURE, MEMBERSHIPS_COUPONS_LIST, MEMBERSHIPS_COUPONS_RECEIVE, MEMBERSHIPS_GIFT_ADD, MEMBERSHIPS_GIFT_ADD_FAILURE, MEMBERSHIPS_GIFT_DELETE, MEMBERSHIPS_GIFT_DELETE_FAILURE, MEMBERSHIPS_EARNINGS_GET, MEMBERSHIPS_EARNINGS_RECEIVE, MEMBERSHIPS_PRODUCT_ADD, MEMBERSHIPS_PRODUCT_ADD_FAILURE, MEMBERSHIPS_PRODUCT_DELETE, MEMBERSHIPS_PRODUCT_DELETE_FAILURE, MEMBERSHIPS_PRODUCT_RECEIVE, MEMBERSHIPS_PRODUCT_UPDATE, MEMBERSHIPS_PRODUCT_UPDATE_FAILURE, MEMBERSHIPS_PRODUCTS_LIST, MEMBERSHIPS_PRODUCTS_RECEIVE, MEMBERSHIPS_SETTINGS, MEMBERSHIPS_SETTINGS_RECEIVE, MEMBERSHIPS_SUBSCRIBERS_LIST, MEMBERSHIPS_SUBSCRIBERS_RECEIVE, MEMBERSHIPS_SUBSCRIPTION_STOP, MEMBERSHIPS_SUBSCRIPTION_STOP_FAILURE, MEMBERSHIPS_SUBSCRIPTION_STOP_SUCCESS, MEMBERSHIPS_SUBSCRIPTION_UPDATE, MEMBERSHIPS_SUBSCRIPTION_UPDATING, MEMBERSHIPS_SUBSCRIPTION_UPDATING_FAILURE, MEMBERSHIPS_SUBSCRIPTION_UPDATING_SUCCESS, MEMBERSHIPS_SUBSCRIPTIONS_LIST_REQUEST, MEMBERSHIPS_SUBSCRIPTIONS_RECEIVE, MY_SITES_SIDEBAR_SECTION_TOGGLE, MY_SITES_SIDEBAR_SECTIONS_COLLAPSE_ALL, NOTIFICATION_SETTINGS_FETCH, NOTIFICATION_SETTINGS_FETCH_COMPLETE, NOTIFICATION_SETTINGS_FETCH_FAILED, NOTIFICATION_SETTINGS_REQUEST, NOTIFICATION_SETTINGS_SAVE, NOTIFICATION_SETTINGS_SAVE_COMPLETE, NOTIFICATION_SETTINGS_SAVE_FAILED, NOTIFICATION_SETTINGS_TOGGLE_SETTING, NOTIFICATION_SETTINGS_UPDATE, NOTIFICATIONS_FORCE_REFRESH, NOTIFICATIONS_UNSEEN_COUNT_SET, OAUTH2_CLIENT_DATA_RECEIVE, ORDER_TRANSACTION_FETCH, ORDER_TRANSACTION_FETCH_ERROR, ORDER_TRANSACTION_SET, P2_CONNECTION_DELETE, P2_CONNECTION_DELETE_FAILURE, P2_CONNECTIONS_RECEIVE, P2_CONNECTIONS_REQUEST, P2_CONNECTIONS_REQUEST_FAILURE, P2_CONNECTIONS_REQUEST_SUCCESS, PLANS_RECEIVE, PLANS_REQUEST, PLANS_REQUEST_FAILURE, PLANS_REQUEST_SUCCESS, PLUGIN_ACTIVATE_REQUEST, PLUGIN_ACTIVATE_REQUEST_FAILURE, PLUGIN_ACTIVATE_REQUEST_SUCCESS, PLUGIN_AUTOUPDATE_DISABLE_REQUEST, PLUGIN_AUTOUPDATE_DISABLE_REQUEST_FAILURE, PLUGIN_AUTOUPDATE_DISABLE_REQUEST_SUCCESS, PLUGIN_AUTOUPDATE_ENABLE_REQUEST, PLUGIN_AUTOUPDATE_ENABLE_REQUEST_FAILURE, PLUGIN_AUTOUPDATE_ENABLE_REQUEST_SUCCESS, PLUGIN_DEACTIVATE_REQUEST, PLUGIN_DEACTIVATE_REQUEST_FAILURE, PLUGIN_DEACTIVATE_REQUEST_SUCCESS, PLUGIN_INSTALL_REQUEST, PLUGIN_INSTALL_REQUEST_FAILURE, PLUGIN_INSTALL_REQUEST_SUCCESS, PLUGIN_NOTICES_REMOVE, RESET_PLUGIN_NOTICES, PLUGIN_REMOVE_REQUEST, PLUGIN_REMOVE_REQUEST_FAILURE, PLUGIN_REMOVE_REQUEST_SUCCESS, PLUGIN_SETUP_ACTIVATE, PLUGIN_SETUP_CONFIGURE, PLUGIN_SETUP_ERROR, PLUGIN_SETUP_FINISH, PLUGIN_SETUP_INSTALL, PLUGIN_SETUP_INSTRUCTIONS_FETCH, PLUGIN_SETUP_INSTRUCTIONS_RECEIVE, PLUGIN_UPDATE_REQUEST, PLUGIN_UPDATE_REQUEST_FAILURE, PLUGIN_UPDATE_REQUEST_SUCCESS, PLUGIN_ALREADY_UP_TO_DATE, PLUGIN_ACTION_STATUS_UPDATE, PLUGIN_UPLOAD, PLUGIN_UPLOAD_CLEAR, PLUGIN_UPLOAD_COMPLETE, PLUGIN_UPLOAD_ERROR, PLUGIN_UPLOAD_PROGRESS, PLUGINS_ALL_RECEIVE, PLUGINS_ALL_REQUEST, PLUGINS_ALL_REQUEST_FAILURE, PLUGINS_ALL_REQUEST_SUCCESS, PLUGINS_RECEIVE, PLUGINS_REQUEST, PLUGINS_REQUEST_FAILURE, PLUGINS_REQUEST_SUCCESS, PLUGINS_WPORG_LIST_RECEIVE, PLUGINS_WPORG_LIST_REQUEST, PLUGINS_WPORG_PLUGIN_RECEIVE, PLUGINS_WPORG_PLUGIN_REQUEST, POST_RESTORE_SUCCESS, POST_REVISIONS_AUTHORS_REQUEST, POST_REVISIONS_REQUEST, POST_SAVE_FAILURE, POST_STATS_RECEIVE, POST_STATS_REQUEST, POST_STATS_REQUEST_FAILURE, POST_STATS_REQUEST_SUCCESS, POST_TYPES_RECEIVE, POST_TYPES_REQUEST, POST_TYPES_TAXONOMIES_RECEIVE, POST_TYPES_TAXONOMIES_REQUEST, POST_TYPES_TAXONOMIES_REQUEST_FAILURE, POST_TYPES_TAXONOMIES_REQUEST_SUCCESS, PRODUCTS_LIST_RECEIVE, PRODUCTS_LIST_REQUEST, PRODUCTS_LIST_REQUEST_FAILURE, PROMOTE_POST_CAMPAIGNS_FETCH, PROMOTE_POST_CAMPAIGNS_FETCH_DONE, PROMOTE_POST_CAMPAIGN_CANCEL, PUBLICIZE_CONNECTION_CREATE, PUBLICIZE_CONNECTION_CREATE_FAILURE, PUBLICIZE_CONNECTION_DELETE, PUBLICIZE_CONNECTION_DELETE_FAILURE, PUBLICIZE_CONNECTION_RECEIVE, PUBLICIZE_CONNECTION_UPDATE, PUBLICIZE_CONNECTION_UPDATE_FAILURE, PUBLICIZE_CONNECTIONS_RECEIVE, PUBLICIZE_CONNECTIONS_REQUEST, PUBLICIZE_CONNECTIONS_REQUEST_FAILURE, PUBLICIZE_CONNECTIONS_REQUEST_SUCCESS, PUBLICIZE_SHARE, PUBLICIZE_SHARE_ACTION_DELETE, PUBLICIZE_SHARE_ACTION_DELETE_FAILURE, PUBLICIZE_SHARE_ACTION_DELETE_SUCCESS, PUBLICIZE_SHARE_ACTION_SCHEDULE, PUBLICIZE_SHARE_ACTION_SCHEDULE_FAILURE, PUBLICIZE_SHARE_ACTION_SCHEDULE_SUCCESS, PUBLICIZE_SHARE_ACTIONS_PUBLISHED_REQUEST, PUBLICIZE_SHARE_ACTIONS_PUBLISHED_REQUEST_FAILURE, PUBLICIZE_SHARE_ACTIONS_PUBLISHED_REQUEST_SUCCESS, PUBLICIZE_SHARE_ACTIONS_SCHEDULED_REQUEST, PUBLICIZE_SHARE_ACTIONS_SCHEDULED_REQUEST_FAILURE, PUBLICIZE_SHARE_ACTIONS_SCHEDULED_REQUEST_SUCCESS, PUBLICIZE_SHARE_DISMISS, PUBLICIZE_SHARE_FAILURE, PUBLICIZE_SHARE_SUCCESS, PURCHASE_CANCELLATION_OFFER_REQUEST, PURCHASE_CANCELLATION_OFFER_REQUEST_FAILURE, PURCHASE_CANCELLATION_OFFER_RECEIVE, PURCHASE_CANCELLATION_OFFER_APPLY, PURCHASE_CANCELLATION_OFFER_APPLY_SUCCESS, PURCHASE_CANCELLATION_OFFER_APPLY_FAILURE, PUSH_NOTIFICATIONS_API_NOT_READY, PUSH_NOTIFICATIONS_API_READY, PUSH_NOTIFICATIONS_AUTHORIZE, PUSH_NOTIFICATIONS_BLOCK, PUSH_NOTIFICATIONS_MUST_PROMPT, PUSH_NOTIFICATIONS_RECEIVE_REGISTER_DEVICE, PUSH_NOTIFICATIONS_RECEIVE_UNREGISTER_DEVICE, PUSH_NOTIFICATIONS_TOGGLE_ENABLED, PUSH_NOTIFICATIONS_TOGGLE_UNBLOCK_INSTRUCTIONS, RECEIPT_FETCH, RECEIPT_FETCH_COMPLETED, RECEIPT_FETCH_FAILED, REWIND_ACTIVATE_FAILURE, REWIND_ACTIVATE_REQUEST, REWIND_ACTIVATE_SUCCESS, REWIND_ACTIVITY_SHARE_REQUEST, REWIND_BACKUP, REWIND_BACKUP_DISMISS, REWIND_BACKUP_DISMISS_PROGRESS, REWIND_BACKUP_PROGRESS_REQUEST, REWIND_BACKUP_REQUEST, REWIND_BACKUP_SET_DOWNLOAD_ID, REWIND_BACKUP_SITE, REWIND_BACKUP_UPDATE_ERROR, REWIND_BACKUP_UPDATE_PROGRESS, REWIND_BACKUPS_REQUEST, REWIND_BACKUPS_SET, REWIND_CAPABILITIES_REQUEST, REWIND_CAPABILITIES_UPDATE, REWIND_CLONE, REWIND_DEACTIVATE_FAILURE, REWIND_DEACTIVATE_REQUEST, REWIND_DEACTIVATE_SUCCESS, REWIND_GRANULAR_RESTORE, REWIND_GRANULAR_BACKUP_REQUEST, REWIND_POLICIES_REQUEST, REWIND_POLICIES_REQUEST_FAILURE, REWIND_POLICIES_REQUEST_SUCCESS, REWIND_POLICIES_SET, REWIND_RESTORE, REWIND_RESTORE_DISMISS, REWIND_RESTORE_DISMISS_PROGRESS, REWIND_RESTORE_PROGRESS_REQUEST, REWIND_RESTORE_REQUEST, REWIND_RESTORE_UPDATE_PROGRESS, REWIND_SIZE_REQUEST, REWIND_SIZE_REQUEST_FAILURE, REWIND_SIZE_REQUEST_SUCCESS, REWIND_SIZE_SET, REWIND_STAGING_CLONE, REWIND_STATE_REQUEST, REWIND_STATE_UPDATE, REWIND_STORAGE_USAGE_LEVEL_SET, SET_MEDIA_EXPORT_DATA, SIGNUP_COMPLETE_RESET, SIGNUP_CURRENT_FLOW_NAME_SET, SIGNUP_DEPENDENCY_STORE_REMOVE_SITE_SLUG, SIGNUP_DEPENDENCY_STORE_UPDATE, SIGNUP_OPTIONAL_DEPENDENCY_SUGGESTED_USERNAME_SET, SIGNUP_PREVIOUS_FLOW_NAME_SET, SIGNUP_FLOW_ADD_EXCLUDED_STEPS, SIGNUP_FLOW_REMOVE_EXCLUDED_STEPS, SIGNUP_FLOW_RESET_EXCLUDED_STEPS, SIGNUP_PROGRESS_ADD_STEP, SIGNUP_PROGRESS_COMPLETE_STEP, SIGNUP_PROGRESS_INVALIDATE_STEP, SIGNUP_PROGRESS_PROCESS_STEP, SIGNUP_PROGRESS_REMOVE_STEP, SIGNUP_PROGRESS_SAVE_STEP, SIGNUP_PROGRESS_SUBMIT_STEP, SIGNUP_STEPS_DESIGN_TYPE_SET, SIGNUP_STEPS_SITE_GOALS_SET, SIGNUP_STEPS_SITE_VERTICAL_SET, SIGNUP_STEPS_SITE_INFO_COLLECTION_UPDATE, SIGNUP_STEPS_SITE_INFO_UPDATE_CURRENT_INDEX, SIGNUP_STEPS_WEBSITE_CONTENT_INITIALIZE_PAGES, SIGNUP_STEPS_WEBSITE_CONTENT_UPDATE_CURRENT_INDEX, SIGNUP_STEPS_WEBSITE_CONTENT_MEDIA_UPLOAD_STARTED, SIGNUP_STEPS_WEBSITE_CONTENT_MEDIA_UPLOAD_COMPLETED, SIGNUP_STEPS_WEBSITE_FIELD_CHANGED, SIGNUP_STEPS_WEBSITE_CONTENT_MEDIA_UPLOAD_FAILED, SIGNUP_STEPS_WEBSITE_CONTENT_MEDIA_REMOVED, SIGNUP_STEPS_WEBSITE_CONTENT_LOGO_UPLOAD_STARTED, SIGNUP_STEPS_WEBSITE_CONTENT_LOGO_UPLOAD_COMPLETED, SIGNUP_STEPS_WEBSITE_CONTENT_LOGO_UPLOAD_FAILED, SIGNUP_STEPS_SOCIAL_PROFILES_UPDATE, SIGNUP_STEPS_SOCIAL_PROFILES_RESET, SIGNUP_STEPS_WEBSITE_CONTENT_REMOVE_LOGO_URL, SIGNUP_STEPS_WEBSITE_CONTENT_FEEDBACK_CHANGE, SIGNUP_STEPS_WEBSITE_CONTENT_CHANGES_SAVED, SIGNUP_STEPS_WEBSITE_CONTENT_SEARCH_TERMS_CHANGED, SIGNUP_STEPS_USER_EXPERIENCE_SET, SITE_ADDRESS_AVAILABILITY_ERROR, SITE_ADDRESS_AVAILABILITY_ERROR_CLEAR, SITE_ADDRESS_AVAILABILITY_REQUEST, SITE_ADDRESS_AVAILABILITY_SUCCESS, SITE_ADDRESS_CHANGE_REQUEST, SITE_ADDRESS_CHANGE_REQUEST_FAILURE, SITE_ADDRESS_CHANGE_REQUEST_SUCCESS, SITE_CHECKLIST_RECEIVE, SITE_CHECKLIST_REQUEST, SITE_CHECKLIST_TASK_UPDATE, SITE_CONNECTION_STATUS_RECEIVE, SITE_CONNECTION_STATUS_REQUEST, SITE_CONNECTION_STATUS_REQUEST_FAILURE, SITE_CONNECTION_STATUS_REQUEST_SUCCESS, SITE_IMPORTER_IMPORT_FAILURE, SITE_IMPORTER_IMPORT_RESET, SITE_IMPORTER_IMPORT_START, SITE_IMPORTER_IMPORT_SUCCESS, SITE_IMPORTER_IS_SITE_IMPORTABLE_FAILURE, SITE_IMPORTER_IS_SITE_IMPORTABLE_START, SITE_IMPORTER_IS_SITE_IMPORTABLE_SUCCESS, SITE_IMPORTER_VALIDATION_ERROR_SET, SITE_KEYRINGS_DELETE, SITE_KEYRINGS_DELETE_FAILURE, SITE_KEYRINGS_DELETE_SUCCESS, SITE_KEYRINGS_REQUEST, SITE_KEYRINGS_REQUEST_FAILURE, SITE_KEYRINGS_REQUEST_SUCCESS, SITE_KEYRINGS_SAVE_SUCCESS, SITE_KEYRINGS_UPDATE, SITE_KEYRINGS_UPDATE_FAILURE, SITE_KEYRINGS_UPDATE_SUCCESS, SITE_LAUNCH, SITE_PLAN_OWNERSHIP_TRANSFER, SITE_SETTINGS_REQUEST, SITE_SETTINGS_REQUEST_FAILURE, SITE_SETTINGS_REQUEST_SUCCESS, SITE_SETTINGS_SAVE, SITE_SETTINGS_SAVE_FAILURE, SITE_SETTINGS_SAVE_SUCCESS, SITE_STATS_RECEIVE, SITE_STATS_REQUEST, SITE_STATS_REQUEST_FAILURE, SOCIAL_CONNECT_ACCOUNT_REQUEST, SOCIAL_CONNECT_ACCOUNT_REQUEST_FAILURE, SOCIAL_CONNECT_ACCOUNT_REQUEST_SUCCESS, SOCIAL_CONNECT_ACCOUNT_LINKING_CANCEL, SOCIAL_CREATE_ACCOUNT_REQUEST_FAILURE, SOCIAL_HANDOFF_CONNECT_ACCOUNT, SOCIAL_DISCONNECT_ACCOUNT_REQUEST, SOCIAL_DISCONNECT_ACCOUNT_REQUEST_FAILURE, SOCIAL_DISCONNECT_ACCOUNT_REQUEST_SUCCESS, SOCIAL_LOGIN_REQUEST, SOCIAL_LOGIN_REQUEST_FAILURE, SOCIAL_LOGIN_REQUEST_SUCCESS, STATS_CHART_COUNTS_RECEIVE, STATS_CHART_COUNTS_REQUEST, STATS_HIGHLIGHTS_RECEIVE, STATS_HIGHLIGHTS_REQUEST, STATS_UTM_METRICS_REQUEST, STATS_UTM_METRICS_REQUEST_FAILURE, STATS_UTM_METRICS_RECEIVE, STATS_UTM_METRICS_RECEIVE_BY_POST, STATS_UTM_TOP_POSTS_REQUEST, STATS_UTM_TOP_POSTS_RECEIVE, STATS_MODULE_SETTINGS_RECEIVE, STATS_MODULE_SETTINGS_REQUEST, STATS_MODULE_SETTINGS_UPDATE, STATS_MODULE_TOGGLES_RECEIVE, STATS_MODULE_TOGGLES_REQUEST, STATS_MODULE_TOGGLES_UPDATE, STATS_RECENT_POST_VIEWS_RECEIVE, STATS_RECENT_POST_VIEWS_REQUEST, STATS_PAID_STATS_UPSELL_MODAL_TOGGLE, STATS_JETPACK_NOTICE_SETTINGS_RECEIVE, STATS_JETPACK_NOTICE_SETTINGS_REQUEST, STATS_JETPACK_NOTICE_SETTINGS_FAILURE, STORED_CARDS_ADD_COMPLETED, STORED_CARDS_DELETE, STORED_CARDS_DELETE_COMPLETED, STORED_CARDS_DELETE_FAILED, STORED_CARDS_UPDATE_IS_PRIMARY_COMPLETED, STORED_CARDS_UPDATE_IS_BACKUP_COMPLETED, STORED_CARDS_FETCH, STORED_CARDS_FETCH_COMPLETED, STORED_CARDS_FETCH_FAILED, SUPPORT_ARTICLE_DIALOG_CLOSE, SUPPORT_ARTICLE_DIALOG_OPEN, SUPPORT_SESSION_TRANSITION, SITE_STAGING_STATUS_SET, SITE_SYNC_STATUS_SET, SITE_SYNC_TARGET_SITE, SITE_SYNC_SOURCE_SITE, SITE_SYNC_IS_SYNCING_IN_PROGRESS, SITE_SYNC_STATUS_REQUEST, SITE_SYNC_FAILURE, SITE_SYNC_LAST_RESTORE_ID, TERM_REMOVE, TERMS_RECEIVE, TERMS_REQUEST, TERMS_REQUEST_FAILURE, TERMS_REQUEST_SUCCESS, TIMEZONES_RECEIVE, TIMEZONES_REQUEST, TOS_ACCEPT, TWO_FACTOR_AUTHENTICATION_LOGIN_REQUEST, TWO_FACTOR_AUTHENTICATION_LOGIN_REQUEST_FAILURE, TWO_FACTOR_AUTHENTICATION_LOGIN_REQUEST_SUCCESS, TWO_FACTOR_AUTHENTICATION_SEND_SMS_CODE_REQUEST, TWO_FACTOR_AUTHENTICATION_SEND_SMS_CODE_REQUEST_FAILURE, TWO_FACTOR_AUTHENTICATION_SEND_SMS_CODE_REQUEST_SUCCESS, TWO_FACTOR_AUTHENTICATION_UPDATE_NONCE, URL_ANALYZER_ANALYZE, URL_ANALYZER_ANALYZE_DONE, URL_ANALYZER_ANALYZE_SUCCESS, URL_ANALYZER_ANALYZE_ERROR, URL_ANALYZER_RESET_ERROR, URL_ANALYZER_URL_DATA_UPDATE, USER_LICENSES_RECEIVE, USER_LICENSES_REQUEST, USER_LICENSES_REQUEST_SUCCESS, USER_LICENSES_REQUEST_FAILURE, USER_LICENSES_COUNTS_RECEIVE, USER_LICENSES_COUNTS_REQUEST, USER_LICENSES_COUNTS_REQUEST_SUCCESS, USER_LICENSES_COUNTS_REQUEST_FAILURE, USER_PROFILE_LINKS_ADD, USER_PROFILE_LINKS_ADD_DUPLICATE, USER_PROFILE_LINKS_ADD_FAILURE, USER_PROFILE_LINKS_ADD_MALFORMED, USER_PROFILE_LINKS_ADD_SUCCESS, USER_PROFILE_LINKS_DELETE, USER_PROFILE_LINKS_DELETE_FAILURE, USER_PROFILE_LINKS_DELETE_SUCCESS, USER_PROFILE_LINKS_RECEIVE, USER_PROFILE_LINKS_REQUEST, USER_PROFILE_LINKS_RESET_ERRORS, USER_SETTINGS_REQUEST, USER_SETTINGS_REQUEST_FAILURE, USER_SETTINGS_REQUEST_SUCCESS, USER_SETTINGS_SAVE, USER_SETTINGS_SAVE_FAILURE, USER_SETTINGS_SAVE_SUCCESS, USER_SETTINGS_UNSAVED_CLEAR, USER_SETTINGS_UNSAVED_REMOVE, USER_SETTINGS_UNSAVED_SET, USER_SUGGESTIONS_RECEIVE, USER_SUGGESTIONS_REQUEST, USER_SUGGESTIONS_REQUEST_FAILURE, USER_SUGGESTIONS_REQUEST_SUCCESS, VIDEO_EDITOR_SET_POSTER_URL, VIDEO_EDITOR_SHOW_ERROR, VIDEO_EDITOR_SHOW_UPLOAD_PROGRESS, VIDEO_EDITOR_UPDATE_POSTER, VIDEO_EDITOR_REFRESH_POSTER, WORDADS_EARNINGS_RECEIVE, WORDADS_EARNINGS_REQUEST, WORDADS_SETTINGS_RECEIVE, WORDADS_SETTINGS_REQUEST, WORDADS_SETTINGS_SAVE, WORDADS_SETTINGS_SAVE_FAILURE, WORDADS_SETTINGS_SAVE_SUCCESS, WORDADS_SETTINGS_UPDATE, WORDADS_PAYMENTS_RECEIVE, WORDADS_PAYMENTS_REQUEST, WORDADS_SITE_APPROVE_REQUEST, WORDADS_SITE_APPROVE_REQUEST_DISMISS_ERROR, WORDADS_SITE_APPROVE_REQUEST_DISMISS_SUCCESS, WORDADS_SITE_APPROVE_REQUEST_FAILURE, WORDADS_STATUS_RECEIVE, WORDADS_STATUS_REQUEST, EMAIL_STATS_RECEIVE, EMAIL_STATS_REQUEST, EMAIL_STATS_REQUEST_FAILURE, EMAIL_STATS_REQUEST_SUCCESS */
 /**
  * Any new action type should be added to the set of exports below, with the
  * value mirroring its exported name.
@@ -36341,6 +36810,8 @@ const ACTIVE_PROMOTIONS_REQUEST_FAILURE = 'ACTIVE_PROMOTIONS_REQUEST_FAILURE';
 const ACTIVE_PROMOTIONS_REQUEST_SUCCESS = 'ACTIVE_PROMOTIONS_REQUEST_SUCCESS';
 const ACTIVITY_LOG_FILTER_SET = 'ACTIVITY_LOG_FILTER_SET';
 const ACTIVITY_LOG_FILTER_UPDATE = 'ACTIVITY_LOG_FILTER_UPDATE';
+const ADMIN_COLOR_RECEIVE = 'ADMIN_COLOR_RECEIVE';
+const ADMIN_COLOR_REQUEST = 'ADMIN_COLOR_REQUEST';
 const ADMIN_MENU_RECEIVE = 'ADMIN_MENU_RECEIVE';
 const ADMIN_MENU_REQUEST = 'ADMIN_MENU_REQUEST';
 const ALL_DOMAINS_REQUEST = 'ALL_DOMAINS_REQUEST';
@@ -43905,7 +44376,7 @@ const markPostSeen = (post, site) => (dispatch, getState) => {
 /* harmony import */ var calypso_lib_post_normalizer_rule_add_image_wrapper_element__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(44934);
 /* harmony import */ var calypso_lib_post_normalizer_rule_content_detect_media__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(15202);
 /* harmony import */ var calypso_lib_post_normalizer_rule_content_detect_polls__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(52612);
-/* harmony import */ var calypso_lib_post_normalizer_rule_content_detect_surveys__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(31085);
+/* harmony import */ var calypso_lib_post_normalizer_rule_content_detect_surveys__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(53466);
 /* harmony import */ var calypso_lib_post_normalizer_rule_content_disable_autoplay__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(63730);
 /* harmony import */ var calypso_lib_post_normalizer_rule_content_link_jetpack_carousels__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(40697);
 /* harmony import */ var calypso_lib_post_normalizer_rule_content_make_embeds_safe__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(27319);
@@ -47872,6 +48343,9 @@ function isJetpackSitePred(options) {
       ...DEFAULT_OPTIONS,
       ...options
     } : DEFAULT_OPTIONS;
+    if (site.options?.is_wpcom_simple) {
+      return false;
+    }
 
     // If the site is an Atomic site, but we should not treat it as Jetpack site, return false.
     if (!mergedOptions.treatAtomicAsJetpackSite && site.options?.is_wpcom_atomic) {
@@ -48659,9 +49133,15 @@ function getSectionName(state) {
 
 
 /**
+ * @typedef {Object} Section
+ * @property {string} name - The name of the section
+ * @property {string[]} paths - The URL paths of the section
+ * @property {string} module - The module path of the section
+ * @property {string} group - The group of the section
+ *
  * Returns the current section.
  * @param  {Object}  state Global state tree
- * @returns {Object}        Current section
+ * @returns {Section}        Current section
  */
 function getSection(state) {
   return state.ui.section || false;
@@ -49546,13 +50026,23 @@ function recordTracksPageView(urlPath, params) {
     eventProperties = Object.assign(eventProperties, params);
   }
 
-  // Record all `utm` marketing parameters as event properties on the page view event
+  // Record some query parameters as event properties on the page view event
   // so we can analyze their performance with our analytics tools
   if ( true && window.location) {
     const urlParams = new URL(window.location.href).searchParams;
+
+    // Record all `utm` marketing params.
     const utmParamEntries = urlParams && Array.from(urlParams.entries()).filter(([key]) => key.startsWith('utm_'));
     const utmParams = utmParamEntries ? Object.fromEntries(utmParamEntries) : {};
-    eventProperties = Object.assign(eventProperties, utmParams);
+
+    // Record the 'ref' param.
+    const refParam = urlParams && urlParams.get('ref') ? {
+      ref: urlParams.get('ref')
+    } : {};
+    eventProperties = Object.assign(eventProperties, {
+      ...utmParams,
+      ...refParam
+    });
   }
   recordTracksEvent('calypso_page_view', eventProperties);
 }
@@ -50257,6 +50747,7 @@ function camelOrSnakeSlug(product) {
 /* harmony export */   CQZ: () => (/* binding */ FEATURE_50GB_STORAGE_ADD_ON),
 /* harmony export */   CR9: () => (/* binding */ FEATURE_MANAGED_HOSTING),
 /* harmony export */   CTo: () => (/* binding */ FEATURE_STORE_DESIGN),
+/* harmony export */   Cf7: () => (/* binding */ FEATURE_SECURITY_VULNERABILITY_NOTIFICATIONS),
 /* harmony export */   Ckc: () => (/* binding */ FEATURE_INTERNATIONAL_PAYMENTS),
 /* harmony export */   Czl: () => (/* binding */ FEATURE_DYNAMIC_UPSELLS),
 /* harmony export */   D6q: () => (/* binding */ FEATURE_JETPACK_PRODUCT_BACKUP),
@@ -50327,13 +50818,16 @@ function camelOrSnakeSlug(product) {
 /* harmony export */   N3t: () => (/* binding */ FEATURE_PAID_SUBSCRIBERS_JP),
 /* harmony export */   NAz: () => (/* binding */ FEATURE_JETPACK_ANTI_SPAM_MONTHLY),
 /* harmony export */   NBm: () => (/* binding */ FEATURE_PLUGIN_AUTOUPDATE_JP),
+/* harmony export */   NI9: () => (/* binding */ WPCOM_FEATURES_PREMIUM_THEMES_LIMITED),
 /* harmony export */   Ncs: () => (/* binding */ FEATURE_ADVERTISE_ON_GOOGLE),
 /* harmony export */   Nno: () => (/* binding */ FEATURE_LIST_UNLIMITED_PRODUCTS),
 /* harmony export */   NrG: () => (/* binding */ FEATURE_ALL_PREMIUM_FEATURES),
+/* harmony export */   O2$: () => (/* binding */ FEATURE_REAL_TIME_SECURITY_SCANS),
 /* harmony export */   O6g: () => (/* binding */ FEATURE_PAYPAL_JP),
 /* harmony export */   OPf: () => (/* binding */ FEATURE_ALL_PREMIUM_FEATURES_JETPACK),
 /* harmony export */   Ohd: () => (/* binding */ FEATURE_PRODUCT_SCAN_DAILY_V2),
 /* harmony export */   Onf: () => (/* binding */ FEATURE_JETPACK_BOOST_MONTHLY),
+/* harmony export */   OvS: () => (/* binding */ FEATURE_TIERED_STORAGE_PLANS_AVAILABLE),
 /* harmony export */   P25: () => (/* binding */ FEATURE_ALWAYS_ONLINE),
 /* harmony export */   P2_: () => (/* binding */ FEATURE_PRODUCT_BACKUP_DAILY_V2),
 /* harmony export */   P44: () => (/* binding */ FEATURE_JETPACK_REAL_TIME_MALWARE_SCANNING),
@@ -50354,6 +50848,7 @@ function camelOrSnakeSlug(product) {
 /* harmony export */   SQX: () => (/* binding */ FEATURE_PREMIUM_STORE_THEMES),
 /* harmony export */   SyJ: () => (/* binding */ FEATURE_BLANK),
 /* harmony export */   TEv: () => (/* binding */ FEATURE_6GB_STORAGE),
+/* harmony export */   Tfk: () => (/* binding */ EXPERT_SUPPORT_ALL_DAYS),
 /* harmony export */   Tgp: () => (/* binding */ FEATURE_PREMIUM_CONTENT_BLOCK),
 /* harmony export */   Tjc: () => (/* binding */ FEATURE_P2_3GB_STORAGE),
 /* harmony export */   Tuf: () => (/* binding */ FEATURE_BANDWIDTH),
@@ -50372,6 +50867,7 @@ function camelOrSnakeSlug(product) {
 /* harmony export */   WoS: () => (/* binding */ FEATURE_STATS_JP),
 /* harmony export */   WtV: () => (/* binding */ FEATURE_COLLECT_PAYMENTS_LINK_IN_BIO),
 /* harmony export */   XAi: () => (/* binding */ FEATURE_LIVE_CHAT_SUPPORT_ALL_DAYS),
+/* harmony export */   XNd: () => (/* binding */ FEATURE_SEAMLESS_STAGING_PRODUCTION_SYNCING),
 /* harmony export */   Xil: () => (/* binding */ FEATURE_SELL_EGIFTS_AND_VOUCHERS),
 /* harmony export */   Xlo: () => (/* binding */ FEATURE_BULK_DISCOUNTS),
 /* harmony export */   Xsf: () => (/* binding */ FEATURE_JETPACK_BACKUP_T0_YEARLY),
@@ -50384,6 +50880,7 @@ function camelOrSnakeSlug(product) {
 /* harmony export */   Ywz: () => (/* binding */ FEATURE_SOCIAL_MEDIA_TOOLS),
 /* harmony export */   Z1x: () => (/* binding */ FEATURE_P2_PRIORITY_CHAT_EMAIL_SUPPORT),
 /* harmony export */   ZIK: () => (/* binding */ FEATURE_DONATIONS_AND_TIPS_JP),
+/* harmony export */   ZLu: () => (/* binding */ FEATURE_WOOCOMMERCE_HOSTING),
 /* harmony export */   ZNU: () => (/* binding */ FEATURE_BACKUP_STORAGE_SPACE_UNLIMITED),
 /* harmony export */   Zvm: () => (/* binding */ FEATURE_UNLIMITED_EMAILS),
 /* harmony export */   ZxR: () => (/* binding */ FEATURE_TITAN_EMAIL),
@@ -50542,7 +51039,7 @@ function camelOrSnakeSlug(product) {
 /* harmony export */   yqq: () => (/* binding */ FEATURE_CUSTOM_MARKETING_AUTOMATION),
 /* harmony export */   zTG: () => (/* binding */ FEATURE_VIDEO_UPLOADS_JETPACK_PRO)
 /* harmony export */ });
-/* unused harmony exports FEATURE_SET_PRIMARY_CUSTOM_DOMAIN, FEATURE_LEGACY_STORAGE_200GB, FEATURE_UNLIMITED_STORAGE, FEATURE_SFTP, FEATURE_SSH, FEATURE_VIDEO_UPLOADS_JETPACK_PREMIUM, FEATURE_INSTALL_THEMES, FEATURE_PERFORMANCE, FEATURE_ALL_PERSONAL_FEATURES_JETPACK, FEATURE_DONATIONS, FEATURE_PREMIUM_CONTENT_CONTAINER, FEATURE_SECURITY_SETTINGS, FEATURE_WOOP, FEATURE_STATS_FREE, FEATURE_SEARCH, FEATURE_SEARCH_V2, FEATURE_VIDEO_HOSTING_V2, FEATURE_CRM_INTEGRATED_WITH_WORDPRESS, FEATURE_CRM_LEADS_AND_FUNNEL, FEATURE_CRM_PROPOSALS_AND_INVOICES, FEATURE_CRM_TRACK_TRANSACTIONS, FEATURE_CRM_NO_CONTACT_LIMITS, FEATURE_SECURE_STORAGE_V2, FEATURE_ONE_CLICK_FIX_V2, FEATURE_INSTANT_EMAIL_V2, FEATURE_AKISMET_V2, FEATURE_SPAM_BLOCK_V2, FEATURE_SPAM_10K_PER_MONTH, FEATURE_FILTERING_V2, FEATURE_LANGUAGE_SUPPORT_V2, FEATURE_SPELLING_CORRECTION_V2, FEATURE_SUPPORTS_WOOCOMMERCE_V2, FEATURE_JETPACK_SCAN_BI_YEARLY, FEATURE_JETPACK_VIDEOPRESS_EDITOR, FEATURE_JETPACK_VIDEOPRESS_STORAGE, FEATURE_JETPACK_VIDEOPRESS_UNBRANDED, FEATURE_SOCIAL_SHARES_1000, FEATURE_SOCIAL_ENHANCED_PUBLISHING, FEATURE_SOCIAL_MASTODON_CONNECTION, FEATURE_SOCIAL_INSTAGRAM_CONNECTION, FEATURE_SOCIAL_NEXTDOOR_CONNECTION, FEATURE_JETPACK_MONITOR_MONTHLY, FEATURE_JETPACK_MONITOR_YEARLY, FEATURE_MONITOR_1_MINUTE_CHECK_INTERVAL, FEATURE_MONITOR_MULTIPLE_EMAIL_RECIPIENTS, FEATURE_MONITOR_SMS_NOTIFICATIONS, FEATURE_JETPACK_1GB_BACKUP_STORAGE, FEATURE_JETPACK_10GB_BACKUP_STORAGE, FEATURE_JETPACK_REAL_TIME_CLOUD_BACKUPS, FEATURE_UNLIMITED_USERS, FEATURE_UNLIMITED_POSTS_PAGES, FEATURE_ADDITIONAL_SITES, WPCOM_FEATURES_AI_ASSISTANT, WPCOM_FEATURES_AKISMET, WPCOM_FEATURES_BACKUPS_RESTORE, WPCOM_FEATURES_CDN, WPCOM_FEATURES_CLASSIC_SEARCH, WPCOM_FEATURES_CLOUDFLARE_CDN, WPCOM_FEATURES_COPY_SITE, WPCOM_FEATURES_FULL_ACTIVITY_LOG, WPCOM_FEATURES_INSTALL_PLUGINS, WPCOM_FEATURES_INSTANT_SEARCH, WPCOM_FEATURES_LIVE_SUPPORT, WPCOM_FEATURES_MANAGE_PLUGINS, WPCOM_FEATURES_NO_ADVERTS, WPCOM_FEATURES_NO_WPCOM_BRANDING, WPCOM_FEATURES_PREMIUM_THEMES_LIMITED, WPCOM_FEATURES_PRIORITY_SUPPORT, WPCOM_FEATURES_REAL_TIME_BACKUPS, WPCOM_FEATURES_SCHEDULED_UPDATES, WPCOM_FEATURES_SEO_PREVIEW_TOOLS, WPCOM_FEATURES_SUBSCRIPTION_GIFTING, WPCOM_FEATURES_LOCKED_MODE, WPCOM_FEATURES_LEGACY_CONTACT, WPCOM_FEATURES_UPLOAD_AUDIO_FILES, WPCOM_FEATURES_UPLOAD_PLUGINS, WPCOM_FEATURES_UPLOAD_VIDEO_FILES, WPCOM_FEATURES_VAULTPRESS_BACKUPS, WPCOM_FEATURES_VIDEOPRESS, WPCOM_FEATURES_VIDEOPRESS_UNLIMITED_STORAGE, WPCOM_FEATURES_VIDEO_HOSTING, WPCOM_FEATURES_WORDADS, WPCOM_FEATURES_CUSTOM_DESIGN, WPCOM_FEATURES_GLOBAL_STYLES, WPCOM_FEATURES_SITE_PREVIEW_LINKS, FEATURE_IMPORT_SUBSCRIBERS, FEATURE_ADD_MULTIPLE_PAGES_NEWSLETTER, FEATURE_COLLECT_PAYMENTS_NEWSLETTER, FEATURE_POST_BY_EMAIL, FEATURE_GOOGLE_ANALYTICS_V2, FEATURE_CUSTOMIZE_THEMES_BUTTONS_COLORS, FEATURE_TRACK_VIEWS_CLICKS, FEATURE_DESIGN_TOOLS, FEATURE_REFERRAL_PROGRAMS, FEATURE_CUSTOMER_BIRTHDAY_EMAILS, FEATURE_LOYALTY_POINTS_PROGRAMS, FEATURE_ASSEMBLED_PRODUCTS_AND_KITS, FEATURE_BRUTE_PROTECT_JP, FEATURE_AUTOMATTIC_DATACENTER_FAILOVER, FEATURE_CUSTOM_PRODUCT_KITS, FEATURE_TYPE_JETPACK_ANTI_SPAM, FEATURE_TYPE_JETPACK_ACTIVITY_LOG, FEATURE_TYPE_JETPACK_BACKUP, FEATURE_TYPE_JETPACK_BOOST, FEATURE_TYPE_JETPACK_SCAN, FEATURE_TYPE_JETPACK_SEARCH, FEATURE_TYPE_JETPACK_STATS, FEATURE_TYPE_JETPACK_VIDEOPRESS */
+/* unused harmony exports FEATURE_SET_PRIMARY_CUSTOM_DOMAIN, FEATURE_LEGACY_STORAGE_200GB, FEATURE_UNLIMITED_STORAGE, FEATURE_SFTP, FEATURE_SSH, FEATURE_VIDEO_UPLOADS_JETPACK_PREMIUM, FEATURE_INSTALL_THEMES, FEATURE_PERFORMANCE, FEATURE_ALL_PERSONAL_FEATURES_JETPACK, FEATURE_DONATIONS, FEATURE_PREMIUM_CONTENT_CONTAINER, FEATURE_SECURITY_SETTINGS, FEATURE_WOOP, FEATURE_STATS_FREE, FEATURE_SEARCH, FEATURE_SEARCH_V2, FEATURE_VIDEO_HOSTING_V2, FEATURE_CRM_INTEGRATED_WITH_WORDPRESS, FEATURE_CRM_LEADS_AND_FUNNEL, FEATURE_CRM_PROPOSALS_AND_INVOICES, FEATURE_CRM_TRACK_TRANSACTIONS, FEATURE_CRM_NO_CONTACT_LIMITS, FEATURE_SECURE_STORAGE_V2, FEATURE_ONE_CLICK_FIX_V2, FEATURE_INSTANT_EMAIL_V2, FEATURE_AKISMET_V2, FEATURE_SPAM_BLOCK_V2, FEATURE_SPAM_10K_PER_MONTH, FEATURE_FILTERING_V2, FEATURE_LANGUAGE_SUPPORT_V2, FEATURE_SPELLING_CORRECTION_V2, FEATURE_SUPPORTS_WOOCOMMERCE_V2, FEATURE_JETPACK_SCAN_BI_YEARLY, FEATURE_JETPACK_VIDEOPRESS_EDITOR, FEATURE_JETPACK_VIDEOPRESS_STORAGE, FEATURE_JETPACK_VIDEOPRESS_UNBRANDED, FEATURE_SOCIAL_SHARES_1000, FEATURE_SOCIAL_ENHANCED_PUBLISHING, FEATURE_SOCIAL_MASTODON_CONNECTION, FEATURE_SOCIAL_INSTAGRAM_CONNECTION, FEATURE_SOCIAL_NEXTDOOR_CONNECTION, FEATURE_JETPACK_MONITOR_MONTHLY, FEATURE_JETPACK_MONITOR_YEARLY, FEATURE_MONITOR_1_MINUTE_CHECK_INTERVAL, FEATURE_MONITOR_MULTIPLE_EMAIL_RECIPIENTS, FEATURE_MONITOR_SMS_NOTIFICATIONS, FEATURE_JETPACK_1GB_BACKUP_STORAGE, FEATURE_JETPACK_10GB_BACKUP_STORAGE, FEATURE_JETPACK_REAL_TIME_CLOUD_BACKUPS, FEATURE_UNLIMITED_USERS, FEATURE_UNLIMITED_POSTS_PAGES, FEATURE_ADDITIONAL_SITES, WPCOM_FEATURES_AI_ASSISTANT, WPCOM_FEATURES_AKISMET, WPCOM_FEATURES_BACKUPS_RESTORE, WPCOM_FEATURES_CDN, WPCOM_FEATURES_CLASSIC_SEARCH, WPCOM_FEATURES_CLOUDFLARE_CDN, WPCOM_FEATURES_COPY_SITE, WPCOM_FEATURES_FULL_ACTIVITY_LOG, WPCOM_FEATURES_INSTALL_PLUGINS, WPCOM_FEATURES_INSTANT_SEARCH, WPCOM_FEATURES_LIVE_SUPPORT, WPCOM_FEATURES_MANAGE_PLUGINS, WPCOM_FEATURES_NO_ADVERTS, WPCOM_FEATURES_NO_WPCOM_BRANDING, WPCOM_FEATURES_PRIORITY_SUPPORT, WPCOM_FEATURES_REAL_TIME_BACKUPS, WPCOM_FEATURES_SCHEDULED_UPDATES, WPCOM_FEATURES_SEO_PREVIEW_TOOLS, WPCOM_FEATURES_SUBSCRIPTION_GIFTING, WPCOM_FEATURES_LOCKED_MODE, WPCOM_FEATURES_LEGACY_CONTACT, WPCOM_FEATURES_UPLOAD_AUDIO_FILES, WPCOM_FEATURES_UPLOAD_PLUGINS, WPCOM_FEATURES_UPLOAD_VIDEO_FILES, WPCOM_FEATURES_VAULTPRESS_BACKUPS, WPCOM_FEATURES_VIDEOPRESS, WPCOM_FEATURES_VIDEOPRESS_UNLIMITED_STORAGE, WPCOM_FEATURES_VIDEO_HOSTING, WPCOM_FEATURES_WORDADS, WPCOM_FEATURES_CUSTOM_DESIGN, WPCOM_FEATURES_GLOBAL_STYLES, WPCOM_FEATURES_SITE_PREVIEW_LINKS, FEATURE_IMPORT_SUBSCRIBERS, FEATURE_ADD_MULTIPLE_PAGES_NEWSLETTER, FEATURE_COLLECT_PAYMENTS_NEWSLETTER, FEATURE_POST_BY_EMAIL, FEATURE_GOOGLE_ANALYTICS_V2, FEATURE_CUSTOMIZE_THEMES_BUTTONS_COLORS, FEATURE_TRACK_VIEWS_CLICKS, FEATURE_DESIGN_TOOLS, FEATURE_REFERRAL_PROGRAMS, FEATURE_CUSTOMER_BIRTHDAY_EMAILS, FEATURE_LOYALTY_POINTS_PROGRAMS, FEATURE_ASSEMBLED_PRODUCTS_AND_KITS, FEATURE_BRUTE_PROTECT_JP, FEATURE_AUTOMATTIC_DATACENTER_FAILOVER, FEATURE_CUSTOM_PRODUCT_KITS, FEATURE_TYPE_JETPACK_ANTI_SPAM, FEATURE_TYPE_JETPACK_ACTIVITY_LOG, FEATURE_TYPE_JETPACK_BACKUP, FEATURE_TYPE_JETPACK_BOOST, FEATURE_TYPE_JETPACK_SCAN, FEATURE_TYPE_JETPACK_SEARCH, FEATURE_TYPE_JETPACK_STATS, FEATURE_TYPE_JETPACK_VIDEOPRESS */
 /* harmony import */ var _jetpack__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(46090);
 
 const FEATURE_WP_SUBDOMAIN = 'wordpress-subdomain';
@@ -50567,6 +51064,7 @@ const FEATURE_EMAIL_LIVE_CHAT_SUPPORT_BUSINESS_DAYS = 'email-live-chat-support-b
 const FEATURE_EMAIL_LIVE_CHAT_SUPPORT_ALL_DAYS = 'email-live-chat-support-all-days';
 const FEATURE_LIVE_CHAT_SUPPORT_ALL_DAYS = 'live-chat-support-all-days';
 const FEATURE_LIVE_CHAT_SUPPORT_BUSINESS_DAYS = 'live-chat-support-business-days';
+const EXPERT_SUPPORT_ALL_DAYS = 'expert-support-all-days';
 const FEATURE_EMAIL_FORWARDING_EXTENDED_LIMIT = 'email-forwarding-extended-limit';
 const FEATURE_PREMIUM_SUPPORT = 'priority-support';
 const FEATURE_GOOGLE_ANALYTICS = 'google-analytics';
@@ -50575,6 +51073,7 @@ const FEATURE_GOOGLE_MY_BUSINESS = 'google-my-business';
 const FEATURE_SFTP = 'sftp';
 const FEATURE_SSH = 'ssh';
 const FEATURE_SITE_STAGING_SITES = 'staging-sites';
+const FEATURE_SEAMLESS_STAGING_PRODUCTION_SYNCING = 'seamless-staging-production-syncing';
 const FEATURE_LIVE_CHAT_SUPPORT = 'live-chat-support';
 const FEATURE_NO_ADS = 'no-adverts';
 const FEATURE_VIDEO_UPLOADS = 'video-upload';
@@ -50765,7 +51264,6 @@ const FEATURE_P2_ACTIVITY_OVERVIEW = 'p2-activity-overview';
 
 // New features Flexible and Pro plans introduced.
 const FEATURE_MANAGED_HOSTING = 'managed-hosting';
-const FEATURE_UNLIMITED_TRAFFIC = 'unlimited-traffic';
 const FEATURE_UNLIMITED_USERS = 'unlimited-users';
 const FEATURE_UNLIMITED_POSTS_PAGES = 'unlimited-posts-pages';
 const FEATURE_PAYMENT_BLOCKS = 'payment-blocks';
@@ -50875,6 +51373,8 @@ const FEATURE_CPUS = 'cpus-v1';
 const FEATURE_DATACENTRE_FAILOVER = 'datacentre-failover';
 const FEATURE_ISOLATED_INFRA = 'isolated-infra';
 const FEATURE_SECURITY_MALWARE = 'security-malware';
+const FEATURE_REAL_TIME_SECURITY_SCANS = 'real-time-security-scans';
+const FEATURE_SECURITY_VULNERABILITY_NOTIFICATIONS = 'security-vulnerability-notifications';
 const FEATURE_SECURITY_DDOS = 'security-ddos';
 const FEATURE_DEV_TOOLS = 'dev-tools';
 const FEATURE_WP_UPDATES = 'wp-updates';
@@ -50926,6 +51426,7 @@ const FEATURE_PAYPAL_JP = 'payments-paypal-jp';
 const FEATURE_PAYMENT_BUTTONS_JP = 'payment-buttons-jp';
 const FEATURE_AUTOMATTIC_DATACENTER_FAILOVER = 'automattic-datacenter-fail-over';
 const FEATURE_PREMIUM_STORE_THEMES = 'premium-store-themes';
+const FEATURE_WOOCOMMERCE_HOSTING = 'woocommerce-hosting';
 const FEATURE_STORE_DESIGN = 'store-design';
 const FEATURE_UNLIMITED_PRODUCTS = 'unlimited-products';
 const FEATURE_DISPLAY_PRODUCTS_BRAND = 'display-products-brand';
@@ -50943,6 +51444,8 @@ const FEATURE_SELL_60_COUNTRIES = 'sell-60-countries';
 const FEATURE_SHIPPING_INTEGRATIONS = 'shipping-integrations';
 const FEATURE_50GB_STORAGE_ADD_ON = '50gb-storage-add-on';
 const FEATURE_100GB_STORAGE_ADD_ON = '100gb-storage-add-on';
+const FEATURE_UNLIMITED_TRAFFIC = 'unlimited-traffic';
+const FEATURE_TIERED_STORAGE_PLANS_AVAILABLE = 'tiered-storage-plans-available';
 
 // Woo Express Features
 const FEATURE_WOOCOMMERCE_STORE = 'woocommerce-store'; // WooCommerce store
@@ -52727,7 +53230,7 @@ const getPlanFreeDetails = () => ({
   getPortfolioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMUNITY_SUPPORT */ .fcV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WP_SUBDOMAIN_SIGNUP */ .Fig, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_THEMES_SIGNUP */ .COw],
   get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BEAUTIFUL_THEMES */ .EPC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAGES */ .ko5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_USERS */ .e5F, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_POST_EDITS_HISTORY */ .b9l, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NEWSLETTERS_RSS */ .jdY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_BRUTE_FORCE */ .LKS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SMART_REDIRECTS */ .lIm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALWAYS_ONLINE */ .P25, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_10 */ .vQx],
   get2023PlanComparisonFeatureOverride: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BEAUTIFUL_THEMES */ .EPC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAGES */ .ko5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_USERS */ .e5F, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_POST_EDITS_HISTORY */ .b9l, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NEWSLETTERS_RSS */ .jdY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_BRUTE_FORCE */ .LKS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SMART_REDIRECTS */ .lIm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALWAYS_ONLINE */ .P25, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BANDWIDTH */ .Tuf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_DNS */ .uoN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GLOBAL_EDGE_CACHING */ .vz3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CDN */ .xq9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DATACENTRE_FAILOVER */ .qot, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WP_UPDATES */ .SIm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MULTI_SITE */ .bW1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_MALWARE */ .QXs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_DDOS */ .HU_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_10 */ .vQx, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GROUP_PAYMENT_TRANSACTION_FEES */ .Faw],
-  get2023PricingGridSignupJetpackFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAID_SUBSCRIBERS_JP */ .N3t, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_JP */ .ch3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DONATIONS_AND_TIPS_JP */ .ZIK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_BUTTONS_JP */ .b1C, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_JP */ .WoS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SPAM_JP */ .y33, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LTD_SOCIAL_MEDIA_JP */ .yD$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CONTACT_FORM_JP */ .qCV],
+  get2023PricingGridSignupJetpackFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAID_SUBSCRIBERS_JP */ .N3t, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_JP */ .ch3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DONATIONS_AND_TIPS_JP */ .ZIK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_BUTTONS_JP */ .b1C, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_JP */ .WoS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LTD_SOCIAL_MEDIA_JP */ .yD$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CONTACT_FORM_JP */ .qCV],
   get2023PlanComparisonJetpackFeatureOverride: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAID_SUBSCRIBERS_JP */ .N3t, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DONATIONS_AND_TIPS_JP */ .ZIK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_JP */ .ch3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_BUTTONS_JP */ .b1C, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_JP */ .WoS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SPAM_JP */ .y33, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CONTACT_FORM_JP */ .qCV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_ACTIVITY_LOG_JP */ .LHt, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHARES_SOCIAL_MEDIA_JP */ .K5c],
   get2023PricingGridSignupStorageOptions: () => {
     return [{
@@ -52790,7 +53293,7 @@ const getPlanPersonalDetails = () => ({
   getBlogSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_DOMAIN */ .BAE, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .RZD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_FREE_FEATURES */ .wIu],
   getPortfolioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_DOMAIN */ .BAE, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .RZD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_FREE_FEATURES */ .wIu],
   getSignupCompareAvailableFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ ._22, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .MZU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_V2 */ .R7Q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .RZD],
-  get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .dBh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_DNS */ .uoN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SUPPORT_EMAIL */ .EOS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_8 */ .Ymf],
+  get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_LIMITED */ .NI9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .dBh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_DNS */ .uoN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SUPPORT_EMAIL */ .EOS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_8 */ .Ymf],
   get2023PlanComparisonFeatureOverride: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .dBh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_DNS */ .uoN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SUPPORT_EMAIL */ .EOS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_8 */ .Ymf],
   get2023PricingGridSignupStorageOptions: () => {
     return [{
@@ -52824,7 +53327,7 @@ const getPlanEcommerceDetails = () => ({
   getBlogAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Best for online stores'),
   getPortfolioAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Best for online stores'),
   getStoreAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Best for online stores'),
-  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Create a powerful online store with built-in premium extensions.'),
+  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Build an online store with powerful, integrated premium extensions.'),
   getDescription: () => {
     return i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('{{strong}}Best for online stores:{{/strong}} Sell products or services with this powerful, ' + 'all-in-one online store experience. This plan includes premium integrations and is extendable, ' + 'so it’ll grow with you as your business grows.', plansDescriptionHeadingComponent);
   },
@@ -52846,7 +53349,7 @@ const getPlanEcommerceDetails = () => ({
   getBlogSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS */ .gH7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .mEY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_BUSINESS_FEATURES */ .adL],
   getPortfolioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS */ .gH7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .mEY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_BUSINESS_FEATURES */ .adL],
   getSignupCompareAvailableFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ ._22, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .MZU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_V2 */ .R7Q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .RZD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_ALL_DAYS */ .XAi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EARN_AD */ .eYY, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .Ol)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .AOP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INSTALL_PLUGINS */ .m51, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_EXPANDED_ABBR */ .kPp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_BACKUPS_AND_RESTORE */ ._vw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SFTP_DATABASE */ .bnw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS */ .gH7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .mEY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .PREMIUM_DESIGN_FOR_STORES */ .kbH].filter(isValueTruthy),
-  get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_STORE_THEMES */ .SQX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STORE_DESIGN */ .CTo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_PRODUCTS */ .CN1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DISPLAY_PRODUCTS_BRAND */ .bA6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_ADD_ONS */ .ozR, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ASSEMBLED_KITS */ .uXB, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MIN_MAX_QTY */ .ee8, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STOCK_NOTIFS */ .m38, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DYNAMIC_UPSELLS */ .Czl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LOYALTY_PROG */ .rxl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_MARKETING_AUTOMATION */ .yqq, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BULK_DISCOUNTS */ .Xlo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INVENTORY_MGMT */ .MaF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STREAMLINED_CHECKOUT */ .D9A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SELL_60_COUNTRIES */ .kbI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_INTEGRATIONS */ .mT$, i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Ay.hasTranslation('%(commission)d%% transaction fee for all payment features') || ['en', 'en-gb'].includes((0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .getLocaleSlug */ .yb)() || '') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_0_ALL */ .aNF : _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_0 */ .kSO],
+  get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WOOCOMMERCE_HOSTING */ .ZLu, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_STORE_THEMES */ .SQX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STORE_DESIGN */ .CTo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_PRODUCTS */ .CN1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DISPLAY_PRODUCTS_BRAND */ .bA6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_ADD_ONS */ .ozR, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ASSEMBLED_KITS */ .uXB, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MIN_MAX_QTY */ .ee8, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STOCK_NOTIFS */ .m38, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DYNAMIC_UPSELLS */ .Czl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LOYALTY_PROG */ .rxl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_MARKETING_AUTOMATION */ .yqq, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BULK_DISCOUNTS */ .Xlo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INVENTORY_MGMT */ .MaF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STREAMLINED_CHECKOUT */ .D9A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SELL_60_COUNTRIES */ .kbI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_INTEGRATIONS */ .mT$, i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Ay.hasTranslation('%(commission)d%% transaction fee for all payment features') || ['en', 'en-gb'].includes((0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .getLocaleSlug */ .yb)() || '') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_0_ALL */ .aNF : _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_0 */ .kSO],
   getCheckoutFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Dml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLUGINS_THEMES */ .j58, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS */ .gH7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .mEY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_PRODUCTS_SERVICES */ .vkJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LOYALTY_PROG */ .rxl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INVENTORY */ .Y_U, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_MARKETING_AUTOMATION */ .yqq],
   get2023PricingGridSignupJetpackFeatures: () => [],
   get2023PricingGridSignupStorageOptions: (showLegacyStorageFeature, isCurrentPlan) => {
@@ -52951,7 +53454,7 @@ const getPlanPremiumDetails = () => ({
   getBlogSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MONETISE */ .aC2, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .Ol)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_PERSONAL_FEATURES */ .ItL].filter(isValueTruthy),
   getPortfolioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .$lI, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .Ol)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_PERSONAL_FEATURES */ .ItL].filter(isValueTruthy),
   getSignupCompareAvailableFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ ._22, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .MZU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_V2 */ .R7Q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .RZD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_BUSINESS_DAYS */ ._c8, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EARN_AD */ .eYY, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .Ol)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .AOP].filter(isValueTruthy),
-  get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Dml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS */ .yks, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STYLE_CUSTOMIZATION */ .RkI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_4 */ .kYS],
+  get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .EXPERT_SUPPORT_ALL_DAYS */ .Tfk, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS */ .yks, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STYLE_CUSTOMIZATION */ .RkI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_4 */ .kYS],
   getCheckoutFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Dml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS */ .yks, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STYLE_CUSTOMIZATION */ .RkI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_PAID */ .iQ_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEOPRESS_JP */ .HKK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLTD_SOCIAL_MEDIA_JP */ .jiF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_ACTIVITY_LOG_JP */ .LHt],
   get2023PricingGridSignupJetpackFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEOPRESS_JP */ .HKK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLTD_SOCIAL_MEDIA_JP */ .jiF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_ACTIVITY_LOG_JP */ .LHt, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_PAID */ .iQ_],
   get2023PricingGridSignupStorageOptions: () => {
@@ -52977,7 +53480,7 @@ const getPlanBusinessDetails = () => ({
   getBlogAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Best for small businesses'),
   getPortfolioAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Best for small businesses'),
   getStoreAudience: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('The plan for small businesses'),
-  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Unlock the power of WordPress with plugins and cloud tools.'),
+  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Unlock the power of WordPress with the managed hosting platform built by WordPress experts.'),
   getBlogOnboardingTagLine: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Expand your blog with plugins and powerful tools to help you scale.'),
   getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('{{strong}}Best for small businesses:{{/strong}} Power your' + ' business website with custom plugins and themes,' + ' %(nmOfGB)s GB storage, and the ability to remove WordPress.com branding.', {
     ...plansDescriptionHeadingComponent,
@@ -53007,7 +53510,11 @@ const getPlanBusinessDetails = () => ({
   getBlogSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES_PLUGINS */ .hQm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_TOOLS */ .gQ2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_PREMIUM_FEATURES */ .NrG],
   getPortfolioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES_PLUGINS */ .hQm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_200GB_STORAGE */ .JZR, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_PREMIUM_FEATURES */ .NrG],
   getSignupCompareAvailableFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ ._22, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .MZU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_V2 */ .R7Q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .RZD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_ALL_DAYS */ .XAi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EARN_AD */ .eYY, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .Ol)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .AOP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INSTALL_PLUGINS */ .m51, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_EXPANDED_ABBR */ .kPp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_BACKUPS_AND_RESTORE */ ._vw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SFTP_DATABASE */ .bnw].filter(isValueTruthy),
-  get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLUGINS_THEMES */ .j58, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BANDWIDTH */ .Tuf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GLOBAL_EDGE_CACHING */ .vz3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BURST */ .eCG, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WAF_V2 */ .$5r, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CDN */ .xq9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CPUS */ .lS7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DATACENTRE_FAILOVER */ .qot, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ISOLATED_INFRA */ .iAz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_MALWARE */ .QXs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_DDOS */ .HU_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DEV_TOOLS */ .lW1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_STAGING_SITES */ .KmN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WP_UPDATES */ .SIm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MULTI_SITE */ .bW1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_2_REGULAR */ .jM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_0_WOO */ .WT$],
+  get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLUGINS_THEMES */ .j58, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BANDWIDTH */ .Tuf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_TRAFFIC */ .l5Q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Dml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GLOBAL_EDGE_CACHING */ .vz3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BURST */ .eCG, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WAF_V2 */ .$5r, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CDN */ .xq9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CPUS */ .lS7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DATACENTRE_FAILOVER */ .qot, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ISOLATED_INFRA */ .iAz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_MALWARE */ .QXs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_TIERED_STORAGE_PLANS_AVAILABLE */ .OvS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REAL_TIME_SECURITY_SCANS */ .O2$,
+  /***
+   * Probably should be moved to Jetpack Features
+   */
+  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SPAM_JP */ .y33, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_DDOS */ .HU_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DEV_TOOLS */ .lW1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_STAGING_SITES */ .KmN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEAMLESS_STAGING_PRODUCTION_SYNCING */ .XNd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WP_UPDATES */ .SIm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MULTI_SITE */ .bW1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_VULNERABILITY_NOTIFICATIONS */ .Cf7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_0_WOO */ .WT$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_2_REGULAR */ .jM],
   getCheckoutFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLUGINS_THEMES */ .j58, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BANDWIDTH */ .Tuf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CDN */ .xq9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_TOOLS */ .gQ2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Dml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DEV_TOOLS */ .lW1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REALTIME_BACKUPS_JP */ .e7t, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_ACTIVITY_LOG_JP */ .LHt, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_DDOS */ .HU_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_STAGING_SITES */ .KmN],
   get2023PricingGridSignupJetpackFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REALTIME_BACKUPS_JP */ .e7t, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ONE_CLICK_RESTORE_V2 */ .RAq, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPTIME_MONITOR_JP */ .Qcp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ES_SEARCH_JP */ .GlD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLUGIN_AUTOUPDATE_JP */ .NBm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_JP */ .ur7],
   get2023PlanComparisonConditionalFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES */ .CFg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_STORE_THEMES */ .SQX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STORE_DESIGN */ .CTo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_PRODUCTS */ .CN1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DISPLAY_PRODUCTS_BRAND */ .bA6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_ADD_ONS */ .ozR, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ASSEMBLED_KITS */ .uXB, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MIN_MAX_QTY */ .ee8, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STOCK_NOTIFS */ .m38, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DYNAMIC_UPSELLS */ .Czl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LOYALTY_PROG */ .rxl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_MARKETING_AUTOMATION */ .yqq, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BULK_DISCOUNTS */ .Xlo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INVENTORY_MGMT */ .MaF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STREAMLINED_CHECKOUT */ .D9A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SELL_60_COUNTRIES */ .kbI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_INTEGRATIONS */ .mT$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHARES_SOCIAL_MEDIA_JP */ .K5c, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_STANDARD_FEATURES */ .Uqd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_WOO_FEATURES */ .QuL],
@@ -55574,6 +56081,89 @@ const CircularProgressBar = ({
   }, currentStep, "/", numberOfSteps));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CircularProgressBar);
+
+/***/ }),
+
+/***/ 16437:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(24586);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(355);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99870);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(85744);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(66087);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(39067);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(51609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(79812);
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(15471);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(14082);
+
+
+
+
+
+
+
+
+
+
+class ExternalLink extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
+  render() {
+    const classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()('external-link', this.props.className, {
+      'icon-first': this.props.showIconFirst,
+      'has-icon': this.props.icon
+    });
+    const props = {
+      ...(0,lodash__WEBPACK_IMPORTED_MODULE_2__.omit)(this.props, 'icon', 'iconSize', 'showIconFirst', 'iconClassName', 'iconComponent'),
+      className: classes,
+      rel: 'external'
+    };
+    if (this.props.icon) {
+      props.target = '_blank';
+    }
+    if (props.target) {
+      props.rel = props.rel.concat(' noopener noreferrer');
+    }
+    if (props.href) {
+      props.href = (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_5__/* .localizeUrl */ .rm)(props.href);
+    }
+    const iconComponent = this.props.iconComponent || (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(___WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+      className: this.props.iconClassName,
+      icon: "external",
+      size: this.props.iconSize
+    });
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", props, this.props.icon && this.props.showIconFirst && iconComponent, this.props.children, this.props.icon && !this.props.showIconFirst && iconComponent, this.props.icon && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(___WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_8__/* .translate */ .Tl)('(opens in a new tab)', {
+      comment: 'accessibility label for an external link'
+    })));
+  }
+}
+(0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A)(ExternalLink, "defaultProps", {
+  iconSize: 18,
+  showIconFirst: false,
+  iconComponent: null
+});
+(0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A)(ExternalLink, "propTypes", {
+  className: (prop_types__WEBPACK_IMPORTED_MODULE_10___default().string),
+  href: (prop_types__WEBPACK_IMPORTED_MODULE_10___default().string),
+  onClick: (prop_types__WEBPACK_IMPORTED_MODULE_10___default().func),
+  icon: (prop_types__WEBPACK_IMPORTED_MODULE_10___default().bool),
+  iconSize: (prop_types__WEBPACK_IMPORTED_MODULE_10___default().number),
+  target: (prop_types__WEBPACK_IMPORTED_MODULE_10___default().string),
+  showIconFirst: (prop_types__WEBPACK_IMPORTED_MODULE_10___default().bool),
+  iconClassName: (prop_types__WEBPACK_IMPORTED_MODULE_10___default().string),
+  iconComponent: (prop_types__WEBPACK_IMPORTED_MODULE_10___default().object)
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ExternalLink);
 
 /***/ }),
 
@@ -58307,6 +58897,7 @@ function createPurchaseObject(purchase) {
     })),
     partnerName: purchase.partner_name,
     partnerSlug: purchase.partner_slug,
+    partnerType: purchase.partner_type,
     partnerKeyId: purchase.partner_key_id,
     payment: {
       name: purchase.payment_name,
@@ -60350,6 +60941,7 @@ const BackToTopButton = () => {
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var calypso_blocks_support_article_dialog_header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13698);
 /* harmony import */ var calypso_components_embed_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(95451);
+/* harmony import */ var _help_center_feedback_form__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(73304);
 /* harmony import */ var _placeholder_lines__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(85555);
 /* harmony import */ var _help_center_article_content_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(26088);
 
@@ -60358,10 +60950,13 @@ const BackToTopButton = () => {
 
 
 
+
 const ArticleContent = ({
   content,
   title,
   link,
+  postId,
+  blogId,
   isLoading = false
 }) => {
   const post = {
@@ -60382,6 +60977,9 @@ const ArticleContent = ({
     dangerouslySetInnerHTML: {
       __html: content
     }
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_feedback_form__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    postId: postId,
+    blogId: blogId
   }))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ArticleContent);
@@ -60470,7 +61068,9 @@ const ArticleFetchingContent = ({
     content: post?.content,
     title: post?.title,
     link: post?.link,
-    isLoading: isLoading
+    isLoading: isLoading,
+    postId: postId,
+    blogId: blogId
   }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ArticleFetchingContent);
@@ -60835,9 +61435,6 @@ const HelpCenterContactForm = props => {
           if ((0,calypso_lib_query_args__WEBPACK_IMPORTED_MODULE_9__/* .getQueryArgs */ .u0)()?.ref === 'woocommerce-com') {
             ticketMeta.push(`Created during store setup on ${(0,calypso_lib_mobile_app__WEBPACK_IMPORTED_MODULE_8__/* .isWcMobileApp */ .q4)() ? 'Woo mobile app' : 'Woo browser'}`);
           }
-          if (params.get('source-command-palette') === 'true') {
-            ticketMeta.push(`From Hosting Command Palette: Please post this user feedback to #dotcom-yolo on Slack.`);
-          }
           const kayakoMessage = [...ticketMeta, '\n', message].join('\n');
           submitTicket({
             subject: subject ?? '',
@@ -61190,6 +61787,7 @@ const HelpCenterContactPage = ({
     __
   } = (0,_wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_7__/* .useI18n */ .s9)();
   const locale = (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_8__/* .useLocale */ .Ym)();
+  const isEnglishLocale = (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_8__/* .useIsEnglishLocale */ .SL)();
   const renderEmail = (0,_hooks__WEBPACK_IMPORTED_MODULE_9__/* .useShouldRenderEmailOption */ .s)();
   const {
     hasActiveChats,
@@ -61213,13 +61811,13 @@ const HelpCenterContactPage = ({
     });
   }, [isLoading, renderChat.state, renderEmail.render]);
   const liveChatHeaderText = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => {
-    if ((0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_13__/* .isDefaultLocale */ .EZ)(locale) || !(0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.hasTranslation)('Live chat (English)')) {
+    if (isEnglishLocale || !(0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.hasTranslation)('Live chat (English)')) {
       return __('Live chat', "full-site-editing");
     }
     return __('Live chat (English)', "full-site-editing");
   }, [__, locale]);
   const emailHeaderText = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => {
-    if ((0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_13__/* .isDefaultLocale */ .EZ)(locale)) {
+    if (isEnglishLocale) {
       return __('Email', "full-site-editing");
     }
     const isLanguageSupported = (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Ay)('upwork_support_locales').includes(locale);
@@ -61235,7 +61833,7 @@ const HelpCenterContactPage = ({
     return __('Email', "full-site-editing");
   }, [__, locale]);
   const forumHeaderText = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => {
-    if ((0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_13__/* .isDefaultLocale */ .EZ)(locale)) {
+    if (isEnglishLocale) {
       return __('Community forums', "full-site-editing");
     }
     return __('Community forums (English)', "full-site-editing");
@@ -61372,31 +61970,33 @@ const HelpCenterContactButton = () => {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(89575);
+/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(89575);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _automattic_viewport_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(44638);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(56427);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(47143);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var react_draggable__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(89463);
-/* harmony import */ var react_draggable__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_draggable__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(18690);
-/* harmony import */ var _contexts_FeatureFlagContext__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(2213);
-/* harmony import */ var _stores__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(29575);
-/* harmony import */ var _help_center_content__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(69539);
-/* harmony import */ var _help_center_footer__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(20431);
-/* harmony import */ var _help_center_header__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(32805);
+/* harmony import */ var _automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(98948);
+/* harmony import */ var _automattic_viewport_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(44638);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(56427);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(47143);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(99870);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(51609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var react_draggable__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(89463);
+/* harmony import */ var react_draggable__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_draggable__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(18690);
+/* harmony import */ var _contexts_FeatureFlagContext__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(2213);
+/* harmony import */ var _stores__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(29575);
+/* harmony import */ var _help_center_content__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(69539);
+/* harmony import */ var _help_center_footer__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(20431);
+/* harmony import */ var _help_center_header__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(32805);
 
 
 /**
  * External Dependencies
  */
+
 
 
 
@@ -61419,7 +62019,7 @@ const OptionalDraggable = ({
   if (!draggable) {
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, props.children);
   }
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)((react_draggable__WEBPACK_IMPORTED_MODULE_5___default()), props);
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)((react_draggable__WEBPACK_IMPORTED_MODULE_6___default()), props);
 };
 const HelpCenterContainer = ({
   handleClose,
@@ -61430,8 +62030,8 @@ const HelpCenterContainer = ({
     show,
     isMinimized,
     initialRoute
-  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useSelect)(select => {
-    const store = select(_stores__WEBPACK_IMPORTED_MODULE_6__/* .HELP_CENTER_STORE */ .qO);
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => {
+    const store = select(_stores__WEBPACK_IMPORTED_MODULE_7__/* .HELP_CENTER_STORE */ .qO);
     return {
       show: store.isHelpCenterShown(),
       isMinimized: store.getIsMinimized(),
@@ -61440,14 +62040,15 @@ const HelpCenterContainer = ({
   }, []);
   const {
     setIsMinimized
-  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useDispatch)(_stores__WEBPACK_IMPORTED_MODULE_6__/* .HELP_CENTER_STORE */ .qO);
-  const [isVisible, setIsVisible] = (0,react__WEBPACK_IMPORTED_MODULE_4__.useState)(true);
-  const isMobile = (0,_automattic_viewport_react__WEBPACK_IMPORTED_MODULE_7__/* .useMobileBreakpoint */ .lC)();
-  const classNames = classnames__WEBPACK_IMPORTED_MODULE_3___default()('help-center__container', isMobile ? 'is-mobile' : 'is-desktop', {
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useDispatch)(_stores__WEBPACK_IMPORTED_MODULE_7__/* .HELP_CENTER_STORE */ .qO);
+  const [isVisible, setIsVisible] = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(true);
+  const isMobile = (0,_automattic_viewport_react__WEBPACK_IMPORTED_MODULE_8__/* .useMobileBreakpoint */ .lC)();
+  const classNames = classnames__WEBPACK_IMPORTED_MODULE_4___default()('help-center__container', isMobile ? 'is-mobile' : 'is-desktop', {
     'is-minimized': isMinimized
   });
   const onDismiss = () => {
     setIsVisible(false);
+    (0,_automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__/* .recordTracksEvent */ .Oy)(`calypso_inlinehelp_close`);
   };
   const toggleVisible = () => {
     if (!isVisible) {
@@ -61464,29 +62065,29 @@ const HelpCenterContainer = ({
   };
   // This is a workaround for an issue with Draggable in StrictMode
   // https://github.com/react-grid-layout/react-draggable/blob/781ef77c86be9486400da9837f43b96186166e38/README.md
-  const nodeRef = (0,react__WEBPACK_IMPORTED_MODULE_4__.useRef)(null);
+  const nodeRef = (0,react__WEBPACK_IMPORTED_MODULE_5__.useRef)(null);
   if (!show || hidden) {
     return null;
   }
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__/* .MemoryRouter */ .fS, {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__/* .MemoryRouter */ .fS, {
     initialEntries: initialRoute ? [initialRoute] : undefined
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_contexts_FeatureFlagContext__WEBPACK_IMPORTED_MODULE_9__/* .FeatureFlagProvider */ .s, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(OptionalDraggable, {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_contexts_FeatureFlagContext__WEBPACK_IMPORTED_MODULE_10__/* .FeatureFlagProvider */ .s, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(OptionalDraggable, {
     draggable: !isMobile && !isMinimized,
     nodeRef: nodeRef,
     handle: ".help-center__container-header",
     bounds: "body"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Card, (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A)({
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Card, (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A)({
     className: classNames
   }, animationProps, {
     ref: nodeRef
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_header__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_header__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     isMinimized: isMinimized,
     onMinimize: () => setIsMinimized(true),
     onMaximize: () => setIsMinimized(false),
     onDismiss: onDismiss
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_content__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_content__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
     currentRoute: currentRoute
-  }), !isMinimized && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_footer__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, null)))));
+  }), !isMinimized && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_footer__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, null)))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (HelpCenterContainer);
 
@@ -61700,6 +62301,12 @@ const HelpCenterEmbedResult = () => {
     (0,_automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__/* .recordTracksEvent */ .Oy)(`calypso_inlinehelp_article_open`, tracksData);
   }, [query, link, sectionName, postId, blogId]);
   const redirectBack = () => {
+    (0,_automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__/* .recordTracksEvent */ .Oy)(`calypso_inlinehelp_navigate_back`, {
+      result_url: link,
+      post_id: postId,
+      blog_id: blogId,
+      search_query: query
+    });
     if (canNavigateBack) {
       navigate(-1);
     } else if (query) {
@@ -61742,6 +62349,69 @@ const HelpCenterEmbedResult = () => {
     blogId: blogId
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_back_to_top_button__WEBPACK_IMPORTED_MODULE_11__/* .BackToTopButton */ .A, null));
 };
+
+/***/ }),
+
+/***/ 73304:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(98948);
+/* harmony import */ var _wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(23634);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(51609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _icons_thumbs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(28989);
+/* harmony import */ var _help_center_feedback_form_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(22274);
+
+
+
+
+
+
+const HelpCenterFeedbackForm = ({
+  postId,
+  blogId
+}) => {
+  const {
+    __
+  } = (0,_wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_4__/* .useI18n */ .s9)();
+  const [startedFeedback, setStartedFeedback] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(null);
+  const [answerValue, setAnswerValue] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(null);
+  const handleFeedbackClick = value => {
+    setStartedFeedback(true);
+    setAnswerValue(value);
+    (0,_automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__/* .recordTracksEvent */ .Oy)(`calypso_inlinehelp_article_feedback_click`, {
+      did_the_article_help: value === 1 ? 'yes' : 'no',
+      post_id: postId
+    });
+  };
+  const FeedbackButtons = () => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, __('Did you find the answer to your question?')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "help-center-feedback-form__buttons"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    // 1 is used as `yes` in crowdsignal as well, do not change
+    onClick: () => handleFeedbackClick(1)
+  }, __('Yes'), " ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_thumbs__WEBPACK_IMPORTED_MODULE_5__/* .ThumbsUpIcon */ .G, null)), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    // 2 is used as `no` in crowdsignal as well, do not change
+    onClick: () => handleFeedbackClick(2)
+  }, __('No'), " ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_thumbs__WEBPACK_IMPORTED_MODULE_5__/* .ThumbsDownIcon */ .d, null))));
+  const FeedbackTextArea = () => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, __('How we can improve?')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("iframe", {
+    title: __('Feedback Form')
+    // This is the URL of the feedback form,
+    // `answerValue` is either 1 or 2 and it is used to skip the first question since we are already asking it here.
+    // it is necessary to help crowd signal to `skip` ( display none with css ) the first question and save the correct value.
+    ,
+    src: `https://wordpressdotcom.survey.fm/helpcenter-articles-feedback?q_1_choice=${answerValue}&postId=${postId}&blogId=${blogId}`
+  }));
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "help-center-feedback__form"
+  }, startedFeedback === null ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(FeedbackButtons, null) : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(FeedbackTextArea, null));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (HelpCenterFeedbackForm);
 
 /***/ }),
 
@@ -62683,12 +63353,18 @@ function HelpSearchResults({
   // Unless searching with Inline Help or on the Purchases section, hide the
   // "Managing Purchases" documentation link for users who have not made a purchase.
   filterManagePurchaseLink(hasPurchases, isPurchasesSection));
-  const routeToQueryMapping = (0,_hooks_use_context_based_search_mapping__WEBPACK_IMPORTED_MODULE_15__/* .useContextBasedSearchMapping */ .c)(currentRoute);
+  const {
+    contextSearch,
+    tailoredArticles
+  } = (0,_hooks_use_context_based_search_mapping__WEBPACK_IMPORTED_MODULE_15__/* .useContextBasedSearchMapping */ .c)(currentRoute, locale);
   const [debouncedQuery] = (0,use_debounce__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A)(searchQuery || '', 500);
   const {
     data: searchData,
     isLoading: isSearching
-  } = (0,calypso_data_help_use_help_search_query__WEBPACK_IMPORTED_MODULE_7__/* .useHelpSearchQuery */ .j)(debouncedQuery || routeToQueryMapping, locale, {}, sectionName);
+  } = (0,calypso_data_help_use_help_search_query__WEBPACK_IMPORTED_MODULE_7__/* .useHelpSearchQuery */ .j)(debouncedQuery || contextSearch,
+  // If there's a query, we don't context search
+  locale, {}, sectionName, debouncedQuery ? undefined // If there's a query, we don't need tailored articles
+  : tailoredArticles);
   const searchResults = searchData ?? [];
   const hasAPIResults = searchResults.length > 0;
   (0,react__WEBPACK_IMPORTED_MODULE_4__.useEffect)(() => {
@@ -62734,7 +63410,7 @@ function HelpSearchResults({
       }
       return;
     }
-    dispatch((0,calypso_state_analytics_actions__WEBPACK_IMPORTED_MODULE_18__/* .recordTracksEvent */ .Oy)('calypso_inlinehelp_article_select', {
+    const eventData = {
       link,
       post_id,
       blog_id,
@@ -62742,7 +63418,9 @@ function HelpSearchResults({
       search_term: searchQuery,
       location,
       section: sectionName
-    }));
+    };
+    const eventName = tailoredArticles?.post_ids.includes(post_id ?? 0) ? 'calypso_inlinehelp_tailored_article_select' : 'calypso_inlinehelp_article_select';
+    dispatch((0,calypso_state_analytics_actions__WEBPACK_IMPORTED_MODULE_18__/* .recordTracksEvent */ .Oy)(eventName, eventData));
     onSelect(event, result);
   };
   const HelpLink = props => {
@@ -63958,6 +64636,7 @@ function useWpcomSite(siteId, enabled = true) {
 /* harmony export */ });
 /* harmony import */ var _data_use_support_activity__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(97689);
 /* harmony import */ var _data_use_support_availability__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(92323);
+/* harmony import */ var _use_still_need_help_url__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(34237);
 /* harmony import */ var ___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(78670);
 /* harmony import */ var ___WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3659);
 /**
@@ -63968,6 +64647,7 @@ function useWpcomSite(siteId, enabled = true) {
 /**
  * Internal Dependencies
  */
+
 
 function useChatStatus(group = 'wpcom_messaging', checkAgentAvailability = true) {
   const {
@@ -63986,6 +64666,7 @@ function useChatStatus(group = 'wpcom_messaging', checkAgentAvailability = true)
   const {
     status: zendeskStatus
   } = (0,___WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)(isEligibleForChat);
+  const isWapuuFlagPresent = (0,_use_still_need_help_url__WEBPACK_IMPORTED_MODULE_4__/* .isWapuuFlagSetInURL */ .x)();
   return {
     canConnectToZendesk: zendeskStatus !== 'error',
     hasActiveChats,
@@ -63996,7 +64677,7 @@ function useChatStatus(group = 'wpcom_messaging', checkAgentAvailability = true)
     isPrecancellationChatOpen: Boolean(chatStatus?.is_precancellation_chat_open),
     supportActivity,
     supportLevel: chatStatus?.supportLevel,
-    wapuuAssistantEnabled: chatStatus?.wapuu_assistant_enabled
+    wapuuAssistantEnabled: chatStatus?.wapuu_assistant_enabled || isWapuuFlagPresent
   };
 }
 
@@ -64131,9 +64812,15 @@ const useContactFormTitle = mode => {
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(47143);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _route_to_query_mapping_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(10031);
+/* harmony import */ var _tailored_post_ids_mapping_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(72275);
 
 
-function useContextBasedSearchMapping(currentRoute) {
+
+// Returns the search query and tailored articles based on the current route.
+// The search query will be determined based on the selected Gutenberg block, an exact match with URL mapping, or a fuzzy match (in this specific order).
+// The tailored Articles will be determined based on an exact URL match within the tailored article mapping.
+function useContextBasedSearchMapping(currentRoute, locale) {
+  // When using a block in the editor, it will be used to search for help articles based on the block name.
   const blockSearchQuery = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.useSelect)(select => {
     const selectedBlock = select('core/block-editor')?.getSelectedBlock();
     if (selectedBlock) {
@@ -64143,16 +64830,24 @@ function useContextBasedSearchMapping(currentRoute) {
     return '';
   }, []);
 
-  // Find exact URL matches
-  const exactMatch = _route_to_query_mapping_json__WEBPACK_IMPORTED_MODULE_1__[currentRoute];
-  if (exactMatch) {
-    return exactMatch;
-  }
-
   // Fuzzier matches
   const urlMatchKey = Object.keys(_route_to_query_mapping_json__WEBPACK_IMPORTED_MODULE_1__).find(key => currentRoute?.startsWith(key));
   const urlSearchQuery = urlMatchKey ? _route_to_query_mapping_json__WEBPACK_IMPORTED_MODULE_1__[urlMatchKey] : '';
-  return blockSearchQuery || urlSearchQuery || '';
+  const tailoredArticlesMatchKey = Object.keys(_tailored_post_ids_mapping_json__WEBPACK_IMPORTED_MODULE_2__).find(key => currentRoute?.startsWith(key));
+  const tailoredArticles = tailoredArticlesMatchKey ? _tailored_post_ids_mapping_json__WEBPACK_IMPORTED_MODULE_2__[tailoredArticlesMatchKey]?.find(tailoredArticle => tailoredArticle.locale === locale) : undefined;
+
+  // Find exact URL matches
+  const exactMatch = _route_to_query_mapping_json__WEBPACK_IMPORTED_MODULE_1__[currentRoute];
+  if (exactMatch) {
+    return {
+      contextSearch: exactMatch,
+      tailoredArticles
+    };
+  }
+  return {
+    contextSearch: blockSearchQuery || urlSearchQuery || '',
+    tailoredArticles
+  };
 }
 
 /***/ }),
@@ -64373,7 +65068,8 @@ function useShouldRenderEmailOption() {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   i: () => (/* binding */ useStillNeedHelpURL)
+/* harmony export */   i: () => (/* binding */ useStillNeedHelpURL),
+/* harmony export */   x: () => (/* binding */ isWapuuFlagSetInURL)
 /* harmony export */ });
 /* harmony import */ var _data_use_support_availability__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(92323);
 /* harmony import */ var _use_is_wapuu_enabled__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74441);
@@ -64381,12 +65077,23 @@ function useShouldRenderEmailOption() {
 
 
 
+
+/**
+ * This function is used as a fallback for users navigating through wp-admin.
+ * It checks if the 'flags' URL parameter is set to 'wapuu' when useIsWapuuEnabled() fails to do so.
+ * @returns boolean
+ */
+function isWapuuFlagSetInURL() {
+  const currentUrl = window.location.href;
+  const urlParams = new URLSearchParams(new URL(currentUrl).search);
+  return urlParams.get('flags') === 'wapuu';
+}
 function useStillNeedHelpURL() {
   const {
     data: supportAvailability,
     isLoading
   } = (0,_data_use_support_availability__WEBPACK_IMPORTED_MODULE_0__/* .useSupportAvailability */ .e)('OTHER');
-  const isWapuuEnabled = (0,_use_is_wapuu_enabled__WEBPACK_IMPORTED_MODULE_1__/* .useIsWapuuEnabled */ .H)();
+  const isWapuuEnabled = (0,_use_is_wapuu_enabled__WEBPACK_IMPORTED_MODULE_1__/* .useIsWapuuEnabled */ .H)() || isWapuuFlagSetInURL();
   const isFreeUser = !supportAvailability?.is_user_eligible_for_tickets;
   if (!isFreeUser) {
     const url = isWapuuEnabled ? '/odie' : '/contact-options';
@@ -64550,7 +65257,7 @@ function useZendeskMessaging(keyConfigName, enabled = true, tryAuthenticating = 
       id: ZENDESK_SCRIPT_ID
     });
   }, [setMessagingScriptLoaded, enabled, zendeskKey, isMessagingScriptLoaded]);
-  if (document && document.getElementById(ZENDESK_SCRIPT_ID) && enabled && typeof window.zE === 'function' && isMessagingScriptLoaded === false) {
+  if (typeof document !== 'undefined' && document.getElementById(ZENDESK_SCRIPT_ID) && enabled && typeof window.zE === 'function' && isMessagingScriptLoaded === false) {
     setMessagingScriptLoaded(true);
   }
   return {
@@ -64650,6 +65357,46 @@ const NewReleases = () => {
   }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NewReleases);
+
+/***/ }),
+
+/***/ 28989:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   G: () => (/* binding */ ThumbsUpIcon),
+/* harmony export */   d: () => (/* binding */ ThumbsDownIcon)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+
+const ThumbsUpIcon = ({
+  className
+}) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: "24",
+  height: "24",
+  viewBox: "0 0 24 24",
+  className: className
+}, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M9.24155 10.0159C9.31208 10.0054 9.38426 10 9.45771 10C9.77958 10 10.0633 9.78887 10.1558 9.48058L11.3423 5.52577C11.4359 5.21371 11.7231 5 12.0489 5C13.6788 5 15 6.32124 15 7.95108V9.5C15 9.77614 15.2239 10 15.5 10H17.4384C18.7396 10 19.6943 11.2228 19.3787 12.4851L18.3787 16.4851C18.1561 17.3754 17.3562 18 16.4384 18H10C9.52703 18 9.0924 17.8358 8.75 17.5613C8.4076 17.8358 7.97297 18 7.5 18H6C5.44772 18 5 17.5523 5 17V10C5 9.44772 5.44772 9 6 9H7.5C8.24683 9 8.89806 9.40935 9.24155 10.0159ZM15.5 11.5H17.4384C17.7637 11.5 18.0024 11.8057 17.9235 12.1213L16.9235 16.1213C16.8679 16.3439 16.6679 16.5 16.4384 16.5H10C9.72386 16.5 9.5 16.2761 9.5 16V11.4996C10.4668 11.4814 11.3138 10.8408 11.5926 9.9116L12.5853 6.60237C13.1212 6.81569 13.5 7.33915 13.5 7.95108V9.5C13.5 10.6046 14.3954 11.5 15.5 11.5ZM8 16V11C8 10.7239 7.77614 10.5 7.5 10.5H6.5V16.5H7.5C7.77614 16.5 8 16.2761 8 16Z"
+}));
+const ThumbsDownIcon = ({
+  className
+}) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: "24",
+  height: "24",
+  viewBox: "0 0 24 24",
+  className: className
+}, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M15.1979 12.9841C15.1273 12.9946 15.0552 13 14.9817 13C14.6599 13 14.3761 13.2111 14.2836 13.5194L13.0972 17.4742C13.0035 17.7863 12.7163 18 12.3905 18C10.7607 18 9.43943 16.6788 9.43943 15.0489V13.5C9.43943 13.2239 9.21557 13 8.93943 13H7.00098C5.69984 13 4.74513 11.7772 5.0607 10.5149L6.0607 6.51493C6.28328 5.62459 7.08325 5 8.00098 5L14.4394 5C14.9124 5 15.347 5.16418 15.6894 5.43866C16.0318 5.16418 16.4665 5 16.9394 5L18.4394 5C18.9917 5 19.4394 5.44772 19.4394 6V13C19.4394 13.5523 18.9917 14 18.4394 14H16.9394C16.1926 14 15.5414 13.5906 15.1979 12.9841ZM8.93943 11.5H7.00098C6.6757 11.5 6.43702 11.1943 6.51591 10.8787L7.51591 6.87873C7.57156 6.65615 7.77155 6.5 8.00098 6.5L14.4394 6.5C14.7156 6.5 14.9394 6.72386 14.9394 7V11.5004C13.9727 11.5186 13.1256 12.1592 12.8469 13.0884L11.8541 16.3976C11.3182 16.1843 10.9394 15.6608 10.9394 15.0489V13.5C10.9394 12.3954 10.044 11.5 8.93943 11.5ZM16.4394 7V12C16.4394 12.2761 16.6633 12.5 16.9394 12.5H17.9394V6.5H16.9394C16.6633 6.5 16.4394 6.72386 16.4394 7Z"
+}));
 
 /***/ }),
 
@@ -65405,10 +66152,11 @@ const getNumericDateString = (timestamp, locale = 'en') => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SL: () => (/* binding */ useIsEnglishLocale),
 /* harmony export */   YO: () => (/* binding */ LocaleProvider),
 /* harmony export */   Ym: () => (/* binding */ useLocale)
 /* harmony export */ });
-/* unused harmony exports localeContext, withLocale, useIsEnglishLocale, useHasEnTranslation */
+/* unused harmony exports localeContext, withLocale, useHasEnTranslation */
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(29491);
@@ -65417,6 +66165,7 @@ const getNumericDateString = (timestamp, locale = 'en') => {
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(51609);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _locales__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(53903);
 
 
 
@@ -65519,7 +66268,7 @@ const withLocale = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_1__.createHigh
  */
 function useIsEnglishLocale() {
   const locale = useLocale();
-  return englishLocales.includes(locale);
+  return _locales__WEBPACK_IMPORTED_MODULE_4__/* .englishLocales */ .s6.includes(locale);
 }
 function useHasEnTranslation() {
   const isEnglishLocale = useIsEnglishLocale();
@@ -65542,9 +66291,10 @@ function useHasEnTranslation() {
 /* harmony export */   Ws: () => (/* binding */ localesForPricePlans),
 /* harmony export */   _J: () => (/* binding */ supportSiteLocales),
 /* harmony export */   lW: () => (/* binding */ magnificentNonEnLocales),
-/* harmony export */   rh: () => (/* binding */ jetpackComLocales)
+/* harmony export */   rh: () => (/* binding */ jetpackComLocales),
+/* harmony export */   s6: () => (/* binding */ englishLocales)
 /* harmony export */ });
-/* unused harmony exports i18nDefaultLocaleSlug, englishLocales, livechatSupportLocales */
+/* unused harmony exports i18nDefaultLocaleSlug, livechatSupportLocales */
 /**
  * The locale sets here map roughly to those found in locales.php
  *
@@ -65568,7 +66318,7 @@ const localesToSubdomains = {
 };
 
 // replaces config( 'english_locales' )
-const englishLocales = (/* unused pure expression or super */ null && (['en', 'en-gb']));
+const englishLocales = ['en', 'en-gb'];
 
 // replaces config( 'livechat_support_locales' )
 const livechatSupportLocales = (/* unused pure expression or super */ null && (['en']));
@@ -66773,7 +67523,7 @@ const CustomALink = ({
   const classNames = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-sources', {
     'odie-sources-inline': inline
   });
-  const transformedHref = (0,_uri_transformer__WEBPACK_IMPORTED_MODULE_4__/* .uriTransformer */ .Q)(href);
+  const transformedHref = (0,_uri_transformer__WEBPACK_IMPORTED_MODULE_4__/* .uriTransformer */ .Q)(href ?? '');
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: classNames
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
@@ -66806,27 +67556,27 @@ const CustomALink = ({
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(99870);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(59944);
+/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(59944);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(51609);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(75795);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react_markdown__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(76352);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(20759);
-/* harmony import */ var calypso_components_async_load__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(68913);
-/* harmony import */ var calypso_components_gravatar__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(61330);
-/* harmony import */ var calypso_state_current_user_selectors__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(13034);
-/* harmony import */ var _assets_maximize_icon_svg__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(75951);
-/* harmony import */ var _assets_minimize_icon_svg__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(63693);
-/* harmony import */ var _assets_wapuu_squared_avatar_svg__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(77697);
-/* harmony import */ var _assets_wapuu_thinking_svg__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(60906);
-/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(39631);
-/* harmony import */ var _utils_user_typer__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(4047);
-/* harmony import */ var _button__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(77901);
+/* harmony import */ var calypso_components_gravatar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(61330);
+/* harmony import */ var calypso_state_current_user_selectors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(13034);
+/* harmony import */ var _assets_maximize_icon_svg__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(75951);
+/* harmony import */ var _assets_minimize_icon_svg__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(63693);
+/* harmony import */ var _assets_wapuu_squared_avatar_svg__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(77697);
+/* harmony import */ var _assets_wapuu_thinking_svg__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(60906);
+/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(39631);
+/* harmony import */ var _utils_user_typer__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(4047);
+/* harmony import */ var _button__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(77901);
 /* harmony import */ var _foldable__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(33608);
 /* harmony import */ var _custom_a_link__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(94850);
 /* harmony import */ var _uri_transformer__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(25254);
 /* harmony import */ var _was_this_helpful_buttons__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(2185);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(87117);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(87117);
 
 /* eslint-disable no-restricted-imports */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -66852,18 +67602,6 @@ const CustomALink = ({
 
 
 
-
-// This is due to the AsyncLoad component. The initial scroll is not working properly, due to
-// the fact that the AsyncLoad component is not rendering the children immediately. In order to solve that
-// we know that the placeholder component will be unmounted when the AsyncLoad component has finished loading.
-const ComponentLoadedReporter = ({
-  callback
-}) => {
-  (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(() => {
-    return callback;
-  }, [callback]);
-  return null;
-};
 const ChatMessage = ({
   message,
   scrollToBottom
@@ -66874,12 +67612,14 @@ const ChatMessage = ({
     extraContactOptions,
     addMessage,
     trackEvent
-  } = (0,_context__WEBPACK_IMPORTED_MODULE_10__/* .useOdieAssistantContext */ .mf)();
+  } = (0,_context__WEBPACK_IMPORTED_MODULE_9__/* .useOdieAssistantContext */ .mf)();
   const [scrolledToBottom, setScrolledToBottom] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
   const [isFullscreen, setIsFullscreen] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
-  const currentUser = (0,react_redux__WEBPACK_IMPORTED_MODULE_5__/* .useSelector */ .d4)(calypso_state_current_user_selectors__WEBPACK_IMPORTED_MODULE_8__/* .getCurrentUser */ .HW);
-  const translate = (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A)();
-  const realTimeMessage = (0,_utils_user_typer__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A)(message.content, !isUser && message.type === 'message', {
+  const currentUser = (0,react_redux__WEBPACK_IMPORTED_MODULE_5__/* .useSelector */ .d4)(calypso_state_current_user_selectors__WEBPACK_IMPORTED_MODULE_7__/* .getCurrentUser */ .HW) ?? {
+    display_name: 'Me'
+  };
+  const translate = (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A)();
+  const realTimeMessage = (0,_utils_user_typer__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A)(message.content, !isUser && message.type === 'message', {
     delayBetweenCharacters: 66,
     randomDelayBetweenCharacters: true,
     charactersPerInterval: 5
@@ -66962,7 +67702,7 @@ const ChatMessage = ({
   const wapuuAvatarClasses = classnames__WEBPACK_IMPORTED_MODULE_2___default()('odie-chatbox-message-avatar', {
     'odie-chatbox-message-avatar-wapuu-liked': message.liked
   });
-  const messageAvatarHeader = isUser ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_gravatar__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+  const messageAvatarHeader = isUser ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_gravatar__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     user: currentUser,
     size: 32,
     alt: translate('User profile display picture', {
@@ -66972,7 +67712,7 @@ const ChatMessage = ({
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", {
     className: "message-header-name"
   }, currentUser.display_name)) : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
-    src: _assets_wapuu_squared_avatar_svg__WEBPACK_IMPORTED_MODULE_13__,
+    src: _assets_wapuu_squared_avatar_svg__WEBPACK_IMPORTED_MODULE_12__,
     alt: translate('%(botName)s profile picture', {
       context: 'html alt tag',
       textOnly: true,
@@ -66982,7 +67722,7 @@ const ChatMessage = ({
     }),
     className: wapuuAvatarClasses
   }), message.type === 'placeholder' ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
-    src: _assets_wapuu_thinking_svg__WEBPACK_IMPORTED_MODULE_14__,
+    src: _assets_wapuu_thinking_svg__WEBPACK_IMPORTED_MODULE_13__,
     alt: translate('Loading state, awaiting response from %(botName)s', {
       context: 'html alt tag',
       textOnly: true,
@@ -66995,12 +67735,12 @@ const ChatMessage = ({
     className: "message-header-name"
   }, botName), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "message-header-buttons"
-  }, message.content?.length > 600 && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_button__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+  }, message.content?.length > 600 && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_button__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     compact: true,
     borderless: true,
     onClick: handleFullscreenToggle
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
-    src: isFullscreen ? _assets_minimize_icon_svg__WEBPACK_IMPORTED_MODULE_16__ : _assets_maximize_icon_svg__WEBPACK_IMPORTED_MODULE_17__,
+    src: isFullscreen ? _assets_minimize_icon_svg__WEBPACK_IMPORTED_MODULE_15__ : _assets_maximize_icon_svg__WEBPACK_IMPORTED_MODULE_16__,
     alt: translate('Icon to expand or collapse %(botName)s messages', {
       context: 'html alt tag',
       textOnly: true,
@@ -67033,21 +67773,13 @@ const ChatMessage = ({
     ref: fullscreenRef
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: messageClasses
-  }, messageHeader, message.type === 'error' && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_async_load__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
-    require: "react-markdown",
-    placeholder: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ComponentLoadedReporter, {
-      callback: scrollToBottom
-    }),
-    transformLinkUri: _uri_transformer__WEBPACK_IMPORTED_MODULE_18__/* .uriTransformer */ .Q,
+  }, messageHeader, message.type === 'error' && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_markdown__WEBPACK_IMPORTED_MODULE_17__/* .Markdown */ .o, {
+    urlTransform: _uri_transformer__WEBPACK_IMPORTED_MODULE_18__/* .uriTransformer */ .Q,
     components: {
       a: _custom_a_link__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A
     }
-  }, message.content), extraContactOptions), (message.type === 'message' || !message.type) && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_async_load__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
-    require: "react-markdown",
-    placeholder: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ComponentLoadedReporter, {
-      callback: scrollToBottom
-    }),
-    transformLinkUri: _uri_transformer__WEBPACK_IMPORTED_MODULE_18__/* .uriTransformer */ .Q,
+  }, message.content), extraContactOptions), (message.type === 'message' || !message.type) && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_markdown__WEBPACK_IMPORTED_MODULE_17__/* .Markdown */ .o, {
+    urlTransform: _uri_transformer__WEBPACK_IMPORTED_MODULE_18__/* .uriTransformer */ .Q,
     components: {
       a: _custom_a_link__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A
     }
@@ -67062,12 +67794,8 @@ const ChatMessage = ({
     className: "odie-introduction-message-content"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "odie-chatbox-introduction-message"
-  }, message.content)), message.type === 'dislike-feedback' && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_async_load__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
-    require: "react-markdown",
-    placeholder: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ComponentLoadedReporter, {
-      callback: scrollToBottom
-    }),
-    transformLinkUri: _uri_transformer__WEBPACK_IMPORTED_MODULE_18__/* .uriTransformer */ .Q,
+  }, message.content)), message.type === 'dislike-feedback' && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_markdown__WEBPACK_IMPORTED_MODULE_17__/* .Markdown */ .o, {
+    urlTransform: _uri_transformer__WEBPACK_IMPORTED_MODULE_18__/* .uriTransformer */ .Q,
     components: {
       a: _custom_a_link__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A
     }
@@ -67233,7 +67961,7 @@ const ThumbsDownIcon = ({
 // It is used to allow only certain protocols in links, and that's why I've copied it here.
 // And overrided with my own implementation to include 'prompt' protocol. We might add more
 // protocols in the future, but for now, this is enough. That would REALLY simplify things for
-// us, because adding a new protocol would be as simple as adding it to the array above, and
+// us, because adding a new protocol would be as simple as adding it to the array above,
 // and extending the component custom-a-link.tsx to handle it. That's it.
 const protocols = ['http', 'https', 'mailto', 'tel', 'prompt'];
 const referralCodes = {
@@ -68077,7 +68805,7 @@ const buildSendChatMessage = async (message, botNameSlug, chat_id, version, sele
     path: apiPathWithIds,
     method: 'POST',
     data: {
-      message,
+      message: message.content,
       version,
       context: {
         selectedSiteId
@@ -68122,7 +68850,7 @@ const useOdieSendMessage = () => {
     chat,
     botNameSlug,
     setIsLoading,
-    addMessage,
+    setChat,
     updateMessage,
     odieClientId,
     selectedSiteId,
@@ -68143,12 +68871,25 @@ const useOdieSendMessage = () => {
       message
     }) => {
       const internal_message_id = uuid();
-      addMessage([message, {
+      const messages = [message, {
         internal_message_id,
         content: '...',
         role: 'bot',
         type: 'placeholder'
-      }]);
+      }];
+      setChat(prevChat => {
+        // Normalize message to always be an array
+        const newMessages = messages;
+
+        // Filter out 'placeholder' messages if new message is not 'dislike-feedback'
+        const filteredMessages = newMessages.some(msg => msg.type === 'dislike-feedback') ? prevChat.messages : prevChat.messages.filter(msg => msg.type !== 'placeholder');
+
+        // Append new messages at the end
+        return {
+          chat_id: prevChat.chat_id,
+          messages: [...filteredMessages, ...newMessages]
+        };
+      });
       setIsLoading(true);
       userMessage.current = message;
       return {
@@ -83083,6 +83824,21072 @@ function shouldThrowError(throwError, params) {
 
 /***/ }),
 
+/***/ 2651:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   i: () => (/* binding */ deserialize)
+/* harmony export */ });
+/* harmony import */ var _types_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(38553);
+
+
+const env = typeof self === 'object' ? self : globalThis;
+
+const deserializer = ($, _) => {
+  const as = (out, index) => {
+    $.set(index, out);
+    return out;
+  };
+
+  const unpair = index => {
+    if ($.has(index))
+      return $.get(index);
+
+    const [type, value] = _[index];
+    switch (type) {
+      case _types_js__WEBPACK_IMPORTED_MODULE_0__/* .PRIMITIVE */ .uT:
+      case _types_js__WEBPACK_IMPORTED_MODULE_0__/* .VOID */ .tV:
+        return as(value, index);
+      case _types_js__WEBPACK_IMPORTED_MODULE_0__/* .ARRAY */ .sO: {
+        const arr = as([], index);
+        for (const index of value)
+          arr.push(unpair(index));
+        return arr;
+      }
+      case _types_js__WEBPACK_IMPORTED_MODULE_0__/* .OBJECT */ .qv: {
+        const object = as({}, index);
+        for (const [key, index] of value)
+          object[unpair(key)] = unpair(index);
+        return object;
+      }
+      case _types_js__WEBPACK_IMPORTED_MODULE_0__/* .DATE */ .vH:
+        return as(new Date(value), index);
+      case _types_js__WEBPACK_IMPORTED_MODULE_0__/* .REGEXP */ .Wm: {
+        const {source, flags} = value;
+        return as(new RegExp(source, flags), index);
+      }
+      case _types_js__WEBPACK_IMPORTED_MODULE_0__/* .MAP */ .lC: {
+        const map = as(new Map, index);
+        for (const [key, index] of value)
+          map.set(unpair(key), unpair(index));
+        return map;
+      }
+      case _types_js__WEBPACK_IMPORTED_MODULE_0__/* .SET */ .rK: {
+        const set = as(new Set, index);
+        for (const index of value)
+          set.add(unpair(index));
+        return set;
+      }
+      case _types_js__WEBPACK_IMPORTED_MODULE_0__/* .ERROR */ .ff: {
+        const {name, message} = value;
+        return as(new env[name](message), index);
+      }
+      case _types_js__WEBPACK_IMPORTED_MODULE_0__/* .BIGINT */ .Ei:
+        return as(BigInt(value), index);
+      case 'BigInt':
+        return as(Object(BigInt(value)), index);
+    }
+    return as(new env[type](value), index);
+  };
+
+  return unpair;
+};
+
+/**
+ * @typedef {Array<string,any>} Record a type representation
+ */
+
+/**
+ * Returns a deserialized value from a serialized array of Records.
+ * @param {Record[]} serialized a previously serialized value.
+ * @returns {any}
+ */
+const deserialize = serialized => deserializer(new Map, serialized)(0);
+
+
+/***/ }),
+
+/***/ 93052:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Ay: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _deserialize_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2651);
+/* harmony import */ var _serialize_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(35798);
+
+
+
+/**
+ * @typedef {Array<string,any>} Record a type representation
+ */
+
+/**
+ * Returns an array of serialized Records.
+ * @param {any} any a serializable value.
+ * @param {{transfer?: any[], json?: boolean, lossy?: boolean}?} options an object with
+ * a transfer option (ignored when polyfilled) and/or non standard fields that
+ * fallback to the polyfill if present.
+ * @returns {Record[]}
+ */
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (typeof structuredClone === "function" ?
+  /* c8 ignore start */
+  (any, options) => (
+    options && ('json' in options || 'lossy' in options) ?
+      (0,_deserialize_js__WEBPACK_IMPORTED_MODULE_0__/* .deserialize */ .i)((0,_serialize_js__WEBPACK_IMPORTED_MODULE_1__/* .serialize */ .l)(any, options)) : structuredClone(any)
+  ) :
+  (any, options) => (0,_deserialize_js__WEBPACK_IMPORTED_MODULE_0__/* .deserialize */ .i)((0,_serialize_js__WEBPACK_IMPORTED_MODULE_1__/* .serialize */ .l)(any, options)));
+  /* c8 ignore stop */
+
+
+
+
+/***/ }),
+
+/***/ 35798:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   l: () => (/* binding */ serialize)
+/* harmony export */ });
+/* harmony import */ var _types_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(38553);
+
+
+const EMPTY = '';
+
+const {toString} = {};
+const {keys} = Object;
+
+const typeOf = value => {
+  const type = typeof value;
+  if (type !== 'object' || !value)
+    return [_types_js__WEBPACK_IMPORTED_MODULE_0__/* .PRIMITIVE */ .uT, type];
+
+  const asString = toString.call(value).slice(8, -1);
+  switch (asString) {
+    case 'Array':
+      return [_types_js__WEBPACK_IMPORTED_MODULE_0__/* .ARRAY */ .sO, EMPTY];
+    case 'Object':
+      return [_types_js__WEBPACK_IMPORTED_MODULE_0__/* .OBJECT */ .qv, EMPTY];
+    case 'Date':
+      return [_types_js__WEBPACK_IMPORTED_MODULE_0__/* .DATE */ .vH, EMPTY];
+    case 'RegExp':
+      return [_types_js__WEBPACK_IMPORTED_MODULE_0__/* .REGEXP */ .Wm, EMPTY];
+    case 'Map':
+      return [_types_js__WEBPACK_IMPORTED_MODULE_0__/* .MAP */ .lC, EMPTY];
+    case 'Set':
+      return [_types_js__WEBPACK_IMPORTED_MODULE_0__/* .SET */ .rK, EMPTY];
+  }
+
+  if (asString.includes('Array'))
+    return [_types_js__WEBPACK_IMPORTED_MODULE_0__/* .ARRAY */ .sO, asString];
+
+  if (asString.includes('Error'))
+    return [_types_js__WEBPACK_IMPORTED_MODULE_0__/* .ERROR */ .ff, asString];
+
+  return [_types_js__WEBPACK_IMPORTED_MODULE_0__/* .OBJECT */ .qv, asString];
+};
+
+const shouldSkip = ([TYPE, type]) => (
+  TYPE === _types_js__WEBPACK_IMPORTED_MODULE_0__/* .PRIMITIVE */ .uT &&
+  (type === 'function' || type === 'symbol')
+);
+
+const serializer = (strict, json, $, _) => {
+
+  const as = (out, value) => {
+    const index = _.push(out) - 1;
+    $.set(value, index);
+    return index;
+  };
+
+  const pair = value => {
+    if ($.has(value))
+      return $.get(value);
+
+    let [TYPE, type] = typeOf(value);
+    switch (TYPE) {
+      case _types_js__WEBPACK_IMPORTED_MODULE_0__/* .PRIMITIVE */ .uT: {
+        let entry = value;
+        switch (type) {
+          case 'bigint':
+            TYPE = _types_js__WEBPACK_IMPORTED_MODULE_0__/* .BIGINT */ .Ei;
+            entry = value.toString();
+            break;
+          case 'function':
+          case 'symbol':
+            if (strict)
+              throw new TypeError('unable to serialize ' + type);
+            entry = null;
+            break;
+          case 'undefined':
+            return as([_types_js__WEBPACK_IMPORTED_MODULE_0__/* .VOID */ .tV], value);
+        }
+        return as([TYPE, entry], value);
+      }
+      case _types_js__WEBPACK_IMPORTED_MODULE_0__/* .ARRAY */ .sO: {
+        if (type)
+          return as([type, [...value]], value);
+  
+        const arr = [];
+        const index = as([TYPE, arr], value);
+        for (const entry of value)
+          arr.push(pair(entry));
+        return index;
+      }
+      case _types_js__WEBPACK_IMPORTED_MODULE_0__/* .OBJECT */ .qv: {
+        if (type) {
+          switch (type) {
+            case 'BigInt':
+              return as([type, value.toString()], value);
+            case 'Boolean':
+            case 'Number':
+            case 'String':
+              return as([type, value.valueOf()], value);
+          }
+        }
+
+        if (json && ('toJSON' in value))
+          return pair(value.toJSON());
+
+        const entries = [];
+        const index = as([TYPE, entries], value);
+        for (const key of keys(value)) {
+          if (strict || !shouldSkip(typeOf(value[key])))
+            entries.push([pair(key), pair(value[key])]);
+        }
+        return index;
+      }
+      case _types_js__WEBPACK_IMPORTED_MODULE_0__/* .DATE */ .vH:
+        return as([TYPE, value.toISOString()], value);
+      case _types_js__WEBPACK_IMPORTED_MODULE_0__/* .REGEXP */ .Wm: {
+        const {source, flags} = value;
+        return as([TYPE, {source, flags}], value);
+      }
+      case _types_js__WEBPACK_IMPORTED_MODULE_0__/* .MAP */ .lC: {
+        const entries = [];
+        const index = as([TYPE, entries], value);
+        for (const [key, entry] of value) {
+          if (strict || !(shouldSkip(typeOf(key)) || shouldSkip(typeOf(entry))))
+            entries.push([pair(key), pair(entry)]);
+        }
+        return index;
+      }
+      case _types_js__WEBPACK_IMPORTED_MODULE_0__/* .SET */ .rK: {
+        const entries = [];
+        const index = as([TYPE, entries], value);
+        for (const entry of value) {
+          if (strict || !shouldSkip(typeOf(entry)))
+            entries.push(pair(entry));
+        }
+        return index;
+      }
+    }
+
+    const {message} = value;
+    return as([TYPE, {name: type, message}], value);
+  };
+
+  return pair;
+};
+
+/**
+ * @typedef {Array<string,any>} Record a type representation
+ */
+
+/**
+ * Returns an array of serialized Records.
+ * @param {any} value a serializable value.
+ * @param {{json?: boolean, lossy?: boolean}?} options an object with a `lossy` or `json` property that,
+ *  if `true`, will not throw errors on incompatible types, and behave more
+ *  like JSON stringify would behave. Symbol and Function will be discarded.
+ * @returns {Record[]}
+ */
+ const serialize = (value, {json, lossy} = {}) => {
+  const _ = [];
+  return serializer(!(json || lossy), !!json, new Map, _)(value), _;
+};
+
+
+/***/ }),
+
+/***/ 38553:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Ei: () => (/* binding */ BIGINT),
+/* harmony export */   Wm: () => (/* binding */ REGEXP),
+/* harmony export */   ff: () => (/* binding */ ERROR),
+/* harmony export */   lC: () => (/* binding */ MAP),
+/* harmony export */   qv: () => (/* binding */ OBJECT),
+/* harmony export */   rK: () => (/* binding */ SET),
+/* harmony export */   sO: () => (/* binding */ ARRAY),
+/* harmony export */   tV: () => (/* binding */ VOID),
+/* harmony export */   uT: () => (/* binding */ PRIMITIVE),
+/* harmony export */   vH: () => (/* binding */ DATE)
+/* harmony export */ });
+const VOID       = -1;
+const PRIMITIVE  = 0;
+const ARRAY      = 1;
+const OBJECT     = 2;
+const DATE       = 3;
+const REGEXP     = 4;
+const MAP        = 5;
+const SET        = 6;
+const ERROR      = 7;
+const BIGINT     = 8;
+// export const SYMBOL = 9;
+
+
+/***/ }),
+
+/***/ 659:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   V: () => (/* binding */ bail)
+/* harmony export */ });
+/**
+ * Throw a given error.
+ *
+ * @param {Error|null|undefined} [error]
+ *   Maybe error.
+ * @returns {asserts error is null|undefined}
+ */
+function bail(error) {
+  if (error) {
+    throw error
+  }
+}
+
+
+/***/ }),
+
+/***/ 36818:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   b: () => (/* binding */ characterEntities)
+/* harmony export */ });
+/**
+ * Map of named character references.
+ *
+ * @type {Record<string, string>}
+ */
+const characterEntities = {
+  AElig: 'Æ',
+  AMP: '&',
+  Aacute: 'Á',
+  Abreve: 'Ă',
+  Acirc: 'Â',
+  Acy: 'А',
+  Afr: '𝔄',
+  Agrave: 'À',
+  Alpha: 'Α',
+  Amacr: 'Ā',
+  And: '⩓',
+  Aogon: 'Ą',
+  Aopf: '𝔸',
+  ApplyFunction: '⁡',
+  Aring: 'Å',
+  Ascr: '𝒜',
+  Assign: '≔',
+  Atilde: 'Ã',
+  Auml: 'Ä',
+  Backslash: '∖',
+  Barv: '⫧',
+  Barwed: '⌆',
+  Bcy: 'Б',
+  Because: '∵',
+  Bernoullis: 'ℬ',
+  Beta: 'Β',
+  Bfr: '𝔅',
+  Bopf: '𝔹',
+  Breve: '˘',
+  Bscr: 'ℬ',
+  Bumpeq: '≎',
+  CHcy: 'Ч',
+  COPY: '©',
+  Cacute: 'Ć',
+  Cap: '⋒',
+  CapitalDifferentialD: 'ⅅ',
+  Cayleys: 'ℭ',
+  Ccaron: 'Č',
+  Ccedil: 'Ç',
+  Ccirc: 'Ĉ',
+  Cconint: '∰',
+  Cdot: 'Ċ',
+  Cedilla: '¸',
+  CenterDot: '·',
+  Cfr: 'ℭ',
+  Chi: 'Χ',
+  CircleDot: '⊙',
+  CircleMinus: '⊖',
+  CirclePlus: '⊕',
+  CircleTimes: '⊗',
+  ClockwiseContourIntegral: '∲',
+  CloseCurlyDoubleQuote: '”',
+  CloseCurlyQuote: '’',
+  Colon: '∷',
+  Colone: '⩴',
+  Congruent: '≡',
+  Conint: '∯',
+  ContourIntegral: '∮',
+  Copf: 'ℂ',
+  Coproduct: '∐',
+  CounterClockwiseContourIntegral: '∳',
+  Cross: '⨯',
+  Cscr: '𝒞',
+  Cup: '⋓',
+  CupCap: '≍',
+  DD: 'ⅅ',
+  DDotrahd: '⤑',
+  DJcy: 'Ђ',
+  DScy: 'Ѕ',
+  DZcy: 'Џ',
+  Dagger: '‡',
+  Darr: '↡',
+  Dashv: '⫤',
+  Dcaron: 'Ď',
+  Dcy: 'Д',
+  Del: '∇',
+  Delta: 'Δ',
+  Dfr: '𝔇',
+  DiacriticalAcute: '´',
+  DiacriticalDot: '˙',
+  DiacriticalDoubleAcute: '˝',
+  DiacriticalGrave: '`',
+  DiacriticalTilde: '˜',
+  Diamond: '⋄',
+  DifferentialD: 'ⅆ',
+  Dopf: '𝔻',
+  Dot: '¨',
+  DotDot: '⃜',
+  DotEqual: '≐',
+  DoubleContourIntegral: '∯',
+  DoubleDot: '¨',
+  DoubleDownArrow: '⇓',
+  DoubleLeftArrow: '⇐',
+  DoubleLeftRightArrow: '⇔',
+  DoubleLeftTee: '⫤',
+  DoubleLongLeftArrow: '⟸',
+  DoubleLongLeftRightArrow: '⟺',
+  DoubleLongRightArrow: '⟹',
+  DoubleRightArrow: '⇒',
+  DoubleRightTee: '⊨',
+  DoubleUpArrow: '⇑',
+  DoubleUpDownArrow: '⇕',
+  DoubleVerticalBar: '∥',
+  DownArrow: '↓',
+  DownArrowBar: '⤓',
+  DownArrowUpArrow: '⇵',
+  DownBreve: '̑',
+  DownLeftRightVector: '⥐',
+  DownLeftTeeVector: '⥞',
+  DownLeftVector: '↽',
+  DownLeftVectorBar: '⥖',
+  DownRightTeeVector: '⥟',
+  DownRightVector: '⇁',
+  DownRightVectorBar: '⥗',
+  DownTee: '⊤',
+  DownTeeArrow: '↧',
+  Downarrow: '⇓',
+  Dscr: '𝒟',
+  Dstrok: 'Đ',
+  ENG: 'Ŋ',
+  ETH: 'Ð',
+  Eacute: 'É',
+  Ecaron: 'Ě',
+  Ecirc: 'Ê',
+  Ecy: 'Э',
+  Edot: 'Ė',
+  Efr: '𝔈',
+  Egrave: 'È',
+  Element: '∈',
+  Emacr: 'Ē',
+  EmptySmallSquare: '◻',
+  EmptyVerySmallSquare: '▫',
+  Eogon: 'Ę',
+  Eopf: '𝔼',
+  Epsilon: 'Ε',
+  Equal: '⩵',
+  EqualTilde: '≂',
+  Equilibrium: '⇌',
+  Escr: 'ℰ',
+  Esim: '⩳',
+  Eta: 'Η',
+  Euml: 'Ë',
+  Exists: '∃',
+  ExponentialE: 'ⅇ',
+  Fcy: 'Ф',
+  Ffr: '𝔉',
+  FilledSmallSquare: '◼',
+  FilledVerySmallSquare: '▪',
+  Fopf: '𝔽',
+  ForAll: '∀',
+  Fouriertrf: 'ℱ',
+  Fscr: 'ℱ',
+  GJcy: 'Ѓ',
+  GT: '>',
+  Gamma: 'Γ',
+  Gammad: 'Ϝ',
+  Gbreve: 'Ğ',
+  Gcedil: 'Ģ',
+  Gcirc: 'Ĝ',
+  Gcy: 'Г',
+  Gdot: 'Ġ',
+  Gfr: '𝔊',
+  Gg: '⋙',
+  Gopf: '𝔾',
+  GreaterEqual: '≥',
+  GreaterEqualLess: '⋛',
+  GreaterFullEqual: '≧',
+  GreaterGreater: '⪢',
+  GreaterLess: '≷',
+  GreaterSlantEqual: '⩾',
+  GreaterTilde: '≳',
+  Gscr: '𝒢',
+  Gt: '≫',
+  HARDcy: 'Ъ',
+  Hacek: 'ˇ',
+  Hat: '^',
+  Hcirc: 'Ĥ',
+  Hfr: 'ℌ',
+  HilbertSpace: 'ℋ',
+  Hopf: 'ℍ',
+  HorizontalLine: '─',
+  Hscr: 'ℋ',
+  Hstrok: 'Ħ',
+  HumpDownHump: '≎',
+  HumpEqual: '≏',
+  IEcy: 'Е',
+  IJlig: 'Ĳ',
+  IOcy: 'Ё',
+  Iacute: 'Í',
+  Icirc: 'Î',
+  Icy: 'И',
+  Idot: 'İ',
+  Ifr: 'ℑ',
+  Igrave: 'Ì',
+  Im: 'ℑ',
+  Imacr: 'Ī',
+  ImaginaryI: 'ⅈ',
+  Implies: '⇒',
+  Int: '∬',
+  Integral: '∫',
+  Intersection: '⋂',
+  InvisibleComma: '⁣',
+  InvisibleTimes: '⁢',
+  Iogon: 'Į',
+  Iopf: '𝕀',
+  Iota: 'Ι',
+  Iscr: 'ℐ',
+  Itilde: 'Ĩ',
+  Iukcy: 'І',
+  Iuml: 'Ï',
+  Jcirc: 'Ĵ',
+  Jcy: 'Й',
+  Jfr: '𝔍',
+  Jopf: '𝕁',
+  Jscr: '𝒥',
+  Jsercy: 'Ј',
+  Jukcy: 'Є',
+  KHcy: 'Х',
+  KJcy: 'Ќ',
+  Kappa: 'Κ',
+  Kcedil: 'Ķ',
+  Kcy: 'К',
+  Kfr: '𝔎',
+  Kopf: '𝕂',
+  Kscr: '𝒦',
+  LJcy: 'Љ',
+  LT: '<',
+  Lacute: 'Ĺ',
+  Lambda: 'Λ',
+  Lang: '⟪',
+  Laplacetrf: 'ℒ',
+  Larr: '↞',
+  Lcaron: 'Ľ',
+  Lcedil: 'Ļ',
+  Lcy: 'Л',
+  LeftAngleBracket: '⟨',
+  LeftArrow: '←',
+  LeftArrowBar: '⇤',
+  LeftArrowRightArrow: '⇆',
+  LeftCeiling: '⌈',
+  LeftDoubleBracket: '⟦',
+  LeftDownTeeVector: '⥡',
+  LeftDownVector: '⇃',
+  LeftDownVectorBar: '⥙',
+  LeftFloor: '⌊',
+  LeftRightArrow: '↔',
+  LeftRightVector: '⥎',
+  LeftTee: '⊣',
+  LeftTeeArrow: '↤',
+  LeftTeeVector: '⥚',
+  LeftTriangle: '⊲',
+  LeftTriangleBar: '⧏',
+  LeftTriangleEqual: '⊴',
+  LeftUpDownVector: '⥑',
+  LeftUpTeeVector: '⥠',
+  LeftUpVector: '↿',
+  LeftUpVectorBar: '⥘',
+  LeftVector: '↼',
+  LeftVectorBar: '⥒',
+  Leftarrow: '⇐',
+  Leftrightarrow: '⇔',
+  LessEqualGreater: '⋚',
+  LessFullEqual: '≦',
+  LessGreater: '≶',
+  LessLess: '⪡',
+  LessSlantEqual: '⩽',
+  LessTilde: '≲',
+  Lfr: '𝔏',
+  Ll: '⋘',
+  Lleftarrow: '⇚',
+  Lmidot: 'Ŀ',
+  LongLeftArrow: '⟵',
+  LongLeftRightArrow: '⟷',
+  LongRightArrow: '⟶',
+  Longleftarrow: '⟸',
+  Longleftrightarrow: '⟺',
+  Longrightarrow: '⟹',
+  Lopf: '𝕃',
+  LowerLeftArrow: '↙',
+  LowerRightArrow: '↘',
+  Lscr: 'ℒ',
+  Lsh: '↰',
+  Lstrok: 'Ł',
+  Lt: '≪',
+  Map: '⤅',
+  Mcy: 'М',
+  MediumSpace: ' ',
+  Mellintrf: 'ℳ',
+  Mfr: '𝔐',
+  MinusPlus: '∓',
+  Mopf: '𝕄',
+  Mscr: 'ℳ',
+  Mu: 'Μ',
+  NJcy: 'Њ',
+  Nacute: 'Ń',
+  Ncaron: 'Ň',
+  Ncedil: 'Ņ',
+  Ncy: 'Н',
+  NegativeMediumSpace: '​',
+  NegativeThickSpace: '​',
+  NegativeThinSpace: '​',
+  NegativeVeryThinSpace: '​',
+  NestedGreaterGreater: '≫',
+  NestedLessLess: '≪',
+  NewLine: '\n',
+  Nfr: '𝔑',
+  NoBreak: '⁠',
+  NonBreakingSpace: ' ',
+  Nopf: 'ℕ',
+  Not: '⫬',
+  NotCongruent: '≢',
+  NotCupCap: '≭',
+  NotDoubleVerticalBar: '∦',
+  NotElement: '∉',
+  NotEqual: '≠',
+  NotEqualTilde: '≂̸',
+  NotExists: '∄',
+  NotGreater: '≯',
+  NotGreaterEqual: '≱',
+  NotGreaterFullEqual: '≧̸',
+  NotGreaterGreater: '≫̸',
+  NotGreaterLess: '≹',
+  NotGreaterSlantEqual: '⩾̸',
+  NotGreaterTilde: '≵',
+  NotHumpDownHump: '≎̸',
+  NotHumpEqual: '≏̸',
+  NotLeftTriangle: '⋪',
+  NotLeftTriangleBar: '⧏̸',
+  NotLeftTriangleEqual: '⋬',
+  NotLess: '≮',
+  NotLessEqual: '≰',
+  NotLessGreater: '≸',
+  NotLessLess: '≪̸',
+  NotLessSlantEqual: '⩽̸',
+  NotLessTilde: '≴',
+  NotNestedGreaterGreater: '⪢̸',
+  NotNestedLessLess: '⪡̸',
+  NotPrecedes: '⊀',
+  NotPrecedesEqual: '⪯̸',
+  NotPrecedesSlantEqual: '⋠',
+  NotReverseElement: '∌',
+  NotRightTriangle: '⋫',
+  NotRightTriangleBar: '⧐̸',
+  NotRightTriangleEqual: '⋭',
+  NotSquareSubset: '⊏̸',
+  NotSquareSubsetEqual: '⋢',
+  NotSquareSuperset: '⊐̸',
+  NotSquareSupersetEqual: '⋣',
+  NotSubset: '⊂⃒',
+  NotSubsetEqual: '⊈',
+  NotSucceeds: '⊁',
+  NotSucceedsEqual: '⪰̸',
+  NotSucceedsSlantEqual: '⋡',
+  NotSucceedsTilde: '≿̸',
+  NotSuperset: '⊃⃒',
+  NotSupersetEqual: '⊉',
+  NotTilde: '≁',
+  NotTildeEqual: '≄',
+  NotTildeFullEqual: '≇',
+  NotTildeTilde: '≉',
+  NotVerticalBar: '∤',
+  Nscr: '𝒩',
+  Ntilde: 'Ñ',
+  Nu: 'Ν',
+  OElig: 'Œ',
+  Oacute: 'Ó',
+  Ocirc: 'Ô',
+  Ocy: 'О',
+  Odblac: 'Ő',
+  Ofr: '𝔒',
+  Ograve: 'Ò',
+  Omacr: 'Ō',
+  Omega: 'Ω',
+  Omicron: 'Ο',
+  Oopf: '𝕆',
+  OpenCurlyDoubleQuote: '“',
+  OpenCurlyQuote: '‘',
+  Or: '⩔',
+  Oscr: '𝒪',
+  Oslash: 'Ø',
+  Otilde: 'Õ',
+  Otimes: '⨷',
+  Ouml: 'Ö',
+  OverBar: '‾',
+  OverBrace: '⏞',
+  OverBracket: '⎴',
+  OverParenthesis: '⏜',
+  PartialD: '∂',
+  Pcy: 'П',
+  Pfr: '𝔓',
+  Phi: 'Φ',
+  Pi: 'Π',
+  PlusMinus: '±',
+  Poincareplane: 'ℌ',
+  Popf: 'ℙ',
+  Pr: '⪻',
+  Precedes: '≺',
+  PrecedesEqual: '⪯',
+  PrecedesSlantEqual: '≼',
+  PrecedesTilde: '≾',
+  Prime: '″',
+  Product: '∏',
+  Proportion: '∷',
+  Proportional: '∝',
+  Pscr: '𝒫',
+  Psi: 'Ψ',
+  QUOT: '"',
+  Qfr: '𝔔',
+  Qopf: 'ℚ',
+  Qscr: '𝒬',
+  RBarr: '⤐',
+  REG: '®',
+  Racute: 'Ŕ',
+  Rang: '⟫',
+  Rarr: '↠',
+  Rarrtl: '⤖',
+  Rcaron: 'Ř',
+  Rcedil: 'Ŗ',
+  Rcy: 'Р',
+  Re: 'ℜ',
+  ReverseElement: '∋',
+  ReverseEquilibrium: '⇋',
+  ReverseUpEquilibrium: '⥯',
+  Rfr: 'ℜ',
+  Rho: 'Ρ',
+  RightAngleBracket: '⟩',
+  RightArrow: '→',
+  RightArrowBar: '⇥',
+  RightArrowLeftArrow: '⇄',
+  RightCeiling: '⌉',
+  RightDoubleBracket: '⟧',
+  RightDownTeeVector: '⥝',
+  RightDownVector: '⇂',
+  RightDownVectorBar: '⥕',
+  RightFloor: '⌋',
+  RightTee: '⊢',
+  RightTeeArrow: '↦',
+  RightTeeVector: '⥛',
+  RightTriangle: '⊳',
+  RightTriangleBar: '⧐',
+  RightTriangleEqual: '⊵',
+  RightUpDownVector: '⥏',
+  RightUpTeeVector: '⥜',
+  RightUpVector: '↾',
+  RightUpVectorBar: '⥔',
+  RightVector: '⇀',
+  RightVectorBar: '⥓',
+  Rightarrow: '⇒',
+  Ropf: 'ℝ',
+  RoundImplies: '⥰',
+  Rrightarrow: '⇛',
+  Rscr: 'ℛ',
+  Rsh: '↱',
+  RuleDelayed: '⧴',
+  SHCHcy: 'Щ',
+  SHcy: 'Ш',
+  SOFTcy: 'Ь',
+  Sacute: 'Ś',
+  Sc: '⪼',
+  Scaron: 'Š',
+  Scedil: 'Ş',
+  Scirc: 'Ŝ',
+  Scy: 'С',
+  Sfr: '𝔖',
+  ShortDownArrow: '↓',
+  ShortLeftArrow: '←',
+  ShortRightArrow: '→',
+  ShortUpArrow: '↑',
+  Sigma: 'Σ',
+  SmallCircle: '∘',
+  Sopf: '𝕊',
+  Sqrt: '√',
+  Square: '□',
+  SquareIntersection: '⊓',
+  SquareSubset: '⊏',
+  SquareSubsetEqual: '⊑',
+  SquareSuperset: '⊐',
+  SquareSupersetEqual: '⊒',
+  SquareUnion: '⊔',
+  Sscr: '𝒮',
+  Star: '⋆',
+  Sub: '⋐',
+  Subset: '⋐',
+  SubsetEqual: '⊆',
+  Succeeds: '≻',
+  SucceedsEqual: '⪰',
+  SucceedsSlantEqual: '≽',
+  SucceedsTilde: '≿',
+  SuchThat: '∋',
+  Sum: '∑',
+  Sup: '⋑',
+  Superset: '⊃',
+  SupersetEqual: '⊇',
+  Supset: '⋑',
+  THORN: 'Þ',
+  TRADE: '™',
+  TSHcy: 'Ћ',
+  TScy: 'Ц',
+  Tab: '\t',
+  Tau: 'Τ',
+  Tcaron: 'Ť',
+  Tcedil: 'Ţ',
+  Tcy: 'Т',
+  Tfr: '𝔗',
+  Therefore: '∴',
+  Theta: 'Θ',
+  ThickSpace: '  ',
+  ThinSpace: ' ',
+  Tilde: '∼',
+  TildeEqual: '≃',
+  TildeFullEqual: '≅',
+  TildeTilde: '≈',
+  Topf: '𝕋',
+  TripleDot: '⃛',
+  Tscr: '𝒯',
+  Tstrok: 'Ŧ',
+  Uacute: 'Ú',
+  Uarr: '↟',
+  Uarrocir: '⥉',
+  Ubrcy: 'Ў',
+  Ubreve: 'Ŭ',
+  Ucirc: 'Û',
+  Ucy: 'У',
+  Udblac: 'Ű',
+  Ufr: '𝔘',
+  Ugrave: 'Ù',
+  Umacr: 'Ū',
+  UnderBar: '_',
+  UnderBrace: '⏟',
+  UnderBracket: '⎵',
+  UnderParenthesis: '⏝',
+  Union: '⋃',
+  UnionPlus: '⊎',
+  Uogon: 'Ų',
+  Uopf: '𝕌',
+  UpArrow: '↑',
+  UpArrowBar: '⤒',
+  UpArrowDownArrow: '⇅',
+  UpDownArrow: '↕',
+  UpEquilibrium: '⥮',
+  UpTee: '⊥',
+  UpTeeArrow: '↥',
+  Uparrow: '⇑',
+  Updownarrow: '⇕',
+  UpperLeftArrow: '↖',
+  UpperRightArrow: '↗',
+  Upsi: 'ϒ',
+  Upsilon: 'Υ',
+  Uring: 'Ů',
+  Uscr: '𝒰',
+  Utilde: 'Ũ',
+  Uuml: 'Ü',
+  VDash: '⊫',
+  Vbar: '⫫',
+  Vcy: 'В',
+  Vdash: '⊩',
+  Vdashl: '⫦',
+  Vee: '⋁',
+  Verbar: '‖',
+  Vert: '‖',
+  VerticalBar: '∣',
+  VerticalLine: '|',
+  VerticalSeparator: '❘',
+  VerticalTilde: '≀',
+  VeryThinSpace: ' ',
+  Vfr: '𝔙',
+  Vopf: '𝕍',
+  Vscr: '𝒱',
+  Vvdash: '⊪',
+  Wcirc: 'Ŵ',
+  Wedge: '⋀',
+  Wfr: '𝔚',
+  Wopf: '𝕎',
+  Wscr: '𝒲',
+  Xfr: '𝔛',
+  Xi: 'Ξ',
+  Xopf: '𝕏',
+  Xscr: '𝒳',
+  YAcy: 'Я',
+  YIcy: 'Ї',
+  YUcy: 'Ю',
+  Yacute: 'Ý',
+  Ycirc: 'Ŷ',
+  Ycy: 'Ы',
+  Yfr: '𝔜',
+  Yopf: '𝕐',
+  Yscr: '𝒴',
+  Yuml: 'Ÿ',
+  ZHcy: 'Ж',
+  Zacute: 'Ź',
+  Zcaron: 'Ž',
+  Zcy: 'З',
+  Zdot: 'Ż',
+  ZeroWidthSpace: '​',
+  Zeta: 'Ζ',
+  Zfr: 'ℨ',
+  Zopf: 'ℤ',
+  Zscr: '𝒵',
+  aacute: 'á',
+  abreve: 'ă',
+  ac: '∾',
+  acE: '∾̳',
+  acd: '∿',
+  acirc: 'â',
+  acute: '´',
+  acy: 'а',
+  aelig: 'æ',
+  af: '⁡',
+  afr: '𝔞',
+  agrave: 'à',
+  alefsym: 'ℵ',
+  aleph: 'ℵ',
+  alpha: 'α',
+  amacr: 'ā',
+  amalg: '⨿',
+  amp: '&',
+  and: '∧',
+  andand: '⩕',
+  andd: '⩜',
+  andslope: '⩘',
+  andv: '⩚',
+  ang: '∠',
+  ange: '⦤',
+  angle: '∠',
+  angmsd: '∡',
+  angmsdaa: '⦨',
+  angmsdab: '⦩',
+  angmsdac: '⦪',
+  angmsdad: '⦫',
+  angmsdae: '⦬',
+  angmsdaf: '⦭',
+  angmsdag: '⦮',
+  angmsdah: '⦯',
+  angrt: '∟',
+  angrtvb: '⊾',
+  angrtvbd: '⦝',
+  angsph: '∢',
+  angst: 'Å',
+  angzarr: '⍼',
+  aogon: 'ą',
+  aopf: '𝕒',
+  ap: '≈',
+  apE: '⩰',
+  apacir: '⩯',
+  ape: '≊',
+  apid: '≋',
+  apos: "'",
+  approx: '≈',
+  approxeq: '≊',
+  aring: 'å',
+  ascr: '𝒶',
+  ast: '*',
+  asymp: '≈',
+  asympeq: '≍',
+  atilde: 'ã',
+  auml: 'ä',
+  awconint: '∳',
+  awint: '⨑',
+  bNot: '⫭',
+  backcong: '≌',
+  backepsilon: '϶',
+  backprime: '‵',
+  backsim: '∽',
+  backsimeq: '⋍',
+  barvee: '⊽',
+  barwed: '⌅',
+  barwedge: '⌅',
+  bbrk: '⎵',
+  bbrktbrk: '⎶',
+  bcong: '≌',
+  bcy: 'б',
+  bdquo: '„',
+  becaus: '∵',
+  because: '∵',
+  bemptyv: '⦰',
+  bepsi: '϶',
+  bernou: 'ℬ',
+  beta: 'β',
+  beth: 'ℶ',
+  between: '≬',
+  bfr: '𝔟',
+  bigcap: '⋂',
+  bigcirc: '◯',
+  bigcup: '⋃',
+  bigodot: '⨀',
+  bigoplus: '⨁',
+  bigotimes: '⨂',
+  bigsqcup: '⨆',
+  bigstar: '★',
+  bigtriangledown: '▽',
+  bigtriangleup: '△',
+  biguplus: '⨄',
+  bigvee: '⋁',
+  bigwedge: '⋀',
+  bkarow: '⤍',
+  blacklozenge: '⧫',
+  blacksquare: '▪',
+  blacktriangle: '▴',
+  blacktriangledown: '▾',
+  blacktriangleleft: '◂',
+  blacktriangleright: '▸',
+  blank: '␣',
+  blk12: '▒',
+  blk14: '░',
+  blk34: '▓',
+  block: '█',
+  bne: '=⃥',
+  bnequiv: '≡⃥',
+  bnot: '⌐',
+  bopf: '𝕓',
+  bot: '⊥',
+  bottom: '⊥',
+  bowtie: '⋈',
+  boxDL: '╗',
+  boxDR: '╔',
+  boxDl: '╖',
+  boxDr: '╓',
+  boxH: '═',
+  boxHD: '╦',
+  boxHU: '╩',
+  boxHd: '╤',
+  boxHu: '╧',
+  boxUL: '╝',
+  boxUR: '╚',
+  boxUl: '╜',
+  boxUr: '╙',
+  boxV: '║',
+  boxVH: '╬',
+  boxVL: '╣',
+  boxVR: '╠',
+  boxVh: '╫',
+  boxVl: '╢',
+  boxVr: '╟',
+  boxbox: '⧉',
+  boxdL: '╕',
+  boxdR: '╒',
+  boxdl: '┐',
+  boxdr: '┌',
+  boxh: '─',
+  boxhD: '╥',
+  boxhU: '╨',
+  boxhd: '┬',
+  boxhu: '┴',
+  boxminus: '⊟',
+  boxplus: '⊞',
+  boxtimes: '⊠',
+  boxuL: '╛',
+  boxuR: '╘',
+  boxul: '┘',
+  boxur: '└',
+  boxv: '│',
+  boxvH: '╪',
+  boxvL: '╡',
+  boxvR: '╞',
+  boxvh: '┼',
+  boxvl: '┤',
+  boxvr: '├',
+  bprime: '‵',
+  breve: '˘',
+  brvbar: '¦',
+  bscr: '𝒷',
+  bsemi: '⁏',
+  bsim: '∽',
+  bsime: '⋍',
+  bsol: '\\',
+  bsolb: '⧅',
+  bsolhsub: '⟈',
+  bull: '•',
+  bullet: '•',
+  bump: '≎',
+  bumpE: '⪮',
+  bumpe: '≏',
+  bumpeq: '≏',
+  cacute: 'ć',
+  cap: '∩',
+  capand: '⩄',
+  capbrcup: '⩉',
+  capcap: '⩋',
+  capcup: '⩇',
+  capdot: '⩀',
+  caps: '∩︀',
+  caret: '⁁',
+  caron: 'ˇ',
+  ccaps: '⩍',
+  ccaron: 'č',
+  ccedil: 'ç',
+  ccirc: 'ĉ',
+  ccups: '⩌',
+  ccupssm: '⩐',
+  cdot: 'ċ',
+  cedil: '¸',
+  cemptyv: '⦲',
+  cent: '¢',
+  centerdot: '·',
+  cfr: '𝔠',
+  chcy: 'ч',
+  check: '✓',
+  checkmark: '✓',
+  chi: 'χ',
+  cir: '○',
+  cirE: '⧃',
+  circ: 'ˆ',
+  circeq: '≗',
+  circlearrowleft: '↺',
+  circlearrowright: '↻',
+  circledR: '®',
+  circledS: 'Ⓢ',
+  circledast: '⊛',
+  circledcirc: '⊚',
+  circleddash: '⊝',
+  cire: '≗',
+  cirfnint: '⨐',
+  cirmid: '⫯',
+  cirscir: '⧂',
+  clubs: '♣',
+  clubsuit: '♣',
+  colon: ':',
+  colone: '≔',
+  coloneq: '≔',
+  comma: ',',
+  commat: '@',
+  comp: '∁',
+  compfn: '∘',
+  complement: '∁',
+  complexes: 'ℂ',
+  cong: '≅',
+  congdot: '⩭',
+  conint: '∮',
+  copf: '𝕔',
+  coprod: '∐',
+  copy: '©',
+  copysr: '℗',
+  crarr: '↵',
+  cross: '✗',
+  cscr: '𝒸',
+  csub: '⫏',
+  csube: '⫑',
+  csup: '⫐',
+  csupe: '⫒',
+  ctdot: '⋯',
+  cudarrl: '⤸',
+  cudarrr: '⤵',
+  cuepr: '⋞',
+  cuesc: '⋟',
+  cularr: '↶',
+  cularrp: '⤽',
+  cup: '∪',
+  cupbrcap: '⩈',
+  cupcap: '⩆',
+  cupcup: '⩊',
+  cupdot: '⊍',
+  cupor: '⩅',
+  cups: '∪︀',
+  curarr: '↷',
+  curarrm: '⤼',
+  curlyeqprec: '⋞',
+  curlyeqsucc: '⋟',
+  curlyvee: '⋎',
+  curlywedge: '⋏',
+  curren: '¤',
+  curvearrowleft: '↶',
+  curvearrowright: '↷',
+  cuvee: '⋎',
+  cuwed: '⋏',
+  cwconint: '∲',
+  cwint: '∱',
+  cylcty: '⌭',
+  dArr: '⇓',
+  dHar: '⥥',
+  dagger: '†',
+  daleth: 'ℸ',
+  darr: '↓',
+  dash: '‐',
+  dashv: '⊣',
+  dbkarow: '⤏',
+  dblac: '˝',
+  dcaron: 'ď',
+  dcy: 'д',
+  dd: 'ⅆ',
+  ddagger: '‡',
+  ddarr: '⇊',
+  ddotseq: '⩷',
+  deg: '°',
+  delta: 'δ',
+  demptyv: '⦱',
+  dfisht: '⥿',
+  dfr: '𝔡',
+  dharl: '⇃',
+  dharr: '⇂',
+  diam: '⋄',
+  diamond: '⋄',
+  diamondsuit: '♦',
+  diams: '♦',
+  die: '¨',
+  digamma: 'ϝ',
+  disin: '⋲',
+  div: '÷',
+  divide: '÷',
+  divideontimes: '⋇',
+  divonx: '⋇',
+  djcy: 'ђ',
+  dlcorn: '⌞',
+  dlcrop: '⌍',
+  dollar: '$',
+  dopf: '𝕕',
+  dot: '˙',
+  doteq: '≐',
+  doteqdot: '≑',
+  dotminus: '∸',
+  dotplus: '∔',
+  dotsquare: '⊡',
+  doublebarwedge: '⌆',
+  downarrow: '↓',
+  downdownarrows: '⇊',
+  downharpoonleft: '⇃',
+  downharpoonright: '⇂',
+  drbkarow: '⤐',
+  drcorn: '⌟',
+  drcrop: '⌌',
+  dscr: '𝒹',
+  dscy: 'ѕ',
+  dsol: '⧶',
+  dstrok: 'đ',
+  dtdot: '⋱',
+  dtri: '▿',
+  dtrif: '▾',
+  duarr: '⇵',
+  duhar: '⥯',
+  dwangle: '⦦',
+  dzcy: 'џ',
+  dzigrarr: '⟿',
+  eDDot: '⩷',
+  eDot: '≑',
+  eacute: 'é',
+  easter: '⩮',
+  ecaron: 'ě',
+  ecir: '≖',
+  ecirc: 'ê',
+  ecolon: '≕',
+  ecy: 'э',
+  edot: 'ė',
+  ee: 'ⅇ',
+  efDot: '≒',
+  efr: '𝔢',
+  eg: '⪚',
+  egrave: 'è',
+  egs: '⪖',
+  egsdot: '⪘',
+  el: '⪙',
+  elinters: '⏧',
+  ell: 'ℓ',
+  els: '⪕',
+  elsdot: '⪗',
+  emacr: 'ē',
+  empty: '∅',
+  emptyset: '∅',
+  emptyv: '∅',
+  emsp13: ' ',
+  emsp14: ' ',
+  emsp: ' ',
+  eng: 'ŋ',
+  ensp: ' ',
+  eogon: 'ę',
+  eopf: '𝕖',
+  epar: '⋕',
+  eparsl: '⧣',
+  eplus: '⩱',
+  epsi: 'ε',
+  epsilon: 'ε',
+  epsiv: 'ϵ',
+  eqcirc: '≖',
+  eqcolon: '≕',
+  eqsim: '≂',
+  eqslantgtr: '⪖',
+  eqslantless: '⪕',
+  equals: '=',
+  equest: '≟',
+  equiv: '≡',
+  equivDD: '⩸',
+  eqvparsl: '⧥',
+  erDot: '≓',
+  erarr: '⥱',
+  escr: 'ℯ',
+  esdot: '≐',
+  esim: '≂',
+  eta: 'η',
+  eth: 'ð',
+  euml: 'ë',
+  euro: '€',
+  excl: '!',
+  exist: '∃',
+  expectation: 'ℰ',
+  exponentiale: 'ⅇ',
+  fallingdotseq: '≒',
+  fcy: 'ф',
+  female: '♀',
+  ffilig: 'ﬃ',
+  fflig: 'ﬀ',
+  ffllig: 'ﬄ',
+  ffr: '𝔣',
+  filig: 'ﬁ',
+  fjlig: 'fj',
+  flat: '♭',
+  fllig: 'ﬂ',
+  fltns: '▱',
+  fnof: 'ƒ',
+  fopf: '𝕗',
+  forall: '∀',
+  fork: '⋔',
+  forkv: '⫙',
+  fpartint: '⨍',
+  frac12: '½',
+  frac13: '⅓',
+  frac14: '¼',
+  frac15: '⅕',
+  frac16: '⅙',
+  frac18: '⅛',
+  frac23: '⅔',
+  frac25: '⅖',
+  frac34: '¾',
+  frac35: '⅗',
+  frac38: '⅜',
+  frac45: '⅘',
+  frac56: '⅚',
+  frac58: '⅝',
+  frac78: '⅞',
+  frasl: '⁄',
+  frown: '⌢',
+  fscr: '𝒻',
+  gE: '≧',
+  gEl: '⪌',
+  gacute: 'ǵ',
+  gamma: 'γ',
+  gammad: 'ϝ',
+  gap: '⪆',
+  gbreve: 'ğ',
+  gcirc: 'ĝ',
+  gcy: 'г',
+  gdot: 'ġ',
+  ge: '≥',
+  gel: '⋛',
+  geq: '≥',
+  geqq: '≧',
+  geqslant: '⩾',
+  ges: '⩾',
+  gescc: '⪩',
+  gesdot: '⪀',
+  gesdoto: '⪂',
+  gesdotol: '⪄',
+  gesl: '⋛︀',
+  gesles: '⪔',
+  gfr: '𝔤',
+  gg: '≫',
+  ggg: '⋙',
+  gimel: 'ℷ',
+  gjcy: 'ѓ',
+  gl: '≷',
+  glE: '⪒',
+  gla: '⪥',
+  glj: '⪤',
+  gnE: '≩',
+  gnap: '⪊',
+  gnapprox: '⪊',
+  gne: '⪈',
+  gneq: '⪈',
+  gneqq: '≩',
+  gnsim: '⋧',
+  gopf: '𝕘',
+  grave: '`',
+  gscr: 'ℊ',
+  gsim: '≳',
+  gsime: '⪎',
+  gsiml: '⪐',
+  gt: '>',
+  gtcc: '⪧',
+  gtcir: '⩺',
+  gtdot: '⋗',
+  gtlPar: '⦕',
+  gtquest: '⩼',
+  gtrapprox: '⪆',
+  gtrarr: '⥸',
+  gtrdot: '⋗',
+  gtreqless: '⋛',
+  gtreqqless: '⪌',
+  gtrless: '≷',
+  gtrsim: '≳',
+  gvertneqq: '≩︀',
+  gvnE: '≩︀',
+  hArr: '⇔',
+  hairsp: ' ',
+  half: '½',
+  hamilt: 'ℋ',
+  hardcy: 'ъ',
+  harr: '↔',
+  harrcir: '⥈',
+  harrw: '↭',
+  hbar: 'ℏ',
+  hcirc: 'ĥ',
+  hearts: '♥',
+  heartsuit: '♥',
+  hellip: '…',
+  hercon: '⊹',
+  hfr: '𝔥',
+  hksearow: '⤥',
+  hkswarow: '⤦',
+  hoarr: '⇿',
+  homtht: '∻',
+  hookleftarrow: '↩',
+  hookrightarrow: '↪',
+  hopf: '𝕙',
+  horbar: '―',
+  hscr: '𝒽',
+  hslash: 'ℏ',
+  hstrok: 'ħ',
+  hybull: '⁃',
+  hyphen: '‐',
+  iacute: 'í',
+  ic: '⁣',
+  icirc: 'î',
+  icy: 'и',
+  iecy: 'е',
+  iexcl: '¡',
+  iff: '⇔',
+  ifr: '𝔦',
+  igrave: 'ì',
+  ii: 'ⅈ',
+  iiiint: '⨌',
+  iiint: '∭',
+  iinfin: '⧜',
+  iiota: '℩',
+  ijlig: 'ĳ',
+  imacr: 'ī',
+  image: 'ℑ',
+  imagline: 'ℐ',
+  imagpart: 'ℑ',
+  imath: 'ı',
+  imof: '⊷',
+  imped: 'Ƶ',
+  in: '∈',
+  incare: '℅',
+  infin: '∞',
+  infintie: '⧝',
+  inodot: 'ı',
+  int: '∫',
+  intcal: '⊺',
+  integers: 'ℤ',
+  intercal: '⊺',
+  intlarhk: '⨗',
+  intprod: '⨼',
+  iocy: 'ё',
+  iogon: 'į',
+  iopf: '𝕚',
+  iota: 'ι',
+  iprod: '⨼',
+  iquest: '¿',
+  iscr: '𝒾',
+  isin: '∈',
+  isinE: '⋹',
+  isindot: '⋵',
+  isins: '⋴',
+  isinsv: '⋳',
+  isinv: '∈',
+  it: '⁢',
+  itilde: 'ĩ',
+  iukcy: 'і',
+  iuml: 'ï',
+  jcirc: 'ĵ',
+  jcy: 'й',
+  jfr: '𝔧',
+  jmath: 'ȷ',
+  jopf: '𝕛',
+  jscr: '𝒿',
+  jsercy: 'ј',
+  jukcy: 'є',
+  kappa: 'κ',
+  kappav: 'ϰ',
+  kcedil: 'ķ',
+  kcy: 'к',
+  kfr: '𝔨',
+  kgreen: 'ĸ',
+  khcy: 'х',
+  kjcy: 'ќ',
+  kopf: '𝕜',
+  kscr: '𝓀',
+  lAarr: '⇚',
+  lArr: '⇐',
+  lAtail: '⤛',
+  lBarr: '⤎',
+  lE: '≦',
+  lEg: '⪋',
+  lHar: '⥢',
+  lacute: 'ĺ',
+  laemptyv: '⦴',
+  lagran: 'ℒ',
+  lambda: 'λ',
+  lang: '⟨',
+  langd: '⦑',
+  langle: '⟨',
+  lap: '⪅',
+  laquo: '«',
+  larr: '←',
+  larrb: '⇤',
+  larrbfs: '⤟',
+  larrfs: '⤝',
+  larrhk: '↩',
+  larrlp: '↫',
+  larrpl: '⤹',
+  larrsim: '⥳',
+  larrtl: '↢',
+  lat: '⪫',
+  latail: '⤙',
+  late: '⪭',
+  lates: '⪭︀',
+  lbarr: '⤌',
+  lbbrk: '❲',
+  lbrace: '{',
+  lbrack: '[',
+  lbrke: '⦋',
+  lbrksld: '⦏',
+  lbrkslu: '⦍',
+  lcaron: 'ľ',
+  lcedil: 'ļ',
+  lceil: '⌈',
+  lcub: '{',
+  lcy: 'л',
+  ldca: '⤶',
+  ldquo: '“',
+  ldquor: '„',
+  ldrdhar: '⥧',
+  ldrushar: '⥋',
+  ldsh: '↲',
+  le: '≤',
+  leftarrow: '←',
+  leftarrowtail: '↢',
+  leftharpoondown: '↽',
+  leftharpoonup: '↼',
+  leftleftarrows: '⇇',
+  leftrightarrow: '↔',
+  leftrightarrows: '⇆',
+  leftrightharpoons: '⇋',
+  leftrightsquigarrow: '↭',
+  leftthreetimes: '⋋',
+  leg: '⋚',
+  leq: '≤',
+  leqq: '≦',
+  leqslant: '⩽',
+  les: '⩽',
+  lescc: '⪨',
+  lesdot: '⩿',
+  lesdoto: '⪁',
+  lesdotor: '⪃',
+  lesg: '⋚︀',
+  lesges: '⪓',
+  lessapprox: '⪅',
+  lessdot: '⋖',
+  lesseqgtr: '⋚',
+  lesseqqgtr: '⪋',
+  lessgtr: '≶',
+  lesssim: '≲',
+  lfisht: '⥼',
+  lfloor: '⌊',
+  lfr: '𝔩',
+  lg: '≶',
+  lgE: '⪑',
+  lhard: '↽',
+  lharu: '↼',
+  lharul: '⥪',
+  lhblk: '▄',
+  ljcy: 'љ',
+  ll: '≪',
+  llarr: '⇇',
+  llcorner: '⌞',
+  llhard: '⥫',
+  lltri: '◺',
+  lmidot: 'ŀ',
+  lmoust: '⎰',
+  lmoustache: '⎰',
+  lnE: '≨',
+  lnap: '⪉',
+  lnapprox: '⪉',
+  lne: '⪇',
+  lneq: '⪇',
+  lneqq: '≨',
+  lnsim: '⋦',
+  loang: '⟬',
+  loarr: '⇽',
+  lobrk: '⟦',
+  longleftarrow: '⟵',
+  longleftrightarrow: '⟷',
+  longmapsto: '⟼',
+  longrightarrow: '⟶',
+  looparrowleft: '↫',
+  looparrowright: '↬',
+  lopar: '⦅',
+  lopf: '𝕝',
+  loplus: '⨭',
+  lotimes: '⨴',
+  lowast: '∗',
+  lowbar: '_',
+  loz: '◊',
+  lozenge: '◊',
+  lozf: '⧫',
+  lpar: '(',
+  lparlt: '⦓',
+  lrarr: '⇆',
+  lrcorner: '⌟',
+  lrhar: '⇋',
+  lrhard: '⥭',
+  lrm: '‎',
+  lrtri: '⊿',
+  lsaquo: '‹',
+  lscr: '𝓁',
+  lsh: '↰',
+  lsim: '≲',
+  lsime: '⪍',
+  lsimg: '⪏',
+  lsqb: '[',
+  lsquo: '‘',
+  lsquor: '‚',
+  lstrok: 'ł',
+  lt: '<',
+  ltcc: '⪦',
+  ltcir: '⩹',
+  ltdot: '⋖',
+  lthree: '⋋',
+  ltimes: '⋉',
+  ltlarr: '⥶',
+  ltquest: '⩻',
+  ltrPar: '⦖',
+  ltri: '◃',
+  ltrie: '⊴',
+  ltrif: '◂',
+  lurdshar: '⥊',
+  luruhar: '⥦',
+  lvertneqq: '≨︀',
+  lvnE: '≨︀',
+  mDDot: '∺',
+  macr: '¯',
+  male: '♂',
+  malt: '✠',
+  maltese: '✠',
+  map: '↦',
+  mapsto: '↦',
+  mapstodown: '↧',
+  mapstoleft: '↤',
+  mapstoup: '↥',
+  marker: '▮',
+  mcomma: '⨩',
+  mcy: 'м',
+  mdash: '—',
+  measuredangle: '∡',
+  mfr: '𝔪',
+  mho: '℧',
+  micro: 'µ',
+  mid: '∣',
+  midast: '*',
+  midcir: '⫰',
+  middot: '·',
+  minus: '−',
+  minusb: '⊟',
+  minusd: '∸',
+  minusdu: '⨪',
+  mlcp: '⫛',
+  mldr: '…',
+  mnplus: '∓',
+  models: '⊧',
+  mopf: '𝕞',
+  mp: '∓',
+  mscr: '𝓂',
+  mstpos: '∾',
+  mu: 'μ',
+  multimap: '⊸',
+  mumap: '⊸',
+  nGg: '⋙̸',
+  nGt: '≫⃒',
+  nGtv: '≫̸',
+  nLeftarrow: '⇍',
+  nLeftrightarrow: '⇎',
+  nLl: '⋘̸',
+  nLt: '≪⃒',
+  nLtv: '≪̸',
+  nRightarrow: '⇏',
+  nVDash: '⊯',
+  nVdash: '⊮',
+  nabla: '∇',
+  nacute: 'ń',
+  nang: '∠⃒',
+  nap: '≉',
+  napE: '⩰̸',
+  napid: '≋̸',
+  napos: 'ŉ',
+  napprox: '≉',
+  natur: '♮',
+  natural: '♮',
+  naturals: 'ℕ',
+  nbsp: ' ',
+  nbump: '≎̸',
+  nbumpe: '≏̸',
+  ncap: '⩃',
+  ncaron: 'ň',
+  ncedil: 'ņ',
+  ncong: '≇',
+  ncongdot: '⩭̸',
+  ncup: '⩂',
+  ncy: 'н',
+  ndash: '–',
+  ne: '≠',
+  neArr: '⇗',
+  nearhk: '⤤',
+  nearr: '↗',
+  nearrow: '↗',
+  nedot: '≐̸',
+  nequiv: '≢',
+  nesear: '⤨',
+  nesim: '≂̸',
+  nexist: '∄',
+  nexists: '∄',
+  nfr: '𝔫',
+  ngE: '≧̸',
+  nge: '≱',
+  ngeq: '≱',
+  ngeqq: '≧̸',
+  ngeqslant: '⩾̸',
+  nges: '⩾̸',
+  ngsim: '≵',
+  ngt: '≯',
+  ngtr: '≯',
+  nhArr: '⇎',
+  nharr: '↮',
+  nhpar: '⫲',
+  ni: '∋',
+  nis: '⋼',
+  nisd: '⋺',
+  niv: '∋',
+  njcy: 'њ',
+  nlArr: '⇍',
+  nlE: '≦̸',
+  nlarr: '↚',
+  nldr: '‥',
+  nle: '≰',
+  nleftarrow: '↚',
+  nleftrightarrow: '↮',
+  nleq: '≰',
+  nleqq: '≦̸',
+  nleqslant: '⩽̸',
+  nles: '⩽̸',
+  nless: '≮',
+  nlsim: '≴',
+  nlt: '≮',
+  nltri: '⋪',
+  nltrie: '⋬',
+  nmid: '∤',
+  nopf: '𝕟',
+  not: '¬',
+  notin: '∉',
+  notinE: '⋹̸',
+  notindot: '⋵̸',
+  notinva: '∉',
+  notinvb: '⋷',
+  notinvc: '⋶',
+  notni: '∌',
+  notniva: '∌',
+  notnivb: '⋾',
+  notnivc: '⋽',
+  npar: '∦',
+  nparallel: '∦',
+  nparsl: '⫽⃥',
+  npart: '∂̸',
+  npolint: '⨔',
+  npr: '⊀',
+  nprcue: '⋠',
+  npre: '⪯̸',
+  nprec: '⊀',
+  npreceq: '⪯̸',
+  nrArr: '⇏',
+  nrarr: '↛',
+  nrarrc: '⤳̸',
+  nrarrw: '↝̸',
+  nrightarrow: '↛',
+  nrtri: '⋫',
+  nrtrie: '⋭',
+  nsc: '⊁',
+  nsccue: '⋡',
+  nsce: '⪰̸',
+  nscr: '𝓃',
+  nshortmid: '∤',
+  nshortparallel: '∦',
+  nsim: '≁',
+  nsime: '≄',
+  nsimeq: '≄',
+  nsmid: '∤',
+  nspar: '∦',
+  nsqsube: '⋢',
+  nsqsupe: '⋣',
+  nsub: '⊄',
+  nsubE: '⫅̸',
+  nsube: '⊈',
+  nsubset: '⊂⃒',
+  nsubseteq: '⊈',
+  nsubseteqq: '⫅̸',
+  nsucc: '⊁',
+  nsucceq: '⪰̸',
+  nsup: '⊅',
+  nsupE: '⫆̸',
+  nsupe: '⊉',
+  nsupset: '⊃⃒',
+  nsupseteq: '⊉',
+  nsupseteqq: '⫆̸',
+  ntgl: '≹',
+  ntilde: 'ñ',
+  ntlg: '≸',
+  ntriangleleft: '⋪',
+  ntrianglelefteq: '⋬',
+  ntriangleright: '⋫',
+  ntrianglerighteq: '⋭',
+  nu: 'ν',
+  num: '#',
+  numero: '№',
+  numsp: ' ',
+  nvDash: '⊭',
+  nvHarr: '⤄',
+  nvap: '≍⃒',
+  nvdash: '⊬',
+  nvge: '≥⃒',
+  nvgt: '>⃒',
+  nvinfin: '⧞',
+  nvlArr: '⤂',
+  nvle: '≤⃒',
+  nvlt: '<⃒',
+  nvltrie: '⊴⃒',
+  nvrArr: '⤃',
+  nvrtrie: '⊵⃒',
+  nvsim: '∼⃒',
+  nwArr: '⇖',
+  nwarhk: '⤣',
+  nwarr: '↖',
+  nwarrow: '↖',
+  nwnear: '⤧',
+  oS: 'Ⓢ',
+  oacute: 'ó',
+  oast: '⊛',
+  ocir: '⊚',
+  ocirc: 'ô',
+  ocy: 'о',
+  odash: '⊝',
+  odblac: 'ő',
+  odiv: '⨸',
+  odot: '⊙',
+  odsold: '⦼',
+  oelig: 'œ',
+  ofcir: '⦿',
+  ofr: '𝔬',
+  ogon: '˛',
+  ograve: 'ò',
+  ogt: '⧁',
+  ohbar: '⦵',
+  ohm: 'Ω',
+  oint: '∮',
+  olarr: '↺',
+  olcir: '⦾',
+  olcross: '⦻',
+  oline: '‾',
+  olt: '⧀',
+  omacr: 'ō',
+  omega: 'ω',
+  omicron: 'ο',
+  omid: '⦶',
+  ominus: '⊖',
+  oopf: '𝕠',
+  opar: '⦷',
+  operp: '⦹',
+  oplus: '⊕',
+  or: '∨',
+  orarr: '↻',
+  ord: '⩝',
+  order: 'ℴ',
+  orderof: 'ℴ',
+  ordf: 'ª',
+  ordm: 'º',
+  origof: '⊶',
+  oror: '⩖',
+  orslope: '⩗',
+  orv: '⩛',
+  oscr: 'ℴ',
+  oslash: 'ø',
+  osol: '⊘',
+  otilde: 'õ',
+  otimes: '⊗',
+  otimesas: '⨶',
+  ouml: 'ö',
+  ovbar: '⌽',
+  par: '∥',
+  para: '¶',
+  parallel: '∥',
+  parsim: '⫳',
+  parsl: '⫽',
+  part: '∂',
+  pcy: 'п',
+  percnt: '%',
+  period: '.',
+  permil: '‰',
+  perp: '⊥',
+  pertenk: '‱',
+  pfr: '𝔭',
+  phi: 'φ',
+  phiv: 'ϕ',
+  phmmat: 'ℳ',
+  phone: '☎',
+  pi: 'π',
+  pitchfork: '⋔',
+  piv: 'ϖ',
+  planck: 'ℏ',
+  planckh: 'ℎ',
+  plankv: 'ℏ',
+  plus: '+',
+  plusacir: '⨣',
+  plusb: '⊞',
+  pluscir: '⨢',
+  plusdo: '∔',
+  plusdu: '⨥',
+  pluse: '⩲',
+  plusmn: '±',
+  plussim: '⨦',
+  plustwo: '⨧',
+  pm: '±',
+  pointint: '⨕',
+  popf: '𝕡',
+  pound: '£',
+  pr: '≺',
+  prE: '⪳',
+  prap: '⪷',
+  prcue: '≼',
+  pre: '⪯',
+  prec: '≺',
+  precapprox: '⪷',
+  preccurlyeq: '≼',
+  preceq: '⪯',
+  precnapprox: '⪹',
+  precneqq: '⪵',
+  precnsim: '⋨',
+  precsim: '≾',
+  prime: '′',
+  primes: 'ℙ',
+  prnE: '⪵',
+  prnap: '⪹',
+  prnsim: '⋨',
+  prod: '∏',
+  profalar: '⌮',
+  profline: '⌒',
+  profsurf: '⌓',
+  prop: '∝',
+  propto: '∝',
+  prsim: '≾',
+  prurel: '⊰',
+  pscr: '𝓅',
+  psi: 'ψ',
+  puncsp: ' ',
+  qfr: '𝔮',
+  qint: '⨌',
+  qopf: '𝕢',
+  qprime: '⁗',
+  qscr: '𝓆',
+  quaternions: 'ℍ',
+  quatint: '⨖',
+  quest: '?',
+  questeq: '≟',
+  quot: '"',
+  rAarr: '⇛',
+  rArr: '⇒',
+  rAtail: '⤜',
+  rBarr: '⤏',
+  rHar: '⥤',
+  race: '∽̱',
+  racute: 'ŕ',
+  radic: '√',
+  raemptyv: '⦳',
+  rang: '⟩',
+  rangd: '⦒',
+  range: '⦥',
+  rangle: '⟩',
+  raquo: '»',
+  rarr: '→',
+  rarrap: '⥵',
+  rarrb: '⇥',
+  rarrbfs: '⤠',
+  rarrc: '⤳',
+  rarrfs: '⤞',
+  rarrhk: '↪',
+  rarrlp: '↬',
+  rarrpl: '⥅',
+  rarrsim: '⥴',
+  rarrtl: '↣',
+  rarrw: '↝',
+  ratail: '⤚',
+  ratio: '∶',
+  rationals: 'ℚ',
+  rbarr: '⤍',
+  rbbrk: '❳',
+  rbrace: '}',
+  rbrack: ']',
+  rbrke: '⦌',
+  rbrksld: '⦎',
+  rbrkslu: '⦐',
+  rcaron: 'ř',
+  rcedil: 'ŗ',
+  rceil: '⌉',
+  rcub: '}',
+  rcy: 'р',
+  rdca: '⤷',
+  rdldhar: '⥩',
+  rdquo: '”',
+  rdquor: '”',
+  rdsh: '↳',
+  real: 'ℜ',
+  realine: 'ℛ',
+  realpart: 'ℜ',
+  reals: 'ℝ',
+  rect: '▭',
+  reg: '®',
+  rfisht: '⥽',
+  rfloor: '⌋',
+  rfr: '𝔯',
+  rhard: '⇁',
+  rharu: '⇀',
+  rharul: '⥬',
+  rho: 'ρ',
+  rhov: 'ϱ',
+  rightarrow: '→',
+  rightarrowtail: '↣',
+  rightharpoondown: '⇁',
+  rightharpoonup: '⇀',
+  rightleftarrows: '⇄',
+  rightleftharpoons: '⇌',
+  rightrightarrows: '⇉',
+  rightsquigarrow: '↝',
+  rightthreetimes: '⋌',
+  ring: '˚',
+  risingdotseq: '≓',
+  rlarr: '⇄',
+  rlhar: '⇌',
+  rlm: '‏',
+  rmoust: '⎱',
+  rmoustache: '⎱',
+  rnmid: '⫮',
+  roang: '⟭',
+  roarr: '⇾',
+  robrk: '⟧',
+  ropar: '⦆',
+  ropf: '𝕣',
+  roplus: '⨮',
+  rotimes: '⨵',
+  rpar: ')',
+  rpargt: '⦔',
+  rppolint: '⨒',
+  rrarr: '⇉',
+  rsaquo: '›',
+  rscr: '𝓇',
+  rsh: '↱',
+  rsqb: ']',
+  rsquo: '’',
+  rsquor: '’',
+  rthree: '⋌',
+  rtimes: '⋊',
+  rtri: '▹',
+  rtrie: '⊵',
+  rtrif: '▸',
+  rtriltri: '⧎',
+  ruluhar: '⥨',
+  rx: '℞',
+  sacute: 'ś',
+  sbquo: '‚',
+  sc: '≻',
+  scE: '⪴',
+  scap: '⪸',
+  scaron: 'š',
+  sccue: '≽',
+  sce: '⪰',
+  scedil: 'ş',
+  scirc: 'ŝ',
+  scnE: '⪶',
+  scnap: '⪺',
+  scnsim: '⋩',
+  scpolint: '⨓',
+  scsim: '≿',
+  scy: 'с',
+  sdot: '⋅',
+  sdotb: '⊡',
+  sdote: '⩦',
+  seArr: '⇘',
+  searhk: '⤥',
+  searr: '↘',
+  searrow: '↘',
+  sect: '§',
+  semi: ';',
+  seswar: '⤩',
+  setminus: '∖',
+  setmn: '∖',
+  sext: '✶',
+  sfr: '𝔰',
+  sfrown: '⌢',
+  sharp: '♯',
+  shchcy: 'щ',
+  shcy: 'ш',
+  shortmid: '∣',
+  shortparallel: '∥',
+  shy: '­',
+  sigma: 'σ',
+  sigmaf: 'ς',
+  sigmav: 'ς',
+  sim: '∼',
+  simdot: '⩪',
+  sime: '≃',
+  simeq: '≃',
+  simg: '⪞',
+  simgE: '⪠',
+  siml: '⪝',
+  simlE: '⪟',
+  simne: '≆',
+  simplus: '⨤',
+  simrarr: '⥲',
+  slarr: '←',
+  smallsetminus: '∖',
+  smashp: '⨳',
+  smeparsl: '⧤',
+  smid: '∣',
+  smile: '⌣',
+  smt: '⪪',
+  smte: '⪬',
+  smtes: '⪬︀',
+  softcy: 'ь',
+  sol: '/',
+  solb: '⧄',
+  solbar: '⌿',
+  sopf: '𝕤',
+  spades: '♠',
+  spadesuit: '♠',
+  spar: '∥',
+  sqcap: '⊓',
+  sqcaps: '⊓︀',
+  sqcup: '⊔',
+  sqcups: '⊔︀',
+  sqsub: '⊏',
+  sqsube: '⊑',
+  sqsubset: '⊏',
+  sqsubseteq: '⊑',
+  sqsup: '⊐',
+  sqsupe: '⊒',
+  sqsupset: '⊐',
+  sqsupseteq: '⊒',
+  squ: '□',
+  square: '□',
+  squarf: '▪',
+  squf: '▪',
+  srarr: '→',
+  sscr: '𝓈',
+  ssetmn: '∖',
+  ssmile: '⌣',
+  sstarf: '⋆',
+  star: '☆',
+  starf: '★',
+  straightepsilon: 'ϵ',
+  straightphi: 'ϕ',
+  strns: '¯',
+  sub: '⊂',
+  subE: '⫅',
+  subdot: '⪽',
+  sube: '⊆',
+  subedot: '⫃',
+  submult: '⫁',
+  subnE: '⫋',
+  subne: '⊊',
+  subplus: '⪿',
+  subrarr: '⥹',
+  subset: '⊂',
+  subseteq: '⊆',
+  subseteqq: '⫅',
+  subsetneq: '⊊',
+  subsetneqq: '⫋',
+  subsim: '⫇',
+  subsub: '⫕',
+  subsup: '⫓',
+  succ: '≻',
+  succapprox: '⪸',
+  succcurlyeq: '≽',
+  succeq: '⪰',
+  succnapprox: '⪺',
+  succneqq: '⪶',
+  succnsim: '⋩',
+  succsim: '≿',
+  sum: '∑',
+  sung: '♪',
+  sup1: '¹',
+  sup2: '²',
+  sup3: '³',
+  sup: '⊃',
+  supE: '⫆',
+  supdot: '⪾',
+  supdsub: '⫘',
+  supe: '⊇',
+  supedot: '⫄',
+  suphsol: '⟉',
+  suphsub: '⫗',
+  suplarr: '⥻',
+  supmult: '⫂',
+  supnE: '⫌',
+  supne: '⊋',
+  supplus: '⫀',
+  supset: '⊃',
+  supseteq: '⊇',
+  supseteqq: '⫆',
+  supsetneq: '⊋',
+  supsetneqq: '⫌',
+  supsim: '⫈',
+  supsub: '⫔',
+  supsup: '⫖',
+  swArr: '⇙',
+  swarhk: '⤦',
+  swarr: '↙',
+  swarrow: '↙',
+  swnwar: '⤪',
+  szlig: 'ß',
+  target: '⌖',
+  tau: 'τ',
+  tbrk: '⎴',
+  tcaron: 'ť',
+  tcedil: 'ţ',
+  tcy: 'т',
+  tdot: '⃛',
+  telrec: '⌕',
+  tfr: '𝔱',
+  there4: '∴',
+  therefore: '∴',
+  theta: 'θ',
+  thetasym: 'ϑ',
+  thetav: 'ϑ',
+  thickapprox: '≈',
+  thicksim: '∼',
+  thinsp: ' ',
+  thkap: '≈',
+  thksim: '∼',
+  thorn: 'þ',
+  tilde: '˜',
+  times: '×',
+  timesb: '⊠',
+  timesbar: '⨱',
+  timesd: '⨰',
+  tint: '∭',
+  toea: '⤨',
+  top: '⊤',
+  topbot: '⌶',
+  topcir: '⫱',
+  topf: '𝕥',
+  topfork: '⫚',
+  tosa: '⤩',
+  tprime: '‴',
+  trade: '™',
+  triangle: '▵',
+  triangledown: '▿',
+  triangleleft: '◃',
+  trianglelefteq: '⊴',
+  triangleq: '≜',
+  triangleright: '▹',
+  trianglerighteq: '⊵',
+  tridot: '◬',
+  trie: '≜',
+  triminus: '⨺',
+  triplus: '⨹',
+  trisb: '⧍',
+  tritime: '⨻',
+  trpezium: '⏢',
+  tscr: '𝓉',
+  tscy: 'ц',
+  tshcy: 'ћ',
+  tstrok: 'ŧ',
+  twixt: '≬',
+  twoheadleftarrow: '↞',
+  twoheadrightarrow: '↠',
+  uArr: '⇑',
+  uHar: '⥣',
+  uacute: 'ú',
+  uarr: '↑',
+  ubrcy: 'ў',
+  ubreve: 'ŭ',
+  ucirc: 'û',
+  ucy: 'у',
+  udarr: '⇅',
+  udblac: 'ű',
+  udhar: '⥮',
+  ufisht: '⥾',
+  ufr: '𝔲',
+  ugrave: 'ù',
+  uharl: '↿',
+  uharr: '↾',
+  uhblk: '▀',
+  ulcorn: '⌜',
+  ulcorner: '⌜',
+  ulcrop: '⌏',
+  ultri: '◸',
+  umacr: 'ū',
+  uml: '¨',
+  uogon: 'ų',
+  uopf: '𝕦',
+  uparrow: '↑',
+  updownarrow: '↕',
+  upharpoonleft: '↿',
+  upharpoonright: '↾',
+  uplus: '⊎',
+  upsi: 'υ',
+  upsih: 'ϒ',
+  upsilon: 'υ',
+  upuparrows: '⇈',
+  urcorn: '⌝',
+  urcorner: '⌝',
+  urcrop: '⌎',
+  uring: 'ů',
+  urtri: '◹',
+  uscr: '𝓊',
+  utdot: '⋰',
+  utilde: 'ũ',
+  utri: '▵',
+  utrif: '▴',
+  uuarr: '⇈',
+  uuml: 'ü',
+  uwangle: '⦧',
+  vArr: '⇕',
+  vBar: '⫨',
+  vBarv: '⫩',
+  vDash: '⊨',
+  vangrt: '⦜',
+  varepsilon: 'ϵ',
+  varkappa: 'ϰ',
+  varnothing: '∅',
+  varphi: 'ϕ',
+  varpi: 'ϖ',
+  varpropto: '∝',
+  varr: '↕',
+  varrho: 'ϱ',
+  varsigma: 'ς',
+  varsubsetneq: '⊊︀',
+  varsubsetneqq: '⫋︀',
+  varsupsetneq: '⊋︀',
+  varsupsetneqq: '⫌︀',
+  vartheta: 'ϑ',
+  vartriangleleft: '⊲',
+  vartriangleright: '⊳',
+  vcy: 'в',
+  vdash: '⊢',
+  vee: '∨',
+  veebar: '⊻',
+  veeeq: '≚',
+  vellip: '⋮',
+  verbar: '|',
+  vert: '|',
+  vfr: '𝔳',
+  vltri: '⊲',
+  vnsub: '⊂⃒',
+  vnsup: '⊃⃒',
+  vopf: '𝕧',
+  vprop: '∝',
+  vrtri: '⊳',
+  vscr: '𝓋',
+  vsubnE: '⫋︀',
+  vsubne: '⊊︀',
+  vsupnE: '⫌︀',
+  vsupne: '⊋︀',
+  vzigzag: '⦚',
+  wcirc: 'ŵ',
+  wedbar: '⩟',
+  wedge: '∧',
+  wedgeq: '≙',
+  weierp: '℘',
+  wfr: '𝔴',
+  wopf: '𝕨',
+  wp: '℘',
+  wr: '≀',
+  wreath: '≀',
+  wscr: '𝓌',
+  xcap: '⋂',
+  xcirc: '◯',
+  xcup: '⋃',
+  xdtri: '▽',
+  xfr: '𝔵',
+  xhArr: '⟺',
+  xharr: '⟷',
+  xi: 'ξ',
+  xlArr: '⟸',
+  xlarr: '⟵',
+  xmap: '⟼',
+  xnis: '⋻',
+  xodot: '⨀',
+  xopf: '𝕩',
+  xoplus: '⨁',
+  xotime: '⨂',
+  xrArr: '⟹',
+  xrarr: '⟶',
+  xscr: '𝓍',
+  xsqcup: '⨆',
+  xuplus: '⨄',
+  xutri: '△',
+  xvee: '⋁',
+  xwedge: '⋀',
+  yacute: 'ý',
+  yacy: 'я',
+  ycirc: 'ŷ',
+  ycy: 'ы',
+  yen: '¥',
+  yfr: '𝔶',
+  yicy: 'ї',
+  yopf: '𝕪',
+  yscr: '𝓎',
+  yucy: 'ю',
+  yuml: 'ÿ',
+  zacute: 'ź',
+  zcaron: 'ž',
+  zcy: 'з',
+  zdot: 'ż',
+  zeetrf: 'ℨ',
+  zeta: 'ζ',
+  zfr: '𝔷',
+  zhcy: 'ж',
+  zigrarr: '⇝',
+  zopf: '𝕫',
+  zscr: '𝓏',
+  zwj: '‍',
+  zwnj: '‌'
+}
+
+
+/***/ }),
+
+/***/ 36469:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ stringify)
+/* harmony export */ });
+/* unused harmony export parse */
+/**
+ * @typedef Options
+ *   Configuration for `stringify`.
+ * @property {boolean} [padLeft=true]
+ *   Whether to pad a space before a token.
+ * @property {boolean} [padRight=false]
+ *   Whether to pad a space after a token.
+ */
+
+/**
+ * @typedef {Options} StringifyOptions
+ *   Please use `StringifyOptions` instead.
+ */
+
+/**
+ * Parse comma-separated tokens to an array.
+ *
+ * @param {string} value
+ *   Comma-separated tokens.
+ * @returns {Array<string>}
+ *   List of tokens.
+ */
+function parse(value) {
+  /** @type {Array<string>} */
+  const tokens = []
+  const input = String(value || '')
+  let index = input.indexOf(',')
+  let start = 0
+  /** @type {boolean} */
+  let end = false
+
+  while (!end) {
+    if (index === -1) {
+      index = input.length
+      end = true
+    }
+
+    const token = input.slice(start, index).trim()
+
+    if (token || !end) {
+      tokens.push(token)
+    }
+
+    start = index + 1
+    index = input.indexOf(',', start)
+  }
+
+  return tokens
+}
+
+/**
+ * Serialize an array of strings or numbers to comma-separated tokens.
+ *
+ * @param {Array<string|number>} values
+ *   List of tokens.
+ * @param {Options} [options]
+ *   Configuration for `stringify` (optional).
+ * @returns {string}
+ *   Comma-separated tokens.
+ */
+function stringify(values, options) {
+  const settings = options || {}
+
+  // Ensure the last empty entry is seen.
+  const input = values[values.length - 1] === '' ? [...values, ''] : values
+
+  return input
+    .join(
+      (settings.padRight ? ' ' : '') +
+        ',' +
+        (settings.padLeft === false ? '' : ' ')
+    )
+    .trim()
+}
+
+
+/***/ }),
+
+/***/ 75731:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   s: () => (/* binding */ decodeNamedCharacterReference)
+/* harmony export */ });
+/* harmony import */ var character_entities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(36818);
+
+
+const own = {}.hasOwnProperty
+
+/**
+ * Decode a single character reference (without the `&` or `;`).
+ * You probably only need this when you’re building parsers yourself that follow
+ * different rules compared to HTML.
+ * This is optimized to be tiny in browsers.
+ *
+ * @param {string} value
+ *   `notin` (named), `#123` (deci), `#x123` (hexa).
+ * @returns {string|false}
+ *   Decoded reference.
+ */
+function decodeNamedCharacterReference(value) {
+  return own.call(character_entities__WEBPACK_IMPORTED_MODULE_0__/* .characterEntities */ .b, value) ? character_entities__WEBPACK_IMPORTED_MODULE_0__/* .characterEntities */ .b[value] : false
+}
+
+
+/***/ }),
+
+/***/ 69820:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   HB: () => (/* binding */ unreachable),
+/* harmony export */   ok: () => (/* binding */ ok)
+/* harmony export */ });
+/* unused harmony exports deprecate, equal */
+function deprecate(fn) {
+  return fn
+}
+
+function equal() {}
+
+function ok() {}
+
+function unreachable() {}
+
+
+/***/ }),
+
+/***/ 17173:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   UU: () => (/* binding */ name)
+/* harmony export */ });
+/* unused harmony exports start, cont */
+/**
+ * @typedef Options
+ *   Configuration.
+ * @property {boolean | null | undefined} [jsx=false]
+ *   Support JSX identifiers (default: `false`).
+ */
+
+const startRe = /[$_\p{ID_Start}]/u
+const contRe = /[$_\u{200C}\u{200D}\p{ID_Continue}]/u
+const contReJsx = /[-$_\u{200C}\u{200D}\p{ID_Continue}]/u
+const nameRe = /^[$_\p{ID_Start}][$_\u{200C}\u{200D}\p{ID_Continue}]*$/u
+const nameReJsx = /^[$_\p{ID_Start}][-$_\u{200C}\u{200D}\p{ID_Continue}]*$/u
+
+/** @type {Options} */
+const emptyOptions = {}
+
+/**
+ * Checks if the given code point can start an identifier.
+ *
+ * @param {number | undefined} code
+ *   Code point to check.
+ * @returns {boolean}
+ *   Whether `code` can start an identifier.
+ */
+// Note: `undefined` is supported so you can pass the result from `''.codePointAt`.
+function start(code) {
+  return code ? startRe.test(String.fromCodePoint(code)) : false
+}
+
+/**
+ * Checks if the given code point can continue an identifier.
+ *
+ * @param {number | undefined} code
+ *   Code point to check.
+ * @param {Options | null | undefined} [options]
+ *   Configuration (optional).
+ * @returns {boolean}
+ *   Whether `code` can continue an identifier.
+ */
+// Note: `undefined` is supported so you can pass the result from `''.codePointAt`.
+function cont(code, options) {
+  const settings = options || emptyOptions
+  const re = settings.jsx ? contReJsx : contRe
+  return code ? re.test(String.fromCodePoint(code)) : false
+}
+
+/**
+ * Checks if the given value is a valid identifier name.
+ *
+ * @param {string} name
+ *   Identifier to check.
+ * @param {Options | null | undefined} [options]
+ *   Configuration (optional).
+ * @returns {boolean}
+ *   Whether `name` can be an identifier.
+ */
+function name(name, options) {
+  const settings = options || emptyOptions
+  const re = settings.jsx ? nameReJsx : nameRe
+  return re.test(name)
+}
+
+
+/***/ }),
+
+/***/ 22133:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   H: () => (/* binding */ toJsxRuntime)
+/* harmony export */ });
+/* harmony import */ var comma_separated_tokens__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(36469);
+/* harmony import */ var devlop__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(69820);
+/* harmony import */ var estree_util_is_identifier_name__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(17173);
+/* harmony import */ var hast_util_whitespace__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(66296);
+/* harmony import */ var property_information__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(65961);
+/* harmony import */ var property_information__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(61182);
+/* harmony import */ var property_information__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(98913);
+/* harmony import */ var space_separated_tokens__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(10010);
+/* harmony import */ var style_to_object__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(48313);
+/* harmony import */ var unist_util_position__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(29119);
+/* harmony import */ var vfile_message__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(24435);
+// Register MDX nodes in mdast:
+/// <reference types="mdast-util-mdx-expression" />
+/// <reference types="mdast-util-mdx-jsx" />
+/// <reference types="mdast-util-mdxjs-esm" />
+
+/**
+ * @typedef {import('estree').Identifier} Identifier
+ * @typedef {import('estree').Literal} Literal
+ * @typedef {import('estree').MemberExpression} MemberExpression
+ * @typedef {import('estree').Expression} Expression
+ * @typedef {import('estree').Program} Program
+ *
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('hast').Nodes} Nodes
+ * @typedef {import('hast').Parents} Parents
+ * @typedef {import('hast').Root} Root
+ * @typedef {import('hast').Text} Text
+ *
+ * @typedef {import('mdast-util-mdx-expression').MdxFlowExpressionHast} MdxFlowExpression
+ * @typedef {import('mdast-util-mdx-expression').MdxTextExpressionHast} MdxTextExpression
+ *
+ * @typedef {import('mdast-util-mdx-jsx').MdxJsxFlowElementHast} MdxJsxFlowElement
+ * @typedef {import('mdast-util-mdx-jsx').MdxJsxTextElementHast} MdxJsxTextElement
+ *
+ * @typedef {import('mdast-util-mdxjs-esm').MdxjsEsmHast} MdxjsEsm
+ *
+ * @typedef {import('property-information').Schema} Schema
+ *
+ * @typedef {import('unist').Position} Position
+ *
+ * @typedef {import('./components.js').Components} Components
+ */
+
+/**
+ * @typedef {JSX.Element | string | null | undefined} Child
+ *   Child.
+ *
+ * @callback Create
+ *   Create something in development or production.
+ * @param {Nodes} node
+ *   hast node.
+ * @param {unknown} type
+ *   Fragment symbol or tag name.
+ * @param {Props} props
+ *   Properties and children.
+ * @param {string | undefined} key
+ *   Key.
+ * @returns {JSX.Element}
+ *   Result.
+ *
+ * @callback CreateEvaluater
+ *   Create an evaluator that turns ESTree ASTs from embedded MDX into values.
+ * @returns {Evaluater}
+ *   Evaluater.
+ *
+ * @typedef {'html' | 'react'} ElementAttributeNameCase
+ *   Casing to use for attribute names.
+ *
+ *   HTML casing is for example `class`, `stroke-linecap`, `xml:lang`.
+ *   React casing is for example `className`, `strokeLinecap`, `xmlLang`.
+ *
+ * @callback EvaluateExpression
+ *   Turn an MDX expression into a value.
+ * @param {Expression} expression
+ *   ESTree expression.
+ * @returns {unknown}
+ *   Result of expression.
+ *
+ * @callback EvaluateProgram
+ *   Turn an MDX program (export/import statements) into a value.
+ * @param {Program} expression
+ *   ESTree program.
+ * @returns {unknown}
+ *   Result of program;
+ *   should likely be `undefined` as ESM changes the scope but doesn’t yield
+ *   something.
+ *
+ * @typedef Evaluater
+ *   Evaluator that turns ESTree ASTs from embedded MDX into values.
+ * @property {EvaluateExpression} evaluateExpression
+ *   Evaluate an expression.
+ * @property {EvaluateProgram} evaluateProgram
+ *   Evaluate a program.
+ *
+ * @typedef {[string, Value]} Field
+ *   Property field.
+ *
+ * @typedef {unknown} Fragment
+ *   Represent the children, typically a symbol.
+ *
+ * @callback Jsx
+ *   Create a production element.
+ * @param {unknown} type
+ *   Element type: `Fragment` symbol, tag name (`string`), component.
+ * @param {Props} props
+ *   Element props, `children`, and maybe `node`.
+ * @param {string | undefined} [key]
+ *   Dynamicly generated key to use.
+ * @returns {JSX.Element}
+ *   Element from your framework.
+ *
+ * @callback JsxDev
+ *   Create a development element.
+ * @param {unknown} type
+ *   Element type: `Fragment` symbol, tag name (`string`), component.
+ * @param {Props} props
+ *   Element props, `children`, and maybe `node`.
+ * @param {string | undefined} key
+ *   Dynamicly generated key to use.
+ * @param {boolean} isStaticChildren
+ *   Whether two or more children are passed (in an array), which is whether
+ *   `jsxs` or `jsx` would be used.
+ * @param {Source} source
+ *   Info about source.
+ * @param {undefined} self
+ *   Nothing (this is used by frameworks that have components, we don’t).
+ * @returns {JSX.Element}
+ *   Element from your framework.
+ *
+ * @typedef {{children?: Array<Child> | Child, node?: Element | MdxJsxFlowElement | MdxJsxTextElement | undefined, [prop: string]: Array<Child> | Child | Element | MdxJsxFlowElement | MdxJsxTextElement | Value | undefined}} Props
+ *   Properties and children.
+ *
+ * @typedef RegularFields
+ *   Configuration.
+ * @property {Partial<Components> | null | undefined} [components]
+ *   Components to use (optional).
+ * @property {CreateEvaluater | null | undefined} [createEvaluater]
+ *   Create an evaluator that turns ESTree ASTs into values (optional).
+ * @property {ElementAttributeNameCase | null | undefined} [elementAttributeNameCase='react']
+ *   Specify casing to use for attribute names (default: `'react'`).
+ * @property {string | null | undefined} [filePath]
+ *   File path to the original source file (optional).
+ *
+ *   Passed in source info to `jsxDEV` when using the automatic runtime with
+ *   `development: true`.
+ * @property {boolean | null | undefined} [ignoreInvalidStyle=false]
+ *   Ignore invalid CSS in `style` props (default: `false`);
+ *   the default behavior is to throw an error.
+ * @property {boolean | null | undefined} [passKeys=true]
+ *   Generate keys to optimize frameworks that support them (default: `true`).
+ *
+ *   > 👉 **Note**: Solid currently fails if keys are passed.
+ * @property {boolean | null | undefined} [passNode=false]
+ *   Pass the hast element node to components (default: `false`).
+ * @property {Space | null | undefined} [space='html']
+ *   Whether `tree` is in the `'html'` or `'svg'` space (default: `'html'`).
+ *
+ *   When an `<svg>` element is found in the HTML space, this package already
+ *   automatically switches to and from the SVG space when entering and exiting
+ *   it.
+ * @property {StylePropertyNameCase | null | undefined} [stylePropertyNameCase='dom']
+ *   Specify casing to use for property names in `style` objects (default:
+ *   `'dom'`).
+ * @property {boolean | null | undefined} [tableCellAlignToStyle=true]
+ *   Turn obsolete `align` props on `td` and `th` into CSS `style` props
+ *   (default: `true`).
+ *
+ * @typedef RuntimeDevelopment
+ *   Runtime fields when development is on.
+ * @property {Fragment} Fragment
+ *   Fragment.
+ * @property {true} development
+ *   Whether to use `jsxDEV` (when on) or `jsx` and `jsxs` (when off).
+ * @property {Jsx | null | undefined} [jsx]
+ *   Dynamic JSX (optional).
+ * @property {JsxDev} jsxDEV
+ *   Development JSX.
+ * @property {Jsx | null | undefined} [jsxs]
+ *   Static JSX (optional).
+ *
+ * @typedef RuntimeProduction
+ *   Runtime fields when development is off.
+ * @property {Fragment} Fragment
+ *   Fragment.
+ * @property {false | null | undefined} [development]
+ *   Whether to use `jsxDEV` (when on) or `jsx` and `jsxs` (when off) (optional).
+ * @property {Jsx} jsx
+ *   Dynamic JSX.
+ * @property {JsxDev | null | undefined} [jsxDEV]
+ *   Development JSX (optional).
+ * @property {Jsx} jsxs
+ *   Static JSX.
+ *
+ * @typedef RuntimeUnknown
+ *   Runtime fields when development might be on or off.
+ * @property {Fragment} Fragment
+ *   Fragment.
+ * @property {boolean} development
+ *   Whether to use `jsxDEV` (when on) or `jsx` and `jsxs` (when off).
+ * @property {Jsx | null | undefined} [jsx]
+ *   Dynamic JSX (optional).
+ * @property {JsxDev | null | undefined} [jsxDEV]
+ *   Development JSX (optional).
+ * @property {Jsx | null | undefined} [jsxs]
+ *   Static JSX (optional).
+ *
+ * @typedef Source
+ *   Info about source.
+ * @property {number | undefined} columnNumber
+ *   Column where thing starts (0-indexed).
+ * @property {string | undefined} fileName
+ *   Name of source file.
+ * @property {number | undefined} lineNumber
+ *   Line where thing starts (1-indexed).
+ *
+ * @typedef {'html' | 'svg'} Space
+ *   Namespace.
+ *
+ *   > 👉 **Note**: hast is not XML.
+ *   > It supports SVG as embedded in HTML.
+ *   > It does not support the features available in XML.
+ *   > Passing SVG might break but fragments of modern SVG should be fine.
+ *   > Use `xast` if you need to support SVG as XML.
+ *
+ * @typedef State
+ *   Info passed around.
+ * @property {unknown} Fragment
+ *   Fragment symbol.
+ * @property {Array<Parents>} ancestors
+ *   Stack of parents.
+ * @property {Partial<Components>} components
+ *   Components to swap.
+ * @property {Create} create
+ *   Create something in development or production.
+ * @property {ElementAttributeNameCase} elementAttributeNameCase
+ *   Casing to use for attribute names.
+ * @property {Evaluater | undefined} evaluater
+ *   Evaluator that turns ESTree ASTs into values.
+ * @property {string | undefined} filePath
+ *   File path.
+ * @property {boolean} ignoreInvalidStyle
+ *   Ignore invalid CSS in `style` props.
+ * @property {boolean} passKeys
+ *   Generate keys to optimize frameworks that support them.
+ * @property {boolean} passNode
+ *   Pass `node` to components.
+ * @property {Schema} schema
+ *   Current schema.
+ * @property {StylePropertyNameCase} stylePropertyNameCase
+ *   Casing to use for property names in `style` objects.
+ * @property {boolean} tableCellAlignToStyle
+ *   Turn obsolete `align` props on `td` and `th` into CSS `style` props.
+ *
+ * @typedef {Record<string, string>} Style
+ *   Style map.
+ *
+ * @typedef {'css' | 'dom'} StylePropertyNameCase
+ *   Casing to use for property names in `style` objects.
+ *
+ *   CSS casing is for example `background-color` and `-webkit-line-clamp`.
+ *   DOM casing is for example `backgroundColor` and `WebkitLineClamp`.
+ *
+ * @typedef {Style | boolean | number | string} Value
+ *   Primitive property value and `Style` map.
+ */
+
+/**
+ * @typedef {RuntimeDevelopment & RegularFields} Development
+ *   Configuration (development).
+ * @typedef {Development | Production | Unknown} Options
+ *   Configuration.
+ * @typedef {RegularFields & RuntimeProduction} Production
+ *   Configuration (production).
+ * @typedef {RegularFields & RuntimeUnknown} Unknown
+ *   Configuration (production or development).
+ */
+
+
+
+
+
+
+
+
+
+
+
+const own = {}.hasOwnProperty
+
+/** @type {Map<string, number>} */
+const emptyMap = new Map()
+
+const cap = /[A-Z]/g
+const dashSomething = /-([a-z])/g
+
+// `react-dom` triggers a warning for *any* white space in tables.
+// To follow GFM, `mdast-util-to-hast` injects line endings between elements.
+// Other tools might do so too, but they don’t do here, so we remove all of
+// that.
+
+// See: <https://github.com/facebook/react/pull/7081>.
+// See: <https://github.com/facebook/react/pull/7515>.
+// See: <https://github.com/remarkjs/remark-react/issues/64>.
+// See: <https://github.com/rehypejs/rehype-react/pull/29>.
+// See: <https://github.com/rehypejs/rehype-react/pull/32>.
+// See: <https://github.com/rehypejs/rehype-react/pull/45>.
+const tableElements = new Set(['table', 'tbody', 'thead', 'tfoot', 'tr'])
+
+const tableCellElement = new Set(['td', 'th'])
+
+const docs = 'https://github.com/syntax-tree/hast-util-to-jsx-runtime'
+
+/**
+ * Transform a hast tree to preact, react, solid, svelte, vue, etc.,
+ * with an automatic JSX runtime.
+ *
+ * @param {Nodes} tree
+ *   Tree to transform.
+ * @param {Options} options
+ *   Configuration (required).
+ * @returns {JSX.Element}
+ *   JSX element.
+ */
+
+function toJsxRuntime(tree, options) {
+  if (!options || options.Fragment === undefined) {
+    throw new TypeError('Expected `Fragment` in options')
+  }
+
+  const filePath = options.filePath || undefined
+  /** @type {Create} */
+  let create
+
+  if (options.development) {
+    if (typeof options.jsxDEV !== 'function') {
+      throw new TypeError(
+        'Expected `jsxDEV` in options when `development: true`'
+      )
+    }
+
+    create = developmentCreate(filePath, options.jsxDEV)
+  } else {
+    if (typeof options.jsx !== 'function') {
+      throw new TypeError('Expected `jsx` in production options')
+    }
+
+    if (typeof options.jsxs !== 'function') {
+      throw new TypeError('Expected `jsxs` in production options')
+    }
+
+    create = productionCreate(filePath, options.jsx, options.jsxs)
+  }
+
+  /** @type {State} */
+  const state = {
+    Fragment: options.Fragment,
+    ancestors: [],
+    components: options.components || {},
+    create,
+    elementAttributeNameCase: options.elementAttributeNameCase || 'react',
+    evaluater: options.createEvaluater ? options.createEvaluater() : undefined,
+    filePath,
+    ignoreInvalidStyle: options.ignoreInvalidStyle || false,
+    passKeys: options.passKeys !== false,
+    passNode: options.passNode || false,
+    schema: options.space === 'svg' ? property_information__WEBPACK_IMPORTED_MODULE_1__/* .svg */ .JW : property_information__WEBPACK_IMPORTED_MODULE_1__/* .html */ .qy,
+    stylePropertyNameCase: options.stylePropertyNameCase || 'dom',
+    tableCellAlignToStyle: options.tableCellAlignToStyle !== false
+  }
+
+  const result = one(state, tree, undefined)
+
+  // JSX element.
+  if (result && typeof result !== 'string') {
+    return result
+  }
+
+  // Text node or something that turned into nothing.
+  return state.create(
+    tree,
+    state.Fragment,
+    {children: result || undefined},
+    undefined
+  )
+}
+
+/**
+ * Transform a node.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {Nodes} node
+ *   Current node.
+ * @param {string | undefined} key
+ *   Key.
+ * @returns {Child | undefined}
+ *   Child, optional.
+ */
+function one(state, node, key) {
+  if (node.type === 'element') {
+    return element(state, node, key)
+  }
+
+  if (node.type === 'mdxFlowExpression' || node.type === 'mdxTextExpression') {
+    return mdxExpression(state, node)
+  }
+
+  if (node.type === 'mdxJsxFlowElement' || node.type === 'mdxJsxTextElement') {
+    return mdxJsxElement(state, node, key)
+  }
+
+  if (node.type === 'mdxjsEsm') {
+    return mdxEsm(state, node)
+  }
+
+  if (node.type === 'root') {
+    return root(state, node, key)
+  }
+
+  if (node.type === 'text') {
+    return text(state, node)
+  }
+}
+
+/**
+ * Handle element.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {Element} node
+ *   Current node.
+ * @param {string | undefined} key
+ *   Key.
+ * @returns {Child | undefined}
+ *   Child, optional.
+ */
+function element(state, node, key) {
+  const parentSchema = state.schema
+  let schema = parentSchema
+
+  if (node.tagName.toLowerCase() === 'svg' && parentSchema.space === 'html') {
+    schema = property_information__WEBPACK_IMPORTED_MODULE_1__/* .svg */ .JW
+    state.schema = schema
+  }
+
+  state.ancestors.push(node)
+
+  const type = findComponentFromName(state, node.tagName, false)
+  const props = createElementProps(state, node)
+  let children = createChildren(state, node)
+
+  if (tableElements.has(node.tagName)) {
+    children = children.filter(function (child) {
+      return typeof child === 'string' ? !(0,hast_util_whitespace__WEBPACK_IMPORTED_MODULE_2__/* .whitespace */ .m)(child) : true
+    })
+  }
+
+  addNode(state, props, type, node)
+  addChildren(props, children)
+
+  // Restore.
+  state.ancestors.pop()
+  state.schema = parentSchema
+
+  return state.create(node, type, props, key)
+}
+
+/**
+ * Handle MDX expression.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {MdxFlowExpression | MdxTextExpression} node
+ *   Current node.
+ * @returns {Child | undefined}
+ *   Child, optional.
+ */
+function mdxExpression(state, node) {
+  if (node.data && node.data.estree && state.evaluater) {
+    const program = node.data.estree
+    const expression = program.body[0]
+    ;(0,devlop__WEBPACK_IMPORTED_MODULE_3__.ok)(expression.type === 'ExpressionStatement')
+
+    // Assume result is a child.
+    return /** @type {Child | undefined} */ (
+      state.evaluater.evaluateExpression(expression.expression)
+    )
+  }
+
+  crashEstree(state, node.position)
+}
+
+/**
+ * Handle MDX ESM.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {MdxjsEsm} node
+ *   Current node.
+ * @returns {Child | undefined}
+ *   Child, optional.
+ */
+function mdxEsm(state, node) {
+  if (node.data && node.data.estree && state.evaluater) {
+    // Assume result is a child.
+    return /** @type {Child | undefined} */ (
+      state.evaluater.evaluateProgram(node.data.estree)
+    )
+  }
+
+  crashEstree(state, node.position)
+}
+
+/**
+ * Handle MDX JSX.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {MdxJsxFlowElement | MdxJsxTextElement} node
+ *   Current node.
+ * @param {string | undefined} key
+ *   Key.
+ * @returns {Child | undefined}
+ *   Child, optional.
+ */
+function mdxJsxElement(state, node, key) {
+  const parentSchema = state.schema
+  let schema = parentSchema
+
+  if (node.name === 'svg' && parentSchema.space === 'html') {
+    schema = property_information__WEBPACK_IMPORTED_MODULE_1__/* .svg */ .JW
+    state.schema = schema
+  }
+
+  state.ancestors.push(node)
+
+  const type =
+    node.name === null
+      ? state.Fragment
+      : findComponentFromName(state, node.name, true)
+  const props = createJsxElementProps(state, node)
+  const children = createChildren(state, node)
+
+  addNode(state, props, type, node)
+  addChildren(props, children)
+
+  // Restore.
+  state.ancestors.pop()
+  state.schema = parentSchema
+
+  return state.create(node, type, props, key)
+}
+
+/**
+ * Handle root.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {Root} node
+ *   Current node.
+ * @param {string | undefined} key
+ *   Key.
+ * @returns {Child | undefined}
+ *   Child, optional.
+ */
+function root(state, node, key) {
+  /** @type {Props} */
+  const props = {}
+
+  addChildren(props, createChildren(state, node))
+
+  return state.create(node, state.Fragment, props, key)
+}
+
+/**
+ * Handle text.
+ *
+ * @param {State} _
+ *   Info passed around.
+ * @param {Text} node
+ *   Current node.
+ * @returns {Child | undefined}
+ *   Child, optional.
+ */
+function text(_, node) {
+  return node.value
+}
+
+/**
+ * Add `node` to props.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {Props} props
+ *   Props.
+ * @param {unknown} type
+ *   Type.
+ * @param {Element | MdxJsxFlowElement | MdxJsxTextElement} node
+ *   Node.
+ * @returns {undefined}
+ *   Nothing.
+ */
+function addNode(state, props, type, node) {
+  // If this is swapped out for a component:
+  if (typeof type !== 'string' && type !== state.Fragment && state.passNode) {
+    props.node = node
+  }
+}
+
+/**
+ * Add children to props.
+ *
+ * @param {Props} props
+ *   Props.
+ * @param {Array<Child>} children
+ *   Children.
+ * @returns {undefined}
+ *   Nothing.
+ */
+function addChildren(props, children) {
+  if (children.length > 0) {
+    const value = children.length > 1 ? children : children[0]
+
+    if (value) {
+      props.children = value
+    }
+  }
+}
+
+/**
+ * @param {string | undefined} _
+ *   Path to file.
+ * @param {Jsx} jsx
+ *   Dynamic.
+ * @param {Jsx} jsxs
+ *   Static.
+ * @returns {Create}
+ *   Create a production element.
+ */
+function productionCreate(_, jsx, jsxs) {
+  return create
+  /** @type {Create} */
+  function create(_, type, props, key) {
+    // Only an array when there are 2 or more children.
+    const isStaticChildren = Array.isArray(props.children)
+    const fn = isStaticChildren ? jsxs : jsx
+    return key ? fn(type, props, key) : fn(type, props)
+  }
+}
+
+/**
+ * @param {string | undefined} filePath
+ *   Path to file.
+ * @param {JsxDev} jsxDEV
+ *   Development.
+ * @returns {Create}
+ *   Create a development element.
+ */
+function developmentCreate(filePath, jsxDEV) {
+  return create
+  /** @type {Create} */
+  function create(node, type, props, key) {
+    // Only an array when there are 2 or more children.
+    const isStaticChildren = Array.isArray(props.children)
+    const point = (0,unist_util_position__WEBPACK_IMPORTED_MODULE_4__/* .pointStart */ .PW)(node)
+    return jsxDEV(
+      type,
+      props,
+      key,
+      isStaticChildren,
+      {
+        columnNumber: point ? point.column - 1 : undefined,
+        fileName: filePath,
+        lineNumber: point ? point.line : undefined
+      },
+      undefined
+    )
+  }
+}
+
+/**
+ * Create props from an element.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {Element} node
+ *   Current element.
+ * @returns {Props}
+ *   Props.
+ */
+function createElementProps(state, node) {
+  /** @type {Props} */
+  const props = {}
+  /** @type {string | undefined} */
+  let alignValue
+  /** @type {string} */
+  let prop
+
+  for (prop in node.properties) {
+    if (prop !== 'children' && own.call(node.properties, prop)) {
+      const result = createProperty(state, prop, node.properties[prop])
+
+      if (result) {
+        const [key, value] = result
+
+        if (
+          state.tableCellAlignToStyle &&
+          key === 'align' &&
+          typeof value === 'string' &&
+          tableCellElement.has(node.tagName)
+        ) {
+          alignValue = value
+        } else {
+          props[key] = value
+        }
+      }
+    }
+  }
+
+  if (alignValue) {
+    // Assume style is an object.
+    const style = /** @type {Style} */ (props.style || (props.style = {}))
+    style[state.stylePropertyNameCase === 'css' ? 'text-align' : 'textAlign'] =
+      alignValue
+  }
+
+  return props
+}
+
+/**
+ * Create props from a JSX element.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {MdxJsxFlowElement | MdxJsxTextElement} node
+ *   Current JSX element.
+ * @returns {Props}
+ *   Props.
+ */
+function createJsxElementProps(state, node) {
+  /** @type {Props} */
+  const props = {}
+
+  for (const attribute of node.attributes) {
+    if (attribute.type === 'mdxJsxExpressionAttribute') {
+      if (attribute.data && attribute.data.estree && state.evaluater) {
+        const program = attribute.data.estree
+        const expression = program.body[0]
+        ;(0,devlop__WEBPACK_IMPORTED_MODULE_3__.ok)(expression.type === 'ExpressionStatement')
+        const objectExpression = expression.expression
+        ;(0,devlop__WEBPACK_IMPORTED_MODULE_3__.ok)(objectExpression.type === 'ObjectExpression')
+        const property = objectExpression.properties[0]
+        ;(0,devlop__WEBPACK_IMPORTED_MODULE_3__.ok)(property.type === 'SpreadElement')
+
+        Object.assign(
+          props,
+          state.evaluater.evaluateExpression(property.argument)
+        )
+      } else {
+        crashEstree(state, node.position)
+      }
+    } else {
+      // For JSX, the author is responsible of passing in the correct values.
+      const name = attribute.name
+      /** @type {unknown} */
+      let value
+
+      if (attribute.value && typeof attribute.value === 'object') {
+        if (
+          attribute.value.data &&
+          attribute.value.data.estree &&
+          state.evaluater
+        ) {
+          const program = attribute.value.data.estree
+          const expression = program.body[0]
+          ;(0,devlop__WEBPACK_IMPORTED_MODULE_3__.ok)(expression.type === 'ExpressionStatement')
+          value = state.evaluater.evaluateExpression(expression.expression)
+        } else {
+          crashEstree(state, node.position)
+        }
+      } else {
+        value = attribute.value === null ? true : attribute.value
+      }
+
+      // Assume a prop.
+      props[name] = /** @type {Props[keyof Props]} */ (value)
+    }
+  }
+
+  return props
+}
+
+/**
+ * Create children.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {Parents} node
+ *   Current element.
+ * @returns {Array<Child>}
+ *   Children.
+ */
+function createChildren(state, node) {
+  /** @type {Array<Child>} */
+  const children = []
+  let index = -1
+  /** @type {Map<string, number>} */
+  // Note: test this when Solid doesn’t want to merge my upcoming PR.
+  /* c8 ignore next */
+  const countsByName = state.passKeys ? new Map() : emptyMap
+
+  while (++index < node.children.length) {
+    const child = node.children[index]
+    /** @type {string | undefined} */
+    let key
+
+    if (state.passKeys) {
+      const name =
+        child.type === 'element'
+          ? child.tagName
+          : child.type === 'mdxJsxFlowElement' ||
+              child.type === 'mdxJsxTextElement'
+            ? child.name
+            : undefined
+
+      if (name) {
+        const count = countsByName.get(name) || 0
+        key = name + '-' + count
+        countsByName.set(name, count + 1)
+      }
+    }
+
+    const result = one(state, child, key)
+    if (result !== undefined) children.push(result)
+  }
+
+  return children
+}
+
+/**
+ * Handle a property.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {string} prop
+ *   Key.
+ * @param {Array<number | string> | boolean | number | string | null | undefined} value
+ *   hast property value.
+ * @returns {Field | undefined}
+ *   Field for runtime, optional.
+ */
+function createProperty(state, prop, value) {
+  const info = (0,property_information__WEBPACK_IMPORTED_MODULE_5__/* .find */ .I)(state.schema, prop)
+
+  // Ignore nullish and `NaN` values.
+  if (
+    value === null ||
+    value === undefined ||
+    (typeof value === 'number' && Number.isNaN(value))
+  ) {
+    return
+  }
+
+  if (Array.isArray(value)) {
+    // Accept `array`.
+    // Most props are space-separated.
+    value = info.commaSeparated ? (0,comma_separated_tokens__WEBPACK_IMPORTED_MODULE_6__/* .stringify */ .A)(value) : (0,space_separated_tokens__WEBPACK_IMPORTED_MODULE_7__/* .stringify */ .A)(value)
+  }
+
+  // React only accepts `style` as object.
+  if (info.property === 'style') {
+    let styleObject =
+      typeof value === 'object' ? value : parseStyle(state, String(value))
+
+    if (state.stylePropertyNameCase === 'css') {
+      styleObject = transformStylesToCssCasing(styleObject)
+    }
+
+    return ['style', styleObject]
+  }
+
+  return [
+    state.elementAttributeNameCase === 'react' && info.space
+      ? property_information__WEBPACK_IMPORTED_MODULE_8__/* .hastToReact */ .H[info.property] || info.property
+      : info.attribute,
+    value
+  ]
+}
+
+/**
+ * Parse a CSS declaration to an object.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {string} value
+ *   CSS declarations.
+ * @returns {Style}
+ *   Properties.
+ * @throws
+ *   Throws `VFileMessage` when CSS cannot be parsed.
+ */
+function parseStyle(state, value) {
+  /** @type {Style} */
+  const result = {}
+
+  try {
+    // @ts-expect-error: `style-to-object` types are broken.
+    ;(0,style_to_object__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)(value, replacer)
+  } catch (error) {
+    if (!state.ignoreInvalidStyle) {
+      const cause = /** @type {Error} */ (error)
+      const message = new vfile_message__WEBPACK_IMPORTED_MODULE_9__/* .VFileMessage */ .o('Cannot parse `style` attribute', {
+        ancestors: state.ancestors,
+        cause,
+        ruleId: 'style',
+        source: 'hast-util-to-jsx-runtime'
+      })
+      message.file = state.filePath || undefined
+      message.url = docs + '#cannot-parse-style-attribute'
+
+      throw message
+    }
+  }
+
+  return result
+
+  /**
+   * Add a CSS property (normal, so with dashes) to `result` as a DOM CSS
+   * property.
+   *
+   * @param {string} name
+   *   Key.
+   * @param {string} value
+   *   Value
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function replacer(name, value) {
+    let key = name
+
+    if (key.slice(0, 2) !== '--') {
+      if (key.slice(0, 4) === '-ms-') key = 'ms-' + key.slice(4)
+      key = key.replace(dashSomething, toCamel)
+    }
+
+    result[key] = value
+  }
+}
+
+/**
+ * Create a JSX name from a string.
+ *
+ * @param {State} state
+ *   To do.
+ * @param {string} name
+ *   Name.
+ * @param {boolean} allowExpression
+ *   Allow member expressions and identifiers.
+ * @returns {unknown}
+ *   To do.
+ */
+function findComponentFromName(state, name, allowExpression) {
+  /** @type {Identifier | Literal | MemberExpression} */
+  let result
+
+  if (!allowExpression) {
+    result = {type: 'Literal', value: name}
+  } else if (name.includes('.')) {
+    const identifiers = name.split('.')
+    let index = -1
+    /** @type {Identifier | Literal | MemberExpression | undefined} */
+    let node
+
+    while (++index < identifiers.length) {
+      /** @type {Identifier | Literal} */
+      const prop = (0,estree_util_is_identifier_name__WEBPACK_IMPORTED_MODULE_10__/* .name */ .UU)(identifiers[index])
+        ? {type: 'Identifier', name: identifiers[index]}
+        : {type: 'Literal', value: identifiers[index]}
+      node = node
+        ? {
+            type: 'MemberExpression',
+            object: node,
+            property: prop,
+            computed: Boolean(index && prop.type === 'Literal'),
+            optional: false
+          }
+        : prop
+    }
+
+    (0,devlop__WEBPACK_IMPORTED_MODULE_3__.ok)(node, 'always a result')
+    result = node
+  } else {
+    result =
+      (0,estree_util_is_identifier_name__WEBPACK_IMPORTED_MODULE_10__/* .name */ .UU)(name) && !/^[a-z]/.test(name)
+        ? {type: 'Identifier', name}
+        : {type: 'Literal', value: name}
+  }
+
+  // Only literals can be passed in `components` currently.
+  // No identifiers / member expressions.
+  if (result.type === 'Literal') {
+    const name = /** @type {keyof JSX.IntrinsicElements} */ (result.value)
+
+    return own.call(state.components, name) ? state.components[name] : name
+  }
+
+  // Assume component.
+  if (state.evaluater) {
+    return state.evaluater.evaluateExpression(result)
+  }
+
+  crashEstree(state)
+}
+
+/**
+ * @param {State} state
+ * @param {Position | undefined} [place]
+ * @returns {never}
+ */
+function crashEstree(state, place) {
+  const message = new vfile_message__WEBPACK_IMPORTED_MODULE_9__/* .VFileMessage */ .o(
+    'Cannot handle MDX estrees without `createEvaluater`',
+    {
+      ancestors: state.ancestors,
+      place,
+      ruleId: 'mdx-estree',
+      source: 'hast-util-to-jsx-runtime'
+    }
+  )
+  message.file = state.filePath || undefined
+  message.url = docs + '#cannot-handle-mdx-estrees-without-createevaluater'
+
+  throw message
+}
+
+/**
+ * Transform a DOM casing style object to a CSS casing style object.
+ *
+ * @param {Style} domCasing
+ * @returns {Style}
+ */
+function transformStylesToCssCasing(domCasing) {
+  /** @type {Style} */
+  const cssCasing = {}
+  /** @type {string} */
+  let from
+
+  for (from in domCasing) {
+    if (own.call(domCasing, from)) {
+      cssCasing[transformStyleToCssCasing(from)] = domCasing[from]
+    }
+  }
+
+  return cssCasing
+}
+
+/**
+ * Transform a DOM casing style field to a CSS casing style field.
+ *
+ * @param {string} from
+ * @returns {string}
+ */
+function transformStyleToCssCasing(from) {
+  let to = from.replace(cap, toDash)
+  // Handle `ms-xxx` -> `-ms-xxx`.
+  if (to.slice(0, 3) === 'ms-') to = '-' + to
+  return to
+}
+
+/**
+ * Make `$1` capitalized.
+ *
+ * @param {string} _
+ *   Whatever.
+ * @param {string} $1
+ *   Single ASCII alphabetical.
+ * @returns {string}
+ *   Capitalized `$1`.
+ */
+function toCamel(_, $1) {
+  return $1.toUpperCase()
+}
+
+/**
+ * Make `$0` dash cased.
+ *
+ * @param {string} $0
+ *   Capitalized ASCII leter.
+ * @returns {string}
+ *   Dash and lower letter.
+ */
+function toDash($0) {
+  return '-' + $0.toLowerCase()
+}
+
+
+/***/ }),
+
+/***/ 29119:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   PW: () => (/* binding */ pointStart)
+/* harmony export */ });
+/* unused harmony exports pointEnd, position */
+/**
+ * @typedef {import('unist').Node} Node
+ * @typedef {import('unist').Point} Point
+ * @typedef {import('unist').Position} Position
+ */
+
+/**
+ * @typedef NodeLike
+ * @property {string} type
+ * @property {PositionLike | null | undefined} [position]
+ *
+ * @typedef PositionLike
+ * @property {PointLike | null | undefined} [start]
+ * @property {PointLike | null | undefined} [end]
+ *
+ * @typedef PointLike
+ * @property {number | null | undefined} [line]
+ * @property {number | null | undefined} [column]
+ * @property {number | null | undefined} [offset]
+ */
+
+/**
+ * Get the ending point of `node`.
+ *
+ * @param node
+ *   Node.
+ * @returns
+ *   Point.
+ */
+const pointEnd = point('end')
+
+/**
+ * Get the starting point of `node`.
+ *
+ * @param node
+ *   Node.
+ * @returns
+ *   Point.
+ */
+const pointStart = point('start')
+
+/**
+ * Get the positional info of `node`.
+ *
+ * @param {'end' | 'start'} type
+ *   Side.
+ * @returns
+ *   Getter.
+ */
+function point(type) {
+  return point
+
+  /**
+   * Get the point info of `node` at a bound side.
+   *
+   * @param {Node | NodeLike | null | undefined} [node]
+   * @returns {Point | undefined}
+   */
+  function point(node) {
+    const point = (node && node.position && node.position[type]) || {}
+
+    if (
+      typeof point.line === 'number' &&
+      point.line > 0 &&
+      typeof point.column === 'number' &&
+      point.column > 0
+    ) {
+      return {
+        line: point.line,
+        column: point.column,
+        offset:
+          typeof point.offset === 'number' && point.offset > -1
+            ? point.offset
+            : undefined
+      }
+    }
+  }
+}
+
+/**
+ * Get the positional info of `node`.
+ *
+ * @param {Node | NodeLike | null | undefined} [node]
+ *   Node.
+ * @returns {Position | undefined}
+ *   Position.
+ */
+function position(node) {
+  const start = pointStart(node)
+  const end = pointEnd(node)
+
+  if (start && end) {
+    return {start, end}
+  }
+}
+
+
+/***/ }),
+
+/***/ 66296:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   m: () => (/* binding */ whitespace)
+/* harmony export */ });
+/**
+ * @typedef {import('hast').Nodes} Nodes
+ */
+
+// HTML whitespace expression.
+// See <https://infra.spec.whatwg.org/#ascii-whitespace>.
+const re = /[ \t\n\f\r]/g
+
+/**
+ * Check if the given value is *inter-element whitespace*.
+ *
+ * @param {Nodes | string} thing
+ *   Thing to check (`Node` or `string`).
+ * @returns {boolean}
+ *   Whether the `value` is inter-element whitespace (`boolean`): consisting of
+ *   zero or more of space, tab (`\t`), line feed (`\n`), carriage return
+ *   (`\r`), or form feed (`\f`); if a node is passed it must be a `Text` node,
+ *   whose `value` field is checked.
+ */
+function whitespace(thing) {
+  return typeof thing === 'object'
+    ? thing.type === 'text'
+      ? empty(thing.value)
+      : false
+    : empty(thing)
+}
+
+/**
+ * @param {string} value
+ * @returns {boolean}
+ */
+function empty(value) {
+  return value.replace(re, '') === ''
+}
+
+
+/***/ }),
+
+/***/ 85124:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   $: () => (/* binding */ urlAttributes)
+/* harmony export */ });
+/**
+ * HTML URL properties.
+ *
+ * Each key is a property name and each value is a list of tag names it applies
+ * to or `null` if it applies to all elements.
+ *
+ * @type {Record<string, Array<string> | null>}
+ */
+const urlAttributes = {
+  action: ['form'],
+  cite: ['blockquote', 'del', 'ins', 'q'],
+  data: ['object'],
+  formAction: ['button', 'input'],
+  href: ['a', 'area', 'base', 'link'],
+  icon: ['menuitem'],
+  itemId: null,
+  manifest: ['html'],
+  ping: ['a', 'area'],
+  poster: ['video'],
+  src: [
+    'audio',
+    'embed',
+    'iframe',
+    'img',
+    'input',
+    'script',
+    'source',
+    'track',
+    'video'
+  ]
+}
+
+
+/***/ }),
+
+/***/ 90766:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Y: () => (/* binding */ fromMarkdown)
+/* harmony export */ });
+/* harmony import */ var mdast_util_to_string__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(66400);
+/* harmony import */ var micromark__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(68975);
+/* harmony import */ var micromark__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(25799);
+/* harmony import */ var micromark__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(92964);
+/* harmony import */ var micromark_util_decode_numeric_character_reference__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(99896);
+/* harmony import */ var micromark_util_decode_string__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(47938);
+/* harmony import */ var micromark_util_normalize_identifier__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(26243);
+/* harmony import */ var decode_named_character_reference__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(75731);
+/* harmony import */ var unist_util_stringify_position__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(29558);
+/**
+ * @typedef {import('mdast').Break} Break
+ * @typedef {import('mdast').Blockquote} Blockquote
+ * @typedef {import('mdast').Code} Code
+ * @typedef {import('mdast').Definition} Definition
+ * @typedef {import('mdast').Emphasis} Emphasis
+ * @typedef {import('mdast').Heading} Heading
+ * @typedef {import('mdast').Html} Html
+ * @typedef {import('mdast').Image} Image
+ * @typedef {import('mdast').InlineCode} InlineCode
+ * @typedef {import('mdast').Link} Link
+ * @typedef {import('mdast').List} List
+ * @typedef {import('mdast').ListItem} ListItem
+ * @typedef {import('mdast').Nodes} Nodes
+ * @typedef {import('mdast').Paragraph} Paragraph
+ * @typedef {import('mdast').Parent} Parent
+ * @typedef {import('mdast').PhrasingContent} PhrasingContent
+ * @typedef {import('mdast').ReferenceType} ReferenceType
+ * @typedef {import('mdast').Root} Root
+ * @typedef {import('mdast').Strong} Strong
+ * @typedef {import('mdast').Text} Text
+ * @typedef {import('mdast').ThematicBreak} ThematicBreak
+ *
+ * @typedef {import('micromark-util-types').Encoding} Encoding
+ * @typedef {import('micromark-util-types').Event} Event
+ * @typedef {import('micromark-util-types').ParseOptions} ParseOptions
+ * @typedef {import('micromark-util-types').Token} Token
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ * @typedef {import('micromark-util-types').Value} Value
+ *
+ * @typedef {import('unist').Point} Point
+ *
+ * @typedef {import('../index.js').CompileData} CompileData
+ */
+
+/**
+ * @typedef {Omit<Parent, 'children' | 'type'> & {type: 'fragment', children: Array<PhrasingContent>}} Fragment
+ */
+
+/**
+ * @callback Transform
+ *   Extra transform, to change the AST afterwards.
+ * @param {Root} tree
+ *   Tree to transform.
+ * @returns {Root | null | undefined | void}
+ *   New tree or nothing (in which case the current tree is used).
+ *
+ * @callback Handle
+ *   Handle a token.
+ * @param {CompileContext} this
+ *   Context.
+ * @param {Token} token
+ *   Current token.
+ * @returns {undefined | void}
+ *   Nothing.
+ *
+ * @typedef {Record<string, Handle>} Handles
+ *   Token types mapping to handles
+ *
+ * @callback OnEnterError
+ *   Handle the case where the `right` token is open, but it is closed (by the
+ *   `left` token) or because we reached the end of the document.
+ * @param {Omit<CompileContext, 'sliceSerialize'>} this
+ *   Context.
+ * @param {Token | undefined} left
+ *   Left token.
+ * @param {Token} right
+ *   Right token.
+ * @returns {undefined}
+ *   Nothing.
+ *
+ * @callback OnExitError
+ *   Handle the case where the `right` token is open but it is closed by
+ *   exiting the `left` token.
+ * @param {Omit<CompileContext, 'sliceSerialize'>} this
+ *   Context.
+ * @param {Token} left
+ *   Left token.
+ * @param {Token} right
+ *   Right token.
+ * @returns {undefined}
+ *   Nothing.
+ *
+ * @typedef {[Token, OnEnterError | undefined]} TokenTuple
+ *   Open token on the stack, with an optional error handler for when
+ *   that token isn’t closed properly.
+ */
+
+/**
+ * @typedef Config
+ *   Configuration.
+ *
+ *   We have our defaults, but extensions will add more.
+ * @property {Array<string>} canContainEols
+ *   Token types where line endings are used.
+ * @property {Handles} enter
+ *   Opening handles.
+ * @property {Handles} exit
+ *   Closing handles.
+ * @property {Array<Transform>} transforms
+ *   Tree transforms.
+ *
+ * @typedef {Partial<Config>} Extension
+ *   Change how markdown tokens from micromark are turned into mdast.
+ *
+ * @typedef CompileContext
+ *   mdast compiler context.
+ * @property {Array<Fragment | Nodes>} stack
+ *   Stack of nodes.
+ * @property {Array<TokenTuple>} tokenStack
+ *   Stack of tokens.
+ * @property {(this: CompileContext) => undefined} buffer
+ *   Capture some of the output data.
+ * @property {(this: CompileContext) => string} resume
+ *   Stop capturing and access the output data.
+ * @property {(this: CompileContext, node: Nodes, token: Token, onError?: OnEnterError) => undefined} enter
+ *   Enter a node.
+ * @property {(this: CompileContext, token: Token, onError?: OnExitError) => undefined} exit
+ *   Exit a node.
+ * @property {TokenizeContext['sliceSerialize']} sliceSerialize
+ *   Get the string value of a token.
+ * @property {Config} config
+ *   Configuration.
+ * @property {CompileData} data
+ *   Info passed around; key/value store.
+ *
+ * @typedef FromMarkdownOptions
+ *   Configuration for how to build mdast.
+ * @property {Array<Extension | Array<Extension>> | null | undefined} [mdastExtensions]
+ *   Extensions for this utility to change how tokens are turned into a tree.
+ *
+ * @typedef {ParseOptions & FromMarkdownOptions} Options
+ *   Configuration.
+ */
+
+
+
+
+
+
+
+
+const own = {}.hasOwnProperty
+
+/**
+ * Turn markdown into a syntax tree.
+ *
+ * @overload
+ * @param {Value} value
+ * @param {Encoding | null | undefined} [encoding]
+ * @param {Options | null | undefined} [options]
+ * @returns {Root}
+ *
+ * @overload
+ * @param {Value} value
+ * @param {Options | null | undefined} [options]
+ * @returns {Root}
+ *
+ * @param {Value} value
+ *   Markdown to parse.
+ * @param {Encoding | Options | null | undefined} [encoding]
+ *   Character encoding for when `value` is `Buffer`.
+ * @param {Options | null | undefined} [options]
+ *   Configuration.
+ * @returns {Root}
+ *   mdast tree.
+ */
+function fromMarkdown(value, encoding, options) {
+  if (typeof encoding !== 'string') {
+    options = encoding
+    encoding = undefined
+  }
+  return compiler(options)(
+    (0,micromark__WEBPACK_IMPORTED_MODULE_0__/* .postprocess */ ._)(
+      (0,micromark__WEBPACK_IMPORTED_MODULE_1__/* .parse */ .q)(options).document().write((0,micromark__WEBPACK_IMPORTED_MODULE_2__/* .preprocess */ .v)()(value, encoding, true))
+    )
+  )
+}
+
+/**
+ * Note this compiler only understand complete buffering, not streaming.
+ *
+ * @param {Options | null | undefined} [options]
+ */
+function compiler(options) {
+  /** @type {Config} */
+  const config = {
+    transforms: [],
+    canContainEols: ['emphasis', 'fragment', 'heading', 'paragraph', 'strong'],
+    enter: {
+      autolink: opener(link),
+      autolinkProtocol: onenterdata,
+      autolinkEmail: onenterdata,
+      atxHeading: opener(heading),
+      blockQuote: opener(blockQuote),
+      characterEscape: onenterdata,
+      characterReference: onenterdata,
+      codeFenced: opener(codeFlow),
+      codeFencedFenceInfo: buffer,
+      codeFencedFenceMeta: buffer,
+      codeIndented: opener(codeFlow, buffer),
+      codeText: opener(codeText, buffer),
+      codeTextData: onenterdata,
+      data: onenterdata,
+      codeFlowValue: onenterdata,
+      definition: opener(definition),
+      definitionDestinationString: buffer,
+      definitionLabelString: buffer,
+      definitionTitleString: buffer,
+      emphasis: opener(emphasis),
+      hardBreakEscape: opener(hardBreak),
+      hardBreakTrailing: opener(hardBreak),
+      htmlFlow: opener(html, buffer),
+      htmlFlowData: onenterdata,
+      htmlText: opener(html, buffer),
+      htmlTextData: onenterdata,
+      image: opener(image),
+      label: buffer,
+      link: opener(link),
+      listItem: opener(listItem),
+      listItemValue: onenterlistitemvalue,
+      listOrdered: opener(list, onenterlistordered),
+      listUnordered: opener(list),
+      paragraph: opener(paragraph),
+      reference: onenterreference,
+      referenceString: buffer,
+      resourceDestinationString: buffer,
+      resourceTitleString: buffer,
+      setextHeading: opener(heading),
+      strong: opener(strong),
+      thematicBreak: opener(thematicBreak)
+    },
+    exit: {
+      atxHeading: closer(),
+      atxHeadingSequence: onexitatxheadingsequence,
+      autolink: closer(),
+      autolinkEmail: onexitautolinkemail,
+      autolinkProtocol: onexitautolinkprotocol,
+      blockQuote: closer(),
+      characterEscapeValue: onexitdata,
+      characterReferenceMarkerHexadecimal: onexitcharacterreferencemarker,
+      characterReferenceMarkerNumeric: onexitcharacterreferencemarker,
+      characterReferenceValue: onexitcharacterreferencevalue,
+      codeFenced: closer(onexitcodefenced),
+      codeFencedFence: onexitcodefencedfence,
+      codeFencedFenceInfo: onexitcodefencedfenceinfo,
+      codeFencedFenceMeta: onexitcodefencedfencemeta,
+      codeFlowValue: onexitdata,
+      codeIndented: closer(onexitcodeindented),
+      codeText: closer(onexitcodetext),
+      codeTextData: onexitdata,
+      data: onexitdata,
+      definition: closer(),
+      definitionDestinationString: onexitdefinitiondestinationstring,
+      definitionLabelString: onexitdefinitionlabelstring,
+      definitionTitleString: onexitdefinitiontitlestring,
+      emphasis: closer(),
+      hardBreakEscape: closer(onexithardbreak),
+      hardBreakTrailing: closer(onexithardbreak),
+      htmlFlow: closer(onexithtmlflow),
+      htmlFlowData: onexitdata,
+      htmlText: closer(onexithtmltext),
+      htmlTextData: onexitdata,
+      image: closer(onexitimage),
+      label: onexitlabel,
+      labelText: onexitlabeltext,
+      lineEnding: onexitlineending,
+      link: closer(onexitlink),
+      listItem: closer(),
+      listOrdered: closer(),
+      listUnordered: closer(),
+      paragraph: closer(),
+      referenceString: onexitreferencestring,
+      resourceDestinationString: onexitresourcedestinationstring,
+      resourceTitleString: onexitresourcetitlestring,
+      resource: onexitresource,
+      setextHeading: closer(onexitsetextheading),
+      setextHeadingLineSequence: onexitsetextheadinglinesequence,
+      setextHeadingText: onexitsetextheadingtext,
+      strong: closer(),
+      thematicBreak: closer()
+    }
+  }
+  configure(config, (options || {}).mdastExtensions || [])
+
+  /** @type {CompileData} */
+  const data = {}
+  return compile
+
+  /**
+   * Turn micromark events into an mdast tree.
+   *
+   * @param {Array<Event>} events
+   *   Events.
+   * @returns {Root}
+   *   mdast tree.
+   */
+  function compile(events) {
+    /** @type {Root} */
+    let tree = {
+      type: 'root',
+      children: []
+    }
+    /** @type {Omit<CompileContext, 'sliceSerialize'>} */
+    const context = {
+      stack: [tree],
+      tokenStack: [],
+      config,
+      enter,
+      exit,
+      buffer,
+      resume,
+      data
+    }
+    /** @type {Array<number>} */
+    const listStack = []
+    let index = -1
+    while (++index < events.length) {
+      // We preprocess lists to add `listItem` tokens, and to infer whether
+      // items the list itself are spread out.
+      if (
+        events[index][1].type === 'listOrdered' ||
+        events[index][1].type === 'listUnordered'
+      ) {
+        if (events[index][0] === 'enter') {
+          listStack.push(index)
+        } else {
+          const tail = listStack.pop()
+          index = prepareList(events, tail, index)
+        }
+      }
+    }
+    index = -1
+    while (++index < events.length) {
+      const handler = config[events[index][0]]
+      if (own.call(handler, events[index][1].type)) {
+        handler[events[index][1].type].call(
+          Object.assign(
+            {
+              sliceSerialize: events[index][2].sliceSerialize
+            },
+            context
+          ),
+          events[index][1]
+        )
+      }
+    }
+
+    // Handle tokens still being open.
+    if (context.tokenStack.length > 0) {
+      const tail = context.tokenStack[context.tokenStack.length - 1]
+      const handler = tail[1] || defaultOnError
+      handler.call(context, undefined, tail[0])
+    }
+
+    // Figure out `root` position.
+    tree.position = {
+      start: point(
+        events.length > 0
+          ? events[0][1].start
+          : {
+              line: 1,
+              column: 1,
+              offset: 0
+            }
+      ),
+      end: point(
+        events.length > 0
+          ? events[events.length - 2][1].end
+          : {
+              line: 1,
+              column: 1,
+              offset: 0
+            }
+      )
+    }
+
+    // Call transforms.
+    index = -1
+    while (++index < config.transforms.length) {
+      tree = config.transforms[index](tree) || tree
+    }
+    return tree
+  }
+
+  /**
+   * @param {Array<Event>} events
+   * @param {number} start
+   * @param {number} length
+   * @returns {number}
+   */
+  function prepareList(events, start, length) {
+    let index = start - 1
+    let containerBalance = -1
+    let listSpread = false
+    /** @type {Token | undefined} */
+    let listItem
+    /** @type {number | undefined} */
+    let lineIndex
+    /** @type {number | undefined} */
+    let firstBlankLineIndex
+    /** @type {boolean | undefined} */
+    let atMarker
+    while (++index <= length) {
+      const event = events[index]
+      switch (event[1].type) {
+        case 'listUnordered':
+        case 'listOrdered':
+        case 'blockQuote': {
+          if (event[0] === 'enter') {
+            containerBalance++
+          } else {
+            containerBalance--
+          }
+          atMarker = undefined
+          break
+        }
+        case 'lineEndingBlank': {
+          if (event[0] === 'enter') {
+            if (
+              listItem &&
+              !atMarker &&
+              !containerBalance &&
+              !firstBlankLineIndex
+            ) {
+              firstBlankLineIndex = index
+            }
+            atMarker = undefined
+          }
+          break
+        }
+        case 'linePrefix':
+        case 'listItemValue':
+        case 'listItemMarker':
+        case 'listItemPrefix':
+        case 'listItemPrefixWhitespace': {
+          // Empty.
+
+          break
+        }
+        default: {
+          atMarker = undefined
+        }
+      }
+      if (
+        (!containerBalance &&
+          event[0] === 'enter' &&
+          event[1].type === 'listItemPrefix') ||
+        (containerBalance === -1 &&
+          event[0] === 'exit' &&
+          (event[1].type === 'listUnordered' ||
+            event[1].type === 'listOrdered'))
+      ) {
+        if (listItem) {
+          let tailIndex = index
+          lineIndex = undefined
+          while (tailIndex--) {
+            const tailEvent = events[tailIndex]
+            if (
+              tailEvent[1].type === 'lineEnding' ||
+              tailEvent[1].type === 'lineEndingBlank'
+            ) {
+              if (tailEvent[0] === 'exit') continue
+              if (lineIndex) {
+                events[lineIndex][1].type = 'lineEndingBlank'
+                listSpread = true
+              }
+              tailEvent[1].type = 'lineEnding'
+              lineIndex = tailIndex
+            } else if (
+              tailEvent[1].type === 'linePrefix' ||
+              tailEvent[1].type === 'blockQuotePrefix' ||
+              tailEvent[1].type === 'blockQuotePrefixWhitespace' ||
+              tailEvent[1].type === 'blockQuoteMarker' ||
+              tailEvent[1].type === 'listItemIndent'
+            ) {
+              // Empty
+            } else {
+              break
+            }
+          }
+          if (
+            firstBlankLineIndex &&
+            (!lineIndex || firstBlankLineIndex < lineIndex)
+          ) {
+            listItem._spread = true
+          }
+
+          // Fix position.
+          listItem.end = Object.assign(
+            {},
+            lineIndex ? events[lineIndex][1].start : event[1].end
+          )
+          events.splice(lineIndex || index, 0, ['exit', listItem, event[2]])
+          index++
+          length++
+        }
+
+        // Create a new list item.
+        if (event[1].type === 'listItemPrefix') {
+          /** @type {Token} */
+          const item = {
+            type: 'listItem',
+            _spread: false,
+            start: Object.assign({}, event[1].start),
+            // @ts-expect-error: we’ll add `end` in a second.
+            end: undefined
+          }
+          listItem = item
+          events.splice(index, 0, ['enter', item, event[2]])
+          index++
+          length++
+          firstBlankLineIndex = undefined
+          atMarker = true
+        }
+      }
+    }
+    events[start][1]._spread = listSpread
+    return length
+  }
+
+  /**
+   * Create an opener handle.
+   *
+   * @param {(token: Token) => Nodes} create
+   *   Create a node.
+   * @param {Handle | undefined} [and]
+   *   Optional function to also run.
+   * @returns {Handle}
+   *   Handle.
+   */
+  function opener(create, and) {
+    return open
+
+    /**
+     * @this {CompileContext}
+     * @param {Token} token
+     * @returns {undefined}
+     */
+    function open(token) {
+      enter.call(this, create(token), token)
+      if (and) and.call(this, token)
+    }
+  }
+
+  /**
+   * @this {CompileContext}
+   * @returns {undefined}
+   */
+  function buffer() {
+    this.stack.push({
+      type: 'fragment',
+      children: []
+    })
+  }
+
+  /**
+   * @this {CompileContext}
+   *   Context.
+   * @param {Nodes} node
+   *   Node to enter.
+   * @param {Token} token
+   *   Corresponding token.
+   * @param {OnEnterError | undefined} [errorHandler]
+   *   Handle the case where this token is open, but it is closed by something else.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function enter(node, token, errorHandler) {
+    const parent = this.stack[this.stack.length - 1]
+    /** @type {Array<Nodes>} */
+    const siblings = parent.children
+    siblings.push(node)
+    this.stack.push(node)
+    this.tokenStack.push([token, errorHandler])
+    node.position = {
+      start: point(token.start),
+      // @ts-expect-error: `end` will be patched later.
+      end: undefined
+    }
+  }
+
+  /**
+   * Create a closer handle.
+   *
+   * @param {Handle | undefined} [and]
+   *   Optional function to also run.
+   * @returns {Handle}
+   *   Handle.
+   */
+  function closer(and) {
+    return close
+
+    /**
+     * @this {CompileContext}
+     * @param {Token} token
+     * @returns {undefined}
+     */
+    function close(token) {
+      if (and) and.call(this, token)
+      exit.call(this, token)
+    }
+  }
+
+  /**
+   * @this {CompileContext}
+   *   Context.
+   * @param {Token} token
+   *   Corresponding token.
+   * @param {OnExitError | undefined} [onExitError]
+   *   Handle the case where another token is open.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function exit(token, onExitError) {
+    const node = this.stack.pop()
+    const open = this.tokenStack.pop()
+    if (!open) {
+      throw new Error(
+        'Cannot close `' +
+          token.type +
+          '` (' +
+          (0,unist_util_stringify_position__WEBPACK_IMPORTED_MODULE_3__/* .stringifyPosition */ .L)({
+            start: token.start,
+            end: token.end
+          }) +
+          '): it’s not open'
+      )
+    } else if (open[0].type !== token.type) {
+      if (onExitError) {
+        onExitError.call(this, token, open[0])
+      } else {
+        const handler = open[1] || defaultOnError
+        handler.call(this, token, open[0])
+      }
+    }
+    node.position.end = point(token.end)
+  }
+
+  /**
+   * @this {CompileContext}
+   * @returns {string}
+   */
+  function resume() {
+    return (0,mdast_util_to_string__WEBPACK_IMPORTED_MODULE_4__/* .toString */ .d)(this.stack.pop())
+  }
+
+  //
+  // Handlers.
+  //
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+  function onenterlistordered() {
+    this.data.expectingFirstListItemValue = true
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+  function onenterlistitemvalue(token) {
+    if (this.data.expectingFirstListItemValue) {
+      const ancestor = this.stack[this.stack.length - 2]
+      ancestor.start = Number.parseInt(this.sliceSerialize(token), 10)
+      this.data.expectingFirstListItemValue = undefined
+    }
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+  function onexitcodefencedfenceinfo() {
+    const data = this.resume()
+    const node = this.stack[this.stack.length - 1]
+    node.lang = data
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+  function onexitcodefencedfencemeta() {
+    const data = this.resume()
+    const node = this.stack[this.stack.length - 1]
+    node.meta = data
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+  function onexitcodefencedfence() {
+    // Exit if this is the closing fence.
+    if (this.data.flowCodeInside) return
+    this.buffer()
+    this.data.flowCodeInside = true
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+  function onexitcodefenced() {
+    const data = this.resume()
+    const node = this.stack[this.stack.length - 1]
+    node.value = data.replace(/^(\r?\n|\r)|(\r?\n|\r)$/g, '')
+    this.data.flowCodeInside = undefined
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+  function onexitcodeindented() {
+    const data = this.resume()
+    const node = this.stack[this.stack.length - 1]
+    node.value = data.replace(/(\r?\n|\r)$/g, '')
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+  function onexitdefinitionlabelstring(token) {
+    const label = this.resume()
+    const node = this.stack[this.stack.length - 1]
+    node.label = label
+    node.identifier = (0,micromark_util_normalize_identifier__WEBPACK_IMPORTED_MODULE_5__/* .normalizeIdentifier */ .B)(
+      this.sliceSerialize(token)
+    ).toLowerCase()
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+  function onexitdefinitiontitlestring() {
+    const data = this.resume()
+    const node = this.stack[this.stack.length - 1]
+    node.title = data
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+  function onexitdefinitiondestinationstring() {
+    const data = this.resume()
+    const node = this.stack[this.stack.length - 1]
+    node.url = data
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+  function onexitatxheadingsequence(token) {
+    const node = this.stack[this.stack.length - 1]
+    if (!node.depth) {
+      const depth = this.sliceSerialize(token).length
+      node.depth = depth
+    }
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+  function onexitsetextheadingtext() {
+    this.data.setextHeadingSlurpLineEnding = true
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+  function onexitsetextheadinglinesequence(token) {
+    const node = this.stack[this.stack.length - 1]
+    node.depth = this.sliceSerialize(token).codePointAt(0) === 61 ? 1 : 2
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+  function onexitsetextheading() {
+    this.data.setextHeadingSlurpLineEnding = undefined
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+
+  function onenterdata(token) {
+    const node = this.stack[this.stack.length - 1]
+    /** @type {Array<Nodes>} */
+    const siblings = node.children
+    let tail = siblings[siblings.length - 1]
+    if (!tail || tail.type !== 'text') {
+      // Add a new text node.
+      tail = text()
+      tail.position = {
+        start: point(token.start),
+        // @ts-expect-error: we’ll add `end` later.
+        end: undefined
+      }
+      siblings.push(tail)
+    }
+    this.stack.push(tail)
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+
+  function onexitdata(token) {
+    const tail = this.stack.pop()
+    tail.value += this.sliceSerialize(token)
+    tail.position.end = point(token.end)
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+
+  function onexitlineending(token) {
+    const context = this.stack[this.stack.length - 1]
+    // If we’re at a hard break, include the line ending in there.
+    if (this.data.atHardBreak) {
+      const tail = context.children[context.children.length - 1]
+      tail.position.end = point(token.end)
+      this.data.atHardBreak = undefined
+      return
+    }
+    if (
+      !this.data.setextHeadingSlurpLineEnding &&
+      config.canContainEols.includes(context.type)
+    ) {
+      onenterdata.call(this, token)
+      onexitdata.call(this, token)
+    }
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+
+  function onexithardbreak() {
+    this.data.atHardBreak = true
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+
+  function onexithtmlflow() {
+    const data = this.resume()
+    const node = this.stack[this.stack.length - 1]
+    node.value = data
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+
+  function onexithtmltext() {
+    const data = this.resume()
+    const node = this.stack[this.stack.length - 1]
+    node.value = data
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+
+  function onexitcodetext() {
+    const data = this.resume()
+    const node = this.stack[this.stack.length - 1]
+    node.value = data
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+
+  function onexitlink() {
+    const node = this.stack[this.stack.length - 1]
+    // Note: there are also `identifier` and `label` fields on this link node!
+    // These are used / cleaned here.
+    // To do: clean.
+    if (this.data.inReference) {
+      /** @type {ReferenceType} */
+      const referenceType = this.data.referenceType || 'shortcut'
+      node.type += 'Reference'
+      // @ts-expect-error: mutate.
+      node.referenceType = referenceType
+      // @ts-expect-error: mutate.
+      delete node.url
+      delete node.title
+    } else {
+      // @ts-expect-error: mutate.
+      delete node.identifier
+      // @ts-expect-error: mutate.
+      delete node.label
+    }
+    this.data.referenceType = undefined
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+
+  function onexitimage() {
+    const node = this.stack[this.stack.length - 1]
+    // Note: there are also `identifier` and `label` fields on this link node!
+    // These are used / cleaned here.
+    // To do: clean.
+    if (this.data.inReference) {
+      /** @type {ReferenceType} */
+      const referenceType = this.data.referenceType || 'shortcut'
+      node.type += 'Reference'
+      // @ts-expect-error: mutate.
+      node.referenceType = referenceType
+      // @ts-expect-error: mutate.
+      delete node.url
+      delete node.title
+    } else {
+      // @ts-expect-error: mutate.
+      delete node.identifier
+      // @ts-expect-error: mutate.
+      delete node.label
+    }
+    this.data.referenceType = undefined
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+
+  function onexitlabeltext(token) {
+    const string = this.sliceSerialize(token)
+    const ancestor = this.stack[this.stack.length - 2]
+    // @ts-expect-error: stash this on the node, as it might become a reference
+    // later.
+    ancestor.label = (0,micromark_util_decode_string__WEBPACK_IMPORTED_MODULE_6__/* .decodeString */ .s)(string)
+    // @ts-expect-error: same as above.
+    ancestor.identifier = (0,micromark_util_normalize_identifier__WEBPACK_IMPORTED_MODULE_5__/* .normalizeIdentifier */ .B)(string).toLowerCase()
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+
+  function onexitlabel() {
+    const fragment = this.stack[this.stack.length - 1]
+    const value = this.resume()
+    const node = this.stack[this.stack.length - 1]
+    // Assume a reference.
+    this.data.inReference = true
+    if (node.type === 'link') {
+      /** @type {Array<PhrasingContent>} */
+      const children = fragment.children
+      node.children = children
+    } else {
+      node.alt = value
+    }
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+
+  function onexitresourcedestinationstring() {
+    const data = this.resume()
+    const node = this.stack[this.stack.length - 1]
+    node.url = data
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+
+  function onexitresourcetitlestring() {
+    const data = this.resume()
+    const node = this.stack[this.stack.length - 1]
+    node.title = data
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+
+  function onexitresource() {
+    this.data.inReference = undefined
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+
+  function onenterreference() {
+    this.data.referenceType = 'collapsed'
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+
+  function onexitreferencestring(token) {
+    const label = this.resume()
+    const node = this.stack[this.stack.length - 1]
+    // @ts-expect-error: stash this on the node, as it might become a reference
+    // later.
+    node.label = label
+    // @ts-expect-error: same as above.
+    node.identifier = (0,micromark_util_normalize_identifier__WEBPACK_IMPORTED_MODULE_5__/* .normalizeIdentifier */ .B)(
+      this.sliceSerialize(token)
+    ).toLowerCase()
+    this.data.referenceType = 'full'
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+
+  function onexitcharacterreferencemarker(token) {
+    this.data.characterReferenceType = token.type
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+  function onexitcharacterreferencevalue(token) {
+    const data = this.sliceSerialize(token)
+    const type = this.data.characterReferenceType
+    /** @type {string} */
+    let value
+    if (type) {
+      value = (0,micromark_util_decode_numeric_character_reference__WEBPACK_IMPORTED_MODULE_7__/* .decodeNumericCharacterReference */ .C)(
+        data,
+        type === 'characterReferenceMarkerNumeric' ? 10 : 16
+      )
+      this.data.characterReferenceType = undefined
+    } else {
+      const result = (0,decode_named_character_reference__WEBPACK_IMPORTED_MODULE_8__/* .decodeNamedCharacterReference */ .s)(data)
+      value = result
+    }
+    const tail = this.stack.pop()
+    tail.value += value
+    tail.position.end = point(token.end)
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+  function onexitautolinkprotocol(token) {
+    onexitdata.call(this, token)
+    const node = this.stack[this.stack.length - 1]
+    node.url = this.sliceSerialize(token)
+  }
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
+  function onexitautolinkemail(token) {
+    onexitdata.call(this, token)
+    const node = this.stack[this.stack.length - 1]
+    node.url = 'mailto:' + this.sliceSerialize(token)
+  }
+
+  //
+  // Creaters.
+  //
+
+  /** @returns {Blockquote} */
+  function blockQuote() {
+    return {
+      type: 'blockquote',
+      children: []
+    }
+  }
+
+  /** @returns {Code} */
+  function codeFlow() {
+    return {
+      type: 'code',
+      lang: null,
+      meta: null,
+      value: ''
+    }
+  }
+
+  /** @returns {InlineCode} */
+  function codeText() {
+    return {
+      type: 'inlineCode',
+      value: ''
+    }
+  }
+
+  /** @returns {Definition} */
+  function definition() {
+    return {
+      type: 'definition',
+      identifier: '',
+      label: null,
+      title: null,
+      url: ''
+    }
+  }
+
+  /** @returns {Emphasis} */
+  function emphasis() {
+    return {
+      type: 'emphasis',
+      children: []
+    }
+  }
+
+  /** @returns {Heading} */
+  function heading() {
+    return {
+      type: 'heading',
+      // @ts-expect-error `depth` will be set later.
+      depth: 0,
+      children: []
+    }
+  }
+
+  /** @returns {Break} */
+  function hardBreak() {
+    return {
+      type: 'break'
+    }
+  }
+
+  /** @returns {Html} */
+  function html() {
+    return {
+      type: 'html',
+      value: ''
+    }
+  }
+
+  /** @returns {Image} */
+  function image() {
+    return {
+      type: 'image',
+      title: null,
+      url: '',
+      alt: null
+    }
+  }
+
+  /** @returns {Link} */
+  function link() {
+    return {
+      type: 'link',
+      title: null,
+      url: '',
+      children: []
+    }
+  }
+
+  /**
+   * @param {Token} token
+   * @returns {List}
+   */
+  function list(token) {
+    return {
+      type: 'list',
+      ordered: token.type === 'listOrdered',
+      start: null,
+      spread: token._spread,
+      children: []
+    }
+  }
+
+  /**
+   * @param {Token} token
+   * @returns {ListItem}
+   */
+  function listItem(token) {
+    return {
+      type: 'listItem',
+      spread: token._spread,
+      checked: null,
+      children: []
+    }
+  }
+
+  /** @returns {Paragraph} */
+  function paragraph() {
+    return {
+      type: 'paragraph',
+      children: []
+    }
+  }
+
+  /** @returns {Strong} */
+  function strong() {
+    return {
+      type: 'strong',
+      children: []
+    }
+  }
+
+  /** @returns {Text} */
+  function text() {
+    return {
+      type: 'text',
+      value: ''
+    }
+  }
+
+  /** @returns {ThematicBreak} */
+  function thematicBreak() {
+    return {
+      type: 'thematicBreak'
+    }
+  }
+}
+
+/**
+ * Copy a point-like value.
+ *
+ * @param {Point} d
+ *   Point-like value.
+ * @returns {Point}
+ *   unist point.
+ */
+function point(d) {
+  return {
+    line: d.line,
+    column: d.column,
+    offset: d.offset
+  }
+}
+
+/**
+ * @param {Config} combined
+ * @param {Array<Array<Extension> | Extension>} extensions
+ * @returns {undefined}
+ */
+function configure(combined, extensions) {
+  let index = -1
+  while (++index < extensions.length) {
+    const value = extensions[index]
+    if (Array.isArray(value)) {
+      configure(combined, value)
+    } else {
+      extension(combined, value)
+    }
+  }
+}
+
+/**
+ * @param {Config} combined
+ * @param {Extension} extension
+ * @returns {undefined}
+ */
+function extension(combined, extension) {
+  /** @type {keyof Extension} */
+  let key
+  for (key in extension) {
+    if (own.call(extension, key)) {
+      switch (key) {
+        case 'canContainEols': {
+          const right = extension[key]
+          if (right) {
+            combined[key].push(...right)
+          }
+          break
+        }
+        case 'transforms': {
+          const right = extension[key]
+          if (right) {
+            combined[key].push(...right)
+          }
+          break
+        }
+        case 'enter':
+        case 'exit': {
+          const right = extension[key]
+          if (right) {
+            Object.assign(combined[key], right)
+          }
+          break
+        }
+        // No default
+      }
+    }
+  }
+}
+
+/** @type {OnEnterError} */
+function defaultOnError(left, right) {
+  if (left) {
+    throw new Error(
+      'Cannot close `' +
+        left.type +
+        '` (' +
+        (0,unist_util_stringify_position__WEBPACK_IMPORTED_MODULE_3__/* .stringifyPosition */ .L)({
+          start: left.start,
+          end: left.end
+        }) +
+        '): a different token (`' +
+        right.type +
+        '`, ' +
+        (0,unist_util_stringify_position__WEBPACK_IMPORTED_MODULE_3__/* .stringifyPosition */ .L)({
+          start: right.start,
+          end: right.end
+        }) +
+        ') is open'
+    )
+  } else {
+    throw new Error(
+      'Cannot close document, a token (`' +
+        right.type +
+        '`, ' +
+        (0,unist_util_stringify_position__WEBPACK_IMPORTED_MODULE_3__/* .stringifyPosition */ .L)({
+          start: right.start,
+          end: right.end
+        }) +
+        ') is still open'
+    )
+  }
+}
+
+
+/***/ }),
+
+/***/ 66400:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   d: () => (/* binding */ toString)
+/* harmony export */ });
+/**
+ * @typedef {import('mdast').Nodes} Nodes
+ *
+ * @typedef Options
+ *   Configuration (optional).
+ * @property {boolean | null | undefined} [includeImageAlt=true]
+ *   Whether to use `alt` for `image`s (default: `true`).
+ * @property {boolean | null | undefined} [includeHtml=true]
+ *   Whether to use `value` of HTML (default: `true`).
+ */
+
+/** @type {Options} */
+const emptyOptions = {}
+
+/**
+ * Get the text content of a node or list of nodes.
+ *
+ * Prefers the node’s plain-text fields, otherwise serializes its children,
+ * and if the given value is an array, serialize the nodes in it.
+ *
+ * @param {unknown} [value]
+ *   Thing to serialize, typically `Node`.
+ * @param {Options | null | undefined} [options]
+ *   Configuration (optional).
+ * @returns {string}
+ *   Serialized `value`.
+ */
+function toString(value, options) {
+  const settings = options || emptyOptions
+  const includeImageAlt =
+    typeof settings.includeImageAlt === 'boolean'
+      ? settings.includeImageAlt
+      : true
+  const includeHtml =
+    typeof settings.includeHtml === 'boolean' ? settings.includeHtml : true
+
+  return one(value, includeImageAlt, includeHtml)
+}
+
+/**
+ * One node or several nodes.
+ *
+ * @param {unknown} value
+ *   Thing to serialize.
+ * @param {boolean} includeImageAlt
+ *   Include image `alt`s.
+ * @param {boolean} includeHtml
+ *   Include HTML.
+ * @returns {string}
+ *   Serialized node.
+ */
+function one(value, includeImageAlt, includeHtml) {
+  if (node(value)) {
+    if ('value' in value) {
+      return value.type === 'html' && !includeHtml ? '' : value.value
+    }
+
+    if (includeImageAlt && 'alt' in value && value.alt) {
+      return value.alt
+    }
+
+    if ('children' in value) {
+      return all(value.children, includeImageAlt, includeHtml)
+    }
+  }
+
+  if (Array.isArray(value)) {
+    return all(value, includeImageAlt, includeHtml)
+  }
+
+  return ''
+}
+
+/**
+ * Serialize a list of nodes.
+ *
+ * @param {Array<unknown>} values
+ *   Thing to serialize.
+ * @param {boolean} includeImageAlt
+ *   Include image `alt`s.
+ * @param {boolean} includeHtml
+ *   Include HTML.
+ * @returns {string}
+ *   Serialized nodes.
+ */
+function all(values, includeImageAlt, includeHtml) {
+  /** @type {Array<string>} */
+  const result = []
+  let index = -1
+
+  while (++index < values.length) {
+    result[index] = one(values[index], includeImageAlt, includeHtml)
+  }
+
+  return result.join('')
+}
+
+/**
+ * Check if `value` looks like a node.
+ *
+ * @param {unknown} value
+ *   Thing.
+ * @returns {value is Nodes}
+ *   Whether `value` is a node.
+ */
+function node(value) {
+  return Boolean(value && typeof value === 'object')
+}
+
+
+/***/ }),
+
+/***/ 29558:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   L: () => (/* binding */ stringifyPosition)
+/* harmony export */ });
+/**
+ * @typedef {import('unist').Node} Node
+ * @typedef {import('unist').Point} Point
+ * @typedef {import('unist').Position} Position
+ */
+
+/**
+ * @typedef NodeLike
+ * @property {string} type
+ * @property {PositionLike | null | undefined} [position]
+ *
+ * @typedef PointLike
+ * @property {number | null | undefined} [line]
+ * @property {number | null | undefined} [column]
+ * @property {number | null | undefined} [offset]
+ *
+ * @typedef PositionLike
+ * @property {PointLike | null | undefined} [start]
+ * @property {PointLike | null | undefined} [end]
+ */
+
+/**
+ * Serialize the positional info of a point, position (start and end points),
+ * or node.
+ *
+ * @param {Node | NodeLike | Point | PointLike | Position | PositionLike | null | undefined} [value]
+ *   Node, position, or point.
+ * @returns {string}
+ *   Pretty printed positional info of a node (`string`).
+ *
+ *   In the format of a range `ls:cs-le:ce` (when given `node` or `position`)
+ *   or a point `l:c` (when given `point`), where `l` stands for line, `c` for
+ *   column, `s` for `start`, and `e` for end.
+ *   An empty string (`''`) is returned if the given value is neither `node`,
+ *   `position`, nor `point`.
+ */
+function stringifyPosition(value) {
+  // Nothing.
+  if (!value || typeof value !== 'object') {
+    return ''
+  }
+
+  // Node.
+  if ('position' in value || 'type' in value) {
+    return position(value.position)
+  }
+
+  // Position.
+  if ('start' in value || 'end' in value) {
+    return position(value)
+  }
+
+  // Point.
+  if ('line' in value || 'column' in value) {
+    return point(value)
+  }
+
+  // ?
+  return ''
+}
+
+/**
+ * @param {Point | PointLike | null | undefined} point
+ * @returns {string}
+ */
+function point(point) {
+  return index(point && point.line) + ':' + index(point && point.column)
+}
+
+/**
+ * @param {Position | PositionLike | null | undefined} pos
+ * @returns {string}
+ */
+function position(pos) {
+  return point(pos && pos.start) + '-' + point(pos && pos.end)
+}
+
+/**
+ * @param {number | null | undefined} value
+ * @returns {number}
+ */
+function index(value) {
+  return value && typeof value === 'number' ? value : 1
+}
+
+
+/***/ }),
+
+/***/ 95357:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   qr: () => (/* binding */ footer)
+/* harmony export */ });
+/* unused harmony exports defaultFootnoteBackContent, defaultFootnoteBackLabel */
+/* harmony import */ var _ungap_structured_clone__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(93052);
+/* harmony import */ var micromark_util_sanitize_uri__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31550);
+/**
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('hast').ElementContent} ElementContent
+ *
+ * @typedef {import('./state.js').State} State
+ */
+
+/**
+ * @callback FootnoteBackContentTemplate
+ *   Generate content for the backreference dynamically.
+ *
+ *   For the following markdown:
+ *
+ *   ```markdown
+ *   Alpha[^micromark], bravo[^micromark], and charlie[^remark].
+ *
+ *   [^remark]: things about remark
+ *   [^micromark]: things about micromark
+ *   ```
+ *
+ *   This function will be called with:
+ *
+ *   *  `0` and `0` for the backreference from `things about micromark` to
+ *      `alpha`, as it is the first used definition, and the first call to it
+ *   *  `0` and `1` for the backreference from `things about micromark` to
+ *      `bravo`, as it is the first used definition, and the second call to it
+ *   *  `1` and `0` for the backreference from `things about remark` to
+ *      `charlie`, as it is the second used definition
+ * @param {number} referenceIndex
+ *   Index of the definition in the order that they are first referenced,
+ *   0-indexed.
+ * @param {number} rereferenceIndex
+ *   Index of calls to the same definition, 0-indexed.
+ * @returns {Array<ElementContent> | ElementContent | string}
+ *   Content for the backreference when linking back from definitions to their
+ *   reference.
+ *
+ * @callback FootnoteBackLabelTemplate
+ *   Generate a back label dynamically.
+ *
+ *   For the following markdown:
+ *
+ *   ```markdown
+ *   Alpha[^micromark], bravo[^micromark], and charlie[^remark].
+ *
+ *   [^remark]: things about remark
+ *   [^micromark]: things about micromark
+ *   ```
+ *
+ *   This function will be called with:
+ *
+ *   *  `0` and `0` for the backreference from `things about micromark` to
+ *      `alpha`, as it is the first used definition, and the first call to it
+ *   *  `0` and `1` for the backreference from `things about micromark` to
+ *      `bravo`, as it is the first used definition, and the second call to it
+ *   *  `1` and `0` for the backreference from `things about remark` to
+ *      `charlie`, as it is the second used definition
+ * @param {number} referenceIndex
+ *   Index of the definition in the order that they are first referenced,
+ *   0-indexed.
+ * @param {number} rereferenceIndex
+ *   Index of calls to the same definition, 0-indexed.
+ * @returns {string}
+ *   Back label to use when linking back from definitions to their reference.
+ */
+
+
+
+
+/**
+ * Generate the default content that GitHub uses on backreferences.
+ *
+ * @param {number} _
+ *   Index of the definition in the order that they are first referenced,
+ *   0-indexed.
+ * @param {number} rereferenceIndex
+ *   Index of calls to the same definition, 0-indexed.
+ * @returns {Array<ElementContent>}
+ *   Content.
+ */
+function defaultFootnoteBackContent(_, rereferenceIndex) {
+  /** @type {Array<ElementContent>} */
+  const result = [{type: 'text', value: '↩'}]
+
+  if (rereferenceIndex > 1) {
+    result.push({
+      type: 'element',
+      tagName: 'sup',
+      properties: {},
+      children: [{type: 'text', value: String(rereferenceIndex)}]
+    })
+  }
+
+  return result
+}
+
+/**
+ * Generate the default label that GitHub uses on backreferences.
+ *
+ * @param {number} referenceIndex
+ *   Index of the definition in the order that they are first referenced,
+ *   0-indexed.
+ * @param {number} rereferenceIndex
+ *   Index of calls to the same definition, 0-indexed.
+ * @returns {string}
+ *   Label.
+ */
+function defaultFootnoteBackLabel(referenceIndex, rereferenceIndex) {
+  return (
+    'Back to reference ' +
+    (referenceIndex + 1) +
+    (rereferenceIndex > 1 ? '-' + rereferenceIndex : '')
+  )
+}
+
+/**
+ * Generate a hast footer for called footnote definitions.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @returns {Element | undefined}
+ *   `section` element or `undefined`.
+ */
+// eslint-disable-next-line complexity
+function footer(state) {
+  const clobberPrefix =
+    typeof state.options.clobberPrefix === 'string'
+      ? state.options.clobberPrefix
+      : 'user-content-'
+  const footnoteBackContent =
+    state.options.footnoteBackContent || defaultFootnoteBackContent
+  const footnoteBackLabel =
+    state.options.footnoteBackLabel || defaultFootnoteBackLabel
+  const footnoteLabel = state.options.footnoteLabel || 'Footnotes'
+  const footnoteLabelTagName = state.options.footnoteLabelTagName || 'h2'
+  const footnoteLabelProperties = state.options.footnoteLabelProperties || {
+    className: ['sr-only']
+  }
+  /** @type {Array<ElementContent>} */
+  const listItems = []
+  let referenceIndex = -1
+
+  while (++referenceIndex < state.footnoteOrder.length) {
+    const def = state.footnoteById.get(state.footnoteOrder[referenceIndex])
+
+    if (!def) {
+      continue
+    }
+
+    const content = state.all(def)
+    const id = String(def.identifier).toUpperCase()
+    const safeId = (0,micromark_util_sanitize_uri__WEBPACK_IMPORTED_MODULE_1__/* .normalizeUri */ .e)(id.toLowerCase())
+    let rereferenceIndex = 0
+    /** @type {Array<ElementContent>} */
+    const backReferences = []
+    const counts = state.footnoteCounts.get(id)
+
+    // eslint-disable-next-line no-unmodified-loop-condition
+    while (counts !== undefined && ++rereferenceIndex <= counts) {
+      if (backReferences.length > 0) {
+        backReferences.push({type: 'text', value: ' '})
+      }
+
+      let children =
+        typeof footnoteBackContent === 'string'
+          ? footnoteBackContent
+          : footnoteBackContent(referenceIndex, rereferenceIndex)
+
+      if (typeof children === 'string') {
+        children = {type: 'text', value: children}
+      }
+
+      backReferences.push({
+        type: 'element',
+        tagName: 'a',
+        properties: {
+          href:
+            '#' +
+            clobberPrefix +
+            'fnref-' +
+            safeId +
+            (rereferenceIndex > 1 ? '-' + rereferenceIndex : ''),
+          dataFootnoteBackref: '',
+          ariaLabel:
+            typeof footnoteBackLabel === 'string'
+              ? footnoteBackLabel
+              : footnoteBackLabel(referenceIndex, rereferenceIndex),
+          className: ['data-footnote-backref']
+        },
+        children: Array.isArray(children) ? children : [children]
+      })
+    }
+
+    const tail = content[content.length - 1]
+
+    if (tail && tail.type === 'element' && tail.tagName === 'p') {
+      const tailTail = tail.children[tail.children.length - 1]
+      if (tailTail && tailTail.type === 'text') {
+        tailTail.value += ' '
+      } else {
+        tail.children.push({type: 'text', value: ' '})
+      }
+
+      tail.children.push(...backReferences)
+    } else {
+      content.push(...backReferences)
+    }
+
+    /** @type {Element} */
+    const listItem = {
+      type: 'element',
+      tagName: 'li',
+      properties: {id: clobberPrefix + 'fn-' + safeId},
+      children: state.wrap(content, true)
+    }
+
+    state.patch(def, listItem)
+
+    listItems.push(listItem)
+  }
+
+  if (listItems.length === 0) {
+    return
+  }
+
+  return {
+    type: 'element',
+    tagName: 'section',
+    properties: {dataFootnotes: true, className: ['footnotes']},
+    children: [
+      {
+        type: 'element',
+        tagName: footnoteLabelTagName,
+        properties: {
+          ...(0,_ungap_structured_clone__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Ay)(footnoteLabelProperties),
+          id: 'footnote-label'
+        },
+        children: [{type: 'text', value: footnoteLabel}]
+      },
+      {type: 'text', value: '\n'},
+      {
+        type: 'element',
+        tagName: 'ol',
+        properties: {},
+        children: state.wrap(listItems, true)
+      },
+      {type: 'text', value: '\n'}
+    ]
+  }
+}
+
+
+/***/ }),
+
+/***/ 45553:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   a: () => (/* binding */ blockquote)
+/* harmony export */ });
+/**
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('mdast').Blockquote} Blockquote
+ * @typedef {import('../state.js').State} State
+ */
+
+// Make VS Code show references to the above types.
+''
+
+/**
+ * Turn an mdast `blockquote` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {Blockquote} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
+ */
+function blockquote(state, node) {
+  /** @type {Element} */
+  const result = {
+    type: 'element',
+    tagName: 'blockquote',
+    properties: {},
+    children: state.wrap(state.all(node), true)
+  }
+  state.patch(node, result)
+  return state.applyData(node, result)
+}
+
+
+/***/ }),
+
+/***/ 91519:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   l: () => (/* binding */ hardBreak)
+/* harmony export */ });
+/**
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('hast').Text} Text
+ * @typedef {import('mdast').Break} Break
+ * @typedef {import('../state.js').State} State
+ */
+
+// Make VS Code show references to the above types.
+''
+
+/**
+ * Turn an mdast `break` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {Break} node
+ *   mdast node.
+ * @returns {Array<Element | Text>}
+ *   hast element content.
+ */
+function hardBreak(state, node) {
+  /** @type {Element} */
+  const result = {type: 'element', tagName: 'br', properties: {}, children: []}
+  state.patch(node, result)
+  return [state.applyData(node, result), {type: 'text', value: '\n'}]
+}
+
+
+/***/ }),
+
+/***/ 56251:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   a: () => (/* binding */ code)
+/* harmony export */ });
+/**
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('hast').Properties} Properties
+ * @typedef {import('mdast').Code} Code
+ * @typedef {import('../state.js').State} State
+ */
+
+// Make VS Code show references to the above types.
+''
+
+/**
+ * Turn an mdast `code` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {Code} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
+ */
+function code(state, node) {
+  const value = node.value ? node.value + '\n' : ''
+  /** @type {Properties} */
+  const properties = {}
+
+  if (node.lang) {
+    properties.className = ['language-' + node.lang]
+  }
+
+  // Create `<code>`.
+  /** @type {Element} */
+  let result = {
+    type: 'element',
+    tagName: 'code',
+    properties,
+    children: [{type: 'text', value}]
+  }
+
+  if (node.meta) {
+    result.data = {meta: node.meta}
+  }
+
+  state.patch(node, result)
+  result = state.applyData(node, result)
+
+  // Create `<pre>`.
+  result = {type: 'element', tagName: 'pre', properties: {}, children: [result]}
+  state.patch(node, result)
+  return result
+}
+
+
+/***/ }),
+
+/***/ 28965:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   o: () => (/* binding */ strikethrough)
+/* harmony export */ });
+/**
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('mdast').Delete} Delete
+ * @typedef {import('../state.js').State} State
+ */
+
+// Make VS Code show references to the above types.
+''
+
+/**
+ * Turn an mdast `delete` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {Delete} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
+ */
+function strikethrough(state, node) {
+  /** @type {Element} */
+  const result = {
+    type: 'element',
+    tagName: 'del',
+    properties: {},
+    children: state.all(node)
+  }
+  state.patch(node, result)
+  return state.applyData(node, result)
+}
+
+
+/***/ }),
+
+/***/ 46092:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   l: () => (/* binding */ emphasis)
+/* harmony export */ });
+/**
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('mdast').Emphasis} Emphasis
+ * @typedef {import('../state.js').State} State
+ */
+
+// Make VS Code show references to the above types.
+''
+
+/**
+ * Turn an mdast `emphasis` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {Emphasis} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
+ */
+function emphasis(state, node) {
+  /** @type {Element} */
+  const result = {
+    type: 'element',
+    tagName: 'em',
+    properties: {},
+    children: state.all(node)
+  }
+  state.patch(node, result)
+  return state.applyData(node, result)
+}
+
+
+/***/ }),
+
+/***/ 57810:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   m: () => (/* binding */ footnoteReference)
+/* harmony export */ });
+/* harmony import */ var micromark_util_sanitize_uri__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(31550);
+/**
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('mdast').FootnoteReference} FootnoteReference
+ * @typedef {import('../state.js').State} State
+ */
+
+
+
+/**
+ * Turn an mdast `footnoteReference` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {FootnoteReference} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
+ */
+function footnoteReference(state, node) {
+  const clobberPrefix =
+    typeof state.options.clobberPrefix === 'string'
+      ? state.options.clobberPrefix
+      : 'user-content-'
+  const id = String(node.identifier).toUpperCase()
+  const safeId = (0,micromark_util_sanitize_uri__WEBPACK_IMPORTED_MODULE_0__/* .normalizeUri */ .e)(id.toLowerCase())
+  const index = state.footnoteOrder.indexOf(id)
+  /** @type {number} */
+  let counter
+
+  let reuseCounter = state.footnoteCounts.get(id)
+
+  if (reuseCounter === undefined) {
+    reuseCounter = 0
+    state.footnoteOrder.push(id)
+    counter = state.footnoteOrder.length
+  } else {
+    counter = index + 1
+  }
+
+  reuseCounter += 1
+  state.footnoteCounts.set(id, reuseCounter)
+
+  /** @type {Element} */
+  const link = {
+    type: 'element',
+    tagName: 'a',
+    properties: {
+      href: '#' + clobberPrefix + 'fn-' + safeId,
+      id:
+        clobberPrefix +
+        'fnref-' +
+        safeId +
+        (reuseCounter > 1 ? '-' + reuseCounter : ''),
+      dataFootnoteRef: true,
+      ariaDescribedBy: ['footnote-label']
+    },
+    children: [{type: 'text', value: String(counter)}]
+  }
+  state.patch(node, link)
+
+  /** @type {Element} */
+  const sup = {
+    type: 'element',
+    tagName: 'sup',
+    properties: {},
+    children: [link]
+  }
+  state.patch(node, sup)
+  return state.applyData(node, sup)
+}
+
+
+/***/ }),
+
+/***/ 55222:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   R: () => (/* binding */ heading)
+/* harmony export */ });
+/**
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('mdast').Heading} Heading
+ * @typedef {import('../state.js').State} State
+ */
+
+// Make VS Code show references to the above types.
+''
+
+/**
+ * Turn an mdast `heading` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {Heading} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
+ */
+function heading(state, node) {
+  /** @type {Element} */
+  const result = {
+    type: 'element',
+    tagName: 'h' + node.depth,
+    properties: {},
+    children: state.all(node)
+  }
+  state.patch(node, result)
+  return state.applyData(node, result)
+}
+
+
+/***/ }),
+
+/***/ 15535:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   q: () => (/* binding */ html)
+/* harmony export */ });
+/**
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('mdast').Html} Html
+ * @typedef {import('../state.js').State} State
+ * @typedef {import('../../index.js').Raw} Raw
+ */
+
+// Make VS Code show references to the above types.
+''
+
+/**
+ * Turn an mdast `html` node into hast (`raw` node in dangerous mode, otherwise
+ * nothing).
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {Html} node
+ *   mdast node.
+ * @returns {Element | Raw | undefined}
+ *   hast node.
+ */
+function html(state, node) {
+  if (state.options.allowDangerousHtml) {
+    /** @type {Raw} */
+    const result = {type: 'raw', value: node.value}
+    state.patch(node, result)
+    return state.applyData(node, result)
+  }
+
+  return undefined
+}
+
+
+/***/ }),
+
+/***/ 54317:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   r: () => (/* binding */ imageReference)
+/* harmony export */ });
+/* harmony import */ var micromark_util_sanitize_uri__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31550);
+/* harmony import */ var _revert_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(81272);
+/**
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('hast').ElementContent} ElementContent
+ * @typedef {import('hast').Properties} Properties
+ * @typedef {import('mdast').ImageReference} ImageReference
+ * @typedef {import('../state.js').State} State
+ */
+
+
+
+
+/**
+ * Turn an mdast `imageReference` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {ImageReference} node
+ *   mdast node.
+ * @returns {Array<ElementContent> | ElementContent}
+ *   hast node.
+ */
+function imageReference(state, node) {
+  const id = String(node.identifier).toUpperCase()
+  const def = state.definitionById.get(id)
+
+  if (!def) {
+    return (0,_revert_js__WEBPACK_IMPORTED_MODULE_0__/* .revert */ .r)(state, node)
+  }
+
+  /** @type {Properties} */
+  const properties = {src: (0,micromark_util_sanitize_uri__WEBPACK_IMPORTED_MODULE_1__/* .normalizeUri */ .e)(def.url || ''), alt: node.alt}
+
+  if (def.title !== null && def.title !== undefined) {
+    properties.title = def.title
+  }
+
+  /** @type {Element} */
+  const result = {type: 'element', tagName: 'img', properties, children: []}
+  state.patch(node, result)
+  return state.applyData(node, result)
+}
+
+
+/***/ }),
+
+/***/ 14501:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   S: () => (/* binding */ image)
+/* harmony export */ });
+/* harmony import */ var micromark_util_sanitize_uri__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(31550);
+/**
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('hast').Properties} Properties
+ * @typedef {import('mdast').Image} Image
+ * @typedef {import('../state.js').State} State
+ */
+
+
+
+/**
+ * Turn an mdast `image` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {Image} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
+ */
+function image(state, node) {
+  /** @type {Properties} */
+  const properties = {src: (0,micromark_util_sanitize_uri__WEBPACK_IMPORTED_MODULE_0__/* .normalizeUri */ .e)(node.url)}
+
+  if (node.alt !== null && node.alt !== undefined) {
+    properties.alt = node.alt
+  }
+
+  if (node.title !== null && node.title !== undefined) {
+    properties.title = node.title
+  }
+
+  /** @type {Element} */
+  const result = {type: 'element', tagName: 'img', properties, children: []}
+  state.patch(node, result)
+  return state.applyData(node, result)
+}
+
+
+/***/ }),
+
+/***/ 88008:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Y: () => (/* binding */ handlers)
+/* harmony export */ });
+/* harmony import */ var _blockquote_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(45553);
+/* harmony import */ var _break_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(91519);
+/* harmony import */ var _code_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(56251);
+/* harmony import */ var _delete_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(28965);
+/* harmony import */ var _emphasis_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(46092);
+/* harmony import */ var _footnote_reference_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(57810);
+/* harmony import */ var _heading_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(55222);
+/* harmony import */ var _html_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(15535);
+/* harmony import */ var _image_reference_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(54317);
+/* harmony import */ var _image_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(14501);
+/* harmony import */ var _inline_code_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(25285);
+/* harmony import */ var _link_reference_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(30650);
+/* harmony import */ var _link_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(70218);
+/* harmony import */ var _list_item_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(13088);
+/* harmony import */ var _list_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(90722);
+/* harmony import */ var _paragraph_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(68522);
+/* harmony import */ var _root_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(4854);
+/* harmony import */ var _strong_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(46789);
+/* harmony import */ var _table_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(4196);
+/* harmony import */ var _table_row_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(40333);
+/* harmony import */ var _table_cell_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(97993);
+/* harmony import */ var _text_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(72441);
+/* harmony import */ var _thematic_break_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(33231);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * Default handlers for nodes.
+ *
+ * @satisfies {import('../state.js').Handlers}
+ */
+const handlers = {
+  blockquote: _blockquote_js__WEBPACK_IMPORTED_MODULE_0__/* .blockquote */ .a,
+  break: _break_js__WEBPACK_IMPORTED_MODULE_1__/* .hardBreak */ .l,
+  code: _code_js__WEBPACK_IMPORTED_MODULE_2__/* .code */ .a,
+  delete: _delete_js__WEBPACK_IMPORTED_MODULE_3__/* .strikethrough */ .o,
+  emphasis: _emphasis_js__WEBPACK_IMPORTED_MODULE_4__/* .emphasis */ .l,
+  footnoteReference: _footnote_reference_js__WEBPACK_IMPORTED_MODULE_5__/* .footnoteReference */ .m,
+  heading: _heading_js__WEBPACK_IMPORTED_MODULE_6__/* .heading */ .R,
+  html: _html_js__WEBPACK_IMPORTED_MODULE_7__/* .html */ .q,
+  imageReference: _image_reference_js__WEBPACK_IMPORTED_MODULE_8__/* .imageReference */ .r,
+  image: _image_js__WEBPACK_IMPORTED_MODULE_9__/* .image */ .S,
+  inlineCode: _inline_code_js__WEBPACK_IMPORTED_MODULE_10__/* .inlineCode */ .t,
+  linkReference: _link_reference_js__WEBPACK_IMPORTED_MODULE_11__/* .linkReference */ .u,
+  link: _link_js__WEBPACK_IMPORTED_MODULE_12__/* .link */ .n,
+  listItem: _list_item_js__WEBPACK_IMPORTED_MODULE_13__/* .listItem */ .A,
+  list: _list_js__WEBPACK_IMPORTED_MODULE_14__/* .list */ .p,
+  paragraph: _paragraph_js__WEBPACK_IMPORTED_MODULE_15__/* .paragraph */ .F,
+  // @ts-expect-error: root is different, but hard to type.
+  root: _root_js__WEBPACK_IMPORTED_MODULE_16__/* .root */ .z,
+  strong: _strong_js__WEBPACK_IMPORTED_MODULE_17__/* .strong */ .k,
+  table: _table_js__WEBPACK_IMPORTED_MODULE_18__/* .table */ .t,
+  tableCell: _table_cell_js__WEBPACK_IMPORTED_MODULE_19__/* .tableCell */ .x,
+  tableRow: _table_row_js__WEBPACK_IMPORTED_MODULE_20__/* .tableRow */ .j,
+  text: _text_js__WEBPACK_IMPORTED_MODULE_21__/* .text */ .Q,
+  thematicBreak: _thematic_break_js__WEBPACK_IMPORTED_MODULE_22__/* .thematicBreak */ .V,
+  toml: ignore,
+  yaml: ignore,
+  definition: ignore,
+  footnoteDefinition: ignore
+}
+
+// Return nothing for nodes that are ignored.
+function ignore() {
+  return undefined
+}
+
+
+/***/ }),
+
+/***/ 25285:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   t: () => (/* binding */ inlineCode)
+/* harmony export */ });
+/**
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('hast').Text} Text
+ * @typedef {import('mdast').InlineCode} InlineCode
+ * @typedef {import('../state.js').State} State
+ */
+
+// Make VS Code show references to the above types.
+''
+
+/**
+ * Turn an mdast `inlineCode` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {InlineCode} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
+ */
+function inlineCode(state, node) {
+  /** @type {Text} */
+  const text = {type: 'text', value: node.value.replace(/\r?\n|\r/g, ' ')}
+  state.patch(node, text)
+
+  /** @type {Element} */
+  const result = {
+    type: 'element',
+    tagName: 'code',
+    properties: {},
+    children: [text]
+  }
+  state.patch(node, result)
+  return state.applyData(node, result)
+}
+
+
+/***/ }),
+
+/***/ 30650:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   u: () => (/* binding */ linkReference)
+/* harmony export */ });
+/* harmony import */ var micromark_util_sanitize_uri__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31550);
+/* harmony import */ var _revert_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(81272);
+/**
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('hast').ElementContent} ElementContent
+ * @typedef {import('hast').Properties} Properties
+ * @typedef {import('mdast').LinkReference} LinkReference
+ * @typedef {import('../state.js').State} State
+ */
+
+
+
+
+/**
+ * Turn an mdast `linkReference` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {LinkReference} node
+ *   mdast node.
+ * @returns {Array<ElementContent> | ElementContent}
+ *   hast node.
+ */
+function linkReference(state, node) {
+  const id = String(node.identifier).toUpperCase()
+  const def = state.definitionById.get(id)
+
+  if (!def) {
+    return (0,_revert_js__WEBPACK_IMPORTED_MODULE_0__/* .revert */ .r)(state, node)
+  }
+
+  /** @type {Properties} */
+  const properties = {href: (0,micromark_util_sanitize_uri__WEBPACK_IMPORTED_MODULE_1__/* .normalizeUri */ .e)(def.url || '')}
+
+  if (def.title !== null && def.title !== undefined) {
+    properties.title = def.title
+  }
+
+  /** @type {Element} */
+  const result = {
+    type: 'element',
+    tagName: 'a',
+    properties,
+    children: state.all(node)
+  }
+  state.patch(node, result)
+  return state.applyData(node, result)
+}
+
+
+/***/ }),
+
+/***/ 70218:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   n: () => (/* binding */ link)
+/* harmony export */ });
+/* harmony import */ var micromark_util_sanitize_uri__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(31550);
+/**
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('hast').Properties} Properties
+ * @typedef {import('mdast').Link} Link
+ * @typedef {import('../state.js').State} State
+ */
+
+
+
+/**
+ * Turn an mdast `link` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {Link} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
+ */
+function link(state, node) {
+  /** @type {Properties} */
+  const properties = {href: (0,micromark_util_sanitize_uri__WEBPACK_IMPORTED_MODULE_0__/* .normalizeUri */ .e)(node.url)}
+
+  if (node.title !== null && node.title !== undefined) {
+    properties.title = node.title
+  }
+
+  /** @type {Element} */
+  const result = {
+    type: 'element',
+    tagName: 'a',
+    properties,
+    children: state.all(node)
+  }
+  state.patch(node, result)
+  return state.applyData(node, result)
+}
+
+
+/***/ }),
+
+/***/ 13088:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ listItem)
+/* harmony export */ });
+/**
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('hast').ElementContent} ElementContent
+ * @typedef {import('hast').Properties} Properties
+ * @typedef {import('mdast').ListItem} ListItem
+ * @typedef {import('mdast').Parents} Parents
+ * @typedef {import('../state.js').State} State
+ */
+
+// Make VS Code show references to the above types.
+''
+
+/**
+ * Turn an mdast `listItem` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {ListItem} node
+ *   mdast node.
+ * @param {Parents | undefined} parent
+ *   Parent of `node`.
+ * @returns {Element}
+ *   hast node.
+ */
+function listItem(state, node, parent) {
+  const results = state.all(node)
+  const loose = parent ? listLoose(parent) : listItemLoose(node)
+  /** @type {Properties} */
+  const properties = {}
+  /** @type {Array<ElementContent>} */
+  const children = []
+
+  if (typeof node.checked === 'boolean') {
+    const head = results[0]
+    /** @type {Element} */
+    let paragraph
+
+    if (head && head.type === 'element' && head.tagName === 'p') {
+      paragraph = head
+    } else {
+      paragraph = {type: 'element', tagName: 'p', properties: {}, children: []}
+      results.unshift(paragraph)
+    }
+
+    if (paragraph.children.length > 0) {
+      paragraph.children.unshift({type: 'text', value: ' '})
+    }
+
+    paragraph.children.unshift({
+      type: 'element',
+      tagName: 'input',
+      properties: {type: 'checkbox', checked: node.checked, disabled: true},
+      children: []
+    })
+
+    // According to github-markdown-css, this class hides bullet.
+    // See: <https://github.com/sindresorhus/github-markdown-css>.
+    properties.className = ['task-list-item']
+  }
+
+  let index = -1
+
+  while (++index < results.length) {
+    const child = results[index]
+
+    // Add eols before nodes, except if this is a loose, first paragraph.
+    if (
+      loose ||
+      index !== 0 ||
+      child.type !== 'element' ||
+      child.tagName !== 'p'
+    ) {
+      children.push({type: 'text', value: '\n'})
+    }
+
+    if (child.type === 'element' && child.tagName === 'p' && !loose) {
+      children.push(...child.children)
+    } else {
+      children.push(child)
+    }
+  }
+
+  const tail = results[results.length - 1]
+
+  // Add a final eol.
+  if (tail && (loose || tail.type !== 'element' || tail.tagName !== 'p')) {
+    children.push({type: 'text', value: '\n'})
+  }
+
+  /** @type {Element} */
+  const result = {type: 'element', tagName: 'li', properties, children}
+  state.patch(node, result)
+  return state.applyData(node, result)
+}
+
+/**
+ * @param {Parents} node
+ * @return {Boolean}
+ */
+function listLoose(node) {
+  let loose = false
+  if (node.type === 'list') {
+    loose = node.spread || false
+    const children = node.children
+    let index = -1
+
+    while (!loose && ++index < children.length) {
+      loose = listItemLoose(children[index])
+    }
+  }
+
+  return loose
+}
+
+/**
+ * @param {ListItem} node
+ * @return {Boolean}
+ */
+function listItemLoose(node) {
+  const spread = node.spread
+
+  return spread === null || spread === undefined
+    ? node.children.length > 1
+    : spread
+}
+
+
+/***/ }),
+
+/***/ 90722:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   p: () => (/* binding */ list)
+/* harmony export */ });
+/**
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('hast').Properties} Properties
+ * @typedef {import('mdast').List} List
+ * @typedef {import('../state.js').State} State
+ */
+
+// Make VS Code show references to the above types.
+''
+
+/**
+ * Turn an mdast `list` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {List} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
+ */
+function list(state, node) {
+  /** @type {Properties} */
+  const properties = {}
+  const results = state.all(node)
+  let index = -1
+
+  if (typeof node.start === 'number' && node.start !== 1) {
+    properties.start = node.start
+  }
+
+  // Like GitHub, add a class for custom styling.
+  while (++index < results.length) {
+    const child = results[index]
+
+    if (
+      child.type === 'element' &&
+      child.tagName === 'li' &&
+      child.properties &&
+      Array.isArray(child.properties.className) &&
+      child.properties.className.includes('task-list-item')
+    ) {
+      properties.className = ['contains-task-list']
+      break
+    }
+  }
+
+  /** @type {Element} */
+  const result = {
+    type: 'element',
+    tagName: node.ordered ? 'ol' : 'ul',
+    properties,
+    children: state.wrap(results, true)
+  }
+  state.patch(node, result)
+  return state.applyData(node, result)
+}
+
+
+/***/ }),
+
+/***/ 68522:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   F: () => (/* binding */ paragraph)
+/* harmony export */ });
+/**
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('mdast').Paragraph} Paragraph
+ * @typedef {import('../state.js').State} State
+ */
+
+// Make VS Code show references to the above types.
+''
+
+/**
+ * Turn an mdast `paragraph` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {Paragraph} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
+ */
+function paragraph(state, node) {
+  /** @type {Element} */
+  const result = {
+    type: 'element',
+    tagName: 'p',
+    properties: {},
+    children: state.all(node)
+  }
+  state.patch(node, result)
+  return state.applyData(node, result)
+}
+
+
+/***/ }),
+
+/***/ 4854:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   z: () => (/* binding */ root)
+/* harmony export */ });
+/**
+ * @typedef {import('hast').Parents} HastParents
+ * @typedef {import('hast').Root} HastRoot
+ * @typedef {import('mdast').Root} MdastRoot
+ * @typedef {import('../state.js').State} State
+ */
+
+// Make VS Code show references to the above types.
+''
+
+/**
+ * Turn an mdast `root` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {MdastRoot} node
+ *   mdast node.
+ * @returns {HastParents}
+ *   hast node.
+ */
+function root(state, node) {
+  /** @type {HastRoot} */
+  const result = {type: 'root', children: state.wrap(state.all(node))}
+  state.patch(node, result)
+  return state.applyData(node, result)
+}
+
+
+/***/ }),
+
+/***/ 46789:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   k: () => (/* binding */ strong)
+/* harmony export */ });
+/**
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('mdast').Strong} Strong
+ * @typedef {import('../state.js').State} State
+ */
+
+// Make VS Code show references to the above types.
+''
+
+/**
+ * Turn an mdast `strong` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {Strong} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
+ */
+function strong(state, node) {
+  /** @type {Element} */
+  const result = {
+    type: 'element',
+    tagName: 'strong',
+    properties: {},
+    children: state.all(node)
+  }
+  state.patch(node, result)
+  return state.applyData(node, result)
+}
+
+
+/***/ }),
+
+/***/ 97993:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   x: () => (/* binding */ tableCell)
+/* harmony export */ });
+/**
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('mdast').TableCell} TableCell
+ * @typedef {import('../state.js').State} State
+ */
+
+// Make VS Code show references to the above types.
+''
+
+/**
+ * Turn an mdast `tableCell` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {TableCell} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
+ */
+function tableCell(state, node) {
+  // Note: this function is normally not called: see `table-row` for how rows
+  // and their cells are compiled.
+  /** @type {Element} */
+  const result = {
+    type: 'element',
+    tagName: 'td', // Assume body cell.
+    properties: {},
+    children: state.all(node)
+  }
+  state.patch(node, result)
+  return state.applyData(node, result)
+}
+
+
+/***/ }),
+
+/***/ 40333:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   j: () => (/* binding */ tableRow)
+/* harmony export */ });
+/**
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('hast').ElementContent} ElementContent
+ * @typedef {import('hast').Properties} Properties
+ * @typedef {import('mdast').Parents} Parents
+ * @typedef {import('mdast').TableRow} TableRow
+ * @typedef {import('../state.js').State} State
+ */
+
+// Make VS Code show references to the above types.
+''
+
+/**
+ * Turn an mdast `tableRow` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {TableRow} node
+ *   mdast node.
+ * @param {Parents | undefined} parent
+ *   Parent of `node`.
+ * @returns {Element}
+ *   hast node.
+ */
+function tableRow(state, node, parent) {
+  const siblings = parent ? parent.children : undefined
+  // Generate a body row when without parent.
+  const rowIndex = siblings ? siblings.indexOf(node) : 1
+  const tagName = rowIndex === 0 ? 'th' : 'td'
+  // To do: option to use `style`?
+  const align = parent && parent.type === 'table' ? parent.align : undefined
+  const length = align ? align.length : node.children.length
+  let cellIndex = -1
+  /** @type {Array<ElementContent>} */
+  const cells = []
+
+  while (++cellIndex < length) {
+    // Note: can also be undefined.
+    const cell = node.children[cellIndex]
+    /** @type {Properties} */
+    const properties = {}
+    const alignValue = align ? align[cellIndex] : undefined
+
+    if (alignValue) {
+      properties.align = alignValue
+    }
+
+    /** @type {Element} */
+    let result = {type: 'element', tagName, properties, children: []}
+
+    if (cell) {
+      result.children = state.all(cell)
+      state.patch(cell, result)
+      result = state.applyData(cell, result)
+    }
+
+    cells.push(result)
+  }
+
+  /** @type {Element} */
+  const result = {
+    type: 'element',
+    tagName: 'tr',
+    properties: {},
+    children: state.wrap(cells, true)
+  }
+  state.patch(node, result)
+  return state.applyData(node, result)
+}
+
+
+/***/ }),
+
+/***/ 4196:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   t: () => (/* binding */ table)
+/* harmony export */ });
+/* harmony import */ var unist_util_position__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(83320);
+/**
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('mdast').Table} Table
+ * @typedef {import('../state.js').State} State
+ */
+
+
+
+/**
+ * Turn an mdast `table` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {Table} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
+ */
+function table(state, node) {
+  const rows = state.all(node)
+  const firstRow = rows.shift()
+  /** @type {Array<Element>} */
+  const tableContent = []
+
+  if (firstRow) {
+    /** @type {Element} */
+    const head = {
+      type: 'element',
+      tagName: 'thead',
+      properties: {},
+      children: state.wrap([firstRow], true)
+    }
+    state.patch(node.children[0], head)
+    tableContent.push(head)
+  }
+
+  if (rows.length > 0) {
+    /** @type {Element} */
+    const body = {
+      type: 'element',
+      tagName: 'tbody',
+      properties: {},
+      children: state.wrap(rows, true)
+    }
+
+    const start = (0,unist_util_position__WEBPACK_IMPORTED_MODULE_0__/* .pointStart */ .PW)(node.children[1])
+    const end = (0,unist_util_position__WEBPACK_IMPORTED_MODULE_0__/* .pointEnd */ .Y)(node.children[node.children.length - 1])
+    if (start && end) body.position = {start, end}
+    tableContent.push(body)
+  }
+
+  /** @type {Element} */
+  const result = {
+    type: 'element',
+    tagName: 'table',
+    properties: {},
+    children: state.wrap(tableContent, true)
+  }
+  state.patch(node, result)
+  return state.applyData(node, result)
+}
+
+
+/***/ }),
+
+/***/ 72441:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Q: () => (/* binding */ text)
+/* harmony export */ });
+/* harmony import */ var trim_lines__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(60549);
+/**
+ * @typedef {import('hast').Element} HastElement
+ * @typedef {import('hast').Text} HastText
+ * @typedef {import('mdast').Text} MdastText
+ * @typedef {import('../state.js').State} State
+ */
+
+
+
+/**
+ * Turn an mdast `text` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {MdastText} node
+ *   mdast node.
+ * @returns {HastElement | HastText}
+ *   hast node.
+ */
+function text(state, node) {
+  /** @type {HastText} */
+  const result = {type: 'text', value: (0,trim_lines__WEBPACK_IMPORTED_MODULE_0__/* .trimLines */ .E)(String(node.value))}
+  state.patch(node, result)
+  return state.applyData(node, result)
+}
+
+
+/***/ }),
+
+/***/ 33231:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   V: () => (/* binding */ thematicBreak)
+/* harmony export */ });
+/**
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('mdast').ThematicBreak} ThematicBreak
+ * @typedef {import('../state.js').State} State
+ */
+
+// Make VS Code show references to the above types.
+''
+
+/**
+ * Turn an mdast `thematicBreak` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {ThematicBreak} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
+ */
+function thematicBreak(state, node) {
+  /** @type {Element} */
+  const result = {
+    type: 'element',
+    tagName: 'hr',
+    properties: {},
+    children: []
+  }
+  state.patch(node, result)
+  return state.applyData(node, result)
+}
+
+
+/***/ }),
+
+/***/ 93888:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   _: () => (/* binding */ toHast)
+/* harmony export */ });
+/* harmony import */ var devlop__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(69820);
+/* harmony import */ var _footer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(95357);
+/* harmony import */ var _state_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(71393);
+/**
+ * @typedef {import('hast').Nodes} HastNodes
+ * @typedef {import('mdast').Nodes} MdastNodes
+ * @typedef {import('./state.js').Options} Options
+ */
+
+
+
+
+
+/**
+ * Transform mdast to hast.
+ *
+ * ##### Notes
+ *
+ * ###### HTML
+ *
+ * Raw HTML is available in mdast as `html` nodes and can be embedded in hast
+ * as semistandard `raw` nodes.
+ * Most utilities ignore `raw` nodes but two notable ones don’t:
+ *
+ * *   `hast-util-to-html` also has an option `allowDangerousHtml` which will
+ *     output the raw HTML.
+ *     This is typically discouraged as noted by the option name but is useful
+ *     if you completely trust authors
+ * *   `hast-util-raw` can handle the raw embedded HTML strings by parsing them
+ *     into standard hast nodes (`element`, `text`, etc).
+ *     This is a heavy task as it needs a full HTML parser, but it is the only
+ *     way to support untrusted content
+ *
+ * ###### Footnotes
+ *
+ * Many options supported here relate to footnotes.
+ * Footnotes are not specified by CommonMark, which we follow by default.
+ * They are supported by GitHub, so footnotes can be enabled in markdown with
+ * `mdast-util-gfm`.
+ *
+ * The options `footnoteBackLabel` and `footnoteLabel` define natural language
+ * that explains footnotes, which is hidden for sighted users but shown to
+ * assistive technology.
+ * When your page is not in English, you must define translated values.
+ *
+ * Back references use ARIA attributes, but the section label itself uses a
+ * heading that is hidden with an `sr-only` class.
+ * To show it to sighted users, define different attributes in
+ * `footnoteLabelProperties`.
+ *
+ * ###### Clobbering
+ *
+ * Footnotes introduces a problem, as it links footnote calls to footnote
+ * definitions on the page through `id` attributes generated from user content,
+ * which results in DOM clobbering.
+ *
+ * DOM clobbering is this:
+ *
+ * ```html
+ * <p id=x></p>
+ * <script>alert(x) // `x` now refers to the DOM `p#x` element</script>
+ * ```
+ *
+ * Elements by their ID are made available by browsers on the `window` object,
+ * which is a security risk.
+ * Using a prefix solves this problem.
+ *
+ * More information on how to handle clobbering and the prefix is explained in
+ * Example: headings (DOM clobbering) in `rehype-sanitize`.
+ *
+ * ###### Unknown nodes
+ *
+ * Unknown nodes are nodes with a type that isn’t in `handlers` or `passThrough`.
+ * The default behavior for unknown nodes is:
+ *
+ * *   when the node has a `value` (and doesn’t have `data.hName`,
+ *     `data.hProperties`, or `data.hChildren`, see later), create a hast `text`
+ *     node
+ * *   otherwise, create a `<div>` element (which could be changed with
+ *     `data.hName`), with its children mapped from mdast to hast as well
+ *
+ * This behavior can be changed by passing an `unknownHandler`.
+ *
+ * @param {MdastNodes} tree
+ *   mdast tree.
+ * @param {Options | null | undefined} [options]
+ *   Configuration (optional).
+ * @returns {HastNodes}
+ *   hast tree.
+ */
+function toHast(tree, options) {
+  const state = (0,_state_js__WEBPACK_IMPORTED_MODULE_0__/* .createState */ .u)(tree, options)
+  const node = state.one(tree, undefined)
+  const foot = (0,_footer_js__WEBPACK_IMPORTED_MODULE_1__/* .footer */ .qr)(state)
+  /** @type {HastNodes} */
+  const result = Array.isArray(node)
+    ? {type: 'root', children: node}
+    : node || {type: 'root', children: []}
+
+  if (foot) {
+    // If there’s a footer, there were definitions, meaning block
+    // content.
+    // So `result` is a parent node.
+    (0,devlop__WEBPACK_IMPORTED_MODULE_2__.ok)('children' in result)
+    result.children.push({type: 'text', value: '\n'}, foot)
+  }
+
+  return result
+}
+
+
+/***/ }),
+
+/***/ 81272:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   r: () => (/* binding */ revert)
+/* harmony export */ });
+/**
+ * @typedef {import('hast').ElementContent} ElementContent
+ *
+ * @typedef {import('mdast').Nodes} Nodes
+ * @typedef {import('mdast').Reference} Reference
+ *
+ * @typedef {import('./state.js').State} State
+ */
+
+// Make VS Code show references to the above types.
+''
+
+/**
+ * Return the content of a reference without definition as plain text.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {Extract<Nodes, Reference>} node
+ *   Reference node (image, link).
+ * @returns {Array<ElementContent>}
+ *   hast content.
+ */
+function revert(state, node) {
+  const subtype = node.referenceType
+  let suffix = ']'
+
+  if (subtype === 'collapsed') {
+    suffix += '[]'
+  } else if (subtype === 'full') {
+    suffix += '[' + (node.label || node.identifier) + ']'
+  }
+
+  if (node.type === 'imageReference') {
+    return [{type: 'text', value: '![' + node.alt + suffix}]
+  }
+
+  const contents = state.all(node)
+  const head = contents[0]
+
+  if (head && head.type === 'text') {
+    head.value = '[' + head.value
+  } else {
+    contents.unshift({type: 'text', value: '['})
+  }
+
+  const tail = contents[contents.length - 1]
+
+  if (tail && tail.type === 'text') {
+    tail.value += suffix
+  } else {
+    contents.push({type: 'text', value: suffix})
+  }
+
+  return contents
+}
+
+
+/***/ }),
+
+/***/ 71393:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   u: () => (/* binding */ createState)
+/* harmony export */ });
+/* unused harmony export wrap */
+/* harmony import */ var _ungap_structured_clone__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(93052);
+/* harmony import */ var unist_util_visit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(14426);
+/* harmony import */ var unist_util_position__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(83320);
+/* harmony import */ var _handlers_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(88008);
+/**
+ * @typedef {import('hast').Element} HastElement
+ * @typedef {import('hast').ElementContent} HastElementContent
+ * @typedef {import('hast').Nodes} HastNodes
+ * @typedef {import('hast').Properties} HastProperties
+ * @typedef {import('hast').RootContent} HastRootContent
+ * @typedef {import('hast').Text} HastText
+ *
+ * @typedef {import('mdast').Definition} MdastDefinition
+ * @typedef {import('mdast').FootnoteDefinition} MdastFootnoteDefinition
+ * @typedef {import('mdast').Nodes} MdastNodes
+ * @typedef {import('mdast').Parents} MdastParents
+ *
+ * @typedef {import('vfile').VFile} VFile
+ *
+ * @typedef {import('./footer.js').FootnoteBackContentTemplate} FootnoteBackContentTemplate
+ * @typedef {import('./footer.js').FootnoteBackLabelTemplate} FootnoteBackLabelTemplate
+ */
+
+/**
+ * @callback Handler
+ *   Handle a node.
+ * @param {State} state
+ *   Info passed around.
+ * @param {any} node
+ *   mdast node to handle.
+ * @param {MdastParents | undefined} parent
+ *   Parent of `node`.
+ * @returns {Array<HastElementContent> | HastElementContent | undefined}
+ *   hast node.
+ *
+ * @typedef {Partial<Record<MdastNodes['type'], Handler>>} Handlers
+ *   Handle nodes.
+ *
+ * @typedef Options
+ *   Configuration (optional).
+ * @property {boolean | null | undefined} [allowDangerousHtml=false]
+ *   Whether to persist raw HTML in markdown in the hast tree (default:
+ *   `false`).
+ * @property {string | null | undefined} [clobberPrefix='user-content-']
+ *   Prefix to use before the `id` property on footnotes to prevent them from
+ *   *clobbering* (default: `'user-content-'`).
+ *
+ *   Pass `''` for trusted markdown and when you are careful with
+ *   polyfilling.
+ *   You could pass a different prefix.
+ *
+ *   DOM clobbering is this:
+ *
+ *   ```html
+ *   <p id="x"></p>
+ *   <script>alert(x) // `x` now refers to the `p#x` DOM element</script>
+ *   ```
+ *
+ *   The above example shows that elements are made available by browsers, by
+ *   their ID, on the `window` object.
+ *   This is a security risk because you might be expecting some other variable
+ *   at that place.
+ *   It can also break polyfills.
+ *   Using a prefix solves these problems.
+ * @property {VFile | null | undefined} [file]
+ *   Corresponding virtual file representing the input document (optional).
+ * @property {FootnoteBackContentTemplate | string | null | undefined} [footnoteBackContent]
+ *   Content of the backreference back to references (default: `defaultFootnoteBackContent`).
+ *
+ *   The default value is:
+ *
+ *   ```js
+ *   function defaultFootnoteBackContent(_, rereferenceIndex) {
+ *     const result = [{type: 'text', value: '↩'}]
+ *
+ *     if (rereferenceIndex > 1) {
+ *       result.push({
+ *         type: 'element',
+ *         tagName: 'sup',
+ *         properties: {},
+ *         children: [{type: 'text', value: String(rereferenceIndex)}]
+ *       })
+ *     }
+ *
+ *     return result
+ *   }
+ *   ```
+ *
+ *   This content is used in the `a` element of each backreference (the `↩`
+ *   links).
+ * @property {FootnoteBackLabelTemplate | string | null | undefined} [footnoteBackLabel]
+ *   Label to describe the backreference back to references (default:
+ *   `defaultFootnoteBackLabel`).
+ *
+ *   The default value is:
+ *
+ *   ```js
+ *   function defaultFootnoteBackLabel(referenceIndex, rereferenceIndex) {
+ *    return (
+ *      'Back to reference ' +
+ *      (referenceIndex + 1) +
+ *      (rereferenceIndex > 1 ? '-' + rereferenceIndex : '')
+ *    )
+ *   }
+ *   ```
+ *
+ *   Change it when the markdown is not in English.
+ *
+ *   This label is used in the `ariaLabel` property on each backreference
+ *   (the `↩` links).
+ *   It affects users of assistive technology.
+ * @property {string | null | undefined} [footnoteLabel='Footnotes']
+ *   Textual label to use for the footnotes section (default: `'Footnotes'`).
+ *
+ *   Change it when the markdown is not in English.
+ *
+ *   This label is typically hidden visually (assuming a `sr-only` CSS class
+ *   is defined that does that) and so affects screen readers only.
+ *   If you do have such a class, but want to show this section to everyone,
+ *   pass different properties with the `footnoteLabelProperties` option.
+ * @property {HastProperties | null | undefined} [footnoteLabelProperties={className: ['sr-only']}]
+ *   Properties to use on the footnote label (default: `{className:
+ *   ['sr-only']}`).
+ *
+ *   Change it to show the label and add other properties.
+ *
+ *   This label is typically hidden visually (assuming an `sr-only` CSS class
+ *   is defined that does that) and so affects screen readers only.
+ *   If you do have such a class, but want to show this section to everyone,
+ *   pass an empty string.
+ *   You can also add different properties.
+ *
+ *   > 👉 **Note**: `id: 'footnote-label'` is always added, because footnote
+ *   > calls use it with `aria-describedby` to provide an accessible label.
+ * @property {string | null | undefined} [footnoteLabelTagName='h2']
+ *   HTML tag name to use for the footnote label element (default: `'h2'`).
+ *
+ *   Change it to match your document structure.
+ *
+ *   This label is typically hidden visually (assuming a `sr-only` CSS class
+ *   is defined that does that) and so affects screen readers only.
+ *   If you do have such a class, but want to show this section to everyone,
+ *   pass different properties with the `footnoteLabelProperties` option.
+ * @property {Handlers | null | undefined} [handlers]
+ *   Extra handlers for nodes (optional).
+ * @property {Array<MdastNodes['type']> | null | undefined} [passThrough]
+ *   List of custom mdast node types to pass through (keep) in hast (note that
+ *   the node itself is passed, but eventual children are transformed)
+ *   (optional).
+ * @property {Handler | null | undefined} [unknownHandler]
+ *   Handler for all unknown nodes (optional).
+ *
+ * @typedef State
+ *   Info passed around.
+ * @property {(node: MdastNodes) => Array<HastElementContent>} all
+ *   Transform the children of an mdast parent to hast.
+ * @property {<Type extends HastNodes>(from: MdastNodes, to: Type) => HastElement | Type} applyData
+ *   Honor the `data` of `from`, and generate an element instead of `node`.
+ * @property {Map<string, MdastDefinition>} definitionById
+ *   Definitions by their identifier.
+ * @property {Map<string, MdastFootnoteDefinition>} footnoteById
+ *   Footnote definitions by their identifier.
+ * @property {Map<string, number>} footnoteCounts
+ *   Counts for how often the same footnote was called.
+ * @property {Array<string>} footnoteOrder
+ *   Identifiers of order when footnote calls first appear in tree order.
+ * @property {Handlers} handlers
+ *   Applied handlers.
+ * @property {(node: MdastNodes, parent: MdastParents | undefined) => Array<HastElementContent> | HastElementContent | undefined} one
+ *   Transform an mdast node to hast.
+ * @property {Options} options
+ *   Configuration.
+ * @property {(from: MdastNodes, node: HastNodes) => undefined} patch
+ *   Copy a node’s positional info.
+ * @property {<Type extends HastRootContent>(nodes: Array<Type>, loose?: boolean | undefined) => Array<HastText | Type>} wrap
+ *   Wrap `nodes` with line endings between each node, adds initial/final line endings when `loose`.
+ */
+
+
+
+
+
+
+const own = {}.hasOwnProperty
+
+/** @type {Options} */
+const emptyOptions = {}
+
+/**
+ * Create `state` from an mdast tree.
+ *
+ * @param {MdastNodes} tree
+ *   mdast node to transform.
+ * @param {Options | null | undefined} [options]
+ *   Configuration (optional).
+ * @returns {State}
+ *   `state` function.
+ */
+function createState(tree, options) {
+  const settings = options || emptyOptions
+  /** @type {Map<string, MdastDefinition>} */
+  const definitionById = new Map()
+  /** @type {Map<string, MdastFootnoteDefinition>} */
+  const footnoteById = new Map()
+  /** @type {Map<string, number>} */
+  const footnoteCounts = new Map()
+  /** @type {Handlers} */
+  // @ts-expect-error: the root handler returns a root.
+  // Hard to type.
+  const handlers = {..._handlers_index_js__WEBPACK_IMPORTED_MODULE_1__/* .handlers */ .Y, ...settings.handlers}
+
+  /** @type {State} */
+  const state = {
+    all,
+    applyData,
+    definitionById,
+    footnoteById,
+    footnoteCounts,
+    footnoteOrder: [],
+    handlers,
+    one,
+    options: settings,
+    patch,
+    wrap
+  }
+
+  ;(0,unist_util_visit__WEBPACK_IMPORTED_MODULE_2__/* .visit */ .YR)(tree, function (node) {
+    if (node.type === 'definition' || node.type === 'footnoteDefinition') {
+      const map = node.type === 'definition' ? definitionById : footnoteById
+      const id = String(node.identifier).toUpperCase()
+
+      // Mimick CM behavior of link definitions.
+      // See: <https://github.com/syntax-tree/mdast-util-definitions/blob/9032189/lib/index.js#L20-L21>.
+      if (!map.has(id)) {
+        // @ts-expect-error: node type matches map.
+        map.set(id, node)
+      }
+    }
+  })
+
+  return state
+
+  /**
+   * Transform an mdast node into a hast node.
+   *
+   * @param {MdastNodes} node
+   *   mdast node.
+   * @param {MdastParents | undefined} [parent]
+   *   Parent of `node`.
+   * @returns {Array<HastElementContent> | HastElementContent | undefined}
+   *   Resulting hast node.
+   */
+  function one(node, parent) {
+    const type = node.type
+    const handle = state.handlers[type]
+
+    if (own.call(state.handlers, type) && handle) {
+      return handle(state, node, parent)
+    }
+
+    if (state.options.passThrough && state.options.passThrough.includes(type)) {
+      if ('children' in node) {
+        const {children, ...shallow} = node
+        const result = (0,_ungap_structured_clone__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Ay)(shallow)
+        // @ts-expect-error: TS doesn’t understand…
+        result.children = state.all(node)
+        // @ts-expect-error: TS doesn’t understand…
+        return result
+      }
+
+      // @ts-expect-error: it’s custom.
+      return (0,_ungap_structured_clone__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Ay)(node)
+    }
+
+    const unknown = state.options.unknownHandler || defaultUnknownHandler
+
+    return unknown(state, node, parent)
+  }
+
+  /**
+   * Transform the children of an mdast node into hast nodes.
+   *
+   * @param {MdastNodes} parent
+   *   mdast node to compile
+   * @returns {Array<HastElementContent>}
+   *   Resulting hast nodes.
+   */
+  function all(parent) {
+    /** @type {Array<HastElementContent>} */
+    const values = []
+
+    if ('children' in parent) {
+      const nodes = parent.children
+      let index = -1
+      while (++index < nodes.length) {
+        const result = state.one(nodes[index], parent)
+
+        // To do: see if we van clean this? Can we merge texts?
+        if (result) {
+          if (index && nodes[index - 1].type === 'break') {
+            if (!Array.isArray(result) && result.type === 'text') {
+              result.value = trimMarkdownSpaceStart(result.value)
+            }
+
+            if (!Array.isArray(result) && result.type === 'element') {
+              const head = result.children[0]
+
+              if (head && head.type === 'text') {
+                head.value = trimMarkdownSpaceStart(head.value)
+              }
+            }
+          }
+
+          if (Array.isArray(result)) {
+            values.push(...result)
+          } else {
+            values.push(result)
+          }
+        }
+      }
+    }
+
+    return values
+  }
+}
+
+/**
+ * Copy a node’s positional info.
+ *
+ * @param {MdastNodes} from
+ *   mdast node to copy from.
+ * @param {HastNodes} to
+ *   hast node to copy into.
+ * @returns {undefined}
+ *   Nothing.
+ */
+function patch(from, to) {
+  if (from.position) to.position = (0,unist_util_position__WEBPACK_IMPORTED_MODULE_3__/* .position */ .G1)(from)
+}
+
+/**
+ * Honor the `data` of `from` and maybe generate an element instead of `to`.
+ *
+ * @template {HastNodes} Type
+ *   Node type.
+ * @param {MdastNodes} from
+ *   mdast node to use data from.
+ * @param {Type} to
+ *   hast node to change.
+ * @returns {HastElement | Type}
+ *   Nothing.
+ */
+function applyData(from, to) {
+  /** @type {HastElement | Type} */
+  let result = to
+
+  // Handle `data.hName`, `data.hProperties, `data.hChildren`.
+  if (from && from.data) {
+    const hName = from.data.hName
+    const hChildren = from.data.hChildren
+    const hProperties = from.data.hProperties
+
+    if (typeof hName === 'string') {
+      // Transforming the node resulted in an element with a different name
+      // than wanted:
+      if (result.type === 'element') {
+        result.tagName = hName
+      }
+      // Transforming the node resulted in a non-element, which happens for
+      // raw, text, and root nodes (unless custom handlers are passed).
+      // The intent of `hName` is to create an element, but likely also to keep
+      // the content around (otherwise: pass `hChildren`).
+      else {
+        /** @type {Array<HastElementContent>} */
+        // @ts-expect-error: assume no doctypes in `root`.
+        const children = 'children' in result ? result.children : [result]
+        result = {type: 'element', tagName: hName, properties: {}, children}
+      }
+    }
+
+    if (result.type === 'element' && hProperties) {
+      Object.assign(result.properties, (0,_ungap_structured_clone__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Ay)(hProperties))
+    }
+
+    if (
+      'children' in result &&
+      result.children &&
+      hChildren !== null &&
+      hChildren !== undefined
+    ) {
+      result.children = hChildren
+    }
+  }
+
+  return result
+}
+
+/**
+ * Transform an unknown node.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {MdastNodes} node
+ *   Unknown mdast node.
+ * @returns {HastElement | HastText}
+ *   Resulting hast node.
+ */
+function defaultUnknownHandler(state, node) {
+  const data = node.data || {}
+  /** @type {HastElement | HastText} */
+  const result =
+    'value' in node &&
+    !(own.call(data, 'hProperties') || own.call(data, 'hChildren'))
+      ? {type: 'text', value: node.value}
+      : {
+          type: 'element',
+          tagName: 'div',
+          properties: {},
+          children: state.all(node)
+        }
+
+  state.patch(node, result)
+  return state.applyData(node, result)
+}
+
+/**
+ * Wrap `nodes` with line endings between each node.
+ *
+ * @template {HastRootContent} Type
+ *   Node type.
+ * @param {Array<Type>} nodes
+ *   List of nodes to wrap.
+ * @param {boolean | undefined} [loose=false]
+ *   Whether to add line endings at start and end (default: `false`).
+ * @returns {Array<HastText | Type>}
+ *   Wrapped nodes.
+ */
+function wrap(nodes, loose) {
+  /** @type {Array<HastText | Type>} */
+  const result = []
+  let index = -1
+
+  if (loose) {
+    result.push({type: 'text', value: '\n'})
+  }
+
+  while (++index < nodes.length) {
+    if (index) result.push({type: 'text', value: '\n'})
+    result.push(nodes[index])
+  }
+
+  if (loose && nodes.length > 0) {
+    result.push({type: 'text', value: '\n'})
+  }
+
+  return result
+}
+
+/**
+ * Trim spaces and tabs at the start of `value`.
+ *
+ * @param {string} value
+ *   Value to trim.
+ * @returns {string}
+ *   Result.
+ */
+function trimMarkdownSpaceStart(value) {
+  let index = 0
+  let code = value.charCodeAt(index)
+
+  while (code === 9 || code === 32) {
+    index++
+    code = value.charCodeAt(index)
+  }
+
+  return value.slice(index)
+}
+
+
+/***/ }),
+
+/***/ 83320:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   G1: () => (/* binding */ position),
+/* harmony export */   PW: () => (/* binding */ pointStart),
+/* harmony export */   Y: () => (/* binding */ pointEnd)
+/* harmony export */ });
+/**
+ * @typedef {import('unist').Node} Node
+ * @typedef {import('unist').Point} Point
+ * @typedef {import('unist').Position} Position
+ */
+
+/**
+ * @typedef NodeLike
+ * @property {string} type
+ * @property {PositionLike | null | undefined} [position]
+ *
+ * @typedef PositionLike
+ * @property {PointLike | null | undefined} [start]
+ * @property {PointLike | null | undefined} [end]
+ *
+ * @typedef PointLike
+ * @property {number | null | undefined} [line]
+ * @property {number | null | undefined} [column]
+ * @property {number | null | undefined} [offset]
+ */
+
+/**
+ * Get the ending point of `node`.
+ *
+ * @param node
+ *   Node.
+ * @returns
+ *   Point.
+ */
+const pointEnd = point('end')
+
+/**
+ * Get the starting point of `node`.
+ *
+ * @param node
+ *   Node.
+ * @returns
+ *   Point.
+ */
+const pointStart = point('start')
+
+/**
+ * Get the positional info of `node`.
+ *
+ * @param {'end' | 'start'} type
+ *   Side.
+ * @returns
+ *   Getter.
+ */
+function point(type) {
+  return point
+
+  /**
+   * Get the point info of `node` at a bound side.
+   *
+   * @param {Node | NodeLike | null | undefined} [node]
+   * @returns {Point | undefined}
+   */
+  function point(node) {
+    const point = (node && node.position && node.position[type]) || {}
+
+    if (
+      typeof point.line === 'number' &&
+      point.line > 0 &&
+      typeof point.column === 'number' &&
+      point.column > 0
+    ) {
+      return {
+        line: point.line,
+        column: point.column,
+        offset:
+          typeof point.offset === 'number' && point.offset > -1
+            ? point.offset
+            : undefined
+      }
+    }
+  }
+}
+
+/**
+ * Get the positional info of `node`.
+ *
+ * @param {Node | NodeLike | null | undefined} [node]
+ *   Node.
+ * @returns {Position | undefined}
+ *   Position.
+ */
+function position(node) {
+  const start = pointStart(node)
+  const end = pointEnd(node)
+
+  if (start && end) {
+    return {start, end}
+  }
+}
+
+
+/***/ }),
+
+/***/ 13645:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   y: () => (/* binding */ color)
+/* harmony export */ });
+/**
+ * @param {string} d
+ * @returns {string}
+ */
+function color(d) {
+  return d
+}
+
+
+/***/ }),
+
+/***/ 65498:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   VG: () => (/* binding */ visitParents)
+/* harmony export */ });
+/* unused harmony exports CONTINUE, EXIT, SKIP */
+/* harmony import */ var unist_util_is__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15186);
+/* harmony import */ var unist_util_visit_parents_do_not_use_color__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13645);
+/**
+ * @typedef {import('unist').Node} UnistNode
+ * @typedef {import('unist').Parent} UnistParent
+ */
+
+/**
+ * @typedef {Exclude<import('unist-util-is').Test, undefined> | undefined} Test
+ *   Test from `unist-util-is`.
+ *
+ *   Note: we have remove and add `undefined`, because otherwise when generating
+ *   automatic `.d.ts` files, TS tries to flatten paths from a local perspective,
+ *   which doesn’t work when publishing on npm.
+ */
+
+/**
+ * @typedef {(
+ *   Fn extends (value: any) => value is infer Thing
+ *   ? Thing
+ *   : Fallback
+ * )} Predicate
+ *   Get the value of a type guard `Fn`.
+ * @template Fn
+ *   Value; typically function that is a type guard (such as `(x): x is Y`).
+ * @template Fallback
+ *   Value to yield if `Fn` is not a type guard.
+ */
+
+/**
+ * @typedef {(
+ *   Check extends null | undefined // No test.
+ *   ? Value
+ *   : Value extends {type: Check} // String (type) test.
+ *   ? Value
+ *   : Value extends Check // Partial test.
+ *   ? Value
+ *   : Check extends Function // Function test.
+ *   ? Predicate<Check, Value> extends Value
+ *     ? Predicate<Check, Value>
+ *     : never
+ *   : never // Some other test?
+ * )} MatchesOne
+ *   Check whether a node matches a primitive check in the type system.
+ * @template Value
+ *   Value; typically unist `Node`.
+ * @template Check
+ *   Value; typically `unist-util-is`-compatible test, but not arrays.
+ */
+
+/**
+ * @typedef {(
+ *   Check extends Array<any>
+ *   ? MatchesOne<Value, Check[keyof Check]>
+ *   : MatchesOne<Value, Check>
+ * )} Matches
+ *   Check whether a node matches a check in the type system.
+ * @template Value
+ *   Value; typically unist `Node`.
+ * @template Check
+ *   Value; typically `unist-util-is`-compatible test.
+ */
+
+/**
+ * @typedef {0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10} Uint
+ *   Number; capped reasonably.
+ */
+
+/**
+ * @typedef {I extends 0 ? 1 : I extends 1 ? 2 : I extends 2 ? 3 : I extends 3 ? 4 : I extends 4 ? 5 : I extends 5 ? 6 : I extends 6 ? 7 : I extends 7 ? 8 : I extends 8 ? 9 : 10} Increment
+ *   Increment a number in the type system.
+ * @template {Uint} [I=0]
+ *   Index.
+ */
+
+/**
+ * @typedef {(
+ *   Node extends UnistParent
+ *   ? Node extends {children: Array<infer Children>}
+ *     ? Child extends Children ? Node : never
+ *     : never
+ *   : never
+ * )} InternalParent
+ *   Collect nodes that can be parents of `Child`.
+ * @template {UnistNode} Node
+ *   All node types in a tree.
+ * @template {UnistNode} Child
+ *   Node to search for.
+ */
+
+/**
+ * @typedef {InternalParent<InclusiveDescendant<Tree>, Child>} Parent
+ *   Collect nodes in `Tree` that can be parents of `Child`.
+ * @template {UnistNode} Tree
+ *   All node types in a tree.
+ * @template {UnistNode} Child
+ *   Node to search for.
+ */
+
+/**
+ * @typedef {(
+ *   Depth extends Max
+ *   ? never
+ *   :
+ *     | InternalParent<Node, Child>
+ *     | InternalAncestor<Node, InternalParent<Node, Child>, Max, Increment<Depth>>
+ * )} InternalAncestor
+ *   Collect nodes in `Tree` that can be ancestors of `Child`.
+ * @template {UnistNode} Node
+ *   All node types in a tree.
+ * @template {UnistNode} Child
+ *   Node to search for.
+ * @template {Uint} [Max=10]
+ *   Max; searches up to this depth.
+ * @template {Uint} [Depth=0]
+ *   Current depth.
+ */
+
+/**
+ * @typedef {InternalAncestor<InclusiveDescendant<Tree>, Child>} Ancestor
+ *   Collect nodes in `Tree` that can be ancestors of `Child`.
+ * @template {UnistNode} Tree
+ *   All node types in a tree.
+ * @template {UnistNode} Child
+ *   Node to search for.
+ */
+
+/**
+ * @typedef {(
+ *   Tree extends UnistParent
+ *     ? Depth extends Max
+ *       ? Tree
+ *       : Tree | InclusiveDescendant<Tree['children'][number], Max, Increment<Depth>>
+ *     : Tree
+ * )} InclusiveDescendant
+ *   Collect all (inclusive) descendants of `Tree`.
+ *
+ *   > 👉 **Note**: for performance reasons, this seems to be the fastest way to
+ *   > recurse without actually running into an infinite loop, which the
+ *   > previous version did.
+ *   >
+ *   > Practically, a max of `2` is typically enough assuming a `Root` is
+ *   > passed, but it doesn’t improve performance.
+ *   > It gets higher with `List > ListItem > Table > TableRow > TableCell`.
+ *   > Using up to `10` doesn’t hurt or help either.
+ * @template {UnistNode} Tree
+ *   Tree type.
+ * @template {Uint} [Max=10]
+ *   Max; searches up to this depth.
+ * @template {Uint} [Depth=0]
+ *   Current depth.
+ */
+
+/**
+ * @typedef {'skip' | boolean} Action
+ *   Union of the action types.
+ *
+ * @typedef {number} Index
+ *   Move to the sibling at `index` next (after node itself is completely
+ *   traversed).
+ *
+ *   Useful if mutating the tree, such as removing the node the visitor is
+ *   currently on, or any of its previous siblings.
+ *   Results less than 0 or greater than or equal to `children.length` stop
+ *   traversing the parent.
+ *
+ * @typedef {[(Action | null | undefined | void)?, (Index | null | undefined)?]} ActionTuple
+ *   List with one or two values, the first an action, the second an index.
+ *
+ * @typedef {Action | ActionTuple | Index | null | undefined | void} VisitorResult
+ *   Any value that can be returned from a visitor.
+ */
+
+/**
+ * @callback Visitor
+ *   Handle a node (matching `test`, if given).
+ *
+ *   Visitors are free to transform `node`.
+ *   They can also transform the parent of node (the last of `ancestors`).
+ *
+ *   Replacing `node` itself, if `SKIP` is not returned, still causes its
+ *   descendants to be walked (which is a bug).
+ *
+ *   When adding or removing previous siblings of `node` (or next siblings, in
+ *   case of reverse), the `Visitor` should return a new `Index` to specify the
+ *   sibling to traverse after `node` is traversed.
+ *   Adding or removing next siblings of `node` (or previous siblings, in case
+ *   of reverse) is handled as expected without needing to return a new `Index`.
+ *
+ *   Removing the children property of an ancestor still results in them being
+ *   traversed.
+ * @param {Visited} node
+ *   Found node.
+ * @param {Array<VisitedParents>} ancestors
+ *   Ancestors of `node`.
+ * @returns {VisitorResult}
+ *   What to do next.
+ *
+ *   An `Index` is treated as a tuple of `[CONTINUE, Index]`.
+ *   An `Action` is treated as a tuple of `[Action]`.
+ *
+ *   Passing a tuple back only makes sense if the `Action` is `SKIP`.
+ *   When the `Action` is `EXIT`, that action can be returned.
+ *   When the `Action` is `CONTINUE`, `Index` can be returned.
+ * @template {UnistNode} [Visited=UnistNode]
+ *   Visited node type.
+ * @template {UnistParent} [VisitedParents=UnistParent]
+ *   Ancestor type.
+ */
+
+/**
+ * @typedef {Visitor<Matches<InclusiveDescendant<Tree>, Check>, Ancestor<Tree, Matches<InclusiveDescendant<Tree>, Check>>>} BuildVisitor
+ *   Build a typed `Visitor` function from a tree and a test.
+ *
+ *   It will infer which values are passed as `node` and which as `parents`.
+ * @template {UnistNode} [Tree=UnistNode]
+ *   Tree type.
+ * @template {Test} [Check=Test]
+ *   Test type.
+ */
+
+
+
+
+/** @type {Readonly<ActionTuple>} */
+const empty = []
+
+/**
+ * Continue traversing as normal.
+ */
+const CONTINUE = true
+
+/**
+ * Stop traversing immediately.
+ */
+const EXIT = false
+
+/**
+ * Do not traverse this node’s children.
+ */
+const SKIP = 'skip'
+
+/**
+ * Visit nodes, with ancestral information.
+ *
+ * This algorithm performs *depth-first* *tree traversal* in *preorder*
+ * (**NLR**) or if `reverse` is given, in *reverse preorder* (**NRL**).
+ *
+ * You can choose for which nodes `visitor` is called by passing a `test`.
+ * For complex tests, you should test yourself in `visitor`, as it will be
+ * faster and will have improved type information.
+ *
+ * Walking the tree is an intensive task.
+ * Make use of the return values of the visitor when possible.
+ * Instead of walking a tree multiple times, walk it once, use `unist-util-is`
+ * to check if a node matches, and then perform different operations.
+ *
+ * You can change the tree.
+ * See `Visitor` for more info.
+ *
+ * @overload
+ * @param {Tree} tree
+ * @param {Check} check
+ * @param {BuildVisitor<Tree, Check>} visitor
+ * @param {boolean | null | undefined} [reverse]
+ * @returns {undefined}
+ *
+ * @overload
+ * @param {Tree} tree
+ * @param {BuildVisitor<Tree>} visitor
+ * @param {boolean | null | undefined} [reverse]
+ * @returns {undefined}
+ *
+ * @param {UnistNode} tree
+ *   Tree to traverse.
+ * @param {Visitor | Test} test
+ *   `unist-util-is`-compatible test
+ * @param {Visitor | boolean | null | undefined} [visitor]
+ *   Handle each node.
+ * @param {boolean | null | undefined} [reverse]
+ *   Traverse in reverse preorder (NRL) instead of the default preorder (NLR).
+ * @returns {undefined}
+ *   Nothing.
+ *
+ * @template {UnistNode} Tree
+ *   Node type.
+ * @template {Test} Check
+ *   `unist-util-is`-compatible test.
+ */
+function visitParents(tree, test, visitor, reverse) {
+  /** @type {Test} */
+  let check
+
+  if (typeof test === 'function' && typeof visitor !== 'function') {
+    reverse = visitor
+    // @ts-expect-error no visitor given, so `visitor` is test.
+    visitor = test
+  } else {
+    // @ts-expect-error visitor given, so `test` isn’t a visitor.
+    check = test
+  }
+
+  const is = (0,unist_util_is__WEBPACK_IMPORTED_MODULE_0__/* .convert */ .C)(check)
+  const step = reverse ? -1 : 1
+
+  factory(tree, undefined, [])()
+
+  /**
+   * @param {UnistNode} node
+   * @param {number | undefined} index
+   * @param {Array<UnistParent>} parents
+   */
+  function factory(node, index, parents) {
+    const value = /** @type {Record<string, unknown>} */ (
+      node && typeof node === 'object' ? node : {}
+    )
+
+    if (typeof value.type === 'string') {
+      const name =
+        // `hast`
+        typeof value.tagName === 'string'
+          ? value.tagName
+          : // `xast`
+          typeof value.name === 'string'
+          ? value.name
+          : undefined
+
+      Object.defineProperty(visit, 'name', {
+        value:
+          'node (' + (0,unist_util_visit_parents_do_not_use_color__WEBPACK_IMPORTED_MODULE_1__/* .color */ .y)(node.type + (name ? '<' + name + '>' : '')) + ')'
+      })
+    }
+
+    return visit
+
+    function visit() {
+      /** @type {Readonly<ActionTuple>} */
+      let result = empty
+      /** @type {Readonly<ActionTuple>} */
+      let subresult
+      /** @type {number} */
+      let offset
+      /** @type {Array<UnistParent>} */
+      let grandparents
+
+      if (!test || is(node, index, parents[parents.length - 1] || undefined)) {
+        // @ts-expect-error: `visitor` is now a visitor.
+        result = toResult(visitor(node, parents))
+
+        if (result[0] === EXIT) {
+          return result
+        }
+      }
+
+      if ('children' in node && node.children) {
+        const nodeAsParent = /** @type {UnistParent} */ (node)
+
+        if (nodeAsParent.children && result[0] !== SKIP) {
+          offset = (reverse ? nodeAsParent.children.length : -1) + step
+          grandparents = parents.concat(nodeAsParent)
+
+          while (offset > -1 && offset < nodeAsParent.children.length) {
+            const child = nodeAsParent.children[offset]
+
+            subresult = factory(child, offset, grandparents)()
+
+            if (subresult[0] === EXIT) {
+              return subresult
+            }
+
+            offset =
+              typeof subresult[1] === 'number' ? subresult[1] : offset + step
+          }
+        }
+      }
+
+      return result
+    }
+  }
+}
+
+/**
+ * Turn a return value into a clean result.
+ *
+ * @param {VisitorResult} value
+ *   Valid return values from visitors.
+ * @returns {Readonly<ActionTuple>}
+ *   Clean result.
+ */
+function toResult(value) {
+  if (Array.isArray(value)) {
+    return value
+  }
+
+  if (typeof value === 'number') {
+    return [CONTINUE, value]
+  }
+
+  return value === null || value === undefined ? empty : [value]
+}
+
+
+/***/ }),
+
+/***/ 14426:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   YR: () => (/* binding */ visit)
+/* harmony export */ });
+/* harmony import */ var unist_util_visit_parents__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(65498);
+/**
+ * @typedef {import('unist').Node} UnistNode
+ * @typedef {import('unist').Parent} UnistParent
+ * @typedef {import('unist-util-visit-parents').VisitorResult} VisitorResult
+ */
+
+/**
+ * @typedef {Exclude<import('unist-util-is').Test, undefined> | undefined} Test
+ *   Test from `unist-util-is`.
+ *
+ *   Note: we have remove and add `undefined`, because otherwise when generating
+ *   automatic `.d.ts` files, TS tries to flatten paths from a local perspective,
+ *   which doesn’t work when publishing on npm.
+ */
+
+// To do: use types from `unist-util-visit-parents` when it’s released.
+
+/**
+ * @typedef {(
+ *   Fn extends (value: any) => value is infer Thing
+ *   ? Thing
+ *   : Fallback
+ * )} Predicate
+ *   Get the value of a type guard `Fn`.
+ * @template Fn
+ *   Value; typically function that is a type guard (such as `(x): x is Y`).
+ * @template Fallback
+ *   Value to yield if `Fn` is not a type guard.
+ */
+
+/**
+ * @typedef {(
+ *   Check extends null | undefined // No test.
+ *   ? Value
+ *   : Value extends {type: Check} // String (type) test.
+ *   ? Value
+ *   : Value extends Check // Partial test.
+ *   ? Value
+ *   : Check extends Function // Function test.
+ *   ? Predicate<Check, Value> extends Value
+ *     ? Predicate<Check, Value>
+ *     : never
+ *   : never // Some other test?
+ * )} MatchesOne
+ *   Check whether a node matches a primitive check in the type system.
+ * @template Value
+ *   Value; typically unist `Node`.
+ * @template Check
+ *   Value; typically `unist-util-is`-compatible test, but not arrays.
+ */
+
+/**
+ * @typedef {(
+ *   Check extends Array<any>
+ *   ? MatchesOne<Value, Check[keyof Check]>
+ *   : MatchesOne<Value, Check>
+ * )} Matches
+ *   Check whether a node matches a check in the type system.
+ * @template Value
+ *   Value; typically unist `Node`.
+ * @template Check
+ *   Value; typically `unist-util-is`-compatible test.
+ */
+
+/**
+ * @typedef {0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10} Uint
+ *   Number; capped reasonably.
+ */
+
+/**
+ * @typedef {I extends 0 ? 1 : I extends 1 ? 2 : I extends 2 ? 3 : I extends 3 ? 4 : I extends 4 ? 5 : I extends 5 ? 6 : I extends 6 ? 7 : I extends 7 ? 8 : I extends 8 ? 9 : 10} Increment
+ *   Increment a number in the type system.
+ * @template {Uint} [I=0]
+ *   Index.
+ */
+
+/**
+ * @typedef {(
+ *   Node extends UnistParent
+ *   ? Node extends {children: Array<infer Children>}
+ *     ? Child extends Children ? Node : never
+ *     : never
+ *   : never
+ * )} InternalParent
+ *   Collect nodes that can be parents of `Child`.
+ * @template {UnistNode} Node
+ *   All node types in a tree.
+ * @template {UnistNode} Child
+ *   Node to search for.
+ */
+
+/**
+ * @typedef {InternalParent<InclusiveDescendant<Tree>, Child>} Parent
+ *   Collect nodes in `Tree` that can be parents of `Child`.
+ * @template {UnistNode} Tree
+ *   All node types in a tree.
+ * @template {UnistNode} Child
+ *   Node to search for.
+ */
+
+/**
+ * @typedef {(
+ *   Depth extends Max
+ *   ? never
+ *   :
+ *     | InternalParent<Node, Child>
+ *     | InternalAncestor<Node, InternalParent<Node, Child>, Max, Increment<Depth>>
+ * )} InternalAncestor
+ *   Collect nodes in `Tree` that can be ancestors of `Child`.
+ * @template {UnistNode} Node
+ *   All node types in a tree.
+ * @template {UnistNode} Child
+ *   Node to search for.
+ * @template {Uint} [Max=10]
+ *   Max; searches up to this depth.
+ * @template {Uint} [Depth=0]
+ *   Current depth.
+ */
+
+/**
+ * @typedef {(
+ *   Tree extends UnistParent
+ *     ? Depth extends Max
+ *       ? Tree
+ *       : Tree | InclusiveDescendant<Tree['children'][number], Max, Increment<Depth>>
+ *     : Tree
+ * )} InclusiveDescendant
+ *   Collect all (inclusive) descendants of `Tree`.
+ *
+ *   > 👉 **Note**: for performance reasons, this seems to be the fastest way to
+ *   > recurse without actually running into an infinite loop, which the
+ *   > previous version did.
+ *   >
+ *   > Practically, a max of `2` is typically enough assuming a `Root` is
+ *   > passed, but it doesn’t improve performance.
+ *   > It gets higher with `List > ListItem > Table > TableRow > TableCell`.
+ *   > Using up to `10` doesn’t hurt or help either.
+ * @template {UnistNode} Tree
+ *   Tree type.
+ * @template {Uint} [Max=10]
+ *   Max; searches up to this depth.
+ * @template {Uint} [Depth=0]
+ *   Current depth.
+ */
+
+/**
+ * @callback Visitor
+ *   Handle a node (matching `test`, if given).
+ *
+ *   Visitors are free to transform `node`.
+ *   They can also transform `parent`.
+ *
+ *   Replacing `node` itself, if `SKIP` is not returned, still causes its
+ *   descendants to be walked (which is a bug).
+ *
+ *   When adding or removing previous siblings of `node` (or next siblings, in
+ *   case of reverse), the `Visitor` should return a new `Index` to specify the
+ *   sibling to traverse after `node` is traversed.
+ *   Adding or removing next siblings of `node` (or previous siblings, in case
+ *   of reverse) is handled as expected without needing to return a new `Index`.
+ *
+ *   Removing the children property of `parent` still results in them being
+ *   traversed.
+ * @param {Visited} node
+ *   Found node.
+ * @param {Visited extends UnistNode ? number | undefined : never} index
+ *   Index of `node` in `parent`.
+ * @param {Ancestor extends UnistParent ? Ancestor | undefined : never} parent
+ *   Parent of `node`.
+ * @returns {VisitorResult}
+ *   What to do next.
+ *
+ *   An `Index` is treated as a tuple of `[CONTINUE, Index]`.
+ *   An `Action` is treated as a tuple of `[Action]`.
+ *
+ *   Passing a tuple back only makes sense if the `Action` is `SKIP`.
+ *   When the `Action` is `EXIT`, that action can be returned.
+ *   When the `Action` is `CONTINUE`, `Index` can be returned.
+ * @template {UnistNode} [Visited=UnistNode]
+ *   Visited node type.
+ * @template {UnistParent} [Ancestor=UnistParent]
+ *   Ancestor type.
+ */
+
+/**
+ * @typedef {Visitor<Visited, Parent<Ancestor, Visited>>} BuildVisitorFromMatch
+ *   Build a typed `Visitor` function from a node and all possible parents.
+ *
+ *   It will infer which values are passed as `node` and which as `parent`.
+ * @template {UnistNode} Visited
+ *   Node type.
+ * @template {UnistParent} Ancestor
+ *   Parent type.
+ */
+
+/**
+ * @typedef {(
+ *   BuildVisitorFromMatch<
+ *     Matches<Descendant, Check>,
+ *     Extract<Descendant, UnistParent>
+ *   >
+ * )} BuildVisitorFromDescendants
+ *   Build a typed `Visitor` function from a list of descendants and a test.
+ *
+ *   It will infer which values are passed as `node` and which as `parent`.
+ * @template {UnistNode} Descendant
+ *   Node type.
+ * @template {Test} Check
+ *   Test type.
+ */
+
+/**
+ * @typedef {(
+ *   BuildVisitorFromDescendants<
+ *     InclusiveDescendant<Tree>,
+ *     Check
+ *   >
+ * )} BuildVisitor
+ *   Build a typed `Visitor` function from a tree and a test.
+ *
+ *   It will infer which values are passed as `node` and which as `parent`.
+ * @template {UnistNode} [Tree=UnistNode]
+ *   Node type.
+ * @template {Test} [Check=Test]
+ *   Test type.
+ */
+
+
+
+
+
+/**
+ * Visit nodes.
+ *
+ * This algorithm performs *depth-first* *tree traversal* in *preorder*
+ * (**NLR**) or if `reverse` is given, in *reverse preorder* (**NRL**).
+ *
+ * You can choose for which nodes `visitor` is called by passing a `test`.
+ * For complex tests, you should test yourself in `visitor`, as it will be
+ * faster and will have improved type information.
+ *
+ * Walking the tree is an intensive task.
+ * Make use of the return values of the visitor when possible.
+ * Instead of walking a tree multiple times, walk it once, use `unist-util-is`
+ * to check if a node matches, and then perform different operations.
+ *
+ * You can change the tree.
+ * See `Visitor` for more info.
+ *
+ * @overload
+ * @param {Tree} tree
+ * @param {Check} check
+ * @param {BuildVisitor<Tree, Check>} visitor
+ * @param {boolean | null | undefined} [reverse]
+ * @returns {undefined}
+ *
+ * @overload
+ * @param {Tree} tree
+ * @param {BuildVisitor<Tree>} visitor
+ * @param {boolean | null | undefined} [reverse]
+ * @returns {undefined}
+ *
+ * @param {UnistNode} tree
+ *   Tree to traverse.
+ * @param {Visitor | Test} testOrVisitor
+ *   `unist-util-is`-compatible test (optional, omit to pass a visitor).
+ * @param {Visitor | boolean | null | undefined} [visitorOrReverse]
+ *   Handle each node (when test is omitted, pass `reverse`).
+ * @param {boolean | null | undefined} [maybeReverse=false]
+ *   Traverse in reverse preorder (NRL) instead of the default preorder (NLR).
+ * @returns {undefined}
+ *   Nothing.
+ *
+ * @template {UnistNode} Tree
+ *   Node type.
+ * @template {Test} Check
+ *   `unist-util-is`-compatible test.
+ */
+function visit(tree, testOrVisitor, visitorOrReverse, maybeReverse) {
+  /** @type {boolean | null | undefined} */
+  let reverse
+  /** @type {Test} */
+  let test
+  /** @type {Visitor} */
+  let visitor
+
+  if (
+    typeof testOrVisitor === 'function' &&
+    typeof visitorOrReverse !== 'function'
+  ) {
+    test = undefined
+    visitor = testOrVisitor
+    reverse = visitorOrReverse
+  } else {
+    // @ts-expect-error: assume the overload with test was given.
+    test = testOrVisitor
+    // @ts-expect-error: assume the overload with test was given.
+    visitor = visitorOrReverse
+    reverse = maybeReverse
+  }
+
+  (0,unist_util_visit_parents__WEBPACK_IMPORTED_MODULE_0__/* .visitParents */ .VG)(tree, test, overload, reverse)
+
+  /**
+   * @param {UnistNode} node
+   * @param {Array<UnistParent>} parents
+   */
+  function overload(node, parents) {
+    const parent = parents[parents.length - 1]
+    const index = parent ? parent.children.indexOf(node) : undefined
+    return visitor(node, index, parent)
+  }
+}
+
+
+/***/ }),
+
+/***/ 76485:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   f: () => (/* binding */ attention)
+/* harmony export */ });
+/* harmony import */ var micromark_util_chunked__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(43890);
+/* harmony import */ var micromark_util_classify_character__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(66990);
+/* harmony import */ var micromark_util_resolve_all__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(23796);
+/**
+ * @typedef {import('micromark-util-types').Code} Code
+ * @typedef {import('micromark-util-types').Construct} Construct
+ * @typedef {import('micromark-util-types').Event} Event
+ * @typedef {import('micromark-util-types').Point} Point
+ * @typedef {import('micromark-util-types').Resolver} Resolver
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').Token} Token
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
+ */
+
+
+
+
+/** @type {Construct} */
+const attention = {
+  name: 'attention',
+  tokenize: tokenizeAttention,
+  resolveAll: resolveAllAttention
+}
+
+/**
+ * Take all events and resolve attention to emphasis or strong.
+ *
+ * @type {Resolver}
+ */
+// eslint-disable-next-line complexity
+function resolveAllAttention(events, context) {
+  let index = -1
+  /** @type {number} */
+  let open
+  /** @type {Token} */
+  let group
+  /** @type {Token} */
+  let text
+  /** @type {Token} */
+  let openingSequence
+  /** @type {Token} */
+  let closingSequence
+  /** @type {number} */
+  let use
+  /** @type {Array<Event>} */
+  let nextEvents
+  /** @type {number} */
+  let offset
+
+  // Walk through all events.
+  //
+  // Note: performance of this is fine on an mb of normal markdown, but it’s
+  // a bottleneck for malicious stuff.
+  while (++index < events.length) {
+    // Find a token that can close.
+    if (
+      events[index][0] === 'enter' &&
+      events[index][1].type === 'attentionSequence' &&
+      events[index][1]._close
+    ) {
+      open = index
+
+      // Now walk back to find an opener.
+      while (open--) {
+        // Find a token that can open the closer.
+        if (
+          events[open][0] === 'exit' &&
+          events[open][1].type === 'attentionSequence' &&
+          events[open][1]._open &&
+          // If the markers are the same:
+          context.sliceSerialize(events[open][1]).charCodeAt(0) ===
+            context.sliceSerialize(events[index][1]).charCodeAt(0)
+        ) {
+          // If the opening can close or the closing can open,
+          // and the close size *is not* a multiple of three,
+          // but the sum of the opening and closing size *is* multiple of three,
+          // then don’t match.
+          if (
+            (events[open][1]._close || events[index][1]._open) &&
+            (events[index][1].end.offset - events[index][1].start.offset) % 3 &&
+            !(
+              (events[open][1].end.offset -
+                events[open][1].start.offset +
+                events[index][1].end.offset -
+                events[index][1].start.offset) %
+              3
+            )
+          ) {
+            continue
+          }
+
+          // Number of markers to use from the sequence.
+          use =
+            events[open][1].end.offset - events[open][1].start.offset > 1 &&
+            events[index][1].end.offset - events[index][1].start.offset > 1
+              ? 2
+              : 1
+          const start = Object.assign({}, events[open][1].end)
+          const end = Object.assign({}, events[index][1].start)
+          movePoint(start, -use)
+          movePoint(end, use)
+          openingSequence = {
+            type: use > 1 ? 'strongSequence' : 'emphasisSequence',
+            start,
+            end: Object.assign({}, events[open][1].end)
+          }
+          closingSequence = {
+            type: use > 1 ? 'strongSequence' : 'emphasisSequence',
+            start: Object.assign({}, events[index][1].start),
+            end
+          }
+          text = {
+            type: use > 1 ? 'strongText' : 'emphasisText',
+            start: Object.assign({}, events[open][1].end),
+            end: Object.assign({}, events[index][1].start)
+          }
+          group = {
+            type: use > 1 ? 'strong' : 'emphasis',
+            start: Object.assign({}, openingSequence.start),
+            end: Object.assign({}, closingSequence.end)
+          }
+          events[open][1].end = Object.assign({}, openingSequence.start)
+          events[index][1].start = Object.assign({}, closingSequence.end)
+          nextEvents = []
+
+          // If there are more markers in the opening, add them before.
+          if (events[open][1].end.offset - events[open][1].start.offset) {
+            nextEvents = (0,micromark_util_chunked__WEBPACK_IMPORTED_MODULE_0__/* .push */ .V)(nextEvents, [
+              ['enter', events[open][1], context],
+              ['exit', events[open][1], context]
+            ])
+          }
+
+          // Opening.
+          nextEvents = (0,micromark_util_chunked__WEBPACK_IMPORTED_MODULE_0__/* .push */ .V)(nextEvents, [
+            ['enter', group, context],
+            ['enter', openingSequence, context],
+            ['exit', openingSequence, context],
+            ['enter', text, context]
+          ])
+
+          // Always populated by defaults.
+
+          // Between.
+          nextEvents = (0,micromark_util_chunked__WEBPACK_IMPORTED_MODULE_0__/* .push */ .V)(
+            nextEvents,
+            (0,micromark_util_resolve_all__WEBPACK_IMPORTED_MODULE_1__/* .resolveAll */ .W)(
+              context.parser.constructs.insideSpan.null,
+              events.slice(open + 1, index),
+              context
+            )
+          )
+
+          // Closing.
+          nextEvents = (0,micromark_util_chunked__WEBPACK_IMPORTED_MODULE_0__/* .push */ .V)(nextEvents, [
+            ['exit', text, context],
+            ['enter', closingSequence, context],
+            ['exit', closingSequence, context],
+            ['exit', group, context]
+          ])
+
+          // If there are more markers in the closing, add them after.
+          if (events[index][1].end.offset - events[index][1].start.offset) {
+            offset = 2
+            nextEvents = (0,micromark_util_chunked__WEBPACK_IMPORTED_MODULE_0__/* .push */ .V)(nextEvents, [
+              ['enter', events[index][1], context],
+              ['exit', events[index][1], context]
+            ])
+          } else {
+            offset = 0
+          }
+          (0,micromark_util_chunked__WEBPACK_IMPORTED_MODULE_0__/* .splice */ .m)(events, open - 1, index - open + 3, nextEvents)
+          index = open + nextEvents.length - offset - 2
+          break
+        }
+      }
+    }
+  }
+
+  // Remove remaining sequences.
+  index = -1
+  while (++index < events.length) {
+    if (events[index][1].type === 'attentionSequence') {
+      events[index][1].type = 'data'
+    }
+  }
+  return events
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeAttention(effects, ok) {
+  const attentionMarkers = this.parser.constructs.attentionMarkers.null
+  const previous = this.previous
+  const before = (0,micromark_util_classify_character__WEBPACK_IMPORTED_MODULE_2__/* .classifyCharacter */ .S)(previous)
+
+  /** @type {NonNullable<Code>} */
+  let marker
+  return start
+
+  /**
+   * Before a sequence.
+   *
+   * ```markdown
+   * > | **
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function start(code) {
+    marker = code
+    effects.enter('attentionSequence')
+    return inside(code)
+  }
+
+  /**
+   * In a sequence.
+   *
+   * ```markdown
+   * > | **
+   *     ^^
+   * ```
+   *
+   * @type {State}
+   */
+  function inside(code) {
+    if (code === marker) {
+      effects.consume(code)
+      return inside
+    }
+    const token = effects.exit('attentionSequence')
+
+    // To do: next major: move this to resolver, just like `markdown-rs`.
+    const after = (0,micromark_util_classify_character__WEBPACK_IMPORTED_MODULE_2__/* .classifyCharacter */ .S)(code)
+
+    // Always populated by defaults.
+
+    const open =
+      !after || (after === 2 && before) || attentionMarkers.includes(code)
+    const close =
+      !before || (before === 2 && after) || attentionMarkers.includes(previous)
+    token._open = Boolean(marker === 42 ? open : open && (before || !close))
+    token._close = Boolean(marker === 42 ? close : close && (after || !open))
+    return ok(code)
+  }
+}
+
+/**
+ * Move a point a bit.
+ *
+ * Note: `move` only works inside lines! It’s not possible to move past other
+ * chunks (replacement characters, tabs, or line endings).
+ *
+ * @param {Point} point
+ * @param {number} offset
+ * @returns {undefined}
+ */
+function movePoint(point, offset) {
+  point.column += offset
+  point.offset += offset
+  point._bufferIndex += offset
+}
+
+
+/***/ }),
+
+/***/ 53604:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   m: () => (/* binding */ autolink)
+/* harmony export */ });
+/* harmony import */ var micromark_util_character__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(57949);
+/**
+ * @typedef {import('micromark-util-types').Construct} Construct
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
+ */
+
+
+/** @type {Construct} */
+const autolink = {
+  name: 'autolink',
+  tokenize: tokenizeAutolink
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeAutolink(effects, ok, nok) {
+  let size = 0
+  return start
+
+  /**
+   * Start of an autolink.
+   *
+   * ```markdown
+   * > | a<https://example.com>b
+   *      ^
+   * > | a<user@example.com>b
+   *      ^
+   * ```
+   *
+   * @type {State}
+   */
+  function start(code) {
+    effects.enter('autolink')
+    effects.enter('autolinkMarker')
+    effects.consume(code)
+    effects.exit('autolinkMarker')
+    effects.enter('autolinkProtocol')
+    return open
+  }
+
+  /**
+   * After `<`, at protocol or atext.
+   *
+   * ```markdown
+   * > | a<https://example.com>b
+   *       ^
+   * > | a<user@example.com>b
+   *       ^
+   * ```
+   *
+   * @type {State}
+   */
+  function open(code) {
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiAlpha */ .CW)(code)) {
+      effects.consume(code)
+      return schemeOrEmailAtext
+    }
+    return emailAtext(code)
+  }
+
+  /**
+   * At second byte of protocol or atext.
+   *
+   * ```markdown
+   * > | a<https://example.com>b
+   *        ^
+   * > | a<user@example.com>b
+   *        ^
+   * ```
+   *
+   * @type {State}
+   */
+  function schemeOrEmailAtext(code) {
+    // ASCII alphanumeric and `+`, `-`, and `.`.
+    if (code === 43 || code === 45 || code === 46 || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiAlphanumeric */ .lV)(code)) {
+      // Count the previous alphabetical from `open` too.
+      size = 1
+      return schemeInsideOrEmailAtext(code)
+    }
+    return emailAtext(code)
+  }
+
+  /**
+   * In ambiguous protocol or atext.
+   *
+   * ```markdown
+   * > | a<https://example.com>b
+   *        ^
+   * > | a<user@example.com>b
+   *        ^
+   * ```
+   *
+   * @type {State}
+   */
+  function schemeInsideOrEmailAtext(code) {
+    if (code === 58) {
+      effects.consume(code)
+      size = 0
+      return urlInside
+    }
+
+    // ASCII alphanumeric and `+`, `-`, and `.`.
+    if (
+      (code === 43 || code === 45 || code === 46 || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiAlphanumeric */ .lV)(code)) &&
+      size++ < 32
+    ) {
+      effects.consume(code)
+      return schemeInsideOrEmailAtext
+    }
+    size = 0
+    return emailAtext(code)
+  }
+
+  /**
+   * After protocol, in URL.
+   *
+   * ```markdown
+   * > | a<https://example.com>b
+   *             ^
+   * ```
+   *
+   * @type {State}
+   */
+  function urlInside(code) {
+    if (code === 62) {
+      effects.exit('autolinkProtocol')
+      effects.enter('autolinkMarker')
+      effects.consume(code)
+      effects.exit('autolinkMarker')
+      effects.exit('autolink')
+      return ok
+    }
+
+    // ASCII control, space, or `<`.
+    if (code === null || code === 32 || code === 60 || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiControl */ .JQ)(code)) {
+      return nok(code)
+    }
+    effects.consume(code)
+    return urlInside
+  }
+
+  /**
+   * In email atext.
+   *
+   * ```markdown
+   * > | a<user.name@example.com>b
+   *              ^
+   * ```
+   *
+   * @type {State}
+   */
+  function emailAtext(code) {
+    if (code === 64) {
+      effects.consume(code)
+      return emailAtSignOrDot
+    }
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiAtext */ .cx)(code)) {
+      effects.consume(code)
+      return emailAtext
+    }
+    return nok(code)
+  }
+
+  /**
+   * In label, after at-sign or dot.
+   *
+   * ```markdown
+   * > | a<user.name@example.com>b
+   *                 ^       ^
+   * ```
+   *
+   * @type {State}
+   */
+  function emailAtSignOrDot(code) {
+    return (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiAlphanumeric */ .lV)(code) ? emailLabel(code) : nok(code)
+  }
+
+  /**
+   * In label, where `.` and `>` are allowed.
+   *
+   * ```markdown
+   * > | a<user.name@example.com>b
+   *                   ^
+   * ```
+   *
+   * @type {State}
+   */
+  function emailLabel(code) {
+    if (code === 46) {
+      effects.consume(code)
+      size = 0
+      return emailAtSignOrDot
+    }
+    if (code === 62) {
+      // Exit, then change the token type.
+      effects.exit('autolinkProtocol').type = 'autolinkEmail'
+      effects.enter('autolinkMarker')
+      effects.consume(code)
+      effects.exit('autolinkMarker')
+      effects.exit('autolink')
+      return ok
+    }
+    return emailValue(code)
+  }
+
+  /**
+   * In label, where `.` and `>` are *not* allowed.
+   *
+   * Though, this is also used in `emailLabel` to parse other values.
+   *
+   * ```markdown
+   * > | a<user.name@ex-ample.com>b
+   *                    ^
+   * ```
+   *
+   * @type {State}
+   */
+  function emailValue(code) {
+    // ASCII alphanumeric or `-`.
+    if ((code === 45 || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiAlphanumeric */ .lV)(code)) && size++ < 63) {
+      const next = code === 45 ? emailValue : emailLabel
+      effects.consume(code)
+      return next
+    }
+    return nok(code)
+  }
+}
+
+
+/***/ }),
+
+/***/ 35460:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   B: () => (/* binding */ blankLine)
+/* harmony export */ });
+/* harmony import */ var micromark_factory_space__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(77508);
+/* harmony import */ var micromark_util_character__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(57949);
+/**
+ * @typedef {import('micromark-util-types').Construct} Construct
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
+ */
+
+
+
+/** @type {Construct} */
+const blankLine = {
+  tokenize: tokenizeBlankLine,
+  partial: true
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeBlankLine(effects, ok, nok) {
+  return start
+
+  /**
+   * Start of blank line.
+   *
+   * > 👉 **Note**: `␠` represents a space character.
+   *
+   * ```markdown
+   * > | ␠␠␊
+   *     ^
+   * > | ␊
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function start(code) {
+    return (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownSpace */ .On)(code)
+      ? (0,micromark_factory_space__WEBPACK_IMPORTED_MODULE_1__/* .factorySpace */ .N)(effects, after, 'linePrefix')(code)
+      : after(code)
+  }
+
+  /**
+   * At eof/eol, after optional whitespace.
+   *
+   * > 👉 **Note**: `␠` represents a space character.
+   *
+   * ```markdown
+   * > | ␠␠␊
+   *       ^
+   * > | ␊
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function after(code) {
+    return code === null || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code) ? ok(code) : nok(code)
+  }
+}
+
+
+/***/ }),
+
+/***/ 94371:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   i: () => (/* binding */ blockQuote)
+/* harmony export */ });
+/* harmony import */ var micromark_factory_space__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(77508);
+/* harmony import */ var micromark_util_character__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(57949);
+/**
+ * @typedef {import('micromark-util-types').Construct} Construct
+ * @typedef {import('micromark-util-types').Exiter} Exiter
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
+ */
+
+
+
+/** @type {Construct} */
+const blockQuote = {
+  name: 'blockQuote',
+  tokenize: tokenizeBlockQuoteStart,
+  continuation: {
+    tokenize: tokenizeBlockQuoteContinuation
+  },
+  exit
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeBlockQuoteStart(effects, ok, nok) {
+  const self = this
+  return start
+
+  /**
+   * Start of block quote.
+   *
+   * ```markdown
+   * > | > a
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function start(code) {
+    if (code === 62) {
+      const state = self.containerState
+      if (!state.open) {
+        effects.enter('blockQuote', {
+          _container: true
+        })
+        state.open = true
+      }
+      effects.enter('blockQuotePrefix')
+      effects.enter('blockQuoteMarker')
+      effects.consume(code)
+      effects.exit('blockQuoteMarker')
+      return after
+    }
+    return nok(code)
+  }
+
+  /**
+   * After `>`, before optional whitespace.
+   *
+   * ```markdown
+   * > | > a
+   *      ^
+   * ```
+   *
+   * @type {State}
+   */
+  function after(code) {
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownSpace */ .On)(code)) {
+      effects.enter('blockQuotePrefixWhitespace')
+      effects.consume(code)
+      effects.exit('blockQuotePrefixWhitespace')
+      effects.exit('blockQuotePrefix')
+      return ok
+    }
+    effects.exit('blockQuotePrefix')
+    return ok(code)
+  }
+}
+
+/**
+ * Start of block quote continuation.
+ *
+ * ```markdown
+ *   | > a
+ * > | > b
+ *     ^
+ * ```
+ *
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeBlockQuoteContinuation(effects, ok, nok) {
+  const self = this
+  return contStart
+
+  /**
+   * Start of block quote continuation.
+   *
+   * Also used to parse the first block quote opening.
+   *
+   * ```markdown
+   *   | > a
+   * > | > b
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function contStart(code) {
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownSpace */ .On)(code)) {
+      // Always populated by defaults.
+
+      return (0,micromark_factory_space__WEBPACK_IMPORTED_MODULE_1__/* .factorySpace */ .N)(
+        effects,
+        contBefore,
+        'linePrefix',
+        self.parser.constructs.disable.null.includes('codeIndented')
+          ? undefined
+          : 4
+      )(code)
+    }
+    return contBefore(code)
+  }
+
+  /**
+   * At `>`, after optional whitespace.
+   *
+   * Also used to parse the first block quote opening.
+   *
+   * ```markdown
+   *   | > a
+   * > | > b
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function contBefore(code) {
+    return effects.attempt(blockQuote, ok, nok)(code)
+  }
+}
+
+/** @type {Exiter} */
+function exit(effects) {
+  effects.exit('blockQuote')
+}
+
+
+/***/ }),
+
+/***/ 30854:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   L: () => (/* binding */ characterEscape)
+/* harmony export */ });
+/* harmony import */ var micromark_util_character__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(57949);
+/**
+ * @typedef {import('micromark-util-types').Construct} Construct
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
+ */
+
+
+/** @type {Construct} */
+const characterEscape = {
+  name: 'characterEscape',
+  tokenize: tokenizeCharacterEscape
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeCharacterEscape(effects, ok, nok) {
+  return start
+
+  /**
+   * Start of character escape.
+   *
+   * ```markdown
+   * > | a\*b
+   *      ^
+   * ```
+   *
+   * @type {State}
+   */
+  function start(code) {
+    effects.enter('characterEscape')
+    effects.enter('escapeMarker')
+    effects.consume(code)
+    effects.exit('escapeMarker')
+    return inside
+  }
+
+  /**
+   * After `\`, at punctuation.
+   *
+   * ```markdown
+   * > | a\*b
+   *       ^
+   * ```
+   *
+   * @type {State}
+   */
+  function inside(code) {
+    // ASCII punctuation.
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiPunctuation */ .ol)(code)) {
+      effects.enter('characterEscapeValue')
+      effects.consume(code)
+      effects.exit('characterEscapeValue')
+      effects.exit('characterEscape')
+      return ok
+    }
+    return nok(code)
+  }
+}
+
+
+/***/ }),
+
+/***/ 66716:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   L: () => (/* binding */ characterReference)
+/* harmony export */ });
+/* harmony import */ var decode_named_character_reference__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(75731);
+/* harmony import */ var micromark_util_character__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(57949);
+/**
+ * @typedef {import('micromark-util-types').Code} Code
+ * @typedef {import('micromark-util-types').Construct} Construct
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
+ */
+
+
+
+/** @type {Construct} */
+const characterReference = {
+  name: 'characterReference',
+  tokenize: tokenizeCharacterReference
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeCharacterReference(effects, ok, nok) {
+  const self = this
+  let size = 0
+  /** @type {number} */
+  let max
+  /** @type {(code: Code) => boolean} */
+  let test
+  return start
+
+  /**
+   * Start of character reference.
+   *
+   * ```markdown
+   * > | a&amp;b
+   *      ^
+   * > | a&#123;b
+   *      ^
+   * > | a&#x9;b
+   *      ^
+   * ```
+   *
+   * @type {State}
+   */
+  function start(code) {
+    effects.enter('characterReference')
+    effects.enter('characterReferenceMarker')
+    effects.consume(code)
+    effects.exit('characterReferenceMarker')
+    return open
+  }
+
+  /**
+   * After `&`, at `#` for numeric references or alphanumeric for named
+   * references.
+   *
+   * ```markdown
+   * > | a&amp;b
+   *       ^
+   * > | a&#123;b
+   *       ^
+   * > | a&#x9;b
+   *       ^
+   * ```
+   *
+   * @type {State}
+   */
+  function open(code) {
+    if (code === 35) {
+      effects.enter('characterReferenceMarkerNumeric')
+      effects.consume(code)
+      effects.exit('characterReferenceMarkerNumeric')
+      return numeric
+    }
+    effects.enter('characterReferenceValue')
+    max = 31
+    test = micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiAlphanumeric */ .lV
+    return value(code)
+  }
+
+  /**
+   * After `#`, at `x` for hexadecimals or digit for decimals.
+   *
+   * ```markdown
+   * > | a&#123;b
+   *        ^
+   * > | a&#x9;b
+   *        ^
+   * ```
+   *
+   * @type {State}
+   */
+  function numeric(code) {
+    if (code === 88 || code === 120) {
+      effects.enter('characterReferenceMarkerHexadecimal')
+      effects.consume(code)
+      effects.exit('characterReferenceMarkerHexadecimal')
+      effects.enter('characterReferenceValue')
+      max = 6
+      test = micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiHexDigit */ .ok
+      return value
+    }
+    effects.enter('characterReferenceValue')
+    max = 7
+    test = micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiDigit */ .BM
+    return value(code)
+  }
+
+  /**
+   * After markers (`&#x`, `&#`, or `&`), in value, before `;`.
+   *
+   * The character reference kind defines what and how many characters are
+   * allowed.
+   *
+   * ```markdown
+   * > | a&amp;b
+   *       ^^^
+   * > | a&#123;b
+   *        ^^^
+   * > | a&#x9;b
+   *         ^
+   * ```
+   *
+   * @type {State}
+   */
+  function value(code) {
+    if (code === 59 && size) {
+      const token = effects.exit('characterReferenceValue')
+      if (
+        test === micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiAlphanumeric */ .lV &&
+        !(0,decode_named_character_reference__WEBPACK_IMPORTED_MODULE_1__/* .decodeNamedCharacterReference */ .s)(self.sliceSerialize(token))
+      ) {
+        return nok(code)
+      }
+
+      // To do: `markdown-rs` uses a different name:
+      // `CharacterReferenceMarkerSemi`.
+      effects.enter('characterReferenceMarker')
+      effects.consume(code)
+      effects.exit('characterReferenceMarker')
+      effects.exit('characterReference')
+      return ok
+    }
+    if (test(code) && size++ < max) {
+      effects.consume(code)
+      return value
+    }
+    return nok(code)
+  }
+}
+
+
+/***/ }),
+
+/***/ 44544:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   b: () => (/* binding */ codeFenced)
+/* harmony export */ });
+/* harmony import */ var micromark_factory_space__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(77508);
+/* harmony import */ var micromark_util_character__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(57949);
+/**
+ * @typedef {import('micromark-util-types').Code} Code
+ * @typedef {import('micromark-util-types').Construct} Construct
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
+ */
+
+
+
+/** @type {Construct} */
+const nonLazyContinuation = {
+  tokenize: tokenizeNonLazyContinuation,
+  partial: true
+}
+
+/** @type {Construct} */
+const codeFenced = {
+  name: 'codeFenced',
+  tokenize: tokenizeCodeFenced,
+  concrete: true
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeCodeFenced(effects, ok, nok) {
+  const self = this
+  /** @type {Construct} */
+  const closeStart = {
+    tokenize: tokenizeCloseStart,
+    partial: true
+  }
+  let initialPrefix = 0
+  let sizeOpen = 0
+  /** @type {NonNullable<Code>} */
+  let marker
+  return start
+
+  /**
+   * Start of code.
+   *
+   * ```markdown
+   * > | ~~~js
+   *     ^
+   *   | alert(1)
+   *   | ~~~
+   * ```
+   *
+   * @type {State}
+   */
+  function start(code) {
+    // To do: parse whitespace like `markdown-rs`.
+    return beforeSequenceOpen(code)
+  }
+
+  /**
+   * In opening fence, after prefix, at sequence.
+   *
+   * ```markdown
+   * > | ~~~js
+   *     ^
+   *   | alert(1)
+   *   | ~~~
+   * ```
+   *
+   * @type {State}
+   */
+  function beforeSequenceOpen(code) {
+    const tail = self.events[self.events.length - 1]
+    initialPrefix =
+      tail && tail[1].type === 'linePrefix'
+        ? tail[2].sliceSerialize(tail[1], true).length
+        : 0
+    marker = code
+    effects.enter('codeFenced')
+    effects.enter('codeFencedFence')
+    effects.enter('codeFencedFenceSequence')
+    return sequenceOpen(code)
+  }
+
+  /**
+   * In opening fence sequence.
+   *
+   * ```markdown
+   * > | ~~~js
+   *      ^
+   *   | alert(1)
+   *   | ~~~
+   * ```
+   *
+   * @type {State}
+   */
+  function sequenceOpen(code) {
+    if (code === marker) {
+      sizeOpen++
+      effects.consume(code)
+      return sequenceOpen
+    }
+    if (sizeOpen < 3) {
+      return nok(code)
+    }
+    effects.exit('codeFencedFenceSequence')
+    return (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownSpace */ .On)(code)
+      ? (0,micromark_factory_space__WEBPACK_IMPORTED_MODULE_1__/* .factorySpace */ .N)(effects, infoBefore, 'whitespace')(code)
+      : infoBefore(code)
+  }
+
+  /**
+   * In opening fence, after the sequence (and optional whitespace), before info.
+   *
+   * ```markdown
+   * > | ~~~js
+   *        ^
+   *   | alert(1)
+   *   | ~~~
+   * ```
+   *
+   * @type {State}
+   */
+  function infoBefore(code) {
+    if (code === null || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      effects.exit('codeFencedFence')
+      return self.interrupt
+        ? ok(code)
+        : effects.check(nonLazyContinuation, atNonLazyBreak, after)(code)
+    }
+    effects.enter('codeFencedFenceInfo')
+    effects.enter('chunkString', {
+      contentType: 'string'
+    })
+    return info(code)
+  }
+
+  /**
+   * In info.
+   *
+   * ```markdown
+   * > | ~~~js
+   *        ^
+   *   | alert(1)
+   *   | ~~~
+   * ```
+   *
+   * @type {State}
+   */
+  function info(code) {
+    if (code === null || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      effects.exit('chunkString')
+      effects.exit('codeFencedFenceInfo')
+      return infoBefore(code)
+    }
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownSpace */ .On)(code)) {
+      effects.exit('chunkString')
+      effects.exit('codeFencedFenceInfo')
+      return (0,micromark_factory_space__WEBPACK_IMPORTED_MODULE_1__/* .factorySpace */ .N)(effects, metaBefore, 'whitespace')(code)
+    }
+    if (code === 96 && code === marker) {
+      return nok(code)
+    }
+    effects.consume(code)
+    return info
+  }
+
+  /**
+   * In opening fence, after info and whitespace, before meta.
+   *
+   * ```markdown
+   * > | ~~~js eval
+   *           ^
+   *   | alert(1)
+   *   | ~~~
+   * ```
+   *
+   * @type {State}
+   */
+  function metaBefore(code) {
+    if (code === null || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      return infoBefore(code)
+    }
+    effects.enter('codeFencedFenceMeta')
+    effects.enter('chunkString', {
+      contentType: 'string'
+    })
+    return meta(code)
+  }
+
+  /**
+   * In meta.
+   *
+   * ```markdown
+   * > | ~~~js eval
+   *           ^
+   *   | alert(1)
+   *   | ~~~
+   * ```
+   *
+   * @type {State}
+   */
+  function meta(code) {
+    if (code === null || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      effects.exit('chunkString')
+      effects.exit('codeFencedFenceMeta')
+      return infoBefore(code)
+    }
+    if (code === 96 && code === marker) {
+      return nok(code)
+    }
+    effects.consume(code)
+    return meta
+  }
+
+  /**
+   * At eol/eof in code, before a non-lazy closing fence or content.
+   *
+   * ```markdown
+   * > | ~~~js
+   *          ^
+   * > | alert(1)
+   *             ^
+   *   | ~~~
+   * ```
+   *
+   * @type {State}
+   */
+  function atNonLazyBreak(code) {
+    return effects.attempt(closeStart, after, contentBefore)(code)
+  }
+
+  /**
+   * Before code content, not a closing fence, at eol.
+   *
+   * ```markdown
+   *   | ~~~js
+   * > | alert(1)
+   *             ^
+   *   | ~~~
+   * ```
+   *
+   * @type {State}
+   */
+  function contentBefore(code) {
+    effects.enter('lineEnding')
+    effects.consume(code)
+    effects.exit('lineEnding')
+    return contentStart
+  }
+
+  /**
+   * Before code content, not a closing fence.
+   *
+   * ```markdown
+   *   | ~~~js
+   * > | alert(1)
+   *     ^
+   *   | ~~~
+   * ```
+   *
+   * @type {State}
+   */
+  function contentStart(code) {
+    return initialPrefix > 0 && (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownSpace */ .On)(code)
+      ? (0,micromark_factory_space__WEBPACK_IMPORTED_MODULE_1__/* .factorySpace */ .N)(
+          effects,
+          beforeContentChunk,
+          'linePrefix',
+          initialPrefix + 1
+        )(code)
+      : beforeContentChunk(code)
+  }
+
+  /**
+   * Before code content, after optional prefix.
+   *
+   * ```markdown
+   *   | ~~~js
+   * > | alert(1)
+   *     ^
+   *   | ~~~
+   * ```
+   *
+   * @type {State}
+   */
+  function beforeContentChunk(code) {
+    if (code === null || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      return effects.check(nonLazyContinuation, atNonLazyBreak, after)(code)
+    }
+    effects.enter('codeFlowValue')
+    return contentChunk(code)
+  }
+
+  /**
+   * In code content.
+   *
+   * ```markdown
+   *   | ~~~js
+   * > | alert(1)
+   *     ^^^^^^^^
+   *   | ~~~
+   * ```
+   *
+   * @type {State}
+   */
+  function contentChunk(code) {
+    if (code === null || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      effects.exit('codeFlowValue')
+      return beforeContentChunk(code)
+    }
+    effects.consume(code)
+    return contentChunk
+  }
+
+  /**
+   * After code.
+   *
+   * ```markdown
+   *   | ~~~js
+   *   | alert(1)
+   * > | ~~~
+   *        ^
+   * ```
+   *
+   * @type {State}
+   */
+  function after(code) {
+    effects.exit('codeFenced')
+    return ok(code)
+  }
+
+  /**
+   * @this {TokenizeContext}
+   * @type {Tokenizer}
+   */
+  function tokenizeCloseStart(effects, ok, nok) {
+    let size = 0
+    return startBefore
+
+    /**
+     *
+     *
+     * @type {State}
+     */
+    function startBefore(code) {
+      effects.enter('lineEnding')
+      effects.consume(code)
+      effects.exit('lineEnding')
+      return start
+    }
+
+    /**
+     * Before closing fence, at optional whitespace.
+     *
+     * ```markdown
+     *   | ~~~js
+     *   | alert(1)
+     * > | ~~~
+     *     ^
+     * ```
+     *
+     * @type {State}
+     */
+    function start(code) {
+      // Always populated by defaults.
+
+      // To do: `enter` here or in next state?
+      effects.enter('codeFencedFence')
+      return (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownSpace */ .On)(code)
+        ? (0,micromark_factory_space__WEBPACK_IMPORTED_MODULE_1__/* .factorySpace */ .N)(
+            effects,
+            beforeSequenceClose,
+            'linePrefix',
+            self.parser.constructs.disable.null.includes('codeIndented')
+              ? undefined
+              : 4
+          )(code)
+        : beforeSequenceClose(code)
+    }
+
+    /**
+     * In closing fence, after optional whitespace, at sequence.
+     *
+     * ```markdown
+     *   | ~~~js
+     *   | alert(1)
+     * > | ~~~
+     *     ^
+     * ```
+     *
+     * @type {State}
+     */
+    function beforeSequenceClose(code) {
+      if (code === marker) {
+        effects.enter('codeFencedFenceSequence')
+        return sequenceClose(code)
+      }
+      return nok(code)
+    }
+
+    /**
+     * In closing fence sequence.
+     *
+     * ```markdown
+     *   | ~~~js
+     *   | alert(1)
+     * > | ~~~
+     *     ^
+     * ```
+     *
+     * @type {State}
+     */
+    function sequenceClose(code) {
+      if (code === marker) {
+        size++
+        effects.consume(code)
+        return sequenceClose
+      }
+      if (size >= sizeOpen) {
+        effects.exit('codeFencedFenceSequence')
+        return (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownSpace */ .On)(code)
+          ? (0,micromark_factory_space__WEBPACK_IMPORTED_MODULE_1__/* .factorySpace */ .N)(effects, sequenceCloseAfter, 'whitespace')(code)
+          : sequenceCloseAfter(code)
+      }
+      return nok(code)
+    }
+
+    /**
+     * After closing fence sequence, after optional whitespace.
+     *
+     * ```markdown
+     *   | ~~~js
+     *   | alert(1)
+     * > | ~~~
+     *        ^
+     * ```
+     *
+     * @type {State}
+     */
+    function sequenceCloseAfter(code) {
+      if (code === null || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+        effects.exit('codeFencedFence')
+        return ok(code)
+      }
+      return nok(code)
+    }
+  }
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeNonLazyContinuation(effects, ok, nok) {
+  const self = this
+  return start
+
+  /**
+   *
+   *
+   * @type {State}
+   */
+  function start(code) {
+    if (code === null) {
+      return nok(code)
+    }
+    effects.enter('lineEnding')
+    effects.consume(code)
+    effects.exit('lineEnding')
+    return lineStart
+  }
+
+  /**
+   *
+   *
+   * @type {State}
+   */
+  function lineStart(code) {
+    return self.parser.lazy[self.now().line] ? nok(code) : ok(code)
+  }
+}
+
+
+/***/ }),
+
+/***/ 25040:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   j: () => (/* binding */ codeIndented)
+/* harmony export */ });
+/* harmony import */ var micromark_factory_space__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(77508);
+/* harmony import */ var micromark_util_character__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(57949);
+/**
+ * @typedef {import('micromark-util-types').Construct} Construct
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
+ */
+
+
+
+/** @type {Construct} */
+const codeIndented = {
+  name: 'codeIndented',
+  tokenize: tokenizeCodeIndented
+}
+
+/** @type {Construct} */
+const furtherStart = {
+  tokenize: tokenizeFurtherStart,
+  partial: true
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeCodeIndented(effects, ok, nok) {
+  const self = this
+  return start
+
+  /**
+   * Start of code (indented).
+   *
+   * > **Parsing note**: it is not needed to check if this first line is a
+   * > filled line (that it has a non-whitespace character), because blank lines
+   * > are parsed already, so we never run into that.
+   *
+   * ```markdown
+   * > |     aaa
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function start(code) {
+    // To do: manually check if interrupting like `markdown-rs`.
+
+    effects.enter('codeIndented')
+    // To do: use an improved `space_or_tab` function like `markdown-rs`,
+    // so that we can drop the next state.
+    return (0,micromark_factory_space__WEBPACK_IMPORTED_MODULE_0__/* .factorySpace */ .N)(effects, afterPrefix, 'linePrefix', 4 + 1)(code)
+  }
+
+  /**
+   * At start, after 1 or 4 spaces.
+   *
+   * ```markdown
+   * > |     aaa
+   *         ^
+   * ```
+   *
+   * @type {State}
+   */
+  function afterPrefix(code) {
+    const tail = self.events[self.events.length - 1]
+    return tail &&
+      tail[1].type === 'linePrefix' &&
+      tail[2].sliceSerialize(tail[1], true).length >= 4
+      ? atBreak(code)
+      : nok(code)
+  }
+
+  /**
+   * At a break.
+   *
+   * ```markdown
+   * > |     aaa
+   *         ^  ^
+   * ```
+   *
+   * @type {State}
+   */
+  function atBreak(code) {
+    if (code === null) {
+      return after(code)
+    }
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_1__/* .markdownLineEnding */ .HP)(code)) {
+      return effects.attempt(furtherStart, atBreak, after)(code)
+    }
+    effects.enter('codeFlowValue')
+    return inside(code)
+  }
+
+  /**
+   * In code content.
+   *
+   * ```markdown
+   * > |     aaa
+   *         ^^^^
+   * ```
+   *
+   * @type {State}
+   */
+  function inside(code) {
+    if (code === null || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_1__/* .markdownLineEnding */ .HP)(code)) {
+      effects.exit('codeFlowValue')
+      return atBreak(code)
+    }
+    effects.consume(code)
+    return inside
+  }
+
+  /** @type {State} */
+  function after(code) {
+    effects.exit('codeIndented')
+    // To do: allow interrupting like `markdown-rs`.
+    // Feel free to interrupt.
+    // tokenizer.interrupt = false
+    return ok(code)
+  }
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeFurtherStart(effects, ok, nok) {
+  const self = this
+  return furtherStart
+
+  /**
+   * At eol, trying to parse another indent.
+   *
+   * ```markdown
+   * > |     aaa
+   *            ^
+   *   |     bbb
+   * ```
+   *
+   * @type {State}
+   */
+  function furtherStart(code) {
+    // To do: improve `lazy` / `pierce` handling.
+    // If this is a lazy line, it can’t be code.
+    if (self.parser.lazy[self.now().line]) {
+      return nok(code)
+    }
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_1__/* .markdownLineEnding */ .HP)(code)) {
+      effects.enter('lineEnding')
+      effects.consume(code)
+      effects.exit('lineEnding')
+      return furtherStart
+    }
+
+    // To do: the code here in `micromark-js` is a bit different from
+    // `markdown-rs` because there it can attempt spaces.
+    // We can’t yet.
+    //
+    // To do: use an improved `space_or_tab` function like `markdown-rs`,
+    // so that we can drop the next state.
+    return (0,micromark_factory_space__WEBPACK_IMPORTED_MODULE_0__/* .factorySpace */ .N)(effects, afterPrefix, 'linePrefix', 4 + 1)(code)
+  }
+
+  /**
+   * At start, after 1 or 4 spaces.
+   *
+   * ```markdown
+   * > |     aaa
+   *         ^
+   * ```
+   *
+   * @type {State}
+   */
+  function afterPrefix(code) {
+    const tail = self.events[self.events.length - 1]
+    return tail &&
+      tail[1].type === 'linePrefix' &&
+      tail[2].sliceSerialize(tail[1], true).length >= 4
+      ? ok(code)
+      : (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_1__/* .markdownLineEnding */ .HP)(code)
+      ? furtherStart(code)
+      : nok(code)
+  }
+}
+
+
+/***/ }),
+
+/***/ 75408:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   p: () => (/* binding */ codeText)
+/* harmony export */ });
+/* harmony import */ var micromark_util_character__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(57949);
+/**
+ * @typedef {import('micromark-util-types').Construct} Construct
+ * @typedef {import('micromark-util-types').Previous} Previous
+ * @typedef {import('micromark-util-types').Resolver} Resolver
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').Token} Token
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
+ */
+
+
+/** @type {Construct} */
+const codeText = {
+  name: 'codeText',
+  tokenize: tokenizeCodeText,
+  resolve: resolveCodeText,
+  previous
+}
+
+// To do: next major: don’t resolve, like `markdown-rs`.
+/** @type {Resolver} */
+function resolveCodeText(events) {
+  let tailExitIndex = events.length - 4
+  let headEnterIndex = 3
+  /** @type {number} */
+  let index
+  /** @type {number | undefined} */
+  let enter
+
+  // If we start and end with an EOL or a space.
+  if (
+    (events[headEnterIndex][1].type === 'lineEnding' ||
+      events[headEnterIndex][1].type === 'space') &&
+    (events[tailExitIndex][1].type === 'lineEnding' ||
+      events[tailExitIndex][1].type === 'space')
+  ) {
+    index = headEnterIndex
+
+    // And we have data.
+    while (++index < tailExitIndex) {
+      if (events[index][1].type === 'codeTextData') {
+        // Then we have padding.
+        events[headEnterIndex][1].type = 'codeTextPadding'
+        events[tailExitIndex][1].type = 'codeTextPadding'
+        headEnterIndex += 2
+        tailExitIndex -= 2
+        break
+      }
+    }
+  }
+
+  // Merge adjacent spaces and data.
+  index = headEnterIndex - 1
+  tailExitIndex++
+  while (++index <= tailExitIndex) {
+    if (enter === undefined) {
+      if (index !== tailExitIndex && events[index][1].type !== 'lineEnding') {
+        enter = index
+      }
+    } else if (
+      index === tailExitIndex ||
+      events[index][1].type === 'lineEnding'
+    ) {
+      events[enter][1].type = 'codeTextData'
+      if (index !== enter + 2) {
+        events[enter][1].end = events[index - 1][1].end
+        events.splice(enter + 2, index - enter - 2)
+        tailExitIndex -= index - enter - 2
+        index = enter + 2
+      }
+      enter = undefined
+    }
+  }
+  return events
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Previous}
+ */
+function previous(code) {
+  // If there is a previous code, there will always be a tail.
+  return (
+    code !== 96 ||
+    this.events[this.events.length - 1][1].type === 'characterEscape'
+  )
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeCodeText(effects, ok, nok) {
+  const self = this
+  let sizeOpen = 0
+  /** @type {number} */
+  let size
+  /** @type {Token} */
+  let token
+  return start
+
+  /**
+   * Start of code (text).
+   *
+   * ```markdown
+   * > | `a`
+   *     ^
+   * > | \`a`
+   *      ^
+   * ```
+   *
+   * @type {State}
+   */
+  function start(code) {
+    effects.enter('codeText')
+    effects.enter('codeTextSequence')
+    return sequenceOpen(code)
+  }
+
+  /**
+   * In opening sequence.
+   *
+   * ```markdown
+   * > | `a`
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function sequenceOpen(code) {
+    if (code === 96) {
+      effects.consume(code)
+      sizeOpen++
+      return sequenceOpen
+    }
+    effects.exit('codeTextSequence')
+    return between(code)
+  }
+
+  /**
+   * Between something and something else.
+   *
+   * ```markdown
+   * > | `a`
+   *      ^^
+   * ```
+   *
+   * @type {State}
+   */
+  function between(code) {
+    // EOF.
+    if (code === null) {
+      return nok(code)
+    }
+
+    // To do: next major: don’t do spaces in resolve, but when compiling,
+    // like `markdown-rs`.
+    // Tabs don’t work, and virtual spaces don’t make sense.
+    if (code === 32) {
+      effects.enter('space')
+      effects.consume(code)
+      effects.exit('space')
+      return between
+    }
+
+    // Closing fence? Could also be data.
+    if (code === 96) {
+      token = effects.enter('codeTextSequence')
+      size = 0
+      return sequenceClose(code)
+    }
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      effects.enter('lineEnding')
+      effects.consume(code)
+      effects.exit('lineEnding')
+      return between
+    }
+
+    // Data.
+    effects.enter('codeTextData')
+    return data(code)
+  }
+
+  /**
+   * In data.
+   *
+   * ```markdown
+   * > | `a`
+   *      ^
+   * ```
+   *
+   * @type {State}
+   */
+  function data(code) {
+    if (
+      code === null ||
+      code === 32 ||
+      code === 96 ||
+      (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)
+    ) {
+      effects.exit('codeTextData')
+      return between(code)
+    }
+    effects.consume(code)
+    return data
+  }
+
+  /**
+   * In closing sequence.
+   *
+   * ```markdown
+   * > | `a`
+   *       ^
+   * ```
+   *
+   * @type {State}
+   */
+  function sequenceClose(code) {
+    // More.
+    if (code === 96) {
+      effects.consume(code)
+      size++
+      return sequenceClose
+    }
+
+    // Done!
+    if (size === sizeOpen) {
+      effects.exit('codeTextSequence')
+      effects.exit('codeText')
+      return ok(code)
+    }
+
+    // More or less accents: mark as data.
+    token.type = 'codeTextData'
+    return data(code)
+  }
+}
+
+
+/***/ }),
+
+/***/ 11626:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Q: () => (/* binding */ content)
+/* harmony export */ });
+/* harmony import */ var micromark_factory_space__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(77508);
+/* harmony import */ var micromark_util_character__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(57949);
+/* harmony import */ var micromark_util_subtokenize__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(94469);
+/**
+ * @typedef {import('micromark-util-types').Construct} Construct
+ * @typedef {import('micromark-util-types').Resolver} Resolver
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').Token} Token
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
+ */
+
+
+
+
+/**
+ * No name because it must not be turned off.
+ * @type {Construct}
+ */
+const content = {
+  tokenize: tokenizeContent,
+  resolve: resolveContent
+}
+
+/** @type {Construct} */
+const continuationConstruct = {
+  tokenize: tokenizeContinuation,
+  partial: true
+}
+
+/**
+ * Content is transparent: it’s parsed right now. That way, definitions are also
+ * parsed right now: before text in paragraphs (specifically, media) are parsed.
+ *
+ * @type {Resolver}
+ */
+function resolveContent(events) {
+  ;(0,micromark_util_subtokenize__WEBPACK_IMPORTED_MODULE_0__/* .subtokenize */ .w)(events)
+  return events
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeContent(effects, ok) {
+  /** @type {Token | undefined} */
+  let previous
+  return chunkStart
+
+  /**
+   * Before a content chunk.
+   *
+   * ```markdown
+   * > | abc
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function chunkStart(code) {
+    effects.enter('content')
+    previous = effects.enter('chunkContent', {
+      contentType: 'content'
+    })
+    return chunkInside(code)
+  }
+
+  /**
+   * In a content chunk.
+   *
+   * ```markdown
+   * > | abc
+   *     ^^^
+   * ```
+   *
+   * @type {State}
+   */
+  function chunkInside(code) {
+    if (code === null) {
+      return contentEnd(code)
+    }
+
+    // To do: in `markdown-rs`, each line is parsed on its own, and everything
+    // is stitched together resolving.
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_1__/* .markdownLineEnding */ .HP)(code)) {
+      return effects.check(
+        continuationConstruct,
+        contentContinue,
+        contentEnd
+      )(code)
+    }
+
+    // Data.
+    effects.consume(code)
+    return chunkInside
+  }
+
+  /**
+   *
+   *
+   * @type {State}
+   */
+  function contentEnd(code) {
+    effects.exit('chunkContent')
+    effects.exit('content')
+    return ok(code)
+  }
+
+  /**
+   *
+   *
+   * @type {State}
+   */
+  function contentContinue(code) {
+    effects.consume(code)
+    effects.exit('chunkContent')
+    previous.next = effects.enter('chunkContent', {
+      contentType: 'content',
+      previous
+    })
+    previous = previous.next
+    return chunkInside
+  }
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeContinuation(effects, ok, nok) {
+  const self = this
+  return startLookahead
+
+  /**
+   *
+   *
+   * @type {State}
+   */
+  function startLookahead(code) {
+    effects.exit('chunkContent')
+    effects.enter('lineEnding')
+    effects.consume(code)
+    effects.exit('lineEnding')
+    return (0,micromark_factory_space__WEBPACK_IMPORTED_MODULE_2__/* .factorySpace */ .N)(effects, prefixed, 'linePrefix')
+  }
+
+  /**
+   *
+   *
+   * @type {State}
+   */
+  function prefixed(code) {
+    if (code === null || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_1__/* .markdownLineEnding */ .HP)(code)) {
+      return nok(code)
+    }
+
+    // Always populated by defaults.
+
+    const tail = self.events[self.events.length - 1]
+    if (
+      !self.parser.constructs.disable.null.includes('codeIndented') &&
+      tail &&
+      tail[1].type === 'linePrefix' &&
+      tail[2].sliceSerialize(tail[1], true).length >= 4
+    ) {
+      return ok(code)
+    }
+    return effects.interrupt(self.parser.constructs.flow, nok, ok)(code)
+  }
+}
+
+
+/***/ }),
+
+/***/ 79326:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   m: () => (/* binding */ definition)
+/* harmony export */ });
+/* harmony import */ var micromark_factory_destination__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(2514);
+/* harmony import */ var micromark_factory_label__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(32568);
+/* harmony import */ var micromark_factory_space__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(77508);
+/* harmony import */ var micromark_factory_title__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(13108);
+/* harmony import */ var micromark_factory_whitespace__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(13967);
+/* harmony import */ var micromark_util_character__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(57949);
+/* harmony import */ var micromark_util_normalize_identifier__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(26243);
+/**
+ * @typedef {import('micromark-util-types').Construct} Construct
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
+ */
+
+
+
+
+
+
+
+
+/** @type {Construct} */
+const definition = {
+  name: 'definition',
+  tokenize: tokenizeDefinition
+}
+
+/** @type {Construct} */
+const titleBefore = {
+  tokenize: tokenizeTitleBefore,
+  partial: true
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeDefinition(effects, ok, nok) {
+  const self = this
+  /** @type {string} */
+  let identifier
+  return start
+
+  /**
+   * At start of a definition.
+   *
+   * ```markdown
+   * > | [a]: b "c"
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function start(code) {
+    // Do not interrupt paragraphs (but do follow definitions).
+    // To do: do `interrupt` the way `markdown-rs` does.
+    // To do: parse whitespace the way `markdown-rs` does.
+    effects.enter('definition')
+    return before(code)
+  }
+
+  /**
+   * After optional whitespace, at `[`.
+   *
+   * ```markdown
+   * > | [a]: b "c"
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function before(code) {
+    // To do: parse whitespace the way `markdown-rs` does.
+
+    return micromark_factory_label__WEBPACK_IMPORTED_MODULE_0__/* .factoryLabel */ .r.call(
+      self,
+      effects,
+      labelAfter,
+      // Note: we don’t need to reset the way `markdown-rs` does.
+      nok,
+      'definitionLabel',
+      'definitionLabelMarker',
+      'definitionLabelString'
+    )(code)
+  }
+
+  /**
+   * After label.
+   *
+   * ```markdown
+   * > | [a]: b "c"
+   *        ^
+   * ```
+   *
+   * @type {State}
+   */
+  function labelAfter(code) {
+    identifier = (0,micromark_util_normalize_identifier__WEBPACK_IMPORTED_MODULE_1__/* .normalizeIdentifier */ .B)(
+      self.sliceSerialize(self.events[self.events.length - 1][1]).slice(1, -1)
+    )
+    if (code === 58) {
+      effects.enter('definitionMarker')
+      effects.consume(code)
+      effects.exit('definitionMarker')
+      return markerAfter
+    }
+    return nok(code)
+  }
+
+  /**
+   * After marker.
+   *
+   * ```markdown
+   * > | [a]: b "c"
+   *         ^
+   * ```
+   *
+   * @type {State}
+   */
+  function markerAfter(code) {
+    // Note: whitespace is optional.
+    return (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_2__/* .markdownLineEndingOrSpace */ .Ee)(code)
+      ? (0,micromark_factory_whitespace__WEBPACK_IMPORTED_MODULE_3__/* .factoryWhitespace */ .Y)(effects, destinationBefore)(code)
+      : destinationBefore(code)
+  }
+
+  /**
+   * Before destination.
+   *
+   * ```markdown
+   * > | [a]: b "c"
+   *          ^
+   * ```
+   *
+   * @type {State}
+   */
+  function destinationBefore(code) {
+    return (0,micromark_factory_destination__WEBPACK_IMPORTED_MODULE_4__/* .factoryDestination */ .v)(
+      effects,
+      destinationAfter,
+      // Note: we don’t need to reset the way `markdown-rs` does.
+      nok,
+      'definitionDestination',
+      'definitionDestinationLiteral',
+      'definitionDestinationLiteralMarker',
+      'definitionDestinationRaw',
+      'definitionDestinationString'
+    )(code)
+  }
+
+  /**
+   * After destination.
+   *
+   * ```markdown
+   * > | [a]: b "c"
+   *           ^
+   * ```
+   *
+   * @type {State}
+   */
+  function destinationAfter(code) {
+    return effects.attempt(titleBefore, after, after)(code)
+  }
+
+  /**
+   * After definition.
+   *
+   * ```markdown
+   * > | [a]: b
+   *           ^
+   * > | [a]: b "c"
+   *               ^
+   * ```
+   *
+   * @type {State}
+   */
+  function after(code) {
+    return (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_2__/* .markdownSpace */ .On)(code)
+      ? (0,micromark_factory_space__WEBPACK_IMPORTED_MODULE_5__/* .factorySpace */ .N)(effects, afterWhitespace, 'whitespace')(code)
+      : afterWhitespace(code)
+  }
+
+  /**
+   * After definition, after optional whitespace.
+   *
+   * ```markdown
+   * > | [a]: b
+   *           ^
+   * > | [a]: b "c"
+   *               ^
+   * ```
+   *
+   * @type {State}
+   */
+  function afterWhitespace(code) {
+    if (code === null || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_2__/* .markdownLineEnding */ .HP)(code)) {
+      effects.exit('definition')
+
+      // Note: we don’t care about uniqueness.
+      // It’s likely that that doesn’t happen very frequently.
+      // It is more likely that it wastes precious time.
+      self.parser.defined.push(identifier)
+
+      // To do: `markdown-rs` interrupt.
+      // // You’d be interrupting.
+      // tokenizer.interrupt = true
+      return ok(code)
+    }
+    return nok(code)
+  }
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeTitleBefore(effects, ok, nok) {
+  return titleBefore
+
+  /**
+   * After destination, at whitespace.
+   *
+   * ```markdown
+   * > | [a]: b
+   *           ^
+   * > | [a]: b "c"
+   *           ^
+   * ```
+   *
+   * @type {State}
+   */
+  function titleBefore(code) {
+    return (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_2__/* .markdownLineEndingOrSpace */ .Ee)(code)
+      ? (0,micromark_factory_whitespace__WEBPACK_IMPORTED_MODULE_3__/* .factoryWhitespace */ .Y)(effects, beforeMarker)(code)
+      : nok(code)
+  }
+
+  /**
+   * At title.
+   *
+   * ```markdown
+   *   | [a]: b
+   * > | "c"
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function beforeMarker(code) {
+    return (0,micromark_factory_title__WEBPACK_IMPORTED_MODULE_6__/* .factoryTitle */ .f)(
+      effects,
+      titleAfter,
+      nok,
+      'definitionTitle',
+      'definitionTitleMarker',
+      'definitionTitleString'
+    )(code)
+  }
+
+  /**
+   * After title.
+   *
+   * ```markdown
+   * > | [a]: b "c"
+   *               ^
+   * ```
+   *
+   * @type {State}
+   */
+  function titleAfter(code) {
+    return (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_2__/* .markdownSpace */ .On)(code)
+      ? (0,micromark_factory_space__WEBPACK_IMPORTED_MODULE_5__/* .factorySpace */ .N)(effects, titleAfterOptionalWhitespace, 'whitespace')(code)
+      : titleAfterOptionalWhitespace(code)
+  }
+
+  /**
+   * After title, after optional whitespace.
+   *
+   * ```markdown
+   * > | [a]: b "c"
+   *               ^
+   * ```
+   *
+   * @type {State}
+   */
+  function titleAfterOptionalWhitespace(code) {
+    return code === null || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_2__/* .markdownLineEnding */ .HP)(code) ? ok(code) : nok(code)
+  }
+}
+
+
+/***/ }),
+
+/***/ 39750:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   G: () => (/* binding */ hardBreakEscape)
+/* harmony export */ });
+/* harmony import */ var micromark_util_character__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(57949);
+/**
+ * @typedef {import('micromark-util-types').Construct} Construct
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
+ */
+
+
+/** @type {Construct} */
+const hardBreakEscape = {
+  name: 'hardBreakEscape',
+  tokenize: tokenizeHardBreakEscape
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeHardBreakEscape(effects, ok, nok) {
+  return start
+
+  /**
+   * Start of a hard break (escape).
+   *
+   * ```markdown
+   * > | a\
+   *      ^
+   *   | b
+   * ```
+   *
+   * @type {State}
+   */
+  function start(code) {
+    effects.enter('hardBreakEscape')
+    effects.consume(code)
+    return after
+  }
+
+  /**
+   * After `\`, at eol.
+   *
+   * ```markdown
+   * > | a\
+   *       ^
+   *   | b
+   * ```
+   *
+   *  @type {State}
+   */
+  function after(code) {
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      effects.exit('hardBreakEscape')
+      return ok(code)
+    }
+    return nok(code)
+  }
+}
+
+
+/***/ }),
+
+/***/ 19135:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   O: () => (/* binding */ headingAtx)
+/* harmony export */ });
+/* harmony import */ var micromark_factory_space__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(77508);
+/* harmony import */ var micromark_util_character__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(57949);
+/* harmony import */ var micromark_util_chunked__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(43890);
+/**
+ * @typedef {import('micromark-util-types').Construct} Construct
+ * @typedef {import('micromark-util-types').Resolver} Resolver
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').Token} Token
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
+ */
+
+
+
+
+/** @type {Construct} */
+const headingAtx = {
+  name: 'headingAtx',
+  tokenize: tokenizeHeadingAtx,
+  resolve: resolveHeadingAtx
+}
+
+/** @type {Resolver} */
+function resolveHeadingAtx(events, context) {
+  let contentEnd = events.length - 2
+  let contentStart = 3
+  /** @type {Token} */
+  let content
+  /** @type {Token} */
+  let text
+
+  // Prefix whitespace, part of the opening.
+  if (events[contentStart][1].type === 'whitespace') {
+    contentStart += 2
+  }
+
+  // Suffix whitespace, part of the closing.
+  if (
+    contentEnd - 2 > contentStart &&
+    events[contentEnd][1].type === 'whitespace'
+  ) {
+    contentEnd -= 2
+  }
+  if (
+    events[contentEnd][1].type === 'atxHeadingSequence' &&
+    (contentStart === contentEnd - 1 ||
+      (contentEnd - 4 > contentStart &&
+        events[contentEnd - 2][1].type === 'whitespace'))
+  ) {
+    contentEnd -= contentStart + 1 === contentEnd ? 2 : 4
+  }
+  if (contentEnd > contentStart) {
+    content = {
+      type: 'atxHeadingText',
+      start: events[contentStart][1].start,
+      end: events[contentEnd][1].end
+    }
+    text = {
+      type: 'chunkText',
+      start: events[contentStart][1].start,
+      end: events[contentEnd][1].end,
+      contentType: 'text'
+    }
+    ;(0,micromark_util_chunked__WEBPACK_IMPORTED_MODULE_0__/* .splice */ .m)(events, contentStart, contentEnd - contentStart + 1, [
+      ['enter', content, context],
+      ['enter', text, context],
+      ['exit', text, context],
+      ['exit', content, context]
+    ])
+  }
+  return events
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeHeadingAtx(effects, ok, nok) {
+  let size = 0
+  return start
+
+  /**
+   * Start of a heading (atx).
+   *
+   * ```markdown
+   * > | ## aa
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function start(code) {
+    // To do: parse indent like `markdown-rs`.
+    effects.enter('atxHeading')
+    return before(code)
+  }
+
+  /**
+   * After optional whitespace, at `#`.
+   *
+   * ```markdown
+   * > | ## aa
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function before(code) {
+    effects.enter('atxHeadingSequence')
+    return sequenceOpen(code)
+  }
+
+  /**
+   * In opening sequence.
+   *
+   * ```markdown
+   * > | ## aa
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function sequenceOpen(code) {
+    if (code === 35 && size++ < 6) {
+      effects.consume(code)
+      return sequenceOpen
+    }
+
+    // Always at least one `#`.
+    if (code === null || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_1__/* .markdownLineEndingOrSpace */ .Ee)(code)) {
+      effects.exit('atxHeadingSequence')
+      return atBreak(code)
+    }
+    return nok(code)
+  }
+
+  /**
+   * After something, before something else.
+   *
+   * ```markdown
+   * > | ## aa
+   *       ^
+   * ```
+   *
+   * @type {State}
+   */
+  function atBreak(code) {
+    if (code === 35) {
+      effects.enter('atxHeadingSequence')
+      return sequenceFurther(code)
+    }
+    if (code === null || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_1__/* .markdownLineEnding */ .HP)(code)) {
+      effects.exit('atxHeading')
+      // To do: interrupt like `markdown-rs`.
+      // // Feel free to interrupt.
+      // tokenizer.interrupt = false
+      return ok(code)
+    }
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_1__/* .markdownSpace */ .On)(code)) {
+      return (0,micromark_factory_space__WEBPACK_IMPORTED_MODULE_2__/* .factorySpace */ .N)(effects, atBreak, 'whitespace')(code)
+    }
+
+    // To do: generate `data` tokens, add the `text` token later.
+    // Needs edit map, see: `markdown.rs`.
+    effects.enter('atxHeadingText')
+    return data(code)
+  }
+
+  /**
+   * In further sequence (after whitespace).
+   *
+   * Could be normal “visible” hashes in the heading or a final sequence.
+   *
+   * ```markdown
+   * > | ## aa ##
+   *           ^
+   * ```
+   *
+   * @type {State}
+   */
+  function sequenceFurther(code) {
+    if (code === 35) {
+      effects.consume(code)
+      return sequenceFurther
+    }
+    effects.exit('atxHeadingSequence')
+    return atBreak(code)
+  }
+
+  /**
+   * In text.
+   *
+   * ```markdown
+   * > | ## aa
+   *        ^
+   * ```
+   *
+   * @type {State}
+   */
+  function data(code) {
+    if (code === null || code === 35 || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_1__/* .markdownLineEndingOrSpace */ .Ee)(code)) {
+      effects.exit('atxHeadingText')
+      return atBreak(code)
+    }
+    effects.consume(code)
+    return data
+  }
+}
+
+
+/***/ }),
+
+/***/ 20963:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   G: () => (/* binding */ htmlFlow)
+/* harmony export */ });
+/* harmony import */ var micromark_util_character__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(57949);
+/* harmony import */ var micromark_util_html_tag_name__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(61486);
+/* harmony import */ var _blank_line_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(35460);
+/**
+ * @typedef {import('micromark-util-types').Code} Code
+ * @typedef {import('micromark-util-types').Construct} Construct
+ * @typedef {import('micromark-util-types').Resolver} Resolver
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
+ */
+
+
+
+
+
+/** @type {Construct} */
+const htmlFlow = {
+  name: 'htmlFlow',
+  tokenize: tokenizeHtmlFlow,
+  resolveTo: resolveToHtmlFlow,
+  concrete: true
+}
+
+/** @type {Construct} */
+const blankLineBefore = {
+  tokenize: tokenizeBlankLineBefore,
+  partial: true
+}
+const nonLazyContinuationStart = {
+  tokenize: tokenizeNonLazyContinuationStart,
+  partial: true
+}
+
+/** @type {Resolver} */
+function resolveToHtmlFlow(events) {
+  let index = events.length
+  while (index--) {
+    if (events[index][0] === 'enter' && events[index][1].type === 'htmlFlow') {
+      break
+    }
+  }
+  if (index > 1 && events[index - 2][1].type === 'linePrefix') {
+    // Add the prefix start to the HTML token.
+    events[index][1].start = events[index - 2][1].start
+    // Add the prefix start to the HTML line token.
+    events[index + 1][1].start = events[index - 2][1].start
+    // Remove the line prefix.
+    events.splice(index - 2, 2)
+  }
+  return events
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeHtmlFlow(effects, ok, nok) {
+  const self = this
+  /** @type {number} */
+  let marker
+  /** @type {boolean} */
+  let closingTag
+  /** @type {string} */
+  let buffer
+  /** @type {number} */
+  let index
+  /** @type {Code} */
+  let markerB
+  return start
+
+  /**
+   * Start of HTML (flow).
+   *
+   * ```markdown
+   * > | <x />
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function start(code) {
+    // To do: parse indent like `markdown-rs`.
+    return before(code)
+  }
+
+  /**
+   * At `<`, after optional whitespace.
+   *
+   * ```markdown
+   * > | <x />
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function before(code) {
+    effects.enter('htmlFlow')
+    effects.enter('htmlFlowData')
+    effects.consume(code)
+    return open
+  }
+
+  /**
+   * After `<`, at tag name or other stuff.
+   *
+   * ```markdown
+   * > | <x />
+   *      ^
+   * > | <!doctype>
+   *      ^
+   * > | <!--xxx-->
+   *      ^
+   * ```
+   *
+   * @type {State}
+   */
+  function open(code) {
+    if (code === 33) {
+      effects.consume(code)
+      return declarationOpen
+    }
+    if (code === 47) {
+      effects.consume(code)
+      closingTag = true
+      return tagCloseStart
+    }
+    if (code === 63) {
+      effects.consume(code)
+      marker = 3
+      // To do:
+      // tokenizer.concrete = true
+      // To do: use `markdown-rs` style interrupt.
+      // While we’re in an instruction instead of a declaration, we’re on a `?`
+      // right now, so we do need to search for `>`, similar to declarations.
+      return self.interrupt ? ok : continuationDeclarationInside
+    }
+
+    // ASCII alphabetical.
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiAlpha */ .CW)(code)) {
+      effects.consume(code)
+      // @ts-expect-error: not null.
+      buffer = String.fromCharCode(code)
+      return tagName
+    }
+    return nok(code)
+  }
+
+  /**
+   * After `<!`, at declaration, comment, or CDATA.
+   *
+   * ```markdown
+   * > | <!doctype>
+   *       ^
+   * > | <!--xxx-->
+   *       ^
+   * > | <![CDATA[>&<]]>
+   *       ^
+   * ```
+   *
+   * @type {State}
+   */
+  function declarationOpen(code) {
+    if (code === 45) {
+      effects.consume(code)
+      marker = 2
+      return commentOpenInside
+    }
+    if (code === 91) {
+      effects.consume(code)
+      marker = 5
+      index = 0
+      return cdataOpenInside
+    }
+
+    // ASCII alphabetical.
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiAlpha */ .CW)(code)) {
+      effects.consume(code)
+      marker = 4
+      // // Do not form containers.
+      // tokenizer.concrete = true
+      return self.interrupt ? ok : continuationDeclarationInside
+    }
+    return nok(code)
+  }
+
+  /**
+   * After `<!-`, inside a comment, at another `-`.
+   *
+   * ```markdown
+   * > | <!--xxx-->
+   *        ^
+   * ```
+   *
+   * @type {State}
+   */
+  function commentOpenInside(code) {
+    if (code === 45) {
+      effects.consume(code)
+      // // Do not form containers.
+      // tokenizer.concrete = true
+      return self.interrupt ? ok : continuationDeclarationInside
+    }
+    return nok(code)
+  }
+
+  /**
+   * After `<![`, inside CDATA, expecting `CDATA[`.
+   *
+   * ```markdown
+   * > | <![CDATA[>&<]]>
+   *        ^^^^^^
+   * ```
+   *
+   * @type {State}
+   */
+  function cdataOpenInside(code) {
+    const value = 'CDATA['
+    if (code === value.charCodeAt(index++)) {
+      effects.consume(code)
+      if (index === value.length) {
+        // // Do not form containers.
+        // tokenizer.concrete = true
+        return self.interrupt ? ok : continuation
+      }
+      return cdataOpenInside
+    }
+    return nok(code)
+  }
+
+  /**
+   * After `</`, in closing tag, at tag name.
+   *
+   * ```markdown
+   * > | </x>
+   *       ^
+   * ```
+   *
+   * @type {State}
+   */
+  function tagCloseStart(code) {
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiAlpha */ .CW)(code)) {
+      effects.consume(code)
+      // @ts-expect-error: not null.
+      buffer = String.fromCharCode(code)
+      return tagName
+    }
+    return nok(code)
+  }
+
+  /**
+   * In tag name.
+   *
+   * ```markdown
+   * > | <ab>
+   *      ^^
+   * > | </ab>
+   *       ^^
+   * ```
+   *
+   * @type {State}
+   */
+  function tagName(code) {
+    if (
+      code === null ||
+      code === 47 ||
+      code === 62 ||
+      (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEndingOrSpace */ .Ee)(code)
+    ) {
+      const slash = code === 47
+      const name = buffer.toLowerCase()
+      if (!slash && !closingTag && micromark_util_html_tag_name__WEBPACK_IMPORTED_MODULE_1__/* .htmlRawNames */ .y.includes(name)) {
+        marker = 1
+        // // Do not form containers.
+        // tokenizer.concrete = true
+        return self.interrupt ? ok(code) : continuation(code)
+      }
+      if (micromark_util_html_tag_name__WEBPACK_IMPORTED_MODULE_1__/* .htmlBlockNames */ .T.includes(buffer.toLowerCase())) {
+        marker = 6
+        if (slash) {
+          effects.consume(code)
+          return basicSelfClosing
+        }
+
+        // // Do not form containers.
+        // tokenizer.concrete = true
+        return self.interrupt ? ok(code) : continuation(code)
+      }
+      marker = 7
+      // Do not support complete HTML when interrupting.
+      return self.interrupt && !self.parser.lazy[self.now().line]
+        ? nok(code)
+        : closingTag
+        ? completeClosingTagAfter(code)
+        : completeAttributeNameBefore(code)
+    }
+
+    // ASCII alphanumerical and `-`.
+    if (code === 45 || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiAlphanumeric */ .lV)(code)) {
+      effects.consume(code)
+      buffer += String.fromCharCode(code)
+      return tagName
+    }
+    return nok(code)
+  }
+
+  /**
+   * After closing slash of a basic tag name.
+   *
+   * ```markdown
+   * > | <div/>
+   *          ^
+   * ```
+   *
+   * @type {State}
+   */
+  function basicSelfClosing(code) {
+    if (code === 62) {
+      effects.consume(code)
+      // // Do not form containers.
+      // tokenizer.concrete = true
+      return self.interrupt ? ok : continuation
+    }
+    return nok(code)
+  }
+
+  /**
+   * After closing slash of a complete tag name.
+   *
+   * ```markdown
+   * > | <x/>
+   *        ^
+   * ```
+   *
+   * @type {State}
+   */
+  function completeClosingTagAfter(code) {
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownSpace */ .On)(code)) {
+      effects.consume(code)
+      return completeClosingTagAfter
+    }
+    return completeEnd(code)
+  }
+
+  /**
+   * At an attribute name.
+   *
+   * At first, this state is used after a complete tag name, after whitespace,
+   * where it expects optional attributes or the end of the tag.
+   * It is also reused after attributes, when expecting more optional
+   * attributes.
+   *
+   * ```markdown
+   * > | <a />
+   *        ^
+   * > | <a :b>
+   *        ^
+   * > | <a _b>
+   *        ^
+   * > | <a b>
+   *        ^
+   * > | <a >
+   *        ^
+   * ```
+   *
+   * @type {State}
+   */
+  function completeAttributeNameBefore(code) {
+    if (code === 47) {
+      effects.consume(code)
+      return completeEnd
+    }
+
+    // ASCII alphanumerical and `:` and `_`.
+    if (code === 58 || code === 95 || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiAlpha */ .CW)(code)) {
+      effects.consume(code)
+      return completeAttributeName
+    }
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownSpace */ .On)(code)) {
+      effects.consume(code)
+      return completeAttributeNameBefore
+    }
+    return completeEnd(code)
+  }
+
+  /**
+   * In attribute name.
+   *
+   * ```markdown
+   * > | <a :b>
+   *         ^
+   * > | <a _b>
+   *         ^
+   * > | <a b>
+   *         ^
+   * ```
+   *
+   * @type {State}
+   */
+  function completeAttributeName(code) {
+    // ASCII alphanumerical and `-`, `.`, `:`, and `_`.
+    if (
+      code === 45 ||
+      code === 46 ||
+      code === 58 ||
+      code === 95 ||
+      (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiAlphanumeric */ .lV)(code)
+    ) {
+      effects.consume(code)
+      return completeAttributeName
+    }
+    return completeAttributeNameAfter(code)
+  }
+
+  /**
+   * After attribute name, at an optional initializer, the end of the tag, or
+   * whitespace.
+   *
+   * ```markdown
+   * > | <a b>
+   *         ^
+   * > | <a b=c>
+   *         ^
+   * ```
+   *
+   * @type {State}
+   */
+  function completeAttributeNameAfter(code) {
+    if (code === 61) {
+      effects.consume(code)
+      return completeAttributeValueBefore
+    }
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownSpace */ .On)(code)) {
+      effects.consume(code)
+      return completeAttributeNameAfter
+    }
+    return completeAttributeNameBefore(code)
+  }
+
+  /**
+   * Before unquoted, double quoted, or single quoted attribute value, allowing
+   * whitespace.
+   *
+   * ```markdown
+   * > | <a b=c>
+   *          ^
+   * > | <a b="c">
+   *          ^
+   * ```
+   *
+   * @type {State}
+   */
+  function completeAttributeValueBefore(code) {
+    if (
+      code === null ||
+      code === 60 ||
+      code === 61 ||
+      code === 62 ||
+      code === 96
+    ) {
+      return nok(code)
+    }
+    if (code === 34 || code === 39) {
+      effects.consume(code)
+      markerB = code
+      return completeAttributeValueQuoted
+    }
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownSpace */ .On)(code)) {
+      effects.consume(code)
+      return completeAttributeValueBefore
+    }
+    return completeAttributeValueUnquoted(code)
+  }
+
+  /**
+   * In double or single quoted attribute value.
+   *
+   * ```markdown
+   * > | <a b="c">
+   *           ^
+   * > | <a b='c'>
+   *           ^
+   * ```
+   *
+   * @type {State}
+   */
+  function completeAttributeValueQuoted(code) {
+    if (code === markerB) {
+      effects.consume(code)
+      markerB = null
+      return completeAttributeValueQuotedAfter
+    }
+    if (code === null || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      return nok(code)
+    }
+    effects.consume(code)
+    return completeAttributeValueQuoted
+  }
+
+  /**
+   * In unquoted attribute value.
+   *
+   * ```markdown
+   * > | <a b=c>
+   *          ^
+   * ```
+   *
+   * @type {State}
+   */
+  function completeAttributeValueUnquoted(code) {
+    if (
+      code === null ||
+      code === 34 ||
+      code === 39 ||
+      code === 47 ||
+      code === 60 ||
+      code === 61 ||
+      code === 62 ||
+      code === 96 ||
+      (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEndingOrSpace */ .Ee)(code)
+    ) {
+      return completeAttributeNameAfter(code)
+    }
+    effects.consume(code)
+    return completeAttributeValueUnquoted
+  }
+
+  /**
+   * After double or single quoted attribute value, before whitespace or the
+   * end of the tag.
+   *
+   * ```markdown
+   * > | <a b="c">
+   *            ^
+   * ```
+   *
+   * @type {State}
+   */
+  function completeAttributeValueQuotedAfter(code) {
+    if (code === 47 || code === 62 || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownSpace */ .On)(code)) {
+      return completeAttributeNameBefore(code)
+    }
+    return nok(code)
+  }
+
+  /**
+   * In certain circumstances of a complete tag where only an `>` is allowed.
+   *
+   * ```markdown
+   * > | <a b="c">
+   *             ^
+   * ```
+   *
+   * @type {State}
+   */
+  function completeEnd(code) {
+    if (code === 62) {
+      effects.consume(code)
+      return completeAfter
+    }
+    return nok(code)
+  }
+
+  /**
+   * After `>` in a complete tag.
+   *
+   * ```markdown
+   * > | <x>
+   *        ^
+   * ```
+   *
+   * @type {State}
+   */
+  function completeAfter(code) {
+    if (code === null || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      // // Do not form containers.
+      // tokenizer.concrete = true
+      return continuation(code)
+    }
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownSpace */ .On)(code)) {
+      effects.consume(code)
+      return completeAfter
+    }
+    return nok(code)
+  }
+
+  /**
+   * In continuation of any HTML kind.
+   *
+   * ```markdown
+   * > | <!--xxx-->
+   *          ^
+   * ```
+   *
+   * @type {State}
+   */
+  function continuation(code) {
+    if (code === 45 && marker === 2) {
+      effects.consume(code)
+      return continuationCommentInside
+    }
+    if (code === 60 && marker === 1) {
+      effects.consume(code)
+      return continuationRawTagOpen
+    }
+    if (code === 62 && marker === 4) {
+      effects.consume(code)
+      return continuationClose
+    }
+    if (code === 63 && marker === 3) {
+      effects.consume(code)
+      return continuationDeclarationInside
+    }
+    if (code === 93 && marker === 5) {
+      effects.consume(code)
+      return continuationCdataInside
+    }
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code) && (marker === 6 || marker === 7)) {
+      effects.exit('htmlFlowData')
+      return effects.check(
+        blankLineBefore,
+        continuationAfter,
+        continuationStart
+      )(code)
+    }
+    if (code === null || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      effects.exit('htmlFlowData')
+      return continuationStart(code)
+    }
+    effects.consume(code)
+    return continuation
+  }
+
+  /**
+   * In continuation, at eol.
+   *
+   * ```markdown
+   * > | <x>
+   *        ^
+   *   | asd
+   * ```
+   *
+   * @type {State}
+   */
+  function continuationStart(code) {
+    return effects.check(
+      nonLazyContinuationStart,
+      continuationStartNonLazy,
+      continuationAfter
+    )(code)
+  }
+
+  /**
+   * In continuation, at eol, before non-lazy content.
+   *
+   * ```markdown
+   * > | <x>
+   *        ^
+   *   | asd
+   * ```
+   *
+   * @type {State}
+   */
+  function continuationStartNonLazy(code) {
+    effects.enter('lineEnding')
+    effects.consume(code)
+    effects.exit('lineEnding')
+    return continuationBefore
+  }
+
+  /**
+   * In continuation, before non-lazy content.
+   *
+   * ```markdown
+   *   | <x>
+   * > | asd
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function continuationBefore(code) {
+    if (code === null || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      return continuationStart(code)
+    }
+    effects.enter('htmlFlowData')
+    return continuation(code)
+  }
+
+  /**
+   * In comment continuation, after one `-`, expecting another.
+   *
+   * ```markdown
+   * > | <!--xxx-->
+   *             ^
+   * ```
+   *
+   * @type {State}
+   */
+  function continuationCommentInside(code) {
+    if (code === 45) {
+      effects.consume(code)
+      return continuationDeclarationInside
+    }
+    return continuation(code)
+  }
+
+  /**
+   * In raw continuation, after `<`, at `/`.
+   *
+   * ```markdown
+   * > | <script>console.log(1)</script>
+   *                            ^
+   * ```
+   *
+   * @type {State}
+   */
+  function continuationRawTagOpen(code) {
+    if (code === 47) {
+      effects.consume(code)
+      buffer = ''
+      return continuationRawEndTag
+    }
+    return continuation(code)
+  }
+
+  /**
+   * In raw continuation, after `</`, in a raw tag name.
+   *
+   * ```markdown
+   * > | <script>console.log(1)</script>
+   *                             ^^^^^^
+   * ```
+   *
+   * @type {State}
+   */
+  function continuationRawEndTag(code) {
+    if (code === 62) {
+      const name = buffer.toLowerCase()
+      if (micromark_util_html_tag_name__WEBPACK_IMPORTED_MODULE_1__/* .htmlRawNames */ .y.includes(name)) {
+        effects.consume(code)
+        return continuationClose
+      }
+      return continuation(code)
+    }
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiAlpha */ .CW)(code) && buffer.length < 8) {
+      effects.consume(code)
+      // @ts-expect-error: not null.
+      buffer += String.fromCharCode(code)
+      return continuationRawEndTag
+    }
+    return continuation(code)
+  }
+
+  /**
+   * In cdata continuation, after `]`, expecting `]>`.
+   *
+   * ```markdown
+   * > | <![CDATA[>&<]]>
+   *                  ^
+   * ```
+   *
+   * @type {State}
+   */
+  function continuationCdataInside(code) {
+    if (code === 93) {
+      effects.consume(code)
+      return continuationDeclarationInside
+    }
+    return continuation(code)
+  }
+
+  /**
+   * In declaration or instruction continuation, at `>`.
+   *
+   * ```markdown
+   * > | <!-->
+   *         ^
+   * > | <?>
+   *       ^
+   * > | <!q>
+   *        ^
+   * > | <!--ab-->
+   *             ^
+   * > | <![CDATA[>&<]]>
+   *                   ^
+   * ```
+   *
+   * @type {State}
+   */
+  function continuationDeclarationInside(code) {
+    if (code === 62) {
+      effects.consume(code)
+      return continuationClose
+    }
+
+    // More dashes.
+    if (code === 45 && marker === 2) {
+      effects.consume(code)
+      return continuationDeclarationInside
+    }
+    return continuation(code)
+  }
+
+  /**
+   * In closed continuation: everything we get until the eol/eof is part of it.
+   *
+   * ```markdown
+   * > | <!doctype>
+   *               ^
+   * ```
+   *
+   * @type {State}
+   */
+  function continuationClose(code) {
+    if (code === null || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      effects.exit('htmlFlowData')
+      return continuationAfter(code)
+    }
+    effects.consume(code)
+    return continuationClose
+  }
+
+  /**
+   * Done.
+   *
+   * ```markdown
+   * > | <!doctype>
+   *               ^
+   * ```
+   *
+   * @type {State}
+   */
+  function continuationAfter(code) {
+    effects.exit('htmlFlow')
+    // // Feel free to interrupt.
+    // tokenizer.interrupt = false
+    // // No longer concrete.
+    // tokenizer.concrete = false
+    return ok(code)
+  }
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeNonLazyContinuationStart(effects, ok, nok) {
+  const self = this
+  return start
+
+  /**
+   * At eol, before continuation.
+   *
+   * ```markdown
+   * > | * ```js
+   *            ^
+   *   | b
+   * ```
+   *
+   * @type {State}
+   */
+  function start(code) {
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      effects.enter('lineEnding')
+      effects.consume(code)
+      effects.exit('lineEnding')
+      return after
+    }
+    return nok(code)
+  }
+
+  /**
+   * A continuation.
+   *
+   * ```markdown
+   *   | * ```js
+   * > | b
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function after(code) {
+    return self.parser.lazy[self.now().line] ? nok(code) : ok(code)
+  }
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeBlankLineBefore(effects, ok, nok) {
+  return start
+
+  /**
+   * Before eol, expecting blank line.
+   *
+   * ```markdown
+   * > | <div>
+   *          ^
+   *   |
+   * ```
+   *
+   * @type {State}
+   */
+  function start(code) {
+    effects.enter('lineEnding')
+    effects.consume(code)
+    effects.exit('lineEnding')
+    return effects.attempt(_blank_line_js__WEBPACK_IMPORTED_MODULE_2__/* .blankLine */ .B, ok, nok)
+  }
+}
+
+
+/***/ }),
+
+/***/ 92352:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   j: () => (/* binding */ htmlText)
+/* harmony export */ });
+/* harmony import */ var micromark_factory_space__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(77508);
+/* harmony import */ var micromark_util_character__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(57949);
+/**
+ * @typedef {import('micromark-util-types').Code} Code
+ * @typedef {import('micromark-util-types').Construct} Construct
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
+ */
+
+
+
+/** @type {Construct} */
+const htmlText = {
+  name: 'htmlText',
+  tokenize: tokenizeHtmlText
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeHtmlText(effects, ok, nok) {
+  const self = this
+  /** @type {NonNullable<Code> | undefined} */
+  let marker
+  /** @type {number} */
+  let index
+  /** @type {State} */
+  let returnState
+  return start
+
+  /**
+   * Start of HTML (text).
+   *
+   * ```markdown
+   * > | a <b> c
+   *       ^
+   * ```
+   *
+   * @type {State}
+   */
+  function start(code) {
+    effects.enter('htmlText')
+    effects.enter('htmlTextData')
+    effects.consume(code)
+    return open
+  }
+
+  /**
+   * After `<`, at tag name or other stuff.
+   *
+   * ```markdown
+   * > | a <b> c
+   *        ^
+   * > | a <!doctype> c
+   *        ^
+   * > | a <!--b--> c
+   *        ^
+   * ```
+   *
+   * @type {State}
+   */
+  function open(code) {
+    if (code === 33) {
+      effects.consume(code)
+      return declarationOpen
+    }
+    if (code === 47) {
+      effects.consume(code)
+      return tagCloseStart
+    }
+    if (code === 63) {
+      effects.consume(code)
+      return instruction
+    }
+
+    // ASCII alphabetical.
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiAlpha */ .CW)(code)) {
+      effects.consume(code)
+      return tagOpen
+    }
+    return nok(code)
+  }
+
+  /**
+   * After `<!`, at declaration, comment, or CDATA.
+   *
+   * ```markdown
+   * > | a <!doctype> c
+   *         ^
+   * > | a <!--b--> c
+   *         ^
+   * > | a <![CDATA[>&<]]> c
+   *         ^
+   * ```
+   *
+   * @type {State}
+   */
+  function declarationOpen(code) {
+    if (code === 45) {
+      effects.consume(code)
+      return commentOpenInside
+    }
+    if (code === 91) {
+      effects.consume(code)
+      index = 0
+      return cdataOpenInside
+    }
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiAlpha */ .CW)(code)) {
+      effects.consume(code)
+      return declaration
+    }
+    return nok(code)
+  }
+
+  /**
+   * In a comment, after `<!-`, at another `-`.
+   *
+   * ```markdown
+   * > | a <!--b--> c
+   *          ^
+   * ```
+   *
+   * @type {State}
+   */
+  function commentOpenInside(code) {
+    if (code === 45) {
+      effects.consume(code)
+      return commentEnd
+    }
+    return nok(code)
+  }
+
+  /**
+   * In comment.
+   *
+   * ```markdown
+   * > | a <!--b--> c
+   *           ^
+   * ```
+   *
+   * @type {State}
+   */
+  function comment(code) {
+    if (code === null) {
+      return nok(code)
+    }
+    if (code === 45) {
+      effects.consume(code)
+      return commentClose
+    }
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      returnState = comment
+      return lineEndingBefore(code)
+    }
+    effects.consume(code)
+    return comment
+  }
+
+  /**
+   * In comment, after `-`.
+   *
+   * ```markdown
+   * > | a <!--b--> c
+   *             ^
+   * ```
+   *
+   * @type {State}
+   */
+  function commentClose(code) {
+    if (code === 45) {
+      effects.consume(code)
+      return commentEnd
+    }
+    return comment(code)
+  }
+
+  /**
+   * In comment, after `--`.
+   *
+   * ```markdown
+   * > | a <!--b--> c
+   *              ^
+   * ```
+   *
+   * @type {State}
+   */
+  function commentEnd(code) {
+    return code === 62
+      ? end(code)
+      : code === 45
+      ? commentClose(code)
+      : comment(code)
+  }
+
+  /**
+   * After `<![`, in CDATA, expecting `CDATA[`.
+   *
+   * ```markdown
+   * > | a <![CDATA[>&<]]> b
+   *          ^^^^^^
+   * ```
+   *
+   * @type {State}
+   */
+  function cdataOpenInside(code) {
+    const value = 'CDATA['
+    if (code === value.charCodeAt(index++)) {
+      effects.consume(code)
+      return index === value.length ? cdata : cdataOpenInside
+    }
+    return nok(code)
+  }
+
+  /**
+   * In CDATA.
+   *
+   * ```markdown
+   * > | a <![CDATA[>&<]]> b
+   *                ^^^
+   * ```
+   *
+   * @type {State}
+   */
+  function cdata(code) {
+    if (code === null) {
+      return nok(code)
+    }
+    if (code === 93) {
+      effects.consume(code)
+      return cdataClose
+    }
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      returnState = cdata
+      return lineEndingBefore(code)
+    }
+    effects.consume(code)
+    return cdata
+  }
+
+  /**
+   * In CDATA, after `]`, at another `]`.
+   *
+   * ```markdown
+   * > | a <![CDATA[>&<]]> b
+   *                    ^
+   * ```
+   *
+   * @type {State}
+   */
+  function cdataClose(code) {
+    if (code === 93) {
+      effects.consume(code)
+      return cdataEnd
+    }
+    return cdata(code)
+  }
+
+  /**
+   * In CDATA, after `]]`, at `>`.
+   *
+   * ```markdown
+   * > | a <![CDATA[>&<]]> b
+   *                     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function cdataEnd(code) {
+    if (code === 62) {
+      return end(code)
+    }
+    if (code === 93) {
+      effects.consume(code)
+      return cdataEnd
+    }
+    return cdata(code)
+  }
+
+  /**
+   * In declaration.
+   *
+   * ```markdown
+   * > | a <!b> c
+   *          ^
+   * ```
+   *
+   * @type {State}
+   */
+  function declaration(code) {
+    if (code === null || code === 62) {
+      return end(code)
+    }
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      returnState = declaration
+      return lineEndingBefore(code)
+    }
+    effects.consume(code)
+    return declaration
+  }
+
+  /**
+   * In instruction.
+   *
+   * ```markdown
+   * > | a <?b?> c
+   *         ^
+   * ```
+   *
+   * @type {State}
+   */
+  function instruction(code) {
+    if (code === null) {
+      return nok(code)
+    }
+    if (code === 63) {
+      effects.consume(code)
+      return instructionClose
+    }
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      returnState = instruction
+      return lineEndingBefore(code)
+    }
+    effects.consume(code)
+    return instruction
+  }
+
+  /**
+   * In instruction, after `?`, at `>`.
+   *
+   * ```markdown
+   * > | a <?b?> c
+   *           ^
+   * ```
+   *
+   * @type {State}
+   */
+  function instructionClose(code) {
+    return code === 62 ? end(code) : instruction(code)
+  }
+
+  /**
+   * After `</`, in closing tag, at tag name.
+   *
+   * ```markdown
+   * > | a </b> c
+   *         ^
+   * ```
+   *
+   * @type {State}
+   */
+  function tagCloseStart(code) {
+    // ASCII alphabetical.
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiAlpha */ .CW)(code)) {
+      effects.consume(code)
+      return tagClose
+    }
+    return nok(code)
+  }
+
+  /**
+   * After `</x`, in a tag name.
+   *
+   * ```markdown
+   * > | a </b> c
+   *          ^
+   * ```
+   *
+   * @type {State}
+   */
+  function tagClose(code) {
+    // ASCII alphanumerical and `-`.
+    if (code === 45 || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiAlphanumeric */ .lV)(code)) {
+      effects.consume(code)
+      return tagClose
+    }
+    return tagCloseBetween(code)
+  }
+
+  /**
+   * In closing tag, after tag name.
+   *
+   * ```markdown
+   * > | a </b> c
+   *          ^
+   * ```
+   *
+   * @type {State}
+   */
+  function tagCloseBetween(code) {
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      returnState = tagCloseBetween
+      return lineEndingBefore(code)
+    }
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownSpace */ .On)(code)) {
+      effects.consume(code)
+      return tagCloseBetween
+    }
+    return end(code)
+  }
+
+  /**
+   * After `<x`, in opening tag name.
+   *
+   * ```markdown
+   * > | a <b> c
+   *         ^
+   * ```
+   *
+   * @type {State}
+   */
+  function tagOpen(code) {
+    // ASCII alphanumerical and `-`.
+    if (code === 45 || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiAlphanumeric */ .lV)(code)) {
+      effects.consume(code)
+      return tagOpen
+    }
+    if (code === 47 || code === 62 || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEndingOrSpace */ .Ee)(code)) {
+      return tagOpenBetween(code)
+    }
+    return nok(code)
+  }
+
+  /**
+   * In opening tag, after tag name.
+   *
+   * ```markdown
+   * > | a <b> c
+   *         ^
+   * ```
+   *
+   * @type {State}
+   */
+  function tagOpenBetween(code) {
+    if (code === 47) {
+      effects.consume(code)
+      return end
+    }
+
+    // ASCII alphabetical and `:` and `_`.
+    if (code === 58 || code === 95 || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiAlpha */ .CW)(code)) {
+      effects.consume(code)
+      return tagOpenAttributeName
+    }
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      returnState = tagOpenBetween
+      return lineEndingBefore(code)
+    }
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownSpace */ .On)(code)) {
+      effects.consume(code)
+      return tagOpenBetween
+    }
+    return end(code)
+  }
+
+  /**
+   * In attribute name.
+   *
+   * ```markdown
+   * > | a <b c> d
+   *          ^
+   * ```
+   *
+   * @type {State}
+   */
+  function tagOpenAttributeName(code) {
+    // ASCII alphabetical and `-`, `.`, `:`, and `_`.
+    if (
+      code === 45 ||
+      code === 46 ||
+      code === 58 ||
+      code === 95 ||
+      (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiAlphanumeric */ .lV)(code)
+    ) {
+      effects.consume(code)
+      return tagOpenAttributeName
+    }
+    return tagOpenAttributeNameAfter(code)
+  }
+
+  /**
+   * After attribute name, before initializer, the end of the tag, or
+   * whitespace.
+   *
+   * ```markdown
+   * > | a <b c> d
+   *           ^
+   * ```
+   *
+   * @type {State}
+   */
+  function tagOpenAttributeNameAfter(code) {
+    if (code === 61) {
+      effects.consume(code)
+      return tagOpenAttributeValueBefore
+    }
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      returnState = tagOpenAttributeNameAfter
+      return lineEndingBefore(code)
+    }
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownSpace */ .On)(code)) {
+      effects.consume(code)
+      return tagOpenAttributeNameAfter
+    }
+    return tagOpenBetween(code)
+  }
+
+  /**
+   * Before unquoted, double quoted, or single quoted attribute value, allowing
+   * whitespace.
+   *
+   * ```markdown
+   * > | a <b c=d> e
+   *            ^
+   * ```
+   *
+   * @type {State}
+   */
+  function tagOpenAttributeValueBefore(code) {
+    if (
+      code === null ||
+      code === 60 ||
+      code === 61 ||
+      code === 62 ||
+      code === 96
+    ) {
+      return nok(code)
+    }
+    if (code === 34 || code === 39) {
+      effects.consume(code)
+      marker = code
+      return tagOpenAttributeValueQuoted
+    }
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      returnState = tagOpenAttributeValueBefore
+      return lineEndingBefore(code)
+    }
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownSpace */ .On)(code)) {
+      effects.consume(code)
+      return tagOpenAttributeValueBefore
+    }
+    effects.consume(code)
+    return tagOpenAttributeValueUnquoted
+  }
+
+  /**
+   * In double or single quoted attribute value.
+   *
+   * ```markdown
+   * > | a <b c="d"> e
+   *             ^
+   * ```
+   *
+   * @type {State}
+   */
+  function tagOpenAttributeValueQuoted(code) {
+    if (code === marker) {
+      effects.consume(code)
+      marker = undefined
+      return tagOpenAttributeValueQuotedAfter
+    }
+    if (code === null) {
+      return nok(code)
+    }
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      returnState = tagOpenAttributeValueQuoted
+      return lineEndingBefore(code)
+    }
+    effects.consume(code)
+    return tagOpenAttributeValueQuoted
+  }
+
+  /**
+   * In unquoted attribute value.
+   *
+   * ```markdown
+   * > | a <b c=d> e
+   *            ^
+   * ```
+   *
+   * @type {State}
+   */
+  function tagOpenAttributeValueUnquoted(code) {
+    if (
+      code === null ||
+      code === 34 ||
+      code === 39 ||
+      code === 60 ||
+      code === 61 ||
+      code === 96
+    ) {
+      return nok(code)
+    }
+    if (code === 47 || code === 62 || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEndingOrSpace */ .Ee)(code)) {
+      return tagOpenBetween(code)
+    }
+    effects.consume(code)
+    return tagOpenAttributeValueUnquoted
+  }
+
+  /**
+   * After double or single quoted attribute value, before whitespace or the end
+   * of the tag.
+   *
+   * ```markdown
+   * > | a <b c="d"> e
+   *               ^
+   * ```
+   *
+   * @type {State}
+   */
+  function tagOpenAttributeValueQuotedAfter(code) {
+    if (code === 47 || code === 62 || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEndingOrSpace */ .Ee)(code)) {
+      return tagOpenBetween(code)
+    }
+    return nok(code)
+  }
+
+  /**
+   * In certain circumstances of a tag where only an `>` is allowed.
+   *
+   * ```markdown
+   * > | a <b c="d"> e
+   *               ^
+   * ```
+   *
+   * @type {State}
+   */
+  function end(code) {
+    if (code === 62) {
+      effects.consume(code)
+      effects.exit('htmlTextData')
+      effects.exit('htmlText')
+      return ok
+    }
+    return nok(code)
+  }
+
+  /**
+   * At eol.
+   *
+   * > 👉 **Note**: we can’t have blank lines in text, so no need to worry about
+   * > empty tokens.
+   *
+   * ```markdown
+   * > | a <!--a
+   *            ^
+   *   | b-->
+   * ```
+   *
+   * @type {State}
+   */
+  function lineEndingBefore(code) {
+    effects.exit('htmlTextData')
+    effects.enter('lineEnding')
+    effects.consume(code)
+    effects.exit('lineEnding')
+    return lineEndingAfter
+  }
+
+  /**
+   * After eol, at optional whitespace.
+   *
+   * > 👉 **Note**: we can’t have blank lines in text, so no need to worry about
+   * > empty tokens.
+   *
+   * ```markdown
+   *   | a <!--a
+   * > | b-->
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function lineEndingAfter(code) {
+    // Always populated by defaults.
+
+    return (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownSpace */ .On)(code)
+      ? (0,micromark_factory_space__WEBPACK_IMPORTED_MODULE_1__/* .factorySpace */ .N)(
+          effects,
+          lineEndingAfterPrefix,
+          'linePrefix',
+          self.parser.constructs.disable.null.includes('codeIndented')
+            ? undefined
+            : 4
+        )(code)
+      : lineEndingAfterPrefix(code)
+  }
+
+  /**
+   * After eol, after optional whitespace.
+   *
+   * > 👉 **Note**: we can’t have blank lines in text, so no need to worry about
+   * > empty tokens.
+   *
+   * ```markdown
+   *   | a <!--a
+   * > | b-->
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function lineEndingAfterPrefix(code) {
+    effects.enter('htmlTextData')
+    return returnState(code)
+  }
+}
+
+
+/***/ }),
+
+/***/ 35725:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   o: () => (/* binding */ labelEnd)
+/* harmony export */ });
+/* harmony import */ var micromark_factory_destination__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2514);
+/* harmony import */ var micromark_factory_label__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(32568);
+/* harmony import */ var micromark_factory_title__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(13108);
+/* harmony import */ var micromark_factory_whitespace__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(13967);
+/* harmony import */ var micromark_util_character__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(57949);
+/* harmony import */ var micromark_util_chunked__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(43890);
+/* harmony import */ var micromark_util_normalize_identifier__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(26243);
+/* harmony import */ var micromark_util_resolve_all__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(23796);
+/**
+ * @typedef {import('micromark-util-types').Construct} Construct
+ * @typedef {import('micromark-util-types').Event} Event
+ * @typedef {import('micromark-util-types').Resolver} Resolver
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').Token} Token
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
+ */
+
+
+
+
+
+
+
+
+
+/** @type {Construct} */
+const labelEnd = {
+  name: 'labelEnd',
+  tokenize: tokenizeLabelEnd,
+  resolveTo: resolveToLabelEnd,
+  resolveAll: resolveAllLabelEnd
+}
+
+/** @type {Construct} */
+const resourceConstruct = {
+  tokenize: tokenizeResource
+}
+/** @type {Construct} */
+const referenceFullConstruct = {
+  tokenize: tokenizeReferenceFull
+}
+/** @type {Construct} */
+const referenceCollapsedConstruct = {
+  tokenize: tokenizeReferenceCollapsed
+}
+
+/** @type {Resolver} */
+function resolveAllLabelEnd(events) {
+  let index = -1
+  while (++index < events.length) {
+    const token = events[index][1]
+    if (
+      token.type === 'labelImage' ||
+      token.type === 'labelLink' ||
+      token.type === 'labelEnd'
+    ) {
+      // Remove the marker.
+      events.splice(index + 1, token.type === 'labelImage' ? 4 : 2)
+      token.type = 'data'
+      index++
+    }
+  }
+  return events
+}
+
+/** @type {Resolver} */
+function resolveToLabelEnd(events, context) {
+  let index = events.length
+  let offset = 0
+  /** @type {Token} */
+  let token
+  /** @type {number | undefined} */
+  let open
+  /** @type {number | undefined} */
+  let close
+  /** @type {Array<Event>} */
+  let media
+
+  // Find an opening.
+  while (index--) {
+    token = events[index][1]
+    if (open) {
+      // If we see another link, or inactive link label, we’ve been here before.
+      if (
+        token.type === 'link' ||
+        (token.type === 'labelLink' && token._inactive)
+      ) {
+        break
+      }
+
+      // Mark other link openings as inactive, as we can’t have links in
+      // links.
+      if (events[index][0] === 'enter' && token.type === 'labelLink') {
+        token._inactive = true
+      }
+    } else if (close) {
+      if (
+        events[index][0] === 'enter' &&
+        (token.type === 'labelImage' || token.type === 'labelLink') &&
+        !token._balanced
+      ) {
+        open = index
+        if (token.type !== 'labelLink') {
+          offset = 2
+          break
+        }
+      }
+    } else if (token.type === 'labelEnd') {
+      close = index
+    }
+  }
+  const group = {
+    type: events[open][1].type === 'labelLink' ? 'link' : 'image',
+    start: Object.assign({}, events[open][1].start),
+    end: Object.assign({}, events[events.length - 1][1].end)
+  }
+  const label = {
+    type: 'label',
+    start: Object.assign({}, events[open][1].start),
+    end: Object.assign({}, events[close][1].end)
+  }
+  const text = {
+    type: 'labelText',
+    start: Object.assign({}, events[open + offset + 2][1].end),
+    end: Object.assign({}, events[close - 2][1].start)
+  }
+  media = [
+    ['enter', group, context],
+    ['enter', label, context]
+  ]
+
+  // Opening marker.
+  media = (0,micromark_util_chunked__WEBPACK_IMPORTED_MODULE_0__/* .push */ .V)(media, events.slice(open + 1, open + offset + 3))
+
+  // Text open.
+  media = (0,micromark_util_chunked__WEBPACK_IMPORTED_MODULE_0__/* .push */ .V)(media, [['enter', text, context]])
+
+  // Always populated by defaults.
+
+  // Between.
+  media = (0,micromark_util_chunked__WEBPACK_IMPORTED_MODULE_0__/* .push */ .V)(
+    media,
+    (0,micromark_util_resolve_all__WEBPACK_IMPORTED_MODULE_1__/* .resolveAll */ .W)(
+      context.parser.constructs.insideSpan.null,
+      events.slice(open + offset + 4, close - 3),
+      context
+    )
+  )
+
+  // Text close, marker close, label close.
+  media = (0,micromark_util_chunked__WEBPACK_IMPORTED_MODULE_0__/* .push */ .V)(media, [
+    ['exit', text, context],
+    events[close - 2],
+    events[close - 1],
+    ['exit', label, context]
+  ])
+
+  // Reference, resource, or so.
+  media = (0,micromark_util_chunked__WEBPACK_IMPORTED_MODULE_0__/* .push */ .V)(media, events.slice(close + 1))
+
+  // Media close.
+  media = (0,micromark_util_chunked__WEBPACK_IMPORTED_MODULE_0__/* .push */ .V)(media, [['exit', group, context]])
+  ;(0,micromark_util_chunked__WEBPACK_IMPORTED_MODULE_0__/* .splice */ .m)(events, open, events.length, media)
+  return events
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeLabelEnd(effects, ok, nok) {
+  const self = this
+  let index = self.events.length
+  /** @type {Token} */
+  let labelStart
+  /** @type {boolean} */
+  let defined
+
+  // Find an opening.
+  while (index--) {
+    if (
+      (self.events[index][1].type === 'labelImage' ||
+        self.events[index][1].type === 'labelLink') &&
+      !self.events[index][1]._balanced
+    ) {
+      labelStart = self.events[index][1]
+      break
+    }
+  }
+  return start
+
+  /**
+   * Start of label end.
+   *
+   * ```markdown
+   * > | [a](b) c
+   *       ^
+   * > | [a][b] c
+   *       ^
+   * > | [a][] b
+   *       ^
+   * > | [a] b
+   * ```
+   *
+   * @type {State}
+   */
+  function start(code) {
+    // If there is not an okay opening.
+    if (!labelStart) {
+      return nok(code)
+    }
+
+    // If the corresponding label (link) start is marked as inactive,
+    // it means we’d be wrapping a link, like this:
+    //
+    // ```markdown
+    // > | a [b [c](d) e](f) g.
+    //                  ^
+    // ```
+    //
+    // We can’t have that, so it’s just balanced brackets.
+    if (labelStart._inactive) {
+      return labelEndNok(code)
+    }
+    defined = self.parser.defined.includes(
+      (0,micromark_util_normalize_identifier__WEBPACK_IMPORTED_MODULE_2__/* .normalizeIdentifier */ .B)(
+        self.sliceSerialize({
+          start: labelStart.end,
+          end: self.now()
+        })
+      )
+    )
+    effects.enter('labelEnd')
+    effects.enter('labelMarker')
+    effects.consume(code)
+    effects.exit('labelMarker')
+    effects.exit('labelEnd')
+    return after
+  }
+
+  /**
+   * After `]`.
+   *
+   * ```markdown
+   * > | [a](b) c
+   *       ^
+   * > | [a][b] c
+   *       ^
+   * > | [a][] b
+   *       ^
+   * > | [a] b
+   *       ^
+   * ```
+   *
+   * @type {State}
+   */
+  function after(code) {
+    // Note: `markdown-rs` also parses GFM footnotes here, which for us is in
+    // an extension.
+
+    // Resource (`[asd](fgh)`)?
+    if (code === 40) {
+      return effects.attempt(
+        resourceConstruct,
+        labelEndOk,
+        defined ? labelEndOk : labelEndNok
+      )(code)
+    }
+
+    // Full (`[asd][fgh]`) or collapsed (`[asd][]`) reference?
+    if (code === 91) {
+      return effects.attempt(
+        referenceFullConstruct,
+        labelEndOk,
+        defined ? referenceNotFull : labelEndNok
+      )(code)
+    }
+
+    // Shortcut (`[asd]`) reference?
+    return defined ? labelEndOk(code) : labelEndNok(code)
+  }
+
+  /**
+   * After `]`, at `[`, but not at a full reference.
+   *
+   * > 👉 **Note**: we only get here if the label is defined.
+   *
+   * ```markdown
+   * > | [a][] b
+   *        ^
+   * > | [a] b
+   *        ^
+   * ```
+   *
+   * @type {State}
+   */
+  function referenceNotFull(code) {
+    return effects.attempt(
+      referenceCollapsedConstruct,
+      labelEndOk,
+      labelEndNok
+    )(code)
+  }
+
+  /**
+   * Done, we found something.
+   *
+   * ```markdown
+   * > | [a](b) c
+   *           ^
+   * > | [a][b] c
+   *           ^
+   * > | [a][] b
+   *          ^
+   * > | [a] b
+   *        ^
+   * ```
+   *
+   * @type {State}
+   */
+  function labelEndOk(code) {
+    // Note: `markdown-rs` does a bunch of stuff here.
+    return ok(code)
+  }
+
+  /**
+   * Done, it’s nothing.
+   *
+   * There was an okay opening, but we didn’t match anything.
+   *
+   * ```markdown
+   * > | [a](b c
+   *        ^
+   * > | [a][b c
+   *        ^
+   * > | [a] b
+   *        ^
+   * ```
+   *
+   * @type {State}
+   */
+  function labelEndNok(code) {
+    labelStart._balanced = true
+    return nok(code)
+  }
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeResource(effects, ok, nok) {
+  return resourceStart
+
+  /**
+   * At a resource.
+   *
+   * ```markdown
+   * > | [a](b) c
+   *        ^
+   * ```
+   *
+   * @type {State}
+   */
+  function resourceStart(code) {
+    effects.enter('resource')
+    effects.enter('resourceMarker')
+    effects.consume(code)
+    effects.exit('resourceMarker')
+    return resourceBefore
+  }
+
+  /**
+   * In resource, after `(`, at optional whitespace.
+   *
+   * ```markdown
+   * > | [a](b) c
+   *         ^
+   * ```
+   *
+   * @type {State}
+   */
+  function resourceBefore(code) {
+    return (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_3__/* .markdownLineEndingOrSpace */ .Ee)(code)
+      ? (0,micromark_factory_whitespace__WEBPACK_IMPORTED_MODULE_4__/* .factoryWhitespace */ .Y)(effects, resourceOpen)(code)
+      : resourceOpen(code)
+  }
+
+  /**
+   * In resource, after optional whitespace, at `)` or a destination.
+   *
+   * ```markdown
+   * > | [a](b) c
+   *         ^
+   * ```
+   *
+   * @type {State}
+   */
+  function resourceOpen(code) {
+    if (code === 41) {
+      return resourceEnd(code)
+    }
+    return (0,micromark_factory_destination__WEBPACK_IMPORTED_MODULE_5__/* .factoryDestination */ .v)(
+      effects,
+      resourceDestinationAfter,
+      resourceDestinationMissing,
+      'resourceDestination',
+      'resourceDestinationLiteral',
+      'resourceDestinationLiteralMarker',
+      'resourceDestinationRaw',
+      'resourceDestinationString',
+      32
+    )(code)
+  }
+
+  /**
+   * In resource, after destination, at optional whitespace.
+   *
+   * ```markdown
+   * > | [a](b) c
+   *          ^
+   * ```
+   *
+   * @type {State}
+   */
+  function resourceDestinationAfter(code) {
+    return (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_3__/* .markdownLineEndingOrSpace */ .Ee)(code)
+      ? (0,micromark_factory_whitespace__WEBPACK_IMPORTED_MODULE_4__/* .factoryWhitespace */ .Y)(effects, resourceBetween)(code)
+      : resourceEnd(code)
+  }
+
+  /**
+   * At invalid destination.
+   *
+   * ```markdown
+   * > | [a](<<) b
+   *         ^
+   * ```
+   *
+   * @type {State}
+   */
+  function resourceDestinationMissing(code) {
+    return nok(code)
+  }
+
+  /**
+   * In resource, after destination and whitespace, at `(` or title.
+   *
+   * ```markdown
+   * > | [a](b ) c
+   *           ^
+   * ```
+   *
+   * @type {State}
+   */
+  function resourceBetween(code) {
+    if (code === 34 || code === 39 || code === 40) {
+      return (0,micromark_factory_title__WEBPACK_IMPORTED_MODULE_6__/* .factoryTitle */ .f)(
+        effects,
+        resourceTitleAfter,
+        nok,
+        'resourceTitle',
+        'resourceTitleMarker',
+        'resourceTitleString'
+      )(code)
+    }
+    return resourceEnd(code)
+  }
+
+  /**
+   * In resource, after title, at optional whitespace.
+   *
+   * ```markdown
+   * > | [a](b "c") d
+   *              ^
+   * ```
+   *
+   * @type {State}
+   */
+  function resourceTitleAfter(code) {
+    return (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_3__/* .markdownLineEndingOrSpace */ .Ee)(code)
+      ? (0,micromark_factory_whitespace__WEBPACK_IMPORTED_MODULE_4__/* .factoryWhitespace */ .Y)(effects, resourceEnd)(code)
+      : resourceEnd(code)
+  }
+
+  /**
+   * In resource, at `)`.
+   *
+   * ```markdown
+   * > | [a](b) d
+   *          ^
+   * ```
+   *
+   * @type {State}
+   */
+  function resourceEnd(code) {
+    if (code === 41) {
+      effects.enter('resourceMarker')
+      effects.consume(code)
+      effects.exit('resourceMarker')
+      effects.exit('resource')
+      return ok
+    }
+    return nok(code)
+  }
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeReferenceFull(effects, ok, nok) {
+  const self = this
+  return referenceFull
+
+  /**
+   * In a reference (full), at the `[`.
+   *
+   * ```markdown
+   * > | [a][b] d
+   *        ^
+   * ```
+   *
+   * @type {State}
+   */
+  function referenceFull(code) {
+    return micromark_factory_label__WEBPACK_IMPORTED_MODULE_7__/* .factoryLabel */ .r.call(
+      self,
+      effects,
+      referenceFullAfter,
+      referenceFullMissing,
+      'reference',
+      'referenceMarker',
+      'referenceString'
+    )(code)
+  }
+
+  /**
+   * In a reference (full), after `]`.
+   *
+   * ```markdown
+   * > | [a][b] d
+   *          ^
+   * ```
+   *
+   * @type {State}
+   */
+  function referenceFullAfter(code) {
+    return self.parser.defined.includes(
+      (0,micromark_util_normalize_identifier__WEBPACK_IMPORTED_MODULE_2__/* .normalizeIdentifier */ .B)(
+        self.sliceSerialize(self.events[self.events.length - 1][1]).slice(1, -1)
+      )
+    )
+      ? ok(code)
+      : nok(code)
+  }
+
+  /**
+   * In reference (full) that was missing.
+   *
+   * ```markdown
+   * > | [a][b d
+   *        ^
+   * ```
+   *
+   * @type {State}
+   */
+  function referenceFullMissing(code) {
+    return nok(code)
+  }
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeReferenceCollapsed(effects, ok, nok) {
+  return referenceCollapsedStart
+
+  /**
+   * In reference (collapsed), at `[`.
+   *
+   * > 👉 **Note**: we only get here if the label is defined.
+   *
+   * ```markdown
+   * > | [a][] d
+   *        ^
+   * ```
+   *
+   * @type {State}
+   */
+  function referenceCollapsedStart(code) {
+    // We only attempt a collapsed label if there’s a `[`.
+
+    effects.enter('reference')
+    effects.enter('referenceMarker')
+    effects.consume(code)
+    effects.exit('referenceMarker')
+    return referenceCollapsedOpen
+  }
+
+  /**
+   * In reference (collapsed), at `]`.
+   *
+   * > 👉 **Note**: we only get here if the label is defined.
+   *
+   * ```markdown
+   * > | [a][] d
+   *         ^
+   * ```
+   *
+   *  @type {State}
+   */
+  function referenceCollapsedOpen(code) {
+    if (code === 93) {
+      effects.enter('referenceMarker')
+      effects.consume(code)
+      effects.exit('referenceMarker')
+      effects.exit('reference')
+      return ok
+    }
+    return nok(code)
+  }
+}
+
+
+/***/ }),
+
+/***/ 76136:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   u: () => (/* binding */ labelStartImage)
+/* harmony export */ });
+/* harmony import */ var _label_end_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(35725);
+/**
+ * @typedef {import('micromark-util-types').Construct} Construct
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
+ */
+
+
+
+/** @type {Construct} */
+const labelStartImage = {
+  name: 'labelStartImage',
+  tokenize: tokenizeLabelStartImage,
+  resolveAll: _label_end_js__WEBPACK_IMPORTED_MODULE_0__/* .labelEnd */ .o.resolveAll
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeLabelStartImage(effects, ok, nok) {
+  const self = this
+  return start
+
+  /**
+   * Start of label (image) start.
+   *
+   * ```markdown
+   * > | a ![b] c
+   *       ^
+   * ```
+   *
+   * @type {State}
+   */
+  function start(code) {
+    effects.enter('labelImage')
+    effects.enter('labelImageMarker')
+    effects.consume(code)
+    effects.exit('labelImageMarker')
+    return open
+  }
+
+  /**
+   * After `!`, at `[`.
+   *
+   * ```markdown
+   * > | a ![b] c
+   *        ^
+   * ```
+   *
+   * @type {State}
+   */
+  function open(code) {
+    if (code === 91) {
+      effects.enter('labelMarker')
+      effects.consume(code)
+      effects.exit('labelMarker')
+      effects.exit('labelImage')
+      return after
+    }
+    return nok(code)
+  }
+
+  /**
+   * After `![`.
+   *
+   * ```markdown
+   * > | a ![b] c
+   *         ^
+   * ```
+   *
+   * This is needed in because, when GFM footnotes are enabled, images never
+   * form when started with a `^`.
+   * Instead, links form:
+   *
+   * ```markdown
+   * ![^a](b)
+   *
+   * ![^a][b]
+   *
+   * [b]: c
+   * ```
+   *
+   * ```html
+   * <p>!<a href=\"b\">^a</a></p>
+   * <p>!<a href=\"c\">^a</a></p>
+   * ```
+   *
+   * @type {State}
+   */
+  function after(code) {
+    // To do: use a new field to do this, this is still needed for
+    // `micromark-extension-gfm-footnote`, but the `label-start-link`
+    // behavior isn’t.
+    // Hidden footnotes hook.
+    /* c8 ignore next 3 */
+    return code === 94 && '_hiddenFootnoteSupport' in self.parser.constructs
+      ? nok(code)
+      : ok(code)
+  }
+}
+
+
+/***/ }),
+
+/***/ 30385:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   J: () => (/* binding */ labelStartLink)
+/* harmony export */ });
+/* harmony import */ var _label_end_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(35725);
+/**
+ * @typedef {import('micromark-util-types').Construct} Construct
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
+ */
+
+
+
+/** @type {Construct} */
+const labelStartLink = {
+  name: 'labelStartLink',
+  tokenize: tokenizeLabelStartLink,
+  resolveAll: _label_end_js__WEBPACK_IMPORTED_MODULE_0__/* .labelEnd */ .o.resolveAll
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeLabelStartLink(effects, ok, nok) {
+  const self = this
+  return start
+
+  /**
+   * Start of label (link) start.
+   *
+   * ```markdown
+   * > | a [b] c
+   *       ^
+   * ```
+   *
+   * @type {State}
+   */
+  function start(code) {
+    effects.enter('labelLink')
+    effects.enter('labelMarker')
+    effects.consume(code)
+    effects.exit('labelMarker')
+    effects.exit('labelLink')
+    return after
+  }
+
+  /** @type {State} */
+  function after(code) {
+    // To do: this isn’t needed in `micromark-extension-gfm-footnote`,
+    // remove.
+    // Hidden footnotes hook.
+    /* c8 ignore next 3 */
+    return code === 94 && '_hiddenFootnoteSupport' in self.parser.constructs
+      ? nok(code)
+      : ok(code)
+  }
+}
+
+
+/***/ }),
+
+/***/ 14229:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   E: () => (/* binding */ lineEnding)
+/* harmony export */ });
+/* harmony import */ var micromark_factory_space__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(77508);
+/**
+ * @typedef {import('micromark-util-types').Construct} Construct
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
+ */
+
+
+
+/** @type {Construct} */
+const lineEnding = {
+  name: 'lineEnding',
+  tokenize: tokenizeLineEnding
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeLineEnding(effects, ok) {
+  return start
+
+  /** @type {State} */
+  function start(code) {
+    effects.enter('lineEnding')
+    effects.consume(code)
+    effects.exit('lineEnding')
+    return (0,micromark_factory_space__WEBPACK_IMPORTED_MODULE_0__/* .factorySpace */ .N)(effects, ok, 'linePrefix')
+  }
+}
+
+
+/***/ }),
+
+/***/ 16027:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   p: () => (/* binding */ list)
+/* harmony export */ });
+/* harmony import */ var micromark_factory_space__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(77508);
+/* harmony import */ var micromark_util_character__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(57949);
+/* harmony import */ var _blank_line_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(35460);
+/* harmony import */ var _thematic_break_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(41590);
+/**
+ * @typedef {import('micromark-util-types').Code} Code
+ * @typedef {import('micromark-util-types').Construct} Construct
+ * @typedef {import('micromark-util-types').ContainerState} ContainerState
+ * @typedef {import('micromark-util-types').Exiter} Exiter
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
+ */
+
+
+
+
+
+
+/** @type {Construct} */
+const list = {
+  name: 'list',
+  tokenize: tokenizeListStart,
+  continuation: {
+    tokenize: tokenizeListContinuation
+  },
+  exit: tokenizeListEnd
+}
+
+/** @type {Construct} */
+const listItemPrefixWhitespaceConstruct = {
+  tokenize: tokenizeListItemPrefixWhitespace,
+  partial: true
+}
+
+/** @type {Construct} */
+const indentConstruct = {
+  tokenize: tokenizeIndent,
+  partial: true
+}
+
+// To do: `markdown-rs` parses list items on their own and later stitches them
+// together.
+
+/**
+ * @type {Tokenizer}
+ * @this {TokenizeContext}
+ */
+function tokenizeListStart(effects, ok, nok) {
+  const self = this
+  const tail = self.events[self.events.length - 1]
+  let initialSize =
+    tail && tail[1].type === 'linePrefix'
+      ? tail[2].sliceSerialize(tail[1], true).length
+      : 0
+  let size = 0
+  return start
+
+  /** @type {State} */
+  function start(code) {
+    const kind =
+      self.containerState.type ||
+      (code === 42 || code === 43 || code === 45
+        ? 'listUnordered'
+        : 'listOrdered')
+    if (
+      kind === 'listUnordered'
+        ? !self.containerState.marker || code === self.containerState.marker
+        : (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiDigit */ .BM)(code)
+    ) {
+      if (!self.containerState.type) {
+        self.containerState.type = kind
+        effects.enter(kind, {
+          _container: true
+        })
+      }
+      if (kind === 'listUnordered') {
+        effects.enter('listItemPrefix')
+        return code === 42 || code === 45
+          ? effects.check(_thematic_break_js__WEBPACK_IMPORTED_MODULE_1__/* .thematicBreak */ .V, nok, atMarker)(code)
+          : atMarker(code)
+      }
+      if (!self.interrupt || code === 49) {
+        effects.enter('listItemPrefix')
+        effects.enter('listItemValue')
+        return inside(code)
+      }
+    }
+    return nok(code)
+  }
+
+  /** @type {State} */
+  function inside(code) {
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiDigit */ .BM)(code) && ++size < 10) {
+      effects.consume(code)
+      return inside
+    }
+    if (
+      (!self.interrupt || size < 2) &&
+      (self.containerState.marker
+        ? code === self.containerState.marker
+        : code === 41 || code === 46)
+    ) {
+      effects.exit('listItemValue')
+      return atMarker(code)
+    }
+    return nok(code)
+  }
+
+  /**
+   * @type {State}
+   **/
+  function atMarker(code) {
+    effects.enter('listItemMarker')
+    effects.consume(code)
+    effects.exit('listItemMarker')
+    self.containerState.marker = self.containerState.marker || code
+    return effects.check(
+      _blank_line_js__WEBPACK_IMPORTED_MODULE_2__/* .blankLine */ .B,
+      // Can’t be empty when interrupting.
+      self.interrupt ? nok : onBlank,
+      effects.attempt(
+        listItemPrefixWhitespaceConstruct,
+        endOfPrefix,
+        otherPrefix
+      )
+    )
+  }
+
+  /** @type {State} */
+  function onBlank(code) {
+    self.containerState.initialBlankLine = true
+    initialSize++
+    return endOfPrefix(code)
+  }
+
+  /** @type {State} */
+  function otherPrefix(code) {
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownSpace */ .On)(code)) {
+      effects.enter('listItemPrefixWhitespace')
+      effects.consume(code)
+      effects.exit('listItemPrefixWhitespace')
+      return endOfPrefix
+    }
+    return nok(code)
+  }
+
+  /** @type {State} */
+  function endOfPrefix(code) {
+    self.containerState.size =
+      initialSize +
+      self.sliceSerialize(effects.exit('listItemPrefix'), true).length
+    return ok(code)
+  }
+}
+
+/**
+ * @type {Tokenizer}
+ * @this {TokenizeContext}
+ */
+function tokenizeListContinuation(effects, ok, nok) {
+  const self = this
+  self.containerState._closeFlow = undefined
+  return effects.check(_blank_line_js__WEBPACK_IMPORTED_MODULE_2__/* .blankLine */ .B, onBlank, notBlank)
+
+  /** @type {State} */
+  function onBlank(code) {
+    self.containerState.furtherBlankLines =
+      self.containerState.furtherBlankLines ||
+      self.containerState.initialBlankLine
+
+    // We have a blank line.
+    // Still, try to consume at most the items size.
+    return (0,micromark_factory_space__WEBPACK_IMPORTED_MODULE_3__/* .factorySpace */ .N)(
+      effects,
+      ok,
+      'listItemIndent',
+      self.containerState.size + 1
+    )(code)
+  }
+
+  /** @type {State} */
+  function notBlank(code) {
+    if (self.containerState.furtherBlankLines || !(0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownSpace */ .On)(code)) {
+      self.containerState.furtherBlankLines = undefined
+      self.containerState.initialBlankLine = undefined
+      return notInCurrentItem(code)
+    }
+    self.containerState.furtherBlankLines = undefined
+    self.containerState.initialBlankLine = undefined
+    return effects.attempt(indentConstruct, ok, notInCurrentItem)(code)
+  }
+
+  /** @type {State} */
+  function notInCurrentItem(code) {
+    // While we do continue, we signal that the flow should be closed.
+    self.containerState._closeFlow = true
+    // As we’re closing flow, we’re no longer interrupting.
+    self.interrupt = undefined
+    // Always populated by defaults.
+
+    return (0,micromark_factory_space__WEBPACK_IMPORTED_MODULE_3__/* .factorySpace */ .N)(
+      effects,
+      effects.attempt(list, ok, nok),
+      'linePrefix',
+      self.parser.constructs.disable.null.includes('codeIndented')
+        ? undefined
+        : 4
+    )(code)
+  }
+}
+
+/**
+ * @type {Tokenizer}
+ * @this {TokenizeContext}
+ */
+function tokenizeIndent(effects, ok, nok) {
+  const self = this
+  return (0,micromark_factory_space__WEBPACK_IMPORTED_MODULE_3__/* .factorySpace */ .N)(
+    effects,
+    afterPrefix,
+    'listItemIndent',
+    self.containerState.size + 1
+  )
+
+  /** @type {State} */
+  function afterPrefix(code) {
+    const tail = self.events[self.events.length - 1]
+    return tail &&
+      tail[1].type === 'listItemIndent' &&
+      tail[2].sliceSerialize(tail[1], true).length === self.containerState.size
+      ? ok(code)
+      : nok(code)
+  }
+}
+
+/**
+ * @type {Exiter}
+ * @this {TokenizeContext}
+ */
+function tokenizeListEnd(effects) {
+  effects.exit(this.containerState.type)
+}
+
+/**
+ * @type {Tokenizer}
+ * @this {TokenizeContext}
+ */
+function tokenizeListItemPrefixWhitespace(effects, ok, nok) {
+  const self = this
+
+  // Always populated by defaults.
+
+  return (0,micromark_factory_space__WEBPACK_IMPORTED_MODULE_3__/* .factorySpace */ .N)(
+    effects,
+    afterPrefix,
+    'listItemPrefixWhitespace',
+    self.parser.constructs.disable.null.includes('codeIndented')
+      ? undefined
+      : 4 + 1
+  )
+
+  /** @type {State} */
+  function afterPrefix(code) {
+    const tail = self.events[self.events.length - 1]
+    return !(0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownSpace */ .On)(code) &&
+      tail &&
+      tail[1].type === 'listItemPrefixWhitespace'
+      ? ok(code)
+      : nok(code)
+  }
+}
+
+
+/***/ }),
+
+/***/ 25789:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ setextUnderline)
+/* harmony export */ });
+/* harmony import */ var micromark_factory_space__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(77508);
+/* harmony import */ var micromark_util_character__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(57949);
+/**
+ * @typedef {import('micromark-util-types').Code} Code
+ * @typedef {import('micromark-util-types').Construct} Construct
+ * @typedef {import('micromark-util-types').Resolver} Resolver
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
+ */
+
+
+
+/** @type {Construct} */
+const setextUnderline = {
+  name: 'setextUnderline',
+  tokenize: tokenizeSetextUnderline,
+  resolveTo: resolveToSetextUnderline
+}
+
+/** @type {Resolver} */
+function resolveToSetextUnderline(events, context) {
+  // To do: resolve like `markdown-rs`.
+  let index = events.length
+  /** @type {number | undefined} */
+  let content
+  /** @type {number | undefined} */
+  let text
+  /** @type {number | undefined} */
+  let definition
+
+  // Find the opening of the content.
+  // It’ll always exist: we don’t tokenize if it isn’t there.
+  while (index--) {
+    if (events[index][0] === 'enter') {
+      if (events[index][1].type === 'content') {
+        content = index
+        break
+      }
+      if (events[index][1].type === 'paragraph') {
+        text = index
+      }
+    }
+    // Exit
+    else {
+      if (events[index][1].type === 'content') {
+        // Remove the content end (if needed we’ll add it later)
+        events.splice(index, 1)
+      }
+      if (!definition && events[index][1].type === 'definition') {
+        definition = index
+      }
+    }
+  }
+  const heading = {
+    type: 'setextHeading',
+    start: Object.assign({}, events[text][1].start),
+    end: Object.assign({}, events[events.length - 1][1].end)
+  }
+
+  // Change the paragraph to setext heading text.
+  events[text][1].type = 'setextHeadingText'
+
+  // If we have definitions in the content, we’ll keep on having content,
+  // but we need move it.
+  if (definition) {
+    events.splice(text, 0, ['enter', heading, context])
+    events.splice(definition + 1, 0, ['exit', events[content][1], context])
+    events[content][1].end = Object.assign({}, events[definition][1].end)
+  } else {
+    events[content][1] = heading
+  }
+
+  // Add the heading exit at the end.
+  events.push(['exit', heading, context])
+  return events
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeSetextUnderline(effects, ok, nok) {
+  const self = this
+  /** @type {NonNullable<Code>} */
+  let marker
+  return start
+
+  /**
+   * At start of heading (setext) underline.
+   *
+   * ```markdown
+   *   | aa
+   * > | ==
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function start(code) {
+    let index = self.events.length
+    /** @type {boolean | undefined} */
+    let paragraph
+    // Find an opening.
+    while (index--) {
+      // Skip enter/exit of line ending, line prefix, and content.
+      // We can now either have a definition or a paragraph.
+      if (
+        self.events[index][1].type !== 'lineEnding' &&
+        self.events[index][1].type !== 'linePrefix' &&
+        self.events[index][1].type !== 'content'
+      ) {
+        paragraph = self.events[index][1].type === 'paragraph'
+        break
+      }
+    }
+
+    // To do: handle lazy/pierce like `markdown-rs`.
+    // To do: parse indent like `markdown-rs`.
+    if (!self.parser.lazy[self.now().line] && (self.interrupt || paragraph)) {
+      effects.enter('setextHeadingLine')
+      marker = code
+      return before(code)
+    }
+    return nok(code)
+  }
+
+  /**
+   * After optional whitespace, at `-` or `=`.
+   *
+   * ```markdown
+   *   | aa
+   * > | ==
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function before(code) {
+    effects.enter('setextHeadingLineSequence')
+    return inside(code)
+  }
+
+  /**
+   * In sequence.
+   *
+   * ```markdown
+   *   | aa
+   * > | ==
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function inside(code) {
+    if (code === marker) {
+      effects.consume(code)
+      return inside
+    }
+    effects.exit('setextHeadingLineSequence')
+    return (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownSpace */ .On)(code)
+      ? (0,micromark_factory_space__WEBPACK_IMPORTED_MODULE_1__/* .factorySpace */ .N)(effects, after, 'lineSuffix')(code)
+      : after(code)
+  }
+
+  /**
+   * After sequence, after optional whitespace.
+   *
+   * ```markdown
+   *   | aa
+   * > | ==
+   *       ^
+   * ```
+   *
+   * @type {State}
+   */
+  function after(code) {
+    if (code === null || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      effects.exit('setextHeadingLine')
+      return ok(code)
+    }
+    return nok(code)
+  }
+}
+
+
+/***/ }),
+
+/***/ 41590:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   V: () => (/* binding */ thematicBreak)
+/* harmony export */ });
+/* harmony import */ var micromark_factory_space__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(77508);
+/* harmony import */ var micromark_util_character__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(57949);
+/**
+ * @typedef {import('micromark-util-types').Code} Code
+ * @typedef {import('micromark-util-types').Construct} Construct
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
+ */
+
+
+
+/** @type {Construct} */
+const thematicBreak = {
+  name: 'thematicBreak',
+  tokenize: tokenizeThematicBreak
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeThematicBreak(effects, ok, nok) {
+  let size = 0
+  /** @type {NonNullable<Code>} */
+  let marker
+  return start
+
+  /**
+   * Start of thematic break.
+   *
+   * ```markdown
+   * > | ***
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function start(code) {
+    effects.enter('thematicBreak')
+    // To do: parse indent like `markdown-rs`.
+    return before(code)
+  }
+
+  /**
+   * After optional whitespace, at marker.
+   *
+   * ```markdown
+   * > | ***
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function before(code) {
+    marker = code
+    return atBreak(code)
+  }
+
+  /**
+   * After something, before something else.
+   *
+   * ```markdown
+   * > | ***
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function atBreak(code) {
+    if (code === marker) {
+      effects.enter('thematicBreakSequence')
+      return sequence(code)
+    }
+    if (size >= 3 && (code === null || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code))) {
+      effects.exit('thematicBreak')
+      return ok(code)
+    }
+    return nok(code)
+  }
+
+  /**
+   * In sequence.
+   *
+   * ```markdown
+   * > | ***
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function sequence(code) {
+    if (code === marker) {
+      effects.consume(code)
+      size++
+      return sequence
+    }
+    effects.exit('thematicBreakSequence')
+    return (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownSpace */ .On)(code)
+      ? (0,micromark_factory_space__WEBPACK_IMPORTED_MODULE_1__/* .factorySpace */ .N)(effects, atBreak, 'whitespace')(code)
+      : atBreak(code)
+  }
+}
+
+
+/***/ }),
+
+/***/ 2514:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   v: () => (/* binding */ factoryDestination)
+/* harmony export */ });
+/* harmony import */ var micromark_util_character__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(57949);
+/**
+ * @typedef {import('micromark-util-types').Effects} Effects
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').TokenType} TokenType
+ */
+
+
+/**
+ * Parse destinations.
+ *
+ * ###### Examples
+ *
+ * ```markdown
+ * <a>
+ * <a\>b>
+ * <a b>
+ * <a)>
+ * a
+ * a\)b
+ * a(b)c
+ * a(b)
+ * ```
+ *
+ * @param {Effects} effects
+ *   Context.
+ * @param {State} ok
+ *   State switched to when successful.
+ * @param {State} nok
+ *   State switched to when unsuccessful.
+ * @param {TokenType} type
+ *   Type for whole (`<a>` or `b`).
+ * @param {TokenType} literalType
+ *   Type when enclosed (`<a>`).
+ * @param {TokenType} literalMarkerType
+ *   Type for enclosing (`<` and `>`).
+ * @param {TokenType} rawType
+ *   Type when not enclosed (`b`).
+ * @param {TokenType} stringType
+ *   Type for the value (`a` or `b`).
+ * @param {number | undefined} [max=Infinity]
+ *   Depth of nested parens (inclusive).
+ * @returns {State}
+ *   Start state.
+ */ // eslint-disable-next-line max-params
+function factoryDestination(
+  effects,
+  ok,
+  nok,
+  type,
+  literalType,
+  literalMarkerType,
+  rawType,
+  stringType,
+  max
+) {
+  const limit = max || Number.POSITIVE_INFINITY
+  let balance = 0
+  return start
+
+  /**
+   * Start of destination.
+   *
+   * ```markdown
+   * > | <aa>
+   *     ^
+   * > | aa
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function start(code) {
+    if (code === 60) {
+      effects.enter(type)
+      effects.enter(literalType)
+      effects.enter(literalMarkerType)
+      effects.consume(code)
+      effects.exit(literalMarkerType)
+      return enclosedBefore
+    }
+
+    // ASCII control, space, closing paren.
+    if (code === null || code === 32 || code === 41 || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiControl */ .JQ)(code)) {
+      return nok(code)
+    }
+    effects.enter(type)
+    effects.enter(rawType)
+    effects.enter(stringType)
+    effects.enter('chunkString', {
+      contentType: 'string'
+    })
+    return raw(code)
+  }
+
+  /**
+   * After `<`, at an enclosed destination.
+   *
+   * ```markdown
+   * > | <aa>
+   *      ^
+   * ```
+   *
+   * @type {State}
+   */
+  function enclosedBefore(code) {
+    if (code === 62) {
+      effects.enter(literalMarkerType)
+      effects.consume(code)
+      effects.exit(literalMarkerType)
+      effects.exit(literalType)
+      effects.exit(type)
+      return ok
+    }
+    effects.enter(stringType)
+    effects.enter('chunkString', {
+      contentType: 'string'
+    })
+    return enclosed(code)
+  }
+
+  /**
+   * In enclosed destination.
+   *
+   * ```markdown
+   * > | <aa>
+   *      ^
+   * ```
+   *
+   * @type {State}
+   */
+  function enclosed(code) {
+    if (code === 62) {
+      effects.exit('chunkString')
+      effects.exit(stringType)
+      return enclosedBefore(code)
+    }
+    if (code === null || code === 60 || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      return nok(code)
+    }
+    effects.consume(code)
+    return code === 92 ? enclosedEscape : enclosed
+  }
+
+  /**
+   * After `\`, at a special character.
+   *
+   * ```markdown
+   * > | <a\*a>
+   *        ^
+   * ```
+   *
+   * @type {State}
+   */
+  function enclosedEscape(code) {
+    if (code === 60 || code === 62 || code === 92) {
+      effects.consume(code)
+      return enclosed
+    }
+    return enclosed(code)
+  }
+
+  /**
+   * In raw destination.
+   *
+   * ```markdown
+   * > | aa
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function raw(code) {
+    if (
+      !balance &&
+      (code === null || code === 41 || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEndingOrSpace */ .Ee)(code))
+    ) {
+      effects.exit('chunkString')
+      effects.exit(stringType)
+      effects.exit(rawType)
+      effects.exit(type)
+      return ok(code)
+    }
+    if (balance < limit && code === 40) {
+      effects.consume(code)
+      balance++
+      return raw
+    }
+    if (code === 41) {
+      effects.consume(code)
+      balance--
+      return raw
+    }
+
+    // ASCII control (but *not* `\0`) and space and `(`.
+    // Note: in `markdown-rs`, `\0` exists in codes, in `micromark-js` it
+    // doesn’t.
+    if (code === null || code === 32 || code === 40 || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiControl */ .JQ)(code)) {
+      return nok(code)
+    }
+    effects.consume(code)
+    return code === 92 ? rawEscape : raw
+  }
+
+  /**
+   * After `\`, at special character.
+   *
+   * ```markdown
+   * > | a\*a
+   *       ^
+   * ```
+   *
+   * @type {State}
+   */
+  function rawEscape(code) {
+    if (code === 40 || code === 41 || code === 92) {
+      effects.consume(code)
+      return raw
+    }
+    return raw(code)
+  }
+}
+
+
+/***/ }),
+
+/***/ 32568:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   r: () => (/* binding */ factoryLabel)
+/* harmony export */ });
+/* harmony import */ var micromark_util_character__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(57949);
+/**
+ * @typedef {import('micromark-util-types').Effects} Effects
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ * @typedef {import('micromark-util-types').TokenType} TokenType
+ */
+
+
+/**
+ * Parse labels.
+ *
+ * > 👉 **Note**: labels in markdown are capped at 999 characters in the string.
+ *
+ * ###### Examples
+ *
+ * ```markdown
+ * [a]
+ * [a
+ * b]
+ * [a\]b]
+ * ```
+ *
+ * @this {TokenizeContext}
+ *   Tokenize context.
+ * @param {Effects} effects
+ *   Context.
+ * @param {State} ok
+ *   State switched to when successful.
+ * @param {State} nok
+ *   State switched to when unsuccessful.
+ * @param {TokenType} type
+ *   Type of the whole label (`[a]`).
+ * @param {TokenType} markerType
+ *   Type for the markers (`[` and `]`).
+ * @param {TokenType} stringType
+ *   Type for the identifier (`a`).
+ * @returns {State}
+ *   Start state.
+ */ // eslint-disable-next-line max-params
+function factoryLabel(effects, ok, nok, type, markerType, stringType) {
+  const self = this
+  let size = 0
+  /** @type {boolean} */
+  let seen
+  return start
+
+  /**
+   * Start of label.
+   *
+   * ```markdown
+   * > | [a]
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function start(code) {
+    effects.enter(type)
+    effects.enter(markerType)
+    effects.consume(code)
+    effects.exit(markerType)
+    effects.enter(stringType)
+    return atBreak
+  }
+
+  /**
+   * In label, at something, before something else.
+   *
+   * ```markdown
+   * > | [a]
+   *      ^
+   * ```
+   *
+   * @type {State}
+   */
+  function atBreak(code) {
+    if (
+      size > 999 ||
+      code === null ||
+      code === 91 ||
+      (code === 93 && !seen) ||
+      // To do: remove in the future once we’ve switched from
+      // `micromark-extension-footnote` to `micromark-extension-gfm-footnote`,
+      // which doesn’t need this.
+      // Hidden footnotes hook.
+      /* c8 ignore next 3 */
+      (code === 94 &&
+        !size &&
+        '_hiddenFootnoteSupport' in self.parser.constructs)
+    ) {
+      return nok(code)
+    }
+    if (code === 93) {
+      effects.exit(stringType)
+      effects.enter(markerType)
+      effects.consume(code)
+      effects.exit(markerType)
+      effects.exit(type)
+      return ok
+    }
+
+    // To do: indent? Link chunks and EOLs together?
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      effects.enter('lineEnding')
+      effects.consume(code)
+      effects.exit('lineEnding')
+      return atBreak
+    }
+    effects.enter('chunkString', {
+      contentType: 'string'
+    })
+    return labelInside(code)
+  }
+
+  /**
+   * In label, in text.
+   *
+   * ```markdown
+   * > | [a]
+   *      ^
+   * ```
+   *
+   * @type {State}
+   */
+  function labelInside(code) {
+    if (
+      code === null ||
+      code === 91 ||
+      code === 93 ||
+      (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code) ||
+      size++ > 999
+    ) {
+      effects.exit('chunkString')
+      return atBreak(code)
+    }
+    effects.consume(code)
+    if (!seen) seen = !(0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownSpace */ .On)(code)
+    return code === 92 ? labelEscape : labelInside
+  }
+
+  /**
+   * After `\`, at a special character.
+   *
+   * ```markdown
+   * > | [a\*a]
+   *        ^
+   * ```
+   *
+   * @type {State}
+   */
+  function labelEscape(code) {
+    if (code === 91 || code === 92 || code === 93) {
+      effects.consume(code)
+      size++
+      return labelInside
+    }
+    return labelInside(code)
+  }
+}
+
+
+/***/ }),
+
+/***/ 77508:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   N: () => (/* binding */ factorySpace)
+/* harmony export */ });
+/* harmony import */ var micromark_util_character__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(57949);
+/**
+ * @typedef {import('micromark-util-types').Effects} Effects
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').TokenType} TokenType
+ */
+
+
+
+// To do: implement `spaceOrTab`, `spaceOrTabMinMax`, `spaceOrTabWithOptions`.
+
+/**
+ * Parse spaces and tabs.
+ *
+ * There is no `nok` parameter:
+ *
+ * *   spaces in markdown are often optional, in which case this factory can be
+ *     used and `ok` will be switched to whether spaces were found or not
+ * *   one line ending or space can be detected with `markdownSpace(code)` right
+ *     before using `factorySpace`
+ *
+ * ###### Examples
+ *
+ * Where `␉` represents a tab (plus how much it expands) and `␠` represents a
+ * single space.
+ *
+ * ```markdown
+ * ␉
+ * ␠␠␠␠
+ * ␉␠
+ * ```
+ *
+ * @param {Effects} effects
+ *   Context.
+ * @param {State} ok
+ *   State switched to when successful.
+ * @param {TokenType} type
+ *   Type (`' \t'`).
+ * @param {number | undefined} [max=Infinity]
+ *   Max (exclusive).
+ * @returns {State}
+ *   Start state.
+ */
+function factorySpace(effects, ok, type, max) {
+  const limit = max ? max - 1 : Number.POSITIVE_INFINITY
+  let size = 0
+  return start
+
+  /** @type {State} */
+  function start(code) {
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownSpace */ .On)(code)) {
+      effects.enter(type)
+      return prefix(code)
+    }
+    return ok(code)
+  }
+
+  /** @type {State} */
+  function prefix(code) {
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownSpace */ .On)(code) && size++ < limit) {
+      effects.consume(code)
+      return prefix
+    }
+    effects.exit(type)
+    return ok(code)
+  }
+}
+
+
+/***/ }),
+
+/***/ 13108:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   f: () => (/* binding */ factoryTitle)
+/* harmony export */ });
+/* harmony import */ var micromark_factory_space__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(77508);
+/* harmony import */ var micromark_util_character__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(57949);
+/**
+ * @typedef {import('micromark-util-types').Code} Code
+ * @typedef {import('micromark-util-types').Effects} Effects
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').TokenType} TokenType
+ */
+
+
+
+/**
+ * Parse titles.
+ *
+ * ###### Examples
+ *
+ * ```markdown
+ * "a"
+ * 'b'
+ * (c)
+ * "a
+ * b"
+ * 'a
+ *     b'
+ * (a\)b)
+ * ```
+ *
+ * @param {Effects} effects
+ *   Context.
+ * @param {State} ok
+ *   State switched to when successful.
+ * @param {State} nok
+ *   State switched to when unsuccessful.
+ * @param {TokenType} type
+ *   Type of the whole title (`"a"`, `'b'`, `(c)`).
+ * @param {TokenType} markerType
+ *   Type for the markers (`"`, `'`, `(`, and `)`).
+ * @param {TokenType} stringType
+ *   Type for the value (`a`).
+ * @returns {State}
+ *   Start state.
+ */ // eslint-disable-next-line max-params
+function factoryTitle(effects, ok, nok, type, markerType, stringType) {
+  /** @type {NonNullable<Code>} */
+  let marker
+  return start
+
+  /**
+   * Start of title.
+   *
+   * ```markdown
+   * > | "a"
+   *     ^
+   * ```
+   *
+   * @type {State}
+   */
+  function start(code) {
+    if (code === 34 || code === 39 || code === 40) {
+      effects.enter(type)
+      effects.enter(markerType)
+      effects.consume(code)
+      effects.exit(markerType)
+      marker = code === 40 ? 41 : code
+      return begin
+    }
+    return nok(code)
+  }
+
+  /**
+   * After opening marker.
+   *
+   * This is also used at the closing marker.
+   *
+   * ```markdown
+   * > | "a"
+   *      ^
+   * ```
+   *
+   * @type {State}
+   */
+  function begin(code) {
+    if (code === marker) {
+      effects.enter(markerType)
+      effects.consume(code)
+      effects.exit(markerType)
+      effects.exit(type)
+      return ok
+    }
+    effects.enter(stringType)
+    return atBreak(code)
+  }
+
+  /**
+   * At something, before something else.
+   *
+   * ```markdown
+   * > | "a"
+   *      ^
+   * ```
+   *
+   * @type {State}
+   */
+  function atBreak(code) {
+    if (code === marker) {
+      effects.exit(stringType)
+      return begin(marker)
+    }
+    if (code === null) {
+      return nok(code)
+    }
+
+    // Note: blank lines can’t exist in content.
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      // To do: use `space_or_tab_eol_with_options`, connect.
+      effects.enter('lineEnding')
+      effects.consume(code)
+      effects.exit('lineEnding')
+      return (0,micromark_factory_space__WEBPACK_IMPORTED_MODULE_1__/* .factorySpace */ .N)(effects, atBreak, 'linePrefix')
+    }
+    effects.enter('chunkString', {
+      contentType: 'string'
+    })
+    return inside(code)
+  }
+
+  /**
+   *
+   *
+   * @type {State}
+   */
+  function inside(code) {
+    if (code === marker || code === null || (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      effects.exit('chunkString')
+      return atBreak(code)
+    }
+    effects.consume(code)
+    return code === 92 ? escape : inside
+  }
+
+  /**
+   * After `\`, at a special character.
+   *
+   * ```markdown
+   * > | "a\*b"
+   *      ^
+   * ```
+   *
+   * @type {State}
+   */
+  function escape(code) {
+    if (code === marker || code === 92) {
+      effects.consume(code)
+      return inside
+    }
+    return inside(code)
+  }
+}
+
+
+/***/ }),
+
+/***/ 13967:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Y: () => (/* binding */ factoryWhitespace)
+/* harmony export */ });
+/* harmony import */ var micromark_factory_space__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(77508);
+/* harmony import */ var micromark_util_character__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(57949);
+/**
+ * @typedef {import('micromark-util-types').Effects} Effects
+ * @typedef {import('micromark-util-types').State} State
+ */
+
+
+
+/**
+ * Parse spaces and tabs.
+ *
+ * There is no `nok` parameter:
+ *
+ * *   line endings or spaces in markdown are often optional, in which case this
+ *     factory can be used and `ok` will be switched to whether spaces were found
+ *     or not
+ * *   one line ending or space can be detected with
+ *     `markdownLineEndingOrSpace(code)` right before using `factoryWhitespace`
+ *
+ * @param {Effects} effects
+ *   Context.
+ * @param {State} ok
+ *   State switched to when successful.
+ * @returns {State}
+ *   Start state.
+ */
+function factoryWhitespace(effects, ok) {
+  /** @type {boolean} */
+  let seen
+  return start
+
+  /** @type {State} */
+  function start(code) {
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEnding */ .HP)(code)) {
+      effects.enter('lineEnding')
+      effects.consume(code)
+      effects.exit('lineEnding')
+      seen = true
+      return start
+    }
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownSpace */ .On)(code)) {
+      return (0,micromark_factory_space__WEBPACK_IMPORTED_MODULE_1__/* .factorySpace */ .N)(
+        effects,
+        start,
+        seen ? 'linePrefix' : 'lineSuffix'
+      )(code)
+    }
+    return ok(code)
+  }
+}
+
+
+/***/ }),
+
+/***/ 57949:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   BM: () => (/* binding */ asciiDigit),
+/* harmony export */   CW: () => (/* binding */ asciiAlpha),
+/* harmony export */   Ee: () => (/* binding */ markdownLineEndingOrSpace),
+/* harmony export */   HP: () => (/* binding */ markdownLineEnding),
+/* harmony export */   JQ: () => (/* binding */ asciiControl),
+/* harmony export */   Ny: () => (/* binding */ unicodeWhitespace),
+/* harmony export */   On: () => (/* binding */ markdownSpace),
+/* harmony export */   cx: () => (/* binding */ asciiAtext),
+/* harmony export */   es: () => (/* binding */ unicodePunctuation),
+/* harmony export */   lV: () => (/* binding */ asciiAlphanumeric),
+/* harmony export */   ok: () => (/* binding */ asciiHexDigit),
+/* harmony export */   ol: () => (/* binding */ asciiPunctuation)
+/* harmony export */ });
+/**
+ * @typedef {import('micromark-util-types').Code} Code
+ */
+
+/**
+ * Check whether the character code represents an ASCII alpha (`a` through `z`,
+ * case insensitive).
+ *
+ * An **ASCII alpha** is an ASCII upper alpha or ASCII lower alpha.
+ *
+ * An **ASCII upper alpha** is a character in the inclusive range U+0041 (`A`)
+ * to U+005A (`Z`).
+ *
+ * An **ASCII lower alpha** is a character in the inclusive range U+0061 (`a`)
+ * to U+007A (`z`).
+ *
+ * @param code
+ *   Code.
+ * @returns {boolean}
+ *   Whether it matches.
+ */
+const asciiAlpha = regexCheck(/[A-Za-z]/);
+
+/**
+ * Check whether the character code represents an ASCII alphanumeric (`a`
+ * through `z`, case insensitive, or `0` through `9`).
+ *
+ * An **ASCII alphanumeric** is an ASCII digit (see `asciiDigit`) or ASCII alpha
+ * (see `asciiAlpha`).
+ *
+ * @param code
+ *   Code.
+ * @returns {boolean}
+ *   Whether it matches.
+ */
+const asciiAlphanumeric = regexCheck(/[\dA-Za-z]/);
+
+/**
+ * Check whether the character code represents an ASCII atext.
+ *
+ * atext is an ASCII alphanumeric (see `asciiAlphanumeric`), or a character in
+ * the inclusive ranges U+0023 NUMBER SIGN (`#`) to U+0027 APOSTROPHE (`'`),
+ * U+002A ASTERISK (`*`), U+002B PLUS SIGN (`+`), U+002D DASH (`-`), U+002F
+ * SLASH (`/`), U+003D EQUALS TO (`=`), U+003F QUESTION MARK (`?`), U+005E
+ * CARET (`^`) to U+0060 GRAVE ACCENT (`` ` ``), or U+007B LEFT CURLY BRACE
+ * (`{`) to U+007E TILDE (`~`).
+ *
+ * See:
+ * **\[RFC5322]**:
+ * [Internet Message Format](https://tools.ietf.org/html/rfc5322).
+ * P. Resnick.
+ * IETF.
+ *
+ * @param code
+ *   Code.
+ * @returns {boolean}
+ *   Whether it matches.
+ */
+const asciiAtext = regexCheck(/[#-'*+\--9=?A-Z^-~]/);
+
+/**
+ * Check whether a character code is an ASCII control character.
+ *
+ * An **ASCII control** is a character in the inclusive range U+0000 NULL (NUL)
+ * to U+001F (US), or U+007F (DEL).
+ *
+ * @param {Code} code
+ *   Code.
+ * @returns {boolean}
+ *   Whether it matches.
+ */
+function asciiControl(code) {
+  return (
+    // Special whitespace codes (which have negative values), C0 and Control
+    // character DEL
+    code !== null && (code < 32 || code === 127)
+  );
+}
+
+/**
+ * Check whether the character code represents an ASCII digit (`0` through `9`).
+ *
+ * An **ASCII digit** is a character in the inclusive range U+0030 (`0`) to
+ * U+0039 (`9`).
+ *
+ * @param code
+ *   Code.
+ * @returns {boolean}
+ *   Whether it matches.
+ */
+const asciiDigit = regexCheck(/\d/);
+
+/**
+ * Check whether the character code represents an ASCII hex digit (`a` through
+ * `f`, case insensitive, or `0` through `9`).
+ *
+ * An **ASCII hex digit** is an ASCII digit (see `asciiDigit`), ASCII upper hex
+ * digit, or an ASCII lower hex digit.
+ *
+ * An **ASCII upper hex digit** is a character in the inclusive range U+0041
+ * (`A`) to U+0046 (`F`).
+ *
+ * An **ASCII lower hex digit** is a character in the inclusive range U+0061
+ * (`a`) to U+0066 (`f`).
+ *
+ * @param code
+ *   Code.
+ * @returns {boolean}
+ *   Whether it matches.
+ */
+const asciiHexDigit = regexCheck(/[\dA-Fa-f]/);
+
+/**
+ * Check whether the character code represents ASCII punctuation.
+ *
+ * An **ASCII punctuation** is a character in the inclusive ranges U+0021
+ * EXCLAMATION MARK (`!`) to U+002F SLASH (`/`), U+003A COLON (`:`) to U+0040 AT
+ * SIGN (`@`), U+005B LEFT SQUARE BRACKET (`[`) to U+0060 GRAVE ACCENT
+ * (`` ` ``), or U+007B LEFT CURLY BRACE (`{`) to U+007E TILDE (`~`).
+ *
+ * @param code
+ *   Code.
+ * @returns {boolean}
+ *   Whether it matches.
+ */
+const asciiPunctuation = regexCheck(/[!-/:-@[-`{-~]/);
+
+/**
+ * Check whether a character code is a markdown line ending.
+ *
+ * A **markdown line ending** is the virtual characters M-0003 CARRIAGE RETURN
+ * LINE FEED (CRLF), M-0004 LINE FEED (LF) and M-0005 CARRIAGE RETURN (CR).
+ *
+ * In micromark, the actual character U+000A LINE FEED (LF) and U+000D CARRIAGE
+ * RETURN (CR) are replaced by these virtual characters depending on whether
+ * they occurred together.
+ *
+ * @param {Code} code
+ *   Code.
+ * @returns {boolean}
+ *   Whether it matches.
+ */
+function markdownLineEnding(code) {
+  return code !== null && code < -2;
+}
+
+/**
+ * Check whether a character code is a markdown line ending (see
+ * `markdownLineEnding`) or markdown space (see `markdownSpace`).
+ *
+ * @param {Code} code
+ *   Code.
+ * @returns {boolean}
+ *   Whether it matches.
+ */
+function markdownLineEndingOrSpace(code) {
+  return code !== null && (code < 0 || code === 32);
+}
+
+/**
+ * Check whether a character code is a markdown space.
+ *
+ * A **markdown space** is the concrete character U+0020 SPACE (SP) and the
+ * virtual characters M-0001 VIRTUAL SPACE (VS) and M-0002 HORIZONTAL TAB (HT).
+ *
+ * In micromark, the actual character U+0009 CHARACTER TABULATION (HT) is
+ * replaced by one M-0002 HORIZONTAL TAB (HT) and between 0 and 3 M-0001 VIRTUAL
+ * SPACE (VS) characters, depending on the column at which the tab occurred.
+ *
+ * @param {Code} code
+ *   Code.
+ * @returns {boolean}
+ *   Whether it matches.
+ */
+function markdownSpace(code) {
+  return code === -2 || code === -1 || code === 32;
+}
+
+// Size note: removing ASCII from the regex and using `asciiPunctuation` here
+// In fact adds to the bundle size.
+/**
+ * Check whether the character code represents Unicode punctuation.
+ *
+ * A **Unicode punctuation** is a character in the Unicode `Pc` (Punctuation,
+ * Connector), `Pd` (Punctuation, Dash), `Pe` (Punctuation, Close), `Pf`
+ * (Punctuation, Final quote), `Pi` (Punctuation, Initial quote), `Po`
+ * (Punctuation, Other), or `Ps` (Punctuation, Open) categories, or an ASCII
+ * punctuation (see `asciiPunctuation`).
+ *
+ * See:
+ * **\[UNICODE]**:
+ * [The Unicode Standard](https://www.unicode.org/versions/).
+ * Unicode Consortium.
+ *
+ * @param code
+ *   Code.
+ * @returns
+ *   Whether it matches.
+ */
+const unicodePunctuation = regexCheck(/\p{P}|\p{S}/u);
+
+/**
+ * Check whether the character code represents Unicode whitespace.
+ *
+ * Note that this does handle micromark specific markdown whitespace characters.
+ * See `markdownLineEndingOrSpace` to check that.
+ *
+ * A **Unicode whitespace** is a character in the Unicode `Zs` (Separator,
+ * Space) category, or U+0009 CHARACTER TABULATION (HT), U+000A LINE FEED (LF),
+ * U+000C (FF), or U+000D CARRIAGE RETURN (CR) (**\[UNICODE]**).
+ *
+ * See:
+ * **\[UNICODE]**:
+ * [The Unicode Standard](https://www.unicode.org/versions/).
+ * Unicode Consortium.
+ *
+ * @param code
+ *   Code.
+ * @returns
+ *   Whether it matches.
+ */
+const unicodeWhitespace = regexCheck(/\s/);
+
+/**
+ * Create a code check from a regex.
+ *
+ * @param {RegExp} regex
+ * @returns {(code: Code) => boolean}
+ */
+function regexCheck(regex) {
+  return check;
+
+  /**
+   * Check whether a code matches the bound regex.
+   *
+   * @param {Code} code
+   *   Character code.
+   * @returns {boolean}
+   *   Whether the character code matches the bound regex.
+   */
+  function check(code) {
+    return code !== null && code > -1 && regex.test(String.fromCharCode(code));
+  }
+}
+
+/***/ }),
+
+/***/ 43890:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   V: () => (/* binding */ push),
+/* harmony export */   m: () => (/* binding */ splice)
+/* harmony export */ });
+/**
+ * Like `Array#splice`, but smarter for giant arrays.
+ *
+ * `Array#splice` takes all items to be inserted as individual argument which
+ * causes a stack overflow in V8 when trying to insert 100k items for instance.
+ *
+ * Otherwise, this does not return the removed items, and takes `items` as an
+ * array instead of rest parameters.
+ *
+ * @template {unknown} T
+ *   Item type.
+ * @param {Array<T>} list
+ *   List to operate on.
+ * @param {number} start
+ *   Index to remove/insert at (can be negative).
+ * @param {number} remove
+ *   Number of items to remove.
+ * @param {Array<T>} items
+ *   Items to inject into `list`.
+ * @returns {undefined}
+ *   Nothing.
+ */
+function splice(list, start, remove, items) {
+  const end = list.length
+  let chunkStart = 0
+  /** @type {Array<unknown>} */
+  let parameters
+
+  // Make start between zero and `end` (included).
+  if (start < 0) {
+    start = -start > end ? 0 : end + start
+  } else {
+    start = start > end ? end : start
+  }
+  remove = remove > 0 ? remove : 0
+
+  // No need to chunk the items if there’s only a couple (10k) items.
+  if (items.length < 10000) {
+    parameters = Array.from(items)
+    parameters.unshift(start, remove)
+    // @ts-expect-error Hush, it’s fine.
+    list.splice(...parameters)
+  } else {
+    // Delete `remove` items starting from `start`
+    if (remove) list.splice(start, remove)
+
+    // Insert the items in chunks to not cause stack overflows.
+    while (chunkStart < items.length) {
+      parameters = items.slice(chunkStart, chunkStart + 10000)
+      parameters.unshift(start, 0)
+      // @ts-expect-error Hush, it’s fine.
+      list.splice(...parameters)
+      chunkStart += 10000
+      start += 10000
+    }
+  }
+}
+
+/**
+ * Append `items` (an array) at the end of `list` (another array).
+ * When `list` was empty, returns `items` instead.
+ *
+ * This prevents a potentially expensive operation when `list` is empty,
+ * and adds items in batches to prevent V8 from hanging.
+ *
+ * @template {unknown} T
+ *   Item type.
+ * @param {Array<T>} list
+ *   List to operate on.
+ * @param {Array<T>} items
+ *   Items to add to `list`.
+ * @returns {Array<T>}
+ *   Either `list` or `items`.
+ */
+function push(list, items) {
+  if (list.length > 0) {
+    splice(list, list.length, 0, items)
+    return list
+  }
+  return items
+}
+
+
+/***/ }),
+
+/***/ 66990:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   S: () => (/* binding */ classifyCharacter)
+/* harmony export */ });
+/* harmony import */ var micromark_util_character__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(57949);
+/**
+ * @typedef {import('micromark-util-types').Code} Code
+ */
+
+
+/**
+ * Classify whether a code represents whitespace, punctuation, or something
+ * else.
+ *
+ * Used for attention (emphasis, strong), whose sequences can open or close
+ * based on the class of surrounding characters.
+ *
+ * > 👉 **Note**: eof (`null`) is seen as whitespace.
+ *
+ * @param {Code} code
+ *   Code.
+ * @returns {typeof constants.characterGroupWhitespace | typeof constants.characterGroupPunctuation | undefined}
+ *   Group.
+ */
+function classifyCharacter(code) {
+  if (
+    code === null ||
+    (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .markdownLineEndingOrSpace */ .Ee)(code) ||
+    (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .unicodeWhitespace */ .Ny)(code)
+  ) {
+    return 1
+  }
+  if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .unicodePunctuation */ .es)(code)) {
+    return 2
+  }
+}
+
+
+/***/ }),
+
+/***/ 10660:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   y: () => (/* binding */ combineExtensions)
+/* harmony export */ });
+/* unused harmony export combineHtmlExtensions */
+/* harmony import */ var micromark_util_chunked__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(43890);
+/**
+ * @typedef {import('micromark-util-types').Extension} Extension
+ * @typedef {import('micromark-util-types').Handles} Handles
+ * @typedef {import('micromark-util-types').HtmlExtension} HtmlExtension
+ * @typedef {import('micromark-util-types').NormalizedExtension} NormalizedExtension
+ */
+
+
+
+const hasOwnProperty = {}.hasOwnProperty
+
+/**
+ * Combine multiple syntax extensions into one.
+ *
+ * @param {Array<Extension>} extensions
+ *   List of syntax extensions.
+ * @returns {NormalizedExtension}
+ *   A single combined extension.
+ */
+function combineExtensions(extensions) {
+  /** @type {NormalizedExtension} */
+  const all = {}
+  let index = -1
+
+  while (++index < extensions.length) {
+    syntaxExtension(all, extensions[index])
+  }
+
+  return all
+}
+
+/**
+ * Merge `extension` into `all`.
+ *
+ * @param {NormalizedExtension} all
+ *   Extension to merge into.
+ * @param {Extension} extension
+ *   Extension to merge.
+ * @returns {undefined}
+ */
+function syntaxExtension(all, extension) {
+  /** @type {keyof Extension} */
+  let hook
+
+  for (hook in extension) {
+    const maybe = hasOwnProperty.call(all, hook) ? all[hook] : undefined
+    /** @type {Record<string, unknown>} */
+    const left = maybe || (all[hook] = {})
+    /** @type {Record<string, unknown> | undefined} */
+    const right = extension[hook]
+    /** @type {string} */
+    let code
+
+    if (right) {
+      for (code in right) {
+        if (!hasOwnProperty.call(left, code)) left[code] = []
+        const value = right[code]
+        constructs(
+          // @ts-expect-error Looks like a list.
+          left[code],
+          Array.isArray(value) ? value : value ? [value] : []
+        )
+      }
+    }
+  }
+}
+
+/**
+ * Merge `list` into `existing` (both lists of constructs).
+ * Mutates `existing`.
+ *
+ * @param {Array<unknown>} existing
+ * @param {Array<unknown>} list
+ * @returns {undefined}
+ */
+function constructs(existing, list) {
+  let index = -1
+  /** @type {Array<unknown>} */
+  const before = []
+
+  while (++index < list.length) {
+    // @ts-expect-error Looks like an object.
+    ;(list[index].add === 'after' ? existing : before).push(list[index])
+  }
+
+  (0,micromark_util_chunked__WEBPACK_IMPORTED_MODULE_0__/* .splice */ .m)(existing, 0, 0, before)
+}
+
+/**
+ * Combine multiple HTML extensions into one.
+ *
+ * @param {Array<HtmlExtension>} htmlExtensions
+ *   List of HTML extensions.
+ * @returns {HtmlExtension}
+ *   A single combined HTML extension.
+ */
+function combineHtmlExtensions(htmlExtensions) {
+  /** @type {HtmlExtension} */
+  const handlers = {}
+  let index = -1
+
+  while (++index < htmlExtensions.length) {
+    htmlExtension(handlers, htmlExtensions[index])
+  }
+
+  return handlers
+}
+
+/**
+ * Merge `extension` into `all`.
+ *
+ * @param {HtmlExtension} all
+ *   Extension to merge into.
+ * @param {HtmlExtension} extension
+ *   Extension to merge.
+ * @returns {undefined}
+ */
+function htmlExtension(all, extension) {
+  /** @type {keyof HtmlExtension} */
+  let hook
+
+  for (hook in extension) {
+    const maybe = hasOwnProperty.call(all, hook) ? all[hook] : undefined
+    const left = maybe || (all[hook] = {})
+    const right = extension[hook]
+    /** @type {keyof Handles} */
+    let type
+
+    if (right) {
+      for (type in right) {
+        // @ts-expect-error assume document vs regular handler are managed correctly.
+        left[type] = right[type]
+      }
+    }
+  }
+}
+
+
+/***/ }),
+
+/***/ 99896:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   C: () => (/* binding */ decodeNumericCharacterReference)
+/* harmony export */ });
+/**
+ * Turn the number (in string form as either hexa- or plain decimal) coming from
+ * a numeric character reference into a character.
+ *
+ * Sort of like `String.fromCodePoint(Number.parseInt(value, base))`, but makes
+ * non-characters and control characters safe.
+ *
+ * @param {string} value
+ *   Value to decode.
+ * @param {number} base
+ *   Numeric base.
+ * @returns {string}
+ *   Character.
+ */
+function decodeNumericCharacterReference(value, base) {
+  const code = Number.parseInt(value, base);
+  if (
+  // C0 except for HT, LF, FF, CR, space.
+  code < 9 || code === 11 || code > 13 && code < 32 ||
+  // Control character (DEL) of C0, and C1 controls.
+  code > 126 && code < 160 ||
+  // Lone high surrogates and low surrogates.
+  code > 55_295 && code < 57_344 ||
+  // Noncharacters.
+  code > 64_975 && code < 65_008 || /* eslint-disable no-bitwise */
+  (code & 65_535) === 65_535 || (code & 65_535) === 65_534 || /* eslint-enable no-bitwise */
+  // Out of range
+  code > 1_114_111) {
+    return "\uFFFD";
+  }
+  return String.fromCodePoint(code);
+}
+
+/***/ }),
+
+/***/ 47938:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   s: () => (/* binding */ decodeString)
+/* harmony export */ });
+/* harmony import */ var decode_named_character_reference__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(75731);
+/* harmony import */ var micromark_util_decode_numeric_character_reference__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(99896);
+
+
+const characterEscapeOrReference =
+  /\\([!-/:-@[-`{-~])|&(#(?:\d{1,7}|x[\da-f]{1,6})|[\da-z]{1,31});/gi
+
+/**
+ * Decode markdown strings (which occur in places such as fenced code info
+ * strings, destinations, labels, and titles).
+ *
+ * The “string” content type allows character escapes and -references.
+ * This decodes those.
+ *
+ * @param {string} value
+ *   Value to decode.
+ * @returns {string}
+ *   Decoded value.
+ */
+function decodeString(value) {
+  return value.replace(characterEscapeOrReference, decode)
+}
+
+/**
+ * @param {string} $0
+ * @param {string} $1
+ * @param {string} $2
+ * @returns {string}
+ */
+function decode($0, $1, $2) {
+  if ($1) {
+    // Escape.
+    return $1
+  }
+
+  // Reference.
+  const head = $2.charCodeAt(0)
+  if (head === 35) {
+    const head = $2.charCodeAt(1)
+    const hex = head === 120 || head === 88
+    return (0,micromark_util_decode_numeric_character_reference__WEBPACK_IMPORTED_MODULE_0__/* .decodeNumericCharacterReference */ .C)($2.slice(hex ? 2 : 1), hex ? 16 : 10)
+  }
+  return (0,decode_named_character_reference__WEBPACK_IMPORTED_MODULE_1__/* .decodeNamedCharacterReference */ .s)($2) || $0
+}
+
+
+/***/ }),
+
+/***/ 61486:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   T: () => (/* binding */ htmlBlockNames),
+/* harmony export */   y: () => (/* binding */ htmlRawNames)
+/* harmony export */ });
+/**
+ * List of lowercase HTML “block” tag names.
+ *
+ * The list, when parsing HTML (flow), results in more relaxed rules (condition
+ * 6).
+ * Because they are known blocks, the HTML-like syntax doesn’t have to be
+ * strictly parsed.
+ * For tag names not in this list, a more strict algorithm (condition 7) is used
+ * to detect whether the HTML-like syntax is seen as HTML (flow) or not.
+ *
+ * This is copied from:
+ * <https://spec.commonmark.org/0.30/#html-blocks>.
+ *
+ * > 👉 **Note**: `search` was added in `CommonMark@0.31`.
+ */
+const htmlBlockNames = [
+  'address',
+  'article',
+  'aside',
+  'base',
+  'basefont',
+  'blockquote',
+  'body',
+  'caption',
+  'center',
+  'col',
+  'colgroup',
+  'dd',
+  'details',
+  'dialog',
+  'dir',
+  'div',
+  'dl',
+  'dt',
+  'fieldset',
+  'figcaption',
+  'figure',
+  'footer',
+  'form',
+  'frame',
+  'frameset',
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
+  'h6',
+  'head',
+  'header',
+  'hr',
+  'html',
+  'iframe',
+  'legend',
+  'li',
+  'link',
+  'main',
+  'menu',
+  'menuitem',
+  'nav',
+  'noframes',
+  'ol',
+  'optgroup',
+  'option',
+  'p',
+  'param',
+  'search',
+  'section',
+  'summary',
+  'table',
+  'tbody',
+  'td',
+  'tfoot',
+  'th',
+  'thead',
+  'title',
+  'tr',
+  'track',
+  'ul'
+]
+
+/**
+ * List of lowercase HTML “raw” tag names.
+ *
+ * The list, when parsing HTML (flow), results in HTML that can include lines
+ * without exiting, until a closing tag also in this list is found (condition
+ * 1).
+ *
+ * This module is copied from:
+ * <https://spec.commonmark.org/0.30/#html-blocks>.
+ *
+ * > 👉 **Note**: `textarea` was added in `CommonMark@0.30`.
+ */
+const htmlRawNames = ['pre', 'script', 'style', 'textarea']
+
+
+/***/ }),
+
+/***/ 26243:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   B: () => (/* binding */ normalizeIdentifier)
+/* harmony export */ });
+/**
+ * Normalize an identifier (as found in references, definitions).
+ *
+ * Collapses markdown whitespace, trim, and then lower- and uppercase.
+ *
+ * Some characters are considered “uppercase”, such as U+03F4 (`ϴ`), but if their
+ * lowercase counterpart (U+03B8 (`θ`)) is uppercased will result in a different
+ * uppercase character (U+0398 (`Θ`)).
+ * So, to get a canonical form, we perform both lower- and uppercase.
+ *
+ * Using uppercase last makes sure keys will never interact with default
+ * prototypal values (such as `constructor`): nothing in the prototype of
+ * `Object` is uppercase.
+ *
+ * @param {string} value
+ *   Identifier to normalize.
+ * @returns {string}
+ *   Normalized identifier.
+ */
+function normalizeIdentifier(value) {
+  return (
+    value
+      // Collapse markdown whitespace.
+      .replace(/[\t\n\r ]+/g, ' ')
+      // Trim.
+      .replace(/^ | $/g, '')
+      // Some characters are considered “uppercase”, but if their lowercase
+      // counterpart is uppercased will result in a different uppercase
+      // character.
+      // Hence, to get that form, we perform both lower- and uppercase.
+      // Upper case makes sure keys will not interact with default prototypal
+      // methods: no method is uppercase.
+      .toLowerCase()
+      .toUpperCase()
+  )
+}
+
+
+/***/ }),
+
+/***/ 23796:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   W: () => (/* binding */ resolveAll)
+/* harmony export */ });
+/**
+ * @typedef {import('micromark-util-types').Event} Event
+ * @typedef {import('micromark-util-types').Resolver} Resolver
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ */
+
+/**
+ * Call all `resolveAll`s.
+ *
+ * @param {Array<{resolveAll?: Resolver | undefined}>} constructs
+ *   List of constructs, optionally with `resolveAll`s.
+ * @param {Array<Event>} events
+ *   List of events.
+ * @param {TokenizeContext} context
+ *   Context used by `tokenize`.
+ * @returns {Array<Event>}
+ *   Changed events.
+ */
+function resolveAll(constructs, events, context) {
+  /** @type {Array<Resolver>} */
+  const called = []
+  let index = -1
+
+  while (++index < constructs.length) {
+    const resolve = constructs[index].resolveAll
+
+    if (resolve && !called.includes(resolve)) {
+      events = resolve(events, context)
+      called.push(resolve)
+    }
+  }
+
+  return events
+}
+
+
+/***/ }),
+
+/***/ 31550:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   e: () => (/* binding */ normalizeUri)
+/* harmony export */ });
+/* unused harmony export sanitizeUri */
+/* harmony import */ var micromark_util_character__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(57949);
+
+
+/**
+ * Make a value safe for injection as a URL.
+ *
+ * This encodes unsafe characters with percent-encoding and skips already
+ * encoded sequences (see `normalizeUri`).
+ * Further unsafe characters are encoded as character references (see
+ * `micromark-util-encode`).
+ *
+ * A regex of allowed protocols can be given, in which case the URL is
+ * sanitized.
+ * For example, `/^(https?|ircs?|mailto|xmpp)$/i` can be used for `a[href]`, or
+ * `/^https?$/i` for `img[src]` (this is what `github.com` allows).
+ * If the URL includes an unknown protocol (one not matched by `protocol`, such
+ * as a dangerous example, `javascript:`), the value is ignored.
+ *
+ * @param {string | null | undefined} url
+ *   URI to sanitize.
+ * @param {RegExp | null | undefined} [protocol]
+ *   Allowed protocols.
+ * @returns {string}
+ *   Sanitized URI.
+ */
+function sanitizeUri(url, protocol) {
+  const value = encode(normalizeUri(url || ''))
+  if (!protocol) {
+    return value
+  }
+  const colon = value.indexOf(':')
+  const questionMark = value.indexOf('?')
+  const numberSign = value.indexOf('#')
+  const slash = value.indexOf('/')
+  if (
+    // If there is no protocol, it’s relative.
+    colon < 0 ||
+    // If the first colon is after a `?`, `#`, or `/`, it’s not a protocol.
+    (slash > -1 && colon > slash) ||
+    (questionMark > -1 && colon > questionMark) ||
+    (numberSign > -1 && colon > numberSign) ||
+    // It is a protocol, it should be allowed.
+    protocol.test(value.slice(0, colon))
+  ) {
+    return value
+  }
+  return ''
+}
+
+/**
+ * Normalize a URL.
+ *
+ * Encode unsafe characters with percent-encoding, skipping already encoded
+ * sequences.
+ *
+ * @param {string} value
+ *   URI to normalize.
+ * @returns {string}
+ *   Normalized URI.
+ */
+function normalizeUri(value) {
+  /** @type {Array<string>} */
+  const result = []
+  let index = -1
+  let start = 0
+  let skip = 0
+  while (++index < value.length) {
+    const code = value.charCodeAt(index)
+    /** @type {string} */
+    let replace = ''
+
+    // A correct percent encoded value.
+    if (
+      code === 37 &&
+      (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiAlphanumeric */ .lV)(value.charCodeAt(index + 1)) &&
+      (0,micromark_util_character__WEBPACK_IMPORTED_MODULE_0__/* .asciiAlphanumeric */ .lV)(value.charCodeAt(index + 2))
+    ) {
+      skip = 2
+    }
+    // ASCII.
+    else if (code < 128) {
+      if (!/[!#$&-;=?-Z_a-z~]/.test(String.fromCharCode(code))) {
+        replace = String.fromCharCode(code)
+      }
+    }
+    // Astral.
+    else if (code > 55_295 && code < 57_344) {
+      const next = value.charCodeAt(index + 1)
+
+      // A correct surrogate pair.
+      if (code < 56_320 && next > 56_319 && next < 57_344) {
+        replace = String.fromCharCode(code, next)
+        skip = 1
+      }
+      // Lone surrogate.
+      else {
+        replace = '\uFFFD'
+      }
+    }
+    // Unicode.
+    else {
+      replace = String.fromCharCode(code)
+    }
+    if (replace) {
+      result.push(value.slice(start, index), encodeURIComponent(replace))
+      start = index + skip + 1
+      replace = ''
+    }
+    if (skip) {
+      index += skip
+      skip = 0
+    }
+  }
+  return result.join('') + value.slice(start)
+}
+
+
+/***/ }),
+
+/***/ 94469:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   w: () => (/* binding */ subtokenize)
+/* harmony export */ });
+/* harmony import */ var micromark_util_chunked__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(43890);
+/**
+ * @typedef {import('micromark-util-types').Chunk} Chunk
+ * @typedef {import('micromark-util-types').Event} Event
+ * @typedef {import('micromark-util-types').Token} Token
+ */
+
+
+/**
+ * Tokenize subcontent.
+ *
+ * @param {Array<Event>} events
+ *   List of events.
+ * @returns {boolean}
+ *   Whether subtokens were found.
+ */ // eslint-disable-next-line complexity
+function subtokenize(events) {
+  /** @type {Record<string, number>} */
+  const jumps = {}
+  let index = -1
+  /** @type {Event} */
+  let event
+  /** @type {number | undefined} */
+  let lineIndex
+  /** @type {number} */
+  let otherIndex
+  /** @type {Event} */
+  let otherEvent
+  /** @type {Array<Event>} */
+  let parameters
+  /** @type {Array<Event>} */
+  let subevents
+  /** @type {boolean | undefined} */
+  let more
+  while (++index < events.length) {
+    while (index in jumps) {
+      index = jumps[index]
+    }
+    event = events[index]
+
+    // Add a hook for the GFM tasklist extension, which needs to know if text
+    // is in the first content of a list item.
+    if (
+      index &&
+      event[1].type === 'chunkFlow' &&
+      events[index - 1][1].type === 'listItemPrefix'
+    ) {
+      subevents = event[1]._tokenizer.events
+      otherIndex = 0
+      if (
+        otherIndex < subevents.length &&
+        subevents[otherIndex][1].type === 'lineEndingBlank'
+      ) {
+        otherIndex += 2
+      }
+      if (
+        otherIndex < subevents.length &&
+        subevents[otherIndex][1].type === 'content'
+      ) {
+        while (++otherIndex < subevents.length) {
+          if (subevents[otherIndex][1].type === 'content') {
+            break
+          }
+          if (subevents[otherIndex][1].type === 'chunkText') {
+            subevents[otherIndex][1]._isInFirstContentOfListItem = true
+            otherIndex++
+          }
+        }
+      }
+    }
+
+    // Enter.
+    if (event[0] === 'enter') {
+      if (event[1].contentType) {
+        Object.assign(jumps, subcontent(events, index))
+        index = jumps[index]
+        more = true
+      }
+    }
+    // Exit.
+    else if (event[1]._container) {
+      otherIndex = index
+      lineIndex = undefined
+      while (otherIndex--) {
+        otherEvent = events[otherIndex]
+        if (
+          otherEvent[1].type === 'lineEnding' ||
+          otherEvent[1].type === 'lineEndingBlank'
+        ) {
+          if (otherEvent[0] === 'enter') {
+            if (lineIndex) {
+              events[lineIndex][1].type = 'lineEndingBlank'
+            }
+            otherEvent[1].type = 'lineEnding'
+            lineIndex = otherIndex
+          }
+        } else {
+          break
+        }
+      }
+      if (lineIndex) {
+        // Fix position.
+        event[1].end = Object.assign({}, events[lineIndex][1].start)
+
+        // Switch container exit w/ line endings.
+        parameters = events.slice(lineIndex, index)
+        parameters.unshift(event)
+        ;(0,micromark_util_chunked__WEBPACK_IMPORTED_MODULE_0__/* .splice */ .m)(events, lineIndex, index - lineIndex + 1, parameters)
+      }
+    }
+  }
+  return !more
+}
+
+/**
+ * Tokenize embedded tokens.
+ *
+ * @param {Array<Event>} events
+ * @param {number} eventIndex
+ * @returns {Record<string, number>}
+ */
+function subcontent(events, eventIndex) {
+  const token = events[eventIndex][1]
+  const context = events[eventIndex][2]
+  let startPosition = eventIndex - 1
+  /** @type {Array<number>} */
+  const startPositions = []
+  const tokenizer =
+    token._tokenizer || context.parser[token.contentType](token.start)
+  const childEvents = tokenizer.events
+  /** @type {Array<[number, number]>} */
+  const jumps = []
+  /** @type {Record<string, number>} */
+  const gaps = {}
+  /** @type {Array<Chunk>} */
+  let stream
+  /** @type {Token | undefined} */
+  let previous
+  let index = -1
+  /** @type {Token | undefined} */
+  let current = token
+  let adjust = 0
+  let start = 0
+  const breaks = [start]
+
+  // Loop forward through the linked tokens to pass them in order to the
+  // subtokenizer.
+  while (current) {
+    // Find the position of the event for this token.
+    while (events[++startPosition][1] !== current) {
+      // Empty.
+    }
+    startPositions.push(startPosition)
+    if (!current._tokenizer) {
+      stream = context.sliceStream(current)
+      if (!current.next) {
+        stream.push(null)
+      }
+      if (previous) {
+        tokenizer.defineSkip(current.start)
+      }
+      if (current._isInFirstContentOfListItem) {
+        tokenizer._gfmTasklistFirstContentOfListItem = true
+      }
+      tokenizer.write(stream)
+      if (current._isInFirstContentOfListItem) {
+        tokenizer._gfmTasklistFirstContentOfListItem = undefined
+      }
+    }
+
+    // Unravel the next token.
+    previous = current
+    current = current.next
+  }
+
+  // Now, loop back through all events (and linked tokens), to figure out which
+  // parts belong where.
+  current = token
+  while (++index < childEvents.length) {
+    if (
+      // Find a void token that includes a break.
+      childEvents[index][0] === 'exit' &&
+      childEvents[index - 1][0] === 'enter' &&
+      childEvents[index][1].type === childEvents[index - 1][1].type &&
+      childEvents[index][1].start.line !== childEvents[index][1].end.line
+    ) {
+      start = index + 1
+      breaks.push(start)
+      // Help GC.
+      current._tokenizer = undefined
+      current.previous = undefined
+      current = current.next
+    }
+  }
+
+  // Help GC.
+  tokenizer.events = []
+
+  // If there’s one more token (which is the cases for lines that end in an
+  // EOF), that’s perfect: the last point we found starts it.
+  // If there isn’t then make sure any remaining content is added to it.
+  if (current) {
+    // Help GC.
+    current._tokenizer = undefined
+    current.previous = undefined
+  } else {
+    breaks.pop()
+  }
+
+  // Now splice the events from the subtokenizer into the current events,
+  // moving back to front so that splice indices aren’t affected.
+  index = breaks.length
+  while (index--) {
+    const slice = childEvents.slice(breaks[index], breaks[index + 1])
+    const start = startPositions.pop()
+    jumps.unshift([start, start + slice.length - 1])
+    ;(0,micromark_util_chunked__WEBPACK_IMPORTED_MODULE_0__/* .splice */ .m)(events, start, 2, slice)
+  }
+  index = -1
+  while (++index < jumps.length) {
+    gaps[adjust + jumps[index][0]] = adjust + jumps[index][1]
+    adjust += jumps[index][1] - jumps[index][0] - 1
+  }
+  return gaps
+}
+
+
+/***/ }),
+
+/***/ 72140:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   attentionMarkers: () => (/* binding */ attentionMarkers),
+/* harmony export */   contentInitial: () => (/* binding */ contentInitial),
+/* harmony export */   disable: () => (/* binding */ disable),
+/* harmony export */   document: () => (/* binding */ document),
+/* harmony export */   flow: () => (/* binding */ flow),
+/* harmony export */   flowInitial: () => (/* binding */ flowInitial),
+/* harmony export */   insideSpan: () => (/* binding */ insideSpan),
+/* harmony export */   string: () => (/* binding */ string),
+/* harmony export */   text: () => (/* binding */ text)
+/* harmony export */ });
+/* harmony import */ var micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(16027);
+/* harmony import */ var micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(94371);
+/* harmony import */ var micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(79326);
+/* harmony import */ var micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(25040);
+/* harmony import */ var micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(19135);
+/* harmony import */ var micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(41590);
+/* harmony import */ var micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(25789);
+/* harmony import */ var micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(20963);
+/* harmony import */ var micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(44544);
+/* harmony import */ var micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(66716);
+/* harmony import */ var micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(30854);
+/* harmony import */ var micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(14229);
+/* harmony import */ var micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(76136);
+/* harmony import */ var micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(76485);
+/* harmony import */ var micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(53604);
+/* harmony import */ var micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(92352);
+/* harmony import */ var micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(30385);
+/* harmony import */ var micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(39750);
+/* harmony import */ var micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(35725);
+/* harmony import */ var micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(75408);
+/* harmony import */ var _initialize_text_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(8100);
+/**
+ * @typedef {import('micromark-util-types').Extension} Extension
+ */
+
+
+
+
+/** @satisfies {Extension['document']} */
+const document = {
+  [42]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_0__/* .list */ .p,
+  [43]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_0__/* .list */ .p,
+  [45]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_0__/* .list */ .p,
+  [48]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_0__/* .list */ .p,
+  [49]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_0__/* .list */ .p,
+  [50]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_0__/* .list */ .p,
+  [51]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_0__/* .list */ .p,
+  [52]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_0__/* .list */ .p,
+  [53]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_0__/* .list */ .p,
+  [54]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_0__/* .list */ .p,
+  [55]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_0__/* .list */ .p,
+  [56]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_0__/* .list */ .p,
+  [57]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_0__/* .list */ .p,
+  [62]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_1__/* .blockQuote */ .i
+}
+
+/** @satisfies {Extension['contentInitial']} */
+const contentInitial = {
+  [91]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_2__/* .definition */ .m
+}
+
+/** @satisfies {Extension['flowInitial']} */
+const flowInitial = {
+  [-2]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_3__/* .codeIndented */ .j,
+  [-1]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_3__/* .codeIndented */ .j,
+  [32]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_3__/* .codeIndented */ .j
+}
+
+/** @satisfies {Extension['flow']} */
+const flow = {
+  [35]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_4__/* .headingAtx */ .O,
+  [42]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_5__/* .thematicBreak */ .V,
+  [45]: [micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_6__/* .setextUnderline */ .A, micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_5__/* .thematicBreak */ .V],
+  [60]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_7__/* .htmlFlow */ .G,
+  [61]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_6__/* .setextUnderline */ .A,
+  [95]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_5__/* .thematicBreak */ .V,
+  [96]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_8__/* .codeFenced */ .b,
+  [126]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_8__/* .codeFenced */ .b
+}
+
+/** @satisfies {Extension['string']} */
+const string = {
+  [38]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_9__/* .characterReference */ .L,
+  [92]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_10__/* .characterEscape */ .L
+}
+
+/** @satisfies {Extension['text']} */
+const text = {
+  [-5]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_11__/* .lineEnding */ .E,
+  [-4]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_11__/* .lineEnding */ .E,
+  [-3]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_11__/* .lineEnding */ .E,
+  [33]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_12__/* .labelStartImage */ .u,
+  [38]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_9__/* .characterReference */ .L,
+  [42]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_13__/* .attention */ .f,
+  [60]: [micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_14__/* .autolink */ .m, micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_15__/* .htmlText */ .j],
+  [91]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_16__/* .labelStartLink */ .J,
+  [92]: [micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_17__/* .hardBreakEscape */ .G, micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_10__/* .characterEscape */ .L],
+  [93]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_18__/* .labelEnd */ .o,
+  [95]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_13__/* .attention */ .f,
+  [96]: micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_19__/* .codeText */ .p
+}
+
+/** @satisfies {Extension['insideSpan']} */
+const insideSpan = {
+  null: [micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_13__/* .attention */ .f, _initialize_text_js__WEBPACK_IMPORTED_MODULE_20__/* .resolver */ .L2]
+}
+
+/** @satisfies {Extension['attentionMarkers']} */
+const attentionMarkers = {
+  null: [42, 95]
+}
+
+/** @satisfies {Extension['disable']} */
+const disable = {
+  null: []
+}
+
+
+/***/ }),
+
+/***/ 70322:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   e: () => (/* binding */ createTokenizer)
+/* harmony export */ });
+/* harmony import */ var micromark_util_character__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(57949);
+/* harmony import */ var micromark_util_chunked__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(43890);
+/* harmony import */ var micromark_util_resolve_all__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(23796);
+/**
+ * @typedef {import('micromark-util-types').Chunk} Chunk
+ * @typedef {import('micromark-util-types').Code} Code
+ * @typedef {import('micromark-util-types').Construct} Construct
+ * @typedef {import('micromark-util-types').ConstructRecord} ConstructRecord
+ * @typedef {import('micromark-util-types').Effects} Effects
+ * @typedef {import('micromark-util-types').InitialConstruct} InitialConstruct
+ * @typedef {import('micromark-util-types').ParseContext} ParseContext
+ * @typedef {import('micromark-util-types').Point} Point
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').Token} Token
+ * @typedef {import('micromark-util-types').TokenType} TokenType
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ */
+
+/**
+ * @callback Restore
+ * @returns {undefined}
+ *
+ * @typedef Info
+ * @property {Restore} restore
+ * @property {number} from
+ *
+ * @callback ReturnHandle
+ *   Handle a successful run.
+ * @param {Construct} construct
+ * @param {Info} info
+ * @returns {undefined}
+ */
+
+
+
+
+/**
+ * Create a tokenizer.
+ * Tokenizers deal with one type of data (e.g., containers, flow, text).
+ * The parser is the object dealing with it all.
+ * `initialize` works like other constructs, except that only its `tokenize`
+ * function is used, in which case it doesn’t receive an `ok` or `nok`.
+ * `from` can be given to set the point before the first character, although
+ * when further lines are indented, they must be set with `defineSkip`.
+ *
+ * @param {ParseContext} parser
+ * @param {InitialConstruct} initialize
+ * @param {Omit<Point, '_bufferIndex' | '_index'> | undefined} [from]
+ * @returns {TokenizeContext}
+ */
+function createTokenizer(parser, initialize, from) {
+  /** @type {Point} */
+  let point = Object.assign(
+    from
+      ? Object.assign({}, from)
+      : {
+          line: 1,
+          column: 1,
+          offset: 0
+        },
+    {
+      _index: 0,
+      _bufferIndex: -1
+    }
+  )
+  /** @type {Record<string, number>} */
+  const columnStart = {}
+  /** @type {Array<Construct>} */
+  const resolveAllConstructs = []
+  /** @type {Array<Chunk>} */
+  let chunks = []
+  /** @type {Array<Token>} */
+  let stack = []
+  /** @type {boolean | undefined} */
+  let consumed = true
+
+  /**
+   * Tools used for tokenizing.
+   *
+   * @type {Effects}
+   */
+  const effects = {
+    consume,
+    enter,
+    exit,
+    attempt: constructFactory(onsuccessfulconstruct),
+    check: constructFactory(onsuccessfulcheck),
+    interrupt: constructFactory(onsuccessfulcheck, {
+      interrupt: true
+    })
+  }
+
+  /**
+   * State and tools for resolving and serializing.
+   *
+   * @type {TokenizeContext}
+   */
+  const context = {
+    previous: null,
+    code: null,
+    containerState: {},
+    events: [],
+    parser,
+    sliceStream,
+    sliceSerialize,
+    now,
+    defineSkip,
+    write
+  }
+
+  /**
+   * The state function.
+   *
+   * @type {State | undefined}
+   */
+  let state = initialize.tokenize.call(context, effects)
+
+  /**
+   * Track which character we expect to be consumed, to catch bugs.
+   *
+   * @type {Code}
+   */
+  let expectedCode
+  if (initialize.resolveAll) {
+    resolveAllConstructs.push(initialize)
+  }
+  return context
+
+  /** @type {TokenizeContext['write']} */
+  function write(slice) {
+    chunks = (0,micromark_util_chunked__WEBPACK_IMPORTED_MODULE_0__/* .push */ .V)(chunks, slice)
+    main()
+
+    // Exit if we’re not done, resolve might change stuff.
+    if (chunks[chunks.length - 1] !== null) {
+      return []
+    }
+    addResult(initialize, 0)
+
+    // Otherwise, resolve, and exit.
+    context.events = (0,micromark_util_resolve_all__WEBPACK_IMPORTED_MODULE_1__/* .resolveAll */ .W)(resolveAllConstructs, context.events, context)
+    return context.events
+  }
+
+  //
+  // Tools.
+  //
+
+  /** @type {TokenizeContext['sliceSerialize']} */
+  function sliceSerialize(token, expandTabs) {
+    return serializeChunks(sliceStream(token), expandTabs)
+  }
+
+  /** @type {TokenizeContext['sliceStream']} */
+  function sliceStream(token) {
+    return sliceChunks(chunks, token)
+  }
+
+  /** @type {TokenizeContext['now']} */
+  function now() {
+    // This is a hot path, so we clone manually instead of `Object.assign({}, point)`
+    const {line, column, offset, _index, _bufferIndex} = point
+    return {
+      line,
+      column,
+      offset,
+      _index,
+      _bufferIndex
+    }
+  }
+
+  /** @type {TokenizeContext['defineSkip']} */
+  function defineSkip(value) {
+    columnStart[value.line] = value.column
+    accountForPotentialSkip()
+  }
+
+  //
+  // State management.
+  //
+
+  /**
+   * Main loop (note that `_index` and `_bufferIndex` in `point` are modified by
+   * `consume`).
+   * Here is where we walk through the chunks, which either include strings of
+   * several characters, or numerical character codes.
+   * The reason to do this in a loop instead of a call is so the stack can
+   * drain.
+   *
+   * @returns {undefined}
+   */
+  function main() {
+    /** @type {number} */
+    let chunkIndex
+    while (point._index < chunks.length) {
+      const chunk = chunks[point._index]
+
+      // If we’re in a buffer chunk, loop through it.
+      if (typeof chunk === 'string') {
+        chunkIndex = point._index
+        if (point._bufferIndex < 0) {
+          point._bufferIndex = 0
+        }
+        while (
+          point._index === chunkIndex &&
+          point._bufferIndex < chunk.length
+        ) {
+          go(chunk.charCodeAt(point._bufferIndex))
+        }
+      } else {
+        go(chunk)
+      }
+    }
+  }
+
+  /**
+   * Deal with one code.
+   *
+   * @param {Code} code
+   * @returns {undefined}
+   */
+  function go(code) {
+    consumed = undefined
+    expectedCode = code
+    state = state(code)
+  }
+
+  /** @type {Effects['consume']} */
+  function consume(code) {
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_2__/* .markdownLineEnding */ .HP)(code)) {
+      point.line++
+      point.column = 1
+      point.offset += code === -3 ? 2 : 1
+      accountForPotentialSkip()
+    } else if (code !== -1) {
+      point.column++
+      point.offset++
+    }
+
+    // Not in a string chunk.
+    if (point._bufferIndex < 0) {
+      point._index++
+    } else {
+      point._bufferIndex++
+
+      // At end of string chunk.
+      // @ts-expect-error Points w/ non-negative `_bufferIndex` reference
+      // strings.
+      if (point._bufferIndex === chunks[point._index].length) {
+        point._bufferIndex = -1
+        point._index++
+      }
+    }
+
+    // Expose the previous character.
+    context.previous = code
+
+    // Mark as consumed.
+    consumed = true
+  }
+
+  /** @type {Effects['enter']} */
+  function enter(type, fields) {
+    /** @type {Token} */
+    // @ts-expect-error Patch instead of assign required fields to help GC.
+    const token = fields || {}
+    token.type = type
+    token.start = now()
+    context.events.push(['enter', token, context])
+    stack.push(token)
+    return token
+  }
+
+  /** @type {Effects['exit']} */
+  function exit(type) {
+    const token = stack.pop()
+    token.end = now()
+    context.events.push(['exit', token, context])
+    return token
+  }
+
+  /**
+   * Use results.
+   *
+   * @type {ReturnHandle}
+   */
+  function onsuccessfulconstruct(construct, info) {
+    addResult(construct, info.from)
+  }
+
+  /**
+   * Discard results.
+   *
+   * @type {ReturnHandle}
+   */
+  function onsuccessfulcheck(_, info) {
+    info.restore()
+  }
+
+  /**
+   * Factory to attempt/check/interrupt.
+   *
+   * @param {ReturnHandle} onreturn
+   * @param {{interrupt?: boolean | undefined} | undefined} [fields]
+   */
+  function constructFactory(onreturn, fields) {
+    return hook
+
+    /**
+     * Handle either an object mapping codes to constructs, a list of
+     * constructs, or a single construct.
+     *
+     * @param {Array<Construct> | Construct | ConstructRecord} constructs
+     * @param {State} returnState
+     * @param {State | undefined} [bogusState]
+     * @returns {State}
+     */
+    function hook(constructs, returnState, bogusState) {
+      /** @type {Array<Construct>} */
+      let listOfConstructs
+      /** @type {number} */
+      let constructIndex
+      /** @type {Construct} */
+      let currentConstruct
+      /** @type {Info} */
+      let info
+      return Array.isArray(constructs) /* c8 ignore next 1 */
+        ? handleListOfConstructs(constructs)
+        : 'tokenize' in constructs
+        ? // @ts-expect-error Looks like a construct.
+          handleListOfConstructs([constructs])
+        : handleMapOfConstructs(constructs)
+
+      /**
+       * Handle a list of construct.
+       *
+       * @param {ConstructRecord} map
+       * @returns {State}
+       */
+      function handleMapOfConstructs(map) {
+        return start
+
+        /** @type {State} */
+        function start(code) {
+          const def = code !== null && map[code]
+          const all = code !== null && map.null
+          const list = [
+            // To do: add more extension tests.
+            /* c8 ignore next 2 */
+            ...(Array.isArray(def) ? def : def ? [def] : []),
+            ...(Array.isArray(all) ? all : all ? [all] : [])
+          ]
+          return handleListOfConstructs(list)(code)
+        }
+      }
+
+      /**
+       * Handle a list of construct.
+       *
+       * @param {Array<Construct>} list
+       * @returns {State}
+       */
+      function handleListOfConstructs(list) {
+        listOfConstructs = list
+        constructIndex = 0
+        if (list.length === 0) {
+          return bogusState
+        }
+        return handleConstruct(list[constructIndex])
+      }
+
+      /**
+       * Handle a single construct.
+       *
+       * @param {Construct} construct
+       * @returns {State}
+       */
+      function handleConstruct(construct) {
+        return start
+
+        /** @type {State} */
+        function start(code) {
+          // To do: not needed to store if there is no bogus state, probably?
+          // Currently doesn’t work because `inspect` in document does a check
+          // w/o a bogus, which doesn’t make sense. But it does seem to help perf
+          // by not storing.
+          info = store()
+          currentConstruct = construct
+          if (!construct.partial) {
+            context.currentConstruct = construct
+          }
+
+          // Always populated by defaults.
+
+          if (
+            construct.name &&
+            context.parser.constructs.disable.null.includes(construct.name)
+          ) {
+            return nok(code)
+          }
+          return construct.tokenize.call(
+            // If we do have fields, create an object w/ `context` as its
+            // prototype.
+            // This allows a “live binding”, which is needed for `interrupt`.
+            fields ? Object.assign(Object.create(context), fields) : context,
+            effects,
+            ok,
+            nok
+          )(code)
+        }
+      }
+
+      /** @type {State} */
+      function ok(code) {
+        consumed = true
+        onreturn(currentConstruct, info)
+        return returnState
+      }
+
+      /** @type {State} */
+      function nok(code) {
+        consumed = true
+        info.restore()
+        if (++constructIndex < listOfConstructs.length) {
+          return handleConstruct(listOfConstructs[constructIndex])
+        }
+        return bogusState
+      }
+    }
+  }
+
+  /**
+   * @param {Construct} construct
+   * @param {number} from
+   * @returns {undefined}
+   */
+  function addResult(construct, from) {
+    if (construct.resolveAll && !resolveAllConstructs.includes(construct)) {
+      resolveAllConstructs.push(construct)
+    }
+    if (construct.resolve) {
+      (0,micromark_util_chunked__WEBPACK_IMPORTED_MODULE_0__/* .splice */ .m)(
+        context.events,
+        from,
+        context.events.length - from,
+        construct.resolve(context.events.slice(from), context)
+      )
+    }
+    if (construct.resolveTo) {
+      context.events = construct.resolveTo(context.events, context)
+    }
+  }
+
+  /**
+   * Store state.
+   *
+   * @returns {Info}
+   */
+  function store() {
+    const startPoint = now()
+    const startPrevious = context.previous
+    const startCurrentConstruct = context.currentConstruct
+    const startEventsIndex = context.events.length
+    const startStack = Array.from(stack)
+    return {
+      restore,
+      from: startEventsIndex
+    }
+
+    /**
+     * Restore state.
+     *
+     * @returns {undefined}
+     */
+    function restore() {
+      point = startPoint
+      context.previous = startPrevious
+      context.currentConstruct = startCurrentConstruct
+      context.events.length = startEventsIndex
+      stack = startStack
+      accountForPotentialSkip()
+    }
+  }
+
+  /**
+   * Move the current point a bit forward in the line when it’s on a column
+   * skip.
+   *
+   * @returns {undefined}
+   */
+  function accountForPotentialSkip() {
+    if (point.line in columnStart && point.column < 2) {
+      point.column = columnStart[point.line]
+      point.offset += columnStart[point.line] - 1
+    }
+  }
+}
+
+/**
+ * Get the chunks from a slice of chunks in the range of a token.
+ *
+ * @param {Array<Chunk>} chunks
+ * @param {Pick<Token, 'end' | 'start'>} token
+ * @returns {Array<Chunk>}
+ */
+function sliceChunks(chunks, token) {
+  const startIndex = token.start._index
+  const startBufferIndex = token.start._bufferIndex
+  const endIndex = token.end._index
+  const endBufferIndex = token.end._bufferIndex
+  /** @type {Array<Chunk>} */
+  let view
+  if (startIndex === endIndex) {
+    // @ts-expect-error `_bufferIndex` is used on string chunks.
+    view = [chunks[startIndex].slice(startBufferIndex, endBufferIndex)]
+  } else {
+    view = chunks.slice(startIndex, endIndex)
+    if (startBufferIndex > -1) {
+      const head = view[0]
+      if (typeof head === 'string') {
+        view[0] = head.slice(startBufferIndex)
+      } else {
+        view.shift()
+      }
+    }
+    if (endBufferIndex > 0) {
+      // @ts-expect-error `_bufferIndex` is used on string chunks.
+      view.push(chunks[endIndex].slice(0, endBufferIndex))
+    }
+  }
+  return view
+}
+
+/**
+ * Get the string value of a slice of chunks.
+ *
+ * @param {Array<Chunk>} chunks
+ * @param {boolean | undefined} [expandTabs=false]
+ * @returns {string}
+ */
+function serializeChunks(chunks, expandTabs) {
+  let index = -1
+  /** @type {Array<string>} */
+  const result = []
+  /** @type {boolean | undefined} */
+  let atTab
+  while (++index < chunks.length) {
+    const chunk = chunks[index]
+    /** @type {string} */
+    let value
+    if (typeof chunk === 'string') {
+      value = chunk
+    } else
+      switch (chunk) {
+        case -5: {
+          value = '\r'
+          break
+        }
+        case -4: {
+          value = '\n'
+          break
+        }
+        case -3: {
+          value = '\r' + '\n'
+          break
+        }
+        case -2: {
+          value = expandTabs ? ' ' : '\t'
+          break
+        }
+        case -1: {
+          if (!expandTabs && atTab) continue
+          value = ' '
+          break
+        }
+        default: {
+          // Currently only replacement character.
+          value = String.fromCharCode(chunk)
+        }
+      }
+    atTab = chunk === -2
+    result.push(value)
+  }
+  return result.join('')
+}
+
+
+/***/ }),
+
+/***/ 99590:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Q: () => (/* binding */ content)
+/* harmony export */ });
+/* harmony import */ var micromark_factory_space__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(77508);
+/* harmony import */ var micromark_util_character__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(57949);
+/**
+ * @typedef {import('micromark-util-types').InitialConstruct} InitialConstruct
+ * @typedef {import('micromark-util-types').Initializer} Initializer
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').Token} Token
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ */
+
+
+
+/** @type {InitialConstruct} */
+const content = {
+  tokenize: initializeContent
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Initializer}
+ */
+function initializeContent(effects) {
+  const contentStart = effects.attempt(
+    this.parser.constructs.contentInitial,
+    afterContentStartConstruct,
+    paragraphInitial
+  )
+  /** @type {Token} */
+  let previous
+  return contentStart
+
+  /** @type {State} */
+  function afterContentStartConstruct(code) {
+    if (code === null) {
+      effects.consume(code)
+      return
+    }
+    effects.enter('lineEnding')
+    effects.consume(code)
+    effects.exit('lineEnding')
+    return (0,micromark_factory_space__WEBPACK_IMPORTED_MODULE_0__/* .factorySpace */ .N)(effects, contentStart, 'linePrefix')
+  }
+
+  /** @type {State} */
+  function paragraphInitial(code) {
+    effects.enter('paragraph')
+    return lineStart(code)
+  }
+
+  /** @type {State} */
+  function lineStart(code) {
+    const token = effects.enter('chunkText', {
+      contentType: 'text',
+      previous
+    })
+    if (previous) {
+      previous.next = token
+    }
+    previous = token
+    return data(code)
+  }
+
+  /** @type {State} */
+  function data(code) {
+    if (code === null) {
+      effects.exit('chunkText')
+      effects.exit('paragraph')
+      effects.consume(code)
+      return
+    }
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_1__/* .markdownLineEnding */ .HP)(code)) {
+      effects.consume(code)
+      effects.exit('chunkText')
+      return lineStart
+    }
+
+    // Data.
+    effects.consume(code)
+    return data
+  }
+}
+
+
+/***/ }),
+
+/***/ 98658:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ document)
+/* harmony export */ });
+/* harmony import */ var micromark_factory_space__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(77508);
+/* harmony import */ var micromark_util_character__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(57949);
+/* harmony import */ var micromark_util_chunked__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(43890);
+/**
+ * @typedef {import('micromark-util-types').Construct} Construct
+ * @typedef {import('micromark-util-types').ContainerState} ContainerState
+ * @typedef {import('micromark-util-types').InitialConstruct} InitialConstruct
+ * @typedef {import('micromark-util-types').Initializer} Initializer
+ * @typedef {import('micromark-util-types').Point} Point
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').Token} Token
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
+ */
+
+/**
+ * @typedef {[Construct, ContainerState]} StackItem
+ */
+
+
+
+
+/** @type {InitialConstruct} */
+const document = {
+  tokenize: initializeDocument
+}
+
+/** @type {Construct} */
+const containerConstruct = {
+  tokenize: tokenizeContainer
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Initializer}
+ */
+function initializeDocument(effects) {
+  const self = this
+  /** @type {Array<StackItem>} */
+  const stack = []
+  let continued = 0
+  /** @type {TokenizeContext | undefined} */
+  let childFlow
+  /** @type {Token | undefined} */
+  let childToken
+  /** @type {number} */
+  let lineStartOffset
+  return start
+
+  /** @type {State} */
+  function start(code) {
+    // First we iterate through the open blocks, starting with the root
+    // document, and descending through last children down to the last open
+    // block.
+    // Each block imposes a condition that the line must satisfy if the block is
+    // to remain open.
+    // For example, a block quote requires a `>` character.
+    // A paragraph requires a non-blank line.
+    // In this phase we may match all or just some of the open blocks.
+    // But we cannot close unmatched blocks yet, because we may have a lazy
+    // continuation line.
+    if (continued < stack.length) {
+      const item = stack[continued]
+      self.containerState = item[1]
+      return effects.attempt(
+        item[0].continuation,
+        documentContinue,
+        checkNewContainers
+      )(code)
+    }
+
+    // Done.
+    return checkNewContainers(code)
+  }
+
+  /** @type {State} */
+  function documentContinue(code) {
+    continued++
+
+    // Note: this field is called `_closeFlow` but it also closes containers.
+    // Perhaps a good idea to rename it but it’s already used in the wild by
+    // extensions.
+    if (self.containerState._closeFlow) {
+      self.containerState._closeFlow = undefined
+      if (childFlow) {
+        closeFlow()
+      }
+
+      // Note: this algorithm for moving events around is similar to the
+      // algorithm when dealing with lazy lines in `writeToChild`.
+      const indexBeforeExits = self.events.length
+      let indexBeforeFlow = indexBeforeExits
+      /** @type {Point | undefined} */
+      let point
+
+      // Find the flow chunk.
+      while (indexBeforeFlow--) {
+        if (
+          self.events[indexBeforeFlow][0] === 'exit' &&
+          self.events[indexBeforeFlow][1].type === 'chunkFlow'
+        ) {
+          point = self.events[indexBeforeFlow][1].end
+          break
+        }
+      }
+      exitContainers(continued)
+
+      // Fix positions.
+      let index = indexBeforeExits
+      while (index < self.events.length) {
+        self.events[index][1].end = Object.assign({}, point)
+        index++
+      }
+
+      // Inject the exits earlier (they’re still also at the end).
+      (0,micromark_util_chunked__WEBPACK_IMPORTED_MODULE_0__/* .splice */ .m)(
+        self.events,
+        indexBeforeFlow + 1,
+        0,
+        self.events.slice(indexBeforeExits)
+      )
+
+      // Discard the duplicate exits.
+      self.events.length = index
+      return checkNewContainers(code)
+    }
+    return start(code)
+  }
+
+  /** @type {State} */
+  function checkNewContainers(code) {
+    // Next, after consuming the continuation markers for existing blocks, we
+    // look for new block starts (e.g. `>` for a block quote).
+    // If we encounter a new block start, we close any blocks unmatched in
+    // step 1 before creating the new block as a child of the last matched
+    // block.
+    if (continued === stack.length) {
+      // No need to `check` whether there’s a container, of `exitContainers`
+      // would be moot.
+      // We can instead immediately `attempt` to parse one.
+      if (!childFlow) {
+        return documentContinued(code)
+      }
+
+      // If we have concrete content, such as block HTML or fenced code,
+      // we can’t have containers “pierce” into them, so we can immediately
+      // start.
+      if (childFlow.currentConstruct && childFlow.currentConstruct.concrete) {
+        return flowStart(code)
+      }
+
+      // If we do have flow, it could still be a blank line,
+      // but we’d be interrupting it w/ a new container if there’s a current
+      // construct.
+      // To do: next major: remove `_gfmTableDynamicInterruptHack` (no longer
+      // needed in micromark-extension-gfm-table@1.0.6).
+      self.interrupt = Boolean(
+        childFlow.currentConstruct && !childFlow._gfmTableDynamicInterruptHack
+      )
+    }
+
+    // Check if there is a new container.
+    self.containerState = {}
+    return effects.check(
+      containerConstruct,
+      thereIsANewContainer,
+      thereIsNoNewContainer
+    )(code)
+  }
+
+  /** @type {State} */
+  function thereIsANewContainer(code) {
+    if (childFlow) closeFlow()
+    exitContainers(continued)
+    return documentContinued(code)
+  }
+
+  /** @type {State} */
+  function thereIsNoNewContainer(code) {
+    self.parser.lazy[self.now().line] = continued !== stack.length
+    lineStartOffset = self.now().offset
+    return flowStart(code)
+  }
+
+  /** @type {State} */
+  function documentContinued(code) {
+    // Try new containers.
+    self.containerState = {}
+    return effects.attempt(
+      containerConstruct,
+      containerContinue,
+      flowStart
+    )(code)
+  }
+
+  /** @type {State} */
+  function containerContinue(code) {
+    continued++
+    stack.push([self.currentConstruct, self.containerState])
+    // Try another.
+    return documentContinued(code)
+  }
+
+  /** @type {State} */
+  function flowStart(code) {
+    if (code === null) {
+      if (childFlow) closeFlow()
+      exitContainers(0)
+      effects.consume(code)
+      return
+    }
+    childFlow = childFlow || self.parser.flow(self.now())
+    effects.enter('chunkFlow', {
+      contentType: 'flow',
+      previous: childToken,
+      _tokenizer: childFlow
+    })
+    return flowContinue(code)
+  }
+
+  /** @type {State} */
+  function flowContinue(code) {
+    if (code === null) {
+      writeToChild(effects.exit('chunkFlow'), true)
+      exitContainers(0)
+      effects.consume(code)
+      return
+    }
+    if ((0,micromark_util_character__WEBPACK_IMPORTED_MODULE_1__/* .markdownLineEnding */ .HP)(code)) {
+      effects.consume(code)
+      writeToChild(effects.exit('chunkFlow'))
+      // Get ready for the next line.
+      continued = 0
+      self.interrupt = undefined
+      return start
+    }
+    effects.consume(code)
+    return flowContinue
+  }
+
+  /**
+   * @param {Token} token
+   * @param {boolean | undefined} [eof]
+   * @returns {undefined}
+   */
+  function writeToChild(token, eof) {
+    const stream = self.sliceStream(token)
+    if (eof) stream.push(null)
+    token.previous = childToken
+    if (childToken) childToken.next = token
+    childToken = token
+    childFlow.defineSkip(token.start)
+    childFlow.write(stream)
+
+    // Alright, so we just added a lazy line:
+    //
+    // ```markdown
+    // > a
+    // b.
+    //
+    // Or:
+    //
+    // > ~~~c
+    // d
+    //
+    // Or:
+    //
+    // > | e |
+    // f
+    // ```
+    //
+    // The construct in the second example (fenced code) does not accept lazy
+    // lines, so it marked itself as done at the end of its first line, and
+    // then the content construct parses `d`.
+    // Most constructs in markdown match on the first line: if the first line
+    // forms a construct, a non-lazy line can’t “unmake” it.
+    //
+    // The construct in the third example is potentially a GFM table, and
+    // those are *weird*.
+    // It *could* be a table, from the first line, if the following line
+    // matches a condition.
+    // In this case, that second line is lazy, which “unmakes” the first line
+    // and turns the whole into one content block.
+    //
+    // We’ve now parsed the non-lazy and the lazy line, and can figure out
+    // whether the lazy line started a new flow block.
+    // If it did, we exit the current containers between the two flow blocks.
+    if (self.parser.lazy[token.start.line]) {
+      let index = childFlow.events.length
+      while (index--) {
+        if (
+          // The token starts before the line ending…
+          childFlow.events[index][1].start.offset < lineStartOffset &&
+          // …and either is not ended yet…
+          (!childFlow.events[index][1].end ||
+            // …or ends after it.
+            childFlow.events[index][1].end.offset > lineStartOffset)
+        ) {
+          // Exit: there’s still something open, which means it’s a lazy line
+          // part of something.
+          return
+        }
+      }
+
+      // Note: this algorithm for moving events around is similar to the
+      // algorithm when closing flow in `documentContinue`.
+      const indexBeforeExits = self.events.length
+      let indexBeforeFlow = indexBeforeExits
+      /** @type {boolean | undefined} */
+      let seen
+      /** @type {Point | undefined} */
+      let point
+
+      // Find the previous chunk (the one before the lazy line).
+      while (indexBeforeFlow--) {
+        if (
+          self.events[indexBeforeFlow][0] === 'exit' &&
+          self.events[indexBeforeFlow][1].type === 'chunkFlow'
+        ) {
+          if (seen) {
+            point = self.events[indexBeforeFlow][1].end
+            break
+          }
+          seen = true
+        }
+      }
+      exitContainers(continued)
+
+      // Fix positions.
+      index = indexBeforeExits
+      while (index < self.events.length) {
+        self.events[index][1].end = Object.assign({}, point)
+        index++
+      }
+
+      // Inject the exits earlier (they’re still also at the end).
+      (0,micromark_util_chunked__WEBPACK_IMPORTED_MODULE_0__/* .splice */ .m)(
+        self.events,
+        indexBeforeFlow + 1,
+        0,
+        self.events.slice(indexBeforeExits)
+      )
+
+      // Discard the duplicate exits.
+      self.events.length = index
+    }
+  }
+
+  /**
+   * @param {number} size
+   * @returns {undefined}
+   */
+  function exitContainers(size) {
+    let index = stack.length
+
+    // Exit open containers.
+    while (index-- > size) {
+      const entry = stack[index]
+      self.containerState = entry[1]
+      entry[0].exit.call(self, effects)
+    }
+    stack.length = size
+  }
+  function closeFlow() {
+    childFlow.write([null])
+    childToken = undefined
+    childFlow = undefined
+    self.containerState._closeFlow = undefined
+  }
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Tokenizer}
+ */
+function tokenizeContainer(effects, ok, nok) {
+  // Always populated by defaults.
+
+  return (0,micromark_factory_space__WEBPACK_IMPORTED_MODULE_2__/* .factorySpace */ .N)(
+    effects,
+    effects.attempt(this.parser.constructs.document, ok, nok),
+    'linePrefix',
+    this.parser.constructs.disable.null.includes('codeIndented') ? undefined : 4
+  )
+}
+
+
+/***/ }),
+
+/***/ 17375:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   L: () => (/* binding */ flow)
+/* harmony export */ });
+/* harmony import */ var micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(35460);
+/* harmony import */ var micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(11626);
+/* harmony import */ var micromark_factory_space__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(77508);
+/**
+ * @typedef {import('micromark-util-types').InitialConstruct} InitialConstruct
+ * @typedef {import('micromark-util-types').Initializer} Initializer
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ */
+
+
+
+
+/** @type {InitialConstruct} */
+const flow = {
+  tokenize: initializeFlow
+}
+
+/**
+ * @this {TokenizeContext}
+ * @type {Initializer}
+ */
+function initializeFlow(effects) {
+  const self = this
+  const initial = effects.attempt(
+    // Try to parse a blank line.
+    micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_0__/* .blankLine */ .B,
+    atBlankEnding,
+    // Try to parse initial flow (essentially, only code).
+    effects.attempt(
+      this.parser.constructs.flowInitial,
+      afterConstruct,
+      (0,micromark_factory_space__WEBPACK_IMPORTED_MODULE_1__/* .factorySpace */ .N)(
+        effects,
+        effects.attempt(
+          this.parser.constructs.flow,
+          afterConstruct,
+          effects.attempt(micromark_core_commonmark__WEBPACK_IMPORTED_MODULE_2__/* .content */ .Q, afterConstruct)
+        ),
+        'linePrefix'
+      )
+    )
+  )
+  return initial
+
+  /** @type {State} */
+  function atBlankEnding(code) {
+    if (code === null) {
+      effects.consume(code)
+      return
+    }
+    effects.enter('lineEndingBlank')
+    effects.consume(code)
+    effects.exit('lineEndingBlank')
+    self.currentConstruct = undefined
+    return initial
+  }
+
+  /** @type {State} */
+  function afterConstruct(code) {
+    if (code === null) {
+      effects.consume(code)
+      return
+    }
+    effects.enter('lineEnding')
+    effects.consume(code)
+    effects.exit('lineEnding')
+    self.currentConstruct = undefined
+    return initial
+  }
+}
+
+
+/***/ }),
+
+/***/ 8100:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   L2: () => (/* binding */ resolver),
+/* harmony export */   Qq: () => (/* binding */ text),
+/* harmony export */   Yj: () => (/* binding */ string)
+/* harmony export */ });
+/**
+ * @typedef {import('micromark-util-types').Code} Code
+ * @typedef {import('micromark-util-types').InitialConstruct} InitialConstruct
+ * @typedef {import('micromark-util-types').Initializer} Initializer
+ * @typedef {import('micromark-util-types').Resolver} Resolver
+ * @typedef {import('micromark-util-types').State} State
+ * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
+ */
+
+const resolver = {
+  resolveAll: createResolver()
+}
+const string = initializeFactory('string')
+const text = initializeFactory('text')
+
+/**
+ * @param {'string' | 'text'} field
+ * @returns {InitialConstruct}
+ */
+function initializeFactory(field) {
+  return {
+    tokenize: initializeText,
+    resolveAll: createResolver(
+      field === 'text' ? resolveAllLineSuffixes : undefined
+    )
+  }
+
+  /**
+   * @this {TokenizeContext}
+   * @type {Initializer}
+   */
+  function initializeText(effects) {
+    const self = this
+    const constructs = this.parser.constructs[field]
+    const text = effects.attempt(constructs, start, notText)
+    return start
+
+    /** @type {State} */
+    function start(code) {
+      return atBreak(code) ? text(code) : notText(code)
+    }
+
+    /** @type {State} */
+    function notText(code) {
+      if (code === null) {
+        effects.consume(code)
+        return
+      }
+      effects.enter('data')
+      effects.consume(code)
+      return data
+    }
+
+    /** @type {State} */
+    function data(code) {
+      if (atBreak(code)) {
+        effects.exit('data')
+        return text(code)
+      }
+
+      // Data.
+      effects.consume(code)
+      return data
+    }
+
+    /**
+     * @param {Code} code
+     * @returns {boolean}
+     */
+    function atBreak(code) {
+      if (code === null) {
+        return true
+      }
+      const list = constructs[code]
+      let index = -1
+      if (list) {
+        // Always populated by defaults.
+
+        while (++index < list.length) {
+          const item = list[index]
+          if (!item.previous || item.previous.call(self, self.previous)) {
+            return true
+          }
+        }
+      }
+      return false
+    }
+  }
+}
+
+/**
+ * @param {Resolver | undefined} [extraResolver]
+ * @returns {Resolver}
+ */
+function createResolver(extraResolver) {
+  return resolveAllText
+
+  /** @type {Resolver} */
+  function resolveAllText(events, context) {
+    let index = -1
+    /** @type {number | undefined} */
+    let enter
+
+    // A rather boring computation (to merge adjacent `data` events) which
+    // improves mm performance by 29%.
+    while (++index <= events.length) {
+      if (enter === undefined) {
+        if (events[index] && events[index][1].type === 'data') {
+          enter = index
+          index++
+        }
+      } else if (!events[index] || events[index][1].type !== 'data') {
+        // Don’t do anything if there is one data token.
+        if (index !== enter + 2) {
+          events[enter][1].end = events[index - 1][1].end
+          events.splice(enter + 2, index - enter - 2)
+          index = enter + 2
+        }
+        enter = undefined
+      }
+    }
+    return extraResolver ? extraResolver(events, context) : events
+  }
+}
+
+/**
+ * A rather ugly set of instructions which again looks at chunks in the input
+ * stream.
+ * The reason to do this here is that it is *much* faster to parse in reverse.
+ * And that we can’t hook into `null` to split the line suffix before an EOF.
+ * To do: figure out if we can make this into a clean utility, or even in core.
+ * As it will be useful for GFMs literal autolink extension (and maybe even
+ * tables?)
+ *
+ * @type {Resolver}
+ */
+function resolveAllLineSuffixes(events, context) {
+  let eventIndex = 0 // Skip first.
+
+  while (++eventIndex <= events.length) {
+    if (
+      (eventIndex === events.length ||
+        events[eventIndex][1].type === 'lineEnding') &&
+      events[eventIndex - 1][1].type === 'data'
+    ) {
+      const data = events[eventIndex - 1][1]
+      const chunks = context.sliceStream(data)
+      let index = chunks.length
+      let bufferIndex = -1
+      let size = 0
+      /** @type {boolean | undefined} */
+      let tabs
+      while (index--) {
+        const chunk = chunks[index]
+        if (typeof chunk === 'string') {
+          bufferIndex = chunk.length
+          while (chunk.charCodeAt(bufferIndex - 1) === 32) {
+            size++
+            bufferIndex--
+          }
+          if (bufferIndex) break
+          bufferIndex = -1
+        }
+        // Number
+        else if (chunk === -2) {
+          tabs = true
+          size++
+        } else if (chunk === -1) {
+          // Empty
+        } else {
+          // Replacement character, exit.
+          index++
+          break
+        }
+      }
+      if (size) {
+        const token = {
+          type:
+            eventIndex === events.length || tabs || size < 2
+              ? 'lineSuffix'
+              : 'hardBreakTrailing',
+          start: {
+            line: data.end.line,
+            column: data.end.column - size,
+            offset: data.end.offset - size,
+            _index: data.start._index + index,
+            _bufferIndex: index
+              ? bufferIndex
+              : data.start._bufferIndex + bufferIndex
+          },
+          end: Object.assign({}, data.end)
+        }
+        data.end = Object.assign({}, token.start)
+        if (data.start.offset === data.end.offset) {
+          Object.assign(data, token)
+        } else {
+          events.splice(
+            eventIndex,
+            0,
+            ['enter', token, context],
+            ['exit', token, context]
+          )
+          eventIndex += 2
+        }
+      }
+      eventIndex++
+    }
+  }
+  return events
+}
+
+
+/***/ }),
+
+/***/ 25799:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   q: () => (/* binding */ parse)
+/* harmony export */ });
+/* harmony import */ var micromark_util_combine_extensions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10660);
+/* harmony import */ var _initialize_content_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(99590);
+/* harmony import */ var _initialize_document_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(98658);
+/* harmony import */ var _initialize_flow_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(17375);
+/* harmony import */ var _initialize_text_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(8100);
+/* harmony import */ var _create_tokenizer_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(70322);
+/* harmony import */ var _constructs_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(72140);
+/**
+ * @typedef {import('micromark-util-types').Create} Create
+ * @typedef {import('micromark-util-types').FullNormalizedExtension} FullNormalizedExtension
+ * @typedef {import('micromark-util-types').InitialConstruct} InitialConstruct
+ * @typedef {import('micromark-util-types').ParseContext} ParseContext
+ * @typedef {import('micromark-util-types').ParseOptions} ParseOptions
+ */
+
+
+
+
+
+
+
+
+
+/**
+ * @param {ParseOptions | null | undefined} [options]
+ * @returns {ParseContext}
+ */
+function parse(options) {
+  const settings = options || {}
+  const constructs =
+    /** @type {FullNormalizedExtension} */
+    (0,micromark_util_combine_extensions__WEBPACK_IMPORTED_MODULE_0__/* .combineExtensions */ .y)([_constructs_js__WEBPACK_IMPORTED_MODULE_1__, ...(settings.extensions || [])])
+
+  /** @type {ParseContext} */
+  const parser = {
+    defined: [],
+    lazy: {},
+    constructs,
+    content: create(_initialize_content_js__WEBPACK_IMPORTED_MODULE_2__/* .content */ .Q),
+    document: create(_initialize_document_js__WEBPACK_IMPORTED_MODULE_3__/* .document */ .A),
+    flow: create(_initialize_flow_js__WEBPACK_IMPORTED_MODULE_4__/* .flow */ .L),
+    string: create(_initialize_text_js__WEBPACK_IMPORTED_MODULE_5__/* .string */ .Yj),
+    text: create(_initialize_text_js__WEBPACK_IMPORTED_MODULE_5__/* .text */ .Qq)
+  }
+  return parser
+
+  /**
+   * @param {InitialConstruct} initial
+   */
+  function create(initial) {
+    return creator
+    /** @type {Create} */
+    function creator(from) {
+      return (0,_create_tokenizer_js__WEBPACK_IMPORTED_MODULE_6__/* .createTokenizer */ .e)(parser, initial, from)
+    }
+  }
+}
+
+
+/***/ }),
+
+/***/ 68975:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   _: () => (/* binding */ postprocess)
+/* harmony export */ });
+/* harmony import */ var micromark_util_subtokenize__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(94469);
+/**
+ * @typedef {import('micromark-util-types').Event} Event
+ */
+
+
+
+/**
+ * @param {Array<Event>} events
+ * @returns {Array<Event>}
+ */
+function postprocess(events) {
+  while (!(0,micromark_util_subtokenize__WEBPACK_IMPORTED_MODULE_0__/* .subtokenize */ .w)(events)) {
+    // Empty
+  }
+  return events
+}
+
+
+/***/ }),
+
+/***/ 92964:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   v: () => (/* binding */ preprocess)
+/* harmony export */ });
+/**
+ * @typedef {import('micromark-util-types').Chunk} Chunk
+ * @typedef {import('micromark-util-types').Code} Code
+ * @typedef {import('micromark-util-types').Encoding} Encoding
+ * @typedef {import('micromark-util-types').Value} Value
+ */
+
+/**
+ * @callback Preprocessor
+ * @param {Value} value
+ * @param {Encoding | null | undefined} [encoding]
+ * @param {boolean | null | undefined} [end=false]
+ * @returns {Array<Chunk>}
+ */
+
+const search = /[\0\t\n\r]/g
+
+/**
+ * @returns {Preprocessor}
+ */
+function preprocess() {
+  let column = 1
+  let buffer = ''
+  /** @type {boolean | undefined} */
+  let start = true
+  /** @type {boolean | undefined} */
+  let atCarriageReturn
+  return preprocessor
+
+  /** @type {Preprocessor} */
+  // eslint-disable-next-line complexity
+  function preprocessor(value, encoding, end) {
+    /** @type {Array<Chunk>} */
+    const chunks = []
+    /** @type {RegExpMatchArray | null} */
+    let match
+    /** @type {number} */
+    let next
+    /** @type {number} */
+    let startPosition
+    /** @type {number} */
+    let endPosition
+    /** @type {Code} */
+    let code
+    value =
+      buffer +
+      (typeof value === 'string'
+        ? value.toString()
+        : new TextDecoder(encoding || undefined).decode(value))
+    startPosition = 0
+    buffer = ''
+    if (start) {
+      // To do: `markdown-rs` actually parses BOMs (byte order mark).
+      if (value.charCodeAt(0) === 65279) {
+        startPosition++
+      }
+      start = undefined
+    }
+    while (startPosition < value.length) {
+      search.lastIndex = startPosition
+      match = search.exec(value)
+      endPosition =
+        match && match.index !== undefined ? match.index : value.length
+      code = value.charCodeAt(endPosition)
+      if (!match) {
+        buffer = value.slice(startPosition)
+        break
+      }
+      if (code === 10 && startPosition === endPosition && atCarriageReturn) {
+        chunks.push(-3)
+        atCarriageReturn = undefined
+      } else {
+        if (atCarriageReturn) {
+          chunks.push(-5)
+          atCarriageReturn = undefined
+        }
+        if (startPosition < endPosition) {
+          chunks.push(value.slice(startPosition, endPosition))
+          column += endPosition - startPosition
+        }
+        switch (code) {
+          case 0: {
+            chunks.push(65533)
+            column++
+            break
+          }
+          case 9: {
+            next = Math.ceil(column / 4) * 4
+            chunks.push(-2)
+            while (column++ < next) chunks.push(-1)
+            break
+          }
+          case 10: {
+            chunks.push(-4)
+            column = 1
+            break
+          }
+          default: {
+            atCarriageReturn = true
+            column = 1
+          }
+        }
+      }
+      startPosition = endPosition + 1
+    }
+    if (end) {
+      if (atCarriageReturn) chunks.push(-5)
+      if (buffer) chunks.push(buffer)
+      chunks.push(null)
+    }
+    return chunks
+  }
+}
+
+
+/***/ }),
+
+/***/ 65961:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   JW: () => (/* binding */ svg),
+/* harmony export */   qy: () => (/* binding */ html)
+/* harmony export */ });
+/* harmony import */ var _lib_util_merge_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(60194);
+/* harmony import */ var _lib_xlink_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(20441);
+/* harmony import */ var _lib_xml_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(27732);
+/* harmony import */ var _lib_xmlns_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(46063);
+/* harmony import */ var _lib_aria_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(55104);
+/* harmony import */ var _lib_html_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(44388);
+/* harmony import */ var _lib_svg_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(50159);
+/**
+ * @typedef {import('./lib/util/info.js').Info} Info
+ * @typedef {import('./lib/util/schema.js').Schema} Schema
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+const html = (0,_lib_util_merge_js__WEBPACK_IMPORTED_MODULE_0__/* .merge */ .h)([_lib_xml_js__WEBPACK_IMPORTED_MODULE_1__/* .xml */ ._, _lib_xlink_js__WEBPACK_IMPORTED_MODULE_2__/* .xlink */ .F, _lib_xmlns_js__WEBPACK_IMPORTED_MODULE_3__/* .xmlns */ .z, _lib_aria_js__WEBPACK_IMPORTED_MODULE_4__/* .aria */ .a, _lib_html_js__WEBPACK_IMPORTED_MODULE_5__/* .html */ .q], 'html')
+const svg = (0,_lib_util_merge_js__WEBPACK_IMPORTED_MODULE_0__/* .merge */ .h)([_lib_xml_js__WEBPACK_IMPORTED_MODULE_1__/* .xml */ ._, _lib_xlink_js__WEBPACK_IMPORTED_MODULE_2__/* .xlink */ .F, _lib_xmlns_js__WEBPACK_IMPORTED_MODULE_3__/* .xmlns */ .z, _lib_aria_js__WEBPACK_IMPORTED_MODULE_4__/* .aria */ .a, _lib_svg_js__WEBPACK_IMPORTED_MODULE_6__/* .svg */ .J], 'svg')
+
+
+/***/ }),
+
+/***/ 55104:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   a: () => (/* binding */ aria)
+/* harmony export */ });
+/* harmony import */ var _util_types_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(41167);
+/* harmony import */ var _util_create_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(75952);
+
+
+
+const aria = (0,_util_create_js__WEBPACK_IMPORTED_MODULE_0__/* .create */ .v)({
+  transform(_, prop) {
+    return prop === 'role' ? prop : 'aria-' + prop.slice(4).toLowerCase()
+  },
+  properties: {
+    ariaActiveDescendant: null,
+    ariaAtomic: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.booleanish,
+    ariaAutoComplete: null,
+    ariaBusy: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.booleanish,
+    ariaChecked: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.booleanish,
+    ariaColCount: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.number,
+    ariaColIndex: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.number,
+    ariaColSpan: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.number,
+    ariaControls: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.spaceSeparated,
+    ariaCurrent: null,
+    ariaDescribedBy: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.spaceSeparated,
+    ariaDetails: null,
+    ariaDisabled: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.booleanish,
+    ariaDropEffect: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.spaceSeparated,
+    ariaErrorMessage: null,
+    ariaExpanded: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.booleanish,
+    ariaFlowTo: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.spaceSeparated,
+    ariaGrabbed: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.booleanish,
+    ariaHasPopup: null,
+    ariaHidden: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.booleanish,
+    ariaInvalid: null,
+    ariaKeyShortcuts: null,
+    ariaLabel: null,
+    ariaLabelledBy: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.spaceSeparated,
+    ariaLevel: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.number,
+    ariaLive: null,
+    ariaModal: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.booleanish,
+    ariaMultiLine: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.booleanish,
+    ariaMultiSelectable: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.booleanish,
+    ariaOrientation: null,
+    ariaOwns: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.spaceSeparated,
+    ariaPlaceholder: null,
+    ariaPosInSet: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.number,
+    ariaPressed: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.booleanish,
+    ariaReadOnly: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.booleanish,
+    ariaRelevant: null,
+    ariaRequired: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.booleanish,
+    ariaRoleDescription: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.spaceSeparated,
+    ariaRowCount: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.number,
+    ariaRowIndex: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.number,
+    ariaRowSpan: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.number,
+    ariaSelected: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.booleanish,
+    ariaSetSize: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.number,
+    ariaSort: null,
+    ariaValueMax: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.number,
+    ariaValueMin: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.number,
+    ariaValueNow: _util_types_js__WEBPACK_IMPORTED_MODULE_1__.number,
+    ariaValueText: null,
+    role: null
+  }
+})
+
+
+/***/ }),
+
+/***/ 61182:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   I: () => (/* binding */ find)
+/* harmony export */ });
+/* harmony import */ var _normalize_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(46738);
+/* harmony import */ var _util_defined_info_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(35772);
+/* harmony import */ var _util_info_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(22092);
+/**
+ * @typedef {import('./util/schema.js').Schema} Schema
+ */
+
+
+
+
+
+const valid = /^data[-\w.:]+$/i
+const dash = /-[a-z]/g
+const cap = /[A-Z]/g
+
+/**
+ * @param {Schema} schema
+ * @param {string} value
+ * @returns {Info}
+ */
+function find(schema, value) {
+  const normal = (0,_normalize_js__WEBPACK_IMPORTED_MODULE_0__/* .normalize */ .S)(value)
+  let prop = value
+  let Type = _util_info_js__WEBPACK_IMPORTED_MODULE_1__/* .Info */ .R
+
+  if (normal in schema.normal) {
+    return schema.property[schema.normal[normal]]
+  }
+
+  if (normal.length > 4 && normal.slice(0, 4) === 'data' && valid.test(value)) {
+    // Attribute or property.
+    if (value.charAt(4) === '-') {
+      // Turn it into a property.
+      const rest = value.slice(5).replace(dash, camelcase)
+      prop = 'data' + rest.charAt(0).toUpperCase() + rest.slice(1)
+    } else {
+      // Turn it into an attribute.
+      const rest = value.slice(4)
+
+      if (!dash.test(rest)) {
+        let dashes = rest.replace(cap, kebab)
+
+        if (dashes.charAt(0) !== '-') {
+          dashes = '-' + dashes
+        }
+
+        value = 'data' + dashes
+      }
+    }
+
+    Type = _util_defined_info_js__WEBPACK_IMPORTED_MODULE_2__/* .DefinedInfo */ .E
+  }
+
+  return new Type(prop, value)
+}
+
+/**
+ * @param {string} $0
+ * @returns {string}
+ */
+function kebab($0) {
+  return '-' + $0.toLowerCase()
+}
+
+/**
+ * @param {string} $0
+ * @returns {string}
+ */
+function camelcase($0) {
+  return $0.charAt(1).toUpperCase()
+}
+
+
+/***/ }),
+
+/***/ 98913:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   H: () => (/* binding */ hastToReact)
+/* harmony export */ });
+/**
+ * `hast` is close to `React`, but differs in a couple of cases.
+ *
+ * To get a React property from a hast property, check if it is in
+ * `hastToReact`, if it is, then use the corresponding value,
+ * otherwise, use the hast property.
+ *
+ * @type {Record<string, string>}
+ */
+const hastToReact = {
+  classId: 'classID',
+  dataType: 'datatype',
+  itemId: 'itemID',
+  strokeDashArray: 'strokeDasharray',
+  strokeDashOffset: 'strokeDashoffset',
+  strokeLineCap: 'strokeLinecap',
+  strokeLineJoin: 'strokeLinejoin',
+  strokeMiterLimit: 'strokeMiterlimit',
+  typeOf: 'typeof',
+  xLinkActuate: 'xlinkActuate',
+  xLinkArcRole: 'xlinkArcrole',
+  xLinkHref: 'xlinkHref',
+  xLinkRole: 'xlinkRole',
+  xLinkShow: 'xlinkShow',
+  xLinkTitle: 'xlinkTitle',
+  xLinkType: 'xlinkType',
+  xmlnsXLink: 'xmlnsXlink'
+}
+
+
+/***/ }),
+
+/***/ 44388:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   q: () => (/* binding */ html)
+/* harmony export */ });
+/* harmony import */ var _util_types_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(41167);
+/* harmony import */ var _util_create_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(75952);
+/* harmony import */ var _util_case_insensitive_transform_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(72645);
+
+
+
+
+const html = (0,_util_create_js__WEBPACK_IMPORTED_MODULE_0__/* .create */ .v)({
+  space: 'html',
+  attributes: {
+    acceptcharset: 'accept-charset',
+    classname: 'class',
+    htmlfor: 'for',
+    httpequiv: 'http-equiv'
+  },
+  transform: _util_case_insensitive_transform_js__WEBPACK_IMPORTED_MODULE_1__/* .caseInsensitiveTransform */ ._,
+  mustUseProperty: ['checked', 'multiple', 'muted', 'selected'],
+  properties: {
+    // Standard Properties.
+    abbr: null,
+    accept: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.commaSeparated,
+    acceptCharset: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.spaceSeparated,
+    accessKey: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.spaceSeparated,
+    action: null,
+    allow: null,
+    allowFullScreen: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    allowPaymentRequest: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    allowUserMedia: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    alt: null,
+    as: null,
+    async: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    autoCapitalize: null,
+    autoComplete: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.spaceSeparated,
+    autoFocus: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    autoPlay: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    capture: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    charSet: null,
+    checked: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    cite: null,
+    className: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.spaceSeparated,
+    cols: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    colSpan: null,
+    content: null,
+    contentEditable: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.booleanish,
+    controls: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    controlsList: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.spaceSeparated,
+    coords: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number | _util_types_js__WEBPACK_IMPORTED_MODULE_2__.commaSeparated,
+    crossOrigin: null,
+    data: null,
+    dateTime: null,
+    decoding: null,
+    default: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    defer: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    dir: null,
+    dirName: null,
+    disabled: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    download: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.overloadedBoolean,
+    draggable: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.booleanish,
+    encType: null,
+    enterKeyHint: null,
+    form: null,
+    formAction: null,
+    formEncType: null,
+    formMethod: null,
+    formNoValidate: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    formTarget: null,
+    headers: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.spaceSeparated,
+    height: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    hidden: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    high: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    href: null,
+    hrefLang: null,
+    htmlFor: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.spaceSeparated,
+    httpEquiv: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.spaceSeparated,
+    id: null,
+    imageSizes: null,
+    imageSrcSet: null,
+    inputMode: null,
+    integrity: null,
+    is: null,
+    isMap: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    itemId: null,
+    itemProp: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.spaceSeparated,
+    itemRef: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.spaceSeparated,
+    itemScope: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    itemType: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.spaceSeparated,
+    kind: null,
+    label: null,
+    lang: null,
+    language: null,
+    list: null,
+    loading: null,
+    loop: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    low: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    manifest: null,
+    max: null,
+    maxLength: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    media: null,
+    method: null,
+    min: null,
+    minLength: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    multiple: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    muted: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    name: null,
+    nonce: null,
+    noModule: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    noValidate: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    onAbort: null,
+    onAfterPrint: null,
+    onAuxClick: null,
+    onBeforeMatch: null,
+    onBeforePrint: null,
+    onBeforeUnload: null,
+    onBlur: null,
+    onCancel: null,
+    onCanPlay: null,
+    onCanPlayThrough: null,
+    onChange: null,
+    onClick: null,
+    onClose: null,
+    onContextLost: null,
+    onContextMenu: null,
+    onContextRestored: null,
+    onCopy: null,
+    onCueChange: null,
+    onCut: null,
+    onDblClick: null,
+    onDrag: null,
+    onDragEnd: null,
+    onDragEnter: null,
+    onDragExit: null,
+    onDragLeave: null,
+    onDragOver: null,
+    onDragStart: null,
+    onDrop: null,
+    onDurationChange: null,
+    onEmptied: null,
+    onEnded: null,
+    onError: null,
+    onFocus: null,
+    onFormData: null,
+    onHashChange: null,
+    onInput: null,
+    onInvalid: null,
+    onKeyDown: null,
+    onKeyPress: null,
+    onKeyUp: null,
+    onLanguageChange: null,
+    onLoad: null,
+    onLoadedData: null,
+    onLoadedMetadata: null,
+    onLoadEnd: null,
+    onLoadStart: null,
+    onMessage: null,
+    onMessageError: null,
+    onMouseDown: null,
+    onMouseEnter: null,
+    onMouseLeave: null,
+    onMouseMove: null,
+    onMouseOut: null,
+    onMouseOver: null,
+    onMouseUp: null,
+    onOffline: null,
+    onOnline: null,
+    onPageHide: null,
+    onPageShow: null,
+    onPaste: null,
+    onPause: null,
+    onPlay: null,
+    onPlaying: null,
+    onPopState: null,
+    onProgress: null,
+    onRateChange: null,
+    onRejectionHandled: null,
+    onReset: null,
+    onResize: null,
+    onScroll: null,
+    onScrollEnd: null,
+    onSecurityPolicyViolation: null,
+    onSeeked: null,
+    onSeeking: null,
+    onSelect: null,
+    onSlotChange: null,
+    onStalled: null,
+    onStorage: null,
+    onSubmit: null,
+    onSuspend: null,
+    onTimeUpdate: null,
+    onToggle: null,
+    onUnhandledRejection: null,
+    onUnload: null,
+    onVolumeChange: null,
+    onWaiting: null,
+    onWheel: null,
+    open: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    optimum: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    pattern: null,
+    ping: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.spaceSeparated,
+    placeholder: null,
+    playsInline: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    poster: null,
+    preload: null,
+    readOnly: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    referrerPolicy: null,
+    rel: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.spaceSeparated,
+    required: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    reversed: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    rows: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    rowSpan: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    sandbox: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.spaceSeparated,
+    scope: null,
+    scoped: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    seamless: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    selected: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    shape: null,
+    size: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    sizes: null,
+    slot: null,
+    span: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    spellCheck: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.booleanish,
+    src: null,
+    srcDoc: null,
+    srcLang: null,
+    srcSet: null,
+    start: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    step: null,
+    style: null,
+    tabIndex: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    target: null,
+    title: null,
+    translate: null,
+    type: null,
+    typeMustMatch: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    useMap: null,
+    value: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.booleanish,
+    width: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    wrap: null,
+
+    // Legacy.
+    // See: https://html.spec.whatwg.org/#other-elements,-attributes-and-apis
+    align: null, // Several. Use CSS `text-align` instead,
+    aLink: null, // `<body>`. Use CSS `a:active {color}` instead
+    archive: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.spaceSeparated, // `<object>`. List of URIs to archives
+    axis: null, // `<td>` and `<th>`. Use `scope` on `<th>`
+    background: null, // `<body>`. Use CSS `background-image` instead
+    bgColor: null, // `<body>` and table elements. Use CSS `background-color` instead
+    border: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number, // `<table>`. Use CSS `border-width` instead,
+    borderColor: null, // `<table>`. Use CSS `border-color` instead,
+    bottomMargin: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number, // `<body>`
+    cellPadding: null, // `<table>`
+    cellSpacing: null, // `<table>`
+    char: null, // Several table elements. When `align=char`, sets the character to align on
+    charOff: null, // Several table elements. When `char`, offsets the alignment
+    classId: null, // `<object>`
+    clear: null, // `<br>`. Use CSS `clear` instead
+    code: null, // `<object>`
+    codeBase: null, // `<object>`
+    codeType: null, // `<object>`
+    color: null, // `<font>` and `<hr>`. Use CSS instead
+    compact: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean, // Lists. Use CSS to reduce space between items instead
+    declare: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean, // `<object>`
+    event: null, // `<script>`
+    face: null, // `<font>`. Use CSS instead
+    frame: null, // `<table>`
+    frameBorder: null, // `<iframe>`. Use CSS `border` instead
+    hSpace: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number, // `<img>` and `<object>`
+    leftMargin: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number, // `<body>`
+    link: null, // `<body>`. Use CSS `a:link {color: *}` instead
+    longDesc: null, // `<frame>`, `<iframe>`, and `<img>`. Use an `<a>`
+    lowSrc: null, // `<img>`. Use a `<picture>`
+    marginHeight: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number, // `<body>`
+    marginWidth: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number, // `<body>`
+    noResize: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean, // `<frame>`
+    noHref: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean, // `<area>`. Use no href instead of an explicit `nohref`
+    noShade: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean, // `<hr>`. Use background-color and height instead of borders
+    noWrap: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean, // `<td>` and `<th>`
+    object: null, // `<applet>`
+    profile: null, // `<head>`
+    prompt: null, // `<isindex>`
+    rev: null, // `<link>`
+    rightMargin: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number, // `<body>`
+    rules: null, // `<table>`
+    scheme: null, // `<meta>`
+    scrolling: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.booleanish, // `<frame>`. Use overflow in the child context
+    standby: null, // `<object>`
+    summary: null, // `<table>`
+    text: null, // `<body>`. Use CSS `color` instead
+    topMargin: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number, // `<body>`
+    valueType: null, // `<param>`
+    version: null, // `<html>`. Use a doctype.
+    vAlign: null, // Several. Use CSS `vertical-align` instead
+    vLink: null, // `<body>`. Use CSS `a:visited {color}` instead
+    vSpace: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number, // `<img>` and `<object>`
+
+    // Non-standard Properties.
+    allowTransparency: null,
+    autoCorrect: null,
+    autoSave: null,
+    disablePictureInPicture: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    disableRemotePlayback: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    prefix: null,
+    property: null,
+    results: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    security: null,
+    unselectable: null
+  }
+})
+
+
+/***/ }),
+
+/***/ 46738:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   S: () => (/* binding */ normalize)
+/* harmony export */ });
+/**
+ * @param {string} value
+ * @returns {string}
+ */
+function normalize(value) {
+  return value.toLowerCase()
+}
+
+
+/***/ }),
+
+/***/ 50159:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   J: () => (/* binding */ svg)
+/* harmony export */ });
+/* harmony import */ var _util_types_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(41167);
+/* harmony import */ var _util_create_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(75952);
+/* harmony import */ var _util_case_sensitive_transform_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(70872);
+
+
+
+
+const svg = (0,_util_create_js__WEBPACK_IMPORTED_MODULE_0__/* .create */ .v)({
+  space: 'svg',
+  attributes: {
+    accentHeight: 'accent-height',
+    alignmentBaseline: 'alignment-baseline',
+    arabicForm: 'arabic-form',
+    baselineShift: 'baseline-shift',
+    capHeight: 'cap-height',
+    className: 'class',
+    clipPath: 'clip-path',
+    clipRule: 'clip-rule',
+    colorInterpolation: 'color-interpolation',
+    colorInterpolationFilters: 'color-interpolation-filters',
+    colorProfile: 'color-profile',
+    colorRendering: 'color-rendering',
+    crossOrigin: 'crossorigin',
+    dataType: 'datatype',
+    dominantBaseline: 'dominant-baseline',
+    enableBackground: 'enable-background',
+    fillOpacity: 'fill-opacity',
+    fillRule: 'fill-rule',
+    floodColor: 'flood-color',
+    floodOpacity: 'flood-opacity',
+    fontFamily: 'font-family',
+    fontSize: 'font-size',
+    fontSizeAdjust: 'font-size-adjust',
+    fontStretch: 'font-stretch',
+    fontStyle: 'font-style',
+    fontVariant: 'font-variant',
+    fontWeight: 'font-weight',
+    glyphName: 'glyph-name',
+    glyphOrientationHorizontal: 'glyph-orientation-horizontal',
+    glyphOrientationVertical: 'glyph-orientation-vertical',
+    hrefLang: 'hreflang',
+    horizAdvX: 'horiz-adv-x',
+    horizOriginX: 'horiz-origin-x',
+    horizOriginY: 'horiz-origin-y',
+    imageRendering: 'image-rendering',
+    letterSpacing: 'letter-spacing',
+    lightingColor: 'lighting-color',
+    markerEnd: 'marker-end',
+    markerMid: 'marker-mid',
+    markerStart: 'marker-start',
+    navDown: 'nav-down',
+    navDownLeft: 'nav-down-left',
+    navDownRight: 'nav-down-right',
+    navLeft: 'nav-left',
+    navNext: 'nav-next',
+    navPrev: 'nav-prev',
+    navRight: 'nav-right',
+    navUp: 'nav-up',
+    navUpLeft: 'nav-up-left',
+    navUpRight: 'nav-up-right',
+    onAbort: 'onabort',
+    onActivate: 'onactivate',
+    onAfterPrint: 'onafterprint',
+    onBeforePrint: 'onbeforeprint',
+    onBegin: 'onbegin',
+    onCancel: 'oncancel',
+    onCanPlay: 'oncanplay',
+    onCanPlayThrough: 'oncanplaythrough',
+    onChange: 'onchange',
+    onClick: 'onclick',
+    onClose: 'onclose',
+    onCopy: 'oncopy',
+    onCueChange: 'oncuechange',
+    onCut: 'oncut',
+    onDblClick: 'ondblclick',
+    onDrag: 'ondrag',
+    onDragEnd: 'ondragend',
+    onDragEnter: 'ondragenter',
+    onDragExit: 'ondragexit',
+    onDragLeave: 'ondragleave',
+    onDragOver: 'ondragover',
+    onDragStart: 'ondragstart',
+    onDrop: 'ondrop',
+    onDurationChange: 'ondurationchange',
+    onEmptied: 'onemptied',
+    onEnd: 'onend',
+    onEnded: 'onended',
+    onError: 'onerror',
+    onFocus: 'onfocus',
+    onFocusIn: 'onfocusin',
+    onFocusOut: 'onfocusout',
+    onHashChange: 'onhashchange',
+    onInput: 'oninput',
+    onInvalid: 'oninvalid',
+    onKeyDown: 'onkeydown',
+    onKeyPress: 'onkeypress',
+    onKeyUp: 'onkeyup',
+    onLoad: 'onload',
+    onLoadedData: 'onloadeddata',
+    onLoadedMetadata: 'onloadedmetadata',
+    onLoadStart: 'onloadstart',
+    onMessage: 'onmessage',
+    onMouseDown: 'onmousedown',
+    onMouseEnter: 'onmouseenter',
+    onMouseLeave: 'onmouseleave',
+    onMouseMove: 'onmousemove',
+    onMouseOut: 'onmouseout',
+    onMouseOver: 'onmouseover',
+    onMouseUp: 'onmouseup',
+    onMouseWheel: 'onmousewheel',
+    onOffline: 'onoffline',
+    onOnline: 'ononline',
+    onPageHide: 'onpagehide',
+    onPageShow: 'onpageshow',
+    onPaste: 'onpaste',
+    onPause: 'onpause',
+    onPlay: 'onplay',
+    onPlaying: 'onplaying',
+    onPopState: 'onpopstate',
+    onProgress: 'onprogress',
+    onRateChange: 'onratechange',
+    onRepeat: 'onrepeat',
+    onReset: 'onreset',
+    onResize: 'onresize',
+    onScroll: 'onscroll',
+    onSeeked: 'onseeked',
+    onSeeking: 'onseeking',
+    onSelect: 'onselect',
+    onShow: 'onshow',
+    onStalled: 'onstalled',
+    onStorage: 'onstorage',
+    onSubmit: 'onsubmit',
+    onSuspend: 'onsuspend',
+    onTimeUpdate: 'ontimeupdate',
+    onToggle: 'ontoggle',
+    onUnload: 'onunload',
+    onVolumeChange: 'onvolumechange',
+    onWaiting: 'onwaiting',
+    onZoom: 'onzoom',
+    overlinePosition: 'overline-position',
+    overlineThickness: 'overline-thickness',
+    paintOrder: 'paint-order',
+    panose1: 'panose-1',
+    pointerEvents: 'pointer-events',
+    referrerPolicy: 'referrerpolicy',
+    renderingIntent: 'rendering-intent',
+    shapeRendering: 'shape-rendering',
+    stopColor: 'stop-color',
+    stopOpacity: 'stop-opacity',
+    strikethroughPosition: 'strikethrough-position',
+    strikethroughThickness: 'strikethrough-thickness',
+    strokeDashArray: 'stroke-dasharray',
+    strokeDashOffset: 'stroke-dashoffset',
+    strokeLineCap: 'stroke-linecap',
+    strokeLineJoin: 'stroke-linejoin',
+    strokeMiterLimit: 'stroke-miterlimit',
+    strokeOpacity: 'stroke-opacity',
+    strokeWidth: 'stroke-width',
+    tabIndex: 'tabindex',
+    textAnchor: 'text-anchor',
+    textDecoration: 'text-decoration',
+    textRendering: 'text-rendering',
+    typeOf: 'typeof',
+    underlinePosition: 'underline-position',
+    underlineThickness: 'underline-thickness',
+    unicodeBidi: 'unicode-bidi',
+    unicodeRange: 'unicode-range',
+    unitsPerEm: 'units-per-em',
+    vAlphabetic: 'v-alphabetic',
+    vHanging: 'v-hanging',
+    vIdeographic: 'v-ideographic',
+    vMathematical: 'v-mathematical',
+    vectorEffect: 'vector-effect',
+    vertAdvY: 'vert-adv-y',
+    vertOriginX: 'vert-origin-x',
+    vertOriginY: 'vert-origin-y',
+    wordSpacing: 'word-spacing',
+    writingMode: 'writing-mode',
+    xHeight: 'x-height',
+    // These were camelcased in Tiny. Now lowercased in SVG 2
+    playbackOrder: 'playbackorder',
+    timelineBegin: 'timelinebegin'
+  },
+  transform: _util_case_sensitive_transform_js__WEBPACK_IMPORTED_MODULE_1__/* .caseSensitiveTransform */ .B,
+  properties: {
+    about: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.commaOrSpaceSeparated,
+    accentHeight: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    accumulate: null,
+    additive: null,
+    alignmentBaseline: null,
+    alphabetic: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    amplitude: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    arabicForm: null,
+    ascent: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    attributeName: null,
+    attributeType: null,
+    azimuth: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    bandwidth: null,
+    baselineShift: null,
+    baseFrequency: null,
+    baseProfile: null,
+    bbox: null,
+    begin: null,
+    bias: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    by: null,
+    calcMode: null,
+    capHeight: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    className: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.spaceSeparated,
+    clip: null,
+    clipPath: null,
+    clipPathUnits: null,
+    clipRule: null,
+    color: null,
+    colorInterpolation: null,
+    colorInterpolationFilters: null,
+    colorProfile: null,
+    colorRendering: null,
+    content: null,
+    contentScriptType: null,
+    contentStyleType: null,
+    crossOrigin: null,
+    cursor: null,
+    cx: null,
+    cy: null,
+    d: null,
+    dataType: null,
+    defaultAction: null,
+    descent: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    diffuseConstant: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    direction: null,
+    display: null,
+    dur: null,
+    divisor: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    dominantBaseline: null,
+    download: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.boolean,
+    dx: null,
+    dy: null,
+    edgeMode: null,
+    editable: null,
+    elevation: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    enableBackground: null,
+    end: null,
+    event: null,
+    exponent: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    externalResourcesRequired: null,
+    fill: null,
+    fillOpacity: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    fillRule: null,
+    filter: null,
+    filterRes: null,
+    filterUnits: null,
+    floodColor: null,
+    floodOpacity: null,
+    focusable: null,
+    focusHighlight: null,
+    fontFamily: null,
+    fontSize: null,
+    fontSizeAdjust: null,
+    fontStretch: null,
+    fontStyle: null,
+    fontVariant: null,
+    fontWeight: null,
+    format: null,
+    fr: null,
+    from: null,
+    fx: null,
+    fy: null,
+    g1: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.commaSeparated,
+    g2: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.commaSeparated,
+    glyphName: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.commaSeparated,
+    glyphOrientationHorizontal: null,
+    glyphOrientationVertical: null,
+    glyphRef: null,
+    gradientTransform: null,
+    gradientUnits: null,
+    handler: null,
+    hanging: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    hatchContentUnits: null,
+    hatchUnits: null,
+    height: null,
+    href: null,
+    hrefLang: null,
+    horizAdvX: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    horizOriginX: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    horizOriginY: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    id: null,
+    ideographic: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    imageRendering: null,
+    initialVisibility: null,
+    in: null,
+    in2: null,
+    intercept: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    k: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    k1: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    k2: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    k3: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    k4: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    kernelMatrix: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.commaOrSpaceSeparated,
+    kernelUnitLength: null,
+    keyPoints: null, // SEMI_COLON_SEPARATED
+    keySplines: null, // SEMI_COLON_SEPARATED
+    keyTimes: null, // SEMI_COLON_SEPARATED
+    kerning: null,
+    lang: null,
+    lengthAdjust: null,
+    letterSpacing: null,
+    lightingColor: null,
+    limitingConeAngle: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    local: null,
+    markerEnd: null,
+    markerMid: null,
+    markerStart: null,
+    markerHeight: null,
+    markerUnits: null,
+    markerWidth: null,
+    mask: null,
+    maskContentUnits: null,
+    maskUnits: null,
+    mathematical: null,
+    max: null,
+    media: null,
+    mediaCharacterEncoding: null,
+    mediaContentEncodings: null,
+    mediaSize: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    mediaTime: null,
+    method: null,
+    min: null,
+    mode: null,
+    name: null,
+    navDown: null,
+    navDownLeft: null,
+    navDownRight: null,
+    navLeft: null,
+    navNext: null,
+    navPrev: null,
+    navRight: null,
+    navUp: null,
+    navUpLeft: null,
+    navUpRight: null,
+    numOctaves: null,
+    observer: null,
+    offset: null,
+    onAbort: null,
+    onActivate: null,
+    onAfterPrint: null,
+    onBeforePrint: null,
+    onBegin: null,
+    onCancel: null,
+    onCanPlay: null,
+    onCanPlayThrough: null,
+    onChange: null,
+    onClick: null,
+    onClose: null,
+    onCopy: null,
+    onCueChange: null,
+    onCut: null,
+    onDblClick: null,
+    onDrag: null,
+    onDragEnd: null,
+    onDragEnter: null,
+    onDragExit: null,
+    onDragLeave: null,
+    onDragOver: null,
+    onDragStart: null,
+    onDrop: null,
+    onDurationChange: null,
+    onEmptied: null,
+    onEnd: null,
+    onEnded: null,
+    onError: null,
+    onFocus: null,
+    onFocusIn: null,
+    onFocusOut: null,
+    onHashChange: null,
+    onInput: null,
+    onInvalid: null,
+    onKeyDown: null,
+    onKeyPress: null,
+    onKeyUp: null,
+    onLoad: null,
+    onLoadedData: null,
+    onLoadedMetadata: null,
+    onLoadStart: null,
+    onMessage: null,
+    onMouseDown: null,
+    onMouseEnter: null,
+    onMouseLeave: null,
+    onMouseMove: null,
+    onMouseOut: null,
+    onMouseOver: null,
+    onMouseUp: null,
+    onMouseWheel: null,
+    onOffline: null,
+    onOnline: null,
+    onPageHide: null,
+    onPageShow: null,
+    onPaste: null,
+    onPause: null,
+    onPlay: null,
+    onPlaying: null,
+    onPopState: null,
+    onProgress: null,
+    onRateChange: null,
+    onRepeat: null,
+    onReset: null,
+    onResize: null,
+    onScroll: null,
+    onSeeked: null,
+    onSeeking: null,
+    onSelect: null,
+    onShow: null,
+    onStalled: null,
+    onStorage: null,
+    onSubmit: null,
+    onSuspend: null,
+    onTimeUpdate: null,
+    onToggle: null,
+    onUnload: null,
+    onVolumeChange: null,
+    onWaiting: null,
+    onZoom: null,
+    opacity: null,
+    operator: null,
+    order: null,
+    orient: null,
+    orientation: null,
+    origin: null,
+    overflow: null,
+    overlay: null,
+    overlinePosition: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    overlineThickness: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    paintOrder: null,
+    panose1: null,
+    path: null,
+    pathLength: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    patternContentUnits: null,
+    patternTransform: null,
+    patternUnits: null,
+    phase: null,
+    ping: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.spaceSeparated,
+    pitch: null,
+    playbackOrder: null,
+    pointerEvents: null,
+    points: null,
+    pointsAtX: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    pointsAtY: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    pointsAtZ: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    preserveAlpha: null,
+    preserveAspectRatio: null,
+    primitiveUnits: null,
+    propagate: null,
+    property: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.commaOrSpaceSeparated,
+    r: null,
+    radius: null,
+    referrerPolicy: null,
+    refX: null,
+    refY: null,
+    rel: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.commaOrSpaceSeparated,
+    rev: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.commaOrSpaceSeparated,
+    renderingIntent: null,
+    repeatCount: null,
+    repeatDur: null,
+    requiredExtensions: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.commaOrSpaceSeparated,
+    requiredFeatures: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.commaOrSpaceSeparated,
+    requiredFonts: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.commaOrSpaceSeparated,
+    requiredFormats: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.commaOrSpaceSeparated,
+    resource: null,
+    restart: null,
+    result: null,
+    rotate: null,
+    rx: null,
+    ry: null,
+    scale: null,
+    seed: null,
+    shapeRendering: null,
+    side: null,
+    slope: null,
+    snapshotTime: null,
+    specularConstant: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    specularExponent: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    spreadMethod: null,
+    spacing: null,
+    startOffset: null,
+    stdDeviation: null,
+    stemh: null,
+    stemv: null,
+    stitchTiles: null,
+    stopColor: null,
+    stopOpacity: null,
+    strikethroughPosition: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    strikethroughThickness: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    string: null,
+    stroke: null,
+    strokeDashArray: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.commaOrSpaceSeparated,
+    strokeDashOffset: null,
+    strokeLineCap: null,
+    strokeLineJoin: null,
+    strokeMiterLimit: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    strokeOpacity: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    strokeWidth: null,
+    style: null,
+    surfaceScale: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    syncBehavior: null,
+    syncBehaviorDefault: null,
+    syncMaster: null,
+    syncTolerance: null,
+    syncToleranceDefault: null,
+    systemLanguage: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.commaOrSpaceSeparated,
+    tabIndex: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    tableValues: null,
+    target: null,
+    targetX: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    targetY: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    textAnchor: null,
+    textDecoration: null,
+    textRendering: null,
+    textLength: null,
+    timelineBegin: null,
+    title: null,
+    transformBehavior: null,
+    type: null,
+    typeOf: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.commaOrSpaceSeparated,
+    to: null,
+    transform: null,
+    u1: null,
+    u2: null,
+    underlinePosition: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    underlineThickness: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    unicode: null,
+    unicodeBidi: null,
+    unicodeRange: null,
+    unitsPerEm: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    values: null,
+    vAlphabetic: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    vMathematical: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    vectorEffect: null,
+    vHanging: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    vIdeographic: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    version: null,
+    vertAdvY: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    vertOriginX: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    vertOriginY: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    viewBox: null,
+    viewTarget: null,
+    visibility: null,
+    width: null,
+    widths: null,
+    wordSpacing: null,
+    writingMode: null,
+    x: null,
+    x1: null,
+    x2: null,
+    xChannelSelector: null,
+    xHeight: _util_types_js__WEBPACK_IMPORTED_MODULE_2__.number,
+    y: null,
+    y1: null,
+    y2: null,
+    yChannelSelector: null,
+    z: null,
+    zoomAndPan: null
+  }
+})
+
+
+/***/ }),
+
+/***/ 72645:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   _: () => (/* binding */ caseInsensitiveTransform)
+/* harmony export */ });
+/* harmony import */ var _case_sensitive_transform_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(70872);
+
+
+/**
+ * @param {Record<string, string>} attributes
+ * @param {string} property
+ * @returns {string}
+ */
+function caseInsensitiveTransform(attributes, property) {
+  return (0,_case_sensitive_transform_js__WEBPACK_IMPORTED_MODULE_0__/* .caseSensitiveTransform */ .B)(attributes, property.toLowerCase())
+}
+
+
+/***/ }),
+
+/***/ 70872:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   B: () => (/* binding */ caseSensitiveTransform)
+/* harmony export */ });
+/**
+ * @param {Record<string, string>} attributes
+ * @param {string} attribute
+ * @returns {string}
+ */
+function caseSensitiveTransform(attributes, attribute) {
+  return attribute in attributes ? attributes[attribute] : attribute
+}
+
+
+/***/ }),
+
+/***/ 75952:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   v: () => (/* binding */ create)
+/* harmony export */ });
+/* harmony import */ var _normalize_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(46738);
+/* harmony import */ var _schema_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(95131);
+/* harmony import */ var _defined_info_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(35772);
+/**
+ * @typedef {import('./schema.js').Properties} Properties
+ * @typedef {import('./schema.js').Normal} Normal
+ *
+ * @typedef {Record<string, string>} Attributes
+ *
+ * @typedef {Object} Definition
+ * @property {Record<string, number|null>} properties
+ * @property {(attributes: Attributes, property: string) => string} transform
+ * @property {string} [space]
+ * @property {Attributes} [attributes]
+ * @property {Array<string>} [mustUseProperty]
+ */
+
+
+
+
+
+const own = {}.hasOwnProperty
+
+/**
+ * @param {Definition} definition
+ * @returns {Schema}
+ */
+function create(definition) {
+  /** @type {Properties} */
+  const property = {}
+  /** @type {Normal} */
+  const normal = {}
+  /** @type {string} */
+  let prop
+
+  for (prop in definition.properties) {
+    if (own.call(definition.properties, prop)) {
+      const value = definition.properties[prop]
+      const info = new _defined_info_js__WEBPACK_IMPORTED_MODULE_0__/* .DefinedInfo */ .E(
+        prop,
+        definition.transform(definition.attributes || {}, prop),
+        value,
+        definition.space
+      )
+
+      if (
+        definition.mustUseProperty &&
+        definition.mustUseProperty.includes(prop)
+      ) {
+        info.mustUseProperty = true
+      }
+
+      property[prop] = info
+
+      normal[(0,_normalize_js__WEBPACK_IMPORTED_MODULE_1__/* .normalize */ .S)(prop)] = prop
+      normal[(0,_normalize_js__WEBPACK_IMPORTED_MODULE_1__/* .normalize */ .S)(info.attribute)] = prop
+    }
+  }
+
+  return new _schema_js__WEBPACK_IMPORTED_MODULE_2__/* .Schema */ .S(property, normal, definition.space)
+}
+
+
+/***/ }),
+
+/***/ 35772:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   E: () => (/* binding */ DefinedInfo)
+/* harmony export */ });
+/* harmony import */ var _info_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(22092);
+/* harmony import */ var _types_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(41167);
+
+
+
+/** @type {Array<keyof types>} */
+// @ts-expect-error: hush.
+const checks = Object.keys(_types_js__WEBPACK_IMPORTED_MODULE_0__)
+
+class DefinedInfo extends _info_js__WEBPACK_IMPORTED_MODULE_1__/* .Info */ .R {
+  /**
+   * @constructor
+   * @param {string} property
+   * @param {string} attribute
+   * @param {number|null} [mask]
+   * @param {string} [space]
+   */
+  constructor(property, attribute, mask, space) {
+    let index = -1
+
+    super(property, attribute)
+
+    mark(this, 'space', space)
+
+    if (typeof mask === 'number') {
+      while (++index < checks.length) {
+        const check = checks[index]
+        mark(this, checks[index], (mask & _types_js__WEBPACK_IMPORTED_MODULE_0__[check]) === _types_js__WEBPACK_IMPORTED_MODULE_0__[check])
+      }
+    }
+  }
+}
+
+DefinedInfo.prototype.defined = true
+
+/**
+ * @param {DefinedInfo} values
+ * @param {string} key
+ * @param {unknown} value
+ */
+function mark(values, key, value) {
+  if (value) {
+    // @ts-expect-error: assume `value` matches the expected value of `key`.
+    values[key] = value
+  }
+}
+
+
+/***/ }),
+
+/***/ 22092:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   R: () => (/* binding */ Info)
+/* harmony export */ });
+class Info {
+  /**
+   * @constructor
+   * @param {string} property
+   * @param {string} attribute
+   */
+  constructor(property, attribute) {
+    /** @type {string} */
+    this.property = property
+    /** @type {string} */
+    this.attribute = attribute
+  }
+}
+
+/** @type {string|null} */
+Info.prototype.space = null
+Info.prototype.boolean = false
+Info.prototype.booleanish = false
+Info.prototype.overloadedBoolean = false
+Info.prototype.number = false
+Info.prototype.commaSeparated = false
+Info.prototype.spaceSeparated = false
+Info.prototype.commaOrSpaceSeparated = false
+Info.prototype.mustUseProperty = false
+Info.prototype.defined = false
+
+
+/***/ }),
+
+/***/ 60194:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   h: () => (/* binding */ merge)
+/* harmony export */ });
+/* harmony import */ var _schema_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(95131);
+/**
+ * @typedef {import('./schema.js').Properties} Properties
+ * @typedef {import('./schema.js').Normal} Normal
+ */
+
+
+
+/**
+ * @param {Schema[]} definitions
+ * @param {string} [space]
+ * @returns {Schema}
+ */
+function merge(definitions, space) {
+  /** @type {Properties} */
+  const property = {}
+  /** @type {Normal} */
+  const normal = {}
+  let index = -1
+
+  while (++index < definitions.length) {
+    Object.assign(property, definitions[index].property)
+    Object.assign(normal, definitions[index].normal)
+  }
+
+  return new _schema_js__WEBPACK_IMPORTED_MODULE_0__/* .Schema */ .S(property, normal, space)
+}
+
+
+/***/ }),
+
+/***/ 95131:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   S: () => (/* binding */ Schema)
+/* harmony export */ });
+/**
+ * @typedef {import('./info.js').Info} Info
+ * @typedef {Record<string, Info>} Properties
+ * @typedef {Record<string, string>} Normal
+ */
+
+class Schema {
+  /**
+   * @constructor
+   * @param {Properties} property
+   * @param {Normal} normal
+   * @param {string} [space]
+   */
+  constructor(property, normal, space) {
+    this.property = property
+    this.normal = normal
+    if (space) {
+      this.space = space
+    }
+  }
+}
+
+/** @type {Properties} */
+Schema.prototype.property = {}
+/** @type {Normal} */
+Schema.prototype.normal = {}
+/** @type {string|null} */
+Schema.prototype.space = null
+
+
+/***/ }),
+
+/***/ 41167:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   boolean: () => (/* binding */ boolean),
+/* harmony export */   booleanish: () => (/* binding */ booleanish),
+/* harmony export */   commaOrSpaceSeparated: () => (/* binding */ commaOrSpaceSeparated),
+/* harmony export */   commaSeparated: () => (/* binding */ commaSeparated),
+/* harmony export */   number: () => (/* binding */ number),
+/* harmony export */   overloadedBoolean: () => (/* binding */ overloadedBoolean),
+/* harmony export */   spaceSeparated: () => (/* binding */ spaceSeparated)
+/* harmony export */ });
+let powers = 0
+
+const boolean = increment()
+const booleanish = increment()
+const overloadedBoolean = increment()
+const number = increment()
+const spaceSeparated = increment()
+const commaSeparated = increment()
+const commaOrSpaceSeparated = increment()
+
+function increment() {
+  return 2 ** ++powers
+}
+
+
+/***/ }),
+
+/***/ 20441:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   F: () => (/* binding */ xlink)
+/* harmony export */ });
+/* harmony import */ var _util_create_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(75952);
+
+
+const xlink = (0,_util_create_js__WEBPACK_IMPORTED_MODULE_0__/* .create */ .v)({
+  space: 'xlink',
+  transform(_, prop) {
+    return 'xlink:' + prop.slice(5).toLowerCase()
+  },
+  properties: {
+    xLinkActuate: null,
+    xLinkArcRole: null,
+    xLinkHref: null,
+    xLinkRole: null,
+    xLinkShow: null,
+    xLinkTitle: null,
+    xLinkType: null
+  }
+})
+
+
+/***/ }),
+
+/***/ 27732:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   _: () => (/* binding */ xml)
+/* harmony export */ });
+/* harmony import */ var _util_create_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(75952);
+
+
+const xml = (0,_util_create_js__WEBPACK_IMPORTED_MODULE_0__/* .create */ .v)({
+  space: 'xml',
+  transform(_, prop) {
+    return 'xml:' + prop.slice(3).toLowerCase()
+  },
+  properties: {xmlLang: null, xmlBase: null, xmlSpace: null}
+})
+
+
+/***/ }),
+
+/***/ 46063:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   z: () => (/* binding */ xmlns)
+/* harmony export */ });
+/* harmony import */ var _util_create_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(75952);
+/* harmony import */ var _util_case_insensitive_transform_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(72645);
+
+
+
+const xmlns = (0,_util_create_js__WEBPACK_IMPORTED_MODULE_0__/* .create */ .v)({
+  space: 'xmlns',
+  attributes: {xmlnsxlink: 'xmlns:xlink'},
+  transform: _util_case_insensitive_transform_js__WEBPACK_IMPORTED_MODULE_1__/* .caseInsensitiveTransform */ ._,
+  properties: {xmlns: null, xmlnsXLink: null}
+})
+
+
+/***/ }),
+
+/***/ 76352:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   o: () => (/* binding */ Markdown)
+/* harmony export */ });
+/* unused harmony export defaultUrlTransform */
+/* harmony import */ var devlop__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(69820);
+/* harmony import */ var hast_util_to_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(22133);
+/* harmony import */ var html_url_attributes__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(85124);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(31085);
+/* harmony import */ var remark_parse__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(42686);
+/* harmony import */ var remark_rehype__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(15979);
+/* harmony import */ var unified__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(48759);
+/* harmony import */ var unist_util_visit__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(90522);
+/* harmony import */ var vfile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(97749);
+// Register `Raw` in tree:
+/// <reference types="mdast-util-to-hast" />
+
+/**
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('hast').ElementContent} ElementContent
+ * @typedef {import('hast').Nodes} Nodes
+ * @typedef {import('hast').Parents} Parents
+ * @typedef {import('hast').Root} Root
+ * @typedef {import('hast-util-to-jsx-runtime').Components} JsxRuntimeComponents
+ * @typedef {import('remark-rehype').Options} RemarkRehypeOptions
+ * @typedef {import('unist-util-visit').BuildVisitor<Root>} Visitor
+ * @typedef {import('unified').PluggableList} PluggableList
+ */
+
+/**
+ * @callback AllowElement
+ *   Filter elements.
+ * @param {Readonly<Element>} element
+ *   Element to check.
+ * @param {number} index
+ *   Index of `element` in `parent`.
+ * @param {Readonly<Parents> | undefined} parent
+ *   Parent of `element`.
+ * @returns {boolean | null | undefined}
+ *   Whether to allow `element` (default: `false`).
+ *
+ * @typedef {Partial<JsxRuntimeComponents>} Components
+ *   Map tag names to components.
+ *
+ * @typedef Deprecation
+ *   Deprecation.
+ * @property {string} from
+ *   Old field.
+ * @property {string} id
+ *   ID in readme.
+ * @property {keyof Options} [to]
+ *   New field.
+ *
+ * @typedef Options
+ *   Configuration.
+ * @property {AllowElement | null | undefined} [allowElement]
+ *   Filter elements (optional);
+ *   `allowedElements` / `disallowedElements` is used first.
+ * @property {ReadonlyArray<string> | null | undefined} [allowedElements]
+ *   Tag names to allow (default: all tag names);
+ *   cannot combine w/ `disallowedElements`.
+ * @property {string | null | undefined} [children]
+ *   Markdown.
+ * @property {string | null | undefined} [className]
+ *   Wrap in a `div` with this class name.
+ * @property {Components | null | undefined} [components]
+ *   Map tag names to components.
+ * @property {ReadonlyArray<string> | null | undefined} [disallowedElements]
+ *   Tag names to disallow (default: `[]`);
+ *   cannot combine w/ `allowedElements`.
+ * @property {PluggableList | null | undefined} [rehypePlugins]
+ *   List of rehype plugins to use.
+ * @property {PluggableList | null | undefined} [remarkPlugins]
+ *   List of remark plugins to use.
+ * @property {Readonly<RemarkRehypeOptions> | null | undefined} [remarkRehypeOptions]
+ *   Options to pass through to `remark-rehype`.
+ * @property {boolean | null | undefined} [skipHtml=false]
+ *   Ignore HTML in markdown completely (default: `false`).
+ * @property {boolean | null | undefined} [unwrapDisallowed=false]
+ *   Extract (unwrap) what’s in disallowed elements (default: `false`);
+ *   normally when say `strong` is not allowed, it and it’s children are dropped,
+ *   with `unwrapDisallowed` the element itself is replaced by its children.
+ * @property {UrlTransform | null | undefined} [urlTransform]
+ *   Change URLs (default: `defaultUrlTransform`)
+ *
+ * @callback UrlTransform
+ *   Transform all URLs.
+ * @param {string} url
+ *   URL.
+ * @param {string} key
+ *   Property name (example: `'href'`).
+ * @param {Readonly<Element>} node
+ *   Node.
+ * @returns {string | null | undefined}
+ *   Transformed URL (optional).
+ */
+
+
+
+
+// @ts-expect-error: untyped.
+
+
+
+
+
+
+
+const changelog =
+  'https://github.com/remarkjs/react-markdown/blob/main/changelog.md'
+
+/** @type {PluggableList} */
+const emptyPlugins = []
+/** @type {Readonly<RemarkRehypeOptions>} */
+const emptyRemarkRehypeOptions = {allowDangerousHtml: true}
+const safeProtocol = /^(https?|ircs?|mailto|xmpp)$/i
+
+// Mutable because we `delete` any time it’s used and a message is sent.
+/** @type {ReadonlyArray<Readonly<Deprecation>>} */
+const deprecations = [
+  {from: 'astPlugins', id: 'remove-buggy-html-in-markdown-parser'},
+  {from: 'allowDangerousHtml', id: 'remove-buggy-html-in-markdown-parser'},
+  {
+    from: 'allowNode',
+    id: 'replace-allownode-allowedtypes-and-disallowedtypes',
+    to: 'allowElement'
+  },
+  {
+    from: 'allowedTypes',
+    id: 'replace-allownode-allowedtypes-and-disallowedtypes',
+    to: 'allowedElements'
+  },
+  {
+    from: 'disallowedTypes',
+    id: 'replace-allownode-allowedtypes-and-disallowedtypes',
+    to: 'disallowedElements'
+  },
+  {from: 'escapeHtml', id: 'remove-buggy-html-in-markdown-parser'},
+  {from: 'includeElementIndex', id: '#remove-includeelementindex'},
+  {
+    from: 'includeNodeIndex',
+    id: 'change-includenodeindex-to-includeelementindex'
+  },
+  {from: 'linkTarget', id: 'remove-linktarget'},
+  {from: 'plugins', id: 'change-plugins-to-remarkplugins', to: 'remarkPlugins'},
+  {from: 'rawSourcePos', id: '#remove-rawsourcepos'},
+  {from: 'renderers', id: 'change-renderers-to-components', to: 'components'},
+  {from: 'source', id: 'change-source-to-children', to: 'children'},
+  {from: 'sourcePos', id: '#remove-sourcepos'},
+  {from: 'transformImageUri', id: '#add-urltransform', to: 'urlTransform'},
+  {from: 'transformLinkUri', id: '#add-urltransform', to: 'urlTransform'}
+]
+
+/**
+ * Component to render markdown.
+ *
+ * @param {Readonly<Options>} options
+ *   Props.
+ * @returns {JSX.Element}
+ *   React element.
+ */
+function Markdown(options) {
+  const allowedElements = options.allowedElements
+  const allowElement = options.allowElement
+  const children = options.children || ''
+  const className = options.className
+  const components = options.components
+  const disallowedElements = options.disallowedElements
+  const rehypePlugins = options.rehypePlugins || emptyPlugins
+  const remarkPlugins = options.remarkPlugins || emptyPlugins
+  const remarkRehypeOptions = options.remarkRehypeOptions
+    ? {...options.remarkRehypeOptions, ...emptyRemarkRehypeOptions}
+    : emptyRemarkRehypeOptions
+  const skipHtml = options.skipHtml
+  const unwrapDisallowed = options.unwrapDisallowed
+  const urlTransform = options.urlTransform || defaultUrlTransform
+
+  const processor = (0,unified__WEBPACK_IMPORTED_MODULE_1__/* .unified */ .l)()
+    .use(remark_parse__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)
+    .use(remarkPlugins)
+    .use(remark_rehype__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, remarkRehypeOptions)
+    .use(rehypePlugins)
+
+  const file = new vfile__WEBPACK_IMPORTED_MODULE_4__/* .VFile */ .T()
+
+  if (typeof children === 'string') {
+    file.value = children
+  } else {
+    (0,devlop__WEBPACK_IMPORTED_MODULE_5__/* .unreachable */ .HB)(
+      'Unexpected value `' +
+        children +
+        '` for `children` prop, expected `string`'
+    )
+  }
+
+  if (allowedElements && disallowedElements) {
+    (0,devlop__WEBPACK_IMPORTED_MODULE_5__/* .unreachable */ .HB)(
+      'Unexpected combined `allowedElements` and `disallowedElements`, expected one or the other'
+    )
+  }
+
+  for (const deprecation of deprecations) {
+    if (Object.hasOwn(options, deprecation.from)) {
+      (0,devlop__WEBPACK_IMPORTED_MODULE_5__/* .unreachable */ .HB)(
+        'Unexpected `' +
+          deprecation.from +
+          '` prop, ' +
+          (deprecation.to
+            ? 'use `' + deprecation.to + '` instead'
+            : 'remove it') +
+          ' (see <' +
+          changelog +
+          '#' +
+          deprecation.id +
+          '> for more info)'
+      )
+    }
+  }
+
+  const mdastTree = processor.parse(file)
+  /** @type {Nodes} */
+  let hastTree = processor.runSync(mdastTree, file)
+
+  // Wrap in `div` if there’s a class name.
+  if (className) {
+    hastTree = {
+      type: 'element',
+      tagName: 'div',
+      properties: {className},
+      // Assume no doctypes.
+      children: /** @type {Array<ElementContent>} */ (
+        hastTree.type === 'root' ? hastTree.children : [hastTree]
+      )
+    }
+  }
+
+  (0,unist_util_visit__WEBPACK_IMPORTED_MODULE_6__/* .visit */ .YR)(hastTree, transform)
+
+  return (0,hast_util_to_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__/* .toJsxRuntime */ .H)(hastTree, {
+    Fragment: react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment,
+    components,
+    ignoreInvalidStyle: true,
+    jsx: react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx,
+    jsxs: react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs,
+    passKeys: true,
+    passNode: true
+  })
+
+  /** @type {Visitor} */
+  function transform(node, index, parent) {
+    if (node.type === 'raw' && parent && typeof index === 'number') {
+      if (skipHtml) {
+        parent.children.splice(index, 1)
+      } else {
+        parent.children[index] = {type: 'text', value: node.value}
+      }
+
+      return index
+    }
+
+    if (node.type === 'element') {
+      /** @type {string} */
+      let key
+
+      for (key in html_url_attributes__WEBPACK_IMPORTED_MODULE_8__/* .urlAttributes */ .$) {
+        if (
+          Object.hasOwn(html_url_attributes__WEBPACK_IMPORTED_MODULE_8__/* .urlAttributes */ .$, key) &&
+          Object.hasOwn(node.properties, key)
+        ) {
+          const value = node.properties[key]
+          const test = html_url_attributes__WEBPACK_IMPORTED_MODULE_8__/* .urlAttributes */ .$[key]
+          if (test === null || test.includes(node.tagName)) {
+            node.properties[key] = urlTransform(String(value || ''), key, node)
+          }
+        }
+      }
+    }
+
+    if (node.type === 'element') {
+      let remove = allowedElements
+        ? !allowedElements.includes(node.tagName)
+        : disallowedElements
+        ? disallowedElements.includes(node.tagName)
+        : false
+
+      if (!remove && allowElement && typeof index === 'number') {
+        remove = !allowElement(node, index, parent)
+      }
+
+      if (remove && parent && typeof index === 'number') {
+        if (unwrapDisallowed && node.children) {
+          parent.children.splice(index, 1, ...node.children)
+        } else {
+          parent.children.splice(index, 1)
+        }
+
+        return index
+      }
+    }
+  }
+}
+
+/**
+ * Make a URL safe.
+ *
+ * @satisfies {UrlTransform}
+ * @param {string} value
+ *   URL.
+ * @returns {string}
+ *   Safe URL.
+ */
+function defaultUrlTransform(value) {
+  // Same as:
+  // <https://github.com/micromark/micromark/blob/929275e/packages/micromark-util-sanitize-uri/dev/index.js#L34>
+  // But without the `encode` part.
+  const colon = value.indexOf(':')
+  const questionMark = value.indexOf('?')
+  const numberSign = value.indexOf('#')
+  const slash = value.indexOf('/')
+
+  if (
+    // If there is no protocol, it’s relative.
+    colon < 0 ||
+    // If the first colon is after a `?`, `#`, or `/`, it’s not a protocol.
+    (slash > -1 && colon > slash) ||
+    (questionMark > -1 && colon > questionMark) ||
+    (numberSign > -1 && colon > numberSign) ||
+    // It is a protocol, it should be allowed.
+    safeProtocol.test(value.slice(0, colon))
+  ) {
+    return value
+  }
+
+  return ''
+}
+
+
+/***/ }),
+
+/***/ 42686:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ remarkParse)
+/* harmony export */ });
+/* harmony import */ var mdast_util_from_markdown__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(90766);
+/**
+ * @typedef {import('mdast').Root} Root
+ * @typedef {import('mdast-util-from-markdown').Options} FromMarkdownOptions
+ * @typedef {import('unified').Parser<Root>} Parser
+ * @typedef {import('unified').Processor<Root>} Processor
+ */
+
+/**
+ * @typedef {Omit<FromMarkdownOptions, 'extensions' | 'mdastExtensions'>} Options
+ */
+
+
+
+/**
+ * Aadd support for parsing from markdown.
+ *
+ * @param {Readonly<Options> | null | undefined} [options]
+ *   Configuration (optional).
+ * @returns {undefined}
+ *   Nothing.
+ */
+function remarkParse(options) {
+  /** @type {Processor} */
+  // @ts-expect-error: TS in JSDoc generates wrong types if `this` is typed regularly.
+  const self = this
+
+  self.parser = parser
+
+  /**
+   * @type {Parser}
+   */
+  function parser(doc) {
+    return (0,mdast_util_from_markdown__WEBPACK_IMPORTED_MODULE_0__/* .fromMarkdown */ .Y)(doc, {
+      ...self.data('settings'),
+      ...options,
+      // Note: these options are not in the readme.
+      // The goal is for them to be set by plugins on `data` instead of being
+      // passed by users.
+      extensions: self.data('micromarkExtensions') || [],
+      mdastExtensions: self.data('fromMarkdownExtensions') || []
+    })
+  }
+}
+
+
+/***/ }),
+
+/***/ 77549:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   y: () => (/* binding */ color)
+/* harmony export */ });
+/**
+ * @param {string} d
+ * @returns {string}
+ */
+function color(d) {
+  return d
+}
+
+
+/***/ }),
+
+/***/ 29402:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   VG: () => (/* binding */ visitParents)
+/* harmony export */ });
+/* unused harmony exports CONTINUE, EXIT, SKIP */
+/* harmony import */ var unist_util_is__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15186);
+/* harmony import */ var unist_util_visit_parents_do_not_use_color__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(77549);
+/**
+ * @typedef {import('unist').Node} UnistNode
+ * @typedef {import('unist').Parent} UnistParent
+ */
+
+/**
+ * @typedef {Exclude<import('unist-util-is').Test, undefined> | undefined} Test
+ *   Test from `unist-util-is`.
+ *
+ *   Note: we have remove and add `undefined`, because otherwise when generating
+ *   automatic `.d.ts` files, TS tries to flatten paths from a local perspective,
+ *   which doesn’t work when publishing on npm.
+ */
+
+/**
+ * @typedef {(
+ *   Fn extends (value: any) => value is infer Thing
+ *   ? Thing
+ *   : Fallback
+ * )} Predicate
+ *   Get the value of a type guard `Fn`.
+ * @template Fn
+ *   Value; typically function that is a type guard (such as `(x): x is Y`).
+ * @template Fallback
+ *   Value to yield if `Fn` is not a type guard.
+ */
+
+/**
+ * @typedef {(
+ *   Check extends null | undefined // No test.
+ *   ? Value
+ *   : Value extends {type: Check} // String (type) test.
+ *   ? Value
+ *   : Value extends Check // Partial test.
+ *   ? Value
+ *   : Check extends Function // Function test.
+ *   ? Predicate<Check, Value> extends Value
+ *     ? Predicate<Check, Value>
+ *     : never
+ *   : never // Some other test?
+ * )} MatchesOne
+ *   Check whether a node matches a primitive check in the type system.
+ * @template Value
+ *   Value; typically unist `Node`.
+ * @template Check
+ *   Value; typically `unist-util-is`-compatible test, but not arrays.
+ */
+
+/**
+ * @typedef {(
+ *   Check extends Array<any>
+ *   ? MatchesOne<Value, Check[keyof Check]>
+ *   : MatchesOne<Value, Check>
+ * )} Matches
+ *   Check whether a node matches a check in the type system.
+ * @template Value
+ *   Value; typically unist `Node`.
+ * @template Check
+ *   Value; typically `unist-util-is`-compatible test.
+ */
+
+/**
+ * @typedef {0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10} Uint
+ *   Number; capped reasonably.
+ */
+
+/**
+ * @typedef {I extends 0 ? 1 : I extends 1 ? 2 : I extends 2 ? 3 : I extends 3 ? 4 : I extends 4 ? 5 : I extends 5 ? 6 : I extends 6 ? 7 : I extends 7 ? 8 : I extends 8 ? 9 : 10} Increment
+ *   Increment a number in the type system.
+ * @template {Uint} [I=0]
+ *   Index.
+ */
+
+/**
+ * @typedef {(
+ *   Node extends UnistParent
+ *   ? Node extends {children: Array<infer Children>}
+ *     ? Child extends Children ? Node : never
+ *     : never
+ *   : never
+ * )} InternalParent
+ *   Collect nodes that can be parents of `Child`.
+ * @template {UnistNode} Node
+ *   All node types in a tree.
+ * @template {UnistNode} Child
+ *   Node to search for.
+ */
+
+/**
+ * @typedef {InternalParent<InclusiveDescendant<Tree>, Child>} Parent
+ *   Collect nodes in `Tree` that can be parents of `Child`.
+ * @template {UnistNode} Tree
+ *   All node types in a tree.
+ * @template {UnistNode} Child
+ *   Node to search for.
+ */
+
+/**
+ * @typedef {(
+ *   Depth extends Max
+ *   ? never
+ *   :
+ *     | InternalParent<Node, Child>
+ *     | InternalAncestor<Node, InternalParent<Node, Child>, Max, Increment<Depth>>
+ * )} InternalAncestor
+ *   Collect nodes in `Tree` that can be ancestors of `Child`.
+ * @template {UnistNode} Node
+ *   All node types in a tree.
+ * @template {UnistNode} Child
+ *   Node to search for.
+ * @template {Uint} [Max=10]
+ *   Max; searches up to this depth.
+ * @template {Uint} [Depth=0]
+ *   Current depth.
+ */
+
+/**
+ * @typedef {InternalAncestor<InclusiveDescendant<Tree>, Child>} Ancestor
+ *   Collect nodes in `Tree` that can be ancestors of `Child`.
+ * @template {UnistNode} Tree
+ *   All node types in a tree.
+ * @template {UnistNode} Child
+ *   Node to search for.
+ */
+
+/**
+ * @typedef {(
+ *   Tree extends UnistParent
+ *     ? Depth extends Max
+ *       ? Tree
+ *       : Tree | InclusiveDescendant<Tree['children'][number], Max, Increment<Depth>>
+ *     : Tree
+ * )} InclusiveDescendant
+ *   Collect all (inclusive) descendants of `Tree`.
+ *
+ *   > 👉 **Note**: for performance reasons, this seems to be the fastest way to
+ *   > recurse without actually running into an infinite loop, which the
+ *   > previous version did.
+ *   >
+ *   > Practically, a max of `2` is typically enough assuming a `Root` is
+ *   > passed, but it doesn’t improve performance.
+ *   > It gets higher with `List > ListItem > Table > TableRow > TableCell`.
+ *   > Using up to `10` doesn’t hurt or help either.
+ * @template {UnistNode} Tree
+ *   Tree type.
+ * @template {Uint} [Max=10]
+ *   Max; searches up to this depth.
+ * @template {Uint} [Depth=0]
+ *   Current depth.
+ */
+
+/**
+ * @typedef {'skip' | boolean} Action
+ *   Union of the action types.
+ *
+ * @typedef {number} Index
+ *   Move to the sibling at `index` next (after node itself is completely
+ *   traversed).
+ *
+ *   Useful if mutating the tree, such as removing the node the visitor is
+ *   currently on, or any of its previous siblings.
+ *   Results less than 0 or greater than or equal to `children.length` stop
+ *   traversing the parent.
+ *
+ * @typedef {[(Action | null | undefined | void)?, (Index | null | undefined)?]} ActionTuple
+ *   List with one or two values, the first an action, the second an index.
+ *
+ * @typedef {Action | ActionTuple | Index | null | undefined | void} VisitorResult
+ *   Any value that can be returned from a visitor.
+ */
+
+/**
+ * @callback Visitor
+ *   Handle a node (matching `test`, if given).
+ *
+ *   Visitors are free to transform `node`.
+ *   They can also transform the parent of node (the last of `ancestors`).
+ *
+ *   Replacing `node` itself, if `SKIP` is not returned, still causes its
+ *   descendants to be walked (which is a bug).
+ *
+ *   When adding or removing previous siblings of `node` (or next siblings, in
+ *   case of reverse), the `Visitor` should return a new `Index` to specify the
+ *   sibling to traverse after `node` is traversed.
+ *   Adding or removing next siblings of `node` (or previous siblings, in case
+ *   of reverse) is handled as expected without needing to return a new `Index`.
+ *
+ *   Removing the children property of an ancestor still results in them being
+ *   traversed.
+ * @param {Visited} node
+ *   Found node.
+ * @param {Array<VisitedParents>} ancestors
+ *   Ancestors of `node`.
+ * @returns {VisitorResult}
+ *   What to do next.
+ *
+ *   An `Index` is treated as a tuple of `[CONTINUE, Index]`.
+ *   An `Action` is treated as a tuple of `[Action]`.
+ *
+ *   Passing a tuple back only makes sense if the `Action` is `SKIP`.
+ *   When the `Action` is `EXIT`, that action can be returned.
+ *   When the `Action` is `CONTINUE`, `Index` can be returned.
+ * @template {UnistNode} [Visited=UnistNode]
+ *   Visited node type.
+ * @template {UnistParent} [VisitedParents=UnistParent]
+ *   Ancestor type.
+ */
+
+/**
+ * @typedef {Visitor<Matches<InclusiveDescendant<Tree>, Check>, Ancestor<Tree, Matches<InclusiveDescendant<Tree>, Check>>>} BuildVisitor
+ *   Build a typed `Visitor` function from a tree and a test.
+ *
+ *   It will infer which values are passed as `node` and which as `parents`.
+ * @template {UnistNode} [Tree=UnistNode]
+ *   Tree type.
+ * @template {Test} [Check=Test]
+ *   Test type.
+ */
+
+
+
+
+/** @type {Readonly<ActionTuple>} */
+const empty = []
+
+/**
+ * Continue traversing as normal.
+ */
+const CONTINUE = true
+
+/**
+ * Stop traversing immediately.
+ */
+const EXIT = false
+
+/**
+ * Do not traverse this node’s children.
+ */
+const SKIP = 'skip'
+
+/**
+ * Visit nodes, with ancestral information.
+ *
+ * This algorithm performs *depth-first* *tree traversal* in *preorder*
+ * (**NLR**) or if `reverse` is given, in *reverse preorder* (**NRL**).
+ *
+ * You can choose for which nodes `visitor` is called by passing a `test`.
+ * For complex tests, you should test yourself in `visitor`, as it will be
+ * faster and will have improved type information.
+ *
+ * Walking the tree is an intensive task.
+ * Make use of the return values of the visitor when possible.
+ * Instead of walking a tree multiple times, walk it once, use `unist-util-is`
+ * to check if a node matches, and then perform different operations.
+ *
+ * You can change the tree.
+ * See `Visitor` for more info.
+ *
+ * @overload
+ * @param {Tree} tree
+ * @param {Check} check
+ * @param {BuildVisitor<Tree, Check>} visitor
+ * @param {boolean | null | undefined} [reverse]
+ * @returns {undefined}
+ *
+ * @overload
+ * @param {Tree} tree
+ * @param {BuildVisitor<Tree>} visitor
+ * @param {boolean | null | undefined} [reverse]
+ * @returns {undefined}
+ *
+ * @param {UnistNode} tree
+ *   Tree to traverse.
+ * @param {Visitor | Test} test
+ *   `unist-util-is`-compatible test
+ * @param {Visitor | boolean | null | undefined} [visitor]
+ *   Handle each node.
+ * @param {boolean | null | undefined} [reverse]
+ *   Traverse in reverse preorder (NRL) instead of the default preorder (NLR).
+ * @returns {undefined}
+ *   Nothing.
+ *
+ * @template {UnistNode} Tree
+ *   Node type.
+ * @template {Test} Check
+ *   `unist-util-is`-compatible test.
+ */
+function visitParents(tree, test, visitor, reverse) {
+  /** @type {Test} */
+  let check
+
+  if (typeof test === 'function' && typeof visitor !== 'function') {
+    reverse = visitor
+    // @ts-expect-error no visitor given, so `visitor` is test.
+    visitor = test
+  } else {
+    // @ts-expect-error visitor given, so `test` isn’t a visitor.
+    check = test
+  }
+
+  const is = (0,unist_util_is__WEBPACK_IMPORTED_MODULE_0__/* .convert */ .C)(check)
+  const step = reverse ? -1 : 1
+
+  factory(tree, undefined, [])()
+
+  /**
+   * @param {UnistNode} node
+   * @param {number | undefined} index
+   * @param {Array<UnistParent>} parents
+   */
+  function factory(node, index, parents) {
+    const value = /** @type {Record<string, unknown>} */ (
+      node && typeof node === 'object' ? node : {}
+    )
+
+    if (typeof value.type === 'string') {
+      const name =
+        // `hast`
+        typeof value.tagName === 'string'
+          ? value.tagName
+          : // `xast`
+          typeof value.name === 'string'
+          ? value.name
+          : undefined
+
+      Object.defineProperty(visit, 'name', {
+        value:
+          'node (' + (0,unist_util_visit_parents_do_not_use_color__WEBPACK_IMPORTED_MODULE_1__/* .color */ .y)(node.type + (name ? '<' + name + '>' : '')) + ')'
+      })
+    }
+
+    return visit
+
+    function visit() {
+      /** @type {Readonly<ActionTuple>} */
+      let result = empty
+      /** @type {Readonly<ActionTuple>} */
+      let subresult
+      /** @type {number} */
+      let offset
+      /** @type {Array<UnistParent>} */
+      let grandparents
+
+      if (!test || is(node, index, parents[parents.length - 1] || undefined)) {
+        // @ts-expect-error: `visitor` is now a visitor.
+        result = toResult(visitor(node, parents))
+
+        if (result[0] === EXIT) {
+          return result
+        }
+      }
+
+      if ('children' in node && node.children) {
+        const nodeAsParent = /** @type {UnistParent} */ (node)
+
+        if (nodeAsParent.children && result[0] !== SKIP) {
+          offset = (reverse ? nodeAsParent.children.length : -1) + step
+          grandparents = parents.concat(nodeAsParent)
+
+          while (offset > -1 && offset < nodeAsParent.children.length) {
+            const child = nodeAsParent.children[offset]
+
+            subresult = factory(child, offset, grandparents)()
+
+            if (subresult[0] === EXIT) {
+              return subresult
+            }
+
+            offset =
+              typeof subresult[1] === 'number' ? subresult[1] : offset + step
+          }
+        }
+      }
+
+      return result
+    }
+  }
+}
+
+/**
+ * Turn a return value into a clean result.
+ *
+ * @param {VisitorResult} value
+ *   Valid return values from visitors.
+ * @returns {Readonly<ActionTuple>}
+ *   Clean result.
+ */
+function toResult(value) {
+  if (Array.isArray(value)) {
+    return value
+  }
+
+  if (typeof value === 'number') {
+    return [CONTINUE, value]
+  }
+
+  return value === null || value === undefined ? empty : [value]
+}
+
+
+/***/ }),
+
+/***/ 90522:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   YR: () => (/* binding */ visit)
+/* harmony export */ });
+/* harmony import */ var unist_util_visit_parents__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(29402);
+/**
+ * @typedef {import('unist').Node} UnistNode
+ * @typedef {import('unist').Parent} UnistParent
+ * @typedef {import('unist-util-visit-parents').VisitorResult} VisitorResult
+ */
+
+/**
+ * @typedef {Exclude<import('unist-util-is').Test, undefined> | undefined} Test
+ *   Test from `unist-util-is`.
+ *
+ *   Note: we have remove and add `undefined`, because otherwise when generating
+ *   automatic `.d.ts` files, TS tries to flatten paths from a local perspective,
+ *   which doesn’t work when publishing on npm.
+ */
+
+// To do: use types from `unist-util-visit-parents` when it’s released.
+
+/**
+ * @typedef {(
+ *   Fn extends (value: any) => value is infer Thing
+ *   ? Thing
+ *   : Fallback
+ * )} Predicate
+ *   Get the value of a type guard `Fn`.
+ * @template Fn
+ *   Value; typically function that is a type guard (such as `(x): x is Y`).
+ * @template Fallback
+ *   Value to yield if `Fn` is not a type guard.
+ */
+
+/**
+ * @typedef {(
+ *   Check extends null | undefined // No test.
+ *   ? Value
+ *   : Value extends {type: Check} // String (type) test.
+ *   ? Value
+ *   : Value extends Check // Partial test.
+ *   ? Value
+ *   : Check extends Function // Function test.
+ *   ? Predicate<Check, Value> extends Value
+ *     ? Predicate<Check, Value>
+ *     : never
+ *   : never // Some other test?
+ * )} MatchesOne
+ *   Check whether a node matches a primitive check in the type system.
+ * @template Value
+ *   Value; typically unist `Node`.
+ * @template Check
+ *   Value; typically `unist-util-is`-compatible test, but not arrays.
+ */
+
+/**
+ * @typedef {(
+ *   Check extends Array<any>
+ *   ? MatchesOne<Value, Check[keyof Check]>
+ *   : MatchesOne<Value, Check>
+ * )} Matches
+ *   Check whether a node matches a check in the type system.
+ * @template Value
+ *   Value; typically unist `Node`.
+ * @template Check
+ *   Value; typically `unist-util-is`-compatible test.
+ */
+
+/**
+ * @typedef {0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10} Uint
+ *   Number; capped reasonably.
+ */
+
+/**
+ * @typedef {I extends 0 ? 1 : I extends 1 ? 2 : I extends 2 ? 3 : I extends 3 ? 4 : I extends 4 ? 5 : I extends 5 ? 6 : I extends 6 ? 7 : I extends 7 ? 8 : I extends 8 ? 9 : 10} Increment
+ *   Increment a number in the type system.
+ * @template {Uint} [I=0]
+ *   Index.
+ */
+
+/**
+ * @typedef {(
+ *   Node extends UnistParent
+ *   ? Node extends {children: Array<infer Children>}
+ *     ? Child extends Children ? Node : never
+ *     : never
+ *   : never
+ * )} InternalParent
+ *   Collect nodes that can be parents of `Child`.
+ * @template {UnistNode} Node
+ *   All node types in a tree.
+ * @template {UnistNode} Child
+ *   Node to search for.
+ */
+
+/**
+ * @typedef {InternalParent<InclusiveDescendant<Tree>, Child>} Parent
+ *   Collect nodes in `Tree` that can be parents of `Child`.
+ * @template {UnistNode} Tree
+ *   All node types in a tree.
+ * @template {UnistNode} Child
+ *   Node to search for.
+ */
+
+/**
+ * @typedef {(
+ *   Depth extends Max
+ *   ? never
+ *   :
+ *     | InternalParent<Node, Child>
+ *     | InternalAncestor<Node, InternalParent<Node, Child>, Max, Increment<Depth>>
+ * )} InternalAncestor
+ *   Collect nodes in `Tree` that can be ancestors of `Child`.
+ * @template {UnistNode} Node
+ *   All node types in a tree.
+ * @template {UnistNode} Child
+ *   Node to search for.
+ * @template {Uint} [Max=10]
+ *   Max; searches up to this depth.
+ * @template {Uint} [Depth=0]
+ *   Current depth.
+ */
+
+/**
+ * @typedef {(
+ *   Tree extends UnistParent
+ *     ? Depth extends Max
+ *       ? Tree
+ *       : Tree | InclusiveDescendant<Tree['children'][number], Max, Increment<Depth>>
+ *     : Tree
+ * )} InclusiveDescendant
+ *   Collect all (inclusive) descendants of `Tree`.
+ *
+ *   > 👉 **Note**: for performance reasons, this seems to be the fastest way to
+ *   > recurse without actually running into an infinite loop, which the
+ *   > previous version did.
+ *   >
+ *   > Practically, a max of `2` is typically enough assuming a `Root` is
+ *   > passed, but it doesn’t improve performance.
+ *   > It gets higher with `List > ListItem > Table > TableRow > TableCell`.
+ *   > Using up to `10` doesn’t hurt or help either.
+ * @template {UnistNode} Tree
+ *   Tree type.
+ * @template {Uint} [Max=10]
+ *   Max; searches up to this depth.
+ * @template {Uint} [Depth=0]
+ *   Current depth.
+ */
+
+/**
+ * @callback Visitor
+ *   Handle a node (matching `test`, if given).
+ *
+ *   Visitors are free to transform `node`.
+ *   They can also transform `parent`.
+ *
+ *   Replacing `node` itself, if `SKIP` is not returned, still causes its
+ *   descendants to be walked (which is a bug).
+ *
+ *   When adding or removing previous siblings of `node` (or next siblings, in
+ *   case of reverse), the `Visitor` should return a new `Index` to specify the
+ *   sibling to traverse after `node` is traversed.
+ *   Adding or removing next siblings of `node` (or previous siblings, in case
+ *   of reverse) is handled as expected without needing to return a new `Index`.
+ *
+ *   Removing the children property of `parent` still results in them being
+ *   traversed.
+ * @param {Visited} node
+ *   Found node.
+ * @param {Visited extends UnistNode ? number | undefined : never} index
+ *   Index of `node` in `parent`.
+ * @param {Ancestor extends UnistParent ? Ancestor | undefined : never} parent
+ *   Parent of `node`.
+ * @returns {VisitorResult}
+ *   What to do next.
+ *
+ *   An `Index` is treated as a tuple of `[CONTINUE, Index]`.
+ *   An `Action` is treated as a tuple of `[Action]`.
+ *
+ *   Passing a tuple back only makes sense if the `Action` is `SKIP`.
+ *   When the `Action` is `EXIT`, that action can be returned.
+ *   When the `Action` is `CONTINUE`, `Index` can be returned.
+ * @template {UnistNode} [Visited=UnistNode]
+ *   Visited node type.
+ * @template {UnistParent} [Ancestor=UnistParent]
+ *   Ancestor type.
+ */
+
+/**
+ * @typedef {Visitor<Visited, Parent<Ancestor, Visited>>} BuildVisitorFromMatch
+ *   Build a typed `Visitor` function from a node and all possible parents.
+ *
+ *   It will infer which values are passed as `node` and which as `parent`.
+ * @template {UnistNode} Visited
+ *   Node type.
+ * @template {UnistParent} Ancestor
+ *   Parent type.
+ */
+
+/**
+ * @typedef {(
+ *   BuildVisitorFromMatch<
+ *     Matches<Descendant, Check>,
+ *     Extract<Descendant, UnistParent>
+ *   >
+ * )} BuildVisitorFromDescendants
+ *   Build a typed `Visitor` function from a list of descendants and a test.
+ *
+ *   It will infer which values are passed as `node` and which as `parent`.
+ * @template {UnistNode} Descendant
+ *   Node type.
+ * @template {Test} Check
+ *   Test type.
+ */
+
+/**
+ * @typedef {(
+ *   BuildVisitorFromDescendants<
+ *     InclusiveDescendant<Tree>,
+ *     Check
+ *   >
+ * )} BuildVisitor
+ *   Build a typed `Visitor` function from a tree and a test.
+ *
+ *   It will infer which values are passed as `node` and which as `parent`.
+ * @template {UnistNode} [Tree=UnistNode]
+ *   Node type.
+ * @template {Test} [Check=Test]
+ *   Test type.
+ */
+
+
+
+
+
+/**
+ * Visit nodes.
+ *
+ * This algorithm performs *depth-first* *tree traversal* in *preorder*
+ * (**NLR**) or if `reverse` is given, in *reverse preorder* (**NRL**).
+ *
+ * You can choose for which nodes `visitor` is called by passing a `test`.
+ * For complex tests, you should test yourself in `visitor`, as it will be
+ * faster and will have improved type information.
+ *
+ * Walking the tree is an intensive task.
+ * Make use of the return values of the visitor when possible.
+ * Instead of walking a tree multiple times, walk it once, use `unist-util-is`
+ * to check if a node matches, and then perform different operations.
+ *
+ * You can change the tree.
+ * See `Visitor` for more info.
+ *
+ * @overload
+ * @param {Tree} tree
+ * @param {Check} check
+ * @param {BuildVisitor<Tree, Check>} visitor
+ * @param {boolean | null | undefined} [reverse]
+ * @returns {undefined}
+ *
+ * @overload
+ * @param {Tree} tree
+ * @param {BuildVisitor<Tree>} visitor
+ * @param {boolean | null | undefined} [reverse]
+ * @returns {undefined}
+ *
+ * @param {UnistNode} tree
+ *   Tree to traverse.
+ * @param {Visitor | Test} testOrVisitor
+ *   `unist-util-is`-compatible test (optional, omit to pass a visitor).
+ * @param {Visitor | boolean | null | undefined} [visitorOrReverse]
+ *   Handle each node (when test is omitted, pass `reverse`).
+ * @param {boolean | null | undefined} [maybeReverse=false]
+ *   Traverse in reverse preorder (NRL) instead of the default preorder (NLR).
+ * @returns {undefined}
+ *   Nothing.
+ *
+ * @template {UnistNode} Tree
+ *   Node type.
+ * @template {Test} Check
+ *   `unist-util-is`-compatible test.
+ */
+function visit(tree, testOrVisitor, visitorOrReverse, maybeReverse) {
+  /** @type {boolean | null | undefined} */
+  let reverse
+  /** @type {Test} */
+  let test
+  /** @type {Visitor} */
+  let visitor
+
+  if (
+    typeof testOrVisitor === 'function' &&
+    typeof visitorOrReverse !== 'function'
+  ) {
+    test = undefined
+    visitor = testOrVisitor
+    reverse = visitorOrReverse
+  } else {
+    // @ts-expect-error: assume the overload with test was given.
+    test = testOrVisitor
+    // @ts-expect-error: assume the overload with test was given.
+    visitor = visitorOrReverse
+    reverse = maybeReverse
+  }
+
+  (0,unist_util_visit_parents__WEBPACK_IMPORTED_MODULE_0__/* .visitParents */ .VG)(tree, test, overload, reverse)
+
+  /**
+   * @param {UnistNode} node
+   * @param {Array<UnistParent>} parents
+   */
+  function overload(node, parents) {
+    const parent = parents[parents.length - 1]
+    const index = parent ? parent.children.indexOf(node) : undefined
+    return visitor(node, index, parent)
+  }
+}
+
+
+/***/ }),
+
+/***/ 15979:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ remarkRehype)
+/* harmony export */ });
+/* harmony import */ var mdast_util_to_hast__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(93888);
+// Include `data` fields in mdast and `raw` nodes in hast.
+/// <reference types="mdast-util-to-hast" />
+
+/**
+ * @typedef {import('hast').Root} HastRoot
+ * @typedef {import('mdast').Root} MdastRoot
+ * @typedef {import('mdast-util-to-hast').Options} ToHastOptions
+ * @typedef {import('unified').Processor} Processor
+ * @typedef {import('vfile').VFile} VFile
+ */
+
+/**
+ * @typedef {Omit<ToHastOptions, 'file'>} Options
+ *
+ * @callback TransformBridge
+ *   Bridge-mode.
+ *
+ *   Runs the destination with the new hast tree.
+ *   Discards result.
+ * @param {MdastRoot} tree
+ *   Tree.
+ * @param {VFile} file
+ *   File.
+ * @returns {Promise<undefined>}
+ *   Nothing.
+ *
+ * @callback TransformMutate
+ *  Mutate-mode.
+ *
+ *  Further transformers run on the hast tree.
+ * @param {MdastRoot} tree
+ *   Tree.
+ * @param {VFile} file
+ *   File.
+ * @returns {HastRoot}
+ *   Tree (hast).
+ */
+
+
+
+/**
+ * Turn markdown into HTML.
+ *
+ * ##### Notes
+ *
+ * ###### Signature
+ *
+ * *   if a processor is given, runs the (rehype) plugins used on it with a
+ *     hast tree, then discards the result (*bridge mode*)
+ * *   otherwise, returns a hast tree, the plugins used after `remarkRehype`
+ *     are rehype plugins (*mutate mode*)
+ *
+ * > 👉 **Note**: It’s highly unlikely that you want to pass a `processor`.
+ *
+ * ###### HTML
+ *
+ * Raw HTML is available in mdast as `html` nodes and can be embedded in hast
+ * as semistandard `raw` nodes.
+ * Most plugins ignore `raw` nodes but two notable ones don’t:
+ *
+ * *   `rehype-stringify` also has an option `allowDangerousHtml` which will
+ *     output the raw HTML.
+ *     This is typically discouraged as noted by the option name but is useful if
+ *     you completely trust authors
+ * *   `rehype-raw` can handle the raw embedded HTML strings by parsing them
+ *     into standard hast nodes (`element`, `text`, etc).
+ *     This is a heavy task as it needs a full HTML parser, but it is the only way
+ *     to support untrusted content
+ *
+ * ###### Footnotes
+ *
+ * Many options supported here relate to footnotes.
+ * Footnotes are not specified by CommonMark, which we follow by default.
+ * They are supported by GitHub, so footnotes can be enabled in markdown with
+ * `remark-gfm`.
+ *
+ * The options `footnoteBackLabel` and `footnoteLabel` define natural language
+ * that explains footnotes, which is hidden for sighted users but shown to
+ * assistive technology.
+ * When your page is not in English, you must define translated values.
+ *
+ * Back references use ARIA attributes, but the section label itself uses a
+ * heading that is hidden with an `sr-only` class.
+ * To show it to sighted users, define different attributes in
+ * `footnoteLabelProperties`.
+ *
+ * ###### Clobbering
+ *
+ * Footnotes introduces a problem, as it links footnote calls to footnote
+ * definitions on the page through `id` attributes generated from user content,
+ * which results in DOM clobbering.
+ *
+ * DOM clobbering is this:
+ *
+ * ```html
+ * <p id=x></p>
+ * <script>alert(x) // `x` now refers to the DOM `p#x` element</script>
+ * ```
+ *
+ * Elements by their ID are made available by browsers on the `window` object,
+ * which is a security risk.
+ * Using a prefix solves this problem.
+ *
+ * More information on how to handle clobbering and the prefix is explained in
+ * *Example: headings (DOM clobbering)* in `rehype-sanitize`.
+ *
+ * ###### Unknown nodes
+ *
+ * Unknown nodes are nodes with a type that isn’t in `handlers` or `passThrough`.
+ * The default behavior for unknown nodes is:
+ *
+ * *   when the node has a `value` (and doesn’t have `data.hName`,
+ *     `data.hProperties`, or `data.hChildren`, see later), create a hast `text`
+ *     node
+ * *   otherwise, create a `<div>` element (which could be changed with
+ *     `data.hName`), with its children mapped from mdast to hast as well
+ *
+ * This behavior can be changed by passing an `unknownHandler`.
+ *
+ * @overload
+ * @param {Processor} processor
+ * @param {Readonly<Options> | null | undefined} [options]
+ * @returns {TransformBridge}
+ *
+ * @overload
+ * @param {Readonly<Options> | null | undefined} [options]
+ * @returns {TransformMutate}
+ *
+ * @param {Readonly<Options> | Processor | null | undefined} [destination]
+ *   Processor or configuration (optional).
+ * @param {Readonly<Options> | null | undefined} [options]
+ *   When a processor was given, configuration (optional).
+ * @returns {TransformBridge | TransformMutate}
+ *   Transform.
+ */
+function remarkRehype(destination, options) {
+  if (destination && 'run' in destination) {
+    /**
+     * @type {TransformBridge}
+     */
+    return async function (tree, file) {
+      // Cast because root in -> root out.
+      const hastTree = /** @type {HastRoot} */ (
+        (0,mdast_util_to_hast__WEBPACK_IMPORTED_MODULE_0__/* .toHast */ ._)(tree, {file, ...options})
+      )
+      await destination.run(hastTree, file)
+    }
+  }
+
+  /**
+   * @type {TransformMutate}
+   */
+  return function (tree, file) {
+    // Cast because root in -> root out.
+    return /** @type {HastRoot} */ (
+      (0,mdast_util_to_hast__WEBPACK_IMPORTED_MODULE_0__/* .toHast */ ._)(tree, {file, ...(options || destination)})
+    )
+  }
+}
+
+
+/***/ }),
+
+/***/ 10010:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ stringify)
+/* harmony export */ });
+/* unused harmony export parse */
+/**
+ * Parse space-separated tokens to an array of strings.
+ *
+ * @param {string} value
+ *   Space-separated tokens.
+ * @returns {Array<string>}
+ *   List of tokens.
+ */
+function parse(value) {
+  const input = String(value || '').trim()
+  return input ? input.split(/[ \t\n\r\f]+/g) : []
+}
+
+/**
+ * Serialize an array of strings as space separated-tokens.
+ *
+ * @param {Array<string|number>} values
+ *   List of tokens.
+ * @returns {string}
+ *   Space-separated tokens.
+ */
+function stringify(values) {
+  return values.join(' ').trim()
+}
+
+
+/***/ }),
+
+/***/ 48313:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _cjs_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(78052);
+
+
+// ensure compatibility with rollup umd build
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_cjs_index_js__WEBPACK_IMPORTED_MODULE_0__["default"] || _cjs_index_js__WEBPACK_IMPORTED_MODULE_0__);
+
+
+/***/ }),
+
 /***/ 73755:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -83916,11 +105723,3711 @@ function combine (array, callback) {
 
 /***/ }),
 
+/***/ 60549:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   E: () => (/* binding */ trimLines)
+/* harmony export */ });
+const tab = 9 /* `\t` */
+const space = 32 /* ` ` */
+
+/**
+ * Remove initial and final spaces and tabs at the line breaks in `value`.
+ * Does not trim initial and final spaces and tabs of the value itself.
+ *
+ * @param {string} value
+ *   Value to trim.
+ * @returns {string}
+ *   Trimmed value.
+ */
+function trimLines(value) {
+  const source = String(value)
+  const search = /\r?\n|\r/g
+  let match = search.exec(source)
+  let last = 0
+  /** @type {Array<string>} */
+  const lines = []
+
+  while (match) {
+    lines.push(
+      trimLine(source.slice(last, match.index), last > 0, true),
+      match[0]
+    )
+
+    last = match.index + match[0].length
+    match = search.exec(source)
+  }
+
+  lines.push(trimLine(source.slice(last), last > 0, false))
+
+  return lines.join('')
+}
+
+/**
+ * @param {string} value
+ *   Line to trim.
+ * @param {boolean} start
+ *   Whether to trim the start of the line.
+ * @param {boolean} end
+ *   Whether to trim the end of the line.
+ * @returns {string}
+ *   Trimmed line.
+ */
+function trimLine(value, start, end) {
+  let startIndex = 0
+  let endIndex = value.length
+
+  if (start) {
+    let code = value.codePointAt(startIndex)
+
+    while (code === tab || code === space) {
+      startIndex++
+      code = value.codePointAt(startIndex)
+    }
+  }
+
+  if (end) {
+    let code = value.codePointAt(endIndex - 1)
+
+    while (code === tab || code === space) {
+      endIndex--
+      code = value.codePointAt(endIndex - 1)
+    }
+  }
+
+  return endIndex > startIndex ? value.slice(startIndex, endIndex) : ''
+}
+
+
+/***/ }),
+
+/***/ 4934:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   S: () => (/* binding */ trough)
+/* harmony export */ });
+/* unused harmony export wrap */
+/**
+ * @typedef {(error?: Error|null|undefined, ...output: Array<any>) => void} Callback
+ * @typedef {(...input: Array<any>) => any} Middleware
+ *
+ * @typedef {(...input: Array<any>) => void} Run
+ *   Call all middleware.
+ * @typedef {(fn: Middleware) => Pipeline} Use
+ *   Add `fn` (middleware) to the list.
+ * @typedef {{run: Run, use: Use}} Pipeline
+ *   Middleware.
+ */
+
+/**
+ * Create new middleware.
+ *
+ * @returns {Pipeline}
+ */
+function trough() {
+  /** @type {Array<Middleware>} */
+  const fns = []
+  /** @type {Pipeline} */
+  const pipeline = {run, use}
+
+  return pipeline
+
+  /** @type {Run} */
+  function run(...values) {
+    let middlewareIndex = -1
+    /** @type {Callback} */
+    const callback = values.pop()
+
+    if (typeof callback !== 'function') {
+      throw new TypeError('Expected function as last argument, not ' + callback)
+    }
+
+    next(null, ...values)
+
+    /**
+     * Run the next `fn`, or we’re done.
+     *
+     * @param {Error|null|undefined} error
+     * @param {Array<any>} output
+     */
+    function next(error, ...output) {
+      const fn = fns[++middlewareIndex]
+      let index = -1
+
+      if (error) {
+        callback(error)
+        return
+      }
+
+      // Copy non-nullish input into values.
+      while (++index < values.length) {
+        if (output[index] === null || output[index] === undefined) {
+          output[index] = values[index]
+        }
+      }
+
+      // Save the newly created `output` for the next call.
+      values = output
+
+      // Next or done.
+      if (fn) {
+        wrap(fn, next)(...output)
+      } else {
+        callback(null, ...output)
+      }
+    }
+  }
+
+  /** @type {Use} */
+  function use(middelware) {
+    if (typeof middelware !== 'function') {
+      throw new TypeError(
+        'Expected `middelware` to be a function, not ' + middelware
+      )
+    }
+
+    fns.push(middelware)
+    return pipeline
+  }
+}
+
+/**
+ * Wrap `middleware`.
+ * Can be sync or async; return a promise, receive a callback, or return new
+ * values and errors.
+ *
+ * @param {Middleware} middleware
+ * @param {Callback} callback
+ */
+function wrap(middleware, callback) {
+  /** @type {boolean} */
+  let called
+
+  return wrapped
+
+  /**
+   * Call `middleware`.
+   * @this {any}
+   * @param {Array<any>} parameters
+   * @returns {void}
+   */
+  function wrapped(...parameters) {
+    const fnExpectsCallback = middleware.length > parameters.length
+    /** @type {any} */
+    let result
+
+    if (fnExpectsCallback) {
+      parameters.push(done)
+    }
+
+    try {
+      result = middleware.apply(this, parameters)
+    } catch (error) {
+      const exception = /** @type {Error} */ (error)
+
+      // Well, this is quite the pickle.
+      // `middleware` received a callback and called it synchronously, but that
+      // threw an error.
+      // The only thing left to do is to throw the thing instead.
+      if (fnExpectsCallback && called) {
+        throw exception
+      }
+
+      return done(exception)
+    }
+
+    if (!fnExpectsCallback) {
+      if (result instanceof Promise) {
+        result.then(then, done)
+      } else if (result instanceof Error) {
+        done(result)
+      } else {
+        then(result)
+      }
+    }
+  }
+
+  /**
+   * Call `callback`, only once.
+   * @type {Callback}
+   */
+  function done(error, ...output) {
+    if (!called) {
+      called = true
+      callback(error, ...output)
+    }
+  }
+
+  /**
+   * Call `done` with one value.
+   *
+   * @param {any} [value]
+   */
+  function then(value) {
+    done(null, value)
+  }
+}
+
+
+/***/ }),
+
+/***/ 34295:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   _: () => (/* binding */ CallableInstance)
+/* harmony export */ });
+const CallableInstance =
+  /**
+   * @type {new <Parameters extends Array<unknown>, Result>(property: string | symbol) => (...parameters: Parameters) => Result}
+   */
+  (
+    /** @type {unknown} */
+    (
+      /**
+       * @this {Function}
+       * @param {string | symbol} property
+       * @returns {(...parameters: Array<unknown>) => unknown}
+       */
+      function (property) {
+        const self = this
+        const constr = self.constructor
+        const proto = /** @type {Record<string | symbol, Function>} */ (
+          // Prototypes do exist.
+          // type-coverage:ignore-next-line
+          constr.prototype
+        )
+        const func = proto[property]
+        /** @type {(...parameters: Array<unknown>) => unknown} */
+        const apply = function () {
+          return func.apply(apply, arguments)
+        }
+
+        Object.setPrototypeOf(apply, proto)
+
+        const names = Object.getOwnPropertyNames(func)
+
+        for (const p of names) {
+          const descriptor = Object.getOwnPropertyDescriptor(func, p)
+          if (descriptor) Object.defineProperty(apply, p, descriptor)
+        }
+
+        return apply
+      }
+    )
+  )
+
+
+/***/ }),
+
+/***/ 48759:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   l: () => (/* binding */ unified)
+/* harmony export */ });
+/* unused harmony export Processor */
+/* harmony import */ var bail__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(659);
+/* harmony import */ var extend__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(89710);
+/* harmony import */ var devlop__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(69820);
+/* harmony import */ var is_plain_obj__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2098);
+/* harmony import */ var trough__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4934);
+/* harmony import */ var vfile__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(97749);
+/* harmony import */ var _callable_instance_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(34295);
+/**
+ * @typedef {import('trough').Pipeline} Pipeline
+ *
+ * @typedef {import('unist').Node} Node
+ *
+ * @typedef {import('vfile').Compatible} Compatible
+ * @typedef {import('vfile').Value} Value
+ *
+ * @typedef {import('../index.js').CompileResultMap} CompileResultMap
+ * @typedef {import('../index.js').Data} Data
+ * @typedef {import('../index.js').Settings} Settings
+ */
+
+/**
+ * @typedef {CompileResultMap[keyof CompileResultMap]} CompileResults
+ *   Acceptable results from compilers.
+ *
+ *   To register custom results, add them to
+ *   {@link CompileResultMap `CompileResultMap`}.
+ */
+
+/**
+ * @template {Node} [Tree=Node]
+ *   The node that the compiler receives (default: `Node`).
+ * @template {CompileResults} [Result=CompileResults]
+ *   The thing that the compiler yields (default: `CompileResults`).
+ * @callback Compiler
+ *   A **compiler** handles the compiling of a syntax tree to something else
+ *   (in most cases, text) (TypeScript type).
+ *
+ *   It is used in the stringify phase and called with a {@link Node `Node`}
+ *   and {@link VFile `VFile`} representation of the document to compile.
+ *   It should return the textual representation of the given tree (typically
+ *   `string`).
+ *
+ *   > 👉 **Note**: unified typically compiles by serializing: most compilers
+ *   > return `string` (or `Uint8Array`).
+ *   > Some compilers, such as the one configured with
+ *   > [`rehype-react`][rehype-react], return other values (in this case, a
+ *   > React tree).
+ *   > If you’re using a compiler that doesn’t serialize, expect different
+ *   > result values.
+ *   >
+ *   > To register custom results in TypeScript, add them to
+ *   > {@link CompileResultMap `CompileResultMap`}.
+ *
+ *   [rehype-react]: https://github.com/rehypejs/rehype-react
+ * @param {Tree} tree
+ *   Tree to compile.
+ * @param {VFile} file
+ *   File associated with `tree`.
+ * @returns {Result}
+ *   New content: compiled text (`string` or `Uint8Array`, for `file.value`) or
+ *   something else (for `file.result`).
+ */
+
+/**
+ * @template {Node} [Tree=Node]
+ *   The node that the parser yields (default: `Node`)
+ * @callback Parser
+ *   A **parser** handles the parsing of text to a syntax tree.
+ *
+ *   It is used in the parse phase and is called with a `string` and
+ *   {@link VFile `VFile`} of the document to parse.
+ *   It must return the syntax tree representation of the given file
+ *   ({@link Node `Node`}).
+ * @param {string} document
+ *   Document to parse.
+ * @param {VFile} file
+ *   File associated with `document`.
+ * @returns {Tree}
+ *   Node representing the given file.
+ */
+
+/**
+ * @typedef {(
+ *   Plugin<Array<any>, any, any> |
+ *   PluginTuple<Array<any>, any, any> |
+ *   Preset
+ * )} Pluggable
+ *   Union of the different ways to add plugins and settings.
+ */
+
+/**
+ * @typedef {Array<Pluggable>} PluggableList
+ *   List of plugins and presets.
+ */
+
+// Note: we can’t use `callback` yet as it messes up `this`:
+//  <https://github.com/microsoft/TypeScript/issues/55197>.
+/**
+ * @template {Array<unknown>} [PluginParameters=[]]
+ *   Arguments passed to the plugin (default: `[]`, the empty tuple).
+ * @template {Node | string | undefined} [Input=Node]
+ *   Value that is expected as input (default: `Node`).
+ *
+ *   *   If the plugin returns a {@link Transformer `Transformer`}, this
+ *       should be the node it expects.
+ *   *   If the plugin sets a {@link Parser `Parser`}, this should be
+ *       `string`.
+ *   *   If the plugin sets a {@link Compiler `Compiler`}, this should be the
+ *       node it expects.
+ * @template [Output=Input]
+ *   Value that is yielded as output (default: `Input`).
+ *
+ *   *   If the plugin returns a {@link Transformer `Transformer`}, this
+ *       should be the node that that yields.
+ *   *   If the plugin sets a {@link Parser `Parser`}, this should be the
+ *       node that it yields.
+ *   *   If the plugin sets a {@link Compiler `Compiler`}, this should be
+ *       result it yields.
+ * @typedef {(
+ *   (this: Processor, ...parameters: PluginParameters) =>
+ *     Input extends string ? // Parser.
+ *        Output extends Node | undefined ? undefined | void : never :
+ *     Output extends CompileResults ? // Compiler.
+ *        Input extends Node | undefined ? undefined | void : never :
+ *     Transformer<
+ *       Input extends Node ? Input : Node,
+ *       Output extends Node ? Output : Node
+ *     > | undefined | void
+ * )} Plugin
+ *   Single plugin.
+ *
+ *   Plugins configure the processors they are applied on in the following
+ *   ways:
+ *
+ *   *   they change the processor, such as the parser, the compiler, or by
+ *       configuring data
+ *   *   they specify how to handle trees and files
+ *
+ *   In practice, they are functions that can receive options and configure the
+ *   processor (`this`).
+ *
+ *   > 👉 **Note**: plugins are called when the processor is *frozen*, not when
+ *   > they are applied.
+ */
+
+/**
+ * Tuple of a plugin and its configuration.
+ *
+ * The first item is a plugin, the rest are its parameters.
+ *
+ * @template {Array<unknown>} [TupleParameters=[]]
+ *   Arguments passed to the plugin (default: `[]`, the empty tuple).
+ * @template {Node | string | undefined} [Input=undefined]
+ *   Value that is expected as input (optional).
+ *
+ *   *   If the plugin returns a {@link Transformer `Transformer`}, this
+ *       should be the node it expects.
+ *   *   If the plugin sets a {@link Parser `Parser`}, this should be
+ *       `string`.
+ *   *   If the plugin sets a {@link Compiler `Compiler`}, this should be the
+ *       node it expects.
+ * @template [Output=undefined] (optional).
+ *   Value that is yielded as output.
+ *
+ *   *   If the plugin returns a {@link Transformer `Transformer`}, this
+ *       should be the node that that yields.
+ *   *   If the plugin sets a {@link Parser `Parser`}, this should be the
+ *       node that it yields.
+ *   *   If the plugin sets a {@link Compiler `Compiler`}, this should be
+ *       result it yields.
+ * @typedef {(
+ *   [
+ *     plugin: Plugin<TupleParameters, Input, Output>,
+ *     ...parameters: TupleParameters
+ *   ]
+ * )} PluginTuple
+ */
+
+/**
+ * @typedef Preset
+ *   Sharable configuration.
+ *
+ *   They can contain plugins and settings.
+ * @property {PluggableList | undefined} [plugins]
+ *   List of plugins and presets (optional).
+ * @property {Settings | undefined} [settings]
+ *   Shared settings for parsers and compilers (optional).
+ */
+
+/**
+ * @template {VFile} [File=VFile]
+ *   The file that the callback receives (default: `VFile`).
+ * @callback ProcessCallback
+ *   Callback called when the process is done.
+ *
+ *   Called with either an error or a result.
+ * @param {Error | undefined} [error]
+ *   Fatal error (optional).
+ * @param {File | undefined} [file]
+ *   Processed file (optional).
+ * @returns {undefined}
+ *   Nothing.
+ */
+
+/**
+ * @template {Node} [Tree=Node]
+ *   The tree that the callback receives (default: `Node`).
+ * @callback RunCallback
+ *   Callback called when transformers are done.
+ *
+ *   Called with either an error or results.
+ * @param {Error | undefined} [error]
+ *   Fatal error (optional).
+ * @param {Tree | undefined} [tree]
+ *   Transformed tree (optional).
+ * @param {VFile | undefined} [file]
+ *   File (optional).
+ * @returns {undefined}
+ *   Nothing.
+ */
+
+/**
+ * @template {Node} [Output=Node]
+ *   Node type that the transformer yields (default: `Node`).
+ * @callback TransformCallback
+ *   Callback passed to transforms.
+ *
+ *   If the signature of a `transformer` accepts a third argument, the
+ *   transformer may perform asynchronous operations, and must call it.
+ * @param {Error | undefined} [error]
+ *   Fatal error to stop the process (optional).
+ * @param {Output | undefined} [tree]
+ *   New, changed, tree (optional).
+ * @param {VFile | undefined} [file]
+ *   New, changed, file (optional).
+ * @returns {undefined}
+ *   Nothing.
+ */
+
+/**
+ * @template {Node} [Input=Node]
+ *   Node type that the transformer expects (default: `Node`).
+ * @template {Node} [Output=Input]
+ *   Node type that the transformer yields (default: `Input`).
+ * @callback Transformer
+ *   Transformers handle syntax trees and files.
+ *
+ *   They are functions that are called each time a syntax tree and file are
+ *   passed through the run phase.
+ *   When an error occurs in them (either because it’s thrown, returned,
+ *   rejected, or passed to `next`), the process stops.
+ *
+ *   The run phase is handled by [`trough`][trough], see its documentation for
+ *   the exact semantics of these functions.
+ *
+ *   > 👉 **Note**: you should likely ignore `next`: don’t accept it.
+ *   > it supports callback-style async work.
+ *   > But promises are likely easier to reason about.
+ *
+ *   [trough]: https://github.com/wooorm/trough#function-fninput-next
+ * @param {Input} tree
+ *   Tree to handle.
+ * @param {VFile} file
+ *   File to handle.
+ * @param {TransformCallback<Output>} next
+ *   Callback.
+ * @returns {(
+ *   Promise<Output | undefined | void> |
+ *   Promise<never> | // For some reason this is needed separately.
+ *   Output |
+ *   Error |
+ *   undefined |
+ *   void
+ * )}
+ *   If you accept `next`, nothing.
+ *   Otherwise:
+ *
+ *   *   `Error` — fatal error to stop the process
+ *   *   `Promise<undefined>` or `undefined` — the next transformer keeps using
+ *       same tree
+ *   *   `Promise<Node>` or `Node` — new, changed, tree
+ */
+
+/**
+ * @template {Node | undefined} ParseTree
+ *   Output of `parse`.
+ * @template {Node | undefined} HeadTree
+ *   Input for `run`.
+ * @template {Node | undefined} TailTree
+ *   Output for `run`.
+ * @template {Node | undefined} CompileTree
+ *   Input of `stringify`.
+ * @template {CompileResults | undefined} CompileResult
+ *   Output of `stringify`.
+ * @template {Node | string | undefined} Input
+ *   Input of plugin.
+ * @template Output
+ *   Output of plugin (optional).
+ * @typedef {(
+ *   Input extends string
+ *     ? Output extends Node | undefined
+ *       ? // Parser.
+ *         Processor<
+ *           Output extends undefined ? ParseTree : Output,
+ *           HeadTree,
+ *           TailTree,
+ *           CompileTree,
+ *           CompileResult
+ *         >
+ *       : // Unknown.
+ *         Processor<ParseTree, HeadTree, TailTree, CompileTree, CompileResult>
+ *     : Output extends CompileResults
+ *     ? Input extends Node | undefined
+ *       ? // Compiler.
+ *         Processor<
+ *           ParseTree,
+ *           HeadTree,
+ *           TailTree,
+ *           Input extends undefined ? CompileTree : Input,
+ *           Output extends undefined ? CompileResult : Output
+ *         >
+ *       : // Unknown.
+ *         Processor<ParseTree, HeadTree, TailTree, CompileTree, CompileResult>
+ *     : Input extends Node | undefined
+ *     ? Output extends Node | undefined
+ *       ? // Transform.
+ *         Processor<
+ *           ParseTree,
+ *           HeadTree extends undefined ? Input : HeadTree,
+ *           Output extends undefined ? TailTree : Output,
+ *           CompileTree,
+ *           CompileResult
+ *         >
+ *       : // Unknown.
+ *         Processor<ParseTree, HeadTree, TailTree, CompileTree, CompileResult>
+ *     : // Unknown.
+ *       Processor<ParseTree, HeadTree, TailTree, CompileTree, CompileResult>
+ * )} UsePlugin
+ *   Create a processor based on the input/output of a {@link Plugin plugin}.
+ */
+
+/**
+ * @template {CompileResults | undefined} Result
+ *   Node type that the transformer yields.
+ * @typedef {(
+ *   Result extends Value | undefined ?
+ *     VFile :
+ *     VFile & {result: Result}
+ *   )} VFileWithOutput
+ *   Type to generate a {@link VFile `VFile`} corresponding to a compiler result.
+ *
+ *   If a result that is not acceptable on a `VFile` is used, that will
+ *   be stored on the `result` field of {@link VFile `VFile`}.
+ */
+
+
+
+
+
+
+
+
+
+// To do: next major: drop `Compiler`, `Parser`: prefer lowercase.
+
+// To do: we could start yielding `never` in TS when a parser is missing and
+// `parse` is called.
+// Currently, we allow directly setting `processor.parser`, which is untyped.
+
+const own = {}.hasOwnProperty
+
+/**
+ * @template {Node | undefined} [ParseTree=undefined]
+ *   Output of `parse` (optional).
+ * @template {Node | undefined} [HeadTree=undefined]
+ *   Input for `run` (optional).
+ * @template {Node | undefined} [TailTree=undefined]
+ *   Output for `run` (optional).
+ * @template {Node | undefined} [CompileTree=undefined]
+ *   Input of `stringify` (optional).
+ * @template {CompileResults | undefined} [CompileResult=undefined]
+ *   Output of `stringify` (optional).
+ * @extends {CallableInstance<[], Processor<ParseTree, HeadTree, TailTree, CompileTree, CompileResult>>}
+ */
+class Processor extends _callable_instance_js__WEBPACK_IMPORTED_MODULE_1__/* .CallableInstance */ ._ {
+  /**
+   * Create a processor.
+   */
+  constructor() {
+    // If `Processor()` is called (w/o new), `copy` is called instead.
+    super('copy')
+
+    /**
+     * Compiler to use (deprecated).
+     *
+     * @deprecated
+     *   Use `compiler` instead.
+     * @type {(
+     *   Compiler<
+     *     CompileTree extends undefined ? Node : CompileTree,
+     *     CompileResult extends undefined ? CompileResults : CompileResult
+     *   > |
+     *   undefined
+     * )}
+     */
+    this.Compiler = undefined
+
+    /**
+     * Parser to use (deprecated).
+     *
+     * @deprecated
+     *   Use `parser` instead.
+     * @type {(
+     *   Parser<ParseTree extends undefined ? Node : ParseTree> |
+     *   undefined
+     * )}
+     */
+    this.Parser = undefined
+
+    // Note: the following fields are considered private.
+    // However, they are needed for tests, and TSC generates an untyped
+    // `private freezeIndex` field for, which trips `type-coverage` up.
+    // Instead, we use `@deprecated` to visualize that they shouldn’t be used.
+    /**
+     * Internal list of configured plugins.
+     *
+     * @deprecated
+     *   This is a private internal property and should not be used.
+     * @type {Array<PluginTuple<Array<unknown>>>}
+     */
+    this.attachers = []
+
+    /**
+     * Compiler to use.
+     *
+     * @type {(
+     *   Compiler<
+     *     CompileTree extends undefined ? Node : CompileTree,
+     *     CompileResult extends undefined ? CompileResults : CompileResult
+     *   > |
+     *   undefined
+     * )}
+     */
+    this.compiler = undefined
+
+    /**
+     * Internal state to track where we are while freezing.
+     *
+     * @deprecated
+     *   This is a private internal property and should not be used.
+     * @type {number}
+     */
+    this.freezeIndex = -1
+
+    /**
+     * Internal state to track whether we’re frozen.
+     *
+     * @deprecated
+     *   This is a private internal property and should not be used.
+     * @type {boolean | undefined}
+     */
+    this.frozen = undefined
+
+    /**
+     * Internal state.
+     *
+     * @deprecated
+     *   This is a private internal property and should not be used.
+     * @type {Data}
+     */
+    this.namespace = {}
+
+    /**
+     * Parser to use.
+     *
+     * @type {(
+     *   Parser<ParseTree extends undefined ? Node : ParseTree> |
+     *   undefined
+     * )}
+     */
+    this.parser = undefined
+
+    /**
+     * Internal list of configured transformers.
+     *
+     * @deprecated
+     *   This is a private internal property and should not be used.
+     * @type {Pipeline}
+     */
+    this.transformers = (0,trough__WEBPACK_IMPORTED_MODULE_2__/* .trough */ .S)()
+  }
+
+  /**
+   * Copy a processor.
+   *
+   * @deprecated
+   *   This is a private internal method and should not be used.
+   * @returns {Processor<ParseTree, HeadTree, TailTree, CompileTree, CompileResult>}
+   *   New *unfrozen* processor ({@link Processor `Processor`}) that is
+   *   configured to work the same as its ancestor.
+   *   When the descendant processor is configured in the future it does not
+   *   affect the ancestral processor.
+   */
+  copy() {
+    // Cast as the type parameters will be the same after attaching.
+    const destination =
+      /** @type {Processor<ParseTree, HeadTree, TailTree, CompileTree, CompileResult>} */ (
+        new Processor()
+      )
+    let index = -1
+
+    while (++index < this.attachers.length) {
+      const attacher = this.attachers[index]
+      destination.use(...attacher)
+    }
+
+    destination.data(extend__WEBPACK_IMPORTED_MODULE_0__(true, {}, this.namespace))
+
+    return destination
+  }
+
+  /**
+   * Configure the processor with info available to all plugins.
+   * Information is stored in an object.
+   *
+   * Typically, options can be given to a specific plugin, but sometimes it
+   * makes sense to have information shared with several plugins.
+   * For example, a list of HTML elements that are self-closing, which is
+   * needed during all phases.
+   *
+   * > 👉 **Note**: setting information cannot occur on *frozen* processors.
+   * > Call the processor first to create a new unfrozen processor.
+   *
+   * > 👉 **Note**: to register custom data in TypeScript, augment the
+   * > {@link Data `Data`} interface.
+   *
+   * @example
+   *   This example show how to get and set info:
+   *
+   *   ```js
+   *   import {unified} from 'unified'
+   *
+   *   const processor = unified().data('alpha', 'bravo')
+   *
+   *   processor.data('alpha') // => 'bravo'
+   *
+   *   processor.data() // => {alpha: 'bravo'}
+   *
+   *   processor.data({charlie: 'delta'})
+   *
+   *   processor.data() // => {charlie: 'delta'}
+   *   ```
+   *
+   * @template {keyof Data} Key
+   *
+   * @overload
+   * @returns {Data}
+   *
+   * @overload
+   * @param {Data} dataset
+   * @returns {Processor<ParseTree, HeadTree, TailTree, CompileTree, CompileResult>}
+   *
+   * @overload
+   * @param {Key} key
+   * @returns {Data[Key]}
+   *
+   * @overload
+   * @param {Key} key
+   * @param {Data[Key]} value
+   * @returns {Processor<ParseTree, HeadTree, TailTree, CompileTree, CompileResult>}
+   *
+   * @param {Data | Key} [key]
+   *   Key to get or set, or entire dataset to set, or nothing to get the
+   *   entire dataset (optional).
+   * @param {Data[Key]} [value]
+   *   Value to set (optional).
+   * @returns {unknown}
+   *   The current processor when setting, the value at `key` when getting, or
+   *   the entire dataset when getting without key.
+   */
+  data(key, value) {
+    if (typeof key === 'string') {
+      // Set `key`.
+      if (arguments.length === 2) {
+        assertUnfrozen('data', this.frozen)
+        this.namespace[key] = value
+        return this
+      }
+
+      // Get `key`.
+      return (own.call(this.namespace, key) && this.namespace[key]) || undefined
+    }
+
+    // Set space.
+    if (key) {
+      assertUnfrozen('data', this.frozen)
+      this.namespace = key
+      return this
+    }
+
+    // Get space.
+    return this.namespace
+  }
+
+  /**
+   * Freeze a processor.
+   *
+   * Frozen processors are meant to be extended and not to be configured
+   * directly.
+   *
+   * When a processor is frozen it cannot be unfrozen.
+   * New processors working the same way can be created by calling the
+   * processor.
+   *
+   * It’s possible to freeze processors explicitly by calling `.freeze()`.
+   * Processors freeze automatically when `.parse()`, `.run()`, `.runSync()`,
+   * `.stringify()`, `.process()`, or `.processSync()` are called.
+   *
+   * @returns {Processor<ParseTree, HeadTree, TailTree, CompileTree, CompileResult>}
+   *   The current processor.
+   */
+  freeze() {
+    if (this.frozen) {
+      return this
+    }
+
+    // Cast so that we can type plugins easier.
+    // Plugins are supposed to be usable on different processors, not just on
+    // this exact processor.
+    const self = /** @type {Processor} */ (/** @type {unknown} */ (this))
+
+    while (++this.freezeIndex < this.attachers.length) {
+      const [attacher, ...options] = this.attachers[this.freezeIndex]
+
+      if (options[0] === false) {
+        continue
+      }
+
+      if (options[0] === true) {
+        options[0] = undefined
+      }
+
+      const transformer = attacher.call(self, ...options)
+
+      if (typeof transformer === 'function') {
+        this.transformers.use(transformer)
+      }
+    }
+
+    this.frozen = true
+    this.freezeIndex = Number.POSITIVE_INFINITY
+
+    return this
+  }
+
+  /**
+   * Parse text to a syntax tree.
+   *
+   * > 👉 **Note**: `parse` freezes the processor if not already *frozen*.
+   *
+   * > 👉 **Note**: `parse` performs the parse phase, not the run phase or other
+   * > phases.
+   *
+   * @param {Compatible | undefined} [file]
+   *   file to parse (optional); typically `string` or `VFile`; any value
+   *   accepted as `x` in `new VFile(x)`.
+   * @returns {ParseTree extends undefined ? Node : ParseTree}
+   *   Syntax tree representing `file`.
+   */
+  parse(file) {
+    this.freeze()
+    const realFile = vfile(file)
+    const parser = this.parser || this.Parser
+    assertParser('parse', parser)
+    return parser(String(realFile), realFile)
+  }
+
+  /**
+   * Process the given file as configured on the processor.
+   *
+   * > 👉 **Note**: `process` freezes the processor if not already *frozen*.
+   *
+   * > 👉 **Note**: `process` performs the parse, run, and stringify phases.
+   *
+   * @overload
+   * @param {Compatible | undefined} file
+   * @param {ProcessCallback<VFileWithOutput<CompileResult>>} done
+   * @returns {undefined}
+   *
+   * @overload
+   * @param {Compatible | undefined} [file]
+   * @returns {Promise<VFileWithOutput<CompileResult>>}
+   *
+   * @param {Compatible | undefined} [file]
+   *   File (optional); typically `string` or `VFile`]; any value accepted as
+   *   `x` in `new VFile(x)`.
+   * @param {ProcessCallback<VFileWithOutput<CompileResult>> | undefined} [done]
+   *   Callback (optional).
+   * @returns {Promise<VFile> | undefined}
+   *   Nothing if `done` is given.
+   *   Otherwise a promise, rejected with a fatal error or resolved with the
+   *   processed file.
+   *
+   *   The parsed, transformed, and compiled value is available at
+   *   `file.value` (see note).
+   *
+   *   > 👉 **Note**: unified typically compiles by serializing: most
+   *   > compilers return `string` (or `Uint8Array`).
+   *   > Some compilers, such as the one configured with
+   *   > [`rehype-react`][rehype-react], return other values (in this case, a
+   *   > React tree).
+   *   > If you’re using a compiler that doesn’t serialize, expect different
+   *   > result values.
+   *   >
+   *   > To register custom results in TypeScript, add them to
+   *   > {@link CompileResultMap `CompileResultMap`}.
+   *
+   *   [rehype-react]: https://github.com/rehypejs/rehype-react
+   */
+  process(file, done) {
+    const self = this
+
+    this.freeze()
+    assertParser('process', this.parser || this.Parser)
+    assertCompiler('process', this.compiler || this.Compiler)
+
+    return done ? executor(undefined, done) : new Promise(executor)
+
+    // Note: `void`s needed for TS.
+    /**
+     * @param {((file: VFileWithOutput<CompileResult>) => undefined | void) | undefined} resolve
+     * @param {(error: Error | undefined) => undefined | void} reject
+     * @returns {undefined}
+     */
+    function executor(resolve, reject) {
+      const realFile = vfile(file)
+      // Assume `ParseTree` (the result of the parser) matches `HeadTree` (the
+      // input of the first transform).
+      const parseTree =
+        /** @type {HeadTree extends undefined ? Node : HeadTree} */ (
+          /** @type {unknown} */ (self.parse(realFile))
+        )
+
+      self.run(parseTree, realFile, function (error, tree, file) {
+        if (error || !tree || !file) {
+          return realDone(error)
+        }
+
+        // Assume `TailTree` (the output of the last transform) matches
+        // `CompileTree` (the input of the compiler).
+        const compileTree =
+          /** @type {CompileTree extends undefined ? Node : CompileTree} */ (
+            /** @type {unknown} */ (tree)
+          )
+
+        const compileResult = self.stringify(compileTree, file)
+
+        if (looksLikeAValue(compileResult)) {
+          file.value = compileResult
+        } else {
+          file.result = compileResult
+        }
+
+        realDone(error, /** @type {VFileWithOutput<CompileResult>} */ (file))
+      })
+
+      /**
+       * @param {Error | undefined} error
+       * @param {VFileWithOutput<CompileResult> | undefined} [file]
+       * @returns {undefined}
+       */
+      function realDone(error, file) {
+        if (error || !file) {
+          reject(error)
+        } else if (resolve) {
+          resolve(file)
+        } else {
+          (0,devlop__WEBPACK_IMPORTED_MODULE_3__.ok)(done, '`done` is defined if `resolve` is not')
+          done(undefined, file)
+        }
+      }
+    }
+  }
+
+  /**
+   * Process the given file as configured on the processor.
+   *
+   * An error is thrown if asynchronous transforms are configured.
+   *
+   * > 👉 **Note**: `processSync` freezes the processor if not already *frozen*.
+   *
+   * > 👉 **Note**: `processSync` performs the parse, run, and stringify phases.
+   *
+   * @param {Compatible | undefined} [file]
+   *   File (optional); typically `string` or `VFile`; any value accepted as
+   *   `x` in `new VFile(x)`.
+   * @returns {VFileWithOutput<CompileResult>}
+   *   The processed file.
+   *
+   *   The parsed, transformed, and compiled value is available at
+   *   `file.value` (see note).
+   *
+   *   > 👉 **Note**: unified typically compiles by serializing: most
+   *   > compilers return `string` (or `Uint8Array`).
+   *   > Some compilers, such as the one configured with
+   *   > [`rehype-react`][rehype-react], return other values (in this case, a
+   *   > React tree).
+   *   > If you’re using a compiler that doesn’t serialize, expect different
+   *   > result values.
+   *   >
+   *   > To register custom results in TypeScript, add them to
+   *   > {@link CompileResultMap `CompileResultMap`}.
+   *
+   *   [rehype-react]: https://github.com/rehypejs/rehype-react
+   */
+  processSync(file) {
+    /** @type {boolean} */
+    let complete = false
+    /** @type {VFileWithOutput<CompileResult> | undefined} */
+    let result
+
+    this.freeze()
+    assertParser('processSync', this.parser || this.Parser)
+    assertCompiler('processSync', this.compiler || this.Compiler)
+
+    this.process(file, realDone)
+    assertDone('processSync', 'process', complete)
+    ;(0,devlop__WEBPACK_IMPORTED_MODULE_3__.ok)(result, 'we either bailed on an error or have a tree')
+
+    return result
+
+    /**
+     * @type {ProcessCallback<VFileWithOutput<CompileResult>>}
+     */
+    function realDone(error, file) {
+      complete = true
+      ;(0,bail__WEBPACK_IMPORTED_MODULE_4__/* .bail */ .V)(error)
+      result = file
+    }
+  }
+
+  /**
+   * Run *transformers* on a syntax tree.
+   *
+   * > 👉 **Note**: `run` freezes the processor if not already *frozen*.
+   *
+   * > 👉 **Note**: `run` performs the run phase, not other phases.
+   *
+   * @overload
+   * @param {HeadTree extends undefined ? Node : HeadTree} tree
+   * @param {RunCallback<TailTree extends undefined ? Node : TailTree>} done
+   * @returns {undefined}
+   *
+   * @overload
+   * @param {HeadTree extends undefined ? Node : HeadTree} tree
+   * @param {Compatible | undefined} file
+   * @param {RunCallback<TailTree extends undefined ? Node : TailTree>} done
+   * @returns {undefined}
+   *
+   * @overload
+   * @param {HeadTree extends undefined ? Node : HeadTree} tree
+   * @param {Compatible | undefined} [file]
+   * @returns {Promise<TailTree extends undefined ? Node : TailTree>}
+   *
+   * @param {HeadTree extends undefined ? Node : HeadTree} tree
+   *   Tree to transform and inspect.
+   * @param {(
+   *   RunCallback<TailTree extends undefined ? Node : TailTree> |
+   *   Compatible
+   * )} [file]
+   *   File associated with `node` (optional); any value accepted as `x` in
+   *   `new VFile(x)`.
+   * @param {RunCallback<TailTree extends undefined ? Node : TailTree>} [done]
+   *   Callback (optional).
+   * @returns {Promise<TailTree extends undefined ? Node : TailTree> | undefined}
+   *   Nothing if `done` is given.
+   *   Otherwise, a promise rejected with a fatal error or resolved with the
+   *   transformed tree.
+   */
+  run(tree, file, done) {
+    assertNode(tree)
+    this.freeze()
+
+    const transformers = this.transformers
+
+    if (!done && typeof file === 'function') {
+      done = file
+      file = undefined
+    }
+
+    return done ? executor(undefined, done) : new Promise(executor)
+
+    // Note: `void`s needed for TS.
+    /**
+     * @param {(
+     *   ((tree: TailTree extends undefined ? Node : TailTree) => undefined | void) |
+     *   undefined
+     * )} resolve
+     * @param {(error: Error) => undefined | void} reject
+     * @returns {undefined}
+     */
+    function executor(resolve, reject) {
+      ;(0,devlop__WEBPACK_IMPORTED_MODULE_3__.ok)(
+        typeof file !== 'function',
+        '`file` can’t be a `done` anymore, we checked'
+      )
+      const realFile = vfile(file)
+      transformers.run(tree, realFile, realDone)
+
+      /**
+       * @param {Error | undefined} error
+       * @param {Node} outputTree
+       * @param {VFile} file
+       * @returns {undefined}
+       */
+      function realDone(error, outputTree, file) {
+        const resultingTree =
+          /** @type {TailTree extends undefined ? Node : TailTree} */ (
+            outputTree || tree
+          )
+
+        if (error) {
+          reject(error)
+        } else if (resolve) {
+          resolve(resultingTree)
+        } else {
+          (0,devlop__WEBPACK_IMPORTED_MODULE_3__.ok)(done, '`done` is defined if `resolve` is not')
+          done(undefined, resultingTree, file)
+        }
+      }
+    }
+  }
+
+  /**
+   * Run *transformers* on a syntax tree.
+   *
+   * An error is thrown if asynchronous transforms are configured.
+   *
+   * > 👉 **Note**: `runSync` freezes the processor if not already *frozen*.
+   *
+   * > 👉 **Note**: `runSync` performs the run phase, not other phases.
+   *
+   * @param {HeadTree extends undefined ? Node : HeadTree} tree
+   *   Tree to transform and inspect.
+   * @param {Compatible | undefined} [file]
+   *   File associated with `node` (optional); any value accepted as `x` in
+   *   `new VFile(x)`.
+   * @returns {TailTree extends undefined ? Node : TailTree}
+   *   Transformed tree.
+   */
+  runSync(tree, file) {
+    /** @type {boolean} */
+    let complete = false
+    /** @type {(TailTree extends undefined ? Node : TailTree) | undefined} */
+    let result
+
+    this.run(tree, file, realDone)
+
+    assertDone('runSync', 'run', complete)
+    ;(0,devlop__WEBPACK_IMPORTED_MODULE_3__.ok)(result, 'we either bailed on an error or have a tree')
+    return result
+
+    /**
+     * @type {RunCallback<TailTree extends undefined ? Node : TailTree>}
+     */
+    function realDone(error, tree) {
+      ;(0,bail__WEBPACK_IMPORTED_MODULE_4__/* .bail */ .V)(error)
+      result = tree
+      complete = true
+    }
+  }
+
+  /**
+   * Compile a syntax tree.
+   *
+   * > 👉 **Note**: `stringify` freezes the processor if not already *frozen*.
+   *
+   * > 👉 **Note**: `stringify` performs the stringify phase, not the run phase
+   * > or other phases.
+   *
+   * @param {CompileTree extends undefined ? Node : CompileTree} tree
+   *   Tree to compile.
+   * @param {Compatible | undefined} [file]
+   *   File associated with `node` (optional); any value accepted as `x` in
+   *   `new VFile(x)`.
+   * @returns {CompileResult extends undefined ? Value : CompileResult}
+   *   Textual representation of the tree (see note).
+   *
+   *   > 👉 **Note**: unified typically compiles by serializing: most compilers
+   *   > return `string` (or `Uint8Array`).
+   *   > Some compilers, such as the one configured with
+   *   > [`rehype-react`][rehype-react], return other values (in this case, a
+   *   > React tree).
+   *   > If you’re using a compiler that doesn’t serialize, expect different
+   *   > result values.
+   *   >
+   *   > To register custom results in TypeScript, add them to
+   *   > {@link CompileResultMap `CompileResultMap`}.
+   *
+   *   [rehype-react]: https://github.com/rehypejs/rehype-react
+   */
+  stringify(tree, file) {
+    this.freeze()
+    const realFile = vfile(file)
+    const compiler = this.compiler || this.Compiler
+    assertCompiler('stringify', compiler)
+    assertNode(tree)
+
+    return compiler(tree, realFile)
+  }
+
+  /**
+   * Configure the processor to use a plugin, a list of usable values, or a
+   * preset.
+   *
+   * If the processor is already using a plugin, the previous plugin
+   * configuration is changed based on the options that are passed in.
+   * In other words, the plugin is not added a second time.
+   *
+   * > 👉 **Note**: `use` cannot be called on *frozen* processors.
+   * > Call the processor first to create a new unfrozen processor.
+   *
+   * @example
+   *   There are many ways to pass plugins to `.use()`.
+   *   This example gives an overview:
+   *
+   *   ```js
+   *   import {unified} from 'unified'
+   *
+   *   unified()
+   *     // Plugin with options:
+   *     .use(pluginA, {x: true, y: true})
+   *     // Passing the same plugin again merges configuration (to `{x: true, y: false, z: true}`):
+   *     .use(pluginA, {y: false, z: true})
+   *     // Plugins:
+   *     .use([pluginB, pluginC])
+   *     // Two plugins, the second with options:
+   *     .use([pluginD, [pluginE, {}]])
+   *     // Preset with plugins and settings:
+   *     .use({plugins: [pluginF, [pluginG, {}]], settings: {position: false}})
+   *     // Settings only:
+   *     .use({settings: {position: false}})
+   *   ```
+   *
+   * @template {Array<unknown>} [Parameters=[]]
+   * @template {Node | string | undefined} [Input=undefined]
+   * @template [Output=Input]
+   *
+   * @overload
+   * @param {Preset | null | undefined} [preset]
+   * @returns {Processor<ParseTree, HeadTree, TailTree, CompileTree, CompileResult>}
+   *
+   * @overload
+   * @param {PluggableList} list
+   * @returns {Processor<ParseTree, HeadTree, TailTree, CompileTree, CompileResult>}
+   *
+   * @overload
+   * @param {Plugin<Parameters, Input, Output>} plugin
+   * @param {...(Parameters | [boolean])} parameters
+   * @returns {UsePlugin<ParseTree, HeadTree, TailTree, CompileTree, CompileResult, Input, Output>}
+   *
+   * @param {PluggableList | Plugin | Preset | null | undefined} value
+   *   Usable value.
+   * @param {...unknown} parameters
+   *   Parameters, when a plugin is given as a usable value.
+   * @returns {Processor<ParseTree, HeadTree, TailTree, CompileTree, CompileResult>}
+   *   Current processor.
+   */
+  use(value, ...parameters) {
+    const attachers = this.attachers
+    const namespace = this.namespace
+
+    assertUnfrozen('use', this.frozen)
+
+    if (value === null || value === undefined) {
+      // Empty.
+    } else if (typeof value === 'function') {
+      addPlugin(value, parameters)
+    } else if (typeof value === 'object') {
+      if (Array.isArray(value)) {
+        addList(value)
+      } else {
+        addPreset(value)
+      }
+    } else {
+      throw new TypeError('Expected usable value, not `' + value + '`')
+    }
+
+    return this
+
+    /**
+     * @param {Pluggable} value
+     * @returns {undefined}
+     */
+    function add(value) {
+      if (typeof value === 'function') {
+        addPlugin(value, [])
+      } else if (typeof value === 'object') {
+        if (Array.isArray(value)) {
+          const [plugin, ...parameters] =
+            /** @type {PluginTuple<Array<unknown>>} */ (value)
+          addPlugin(plugin, parameters)
+        } else {
+          addPreset(value)
+        }
+      } else {
+        throw new TypeError('Expected usable value, not `' + value + '`')
+      }
+    }
+
+    /**
+     * @param {Preset} result
+     * @returns {undefined}
+     */
+    function addPreset(result) {
+      if (!('plugins' in result) && !('settings' in result)) {
+        throw new Error(
+          'Expected usable value but received an empty preset, which is probably a mistake: presets typically come with `plugins` and sometimes with `settings`, but this has neither'
+        )
+      }
+
+      addList(result.plugins)
+
+      if (result.settings) {
+        namespace.settings = extend__WEBPACK_IMPORTED_MODULE_0__(true, namespace.settings, result.settings)
+      }
+    }
+
+    /**
+     * @param {PluggableList | null | undefined} plugins
+     * @returns {undefined}
+     */
+    function addList(plugins) {
+      let index = -1
+
+      if (plugins === null || plugins === undefined) {
+        // Empty.
+      } else if (Array.isArray(plugins)) {
+        while (++index < plugins.length) {
+          const thing = plugins[index]
+          add(thing)
+        }
+      } else {
+        throw new TypeError('Expected a list of plugins, not `' + plugins + '`')
+      }
+    }
+
+    /**
+     * @param {Plugin} plugin
+     * @param {Array<unknown>} parameters
+     * @returns {undefined}
+     */
+    function addPlugin(plugin, parameters) {
+      let index = -1
+      let entryIndex = -1
+
+      while (++index < attachers.length) {
+        if (attachers[index][0] === plugin) {
+          entryIndex = index
+          break
+        }
+      }
+
+      if (entryIndex === -1) {
+        attachers.push([plugin, ...parameters])
+      }
+      // Only set if there was at least a `primary` value, otherwise we’d change
+      // `arguments.length`.
+      else if (parameters.length > 0) {
+        let [primary, ...rest] = parameters
+        const currentPrimary = attachers[entryIndex][1]
+        if ((0,is_plain_obj__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(currentPrimary) && (0,is_plain_obj__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(primary)) {
+          primary = extend__WEBPACK_IMPORTED_MODULE_0__(true, currentPrimary, primary)
+        }
+
+        attachers[entryIndex] = [plugin, primary, ...rest]
+      }
+    }
+  }
+}
+
+// Note: this returns a *callable* instance.
+// That’s why it’s documented as a function.
+/**
+ * Create a new processor.
+ *
+ * @example
+ *   This example shows how a new processor can be created (from `remark`) and linked
+ *   to **stdin**(4) and **stdout**(4).
+ *
+ *   ```js
+ *   import process from 'node:process'
+ *   import concatStream from 'concat-stream'
+ *   import {remark} from 'remark'
+ *
+ *   process.stdin.pipe(
+ *     concatStream(function (buf) {
+ *       process.stdout.write(String(remark().processSync(buf)))
+ *     })
+ *   )
+ *   ```
+ *
+ * @returns
+ *   New *unfrozen* processor (`processor`).
+ *
+ *   This processor is configured to work the same as its ancestor.
+ *   When the descendant processor is configured in the future it does not
+ *   affect the ancestral processor.
+ */
+const unified = new Processor().freeze()
+
+/**
+ * Assert a parser is available.
+ *
+ * @param {string} name
+ * @param {unknown} value
+ * @returns {asserts value is Parser}
+ */
+function assertParser(name, value) {
+  if (typeof value !== 'function') {
+    throw new TypeError('Cannot `' + name + '` without `parser`')
+  }
+}
+
+/**
+ * Assert a compiler is available.
+ *
+ * @param {string} name
+ * @param {unknown} value
+ * @returns {asserts value is Compiler}
+ */
+function assertCompiler(name, value) {
+  if (typeof value !== 'function') {
+    throw new TypeError('Cannot `' + name + '` without `compiler`')
+  }
+}
+
+/**
+ * Assert the processor is not frozen.
+ *
+ * @param {string} name
+ * @param {unknown} frozen
+ * @returns {asserts frozen is false}
+ */
+function assertUnfrozen(name, frozen) {
+  if (frozen) {
+    throw new Error(
+      'Cannot call `' +
+        name +
+        '` on a frozen processor.\nCreate a new processor first, by calling it: use `processor()` instead of `processor`.'
+    )
+  }
+}
+
+/**
+ * Assert `node` is a unist node.
+ *
+ * @param {unknown} node
+ * @returns {asserts node is Node}
+ */
+function assertNode(node) {
+  // `isPlainObj` unfortunately uses `any` instead of `unknown`.
+  // type-coverage:ignore-next-line
+  if (!(0,is_plain_obj__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(node) || typeof node.type !== 'string') {
+    throw new TypeError('Expected node, got `' + node + '`')
+    // Fine.
+  }
+}
+
+/**
+ * Assert that `complete` is `true`.
+ *
+ * @param {string} name
+ * @param {string} asyncName
+ * @param {unknown} complete
+ * @returns {asserts complete is true}
+ */
+function assertDone(name, asyncName, complete) {
+  if (!complete) {
+    throw new Error(
+      '`' + name + '` finished async. Use `' + asyncName + '` instead'
+    )
+  }
+}
+
+/**
+ * @param {Compatible | undefined} [value]
+ * @returns {VFile}
+ */
+function vfile(value) {
+  return looksLikeAVFile(value) ? value : new vfile__WEBPACK_IMPORTED_MODULE_6__/* .VFile */ .T(value)
+}
+
+/**
+ * @param {Compatible | undefined} [value]
+ * @returns {value is VFile}
+ */
+function looksLikeAVFile(value) {
+  return Boolean(
+    value &&
+      typeof value === 'object' &&
+      'message' in value &&
+      'messages' in value
+  )
+}
+
+/**
+ * @param {unknown} [value]
+ * @returns {value is Value}
+ */
+function looksLikeAValue(value) {
+  return typeof value === 'string' || isUint8Array(value)
+}
+
+/**
+ * Assert `value` is an `Uint8Array`.
+ *
+ * @param {unknown} value
+ *   thing.
+ * @returns {value is Uint8Array}
+ *   Whether `value` is an `Uint8Array`.
+ */
+function isUint8Array(value) {
+  return Boolean(
+    value &&
+      typeof value === 'object' &&
+      'byteLength' in value &&
+      'byteOffset' in value
+  )
+}
+
+
+/***/ }),
+
+/***/ 2098:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ isPlainObject)
+/* harmony export */ });
+function isPlainObject(value) {
+	if (typeof value !== 'object' || value === null) {
+		return false;
+	}
+
+	const prototype = Object.getPrototypeOf(value);
+	return (prototype === null || prototype === Object.prototype || Object.getPrototypeOf(prototype) === null) && !(Symbol.toStringTag in value) && !(Symbol.iterator in value);
+}
+
+
+/***/ }),
+
+/***/ 15186:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   C: () => (/* binding */ convert)
+/* harmony export */ });
+/* unused harmony export is */
+/**
+ * @typedef {import('unist').Node} Node
+ * @typedef {import('unist').Parent} Parent
+ */
+
+/**
+ * @template Fn
+ * @template Fallback
+ * @typedef {Fn extends (value: any) => value is infer Thing ? Thing : Fallback} Predicate
+ */
+
+/**
+ * @callback Check
+ *   Check that an arbitrary value is a node.
+ * @param {unknown} this
+ *   The given context.
+ * @param {unknown} [node]
+ *   Anything (typically a node).
+ * @param {number | null | undefined} [index]
+ *   The node’s position in its parent.
+ * @param {Parent | null | undefined} [parent]
+ *   The node’s parent.
+ * @returns {boolean}
+ *   Whether this is a node and passes a test.
+ *
+ * @typedef {Record<string, unknown> | Node} Props
+ *   Object to check for equivalence.
+ *
+ *   Note: `Node` is included as it is common but is not indexable.
+ *
+ * @typedef {Array<Props | TestFunction | string> | Props | TestFunction | string | null | undefined} Test
+ *   Check for an arbitrary node.
+ *
+ * @callback TestFunction
+ *   Check if a node passes a test.
+ * @param {unknown} this
+ *   The given context.
+ * @param {Node} node
+ *   A node.
+ * @param {number | undefined} [index]
+ *   The node’s position in its parent.
+ * @param {Parent | undefined} [parent]
+ *   The node’s parent.
+ * @returns {boolean | undefined | void}
+ *   Whether this node passes the test.
+ *
+ *   Note: `void` is included until TS sees no return as `undefined`.
+ */
+
+/**
+ * Check if `node` is a `Node` and whether it passes the given test.
+ *
+ * @param {unknown} node
+ *   Thing to check, typically `Node`.
+ * @param {Test} test
+ *   A check for a specific node.
+ * @param {number | null | undefined} index
+ *   The node’s position in its parent.
+ * @param {Parent | null | undefined} parent
+ *   The node’s parent.
+ * @param {unknown} context
+ *   Context object (`this`) to pass to `test` functions.
+ * @returns {boolean}
+ *   Whether `node` is a node and passes a test.
+ */
+const is =
+  // Note: overloads in JSDoc can’t yet use different `@template`s.
+  /**
+   * @type {(
+   *   (<Condition extends string>(node: unknown, test: Condition, index?: number | null | undefined, parent?: Parent | null | undefined, context?: unknown) => node is Node & {type: Condition}) &
+   *   (<Condition extends Props>(node: unknown, test: Condition, index?: number | null | undefined, parent?: Parent | null | undefined, context?: unknown) => node is Node & Condition) &
+   *   (<Condition extends TestFunction>(node: unknown, test: Condition, index?: number | null | undefined, parent?: Parent | null | undefined, context?: unknown) => node is Node & Predicate<Condition, Node>) &
+   *   ((node?: null | undefined) => false) &
+   *   ((node: unknown, test?: null | undefined, index?: number | null | undefined, parent?: Parent | null | undefined, context?: unknown) => node is Node) &
+   *   ((node: unknown, test?: Test, index?: number | null | undefined, parent?: Parent | null | undefined, context?: unknown) => boolean)
+   * )}
+   */
+  (
+    /**
+     * @param {unknown} [node]
+     * @param {Test} [test]
+     * @param {number | null | undefined} [index]
+     * @param {Parent | null | undefined} [parent]
+     * @param {unknown} [context]
+     * @returns {boolean}
+     */
+    // eslint-disable-next-line max-params
+    function (node, test, index, parent, context) {
+      const check = convert(test)
+
+      if (
+        index !== undefined &&
+        index !== null &&
+        (typeof index !== 'number' ||
+          index < 0 ||
+          index === Number.POSITIVE_INFINITY)
+      ) {
+        throw new Error('Expected positive finite index')
+      }
+
+      if (
+        parent !== undefined &&
+        parent !== null &&
+        (!is(parent) || !parent.children)
+      ) {
+        throw new Error('Expected parent node')
+      }
+
+      if (
+        (parent === undefined || parent === null) !==
+        (index === undefined || index === null)
+      ) {
+        throw new Error('Expected both parent and index')
+      }
+
+      return looksLikeANode(node)
+        ? check.call(context, node, index, parent)
+        : false
+    }
+  )
+
+/**
+ * Generate an assertion from a test.
+ *
+ * Useful if you’re going to test many nodes, for example when creating a
+ * utility where something else passes a compatible test.
+ *
+ * The created function is a bit faster because it expects valid input only:
+ * a `node`, `index`, and `parent`.
+ *
+ * @param {Test} test
+ *   *   when nullish, checks if `node` is a `Node`.
+ *   *   when `string`, works like passing `(node) => node.type === test`.
+ *   *   when `function` checks if function passed the node is true.
+ *   *   when `object`, checks that all keys in test are in node, and that they have (strictly) equal values.
+ *   *   when `array`, checks if any one of the subtests pass.
+ * @returns {Check}
+ *   An assertion.
+ */
+const convert =
+  // Note: overloads in JSDoc can’t yet use different `@template`s.
+  /**
+   * @type {(
+   *   (<Condition extends string>(test: Condition) => (node: unknown, index?: number | null | undefined, parent?: Parent | null | undefined, context?: unknown) => node is Node & {type: Condition}) &
+   *   (<Condition extends Props>(test: Condition) => (node: unknown, index?: number | null | undefined, parent?: Parent | null | undefined, context?: unknown) => node is Node & Condition) &
+   *   (<Condition extends TestFunction>(test: Condition) => (node: unknown, index?: number | null | undefined, parent?: Parent | null | undefined, context?: unknown) => node is Node & Predicate<Condition, Node>) &
+   *   ((test?: null | undefined) => (node?: unknown, index?: number | null | undefined, parent?: Parent | null | undefined, context?: unknown) => node is Node) &
+   *   ((test?: Test) => Check)
+   * )}
+   */
+  (
+    /**
+     * @param {Test} [test]
+     * @returns {Check}
+     */
+    function (test) {
+      if (test === null || test === undefined) {
+        return ok
+      }
+
+      if (typeof test === 'function') {
+        return castFactory(test)
+      }
+
+      if (typeof test === 'object') {
+        return Array.isArray(test) ? anyFactory(test) : propsFactory(test)
+      }
+
+      if (typeof test === 'string') {
+        return typeFactory(test)
+      }
+
+      throw new Error('Expected function, string, or object as test')
+    }
+  )
+
+/**
+ * @param {Array<Props | TestFunction | string>} tests
+ * @returns {Check}
+ */
+function anyFactory(tests) {
+  /** @type {Array<Check>} */
+  const checks = []
+  let index = -1
+
+  while (++index < tests.length) {
+    checks[index] = convert(tests[index])
+  }
+
+  return castFactory(any)
+
+  /**
+   * @this {unknown}
+   * @type {TestFunction}
+   */
+  function any(...parameters) {
+    let index = -1
+
+    while (++index < checks.length) {
+      if (checks[index].apply(this, parameters)) return true
+    }
+
+    return false
+  }
+}
+
+/**
+ * Turn an object into a test for a node with a certain fields.
+ *
+ * @param {Props} check
+ * @returns {Check}
+ */
+function propsFactory(check) {
+  const checkAsRecord = /** @type {Record<string, unknown>} */ (check)
+
+  return castFactory(all)
+
+  /**
+   * @param {Node} node
+   * @returns {boolean}
+   */
+  function all(node) {
+    const nodeAsRecord = /** @type {Record<string, unknown>} */ (
+      /** @type {unknown} */ (node)
+    )
+
+    /** @type {string} */
+    let key
+
+    for (key in check) {
+      if (nodeAsRecord[key] !== checkAsRecord[key]) return false
+    }
+
+    return true
+  }
+}
+
+/**
+ * Turn a string into a test for a node with a certain type.
+ *
+ * @param {string} check
+ * @returns {Check}
+ */
+function typeFactory(check) {
+  return castFactory(type)
+
+  /**
+   * @param {Node} node
+   */
+  function type(node) {
+    return node && node.type === check
+  }
+}
+
+/**
+ * Turn a custom test into a test for a node that passes that test.
+ *
+ * @param {TestFunction} testFunction
+ * @returns {Check}
+ */
+function castFactory(testFunction) {
+  return check
+
+  /**
+   * @this {unknown}
+   * @type {Check}
+   */
+  function check(value, index, parent) {
+    return Boolean(
+      looksLikeANode(value) &&
+        testFunction.call(
+          this,
+          value,
+          typeof index === 'number' ? index : undefined,
+          parent || undefined
+        )
+    )
+  }
+}
+
+function ok() {
+  return true
+}
+
+/**
+ * @param {unknown} value
+ * @returns {value is Node}
+ */
+function looksLikeANode(value) {
+  return value !== null && typeof value === 'object' && 'type' in value
+}
+
+
+/***/ }),
+
+/***/ 24435:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   o: () => (/* binding */ VFileMessage)
+/* harmony export */ });
+/* harmony import */ var unist_util_stringify_position__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(62437);
+/**
+ * @typedef {import('unist').Node} Node
+ * @typedef {import('unist').Point} Point
+ * @typedef {import('unist').Position} Position
+ */
+
+/**
+ * @typedef {object & {type: string, position?: Position | undefined}} NodeLike
+ *
+ * @typedef Options
+ *   Configuration.
+ * @property {Array<Node> | null | undefined} [ancestors]
+ *   Stack of (inclusive) ancestor nodes surrounding the message (optional).
+ * @property {Error | null | undefined} [cause]
+ *   Original error cause of the message (optional).
+ * @property {Point | Position | null | undefined} [place]
+ *   Place of message (optional).
+ * @property {string | null | undefined} [ruleId]
+ *   Category of message (optional, example: `'my-rule'`).
+ * @property {string | null | undefined} [source]
+ *   Namespace of who sent the message (optional, example: `'my-package'`).
+ */
+
+
+
+/**
+ * Message.
+ */
+class VFileMessage extends Error {
+  /**
+   * Create a message for `reason`.
+   *
+   * > 🪦 **Note**: also has obsolete signatures.
+   *
+   * @overload
+   * @param {string} reason
+   * @param {Options | null | undefined} [options]
+   * @returns
+   *
+   * @overload
+   * @param {string} reason
+   * @param {Node | NodeLike | null | undefined} parent
+   * @param {string | null | undefined} [origin]
+   * @returns
+   *
+   * @overload
+   * @param {string} reason
+   * @param {Point | Position | null | undefined} place
+   * @param {string | null | undefined} [origin]
+   * @returns
+   *
+   * @overload
+   * @param {string} reason
+   * @param {string | null | undefined} [origin]
+   * @returns
+   *
+   * @overload
+   * @param {Error | VFileMessage} cause
+   * @param {Node | NodeLike | null | undefined} parent
+   * @param {string | null | undefined} [origin]
+   * @returns
+   *
+   * @overload
+   * @param {Error | VFileMessage} cause
+   * @param {Point | Position | null | undefined} place
+   * @param {string | null | undefined} [origin]
+   * @returns
+   *
+   * @overload
+   * @param {Error | VFileMessage} cause
+   * @param {string | null | undefined} [origin]
+   * @returns
+   *
+   * @param {Error | VFileMessage | string} causeOrReason
+   *   Reason for message, should use markdown.
+   * @param {Node | NodeLike | Options | Point | Position | string | null | undefined} [optionsOrParentOrPlace]
+   *   Configuration (optional).
+   * @param {string | null | undefined} [origin]
+   *   Place in code where the message originates (example:
+   *   `'my-package:my-rule'` or `'my-rule'`).
+   * @returns
+   *   Instance of `VFileMessage`.
+   */
+  // eslint-disable-next-line complexity
+  constructor(causeOrReason, optionsOrParentOrPlace, origin) {
+    super()
+
+    if (typeof optionsOrParentOrPlace === 'string') {
+      origin = optionsOrParentOrPlace
+      optionsOrParentOrPlace = undefined
+    }
+
+    /** @type {string} */
+    let reason = ''
+    /** @type {Options} */
+    let options = {}
+    let legacyCause = false
+
+    if (optionsOrParentOrPlace) {
+      // Point.
+      if (
+        'line' in optionsOrParentOrPlace &&
+        'column' in optionsOrParentOrPlace
+      ) {
+        options = {place: optionsOrParentOrPlace}
+      }
+      // Position.
+      else if (
+        'start' in optionsOrParentOrPlace &&
+        'end' in optionsOrParentOrPlace
+      ) {
+        options = {place: optionsOrParentOrPlace}
+      }
+      // Node.
+      else if ('type' in optionsOrParentOrPlace) {
+        options = {
+          ancestors: [optionsOrParentOrPlace],
+          place: optionsOrParentOrPlace.position
+        }
+      }
+      // Options.
+      else {
+        options = {...optionsOrParentOrPlace}
+      }
+    }
+
+    if (typeof causeOrReason === 'string') {
+      reason = causeOrReason
+    }
+    // Error.
+    else if (!options.cause && causeOrReason) {
+      legacyCause = true
+      reason = causeOrReason.message
+      options.cause = causeOrReason
+    }
+
+    if (!options.ruleId && !options.source && typeof origin === 'string') {
+      const index = origin.indexOf(':')
+
+      if (index === -1) {
+        options.ruleId = origin
+      } else {
+        options.source = origin.slice(0, index)
+        options.ruleId = origin.slice(index + 1)
+      }
+    }
+
+    if (!options.place && options.ancestors && options.ancestors) {
+      const parent = options.ancestors[options.ancestors.length - 1]
+
+      if (parent) {
+        options.place = parent.position
+      }
+    }
+
+    const start =
+      options.place && 'start' in options.place
+        ? options.place.start
+        : options.place
+
+    /* eslint-disable no-unused-expressions */
+    /**
+     * Stack of ancestor nodes surrounding the message.
+     *
+     * @type {Array<Node> | undefined}
+     */
+    this.ancestors = options.ancestors || undefined
+
+    /**
+     * Original error cause of the message.
+     *
+     * @type {Error | undefined}
+     */
+    this.cause = options.cause || undefined
+
+    /**
+     * Starting column of message.
+     *
+     * @type {number | undefined}
+     */
+    this.column = start ? start.column : undefined
+
+    /**
+     * State of problem.
+     *
+     * * `true` — error, file not usable
+     * * `false` — warning, change may be needed
+     * * `undefined` — change likely not needed
+     *
+     * @type {boolean | null | undefined}
+     */
+    this.fatal = undefined
+
+    /**
+     * Path of a file (used throughout the `VFile` ecosystem).
+     *
+     * @type {string | undefined}
+     */
+    this.file
+
+    // Field from `Error`.
+    /**
+     * Reason for message.
+     *
+     * @type {string}
+     */
+    this.message = reason
+
+    /**
+     * Starting line of error.
+     *
+     * @type {number | undefined}
+     */
+    this.line = start ? start.line : undefined
+
+    // Field from `Error`.
+    /**
+     * Serialized positional info of message.
+     *
+     * On normal errors, this would be something like `ParseError`, buit in
+     * `VFile` messages we use this space to show where an error happened.
+     */
+    this.name = (0,unist_util_stringify_position__WEBPACK_IMPORTED_MODULE_0__/* .stringifyPosition */ .L)(options.place) || '1:1'
+
+    /**
+     * Place of message.
+     *
+     * @type {Point | Position | undefined}
+     */
+    this.place = options.place || undefined
+
+    /**
+     * Reason for message, should use markdown.
+     *
+     * @type {string}
+     */
+    this.reason = this.message
+
+    /**
+     * Category of message (example: `'my-rule'`).
+     *
+     * @type {string | undefined}
+     */
+    this.ruleId = options.ruleId || undefined
+
+    /**
+     * Namespace of message (example: `'my-package'`).
+     *
+     * @type {string | undefined}
+     */
+    this.source = options.source || undefined
+
+    // Field from `Error`.
+    /**
+     * Stack of message.
+     *
+     * This is used by normal errors to show where something happened in
+     * programming code, irrelevant for `VFile` messages,
+     *
+     * @type {string}
+     */
+    this.stack =
+      legacyCause && options.cause && typeof options.cause.stack === 'string'
+        ? options.cause.stack
+        : ''
+
+    // The following fields are “well known”.
+    // Not standard.
+    // Feel free to add other non-standard fields to your messages.
+
+    /**
+     * Specify the source value that’s being reported, which is deemed
+     * incorrect.
+     *
+     * @type {string | undefined}
+     */
+    this.actual
+
+    /**
+     * Suggest acceptable values that can be used instead of `actual`.
+     *
+     * @type {Array<string> | undefined}
+     */
+    this.expected
+
+    /**
+     * Long form description of the message (you should use markdown).
+     *
+     * @type {string | undefined}
+     */
+    this.note
+
+    /**
+     * Link to docs for the message.
+     *
+     * > 👉 **Note**: this must be an absolute URL that can be passed as `x`
+     * > to `new URL(x)`.
+     *
+     * @type {string | undefined}
+     */
+    this.url
+    /* eslint-enable no-unused-expressions */
+  }
+}
+
+VFileMessage.prototype.file = ''
+VFileMessage.prototype.name = ''
+VFileMessage.prototype.reason = ''
+VFileMessage.prototype.message = ''
+VFileMessage.prototype.stack = ''
+VFileMessage.prototype.column = undefined
+VFileMessage.prototype.line = undefined
+VFileMessage.prototype.ancestors = undefined
+VFileMessage.prototype.cause = undefined
+VFileMessage.prototype.fatal = undefined
+VFileMessage.prototype.place = undefined
+VFileMessage.prototype.ruleId = undefined
+VFileMessage.prototype.source = undefined
+
+
+/***/ }),
+
+/***/ 62437:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   L: () => (/* binding */ stringifyPosition)
+/* harmony export */ });
+/**
+ * @typedef {import('unist').Node} Node
+ * @typedef {import('unist').Point} Point
+ * @typedef {import('unist').Position} Position
+ */
+
+/**
+ * @typedef NodeLike
+ * @property {string} type
+ * @property {PositionLike | null | undefined} [position]
+ *
+ * @typedef PointLike
+ * @property {number | null | undefined} [line]
+ * @property {number | null | undefined} [column]
+ * @property {number | null | undefined} [offset]
+ *
+ * @typedef PositionLike
+ * @property {PointLike | null | undefined} [start]
+ * @property {PointLike | null | undefined} [end]
+ */
+
+/**
+ * Serialize the positional info of a point, position (start and end points),
+ * or node.
+ *
+ * @param {Node | NodeLike | Point | PointLike | Position | PositionLike | null | undefined} [value]
+ *   Node, position, or point.
+ * @returns {string}
+ *   Pretty printed positional info of a node (`string`).
+ *
+ *   In the format of a range `ls:cs-le:ce` (when given `node` or `position`)
+ *   or a point `l:c` (when given `point`), where `l` stands for line, `c` for
+ *   column, `s` for `start`, and `e` for end.
+ *   An empty string (`''`) is returned if the given value is neither `node`,
+ *   `position`, nor `point`.
+ */
+function stringifyPosition(value) {
+  // Nothing.
+  if (!value || typeof value !== 'object') {
+    return ''
+  }
+
+  // Node.
+  if ('position' in value || 'type' in value) {
+    return position(value.position)
+  }
+
+  // Position.
+  if ('start' in value || 'end' in value) {
+    return position(value)
+  }
+
+  // Point.
+  if ('line' in value || 'column' in value) {
+    return point(value)
+  }
+
+  // ?
+  return ''
+}
+
+/**
+ * @param {Point | PointLike | null | undefined} point
+ * @returns {string}
+ */
+function point(point) {
+  return index(point && point.line) + ':' + index(point && point.column)
+}
+
+/**
+ * @param {Position | PositionLike | null | undefined} pos
+ * @returns {string}
+ */
+function position(pos) {
+  return point(pos && pos.start) + '-' + point(pos && pos.end)
+}
+
+/**
+ * @param {number | null | undefined} value
+ * @returns {number}
+ */
+function index(value) {
+  return value && typeof value === 'number' ? value : 1
+}
+
+
+/***/ }),
+
+/***/ 97749:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   T: () => (/* binding */ VFile)
+/* harmony export */ });
+/* harmony import */ var vfile_message__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(24435);
+/* harmony import */ var vfile_do_not_use_conditional_minpath__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(83196);
+/* harmony import */ var vfile_do_not_use_conditional_minproc__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(591);
+/* harmony import */ var vfile_do_not_use_conditional_minurl__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(89497);
+/* harmony import */ var vfile_do_not_use_conditional_minurl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(69086);
+/**
+ * @typedef {import('unist').Node} Node
+ * @typedef {import('unist').Point} Point
+ * @typedef {import('unist').Position} Position
+ * @typedef {import('vfile-message').Options} MessageOptions
+ * @typedef {import('../index.js').Data} Data
+ * @typedef {import('../index.js').Value} Value
+ */
+
+/**
+ * @typedef {object & {type: string, position?: Position | undefined}} NodeLike
+ *
+ * @typedef {Options | URL | VFile | Value} Compatible
+ *   Things that can be passed to the constructor.
+ *
+ * @typedef VFileCoreOptions
+ *   Set multiple values.
+ * @property {string | null | undefined} [basename]
+ *   Set `basename` (name).
+ * @property {string | null | undefined} [cwd]
+ *   Set `cwd` (working directory).
+ * @property {Data | null | undefined} [data]
+ *   Set `data` (associated info).
+ * @property {string | null | undefined} [dirname]
+ *   Set `dirname` (path w/o basename).
+ * @property {string | null | undefined} [extname]
+ *   Set `extname` (extension with dot).
+ * @property {Array<string> | null | undefined} [history]
+ *   Set `history` (paths the file moved between).
+ * @property {URL | string | null | undefined} [path]
+ *   Set `path` (current path).
+ * @property {string | null | undefined} [stem]
+ *   Set `stem` (name without extension).
+ * @property {Value | null | undefined} [value]
+ *   Set `value` (the contents of the file).
+ *
+ * @typedef Map
+ *   Raw source map.
+ *
+ *   See:
+ *   <https://github.com/mozilla/source-map/blob/60adcb0/source-map.d.ts#L15-L23>.
+ * @property {number} version
+ *   Which version of the source map spec this map is following.
+ * @property {Array<string>} sources
+ *   An array of URLs to the original source files.
+ * @property {Array<string>} names
+ *   An array of identifiers which can be referenced by individual mappings.
+ * @property {string | undefined} [sourceRoot]
+ *   The URL root from which all sources are relative.
+ * @property {Array<string> | undefined} [sourcesContent]
+ *   An array of contents of the original source files.
+ * @property {string} mappings
+ *   A string of base64 VLQs which contain the actual mappings.
+ * @property {string} file
+ *   The generated file this source map is associated with.
+ *
+ * @typedef {Record<string, unknown> & VFileCoreOptions} Options
+ *   Configuration.
+ *
+ *   A bunch of keys that will be shallow copied over to the new file.
+ *
+ * @typedef {Record<string, unknown>} ReporterSettings
+ *   Configuration for reporters.
+ */
+
+/**
+ * @template [Settings=ReporterSettings]
+ *   Options type.
+ * @callback Reporter
+ *   Type for a reporter.
+ * @param {Array<VFile>} files
+ *   Files to report.
+ * @param {Settings} options
+ *   Configuration.
+ * @returns {string}
+ *   Report.
+ */
+
+
+
+
+
+
+/**
+ * Order of setting (least specific to most), we need this because otherwise
+ * `{stem: 'a', path: '~/b.js'}` would throw, as a path is needed before a
+ * stem can be set.
+ */
+const order = /** @type {const} */ ([
+  'history',
+  'path',
+  'basename',
+  'stem',
+  'extname',
+  'dirname'
+])
+
+class VFile {
+  /**
+   * Create a new virtual file.
+   *
+   * `options` is treated as:
+   *
+   * *   `string` or `Uint8Array` — `{value: options}`
+   * *   `URL` — `{path: options}`
+   * *   `VFile` — shallow copies its data over to the new file
+   * *   `object` — all fields are shallow copied over to the new file
+   *
+   * Path related fields are set in the following order (least specific to
+   * most specific): `history`, `path`, `basename`, `stem`, `extname`,
+   * `dirname`.
+   *
+   * You cannot set `dirname` or `extname` without setting either `history`,
+   * `path`, `basename`, or `stem` too.
+   *
+   * @param {Compatible | null | undefined} [value]
+   *   File value.
+   * @returns
+   *   New instance.
+   */
+  constructor(value) {
+    /** @type {Options | VFile} */
+    let options
+
+    if (!value) {
+      options = {}
+    } else if ((0,vfile_do_not_use_conditional_minurl__WEBPACK_IMPORTED_MODULE_0__/* .isUrl */ .g)(value)) {
+      options = {path: value}
+    } else if (typeof value === 'string' || isUint8Array(value)) {
+      options = {value}
+    } else {
+      options = value
+    }
+
+    /* eslint-disable no-unused-expressions */
+
+    /**
+     * Base of `path` (default: `process.cwd()` or `'/'` in browsers).
+     *
+     * @type {string}
+     */
+    this.cwd = vfile_do_not_use_conditional_minproc__WEBPACK_IMPORTED_MODULE_1__/* .proc */ .f.cwd()
+
+    /**
+     * Place to store custom info (default: `{}`).
+     *
+     * It’s OK to store custom data directly on the file but moving it to
+     * `data` is recommended.
+     *
+     * @type {Data}
+     */
+    this.data = {}
+
+    /**
+     * List of file paths the file moved between.
+     *
+     * The first is the original path and the last is the current path.
+     *
+     * @type {Array<string>}
+     */
+    this.history = []
+
+    /**
+     * List of messages associated with the file.
+     *
+     * @type {Array<VFileMessage>}
+     */
+    this.messages = []
+
+    /**
+     * Raw value.
+     *
+     * @type {Value}
+     */
+    this.value
+
+    // The below are non-standard, they are “well-known”.
+    // As in, used in several tools.
+    /**
+     * Source map.
+     *
+     * This type is equivalent to the `RawSourceMap` type from the `source-map`
+     * module.
+     *
+     * @type {Map | null | undefined}
+     */
+    this.map
+
+    /**
+     * Custom, non-string, compiled, representation.
+     *
+     * This is used by unified to store non-string results.
+     * One example is when turning markdown into React nodes.
+     *
+     * @type {unknown}
+     */
+    this.result
+
+    /**
+     * Whether a file was saved to disk.
+     *
+     * This is used by vfile reporters.
+     *
+     * @type {boolean}
+     */
+    this.stored
+    /* eslint-enable no-unused-expressions */
+
+    // Set path related properties in the correct order.
+    let index = -1
+
+    while (++index < order.length) {
+      const prop = order[index]
+
+      // Note: we specifically use `in` instead of `hasOwnProperty` to accept
+      // `vfile`s too.
+      if (
+        prop in options &&
+        options[prop] !== undefined &&
+        options[prop] !== null
+      ) {
+        // @ts-expect-error: TS doesn’t understand basic reality.
+        this[prop] = prop === 'history' ? [...options[prop]] : options[prop]
+      }
+    }
+
+    /** @type {string} */
+    let prop
+
+    // Set non-path related properties.
+    for (prop in options) {
+      // @ts-expect-error: fine to set other things.
+      if (!order.includes(prop)) {
+        // @ts-expect-error: fine to set other things.
+        this[prop] = options[prop]
+      }
+    }
+  }
+
+  /**
+   * Get the basename (including extname) (example: `'index.min.js'`).
+   *
+   * @returns {string | undefined}
+   *   Basename.
+   */
+  get basename() {
+    return typeof this.path === 'string' ? vfile_do_not_use_conditional_minpath__WEBPACK_IMPORTED_MODULE_2__/* .path */ .A.basename(this.path) : undefined
+  }
+
+  /**
+   * Set basename (including extname) (`'index.min.js'`).
+   *
+   * Cannot contain path separators (`'/'` on unix, macOS, and browsers, `'\'`
+   * on windows).
+   * Cannot be nullified (use `file.path = file.dirname` instead).
+   *
+   * @param {string} basename
+   *   Basename.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  set basename(basename) {
+    assertNonEmpty(basename, 'basename')
+    assertPart(basename, 'basename')
+    this.path = vfile_do_not_use_conditional_minpath__WEBPACK_IMPORTED_MODULE_2__/* .path */ .A.join(this.dirname || '', basename)
+  }
+
+  /**
+   * Get the parent path (example: `'~'`).
+   *
+   * @returns {string | undefined}
+   *   Dirname.
+   */
+  get dirname() {
+    return typeof this.path === 'string' ? vfile_do_not_use_conditional_minpath__WEBPACK_IMPORTED_MODULE_2__/* .path */ .A.dirname(this.path) : undefined
+  }
+
+  /**
+   * Set the parent path (example: `'~'`).
+   *
+   * Cannot be set if there’s no `path` yet.
+   *
+   * @param {string | undefined} dirname
+   *   Dirname.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  set dirname(dirname) {
+    assertPath(this.basename, 'dirname')
+    this.path = vfile_do_not_use_conditional_minpath__WEBPACK_IMPORTED_MODULE_2__/* .path */ .A.join(dirname || '', this.basename)
+  }
+
+  /**
+   * Get the extname (including dot) (example: `'.js'`).
+   *
+   * @returns {string | undefined}
+   *   Extname.
+   */
+  get extname() {
+    return typeof this.path === 'string' ? vfile_do_not_use_conditional_minpath__WEBPACK_IMPORTED_MODULE_2__/* .path */ .A.extname(this.path) : undefined
+  }
+
+  /**
+   * Set the extname (including dot) (example: `'.js'`).
+   *
+   * Cannot contain path separators (`'/'` on unix, macOS, and browsers, `'\'`
+   * on windows).
+   * Cannot be set if there’s no `path` yet.
+   *
+   * @param {string | undefined} extname
+   *   Extname.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  set extname(extname) {
+    assertPart(extname, 'extname')
+    assertPath(this.dirname, 'extname')
+
+    if (extname) {
+      if (extname.codePointAt(0) !== 46 /* `.` */) {
+        throw new Error('`extname` must start with `.`')
+      }
+
+      if (extname.includes('.', 1)) {
+        throw new Error('`extname` cannot contain multiple dots')
+      }
+    }
+
+    this.path = vfile_do_not_use_conditional_minpath__WEBPACK_IMPORTED_MODULE_2__/* .path */ .A.join(this.dirname, this.stem + (extname || ''))
+  }
+
+  /**
+   * Get the full path (example: `'~/index.min.js'`).
+   *
+   * @returns {string}
+   *   Path.
+   */
+  get path() {
+    return this.history[this.history.length - 1]
+  }
+
+  /**
+   * Set the full path (example: `'~/index.min.js'`).
+   *
+   * Cannot be nullified.
+   * You can set a file URL (a `URL` object with a `file:` protocol) which will
+   * be turned into a path with `url.fileURLToPath`.
+   *
+   * @param {URL | string} path
+   *   Path.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  set path(path) {
+    if ((0,vfile_do_not_use_conditional_minurl__WEBPACK_IMPORTED_MODULE_0__/* .isUrl */ .g)(path)) {
+      path = (0,vfile_do_not_use_conditional_minurl__WEBPACK_IMPORTED_MODULE_3__/* .urlToPath */ .Y)(path)
+    }
+
+    assertNonEmpty(path, 'path')
+
+    if (this.path !== path) {
+      this.history.push(path)
+    }
+  }
+
+  /**
+   * Get the stem (basename w/o extname) (example: `'index.min'`).
+   *
+   * @returns {string | undefined}
+   *   Stem.
+   */
+  get stem() {
+    return typeof this.path === 'string'
+      ? vfile_do_not_use_conditional_minpath__WEBPACK_IMPORTED_MODULE_2__/* .path */ .A.basename(this.path, this.extname)
+      : undefined
+  }
+
+  /**
+   * Set the stem (basename w/o extname) (example: `'index.min'`).
+   *
+   * Cannot contain path separators (`'/'` on unix, macOS, and browsers, `'\'`
+   * on windows).
+   * Cannot be nullified (use `file.path = file.dirname` instead).
+   *
+   * @param {string} stem
+   *   Stem.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  set stem(stem) {
+    assertNonEmpty(stem, 'stem')
+    assertPart(stem, 'stem')
+    this.path = vfile_do_not_use_conditional_minpath__WEBPACK_IMPORTED_MODULE_2__/* .path */ .A.join(this.dirname || '', stem + (this.extname || ''))
+  }
+
+  // Normal prototypal methods.
+  /**
+   * Create a fatal message for `reason` associated with the file.
+   *
+   * The `fatal` field of the message is set to `true` (error; file not usable)
+   * and the `file` field is set to the current file path.
+   * The message is added to the `messages` field on `file`.
+   *
+   * > 🪦 **Note**: also has obsolete signatures.
+   *
+   * @overload
+   * @param {string} reason
+   * @param {MessageOptions | null | undefined} [options]
+   * @returns {never}
+   *
+   * @overload
+   * @param {string} reason
+   * @param {Node | NodeLike | null | undefined} parent
+   * @param {string | null | undefined} [origin]
+   * @returns {never}
+   *
+   * @overload
+   * @param {string} reason
+   * @param {Point | Position | null | undefined} place
+   * @param {string | null | undefined} [origin]
+   * @returns {never}
+   *
+   * @overload
+   * @param {string} reason
+   * @param {string | null | undefined} [origin]
+   * @returns {never}
+   *
+   * @overload
+   * @param {Error | VFileMessage} cause
+   * @param {Node | NodeLike | null | undefined} parent
+   * @param {string | null | undefined} [origin]
+   * @returns {never}
+   *
+   * @overload
+   * @param {Error | VFileMessage} cause
+   * @param {Point | Position | null | undefined} place
+   * @param {string | null | undefined} [origin]
+   * @returns {never}
+   *
+   * @overload
+   * @param {Error | VFileMessage} cause
+   * @param {string | null | undefined} [origin]
+   * @returns {never}
+   *
+   * @param {Error | VFileMessage | string} causeOrReason
+   *   Reason for message, should use markdown.
+   * @param {Node | NodeLike | MessageOptions | Point | Position | string | null | undefined} [optionsOrParentOrPlace]
+   *   Configuration (optional).
+   * @param {string | null | undefined} [origin]
+   *   Place in code where the message originates (example:
+   *   `'my-package:my-rule'` or `'my-rule'`).
+   * @returns {never}
+   *   Never.
+   * @throws {VFileMessage}
+   *   Message.
+   */
+  fail(causeOrReason, optionsOrParentOrPlace, origin) {
+    // @ts-expect-error: the overloads are fine.
+    const message = this.message(causeOrReason, optionsOrParentOrPlace, origin)
+
+    message.fatal = true
+
+    throw message
+  }
+
+  /**
+   * Create an info message for `reason` associated with the file.
+   *
+   * The `fatal` field of the message is set to `undefined` (info; change
+   * likely not needed) and the `file` field is set to the current file path.
+   * The message is added to the `messages` field on `file`.
+   *
+   * > 🪦 **Note**: also has obsolete signatures.
+   *
+   * @overload
+   * @param {string} reason
+   * @param {MessageOptions | null | undefined} [options]
+   * @returns {VFileMessage}
+   *
+   * @overload
+   * @param {string} reason
+   * @param {Node | NodeLike | null | undefined} parent
+   * @param {string | null | undefined} [origin]
+   * @returns {VFileMessage}
+   *
+   * @overload
+   * @param {string} reason
+   * @param {Point | Position | null | undefined} place
+   * @param {string | null | undefined} [origin]
+   * @returns {VFileMessage}
+   *
+   * @overload
+   * @param {string} reason
+   * @param {string | null | undefined} [origin]
+   * @returns {VFileMessage}
+   *
+   * @overload
+   * @param {Error | VFileMessage} cause
+   * @param {Node | NodeLike | null | undefined} parent
+   * @param {string | null | undefined} [origin]
+   * @returns {VFileMessage}
+   *
+   * @overload
+   * @param {Error | VFileMessage} cause
+   * @param {Point | Position | null | undefined} place
+   * @param {string | null | undefined} [origin]
+   * @returns {VFileMessage}
+   *
+   * @overload
+   * @param {Error | VFileMessage} cause
+   * @param {string | null | undefined} [origin]
+   * @returns {VFileMessage}
+   *
+   * @param {Error | VFileMessage | string} causeOrReason
+   *   Reason for message, should use markdown.
+   * @param {Node | NodeLike | MessageOptions | Point | Position | string | null | undefined} [optionsOrParentOrPlace]
+   *   Configuration (optional).
+   * @param {string | null | undefined} [origin]
+   *   Place in code where the message originates (example:
+   *   `'my-package:my-rule'` or `'my-rule'`).
+   * @returns {VFileMessage}
+   *   Message.
+   */
+  info(causeOrReason, optionsOrParentOrPlace, origin) {
+    // @ts-expect-error: the overloads are fine.
+    const message = this.message(causeOrReason, optionsOrParentOrPlace, origin)
+
+    message.fatal = undefined
+
+    return message
+  }
+
+  /**
+   * Create a message for `reason` associated with the file.
+   *
+   * The `fatal` field of the message is set to `false` (warning; change may be
+   * needed) and the `file` field is set to the current file path.
+   * The message is added to the `messages` field on `file`.
+   *
+   * > 🪦 **Note**: also has obsolete signatures.
+   *
+   * @overload
+   * @param {string} reason
+   * @param {MessageOptions | null | undefined} [options]
+   * @returns {VFileMessage}
+   *
+   * @overload
+   * @param {string} reason
+   * @param {Node | NodeLike | null | undefined} parent
+   * @param {string | null | undefined} [origin]
+   * @returns {VFileMessage}
+   *
+   * @overload
+   * @param {string} reason
+   * @param {Point | Position | null | undefined} place
+   * @param {string | null | undefined} [origin]
+   * @returns {VFileMessage}
+   *
+   * @overload
+   * @param {string} reason
+   * @param {string | null | undefined} [origin]
+   * @returns {VFileMessage}
+   *
+   * @overload
+   * @param {Error | VFileMessage} cause
+   * @param {Node | NodeLike | null | undefined} parent
+   * @param {string | null | undefined} [origin]
+   * @returns {VFileMessage}
+   *
+   * @overload
+   * @param {Error | VFileMessage} cause
+   * @param {Point | Position | null | undefined} place
+   * @param {string | null | undefined} [origin]
+   * @returns {VFileMessage}
+   *
+   * @overload
+   * @param {Error | VFileMessage} cause
+   * @param {string | null | undefined} [origin]
+   * @returns {VFileMessage}
+   *
+   * @param {Error | VFileMessage | string} causeOrReason
+   *   Reason for message, should use markdown.
+   * @param {Node | NodeLike | MessageOptions | Point | Position | string | null | undefined} [optionsOrParentOrPlace]
+   *   Configuration (optional).
+   * @param {string | null | undefined} [origin]
+   *   Place in code where the message originates (example:
+   *   `'my-package:my-rule'` or `'my-rule'`).
+   * @returns {VFileMessage}
+   *   Message.
+   */
+  message(causeOrReason, optionsOrParentOrPlace, origin) {
+    const message = new vfile_message__WEBPACK_IMPORTED_MODULE_4__/* .VFileMessage */ .o(
+      // @ts-expect-error: the overloads are fine.
+      causeOrReason,
+      optionsOrParentOrPlace,
+      origin
+    )
+
+    if (this.path) {
+      message.name = this.path + ':' + message.name
+      message.file = this.path
+    }
+
+    message.fatal = false
+
+    this.messages.push(message)
+
+    return message
+  }
+
+  /**
+   * Serialize the file.
+   *
+   * > **Note**: which encodings are supported depends on the engine.
+   * > For info on Node.js, see:
+   * > <https://nodejs.org/api/util.html#whatwg-supported-encodings>.
+   *
+   * @param {string | null | undefined} [encoding='utf8']
+   *   Character encoding to understand `value` as when it’s a `Uint8Array`
+   *   (default: `'utf-8'`).
+   * @returns {string}
+   *   Serialized file.
+   */
+  toString(encoding) {
+    if (this.value === undefined) {
+      return ''
+    }
+
+    if (typeof this.value === 'string') {
+      return this.value
+    }
+
+    const decoder = new TextDecoder(encoding || undefined)
+    return decoder.decode(this.value)
+  }
+}
+
+/**
+ * Assert that `part` is not a path (as in, does not contain `path.sep`).
+ *
+ * @param {string | null | undefined} part
+ *   File path part.
+ * @param {string} name
+ *   Part name.
+ * @returns {undefined}
+ *   Nothing.
+ */
+function assertPart(part, name) {
+  if (part && part.includes(vfile_do_not_use_conditional_minpath__WEBPACK_IMPORTED_MODULE_2__/* .path */ .A.sep)) {
+    throw new Error(
+      '`' + name + '` cannot be a path: did not expect `' + vfile_do_not_use_conditional_minpath__WEBPACK_IMPORTED_MODULE_2__/* .path */ .A.sep + '`'
+    )
+  }
+}
+
+/**
+ * Assert that `part` is not empty.
+ *
+ * @param {string | undefined} part
+ *   Thing.
+ * @param {string} name
+ *   Part name.
+ * @returns {asserts part is string}
+ *   Nothing.
+ */
+function assertNonEmpty(part, name) {
+  if (!part) {
+    throw new Error('`' + name + '` cannot be empty')
+  }
+}
+
+/**
+ * Assert `path` exists.
+ *
+ * @param {string | undefined} path
+ *   Path.
+ * @param {string} name
+ *   Dependency name.
+ * @returns {asserts path is string}
+ *   Nothing.
+ */
+function assertPath(path, name) {
+  if (!path) {
+    throw new Error('Setting `' + name + '` requires `path` to be set too')
+  }
+}
+
+/**
+ * Assert `value` is an `Uint8Array`.
+ *
+ * @param {unknown} value
+ *   thing.
+ * @returns {value is Uint8Array}
+ *   Whether `value` is an `Uint8Array`.
+ */
+function isUint8Array(value) {
+  return Boolean(
+    value &&
+      typeof value === 'object' &&
+      'byteLength' in value &&
+      'byteOffset' in value
+  )
+}
+
+
+/***/ }),
+
+/***/ 83196:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ path)
+/* harmony export */ });
+// A derivative work based on:
+// <https://github.com/browserify/path-browserify>.
+// Which is licensed:
+//
+// MIT License
+//
+// Copyright (c) 2013 James Halliday
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of
+// this software and associated documentation files (the "Software"), to deal in
+// the Software without restriction, including without limitation the rights to
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do so,
+// subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+// FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+// COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+// IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+// CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// A derivative work based on:
+//
+// Parts of that are extracted from Node’s internal `path` module:
+// <https://github.com/nodejs/node/blob/master/lib/path.js>.
+// Which is licensed:
+//
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+const path = {basename, dirname, extname, join, sep: '/'}
+
+/* eslint-disable max-depth, complexity */
+
+/**
+ * Get the basename from a path.
+ *
+ * @param {string} path
+ *   File path.
+ * @param {string | null | undefined} [ext]
+ *   Extension to strip.
+ * @returns {string}
+ *   Stem or basename.
+ */
+function basename(path, ext) {
+  if (ext !== undefined && typeof ext !== 'string') {
+    throw new TypeError('"ext" argument must be a string')
+  }
+
+  assertPath(path)
+  let start = 0
+  let end = -1
+  let index = path.length
+  /** @type {boolean | undefined} */
+  let seenNonSlash
+
+  if (ext === undefined || ext.length === 0 || ext.length > path.length) {
+    while (index--) {
+      if (path.codePointAt(index) === 47 /* `/` */) {
+        // If we reached a path separator that was not part of a set of path
+        // separators at the end of the string, stop now.
+        if (seenNonSlash) {
+          start = index + 1
+          break
+        }
+      } else if (end < 0) {
+        // We saw the first non-path separator, mark this as the end of our
+        // path component.
+        seenNonSlash = true
+        end = index + 1
+      }
+    }
+
+    return end < 0 ? '' : path.slice(start, end)
+  }
+
+  if (ext === path) {
+    return ''
+  }
+
+  let firstNonSlashEnd = -1
+  let extIndex = ext.length - 1
+
+  while (index--) {
+    if (path.codePointAt(index) === 47 /* `/` */) {
+      // If we reached a path separator that was not part of a set of path
+      // separators at the end of the string, stop now.
+      if (seenNonSlash) {
+        start = index + 1
+        break
+      }
+    } else {
+      if (firstNonSlashEnd < 0) {
+        // We saw the first non-path separator, remember this index in case
+        // we need it if the extension ends up not matching.
+        seenNonSlash = true
+        firstNonSlashEnd = index + 1
+      }
+
+      if (extIndex > -1) {
+        // Try to match the explicit extension.
+        if (path.codePointAt(index) === ext.codePointAt(extIndex--)) {
+          if (extIndex < 0) {
+            // We matched the extension, so mark this as the end of our path
+            // component
+            end = index
+          }
+        } else {
+          // Extension does not match, so our result is the entire path
+          // component
+          extIndex = -1
+          end = firstNonSlashEnd
+        }
+      }
+    }
+  }
+
+  if (start === end) {
+    end = firstNonSlashEnd
+  } else if (end < 0) {
+    end = path.length
+  }
+
+  return path.slice(start, end)
+}
+
+/**
+ * Get the dirname from a path.
+ *
+ * @param {string} path
+ *   File path.
+ * @returns {string}
+ *   File path.
+ */
+function dirname(path) {
+  assertPath(path)
+
+  if (path.length === 0) {
+    return '.'
+  }
+
+  let end = -1
+  let index = path.length
+  /** @type {boolean | undefined} */
+  let unmatchedSlash
+
+  // Prefix `--` is important to not run on `0`.
+  while (--index) {
+    if (path.codePointAt(index) === 47 /* `/` */) {
+      if (unmatchedSlash) {
+        end = index
+        break
+      }
+    } else if (!unmatchedSlash) {
+      // We saw the first non-path separator
+      unmatchedSlash = true
+    }
+  }
+
+  return end < 0
+    ? path.codePointAt(0) === 47 /* `/` */
+      ? '/'
+      : '.'
+    : end === 1 && path.codePointAt(0) === 47 /* `/` */
+    ? '//'
+    : path.slice(0, end)
+}
+
+/**
+ * Get an extname from a path.
+ *
+ * @param {string} path
+ *   File path.
+ * @returns {string}
+ *   Extname.
+ */
+function extname(path) {
+  assertPath(path)
+
+  let index = path.length
+
+  let end = -1
+  let startPart = 0
+  let startDot = -1
+  // Track the state of characters (if any) we see before our first dot and
+  // after any path separator we find.
+  let preDotState = 0
+  /** @type {boolean | undefined} */
+  let unmatchedSlash
+
+  while (index--) {
+    const code = path.codePointAt(index)
+
+    if (code === 47 /* `/` */) {
+      // If we reached a path separator that was not part of a set of path
+      // separators at the end of the string, stop now.
+      if (unmatchedSlash) {
+        startPart = index + 1
+        break
+      }
+
+      continue
+    }
+
+    if (end < 0) {
+      // We saw the first non-path separator, mark this as the end of our
+      // extension.
+      unmatchedSlash = true
+      end = index + 1
+    }
+
+    if (code === 46 /* `.` */) {
+      // If this is our first dot, mark it as the start of our extension.
+      if (startDot < 0) {
+        startDot = index
+      } else if (preDotState !== 1) {
+        preDotState = 1
+      }
+    } else if (startDot > -1) {
+      // We saw a non-dot and non-path separator before our dot, so we should
+      // have a good chance at having a non-empty extension.
+      preDotState = -1
+    }
+  }
+
+  if (
+    startDot < 0 ||
+    end < 0 ||
+    // We saw a non-dot character immediately before the dot.
+    preDotState === 0 ||
+    // The (right-most) trimmed path component is exactly `..`.
+    (preDotState === 1 && startDot === end - 1 && startDot === startPart + 1)
+  ) {
+    return ''
+  }
+
+  return path.slice(startDot, end)
+}
+
+/**
+ * Join segments from a path.
+ *
+ * @param {Array<string>} segments
+ *   Path segments.
+ * @returns {string}
+ *   File path.
+ */
+function join(...segments) {
+  let index = -1
+  /** @type {string | undefined} */
+  let joined
+
+  while (++index < segments.length) {
+    assertPath(segments[index])
+
+    if (segments[index]) {
+      joined =
+        joined === undefined ? segments[index] : joined + '/' + segments[index]
+    }
+  }
+
+  return joined === undefined ? '.' : normalize(joined)
+}
+
+/**
+ * Normalize a basic file path.
+ *
+ * @param {string} path
+ *   File path.
+ * @returns {string}
+ *   File path.
+ */
+// Note: `normalize` is not exposed as `path.normalize`, so some code is
+// manually removed from it.
+function normalize(path) {
+  assertPath(path)
+
+  const absolute = path.codePointAt(0) === 47 /* `/` */
+
+  // Normalize the path according to POSIX rules.
+  let value = normalizeString(path, !absolute)
+
+  if (value.length === 0 && !absolute) {
+    value = '.'
+  }
+
+  if (value.length > 0 && path.codePointAt(path.length - 1) === 47 /* / */) {
+    value += '/'
+  }
+
+  return absolute ? '/' + value : value
+}
+
+/**
+ * Resolve `.` and `..` elements in a path with directory names.
+ *
+ * @param {string} path
+ *   File path.
+ * @param {boolean} allowAboveRoot
+ *   Whether `..` can move above root.
+ * @returns {string}
+ *   File path.
+ */
+function normalizeString(path, allowAboveRoot) {
+  let result = ''
+  let lastSegmentLength = 0
+  let lastSlash = -1
+  let dots = 0
+  let index = -1
+  /** @type {number | undefined} */
+  let code
+  /** @type {number} */
+  let lastSlashIndex
+
+  while (++index <= path.length) {
+    if (index < path.length) {
+      code = path.codePointAt(index)
+    } else if (code === 47 /* `/` */) {
+      break
+    } else {
+      code = 47 /* `/` */
+    }
+
+    if (code === 47 /* `/` */) {
+      if (lastSlash === index - 1 || dots === 1) {
+        // Empty.
+      } else if (lastSlash !== index - 1 && dots === 2) {
+        if (
+          result.length < 2 ||
+          lastSegmentLength !== 2 ||
+          result.codePointAt(result.length - 1) !== 46 /* `.` */ ||
+          result.codePointAt(result.length - 2) !== 46 /* `.` */
+        ) {
+          if (result.length > 2) {
+            lastSlashIndex = result.lastIndexOf('/')
+
+            if (lastSlashIndex !== result.length - 1) {
+              if (lastSlashIndex < 0) {
+                result = ''
+                lastSegmentLength = 0
+              } else {
+                result = result.slice(0, lastSlashIndex)
+                lastSegmentLength = result.length - 1 - result.lastIndexOf('/')
+              }
+
+              lastSlash = index
+              dots = 0
+              continue
+            }
+          } else if (result.length > 0) {
+            result = ''
+            lastSegmentLength = 0
+            lastSlash = index
+            dots = 0
+            continue
+          }
+        }
+
+        if (allowAboveRoot) {
+          result = result.length > 0 ? result + '/..' : '..'
+          lastSegmentLength = 2
+        }
+      } else {
+        if (result.length > 0) {
+          result += '/' + path.slice(lastSlash + 1, index)
+        } else {
+          result = path.slice(lastSlash + 1, index)
+        }
+
+        lastSegmentLength = index - lastSlash - 1
+      }
+
+      lastSlash = index
+      dots = 0
+    } else if (code === 46 /* `.` */ && dots > -1) {
+      dots++
+    } else {
+      dots = -1
+    }
+  }
+
+  return result
+}
+
+/**
+ * Make sure `path` is a string.
+ *
+ * @param {string} path
+ *   File path.
+ * @returns {asserts path is string}
+ *   Nothing.
+ */
+function assertPath(path) {
+  if (typeof path !== 'string') {
+    throw new TypeError(
+      'Path must be a string. Received ' + JSON.stringify(path)
+    )
+  }
+}
+
+/* eslint-enable max-depth, complexity */
+
+
+/***/ }),
+
+/***/ 591:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   f: () => (/* binding */ proc)
+/* harmony export */ });
+// Somewhat based on:
+// <https://github.com/defunctzombie/node-process/blob/master/browser.js>.
+// But I don’t think one tiny line of code can be copyrighted. 😅
+const proc = {cwd}
+
+function cwd() {
+  return '/'
+}
+
+
+/***/ }),
+
+/***/ 69086:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Y: () => (/* binding */ urlToPath)
+/* harmony export */ });
+/* harmony import */ var _minurl_shared_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(89497);
+
+
+
+
+// See: <https://github.com/nodejs/node/blob/6a3403c/lib/internal/url.js>
+
+/**
+ * @param {URL | string} path
+ *   File URL.
+ * @returns {string}
+ *   File URL.
+ */
+function urlToPath(path) {
+  if (typeof path === 'string') {
+    path = new URL(path)
+  } else if (!(0,_minurl_shared_js__WEBPACK_IMPORTED_MODULE_0__/* .isUrl */ .g)(path)) {
+    /** @type {NodeJS.ErrnoException} */
+    const error = new TypeError(
+      'The "path" argument must be of type string or an instance of URL. Received `' +
+        path +
+        '`'
+    )
+    error.code = 'ERR_INVALID_ARG_TYPE'
+    throw error
+  }
+
+  if (path.protocol !== 'file:') {
+    /** @type {NodeJS.ErrnoException} */
+    const error = new TypeError('The URL must be of scheme file')
+    error.code = 'ERR_INVALID_URL_SCHEME'
+    throw error
+  }
+
+  return getPathFromURLPosix(path)
+}
+
+/**
+ * Get a path from a POSIX URL.
+ *
+ * @param {URL} url
+ *   URL.
+ * @returns {string}
+ *   File path.
+ */
+function getPathFromURLPosix(url) {
+  if (url.hostname !== '') {
+    /** @type {NodeJS.ErrnoException} */
+    const error = new TypeError(
+      'File URL host must be "localhost" or empty on darwin'
+    )
+    error.code = 'ERR_INVALID_FILE_URL_HOST'
+    throw error
+  }
+
+  const pathname = url.pathname
+  let index = -1
+
+  while (++index < pathname.length) {
+    if (
+      pathname.codePointAt(index) === 37 /* `%` */ &&
+      pathname.codePointAt(index + 1) === 50 /* `2` */
+    ) {
+      const third = pathname.codePointAt(index + 2)
+      if (third === 70 /* `F` */ || third === 102 /* `f` */) {
+        /** @type {NodeJS.ErrnoException} */
+        const error = new TypeError(
+          'File URL path must not include encoded / characters'
+        )
+        error.code = 'ERR_INVALID_FILE_URL_PATH'
+        throw error
+      }
+    }
+  }
+
+  return decodeURIComponent(pathname)
+}
+
+
+/***/ }),
+
+/***/ 89497:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   g: () => (/* binding */ isUrl)
+/* harmony export */ });
+/**
+ * Checks if a value has the shape of a WHATWG URL object.
+ *
+ * Using a symbol or instanceof would not be able to recognize URL objects
+ * coming from other implementations (e.g. in Electron), so instead we are
+ * checking some well known properties for a lack of a better test.
+ *
+ * We use `href` and `protocol` as they are the only properties that are
+ * easy to retrieve and calculate due to the lazy nature of the getters.
+ *
+ * We check for auth attribute to distinguish legacy url instance with
+ * WHATWG URL instance.
+ *
+ * @param {unknown} fileUrlOrPath
+ *   File path or URL.
+ * @returns {fileUrlOrPath is URL}
+ *   Whether it’s a URL.
+ */
+// From: <https://github.com/nodejs/node/blob/6a3403c/lib/internal/url.js#L720>
+function isUrl(fileUrlOrPath) {
+  return Boolean(
+    fileUrlOrPath !== null &&
+      typeof fileUrlOrPath === 'object' &&
+      'href' in fileUrlOrPath &&
+      fileUrlOrPath.href &&
+      'protocol' in fileUrlOrPath &&
+      fileUrlOrPath.protocol &&
+      // @ts-expect-error: indexing is fine.
+      fileUrlOrPath.auth === undefined
+  )
+}
+
+
+/***/ }),
+
 /***/ 10031:
 /***/ ((module) => {
 
 "use strict";
 module.exports = /*#__PURE__*/JSON.parse('{"/home/":"home","/stats/":"statistics","/add-ons/":"add-ons","/mailboxes":"mail","/comments/":"comments","/checkout/":"checkout","/backup/":"backup","/themes/":"themes","/plugins/manage":"manage plugins","/plugins":"plugins","/plans/":"upgrade plan","/email/":"manage emails","/domains/manage":"manage domain","/media/":"media","/posts/drafts":"drafted post","/posts/scheduled":"scheduled post","/posts/trashed":"trash post","/posts/":"posts","/posts":"posts","/pages/drafts":"drafted pages","/pages/scheduled":"scheduled pages","/pages/trashed":"trash pages","/pages/":"pages","/pages":"pages","/purchases/subscriptions/":"subscription purchases","/purchases/payment-methods/":"payment methods","/purchases/billing-history/":"billing history","/activity-log/":"activity","/woocommerce":"woocommerce","/wp-admin/admin.php?page=wc":"woocommerce","/people/team":"site users","/people/new":"invite user","/subscribers":"subscribers","/me/security":"security","/me/purchases":"purchases","/me/privacy":"privacy","/me/notifications":"notification settings","/me/account":"account settings","/me/site-blocks":"blocked sites","/me/get-apps":"wordpress apps","/me":"my profile","/settings/general/":"general settings","/settings/writing/":"writing settings","/settings/reading/":"reading settings","/settings/newsletter/":"newsletter settings","/settings/performance/":"performance settings","/settings/taxonomies/category/":"site categories","/settings/taxonomies/post_tag/":"post tag","/settings/podcasting/":"podcasting","/hosting-config/":"hosting configuration","/wp-admin/options-media.php":"media settings","/wp-admin/edit.php?post_type=jetpack-testimonial":"testimonials","/wp-admin/edit.php?post_type=page":"pages","/wp-admin/edit.php?post_type=feedback":"feedback form","/wp-admin/edit.php":"posts","/wp-admin/post-new.php?post_type=jetpack-testimonial":"new testimonial","/wp-admin/post-new.php?post_type=page":"new page","/wp-admin/post-new.php":"new post","/wp-admin/admin.php?page=akismet-key-config":"site spam","/wp-admin/admin.php?page=jetpack-search":"jetpack search","/wp-admin/admin.php?page=polls":"crowdsignal","/wp-admin/admin.php?page=ratings":"ratings","/wp-admin/options-general.php?page=debug-bar-extender":"debug bar extender","/wp-admin/index.php?page=my-blogs":"my sites","/read/conversations":"conversations","/read/notifications":"notifications","/read/subscriptions":"manage subscriptions","/read/list":"reader list","/read/search":"search","/read":"reader","/discover":"discover blogs","/tags":"tags","/sites":"manage sites","/marketing/tools/":"marketing tools","/marketing/traffic/":"traffic","/marketing/connections/":"connections","/marketing/sharing-buttons/":"social share","/marketing/business-tools/":"business tools","/earn/":"monetize","/advertising/":"advertising","/import/":"import","/export/":"export"}');
+
+/***/ }),
+
+/***/ 72275:
+/***/ ((module) => {
+
+"use strict";
+module.exports = /*#__PURE__*/JSON.parse('{"/home/":[{"locale":"en","post_ids":[1988,158974,134698,1507,147594],"blog_id":9619154}],"/stats/":[{"locale":"en","post_ids":[276080,3307,276101,4454,98905],"blog_id":9619154}],"/mailboxes/":[{"locale":"en","post_ids":[34087],"blog_id":9619154}],"/checkout/":[{"locale":"en","post_ids":[100856,199786,267108,1988,267100],"blog_id":9619154}],"/backup/":[{"locale":"en","post_ids":[145800,159843,115025,151496,134940],"blog_id":9619154}],"/themes/":[{"locale":"en","post_ids":[2278,184023,188667,259706,294101],"blog_id":9619154}],"/domains/manage":[{"locale":"en","post_ids":[2784,137759,2789,185130,1988],"blog_id":9619154}],"/media/":[{"locale":"en","post_ids":[853,3749,152893,4744,1998],"blog_id":9619154}],"/posts/drafts":[{"locale":"en","post_ids":[100846,84,176675,1668,14812],"blog_id":9619154}],"/posts/scheduled":[{"locale":"en","post_ids":[100846,84,176675,1344,82],"blog_id":9619154}],"/posts/trashed":[{"locale":"en","post_ids":[100846,193593,176675,5182,82],"blog_id":9619154}],"/post/":[{"locale":"en","post_ids":[147594,193416,193554,167011,176675],"blog_id":9619154}],"/posts/":[{"locale":"en","post_ids":[100846,84,176675,191604,82],"blog_id":9619154}],"/posts":[{"locale":"en","post_ids":[100846,84,176675,191604,82],"blog_id":9619154}],"/page/":[{"locale":"en","post_ids":[147594,193416,193554,167011,193903],"blog_id":9619154}],"/pages/drafts":[{"locale":"en","post_ids":[86,1668,163330,14812,189860],"blog_id":9619154}],"/pages/scheduled":[{"locale":"en","post_ids":[86,1344,163330,124077,189860],"blog_id":9619154}],"/pages/trashed":[{"locale":"en","post_ids":[86,5182,163330,193593,189860],"blog_id":9619154}],"/pages/":[{"locale":"en","post_ids":[86,1698,163330,124077,189860],"blog_id":9619154}],"/pages":[{"locale":"en","post_ids":[86,1698,163330,124077,189860],"blog_id":9619154}],"/purchases/subscriptions/":[{"locale":"en","post_ids":[111349,80135,151483,40792,1988],"blog_id":9619154}],"/purchases/payment-methods/":[{"locale":"en","post_ids":[111349,80135,76237,40792,1988],"blog_id":9619154}],"/purchases/billing-history/":[{"locale":"en","post_ids":[111349,80135,234670,40792,1988],"blog_id":9619154}],"/activity-log/":[{"locale":"en","post_ids":[145800,159843,115025,151496,134940],"blog_id":9619154}],"/people/team":[{"locale":"en","post_ids":[1221,226531,5444,80368,10977],"blog_id":9619154}],"/people/new":[{"locale":"en","post_ids":[1221,226531,5444,80368,10977],"blog_id":9619154}],"/me/security":[{"locale":"en","post_ids":[89,80368,58847,10977,91],"blog_id":9619154}],"/me/purchases":[{"locale":"en","post_ids":[111349,80135,267100,40792,1988],"blog_id":9619154}],"/me/account":[{"locale":"en","post_ids":[91,80368,9394,134698,2116],"blog_id":9619154}],"/me":[{"locale":"en","post_ids":[19775,80368,9394,134698,2116],"blog_id":9619154}],"/settings/general/":[{"locale":"en","post_ids":[1501,119826,1507,134940,240668],"blog_id":9619154}],"/settings/newsletter/":[{"locale":"en","post_ids":[257112,67810,168381,220199,5444],"blog_id":9619154}],"/wp-admin/edit.php?post_type=page":[{"locale":"en","post_ids":[86,1698,163330,124077,189860],"blog_id":9619154}],"/wp-admin/edit.php":[{"locale":"en","post_ids":[100846,84,176675,191604,82],"blog_id":9619154}],"/wp-admin/post-new.php?post_type=page":[{"locale":"en","post_ids":[86,1698,163330,124077,147594],"blog_id":9619154}],"/wp-admin/post-new.php":[{"locale":"en","post_ids":[100846,84,176675,191604,147594],"blog_id":9619154}],"/marketing/tools/":[{"locale":"en","post_ids":[216472,152657,121282,5022,3307],"blog_id":9619154}],"/marketing/traffic/":[{"locale":"en","post_ids":[155209,98905,142,134940,5022],"blog_id":9619154}],"/marketing/connections/":[{"locale":"en","post_ids":[216472,152893,152657,77589,320228],"blog_id":9619154}],"/earn/":[{"locale":"en","post_ids":[120172,154292,169123,255352,3307],"blog_id":9619154}],"/import":[{"locale":"en","post_ids":[41,240055,137759],"blog_id":9619154}],"/export/":[{"locale":"en","post_ids":[2087,278472,159843],"blog_id":9619154}]}');
 
 /***/ }),
 
