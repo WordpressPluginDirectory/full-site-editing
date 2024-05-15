@@ -2785,6 +2785,7 @@ function useHasEnTranslation() {
 /* harmony export */   Ws: () => (/* binding */ localesForPricePlans),
 /* harmony export */   _J: () => (/* binding */ supportSiteLocales),
 /* harmony export */   lW: () => (/* binding */ magnificentNonEnLocales),
+/* harmony export */   mt: () => (/* binding */ localesWithLearn),
 /* harmony export */   rh: () => (/* binding */ jetpackComLocales)
 /* harmony export */ });
 /* unused harmony exports i18nDefaultLocaleSlug, englishLocales, livechatSupportLocales */
@@ -2800,6 +2801,7 @@ const localesWithBlog = ['en', 'ja', 'es', 'pt', 'fr', 'pt-br'];
 const localesWithGoBlog = ['en', 'pt-br', 'de', 'es', 'fr', 'it'];
 const localesWithPrivacyPolicy = ['en', 'fr', 'de', 'es'];
 const localesWithCookiePolicy = ['en', 'fr', 'de', 'es'];
+const localesWithLearn = ['en', 'es'];
 const localesForPricePlans = ['ar', 'de', 'el', 'es', 'fr', 'he', 'id', 'it', 'ja', 'ko', 'nl', 'pt-br', 'ro', 'ru', 'sv', 'tr', 'zh-cn', 'zh-tw'];
 const localesToSubdomains = {
   'pt-br': 'br',
@@ -2918,6 +2920,7 @@ const urlLocalizationMapping = {
     }
     return prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesWithGoBlog */ .Cx)(url, localeSlug);
   },
+  'wordpress.com/pricing/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesForPricePlans */ .Ws),
   'wordpress.com/tos/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .lW),
   'wordpress.com/wp-admin/': setLocalizedUrlHost('wordpress.com', _locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .lW),
   'wordpress.com/wp-login.php': setLocalizedUrlHost('wordpress.com', _locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .lW),
@@ -2961,6 +2964,14 @@ const urlLocalizationMapping = {
   },
   'wordpress.com/start/': (url, localeSlug, isLoggedIn) => {
     return isLoggedIn ? url : suffixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .lW)(url, localeSlug);
+  },
+  'wordpress.com/learn/': (url, localeSlug) => {
+    const webinars = url.pathname.includes('/learn/webinars/');
+    if (webinars && 'es' === localeSlug) {
+      url.pathname = url.pathname.replace('/learn/webinars/', '/learn/es/webinars/');
+      return url;
+    }
+    return suffixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesWithLearn */ .mt)(url, localeSlug);
   },
   'wordpress.com/plans/': (url, localeSlug, isLoggedIn) => {
     // if logged in, or url.pathname contains characters after `/plans/`, don't rewrite

@@ -9138,7 +9138,9 @@ const EVENT_NAME_EXCEPTIONS = ['a8c_cookie_banner_ok', 'a8c_cookie_banner_view',
 // Checkout
 'calypso_checkout_switch_to_p_24', 'calypso_checkout_composite_p24_submit_clicked',
 // Launch Bar
-'wpcom_launchbar_button_click'];
+'wpcom_launchbar_button_click',
+// Request for free migration
+'wpcom_support_free_migration_request_click'];
 let _superProps; // Added to all Tracks events.
 let _loadTracksResult = Promise.resolve(); // default value for non-BOM environments.
 
@@ -9231,6 +9233,11 @@ function initializeAnalytics(currentUser, superProps) {
   if ('object' === typeof currentUser) {
     debug('identifyUser', currentUser);
     identifyUser(currentUser);
+  }
+  const tracksLinkerId = getUrlParameter('_tkl');
+  if (tracksLinkerId && tracksLinkerId !== getTracksAnonymousUserId()) {
+    // Link tk_ai anonymous ids if _tkl parameter is present in URL and ids between pages are different (e.g. cross-domain)
+    signalUserFromAnotherProduct(tracksLinkerId, 'anon');
   }
 
   // Tracks blocked?
@@ -10705,6 +10712,7 @@ function useHasEnTranslation() {
 /* harmony export */   Ws: () => (/* binding */ localesForPricePlans),
 /* harmony export */   _J: () => (/* binding */ supportSiteLocales),
 /* harmony export */   lW: () => (/* binding */ magnificentNonEnLocales),
+/* harmony export */   mt: () => (/* binding */ localesWithLearn),
 /* harmony export */   rh: () => (/* binding */ jetpackComLocales)
 /* harmony export */ });
 /* unused harmony exports englishLocales, livechatSupportLocales */
@@ -10720,6 +10728,7 @@ const localesWithBlog = ['en', 'ja', 'es', 'pt', 'fr', 'pt-br'];
 const localesWithGoBlog = ['en', 'pt-br', 'de', 'es', 'fr', 'it'];
 const localesWithPrivacyPolicy = ['en', 'fr', 'de', 'es'];
 const localesWithCookiePolicy = ['en', 'fr', 'de', 'es'];
+const localesWithLearn = ['en', 'es'];
 const localesForPricePlans = ['ar', 'de', 'el', 'es', 'fr', 'he', 'id', 'it', 'ja', 'ko', 'nl', 'pt-br', 'ro', 'ru', 'sv', 'tr', 'zh-cn', 'zh-tw'];
 const localesToSubdomains = {
   'pt-br': 'br',
@@ -10838,6 +10847,7 @@ const urlLocalizationMapping = {
     }
     return prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesWithGoBlog */ .Cx)(url, localeSlug);
   },
+  'wordpress.com/pricing/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesForPricePlans */ .Ws),
   'wordpress.com/tos/': prefixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .lW),
   'wordpress.com/wp-admin/': setLocalizedUrlHost('wordpress.com', _locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .lW),
   'wordpress.com/wp-login.php': setLocalizedUrlHost('wordpress.com', _locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .lW),
@@ -10881,6 +10891,14 @@ const urlLocalizationMapping = {
   },
   'wordpress.com/start/': (url, localeSlug, isLoggedIn) => {
     return isLoggedIn ? url : suffixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .magnificentNonEnLocales */ .lW)(url, localeSlug);
+  },
+  'wordpress.com/learn/': (url, localeSlug) => {
+    const webinars = url.pathname.includes('/learn/webinars/');
+    if (webinars && 'es' === localeSlug) {
+      url.pathname = url.pathname.replace('/learn/webinars/', '/learn/es/webinars/');
+      return url;
+    }
+    return suffixLocalizedUrlPath(_locales__WEBPACK_IMPORTED_MODULE_4__/* .localesWithLearn */ .mt)(url, localeSlug);
   },
   'wordpress.com/plans/': (url, localeSlug, isLoggedIn) => {
     // if logged in, or url.pathname contains characters after `/plans/`, don't rewrite
@@ -11335,7 +11353,7 @@ function loadjQueryDependentScript(url, callback, args) {
 /* harmony export */   JV: () => (/* binding */ DESIGN_FIRST_FLOW),
 /* harmony export */   Xf: () => (/* binding */ START_WRITING_FLOW)
 /* harmony export */ });
-/* unused harmony exports ACCOUNT_FLOW, AI_ASSEMBLER_FLOW, NEWSLETTER_FLOW, NEWSLETTER_POST_SETUP_FLOW, HOSTING_LP_FLOW, NEW_HOSTED_SITE_FLOW, TRANSFERRING_HOSTED_SITE_FLOW, LINK_IN_BIO_FLOW, LINK_IN_BIO_DOMAIN_FLOW, LINK_IN_BIO_TLD_FLOW, LINK_IN_BIO_POST_SETUP_FLOW, CONNECT_DOMAIN_FLOW, VIDEOPRESS_FLOW, VIDEOPRESS_ACCOUNT, VIDEOPRESS_TV_FLOW, VIDEOPRESS_TV_PURCHASE_FLOW, IMPORT_FOCUSED_FLOW, IMPORT_HOSTED_SITE_FLOW, SENSEI_FLOW, ECOMMERCE_FLOW, ENTREPRENEUR_FLOW, WOOEXPRESS_FLOW, FREE_FLOW, FREE_POST_SETUP_FLOW, MIGRATION_FLOW, SITE_MIGRATION_FLOW, COPY_SITE_FLOW, BUILD_FLOW, WRITE_FLOW, SITE_SETUP_FLOW, WITH_THEME_FLOW, WITH_THEME_ASSEMBLER_FLOW, ASSEMBLER_FIRST_FLOW, UPDATE_DESIGN_FLOW, DOMAIN_UPSELL_FLOW, DOMAIN_TRANSFER, GOOGLE_TRANSFER, HUNDRED_YEAR_PLAN_FLOW, REBLOGGING_FLOW, isLinkInBioFlow, isNewsletterFlow, isFreeFlow, isNewsletterOrLinkInBioFlow, isTailoredSignupFlow, isHostingSignupFlow, isNewHostedSiteCreationFlow, isTransferringHostedSiteCreationFlow, isAnyHostingFlow, isAnyMigrationFlow, isMigrationFlow, isCopySiteFlow, isEntrepreneurFlow, isWooExpressFlow, isNewSiteMigrationFlow, isBuildFlow, isWriteFlow, isUpdateDesignFlow, isStartWritingFlow, isDesignFirstFlow, isBlogOnboardingFlow, isDomainUpsellFlow, isSiteAssemblerFlow, isWithThemeAssemblerFlow, isWithThemeFlow, isSiteSetupFlow, isSenseiFlow, ecommerceFlowRecurTypes, isVideoPressFlow, isVideoPressTVFlow */
+/* unused harmony exports ACCOUNT_FLOW, AI_ASSEMBLER_FLOW, NEWSLETTER_FLOW, NEWSLETTER_POST_SETUP_FLOW, HOSTING_LP_FLOW, NEW_HOSTED_SITE_FLOW, TRANSFERRING_HOSTED_SITE_FLOW, LINK_IN_BIO_FLOW, LINK_IN_BIO_DOMAIN_FLOW, LINK_IN_BIO_TLD_FLOW, LINK_IN_BIO_POST_SETUP_FLOW, CONNECT_DOMAIN_FLOW, VIDEOPRESS_FLOW, VIDEOPRESS_ACCOUNT, VIDEOPRESS_TV_FLOW, VIDEOPRESS_TV_PURCHASE_FLOW, IMPORT_FOCUSED_FLOW, IMPORT_HOSTED_SITE_FLOW, SENSEI_FLOW, ECOMMERCE_FLOW, ENTREPRENEUR_FLOW, WOOEXPRESS_FLOW, FREE_FLOW, FREE_POST_SETUP_FLOW, MIGRATION_FLOW, SITE_MIGRATION_FLOW, MIGRATION_SIGNUP_FLOW, COPY_SITE_FLOW, BUILD_FLOW, WRITE_FLOW, SITE_SETUP_FLOW, WITH_THEME_FLOW, WITH_THEME_ASSEMBLER_FLOW, ASSEMBLER_FIRST_FLOW, UPDATE_DESIGN_FLOW, DOMAIN_UPSELL_FLOW, DOMAIN_TRANSFER, GOOGLE_TRANSFER, HUNDRED_YEAR_PLAN_FLOW, REBLOGGING_FLOW, isLinkInBioFlow, isNewsletterFlow, isFreeFlow, isNewsletterOrLinkInBioFlow, isTailoredSignupFlow, isHostingSignupFlow, isNewHostedSiteCreationFlow, isTransferringHostedSiteCreationFlow, isAnyHostingFlow, isAnyMigrationFlow, isMigrationFlow, isCopySiteFlow, isEntrepreneurFlow, isWooExpressFlow, isNewSiteMigrationFlow, isMigrationSignupFlow, isBuildFlow, isWriteFlow, isUpdateDesignFlow, isStartWritingFlow, isDesignFirstFlow, isBlogOnboardingFlow, isDomainUpsellFlow, isSiteAssemblerFlow, isWithThemeAssemblerFlow, isWithThemeFlow, isSiteSetupFlow, isSenseiFlow, ecommerceFlowRecurTypes, isVideoPressFlow, isVideoPressTVFlow */
 const ACCOUNT_FLOW = 'account';
 const AI_ASSEMBLER_FLOW = 'ai-assembler';
 const NEWSLETTER_FLOW = 'newsletter';
@@ -11362,6 +11380,7 @@ const FREE_FLOW = 'free';
 const FREE_POST_SETUP_FLOW = 'free-post-setup';
 const MIGRATION_FLOW = 'import-focused';
 const SITE_MIGRATION_FLOW = 'site-migration';
+const MIGRATION_SIGNUP_FLOW = 'migration-signup';
 const COPY_SITE_FLOW = 'copy-site';
 const BUILD_FLOW = 'build';
 const WRITE_FLOW = 'write';
@@ -11421,6 +11440,9 @@ const isWooExpressFlow = flowName => {
 };
 const isNewSiteMigrationFlow = flowName => {
   return Boolean(flowName && [SITE_MIGRATION_FLOW].includes(flowName));
+};
+const isMigrationSignupFlow = flowName => {
+  return Boolean(flowName && [MIGRATION_SIGNUP_FLOW].includes(flowName));
 };
 const isBuildFlow = flowName => {
   return Boolean(flowName && [BUILD_FLOW].includes(flowName));
@@ -11617,7 +11639,8 @@ const TourKitFrame = ({
   const tourContainerRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
   const isMobile = (0,_automattic_viewport_react__WEBPACK_IMPORTED_MODULE_2__/* .useMobileBreakpoint */ .lC)();
   const lastStepIndex = config.steps.length - 1;
-  const referenceElementSelector = config.steps[currentStepIndex].referenceElements?.[isMobile ? 'mobile' : 'desktop'] || null;
+  const referenceElements = config.steps[currentStepIndex].referenceElements;
+  const referenceElementSelector = referenceElements?.[isMobile ? 'mobile' : 'desktop'] || referenceElements?.desktop;
   const referenceElement = referenceElementSelector ? document.querySelector(referenceElementSelector) : null;
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (config.isMinimized) {
@@ -13153,7 +13176,7 @@ const withDesktopBreakpoint = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_1__
 /* harmony export */   jK: () => (/* binding */ DESKTOP_BREAKPOINT),
 /* harmony export */   xV: () => (/* binding */ subscribeIsWithinBreakpoint)
 /* harmony export */ });
-/* unused harmony exports subscribeIsMobile, isDesktop, subscribeIsDesktop, getWindowInnerWidth, isTabletResolution, DEVICE_MOBILE, DEVICE_TABLET, DEVICE_DESKTOP, resolveDeviceTypeByViewPort */
+/* unused harmony exports WIDE_BREAKPOINT, subscribeIsMobile, isDesktop, subscribeIsDesktop, getWindowInnerWidth, isTabletResolution, DEVICE_MOBILE, DEVICE_TABLET, DEVICE_DESKTOP, resolveDeviceTypeByViewPort */
 // Determine whether a user is viewing calypso from a device within a
 // particular mobile-first responsive breakpoint, matching our existing media
 // queries. [1]
@@ -13197,6 +13220,7 @@ const withDesktopBreakpoint = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_1__
 const SERVER_WIDTH = 769;
 const MOBILE_BREAKPOINT = '<480px';
 const DESKTOP_BREAKPOINT = '>960px';
+const WIDE_BREAKPOINT = '>1280px';
 const isServer =  false || !window.matchMedia;
 const noop = () => null;
 function addListenerFunctions(obj) {
@@ -13249,6 +13273,9 @@ const mediaQueryOptions = {
   },
   '<1040px': {
     max: 1040
+  },
+  '<1180px': {
+    max: 1180
   },
   '<1280px': {
     max: 1280
@@ -14967,7 +14994,7 @@ function toPrimitive(t, r) {
 
 function toPropertyKey(t) {
   var i = (0,_toPrimitive_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)(t, "string");
-  return "symbol" == (0,_typeof_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(i) ? i : String(i);
+  return "symbol" == (0,_typeof_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(i) ? i : i + "";
 }
 
 /***/ }),

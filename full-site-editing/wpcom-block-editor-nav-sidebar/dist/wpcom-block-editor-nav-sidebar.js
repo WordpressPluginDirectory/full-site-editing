@@ -2147,6 +2147,9 @@ function WpcomBlockEditorNavSidebar() {
   if (launchpadScreenOption === 'full' && siteIntent !== false) {
     defaultCloseUrl = `${siteOrigin}/setup/${siteIntent}/launchpad?siteSlug=${siteSlug}`;
     defaultCloseLabel = __('Next steps', 'full-site-editing');
+  } else if (window.calypsoifyGutenberg) {
+    defaultCloseUrl = window.calypsoifyGutenberg.closeUrl;
+    defaultCloseLabel = (0,lodash__WEBPACK_IMPORTED_MODULE_10__.get)(postType, ['labels', 'all_items'], __('Back', 'full-site-editing'));
   } else {
     defaultCloseUrl = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_8__.addQueryArgs)('edit.php', {
       post_type: postType.slug
@@ -2611,7 +2614,9 @@ const EVENT_NAME_EXCEPTIONS = ['a8c_cookie_banner_ok', 'a8c_cookie_banner_view',
 // Checkout
 'calypso_checkout_switch_to_p_24', 'calypso_checkout_composite_p24_submit_clicked',
 // Launch Bar
-'wpcom_launchbar_button_click'];
+'wpcom_launchbar_button_click',
+// Request for free migration
+'wpcom_support_free_migration_request_click'];
 let _superProps; // Added to all Tracks events.
 let _loadTracksResult = Promise.resolve(); // default value for non-BOM environments.
 
@@ -2704,6 +2709,11 @@ function initializeAnalytics(currentUser, superProps) {
   if ('object' === typeof currentUser) {
     debug('identifyUser', currentUser);
     identifyUser(currentUser);
+  }
+  const tracksLinkerId = getUrlParameter('_tkl');
+  if (tracksLinkerId && tracksLinkerId !== getTracksAnonymousUserId()) {
+    // Link tk_ai anonymous ids if _tkl parameter is present in URL and ids between pages are different (e.g. cross-domain)
+    signalUserFromAnotherProduct(tracksLinkerId, 'anon');
   }
 
   // Tracks blocked?
@@ -3526,7 +3536,7 @@ function loadjQueryDependentScript(url, callback, args) {
 /* harmony export */   JV: () => (/* binding */ DESIGN_FIRST_FLOW),
 /* harmony export */   Xf: () => (/* binding */ START_WRITING_FLOW)
 /* harmony export */ });
-/* unused harmony exports ACCOUNT_FLOW, AI_ASSEMBLER_FLOW, NEWSLETTER_FLOW, NEWSLETTER_POST_SETUP_FLOW, HOSTING_LP_FLOW, NEW_HOSTED_SITE_FLOW, TRANSFERRING_HOSTED_SITE_FLOW, LINK_IN_BIO_FLOW, LINK_IN_BIO_DOMAIN_FLOW, LINK_IN_BIO_TLD_FLOW, LINK_IN_BIO_POST_SETUP_FLOW, CONNECT_DOMAIN_FLOW, VIDEOPRESS_FLOW, VIDEOPRESS_ACCOUNT, VIDEOPRESS_TV_FLOW, VIDEOPRESS_TV_PURCHASE_FLOW, IMPORT_FOCUSED_FLOW, IMPORT_HOSTED_SITE_FLOW, SENSEI_FLOW, ECOMMERCE_FLOW, ENTREPRENEUR_FLOW, WOOEXPRESS_FLOW, FREE_FLOW, FREE_POST_SETUP_FLOW, MIGRATION_FLOW, SITE_MIGRATION_FLOW, COPY_SITE_FLOW, BUILD_FLOW, WRITE_FLOW, SITE_SETUP_FLOW, WITH_THEME_FLOW, WITH_THEME_ASSEMBLER_FLOW, ASSEMBLER_FIRST_FLOW, UPDATE_DESIGN_FLOW, DOMAIN_UPSELL_FLOW, DOMAIN_TRANSFER, GOOGLE_TRANSFER, HUNDRED_YEAR_PLAN_FLOW, REBLOGGING_FLOW, isLinkInBioFlow, isNewsletterFlow, isFreeFlow, isNewsletterOrLinkInBioFlow, isTailoredSignupFlow, isHostingSignupFlow, isNewHostedSiteCreationFlow, isTransferringHostedSiteCreationFlow, isAnyHostingFlow, isAnyMigrationFlow, isMigrationFlow, isCopySiteFlow, isEntrepreneurFlow, isWooExpressFlow, isNewSiteMigrationFlow, isBuildFlow, isWriteFlow, isUpdateDesignFlow, isStartWritingFlow, isDesignFirstFlow, isBlogOnboardingFlow, isDomainUpsellFlow, isSiteAssemblerFlow, isWithThemeAssemblerFlow, isWithThemeFlow, isSiteSetupFlow, isSenseiFlow, ecommerceFlowRecurTypes, isVideoPressFlow, isVideoPressTVFlow */
+/* unused harmony exports ACCOUNT_FLOW, AI_ASSEMBLER_FLOW, NEWSLETTER_FLOW, NEWSLETTER_POST_SETUP_FLOW, HOSTING_LP_FLOW, NEW_HOSTED_SITE_FLOW, TRANSFERRING_HOSTED_SITE_FLOW, LINK_IN_BIO_FLOW, LINK_IN_BIO_DOMAIN_FLOW, LINK_IN_BIO_TLD_FLOW, LINK_IN_BIO_POST_SETUP_FLOW, CONNECT_DOMAIN_FLOW, VIDEOPRESS_FLOW, VIDEOPRESS_ACCOUNT, VIDEOPRESS_TV_FLOW, VIDEOPRESS_TV_PURCHASE_FLOW, IMPORT_FOCUSED_FLOW, IMPORT_HOSTED_SITE_FLOW, SENSEI_FLOW, ECOMMERCE_FLOW, ENTREPRENEUR_FLOW, WOOEXPRESS_FLOW, FREE_FLOW, FREE_POST_SETUP_FLOW, MIGRATION_FLOW, SITE_MIGRATION_FLOW, MIGRATION_SIGNUP_FLOW, COPY_SITE_FLOW, BUILD_FLOW, WRITE_FLOW, SITE_SETUP_FLOW, WITH_THEME_FLOW, WITH_THEME_ASSEMBLER_FLOW, ASSEMBLER_FIRST_FLOW, UPDATE_DESIGN_FLOW, DOMAIN_UPSELL_FLOW, DOMAIN_TRANSFER, GOOGLE_TRANSFER, HUNDRED_YEAR_PLAN_FLOW, REBLOGGING_FLOW, isLinkInBioFlow, isNewsletterFlow, isFreeFlow, isNewsletterOrLinkInBioFlow, isTailoredSignupFlow, isHostingSignupFlow, isNewHostedSiteCreationFlow, isTransferringHostedSiteCreationFlow, isAnyHostingFlow, isAnyMigrationFlow, isMigrationFlow, isCopySiteFlow, isEntrepreneurFlow, isWooExpressFlow, isNewSiteMigrationFlow, isMigrationSignupFlow, isBuildFlow, isWriteFlow, isUpdateDesignFlow, isStartWritingFlow, isDesignFirstFlow, isBlogOnboardingFlow, isDomainUpsellFlow, isSiteAssemblerFlow, isWithThemeAssemblerFlow, isWithThemeFlow, isSiteSetupFlow, isSenseiFlow, ecommerceFlowRecurTypes, isVideoPressFlow, isVideoPressTVFlow */
 const ACCOUNT_FLOW = 'account';
 const AI_ASSEMBLER_FLOW = 'ai-assembler';
 const NEWSLETTER_FLOW = 'newsletter';
@@ -3553,6 +3563,7 @@ const FREE_FLOW = 'free';
 const FREE_POST_SETUP_FLOW = 'free-post-setup';
 const MIGRATION_FLOW = 'import-focused';
 const SITE_MIGRATION_FLOW = 'site-migration';
+const MIGRATION_SIGNUP_FLOW = 'migration-signup';
 const COPY_SITE_FLOW = 'copy-site';
 const BUILD_FLOW = 'build';
 const WRITE_FLOW = 'write';
@@ -3612,6 +3623,9 @@ const isWooExpressFlow = flowName => {
 };
 const isNewSiteMigrationFlow = flowName => {
   return Boolean(flowName && [SITE_MIGRATION_FLOW].includes(flowName));
+};
+const isMigrationSignupFlow = flowName => {
+  return Boolean(flowName && [MIGRATION_SIGNUP_FLOW].includes(flowName));
 };
 const isBuildFlow = flowName => {
   return Boolean(flowName && [BUILD_FLOW].includes(flowName));
