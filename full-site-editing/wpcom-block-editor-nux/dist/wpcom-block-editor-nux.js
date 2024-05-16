@@ -11353,7 +11353,7 @@ function loadjQueryDependentScript(url, callback, args) {
 /* harmony export */   JV: () => (/* binding */ DESIGN_FIRST_FLOW),
 /* harmony export */   Xf: () => (/* binding */ START_WRITING_FLOW)
 /* harmony export */ });
-/* unused harmony exports ACCOUNT_FLOW, AI_ASSEMBLER_FLOW, NEWSLETTER_FLOW, NEWSLETTER_POST_SETUP_FLOW, HOSTING_LP_FLOW, NEW_HOSTED_SITE_FLOW, TRANSFERRING_HOSTED_SITE_FLOW, LINK_IN_BIO_FLOW, LINK_IN_BIO_DOMAIN_FLOW, LINK_IN_BIO_TLD_FLOW, LINK_IN_BIO_POST_SETUP_FLOW, CONNECT_DOMAIN_FLOW, VIDEOPRESS_FLOW, VIDEOPRESS_ACCOUNT, VIDEOPRESS_TV_FLOW, VIDEOPRESS_TV_PURCHASE_FLOW, IMPORT_FOCUSED_FLOW, IMPORT_HOSTED_SITE_FLOW, SENSEI_FLOW, ECOMMERCE_FLOW, ENTREPRENEUR_FLOW, WOOEXPRESS_FLOW, FREE_FLOW, FREE_POST_SETUP_FLOW, MIGRATION_FLOW, SITE_MIGRATION_FLOW, MIGRATION_SIGNUP_FLOW, COPY_SITE_FLOW, BUILD_FLOW, WRITE_FLOW, SITE_SETUP_FLOW, WITH_THEME_FLOW, WITH_THEME_ASSEMBLER_FLOW, ASSEMBLER_FIRST_FLOW, UPDATE_DESIGN_FLOW, DOMAIN_UPSELL_FLOW, DOMAIN_TRANSFER, GOOGLE_TRANSFER, HUNDRED_YEAR_PLAN_FLOW, REBLOGGING_FLOW, isLinkInBioFlow, isNewsletterFlow, isFreeFlow, isNewsletterOrLinkInBioFlow, isTailoredSignupFlow, isHostingSignupFlow, isNewHostedSiteCreationFlow, isTransferringHostedSiteCreationFlow, isAnyHostingFlow, isAnyMigrationFlow, isMigrationFlow, isCopySiteFlow, isEntrepreneurFlow, isWooExpressFlow, isNewSiteMigrationFlow, isMigrationSignupFlow, isBuildFlow, isWriteFlow, isUpdateDesignFlow, isStartWritingFlow, isDesignFirstFlow, isBlogOnboardingFlow, isDomainUpsellFlow, isSiteAssemblerFlow, isWithThemeAssemblerFlow, isWithThemeFlow, isSiteSetupFlow, isSenseiFlow, ecommerceFlowRecurTypes, isVideoPressFlow, isVideoPressTVFlow */
+/* unused harmony exports ACCOUNT_FLOW, AI_ASSEMBLER_FLOW, NEWSLETTER_FLOW, NEWSLETTER_POST_SETUP_FLOW, HOSTING_LP_FLOW, NEW_HOSTED_SITE_FLOW, TRANSFERRING_HOSTED_SITE_FLOW, LINK_IN_BIO_FLOW, LINK_IN_BIO_DOMAIN_FLOW, LINK_IN_BIO_TLD_FLOW, LINK_IN_BIO_POST_SETUP_FLOW, CONNECT_DOMAIN_FLOW, VIDEOPRESS_FLOW, VIDEOPRESS_ACCOUNT, VIDEOPRESS_TV_FLOW, VIDEOPRESS_TV_PURCHASE_FLOW, IMPORT_FOCUSED_FLOW, IMPORT_HOSTED_SITE_FLOW, SENSEI_FLOW, ECOMMERCE_FLOW, ENTREPRENEUR_FLOW, WOOEXPRESS_FLOW, FREE_FLOW, FREE_POST_SETUP_FLOW, MIGRATION_FLOW, SITE_MIGRATION_FLOW, MIGRATION_SIGNUP_FLOW, HOSTED_SITE_MIGRATION_FLOW, COPY_SITE_FLOW, BUILD_FLOW, WRITE_FLOW, SITE_SETUP_FLOW, WITH_THEME_FLOW, WITH_THEME_ASSEMBLER_FLOW, ASSEMBLER_FIRST_FLOW, UPDATE_DESIGN_FLOW, DOMAIN_UPSELL_FLOW, DOMAIN_TRANSFER, GOOGLE_TRANSFER, HUNDRED_YEAR_PLAN_FLOW, REBLOGGING_FLOW, isLinkInBioFlow, isNewsletterFlow, isFreeFlow, isNewsletterOrLinkInBioFlow, isTailoredSignupFlow, isHostingSignupFlow, isNewHostedSiteCreationFlow, isTransferringHostedSiteCreationFlow, isAnyHostingFlow, isAnyMigrationFlow, isMigrationFlow, isCopySiteFlow, isEntrepreneurFlow, isWooExpressFlow, isNewSiteMigrationFlow, isMigrationSignupFlow, isHostedSiteMigrationFlow, isBuildFlow, isWriteFlow, isUpdateDesignFlow, isStartWritingFlow, isDesignFirstFlow, isBlogOnboardingFlow, isDomainUpsellFlow, isSiteAssemblerFlow, isWithThemeAssemblerFlow, isWithThemeFlow, isSiteSetupFlow, isSenseiFlow, ecommerceFlowRecurTypes, isVideoPressFlow, isVideoPressTVFlow */
 const ACCOUNT_FLOW = 'account';
 const AI_ASSEMBLER_FLOW = 'ai-assembler';
 const NEWSLETTER_FLOW = 'newsletter';
@@ -11381,6 +11381,7 @@ const FREE_POST_SETUP_FLOW = 'free-post-setup';
 const MIGRATION_FLOW = 'import-focused';
 const SITE_MIGRATION_FLOW = 'site-migration';
 const MIGRATION_SIGNUP_FLOW = 'migration-signup';
+const HOSTED_SITE_MIGRATION_FLOW = 'hosted-site-migration';
 const COPY_SITE_FLOW = 'copy-site';
 const BUILD_FLOW = 'build';
 const WRITE_FLOW = 'write';
@@ -11443,6 +11444,9 @@ const isNewSiteMigrationFlow = flowName => {
 };
 const isMigrationSignupFlow = flowName => {
   return Boolean(flowName && [MIGRATION_SIGNUP_FLOW].includes(flowName));
+};
+const isHostedSiteMigrationFlow = flowName => {
+  return Boolean(flowName && [HOSTED_SITE_MIGRATION_FLOW].includes(flowName));
 };
 const isBuildFlow = flowName => {
   return Boolean(flowName && [BUILD_FLOW].includes(flowName));
