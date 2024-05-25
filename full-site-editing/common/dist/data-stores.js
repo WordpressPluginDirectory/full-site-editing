@@ -5745,6 +5745,7 @@ const PERIOD_LIST = [PLAN_MONTHLY_PERIOD, PLAN_ANNUAL_PERIOD, PLAN_BIENNIAL_PERI
 
 
 
+
 // plansSlugs is a list with the identifiers for each plan and they are agnostic of billing period; eg: 'free', 'personal'
 // plansSlugs is also used to construct the route that accepts plan slugs like '/free', '/personal', '/business'
 // plansProductSlugs is a list with the identifiers for each plan product (including the billing period); eg: 'personal-bundle', 'personal-bundle-monthly'
