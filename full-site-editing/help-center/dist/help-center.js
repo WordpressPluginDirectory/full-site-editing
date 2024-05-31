@@ -54924,18 +54924,24 @@ PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY
  * See: p7H4VZ-4S4-p2
  */
 
-const getPlanPersonalTitle = () => (0,_experiments__WEBPACK_IMPORTED_MODULE_0__/* .getPlansListExperiment */ .cw)('wpcom_plan_name_change_starter_to_beginner_v5') === 'treatment' ?
-// translators: Beginner is a plan name
-i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Beginner') :
+const getPlanPersonalTitle = () => (0,_experiments__WEBPACK_IMPORTED_MODULE_0__/* .getPlansListExperiment */ .cw)('wpcom_plan_name_change_personal_premium_v1') === 'treatment' ?
+// translators: Personal is a plan name
+i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Personal') :
 // translators: Starter is a plan name
 i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Starter');
-const getPlanPremiumTitle = () =>
+const getPlanPremiumTitle = () => (0,_experiments__WEBPACK_IMPORTED_MODULE_0__/* .getPlansListExperiment */ .cw)('wpcom_plan_name_change_personal_premium_v1') === 'treatment' ?
+// translators: Premium is a plan name
+i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Premium') :
 // translators: Explorer is a plan name
 i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Explorer');
-const getPlanBusinessTitle = () =>
+const getPlanBusinessTitle = () => (0,_experiments__WEBPACK_IMPORTED_MODULE_0__/* .getPlansListExperiment */ .cw)('wpcom_plan_name_change_personal_premium_v1') === 'treatment' ?
+// translators: Business is a plan name
+i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Business') :
 // translators: Creator is a plan name
 i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Creator');
-const getPlanEcommerceTitle = () =>
+const getPlanEcommerceTitle = () => (0,_experiments__WEBPACK_IMPORTED_MODULE_0__/* .getPlansListExperiment */ .cw)('wpcom_plan_name_change_personal_premium_v1') === 'treatment' ?
+// translators: Commerce is a plan name
+i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Commerce') :
 // translators: Entrepreneur is a plan name
 i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Entrepreneur');
 
@@ -61506,7 +61512,8 @@ const ArticleContent = ({
   link,
   postId,
   blogId,
-  isLoading = false
+  isLoading = false,
+  slug
 }) => {
   const post = {
     title: title,
@@ -61528,7 +61535,8 @@ const ArticleContent = ({
     }
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_feedback_form__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     postId: postId,
-    blogId: blogId
+    blogId: blogId,
+    slug: slug
   }))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ArticleContent);
@@ -61619,7 +61627,8 @@ const ArticleFetchingContent = ({
     link: post?.link,
     isLoading: isLoading,
     postId: postId,
-    blogId: blogId
+    blogId: blogId,
+    slug: post?.slug
   }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ArticleFetchingContent);
@@ -62940,11 +62949,14 @@ const HelpCenterEmbedResult = () => {
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(98948);
-/* harmony import */ var _wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(23634);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _icons_thumbs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(28989);
-/* harmony import */ var _help_center_feedback_form_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(22274);
+/* harmony import */ var _wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(23634);
+/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(93832);
+/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_url__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(51609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _icons_thumbs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(28989);
+/* harmony import */ var _help_center_feedback_form_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(22274);
+
 
 
 
@@ -62953,13 +62965,14 @@ const HelpCenterEmbedResult = () => {
 
 const HelpCenterFeedbackForm = ({
   postId,
-  blogId
+  blogId,
+  slug
 }) => {
   const {
     __
-  } = (0,_wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_4__/* .useI18n */ .s9)();
-  const [startedFeedback, setStartedFeedback] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(null);
-  const [answerValue, setAnswerValue] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(null);
+  } = (0,_wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_5__/* .useI18n */ .s9)();
+  const [startedFeedback, setStartedFeedback] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(null);
+  const [answerValue, setAnswerValue] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(null);
   const handleFeedbackClick = value => {
     setStartedFeedback(true);
     setAnswerValue(value);
@@ -62973,17 +62986,23 @@ const HelpCenterFeedbackForm = ({
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     // 1 is used as `yes` in crowdsignal as well, do not change
     onClick: () => handleFeedbackClick(1)
-  }, __('Yes'), " ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_thumbs__WEBPACK_IMPORTED_MODULE_5__/* .ThumbsUpIcon */ .G, null)), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+  }, __('Yes'), " ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_thumbs__WEBPACK_IMPORTED_MODULE_6__/* .ThumbsUpIcon */ .G, null)), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     // 2 is used as `no` in crowdsignal as well, do not change
     onClick: () => handleFeedbackClick(2)
-  }, __('No'), " ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_thumbs__WEBPACK_IMPORTED_MODULE_5__/* .ThumbsDownIcon */ .d, null))));
+  }, __('No'), " ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_thumbs__WEBPACK_IMPORTED_MODULE_6__/* .ThumbsDownIcon */ .d, null))));
+  const feedbackFormUrl = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_2__.addQueryArgs)('https://wordpressdotcom.survey.fm/helpcenter-articles-feedback', {
+    q_1_choice: answerValue,
+    guide: slug,
+    postId,
+    blogId
+  });
   const FeedbackTextArea = () => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, __('How we can improve?')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("iframe", {
     title: __('Feedback Form')
     // This is the URL of the feedback form,
     // `answerValue` is either 1 or 2 and it is used to skip the first question since we are already asking it here.
     // it is necessary to help crowd signal to `skip` ( display none with css ) the first question and save the correct value.
     ,
-    src: `https://wordpressdotcom.survey.fm/helpcenter-articles-feedback?q_1_choice=${answerValue}&postId=${postId}&blogId=${blogId}`
+    src: feedbackFormUrl
   }));
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "help-center-feedback__form"

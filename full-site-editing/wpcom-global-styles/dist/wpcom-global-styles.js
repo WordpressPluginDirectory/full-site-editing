@@ -8038,18 +8038,24 @@ PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY
  * See: p7H4VZ-4S4-p2
  */
 
-const getPlanPersonalTitle = () => (0,_experiments__WEBPACK_IMPORTED_MODULE_0__/* .getPlansListExperiment */ .cw)('wpcom_plan_name_change_starter_to_beginner_v5') === 'treatment' ?
-// translators: Beginner is a plan name
-i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Beginner') :
+const getPlanPersonalTitle = () => (0,_experiments__WEBPACK_IMPORTED_MODULE_0__/* .getPlansListExperiment */ .cw)('wpcom_plan_name_change_personal_premium_v1') === 'treatment' ?
+// translators: Personal is a plan name
+i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Personal') :
 // translators: Starter is a plan name
 i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Starter');
-const getPlanPremiumTitle = () =>
+const getPlanPremiumTitle = () => (0,_experiments__WEBPACK_IMPORTED_MODULE_0__/* .getPlansListExperiment */ .cw)('wpcom_plan_name_change_personal_premium_v1') === 'treatment' ?
+// translators: Premium is a plan name
+i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Premium') :
 // translators: Explorer is a plan name
 i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Explorer');
-const getPlanBusinessTitle = () =>
+const getPlanBusinessTitle = () => (0,_experiments__WEBPACK_IMPORTED_MODULE_0__/* .getPlansListExperiment */ .cw)('wpcom_plan_name_change_personal_premium_v1') === 'treatment' ?
+// translators: Business is a plan name
+i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Business') :
 // translators: Creator is a plan name
 i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Creator');
-const getPlanEcommerceTitle = () =>
+const getPlanEcommerceTitle = () => (0,_experiments__WEBPACK_IMPORTED_MODULE_0__/* .getPlansListExperiment */ .cw)('wpcom_plan_name_change_personal_premium_v1') === 'treatment' ?
+// translators: Commerce is a plan name
+i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Commerce') :
 // translators: Entrepreneur is a plan name
 i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Entrepreneur');
 
