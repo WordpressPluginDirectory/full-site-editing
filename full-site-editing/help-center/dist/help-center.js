@@ -6838,21 +6838,21 @@ function Icon({
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5573);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__);
-
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5573);
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31085);
 /**
  * WordPress dependencies
  */
 
-const arrowRight = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.SVG, {
+
+const arrowRight = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24"
-}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.Path, {
-  d: "m14.5 6.5-1 1 3.7 3.7H4v1.6h13.2l-3.7 3.7 1 1 5.6-5.5z"
-}));
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.Path, {
+    d: "m14.5 6.5-1 1 3.7 3.7H4v1.6h13.2l-3.7 3.7 1 1 5.6-5.5z"
+  })
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (arrowRight);
 //# sourceMappingURL=arrow-right.js.map
 
@@ -6865,21 +6865,21 @@ const arrowRight = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpre
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5573);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__);
-
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5573);
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31085);
 /**
  * WordPress dependencies
  */
 
-const arrowUp = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.SVG, {
+
+const arrowUp = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24"
-}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.Path, {
-  d: "M12 3.9 6.5 9.5l1 1 3.8-3.7V20h1.5V6.8l3.7 3.7 1-1z"
-}));
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.Path, {
+    d: "M12 3.9 6.5 9.5l1 1 3.8-3.7V20h1.5V6.8l3.7 3.7 1-1z"
+  })
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (arrowUp);
 //# sourceMappingURL=arrow-up.js.map
 
@@ -6892,21 +6892,21 @@ const arrowUp = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5573);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__);
-
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5573);
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31085);
 /**
  * WordPress dependencies
  */
 
-const captureVideo = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.SVG, {
+
+const captureVideo = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.SVG, {
   viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg"
-}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.Path, {
-  d: "M14 5H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm.5 12c0 .3-.2.5-.5.5H4c-.3 0-.5-.2-.5-.5V7c0-.3.2-.5.5-.5h10c.3 0 .5.2.5.5v10zm2.5-7v4l5 3V7l-5 3zm3.5 4.4l-2-1.2v-2.3l2-1.2v4.7z"
-}));
+  xmlns: "http://www.w3.org/2000/svg",
+  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.Path, {
+    d: "M14 5H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm.5 12c0 .3-.2.5-.5.5H4c-.3 0-.5-.2-.5-.5V7c0-.3.2-.5.5-.5h10c.3 0 .5.2.5.5v10zm2.5-7v4l5 3V7l-5 3zm3.5 4.4l-2-1.2v-2.3l2-1.2v4.7z"
+  })
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (captureVideo);
 //# sourceMappingURL=capture-video.js.map
 
@@ -6919,21 +6919,21 @@ const captureVideo = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordp
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5573);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__);
-
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5573);
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31085);
 /**
  * WordPress dependencies
  */
 
-const check = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.SVG, {
+
+const check = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24"
-}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.Path, {
-  d: "M16.7 7.1l-6.3 8.5-3.3-2.5-.9 1.2 4.5 3.4L17.9 8z"
-}));
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.Path, {
+    d: "M16.7 7.1l-6.3 8.5-3.3-2.5-.9 1.2 4.5 3.4L17.9 8z"
+  })
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (check);
 //# sourceMappingURL=check.js.map
 
@@ -6946,21 +6946,21 @@ const check = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_pr
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5573);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__);
-
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5573);
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31085);
 /**
  * WordPress dependencies
  */
 
-const chevronDown = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.SVG, {
+
+const chevronDown = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.SVG, {
   viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg"
-}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.Path, {
-  d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z"
-}));
+  xmlns: "http://www.w3.org/2000/svg",
+  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.Path, {
+    d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z"
+  })
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (chevronDown);
 //# sourceMappingURL=chevron-down.js.map
 
@@ -6973,21 +6973,21 @@ const chevronDown = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpr
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5573);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__);
-
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5573);
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31085);
 /**
  * WordPress dependencies
  */
 
-const chevronLeft = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.SVG, {
+
+const chevronLeft = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24"
-}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.Path, {
-  d: "M14.6 7l-1.2-1L8 12l5.4 6 1.2-1-4.6-5z"
-}));
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.Path, {
+    d: "M14.6 7l-1.2-1L8 12l5.4 6 1.2-1-4.6-5z"
+  })
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (chevronLeft);
 //# sourceMappingURL=chevron-left.js.map
 
@@ -7000,21 +7000,21 @@ const chevronLeft = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpr
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5573);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__);
-
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5573);
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31085);
 /**
  * WordPress dependencies
  */
 
-const chevronRight = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.SVG, {
+
+const chevronRight = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24"
-}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.Path, {
-  d: "M10.6 6L9.4 7l4.6 5-4.6 5 1.2 1 5.4-6z"
-}));
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.Path, {
+    d: "M10.6 6L9.4 7l4.6 5-4.6 5 1.2 1 5.4-6z"
+  })
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (chevronRight);
 //# sourceMappingURL=chevron-right.js.map
 
@@ -7027,21 +7027,21 @@ const chevronRight = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordp
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5573);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__);
-
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5573);
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31085);
 /**
  * WordPress dependencies
  */
 
-const chevronUp = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.SVG, {
+
+const chevronUp = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.SVG, {
   viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg"
-}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.Path, {
-  d: "M6.5 12.4L12 8l5.5 4.4-.9 1.2L12 10l-4.5 3.6-1-1.2z"
-}));
+  xmlns: "http://www.w3.org/2000/svg",
+  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.Path, {
+    d: "M6.5 12.4L12 8l5.5 4.4-.9 1.2L12 10l-4.5 3.6-1-1.2z"
+  })
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (chevronUp);
 //# sourceMappingURL=chevron-up.js.map
 
@@ -7054,21 +7054,21 @@ const chevronUp = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpres
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5573);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__);
-
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5573);
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31085);
 /**
  * WordPress dependencies
  */
 
-const closeSmall = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.SVG, {
+
+const closeSmall = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24"
-}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.Path, {
-  d: "M12 13.06l3.712 3.713 1.061-1.06L13.061 12l3.712-3.712-1.06-1.06L12 10.938 8.288 7.227l-1.061 1.06L10.939 12l-3.712 3.712 1.06 1.061L12 13.061z"
-}));
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.Path, {
+    d: "M12 13.06l3.712 3.713 1.061-1.06L13.061 12l3.712-3.712-1.06-1.06L12 10.938 8.288 7.227l-1.061 1.06L10.939 12l-3.712 3.712 1.06 1.061L12 13.061z"
+  })
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (closeSmall);
 //# sourceMappingURL=close-small.js.map
 
@@ -7081,23 +7081,23 @@ const closeSmall = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpre
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5573);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__);
-
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5573);
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31085);
 /**
  * WordPress dependencies
  */
 
-const commentContent = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.SVG, {
+
+const commentContent = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.SVG, {
   viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg"
-}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.Path, {
-  fillRule: "evenodd",
-  clipRule: "evenodd",
-  d: "M6.68822 16.625L5.5 17.8145L5.5 5.5L18.5 5.5L18.5 16.625L6.68822 16.625ZM7.31 18.125L19 18.125C19.5523 18.125 20 17.6773 20 17.125L20 5C20 4.44772 19.5523 4 19 4H5C4.44772 4 4 4.44772 4 5V19.5247C4 19.8173 4.16123 20.086 4.41935 20.2237C4.72711 20.3878 5.10601 20.3313 5.35252 20.0845L7.31 18.125ZM16 9.99997H8V8.49997H16V9.99997ZM8 14H13V12.5H8V14Z"
-}));
+  xmlns: "http://www.w3.org/2000/svg",
+  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M6.68822 16.625L5.5 17.8145L5.5 5.5L18.5 5.5L18.5 16.625L6.68822 16.625ZM7.31 18.125L19 18.125C19.5523 18.125 20 17.6773 20 17.125L20 5C20 4.44772 19.5523 4 19 4H5C4.44772 4 4 4.44772 4 5V19.5247C4 19.8173 4.16123 20.086 4.41935 20.2237C4.72711 20.3878 5.10601 20.3313 5.35252 20.0845L7.31 18.125ZM16 9.99997H8V8.49997H16V9.99997ZM8 14H13V12.5H8V14Z"
+  })
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (commentContent);
 //# sourceMappingURL=comment-content.js.map
 
@@ -7110,21 +7110,21 @@ const commentContent = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wor
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5573);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__);
-
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5573);
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31085);
 /**
  * WordPress dependencies
  */
 
-const comment = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.SVG, {
+
+const comment = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.SVG, {
   viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg"
-}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.Path, {
-  d: "M18 4H6c-1.1 0-2 .9-2 2v12.9c0 .6.5 1.1 1.1 1.1.3 0 .5-.1.8-.3L8.5 17H18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 11c0 .3-.2.5-.5.5H7.9l-2.4 2.4V6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v9z"
-}));
+  xmlns: "http://www.w3.org/2000/svg",
+  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.Path, {
+    d: "M18 4H6c-1.1 0-2 .9-2 2v12.9c0 .6.5 1.1 1.1 1.1.3 0 .5-.1.8-.3L8.5 17H18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 11c0 .3-.2.5-.5.5H7.9l-2.4 2.4V6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v9z"
+  })
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (comment);
 //# sourceMappingURL=comment.js.map
 
@@ -7137,21 +7137,21 @@ const comment = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5573);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__);
-
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5573);
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31085);
 /**
  * WordPress dependencies
  */
 
-const external = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.SVG, {
+
+const external = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24"
-}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.Path, {
-  d: "M19.5 4.5h-7V6h4.44l-5.97 5.97 1.06 1.06L18 7.06v4.44h1.5v-7Zm-13 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3H17v3a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h3V5.5h-3Z"
-}));
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.Path, {
+    d: "M19.5 4.5h-7V6h4.44l-5.97 5.97 1.06 1.06L18 7.06v4.44h1.5v-7Zm-13 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3H17v3a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h3V5.5h-3Z"
+  })
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (external);
 //# sourceMappingURL=external.js.map
 
@@ -7164,21 +7164,21 @@ const external = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5573);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__);
-
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5573);
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31085);
 /**
  * WordPress dependencies
  */
 
-const formatListNumbered = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.SVG, {
+
+const formatListNumbered = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24"
-}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.Path, {
-  d: "M11.1 15.8H20v-1.5h-8.9v1.5zm0-8.6v1.5H20V7.2h-8.9zM5 6.7V10h1V5.3L3.8 6l.4 1 .8-.3zm-.4 5.7c-.3.1-.5.2-.7.3l.1 1.1c.2-.2.5-.4.8-.5.3-.1.6 0 .7.1.2.3 0 .8-.2 1.1-.5.8-.9 1.6-1.4 2.5h2.7v-1h-1c.3-.6.8-1.4.9-2.1.1-.3 0-.8-.2-1.1-.5-.6-1.3-.5-1.7-.4z"
-}));
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.Path, {
+    d: "M11.1 15.8H20v-1.5h-8.9v1.5zm0-8.6v1.5H20V7.2h-8.9zM5 6.7V10h1V5.3L3.8 6l.4 1 .8-.3zm-.4 5.7c-.3.1-.5.2-.7.3l.1 1.1c.2-.2.5-.4.8-.5.3-.1.6 0 .7.1.2.3 0 .8-.2 1.1-.5.8-.9 1.6-1.4 2.5h2.7v-1h-1c.3-.6.8-1.4.9-2.1.1-.3 0-.8-.2-1.1-.5-.6-1.3-.5-1.7-.4z"
+  })
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (formatListNumbered);
 //# sourceMappingURL=format-list-numbered.js.map
 
@@ -7191,21 +7191,21 @@ const formatListNumbered = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5573);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__);
-
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5573);
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31085);
 /**
  * WordPress dependencies
  */
 
-const globe = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.SVG, {
+
+const globe = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24"
-}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.Path, {
-  d: "M12 3.3c-4.8 0-8.8 3.9-8.8 8.8 0 4.8 3.9 8.8 8.8 8.8 4.8 0 8.8-3.9 8.8-8.8s-4-8.8-8.8-8.8zm6.5 5.5h-2.6C15.4 7.3 14.8 6 14 5c2 .6 3.6 2 4.5 3.8zm.7 3.2c0 .6-.1 1.2-.2 1.8h-2.9c.1-.6.1-1.2.1-1.8s-.1-1.2-.1-1.8H19c.2.6.2 1.2.2 1.8zM12 18.7c-1-.7-1.8-1.9-2.3-3.5h4.6c-.5 1.6-1.3 2.9-2.3 3.5zm-2.6-4.9c-.1-.6-.1-1.1-.1-1.8 0-.6.1-1.2.1-1.8h5.2c.1.6.1 1.1.1 1.8s-.1 1.2-.1 1.8H9.4zM4.8 12c0-.6.1-1.2.2-1.8h2.9c-.1.6-.1 1.2-.1 1.8 0 .6.1 1.2.1 1.8H5c-.2-.6-.2-1.2-.2-1.8zM12 5.3c1 .7 1.8 1.9 2.3 3.5H9.7c.5-1.6 1.3-2.9 2.3-3.5zM10 5c-.8 1-1.4 2.3-1.8 3.8H5.5C6.4 7 8 5.6 10 5zM5.5 15.3h2.6c.4 1.5 1 2.8 1.8 3.7-1.8-.6-3.5-2-4.4-3.7zM14 19c.8-1 1.4-2.2 1.8-3.7h2.6C17.6 17 16 18.4 14 19z"
-}));
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.Path, {
+    d: "M12 3.3c-4.8 0-8.8 3.9-8.8 8.8 0 4.8 3.9 8.8 8.8 8.8 4.8 0 8.8-3.9 8.8-8.8s-4-8.8-8.8-8.8zm6.5 5.5h-2.6C15.4 7.3 14.8 6 14 5c2 .6 3.6 2 4.5 3.8zm.7 3.2c0 .6-.1 1.2-.2 1.8h-2.9c.1-.6.1-1.2.1-1.8s-.1-1.2-.1-1.8H19c.2.6.2 1.2.2 1.8zM12 18.7c-1-.7-1.8-1.9-2.3-3.5h4.6c-.5 1.6-1.3 2.9-2.3 3.5zm-2.6-4.9c-.1-.6-.1-1.1-.1-1.8 0-.6.1-1.2.1-1.8h5.2c.1.6.1 1.1.1 1.8s-.1 1.2-.1 1.8H9.4zM4.8 12c0-.6.1-1.2.2-1.8h2.9c-.1.6-.1 1.2-.1 1.8 0 .6.1 1.2.1 1.8H5c-.2-.6-.2-1.2-.2-1.8zM12 5.3c1 .7 1.8 1.9 2.3 3.5H9.7c.5-1.6 1.3-2.9 2.3-3.5zM10 5c-.8 1-1.4 2.3-1.8 3.8H5.5C6.4 7 8 5.6 10 5zM5.5 15.3h2.6c.4 1.5 1 2.8 1.8 3.7-1.8-.6-3.5-2-4.4-3.7zM14 19c.8-1 1.4-2.2 1.8-3.7h2.6C17.6 17 16 18.4 14 19z"
+  })
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (globe);
 //# sourceMappingURL=globe.js.map
 
@@ -7218,21 +7218,21 @@ const globe = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_pr
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5573);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__);
-
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5573);
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31085);
 /**
  * WordPress dependencies
  */
 
-const info = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.SVG, {
+
+const info = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24"
-}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.Path, {
-  d: "M12 3.2c-4.8 0-8.8 3.9-8.8 8.8 0 4.8 3.9 8.8 8.8 8.8 4.8 0 8.8-3.9 8.8-8.8 0-4.8-4-8.8-8.8-8.8zm0 16c-4 0-7.2-3.3-7.2-7.2C4.8 8 8 4.8 12 4.8s7.2 3.3 7.2 7.2c0 4-3.2 7.2-7.2 7.2zM11 17h2v-6h-2v6zm0-8h2V7h-2v2z"
-}));
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.Path, {
+    d: "M12 3.2c-4.8 0-8.8 3.9-8.8 8.8 0 4.8 3.9 8.8 8.8 8.8 4.8 0 8.8-3.9 8.8-8.8 0-4.8-4-8.8-8.8-8.8zm0 16c-4 0-7.2-3.3-7.2-7.2C4.8 8 8 4.8 12 4.8s7.2 3.3 7.2 7.2c0 4-3.2 7.2-7.2 7.2zM11 17h2v-6h-2v6zm0-8h2V7h-2v2z"
+  })
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (info);
 //# sourceMappingURL=info.js.map
 
@@ -7245,23 +7245,23 @@ const info = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_pri
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5573);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__);
-
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5573);
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31085);
 /**
  * WordPress dependencies
  */
 
-const institute = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.SVG, {
+
+const institute = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24"
-}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.Path, {
-  fillRule: "evenodd",
-  d: "M18.646 9H20V8l-1-.5L12 4 5 7.5 4 8v1h14.646zm-3-1.5L12 5.677 8.354 7.5h7.292zm-7.897 9.44v-6.5h-1.5v6.5h1.5zm5-6.5v6.5h-1.5v-6.5h1.5zm5 0v6.5h-1.5v-6.5h1.5zm2.252 8.81c0 .414-.334.75-.748.75H4.752a.75.75 0 010-1.5h14.5a.75.75 0 01.749.75z",
-  clipRule: "evenodd"
-}));
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.Path, {
+    fillRule: "evenodd",
+    d: "M18.646 9H20V8l-1-.5L12 4 5 7.5 4 8v1h14.646zm-3-1.5L12 5.677 8.354 7.5h7.292zm-7.897 9.44v-6.5h-1.5v6.5h1.5zm5-6.5v6.5h-1.5v-6.5h1.5zm5 0v6.5h-1.5v-6.5h1.5zm2.252 8.81c0 .414-.334.75-.748.75H4.752a.75.75 0 010-1.5h14.5a.75.75 0 01.749.75z",
+    clipRule: "evenodd"
+  })
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (institute);
 //# sourceMappingURL=institution.js.map
 
@@ -7274,21 +7274,21 @@ const institute = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpres
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5573);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__);
-
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5573);
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31085);
 /**
  * WordPress dependencies
  */
 
-const lineSolid = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.SVG, {
+
+const lineSolid = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24"
-}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.Path, {
-  d: "M5 11.25h14v1.5H5z"
-}));
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.Path, {
+    d: "M5 11.25h14v1.5H5z"
+  })
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (lineSolid);
 //# sourceMappingURL=line-solid.js.map
 
@@ -7301,23 +7301,24 @@ const lineSolid = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpres
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5573);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__);
-
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5573);
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31085);
 /**
  * WordPress dependencies
  */
 
-const page = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.SVG, {
+
+
+const page = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24"
-}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.Path, {
-  d: "M15.5 7.5h-7V9h7V7.5Zm-7 3.5h7v1.5h-7V11Zm7 3.5h-7V16h7v-1.5Z"
-}), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.Path, {
-  d: "M17 4H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2ZM7 5.5h10a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5H7a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 .5-.5Z"
-}));
+  viewBox: "0 0 24 24",
+  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.Path, {
+    d: "M15.5 7.5h-7V9h7V7.5Zm-7 3.5h7v1.5h-7V11Zm7 3.5h-7V16h7v-1.5Z"
+  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.Path, {
+    d: "M17 4H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2ZM7 5.5h10a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5H7a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 .5-.5Z"
+  })]
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (page);
 //# sourceMappingURL=page.js.map
 
@@ -7330,21 +7331,21 @@ const page = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_pri
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5573);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__);
-
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5573);
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31085);
 /**
  * WordPress dependencies
  */
 
-const search = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.SVG, {
+
+const search = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24"
-}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.Path, {
-  d: "M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z"
-}));
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.Path, {
+    d: "M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z"
+  })
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (search);
 //# sourceMappingURL=search.js.map
 
@@ -7358,13 +7359,11 @@ const search = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_p
 /* harmony export */   s9: () => (/* binding */ useI18n)
 /* harmony export */ });
 /* unused harmony exports I18nProvider, withI18n */
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(86087);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(27723);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
-
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(27723);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(31085);
 /**
  * External dependencies
  */
@@ -7372,6 +7371,7 @@ const search = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_p
 /**
  * WordPress dependencies
  */
+
 
 
 /**
@@ -7389,7 +7389,7 @@ function makeContextValue(i18n) {
     hasTranslation: i18n.hasTranslation.bind(i18n)
   };
 }
-const I18nContext = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createContext)(makeContextValue(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.defaultI18n));
+const I18nContext = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createContext)(makeContextValue(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.defaultI18n));
 /**
  * The `I18nProvider` should be mounted above any localized components:
  *
@@ -7423,9 +7423,10 @@ function I18nProvider(props) {
   // Rerender translations whenever the i18n instance fires a change event.
   useEffect(() => i18n.subscribe(forceUpdate), [i18n]);
   const value = useMemo(() => makeContextValue(i18n), [i18n, update]);
-  return createElement(I18nContext.Provider, {
-    value: value
-  }, children);
+  return /*#__PURE__*/_jsx(I18nContext.Provider, {
+    value: value,
+    children: children
+  });
 }
 
 /**
@@ -7443,7 +7444,7 @@ function I18nProvider(props) {
  * }
  * ```
  */
-const useI18n = () => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useContext)(I18nContext);
+const useI18n = () => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useContext)(I18nContext);
 /**
  * React higher-order component that passes the i18n translate functions (the same set
  * as exposed by the `useI18n` hook) to the wrapped component as props.
@@ -7465,7 +7466,7 @@ const useI18n = () => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useCont
 function withI18n(InnerComponent) {
   const EnhancedComponent = props => {
     const i18nProps = useI18n();
-    return createElement(InnerComponent, {
+    return /*#__PURE__*/_jsx(InnerComponent, {
       ...props,
       ...i18nProps
     });
@@ -7899,72 +7900,6 @@ if ($defineProperty) {
 } else {
 	module.exports.apply = applyBind;
 }
-
-
-/***/ }),
-
-/***/ 99870:
-/***/ ((module, exports) => {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
-	Copyright (c) 2018 Jed Watson.
-	Licensed under the MIT License (MIT), see
-	http://jedwatson.github.io/classnames
-*/
-/* global define */
-
-(function () {
-	'use strict';
-
-	var hasOwn = {}.hasOwnProperty;
-	var nativeCodeString = '[native code]';
-
-	function classNames() {
-		var classes = [];
-
-		for (var i = 0; i < arguments.length; i++) {
-			var arg = arguments[i];
-			if (!arg) continue;
-
-			var argType = typeof arg;
-
-			if (argType === 'string' || argType === 'number') {
-				classes.push(arg);
-			} else if (Array.isArray(arg)) {
-				if (arg.length) {
-					var inner = classNames.apply(null, arg);
-					if (inner) {
-						classes.push(inner);
-					}
-				}
-			} else if (argType === 'object') {
-				if (arg.toString !== Object.prototype.toString && !arg.toString.toString().includes('[native code]')) {
-					classes.push(arg.toString());
-					continue;
-				}
-
-				for (var key in arg) {
-					if (hasOwn.call(arg, key) && arg[key]) {
-						classes.push(key);
-					}
-				}
-			}
-		}
-
-		return classes.join(' ');
-	}
-
-	if ( true && module.exports) {
-		classNames.default = classNames;
-		module.exports = classNames;
-	} else if (true) {
-		// register as 'classnames', consistent with npm package name
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
-			return classNames;
-		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	} else {}
-}());
 
 
 /***/ }),
@@ -26176,13 +26111,12 @@ window.process = {
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(92279);
 /* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_plugins__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(20759);
-/* harmony import */ var calypso_state_ui_selectors__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(65284);
-/* harmony import */ var _common_what_new_query_client__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(71805);
-/* harmony import */ var _CalypsoStateProvider__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(66089);
-/* harmony import */ var _use_action_hooks__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(10749);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(54357);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(20759);
+/* harmony import */ var calypso_state_ui_selectors__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(65284);
+/* harmony import */ var _common_what_new_query_client__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(71805);
+/* harmony import */ var _CalypsoStateProvider__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(66089);
+/* harmony import */ var _use_action_hooks__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(10749);
 
 
 
@@ -26202,7 +26136,7 @@ window.process = {
 function HelpCenterContent() {
   const [helpIconRef, setHelpIconRef] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)();
   const isDesktop = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__.useMediaQuery)('(min-width: 480px)');
-  const sectionName = (0,react_redux__WEBPACK_IMPORTED_MODULE_7__/* .useSelector */ .d4)(calypso_state_ui_selectors__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A);
+  const sectionName = (0,react_redux__WEBPACK_IMPORTED_MODULE_6__/* .useSelector */ .d4)(calypso_state_ui_selectors__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A);
   const [showHelpIcon, setShowHelpIcon] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const {
     setShowHelpCenter
@@ -26220,10 +26154,10 @@ function HelpCenterContent() {
     const timeout = setTimeout(() => setShowHelpIcon(true), 0);
     return () => clearTimeout(timeout);
   }, []);
-  (0,_use_action_hooks__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A)();
+  (0,_use_action_hooks__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A)();
   const closeCallback = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useCallback)(() => setShowHelpCenter(false), [setShowHelpCenter]);
   const content = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-    className: classnames__WEBPACK_IMPORTED_MODULE_6___default()('entry-point-button', 'help-center', {
+    className: (0,clsx__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A)('entry-point-button', 'help-center', {
       'is-active': show
     }),
     onClick: handleToggleHelpCenter,
@@ -26248,8 +26182,8 @@ function HelpCenterContent() {
 (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_5__.registerPlugin)('etk-help-center', {
   render: () => {
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_tanstack_react_query__WEBPACK_IMPORTED_MODULE_14__/* .QueryClientProvider */ .Ht, {
-      client: _common_what_new_query_client__WEBPACK_IMPORTED_MODULE_8__/* .whatsNewQueryClient */ .f
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_CalypsoStateProvider__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_15__/* .LocaleProvider */ .YO, {
+      client: _common_what_new_query_client__WEBPACK_IMPORTED_MODULE_7__/* .whatsNewQueryClient */ .f
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_CalypsoStateProvider__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_15__/* .LocaleProvider */ .YO, {
       localeSlug: window.helpCenterLocale?.locale
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(HelpCenterContent, null))));
   }
@@ -26445,6 +26379,7 @@ const SUPPORT_TYPE_ADMIN_SECTION = 'admin_section';
  * Module variables
  */
 const debug = debug__WEBPACK_IMPORTED_MODULE_2___default()('calypso:inline-help');
+const AUTO_FOCUS_LOCATION = ['help-center', 'inline-help-popover'];
 const InlineHelpSearchCard = ({
   searchQuery = '',
   location = 'inline-help-popover',
@@ -26459,8 +26394,7 @@ const InlineHelpSearchCard = ({
   // Focus in the input element.
   (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(() => {
     const inputElement = cardRef.current?.searchInput;
-    // Focuses only in the popover.
-    if (location !== 'inline-help-popover' || !inputElement || !isVisible) {
+    if (!AUTO_FOCUS_LOCATION.includes(location) || !inputElement || !isVisible) {
       return;
     }
     const timerId = setTimeout(() => inputElement.focus(), 0);
@@ -26805,15 +26739,14 @@ const useQueryUserPurchases = (enabled = true) => {
 /* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(42207);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(64446);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(95656);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(59944);
-/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(87526);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(66087);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _swipeable__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(50980);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(54357);
+/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(59944);
+/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(87526);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(66087);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(51609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _swipeable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(50980);
 
 
 
@@ -26833,8 +26766,8 @@ const Controls = ({
   tracksPrefix,
   tracksFn
 }) => {
-  const translate = (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)();
-  const isRtl = (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_6__/* .useRtl */ .I)();
+  const translate = (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)();
+  const isRtl = (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_5__/* .useRtl */ .I)();
   if (numberOfPages < 2) {
     return null;
   }
@@ -26843,12 +26776,12 @@ const Controls = ({
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", {
     className: "dot-pager__controls",
     "aria-label": translate('Pager controls')
-  }, (0,lodash__WEBPACK_IMPORTED_MODULE_2__.times)(numberOfPages, page => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
+  }, (0,lodash__WEBPACK_IMPORTED_MODULE_1__.times)(numberOfPages, page => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
     key: `page-${page}`,
     "aria-current": page === currentPage ? 'page' : undefined
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     key: page.toString(),
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()('dot-pager__control-choose-page', {
+    className: (0,clsx__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)('dot-pager__control-choose-page', {
       'dot-pager__control-current': page === currentPage
     }),
     disabled: page === currentPage,
@@ -26929,18 +26862,18 @@ const DotPager = ({
   onFinish = () => {},
   ...props
 }) => {
-  const translate = (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)();
+  const translate = (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)();
 
   // Filter out the empty children
-  const normalizedChildren = react__WEBPACK_IMPORTED_MODULE_3__.Children.toArray(children).filter(Boolean);
-  const [currentPage, setCurrentPage] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(0);
-  const numPages = react__WEBPACK_IMPORTED_MODULE_3__.Children.count(normalizedChildren);
-  (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(() => {
+  const normalizedChildren = react__WEBPACK_IMPORTED_MODULE_2__.Children.toArray(children).filter(Boolean);
+  const [currentPage, setCurrentPage] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(0);
+  const numPages = react__WEBPACK_IMPORTED_MODULE_2__.Children.count(normalizedChildren);
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
     if (currentPage >= numPages) {
       setCurrentPage(numPages - 1);
     }
   }, [numPages, currentPage]);
-  (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(() => {
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
     if (rotateTime > 0 && numPages > 1) {
       const timerId = setTimeout(() => {
         setCurrentPage((currentPage + 1) % numPages);
@@ -26953,7 +26886,7 @@ const DotPager = ({
     onPageSelected?.(index);
   };
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A)({
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()('dot-pager', className)
+    className: (0,clsx__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)('dot-pager', className)
   }, props), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Controls, {
     showControlLabels: showControlLabels,
     currentPage: currentPage,
@@ -26962,7 +26895,7 @@ const DotPager = ({
     navArrowSize: navArrowSize,
     tracksPrefix: tracksPrefix,
     tracksFn: tracksFn
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_swipeable__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_swipeable__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     hasDynamicHeight: hasDynamicHeight,
     onPageSelect: handleSelectPage,
     currentPage: currentPage,
@@ -27011,19 +26944,18 @@ const DotPager = ({
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _automattic_load_script__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7944);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2090);
-/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(66087);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(75795);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(25873);
-/* harmony import */ var calypso_components_dot_pager__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(83269);
-/* harmony import */ var calypso_lib_load_jquery_dependent_script_desktop_wrapper__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(97059);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(54357);
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2090);
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(66087);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(51609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(75795);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(25873);
+/* harmony import */ var calypso_components_dot_pager__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(83269);
+/* harmony import */ var calypso_lib_load_jquery_dependent_script_desktop_wrapper__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(97059);
 
 
 
@@ -27035,7 +26967,7 @@ const DotPager = ({
 
 
 const noop = () => {};
-const debug = debug__WEBPACK_IMPORTED_MODULE_3___default()('calypso:components:embed-container');
+const debug = debug__WEBPACK_IMPORTED_MODULE_2___default()('calypso:components:embed-container');
 const embedsToLookFor = {
   'blockquote[class^="instagram-"]': embedInstagram,
   'blockquote[class^="twitter-"], a[class^="twitter-"]': embedTwitter,
@@ -27063,7 +26995,7 @@ const SLIDESHOW_URLS = {
 function processEmbeds(domNode) {
   Object.entries(embedsToLookFor).forEach(([embedSelector, fn]) => {
     const nodes = domNode.querySelectorAll(embedSelector);
-    (0,lodash__WEBPACK_IMPORTED_MODULE_4__.forEach)((0,lodash__WEBPACK_IMPORTED_MODULE_4__.filter)(nodes, nodeNeedsProcessing), fn);
+    (0,lodash__WEBPACK_IMPORTED_MODULE_3__.forEach)((0,lodash__WEBPACK_IMPORTED_MODULE_3__.filter)(nodes, nodeNeedsProcessing), fn);
   });
 }
 function nodeNeedsProcessing(domNode) {
@@ -27165,7 +27097,7 @@ function embedTumblr(domNode) {
   // tumblr just wants us to load this script, over and over and over
   tumblrLoader = true;
   function removeScript() {
-    (0,lodash__WEBPACK_IMPORTED_MODULE_4__.forEach)(document.querySelectorAll('script[src="https://secure.assets.tumblr.com/post.js"]'), function (el) {
+    (0,lodash__WEBPACK_IMPORTED_MODULE_3__.forEach)(document.querySelectorAll('script[src="https://secure.assets.tumblr.com/post.js"]'), function (el) {
       el.parentNode.removeChild(el);
     });
     tumblrLoader = false;
@@ -27200,7 +27132,7 @@ function embedSlideshow(domNode) {
 
   // Remove no JS warning so user doesn't have to look at it while several scripts load
   const warningElements = domNode.parentNode.getElementsByClassName('jetpack-slideshow-noscript');
-  (0,lodash__WEBPACK_IMPORTED_MODULE_4__.forEach)(warningElements, el => {
+  (0,lodash__WEBPACK_IMPORTED_MODULE_3__.forEach)(warningElements, el => {
     el.classList.add('hidden');
   });
   if (window.jQuery && window.jQuery.prototype.cycle) {
@@ -27213,7 +27145,7 @@ function embedSlideshow(domNode) {
     });
   } else {
     // Neither exist
-    (0,calypso_lib_load_jquery_dependent_script_desktop_wrapper__WEBPACK_IMPORTED_MODULE_9__/* .loadjQueryDependentScriptDesktopWrapper */ .e)(SLIDESHOW_URLS.CYCLE_JS, () => {
+    (0,calypso_lib_load_jquery_dependent_script_desktop_wrapper__WEBPACK_IMPORTED_MODULE_8__/* .loadjQueryDependentScriptDesktopWrapper */ .e)(SLIDESHOW_URLS.CYCLE_JS, () => {
       createSlideshow();
     });
   }
@@ -27226,10 +27158,10 @@ function embedCarousel(domNode) {
   if (carouselItemsWrapper) {
     const carouselItems = Array.from(carouselItemsWrapper?.children);
     if (carouselItems && carouselItems.length) {
-      (0,react_dom_client__WEBPACK_IMPORTED_MODULE_7__/* .createRoot */ .H)(domNode).render((0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_dot_pager__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, null, carouselItems.map((item, index) => {
+      (0,react_dom_client__WEBPACK_IMPORTED_MODULE_6__/* .createRoot */ .H)(domNode).render((0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_dot_pager__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, carouselItems.map((item, index) => {
         return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
           key: index,
-          className: classnames__WEBPACK_IMPORTED_MODULE_2___default()('carousel-slide', item?.className)
+          className: (0,clsx__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A)('carousel-slide', item?.className)
           // eslint-disable-next-line react/no-danger
           ,
           dangerouslySetInnerHTML: {
@@ -27258,7 +27190,7 @@ function embedTiledGallery(domNode) {
     const imageItems = Array.from(galleryItems);
 
     // Replace the gallery with updated markup
-    (0,react_dom_client__WEBPACK_IMPORTED_MODULE_7__/* .createRoot */ .H)(domNode).render((0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    (0,react_dom_client__WEBPACK_IMPORTED_MODULE_6__/* .createRoot */ .H)(domNode).render((0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "gallery-container"
     }, imageItems.map(item => {
       const itemImage = item.querySelector('img');
@@ -27284,16 +27216,16 @@ function embedTiledGallery(domNode) {
 /**
  * A component that notices when the content has embeds that require outside JS. Load the outside JS and process the embeds
  */
-class EmbedContainer extends react__WEBPACK_IMPORTED_MODULE_5__.PureComponent {
+class EmbedContainer extends react__WEBPACK_IMPORTED_MODULE_4__.PureComponent {
   componentDidMount() {
-    processEmbeds(react_dom__WEBPACK_IMPORTED_MODULE_6___default().findDOMNode(this));
+    processEmbeds(react_dom__WEBPACK_IMPORTED_MODULE_5___default().findDOMNode(this));
   }
   componentDidUpdate() {
-    processEmbeds(react_dom__WEBPACK_IMPORTED_MODULE_6___default().findDOMNode(this));
+    processEmbeds(react_dom__WEBPACK_IMPORTED_MODULE_5___default().findDOMNode(this));
   }
   componentWillUnmount() {
     // Unmark the contents as done because they may not be on the following re-render.
-    react_dom__WEBPACK_IMPORTED_MODULE_6___default().findDOMNode(this).querySelectorAll('[data-wpcom-embed-processed]').forEach(node => {
+    react_dom__WEBPACK_IMPORTED_MODULE_5___default().findDOMNode(this).querySelectorAll('[data-wpcom-embed-processed]').forEach(node => {
       node.removeAttribute('data-wpcom-embed-processed');
     });
   }
@@ -27330,15 +27262,14 @@ class EmbedContainer extends react__WEBPACK_IMPORTED_MODULE_5__.PureComponent {
 /* harmony export */   A: () => (/* binding */ FormTextInput)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(89575);
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(24586);
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(24586);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(54357);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(39067);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(51609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 
 
 
@@ -27346,14 +27277,14 @@ class EmbedContainer extends react__WEBPACK_IMPORTED_MODULE_5__.PureComponent {
 
 
 
-class FormTextInput extends react__WEBPACK_IMPORTED_MODULE_2__.PureComponent {
+class FormTextInput extends react__WEBPACK_IMPORTED_MODULE_1__.PureComponent {
   constructor(...args) {
     super(...args);
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)(this, "state", {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(this, "state", {
       value: this.props.value || ''
     });
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)(this, "currentTextField", undefined);
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)(this, "textFieldRef", element => {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(this, "currentTextField", undefined);
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(this, "textFieldRef", element => {
       this.currentTextField = element;
       const {
         inputRef
@@ -27367,12 +27298,12 @@ class FormTextInput extends react__WEBPACK_IMPORTED_MODULE_2__.PureComponent {
         inputRef.current = element;
       }
     });
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)(this, "selectOnFocus", event => {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(this, "selectOnFocus", event => {
       if (this.props.selectOnFocus) {
         event.target.select();
       }
     });
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)(this, "onChange", event => {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(this, "onChange", event => {
       this.setState({
         value: event.target.value
       });
@@ -27407,7 +27338,7 @@ class FormTextInput extends react__WEBPACK_IMPORTED_MODULE_2__.PureComponent {
       value,
       ...rest
     } = this.props;
-    const classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()('form-text-input', this.props.className, {
+    const classes = (0,clsx__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)('form-text-input', this.props.className, {
       'is-error': this.props.isError,
       'is-valid': this.props.isValid
     });
@@ -27422,7 +27353,7 @@ class FormTextInput extends react__WEBPACK_IMPORTED_MODULE_2__.PureComponent {
     }));
   }
 }
-(0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)(FormTextInput, "propTypes", {
+(0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(FormTextInput, "propTypes", {
   isError: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().bool),
   isValid: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().bool),
   selectOnFocus: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().bool),
@@ -27442,11 +27373,10 @@ class FormTextInput extends react__WEBPACK_IMPORTED_MODULE_2__.PureComponent {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(89575);
+/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(89575);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(54357);
 
 
 
@@ -27458,8 +27388,8 @@ const FormTextarea = ({
   children = undefined,
   forwardedRef = undefined,
   ...otherProps
-}) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("textarea", (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)({}, otherProps, {
-  className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(className, 'form-textarea', {
+}) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("textarea", (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)({}, otherProps, {
+  className: (0,clsx__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(className, 'form-textarea', {
     'is-error': isError,
     'is-valid': isValid
   }),
@@ -27695,18 +27625,17 @@ class PopoverMenu extends react__WEBPACK_IMPORTED_MODULE_1__.Component {
 /* harmony export */   A: () => (/* binding */ PopoverMenuItem)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(89575);
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(24586);
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(24586);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(79812);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(66087);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(54357);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(66087);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(39067);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(51609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var calypso_components_external_link__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(75056);
 
 
@@ -27718,10 +27647,10 @@ class PopoverMenu extends react__WEBPACK_IMPORTED_MODULE_1__.Component {
 
 
 const noop = () => {};
-class PopoverMenuItem extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
+class PopoverMenuItem extends react__WEBPACK_IMPORTED_MODULE_2__.Component {
   constructor(...args) {
     super(...args);
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)(this, "handleMouseOver", event => {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)(this, "handleMouseOver", event => {
       const {
         focusOnHover
       } = this.props;
@@ -27741,8 +27670,8 @@ class PopoverMenuItem extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
       isExternalLink,
       isSelected
     } = this.props;
-    const itemProps = (0,lodash__WEBPACK_IMPORTED_MODULE_2__.omit)(this.props, 'icon', 'focusOnHover', 'isSelected', 'isExternalLink', 'className', 'itemComponent');
-    const classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()('popover__menu-item', className, {
+    const itemProps = (0,lodash__WEBPACK_IMPORTED_MODULE_1__.omit)(this.props, 'icon', 'focusOnHover', 'isSelected', 'isExternalLink', 'className', 'itemComponent');
+    const classes = (0,clsx__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)('popover__menu-item', className, {
       'is-selected': isSelected
     });
     let ItemComponent = this.props.itemComponent;
@@ -27768,7 +27697,7 @@ class PopoverMenuItem extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
     }), itemIcon, children);
   }
 }
-(0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)(PopoverMenuItem, "propTypes", {
+(0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)(PopoverMenuItem, "propTypes", {
   href: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().string),
   disabled: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().bool),
   className: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().string),
@@ -27780,7 +27709,7 @@ class PopoverMenuItem extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
   isExternalLink: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().bool),
   itemComponent: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().elementType)
 });
-(0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)(PopoverMenuItem, "defaultProps", {
+(0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)(PopoverMenuItem, "defaultProps", {
   isSelected: false,
   focusOnHover: true,
   onMouseOver: noop,
@@ -27799,12 +27728,11 @@ class PopoverMenuItem extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
 /* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(89575);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(25109);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var calypso_components_search__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(27646);
+/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(25109);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(54357);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(51609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var calypso_components_search__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(27646);
 
 
 
@@ -27815,12 +27743,12 @@ class PopoverMenuItem extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
 const SearchCard = ({
   className,
   ...props
-}, ref) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_components__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
-  className: classnames__WEBPACK_IMPORTED_MODULE_1___default()('search-card', className)
-}, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_search__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Ay, (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)({
+}, ref) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_components__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+  className: (0,clsx__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)('search-card', className)
+}, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_search__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Ay, (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)({
   ref: ref
 }, props)));
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (/*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_2__.forwardRef)(SearchCard));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (/*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(SearchCard));
 
 /***/ }),
 
@@ -27833,27 +27761,26 @@ const SearchCard = ({
 /* harmony export */ });
 /* unused harmony exports SEARCH_MODE_WHEN_TYPING, SEARCH_MODE_ON_ENTER */
 /* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(89575);
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(24586);
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(24586);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(64682);
-/* harmony import */ var _automattic_viewport__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(59886);
+/* harmony import */ var _automattic_viewport__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(59886);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(64446);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(13936);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(82096);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(85744);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(66087);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(54357);
+/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(85744);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(66087);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(39067);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(77981);
-/* harmony import */ var calypso_components_forms_form_text_input__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3875);
-/* harmony import */ var calypso_components_translatable_proptype__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(3616);
-/* harmony import */ var calypso_lib_analytics_ga__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(37535);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(51609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(77981);
+/* harmony import */ var calypso_components_forms_form_text_input__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3875);
+/* harmony import */ var calypso_components_translatable_proptype__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3616);
+/* harmony import */ var calypso_lib_analytics_ga__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(37535);
 
 
 
@@ -27886,13 +27813,13 @@ function keyListener(methodToCall, event) {
       break;
   }
 }
-class Search extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
+class Search extends react__WEBPACK_IMPORTED_MODULE_2__.Component {
   constructor(props) {
     super(props);
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A)(this, "setOpenIconRef", openIcon => this.openIcon = openIcon);
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A)(this, "setSearchInputRef", input => this.searchInput = input);
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A)(this, "setOverlayRef", overlay => this.overlay = overlay);
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A)(this, "scrollOverlay", () => {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "setOpenIconRef", openIcon => this.openIcon = openIcon);
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "setSearchInputRef", input => this.searchInput = input);
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "setOverlayRef", overlay => this.overlay = overlay);
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "scrollOverlay", () => {
       this.overlay && window.requestAnimationFrame(() => {
         if (this.overlay && this.searchInput) {
           this.overlay.scrollLeft = this.getScrollLeft(this.searchInput);
@@ -27902,7 +27829,7 @@ class Search extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
     //This is fix for IE11. Does not work on Edge.
     //On IE11 scrollLeft value for input is always 0.
     //We are calculating it manually using TextRange object.
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A)(this, "getScrollLeft", inputElement => {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "getScrollLeft", inputElement => {
       //TextRange is IE11 specific so this checks if we are not on IE11.
       if (!inputElement.createTextRange) {
         return inputElement.scrollLeft;
@@ -27914,16 +27841,16 @@ class Search extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
       const scrollLeft = inputElement.getBoundingClientRect().left + inputElement.clientLeft + paddingLeft - rangeRect.left;
       return scrollLeft;
     });
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A)(this, "focus", () => {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "focus", () => {
       // if we call focus before the element has been entirely synced up with the DOM, we stand a decent chance of
       // causing the browser to scroll somewhere odd. Instead, defer the focus until a future turn of the event loop.
       setTimeout(() => this.searchInput && this.searchInput.focus(), 0);
     });
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A)(this, "blur", () => this.searchInput.blur());
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A)(this, "clear", () => this.setState({
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "blur", () => this.searchInput.blur());
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "clear", () => this.setState({
       keyword: ''
     }));
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A)(this, "onBlur", event => {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "onBlur", event => {
       if (this.props.onBlur) {
         this.props.onBlur(event);
       }
@@ -27931,20 +27858,20 @@ class Search extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
         hasFocus: false
       });
     });
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A)(this, "onChange", event => {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "onChange", event => {
       this.setState({
         keyword: event.target.value
       });
     });
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A)(this, "openSearch", event => {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "openSearch", event => {
       event.preventDefault();
       this.setState({
         keyword: '',
         isOpen: true
       });
-      (0,calypso_lib_analytics_ga__WEBPACK_IMPORTED_MODULE_6__/* .gaRecordEvent */ .WI)(this.props.analyticsGroup, 'Clicked Open Search');
+      (0,calypso_lib_analytics_ga__WEBPACK_IMPORTED_MODULE_5__/* .gaRecordEvent */ .WI)(this.props.analyticsGroup, 'Clicked Open Search');
     });
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A)(this, "closeSearch", event => {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "closeSearch", event => {
       event.preventDefault();
       if (this.props.disabled) {
         return;
@@ -27962,10 +27889,10 @@ class Search extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
         this.searchInput.focus();
       }
       this.props.onSearchClose(event);
-      (0,calypso_lib_analytics_ga__WEBPACK_IMPORTED_MODULE_6__/* .gaRecordEvent */ .WI)(this.props.analyticsGroup, 'Clicked Close Search');
+      (0,calypso_lib_analytics_ga__WEBPACK_IMPORTED_MODULE_5__/* .gaRecordEvent */ .WI)(this.props.analyticsGroup, 'Clicked Close Search');
     });
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A)(this, "keyUp", event => {
-      if (event.key === 'Enter' && (0,_automattic_viewport__WEBPACK_IMPORTED_MODULE_8__/* .isMobile */ .Fr)()) {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "keyUp", event => {
+      if (event.key === 'Enter' && (0,_automattic_viewport__WEBPACK_IMPORTED_MODULE_7__/* .isMobile */ .Fr)()) {
         //dismiss soft keyboards
         this.blur();
       }
@@ -27977,7 +27904,7 @@ class Search extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
       }
       this.scrollOverlay();
     });
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A)(this, "keyDown", event => {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "keyDown", event => {
       this.scrollOverlay();
       if (event.key === 'Escape' && event.target.value === '') {
         this.closeSearch(event);
@@ -27989,7 +27916,7 @@ class Search extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
     });
     // Puts the cursor at end of the text when starting
     // with `initialValue` set.
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A)(this, "onFocus", () => {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "onFocus", () => {
       if (!this.searchInput) {
         return;
       }
@@ -28004,7 +27931,7 @@ class Search extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
       });
       this.props.onSearchOpen();
     });
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A)(this, "updateSearch", () => {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "updateSearch", () => {
       if (this.state.keyword) {
         // this.onSearch is debounced when this.props.delaySearch === true
         // this avoids unnecessary fetches while user types
@@ -28019,13 +27946,13 @@ class Search extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
         this.props.onSearch(this.state.keyword);
       }
     });
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A)(this, "isSearchOnEnterMode", () => {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "isSearchOnEnterMode", () => {
       return this.props.searchMode === SEARCH_MODE_ON_ENTER;
     });
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A)(this, "isSearchOnWriteMode", () => {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "isSearchOnWriteMode", () => {
       return !this.isSearchOnEnterMode();
     });
-    this.instanceId = (0,uuid__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A)();
+    this.instanceId = (0,uuid__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A)();
     this.state = {
       keyword: props.initialValue || '',
       isOpen: !!props.isOpen,
@@ -28037,7 +27964,7 @@ class Search extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
   // @TODO: Please update https://github.com/Automattic/wp-calypso/issues/58453 if you are refactoring away from UNSAFE_* lifecycle methods!
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.onSearch !== this.props.onSearch || nextProps.delaySearch !== this.props.delaySearch) {
-      this.onSearch = this.props.delaySearch ? (0,lodash__WEBPACK_IMPORTED_MODULE_2__.debounce)(this.props.onSearch, this.props.delayTimeout) : this.props.onSearch;
+      this.onSearch = this.props.delaySearch ? (0,lodash__WEBPACK_IMPORTED_MODULE_1__.debounce)(this.props.onSearch, this.props.delayTimeout) : this.props.onSearch;
     }
     if (this.props.isOpen !== nextProps.isOpen) {
       this.setState({
@@ -28070,11 +27997,11 @@ class Search extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
     this.props.onSearchChange(this.state.keyword);
   }
   componentDidMount() {
-    this.onSearch = this.props.delaySearch ? (0,lodash__WEBPACK_IMPORTED_MODULE_2__.debounce)(this.props.onSearch, this.props.delayTimeout) : this.props.onSearch;
+    this.onSearch = this.props.delaySearch ? (0,lodash__WEBPACK_IMPORTED_MODULE_1__.debounce)(this.props.onSearch, this.props.delayTimeout) : this.props.onSearch;
   }
   render() {
     const searchValue = this.state.keyword;
-    const placeholder = this.props.placeholder || i18n_calypso__WEBPACK_IMPORTED_MODULE_10__/* ["default"].translate */ .Ay.translate('Search…', {
+    const placeholder = this.props.placeholder || i18n_calypso__WEBPACK_IMPORTED_MODULE_9__/* ["default"].translate */ .Ay.translate('Search…', {
       textOnly: true
     });
     const inputLabel = this.props.inputLabel;
@@ -28085,7 +28012,7 @@ class Search extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
       autoCorrect: 'off',
       spellCheck: 'false'
     };
-    const searchClass = classnames__WEBPACK_IMPORTED_MODULE_1___default()(this.props.additionalClasses, this.props.dir, {
+    const searchClass = (0,clsx__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A)(this.props.additionalClasses, this.props.dir, {
       'is-expanded-to-container': this.props.fitsContainer,
       'is-open': isOpenUnpinnedOrQueried,
       'is-searching': this.props.searching,
@@ -28094,8 +28021,8 @@ class Search extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
       'has-open-icon': !this.props.hideOpenIcon,
       search: true
     });
-    const fadeDivClass = classnames__WEBPACK_IMPORTED_MODULE_1___default()('search__input-fade', this.props.dir);
-    const inputClass = classnames__WEBPACK_IMPORTED_MODULE_1___default()('search__input', this.props.dir);
+    const fadeDivClass = (0,clsx__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A)('search__input-fade', this.props.dir);
+    const inputClass = (0,clsx__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A)('search__input', this.props.dir);
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       dir: this.props.dir || null,
       className: searchClass,
@@ -28108,7 +28035,7 @@ class Search extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
       tabIndex: enableOpenIcon ? '0' : null,
       onKeyDown: enableOpenIcon ? this.openListener : null,
       "aria-controls": 'search-component-' + this.instanceId,
-      "aria-label": i18n_calypso__WEBPACK_IMPORTED_MODULE_10__/* ["default"].translate */ .Ay.translate('Open Search', {
+      "aria-label": i18n_calypso__WEBPACK_IMPORTED_MODULE_9__/* ["default"].translate */ .Ay.translate('Open Search', {
         context: 'button label'
       })
     }, !this.props.hideOpenIcon && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
@@ -28116,13 +28043,13 @@ class Search extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
       className: "search__open-icon"
     })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: fadeDivClass
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_forms_form_text_input__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A)({
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_forms_form_text_input__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A)({
       type: "search",
       id: 'search-component-' + this.instanceId,
       autoFocus: this.props.autoFocus // eslint-disable-line jsx-a11y/no-autofocus
       ,
       "aria-describedby": this.props.describedBy,
-      "aria-label": inputLabel ? inputLabel : i18n_calypso__WEBPACK_IMPORTED_MODULE_10__/* ["default"].translate */ .Ay.translate('Search'),
+      "aria-label": inputLabel ? inputLabel : i18n_calypso__WEBPACK_IMPORTED_MODULE_9__/* ["default"].translate */ .Ay.translate('Search'),
       "aria-hidden": !isOpenUnpinnedOrQueried,
       className: inputClass,
       placeholder: placeholder,
@@ -28157,7 +28084,7 @@ class Search extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
         tabIndex: "0",
         onKeyDown: this.closeListener,
         "aria-controls": 'search-component-' + this.instanceId,
-        "aria-label": i18n_calypso__WEBPACK_IMPORTED_MODULE_10__/* ["default"].translate */ .Ay.translate('Close Search', {
+        "aria-label": i18n_calypso__WEBPACK_IMPORTED_MODULE_9__/* ["default"].translate */ .Ay.translate('Close Search', {
           context: 'button label'
         })
       }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
@@ -28168,11 +28095,11 @@ class Search extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
     return null;
   }
 }
-(0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A)(Search, "propTypes", {
+(0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(Search, "propTypes", {
   additionalClasses: (prop_types__WEBPACK_IMPORTED_MODULE_16___default().string),
   initialValue: (prop_types__WEBPACK_IMPORTED_MODULE_16___default().string),
   value: (prop_types__WEBPACK_IMPORTED_MODULE_16___default().string),
-  placeholder: calypso_components_translatable_proptype__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A,
+  placeholder: calypso_components_translatable_proptype__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A,
   pinned: (prop_types__WEBPACK_IMPORTED_MODULE_16___default().bool),
   delaySearch: (prop_types__WEBPACK_IMPORTED_MODULE_16___default().bool),
   delayTimeout: (prop_types__WEBPACK_IMPORTED_MODULE_16___default().number),
@@ -28203,7 +28130,7 @@ class Search extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
   searchMode: (prop_types__WEBPACK_IMPORTED_MODULE_16___default().string),
   applySearch: (prop_types__WEBPACK_IMPORTED_MODULE_16___default().bool)
 });
-(0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A)(Search, "defaultProps", {
+(0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(Search, "defaultProps", {
   pinned: false,
   delaySearch: false,
   delayTimeout: SEARCH_DEBOUNCE_MS,
@@ -28242,14 +28169,13 @@ class Search extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* unused harmony export Swipeable */
-/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(89575);
+/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(89575);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(87526);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(54357);
+/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(87526);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(51609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 
 
 
@@ -28261,17 +28187,17 @@ const VELOCITY_THRESHOLD = 0.2; // Speed of drag above, before we trigger the sl
 const VERTICAL_THRESHOLD_ANGLE = 55;
 const TRANSITION_DURATION = '300ms';
 function useResizeObserver() {
-  const [observerEntry, setObserverEntry] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({});
-  const [node, setNode] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(null);
-  const observer = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)(null);
-  const disconnect = (0,react__WEBPACK_IMPORTED_MODULE_2__.useCallback)(() => observer.current?.disconnect(), []);
-  const observe = (0,react__WEBPACK_IMPORTED_MODULE_2__.useCallback)(() => {
+  const [observerEntry, setObserverEntry] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({});
+  const [node, setNode] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+  const observer = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
+  const disconnect = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)(() => observer.current?.disconnect(), []);
+  const observe = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)(() => {
     observer.current = new ResizeObserver(([entry]) => setObserverEntry(entry));
     if (node) {
       observer.current.observe(node);
     }
   }, [node]);
-  (0,react__WEBPACK_IMPORTED_MODULE_2__.useLayoutEffect)(() => {
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useLayoutEffect)(() => {
     observe();
     return () => disconnect();
   }, [disconnect, observe]);
@@ -28318,17 +28244,17 @@ const Swipeable = ({
   isClickEnabled,
   ...otherProps
 }) => {
-  const [swipeableArea, setSwipeableArea] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)();
-  const isRtl = (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_3__/* .useRtl */ .I)();
+  const [swipeableArea, setSwipeableArea] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)();
+  const isRtl = (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* .useRtl */ .I)();
   const [resizeObserverRef, entry] = useResizeObserver();
-  const [pagesStyle, setPagesStyle] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
+  const [pagesStyle, setPagesStyle] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
     transitionDuration: TRANSITION_DURATION
   });
-  const [dragData, setDragData] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(null);
-  const pagesRef = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)();
-  const numPages = react__WEBPACK_IMPORTED_MODULE_2__.Children.count(children);
+  const [dragData, setDragData] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+  const pagesRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)();
+  const numPages = react__WEBPACK_IMPORTED_MODULE_1__.Children.count(children);
   const containerWidth = entry?.contentRect?.width;
-  const getOffset = (0,react__WEBPACK_IMPORTED_MODULE_2__.useCallback)(index => {
+  const getOffset = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)(index => {
     const offset = containerWidth * index;
     return isRtl ? offset : -offset;
   }, [isRtl, containerWidth]);
@@ -28336,7 +28262,7 @@ const Swipeable = ({
 
   // Generate a property that denotes the order of the cards, in order to recalculate height whenever the card order changes.
   const childrenOrder = children.reduce((acc, child) => acc + child.key, '');
-  (0,react__WEBPACK_IMPORTED_MODULE_2__.useLayoutEffect)(() => {
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useLayoutEffect)(() => {
     if (!updateEnabled) {
       // This is a fix for a bug when you have >1 pages and it update the component to just one but the height is still
       // Related to https://github.com/Automattic/dotcom-forge/issues/2033
@@ -28356,7 +28282,7 @@ const Swipeable = ({
       });
     }
   }, [pagesRef, currentPage, pagesStyle, updateEnabled, containerWidth, childrenOrder]);
-  const resetDragData = (0,react__WEBPACK_IMPORTED_MODULE_2__.useCallback)(() => {
+  const resetDragData = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)(() => {
     delete pagesStyle.transform;
     setPagesStyle({
       ...pagesStyle,
@@ -28364,7 +28290,7 @@ const Swipeable = ({
     });
     setDragData(null);
   }, [pagesStyle, setPagesStyle, setDragData]);
-  const handleDragStart = (0,react__WEBPACK_IMPORTED_MODULE_2__.useCallback)(event => {
+  const handleDragStart = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)(event => {
     const position = getDragPositionAndTime(event);
     setSwipeableArea(pagesRef.current?.getBoundingClientRect());
     setDragData({
@@ -28375,9 +28301,9 @@ const Swipeable = ({
       transitionDuration: `0ms`
     }); // Set transition Duration to 0 for smooth dragging.
   }, [pagesStyle]);
-  const hasSwipedToNextPage = (0,react__WEBPACK_IMPORTED_MODULE_2__.useCallback)(delta => isRtl ? delta > 0 : delta < 0, [isRtl]);
-  const hasSwipedToPreviousPage = (0,react__WEBPACK_IMPORTED_MODULE_2__.useCallback)(delta => isRtl ? delta < 0 : delta > 0, [isRtl]);
-  const handleDragEnd = (0,react__WEBPACK_IMPORTED_MODULE_2__.useCallback)(event => {
+  const hasSwipedToNextPage = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)(delta => isRtl ? delta > 0 : delta < 0, [isRtl]);
+  const hasSwipedToPreviousPage = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)(delta => isRtl ? delta < 0 : delta > 0, [isRtl]);
+  const handleDragEnd = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)(event => {
     if (!dragData) {
       return; // End early if we are not dragging any more.
     }
@@ -28423,7 +28349,7 @@ const Swipeable = ({
     onPageSelect(newIndex);
     setDragData(null);
   }, [currentPage, dragData, hasSwipedToNextPage, hasSwipedToPreviousPage, numPages, onPageSelect, pagesStyle, containerWidth, isClickEnabled]);
-  const handleDrag = (0,react__WEBPACK_IMPORTED_MODULE_2__.useCallback)(event => {
+  const handleDrag = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)(event => {
     if (!dragData) {
       return;
     }
@@ -28457,7 +28383,7 @@ const Swipeable = ({
       handleDragEnd(event);
     }
   }, [dragData, getOffset, currentPage, numPages, hasSwipedToNextPage, hasSwipedToPreviousPage, swipeableArea, pagesStyle, handleDragEnd]);
-  const getTouchEvents = (0,react__WEBPACK_IMPORTED_MODULE_2__.useCallback)(() => {
+  const getTouchEvents = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)(() => {
     if ('onpointerup' in document) {
       return {
         onPointerDown: handleDragStart,
@@ -28485,22 +28411,22 @@ const Swipeable = ({
     return null;
   }, [handleDragStart, handleDrag, handleDragEnd]);
   const offset = getOffset(currentPage);
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)({}, getTouchEvents(), {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)({}, getTouchEvents(), {
     className: "swipeable__container",
     ref: pagesRef
   }, otherProps), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()('swipeable__pages', containerClassName),
+    className: (0,clsx__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)('swipeable__pages', containerClassName),
     style: {
       transform: `translate3d(${offset}px, 0px, 0px)`,
       ...pagesStyle,
       width: getPagesWidth(containerWidth, numPages)
     }
-  }, react__WEBPACK_IMPORTED_MODULE_2__.Children.map(children, (child, index) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, react__WEBPACK_IMPORTED_MODULE_1__.Children.map(children, (child, index) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     style: {
       width: `${containerWidth}px`
     } // Setting the page width is important for iOS browser.
     ,
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()('swipeable__page', pageClassName, {
+    className: (0,clsx__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)('swipeable__page', pageClassName, {
       'is-current': index === currentPage,
       'is-prev': index < currentPage,
       'is-next': index > currentPage
@@ -28523,18 +28449,17 @@ const Swipeable = ({
 /* harmony export */   A: () => (/* binding */ TextareaAutosize)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(89575);
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(24586);
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(24586);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(66123);
 /* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(autosize__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(54357);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(39067);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var calypso_components_forms_form_textarea__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(75863);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(51609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var calypso_components_forms_form_textarea__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(75863);
 
 
 
@@ -28544,10 +28469,10 @@ const Swipeable = ({
 
 
 
-class TextareaAutosize extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
+class TextareaAutosize extends react__WEBPACK_IMPORTED_MODULE_2__.Component {
   constructor(...args) {
     super(...args);
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(this, "textareaRef", /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_3__.createRef)());
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)(this, "textareaRef", /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_2__.createRef)());
   }
   componentDidMount() {
     autosize__WEBPACK_IMPORTED_MODULE_1___default()(this.textareaRef.current);
@@ -28564,14 +28489,14 @@ class TextareaAutosize extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
     autosize__WEBPACK_IMPORTED_MODULE_1___default().update(this.textareaRef.current);
   }
   render() {
-    const classes = classnames__WEBPACK_IMPORTED_MODULE_2___default()('textarea-autosize', this.props.className);
-    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_forms_form_textarea__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)({}, this.props, {
+    const classes = (0,clsx__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)('textarea-autosize', this.props.className);
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_forms_form_textarea__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)({}, this.props, {
       className: classes,
       forwardedRef: this.textareaRef
     }));
   }
 }
-(0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(TextareaAutosize, "propTypes", {
+(0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)(TextareaAutosize, "propTypes", {
   className: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().string)
 });
 
@@ -46382,9 +46307,18 @@ function requestSites() {
       options: calypso_state_sites_constants__WEBPACK_IMPORTED_MODULE_8__/* .SITE_REQUEST_OPTIONS */ .d,
       filters: siteFilter.length > 0 ? siteFilter.join(',') : undefined
     }).then(response => {
-      dispatch(receiveSites((0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_0__/* .isEnabled */ .Ol)('jetpack/manage-simple-sites') && (0,calypso_lib_jetpack_is_jetpack_cloud__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)() ?
-      // Filter out P2 sites for Jetpack Cloud that has the feature enabled
-      response.sites.filter(site => !site?.options?.is_wpforteams_site) : response.sites));
+      const jetpackCloudSites = response.sites.filter(site => {
+        // Filter Jetpack Cloud sites to exclude P2 sites by default.
+        const isP2 = site?.options?.is_wpforteams_site;
+        let filterCondition = !isP2;
+        // Filter out simple sites if feature flag is not enabled.
+        if (!(0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_0__/* .isEnabled */ .Ol)('jetpack/manage-simple-sites')) {
+          const isSimple = !site?.jetpack && !site?.is_wpcom_atomic;
+          filterCondition = !isP2 && !isSimple;
+        }
+        return filterCondition;
+      });
+      dispatch(receiveSites((0,calypso_lib_jetpack_is_jetpack_cloud__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)() ? jetpackCloudSites : response.sites));
       dispatch({
         type: calypso_state_action_types__WEBPACK_IMPORTED_MODULE_9__/* .SITES_REQUEST_SUCCESS */ .$pi
       });
@@ -50943,14 +50877,12 @@ function camelOrSnakeSlug(product) {
 /* harmony export */   Dw1: () => (/* binding */ FEATURE_JETPACK_SEARCH_MONTHLY),
 /* harmony export */   DyV: () => (/* binding */ FEATURE_PAYMENT_BLOCKS),
 /* harmony export */   EPC: () => (/* binding */ FEATURE_BEAUTIFUL_THEMES),
-/* harmony export */   EVF: () => (/* binding */ FEATURE_EMAIL_LIVE_CHAT_SUPPORT),
 /* harmony export */   F2P: () => (/* binding */ FEATURE_OFFSITE_BACKUP_VAULTPRESS_REALTIME),
 /* harmony export */   FHf: () => (/* binding */ FEATURE_P2_VIDEO_SHARING),
 /* harmony export */   Faw: () => (/* binding */ FEATURE_GROUP_PAYMENT_TRANSACTION_FEES),
 /* harmony export */   Fh3: () => (/* binding */ FEATURE_48_PREMIUM_THEMES),
 /* harmony export */   Fig: () => (/* binding */ FEATURE_WP_SUBDOMAIN_SIGNUP),
 /* harmony export */   Fim: () => (/* binding */ FEATURE_REAL_TIME_ANALYTICS),
-/* harmony export */   Fv5: () => (/* binding */ FEATURE_EMAIL_LIVE_CHAT_SUPPORT_BUSINESS_DAYS),
 /* harmony export */   GNY: () => (/* binding */ FEATURE_SALES_REPORTS),
 /* harmony export */   GRF: () => (/* binding */ FEATURE_NEWSLETTER_IMPORT_SUBSCRIBERS_FREE),
 /* harmony export */   GlD: () => (/* binding */ FEATURE_ES_SEARCH_JP),
@@ -51001,7 +50933,6 @@ function camelOrSnakeSlug(product) {
 /* harmony export */   Mak: () => (/* binding */ FEATURE_FULL_DATA_CENTER_REDUNDANCIES),
 /* harmony export */   McC: () => (/* binding */ FEATURE_PRE_INSTALLED_SECURITY_PERF_PLUGINS),
 /* harmony export */   Mo5: () => (/* binding */ FEATURE_UPLOAD_THEMES),
-/* harmony export */   Moq: () => (/* binding */ FEATURE_EMAIL_LIVE_CHAT_SUPPORT_ALL_DAYS),
 /* harmony export */   MtP: () => (/* binding */ FEATURE_P2_ADVANCED_SEARCH),
 /* harmony export */   N3t: () => (/* binding */ FEATURE_PAID_SUBSCRIBERS_JP),
 /* harmony export */   NAz: () => (/* binding */ FEATURE_JETPACK_ANTI_SPAM_MONTHLY),
@@ -51028,7 +50959,6 @@ function camelOrSnakeSlug(product) {
 /* harmony export */   QvK: () => (/* binding */ FEATURE_MIN_MAX_ORDER_QUANTITY),
 /* harmony export */   R7Q: () => (/* binding */ FEATURE_COLLECT_PAYMENTS_V2),
 /* harmony export */   RAq: () => (/* binding */ FEATURE_ONE_CLICK_RESTORE_V2),
-/* harmony export */   RZD: () => (/* binding */ FEATURE_EMAIL_SUPPORT_SIGNUP),
 /* harmony export */   R_9: () => (/* binding */ FEATURE_AUDIO_UPLOADS),
 /* harmony export */   RkI: () => (/* binding */ FEATURE_STYLE_CUSTOMIZATION),
 /* harmony export */   Rs_: () => (/* binding */ WPCOM_FEATURES_ANTISPAM),
@@ -51055,7 +50985,6 @@ function camelOrSnakeSlug(product) {
 /* harmony export */   WcS: () => (/* binding */ FEATURE_JETPACK_BOOST),
 /* harmony export */   WoS: () => (/* binding */ FEATURE_STATS_JP),
 /* harmony export */   WtV: () => (/* binding */ FEATURE_COLLECT_PAYMENTS_LINK_IN_BIO),
-/* harmony export */   XAi: () => (/* binding */ FEATURE_LIVE_CHAT_SUPPORT_ALL_DAYS),
 /* harmony export */   XNd: () => (/* binding */ FEATURE_SEAMLESS_STAGING_PRODUCTION_SYNCING),
 /* harmony export */   Xil: () => (/* binding */ FEATURE_SELL_EGIFTS_AND_VOUCHERS),
 /* harmony export */   Xlo: () => (/* binding */ FEATURE_BULK_DISCOUNTS),
@@ -51079,7 +51008,6 @@ function camelOrSnakeSlug(product) {
 /* harmony export */   _5w: () => (/* binding */ FEATURE_PLAN_SECURITY_DAILY),
 /* harmony export */   _Qs: () => (/* binding */ FEATURE_WAF),
 /* harmony export */   __J: () => (/* binding */ FEATURE_LIMITED_STATS),
-/* harmony export */   _c8: () => (/* binding */ FEATURE_LIVE_CHAT_SUPPORT_BUSINESS_DAYS),
 /* harmony export */   _nr: () => (/* binding */ FEATURE_JETPACK_SOCIAL_ADVANCED_BI_YEARLY),
 /* harmony export */   _pA: () => (/* binding */ FEATURE_JETPACK_BACKUP_T0_MONTHLY),
 /* harmony export */   _vw: () => (/* binding */ FEATURE_SITE_BACKUPS_AND_RESTORE),
@@ -51200,7 +51128,6 @@ function camelOrSnakeSlug(product) {
 /* harmony export */   tDt: () => (/* binding */ FEATURE_ALL_FREE_FEATURES_JETPACK),
 /* harmony export */   tdE: () => (/* binding */ FEATURE_JETPACK_SOCIAL_BASIC),
 /* harmony export */   tx2: () => (/* binding */ FEATURE_JETPACK_30_DAY_ARCHIVE_ACTIVITY_LOG),
-/* harmony export */   u7c: () => (/* binding */ FEATURE_EMAIL_SUPPORT),
 /* harmony export */   uFG: () => (/* binding */ FEATURE_CART_ABANDONMENT_EMAILS),
 /* harmony export */   uGw: () => (/* binding */ WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED),
 /* harmony export */   uVr: () => (/* binding */ FEATURE_UNLIMITED_ADMINS),
@@ -51234,7 +51161,7 @@ function camelOrSnakeSlug(product) {
 /* harmony export */   zTG: () => (/* binding */ FEATURE_VIDEO_UPLOADS_JETPACK_PRO),
 /* harmony export */   zcQ: () => (/* binding */ FEATURE_AD_SUPPORTED_EXPERIENCE)
 /* harmony export */ });
-/* unused harmony exports FEATURE_SET_PRIMARY_CUSTOM_DOMAIN, FEATURE_LEGACY_STORAGE_200GB, FEATURE_UNLIMITED_STORAGE, EXPERT_SUPPORT_ALL_DAYS, FEATURE_SFTP, FEATURE_SSH, FEATURE_VIDEO_UPLOADS_JETPACK_PREMIUM, FEATURE_INSTALL_THEMES, FEATURE_PERFORMANCE, FEATURE_ALL_PERSONAL_FEATURES_JETPACK, FEATURE_DONATIONS, FEATURE_PREMIUM_CONTENT_CONTAINER, FEATURE_SECURITY_SETTINGS, FEATURE_WOOP, FEATURE_STATS_FREE, FEATURE_SEARCH, FEATURE_SEARCH_V2, FEATURE_VIDEO_HOSTING_V2, FEATURE_CRM_INTEGRATED_WITH_WORDPRESS, FEATURE_CRM_LEADS_AND_FUNNEL, FEATURE_CRM_PROPOSALS_AND_INVOICES, FEATURE_CRM_TRACK_TRANSACTIONS, FEATURE_CRM_NO_CONTACT_LIMITS, FEATURE_SECURE_STORAGE_V2, FEATURE_ONE_CLICK_FIX_V2, FEATURE_INSTANT_EMAIL_V2, FEATURE_AKISMET_V2, FEATURE_SPAM_BLOCK_V2, FEATURE_SPAM_10K_PER_MONTH, FEATURE_FILTERING_V2, FEATURE_LANGUAGE_SUPPORT_V2, FEATURE_SPELLING_CORRECTION_V2, FEATURE_SUPPORTS_WOOCOMMERCE_V2, FEATURE_JETPACK_SCAN_BI_YEARLY, FEATURE_JETPACK_VIDEOPRESS_EDITOR, FEATURE_JETPACK_VIDEOPRESS_STORAGE, FEATURE_JETPACK_VIDEOPRESS_UNBRANDED, FEATURE_JETPACK_SOCIAL_V1_YEARLY, FEATURE_JETPACK_SOCIAL_V1_MONTHLY, FEATURE_JETPACK_SOCIAL_V1_BI_YEARLY, FEATURE_SOCIAL_SHARES_1000, FEATURE_SOCIAL_ENHANCED_PUBLISHING, FEATURE_SOCIAL_MASTODON_CONNECTION, FEATURE_SOCIAL_INSTAGRAM_CONNECTION, FEATURE_SOCIAL_NEXTDOOR_CONNECTION, FEATURE_JETPACK_MONITOR_MONTHLY, FEATURE_JETPACK_MONITOR_YEARLY, FEATURE_MONITOR_1_MINUTE_CHECK_INTERVAL, FEATURE_MONITOR_MULTIPLE_EMAIL_RECIPIENTS, FEATURE_MONITOR_SMS_NOTIFICATIONS, FEATURE_JETPACK_1GB_BACKUP_STORAGE, FEATURE_JETPACK_10GB_BACKUP_STORAGE, FEATURE_JETPACK_REAL_TIME_CLOUD_BACKUPS, FEATURE_UNLIMITED_USERS, FEATURE_UNLIMITED_POSTS_PAGES, FEATURE_ADDITIONAL_SITES, WPCOM_FEATURES_AI_ASSISTANT, WPCOM_FEATURES_AKISMET, WPCOM_FEATURES_BACKUPS_RESTORE, WPCOM_FEATURES_CDN, WPCOM_FEATURES_CLASSIC_SEARCH, WPCOM_FEATURES_CLOUDFLARE_CDN, WPCOM_FEATURES_COPY_SITE, WPCOM_FEATURES_FULL_ACTIVITY_LOG, WPCOM_FEATURES_INSTALL_PLUGINS, WPCOM_FEATURES_INSTANT_SEARCH, WPCOM_FEATURES_LIVE_SUPPORT, WPCOM_FEATURES_MANAGE_PLUGINS, WPCOM_FEATURES_NO_ADVERTS, WPCOM_FEATURES_NO_WPCOM_BRANDING, WPCOM_FEATURES_PRIORITY_SUPPORT, WPCOM_FEATURES_REAL_TIME_BACKUPS, WPCOM_FEATURES_SCHEDULED_UPDATES, WPCOM_FEATURES_SEO_PREVIEW_TOOLS, WPCOM_FEATURES_SUBSCRIPTION_GIFTING, WPCOM_FEATURES_LOCKED_MODE, WPCOM_FEATURES_LEGACY_CONTACT, WPCOM_FEATURES_UPLOAD_AUDIO_FILES, WPCOM_FEATURES_UPLOAD_PLUGINS, WPCOM_FEATURES_UPLOAD_VIDEO_FILES, WPCOM_FEATURES_VAULTPRESS_BACKUPS, WPCOM_FEATURES_VIDEOPRESS, WPCOM_FEATURES_VIDEOPRESS_UNLIMITED_STORAGE, WPCOM_FEATURES_VIDEO_HOSTING, WPCOM_FEATURES_WORDADS, WPCOM_FEATURES_CUSTOM_DESIGN, WPCOM_FEATURES_GLOBAL_STYLES, WPCOM_FEATURES_SITE_PREVIEW_LINKS, FEATURE_IMPORT_SUBSCRIBERS, FEATURE_ADD_MULTIPLE_PAGES_NEWSLETTER, FEATURE_COLLECT_PAYMENTS_NEWSLETTER, FEATURE_POST_BY_EMAIL, FEATURE_GOOGLE_ANALYTICS_V2, FEATURE_CUSTOMIZE_THEMES_BUTTONS_COLORS, FEATURE_TRACK_VIEWS_CLICKS, FEATURE_SUPPORT_EMAIL, FEATURE_DESIGN_TOOLS, FEATURE_REFERRAL_PROGRAMS, FEATURE_CUSTOMER_BIRTHDAY_EMAILS, FEATURE_LOYALTY_POINTS_PROGRAMS, FEATURE_ASSEMBLED_PRODUCTS_AND_KITS, FEATURE_BRUTE_PROTECT_JP, FEATURE_AUTOMATTIC_DATACENTER_FAILOVER, FEATURE_CUSTOM_PRODUCT_KITS, FEATURE_TYPE_JETPACK_ANTI_SPAM, FEATURE_TYPE_JETPACK_ACTIVITY_LOG, FEATURE_TYPE_JETPACK_BACKUP, FEATURE_TYPE_JETPACK_BOOST, FEATURE_TYPE_JETPACK_SCAN, FEATURE_TYPE_JETPACK_SEARCH, FEATURE_TYPE_JETPACK_STATS, FEATURE_TYPE_JETPACK_VIDEOPRESS, FEATURE_DEVELOPER_TOOLS, FEATURE_DYNAMIC_PRODUCT_UPSELLS */
+/* unused harmony exports FEATURE_SET_PRIMARY_CUSTOM_DOMAIN, FEATURE_LEGACY_STORAGE_200GB, FEATURE_UNLIMITED_STORAGE, EXPERT_SUPPORT_ALL_DAYS, FEATURE_SFTP, FEATURE_SSH, FEATURE_VIDEO_UPLOADS_JETPACK_PREMIUM, FEATURE_INSTALL_THEMES, FEATURE_PERFORMANCE, FEATURE_ALL_PERSONAL_FEATURES_JETPACK, FEATURE_DONATIONS, FEATURE_PREMIUM_CONTENT_CONTAINER, FEATURE_SECURITY_SETTINGS, FEATURE_WOOP, FEATURE_STATS_FREE, FEATURE_SEARCH, FEATURE_SEARCH_V2, FEATURE_VIDEO_HOSTING_V2, FEATURE_CRM_INTEGRATED_WITH_WORDPRESS, FEATURE_CRM_LEADS_AND_FUNNEL, FEATURE_CRM_PROPOSALS_AND_INVOICES, FEATURE_CRM_TRACK_TRANSACTIONS, FEATURE_CRM_NO_CONTACT_LIMITS, FEATURE_SECURE_STORAGE_V2, FEATURE_ONE_CLICK_FIX_V2, FEATURE_INSTANT_EMAIL_V2, FEATURE_AKISMET_V2, FEATURE_SPAM_BLOCK_V2, FEATURE_SPAM_10K_PER_MONTH, FEATURE_FILTERING_V2, FEATURE_LANGUAGE_SUPPORT_V2, FEATURE_SPELLING_CORRECTION_V2, FEATURE_SUPPORTS_WOOCOMMERCE_V2, FEATURE_JETPACK_SCAN_BI_YEARLY, FEATURE_JETPACK_VIDEOPRESS_EDITOR, FEATURE_JETPACK_VIDEOPRESS_STORAGE, FEATURE_JETPACK_VIDEOPRESS_UNBRANDED, FEATURE_JETPACK_SOCIAL_V1_YEARLY, FEATURE_JETPACK_SOCIAL_V1_MONTHLY, FEATURE_JETPACK_SOCIAL_V1_BI_YEARLY, FEATURE_SOCIAL_SHARES_1000, FEATURE_SOCIAL_ENHANCED_PUBLISHING, FEATURE_SOCIAL_MASTODON_CONNECTION, FEATURE_SOCIAL_INSTAGRAM_CONNECTION, FEATURE_SOCIAL_NEXTDOOR_CONNECTION, FEATURE_JETPACK_MONITOR_MONTHLY, FEATURE_JETPACK_MONITOR_YEARLY, FEATURE_MONITOR_1_MINUTE_CHECK_INTERVAL, FEATURE_MONITOR_MULTIPLE_EMAIL_RECIPIENTS, FEATURE_MONITOR_SMS_NOTIFICATIONS, FEATURE_JETPACK_1GB_BACKUP_STORAGE, FEATURE_JETPACK_10GB_BACKUP_STORAGE, FEATURE_JETPACK_REAL_TIME_CLOUD_BACKUPS, FEATURE_UNLIMITED_USERS, FEATURE_UNLIMITED_POSTS_PAGES, FEATURE_ADDITIONAL_SITES, WPCOM_FEATURES_AI_ASSISTANT, WPCOM_FEATURES_AKISMET, WPCOM_FEATURES_BACKUPS_RESTORE, WPCOM_FEATURES_CDN, WPCOM_FEATURES_CLASSIC_SEARCH, WPCOM_FEATURES_CLOUDFLARE_CDN, WPCOM_FEATURES_COPY_SITE, WPCOM_FEATURES_FULL_ACTIVITY_LOG, WPCOM_FEATURES_INSTALL_PLUGINS, WPCOM_FEATURES_INSTANT_SEARCH, WPCOM_FEATURES_LIVE_SUPPORT, WPCOM_FEATURES_MANAGE_PLUGINS, WPCOM_FEATURES_NO_ADVERTS, WPCOM_FEATURES_NO_WPCOM_BRANDING, WPCOM_FEATURES_PRIORITY_SUPPORT, WPCOM_FEATURES_REAL_TIME_BACKUPS, WPCOM_FEATURES_SCHEDULED_UPDATES, WPCOM_FEATURES_SEO_PREVIEW_TOOLS, WPCOM_FEATURES_SUBSCRIPTION_GIFTING, WPCOM_FEATURES_LOCKED_MODE, WPCOM_FEATURES_LEGACY_CONTACT, WPCOM_FEATURES_UPLOAD_AUDIO_FILES, WPCOM_FEATURES_UPLOAD_PLUGINS, WPCOM_FEATURES_UPLOAD_VIDEO_FILES, WPCOM_FEATURES_VAULTPRESS_BACKUPS, WPCOM_FEATURES_VIDEOPRESS, WPCOM_FEATURES_VIDEOPRESS_UNLIMITED_STORAGE, WPCOM_FEATURES_VIDEO_HOSTING, WPCOM_FEATURES_WORDADS, WPCOM_FEATURES_CUSTOM_DESIGN, WPCOM_FEATURES_GLOBAL_STYLES, WPCOM_FEATURES_SITE_PREVIEW_LINKS, FEATURE_IMPORT_SUBSCRIBERS, FEATURE_ADD_MULTIPLE_PAGES_NEWSLETTER, FEATURE_COLLECT_PAYMENTS_NEWSLETTER, FEATURE_POST_BY_EMAIL, FEATURE_GOOGLE_ANALYTICS_V2, FEATURE_CUSTOMIZE_THEMES_BUTTONS_COLORS, FEATURE_TRACK_VIEWS_CLICKS, FEATURE_DESIGN_TOOLS, FEATURE_REFERRAL_PROGRAMS, FEATURE_CUSTOMER_BIRTHDAY_EMAILS, FEATURE_LOYALTY_POINTS_PROGRAMS, FEATURE_ASSEMBLED_PRODUCTS_AND_KITS, FEATURE_BRUTE_PROTECT_JP, FEATURE_AUTOMATTIC_DATACENTER_FAILOVER, FEATURE_CUSTOM_PRODUCT_KITS, FEATURE_TYPE_JETPACK_ANTI_SPAM, FEATURE_TYPE_JETPACK_ACTIVITY_LOG, FEATURE_TYPE_JETPACK_BACKUP, FEATURE_TYPE_JETPACK_BOOST, FEATURE_TYPE_JETPACK_SCAN, FEATURE_TYPE_JETPACK_SEARCH, FEATURE_TYPE_JETPACK_STATS, FEATURE_TYPE_JETPACK_VIDEOPRESS, FEATURE_DEVELOPER_TOOLS, FEATURE_DYNAMIC_PRODUCT_UPSELLS */
 /* harmony import */ var _jetpack__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(46090);
 
 const FEATURE_WP_SUBDOMAIN = 'wordpress-subdomain';
@@ -51253,12 +51180,6 @@ const FEATURE_200GB_STORAGE = '200gb-storage';
 const FEATURE_LEGACY_STORAGE_200GB = 'upload-space-200gb';
 const FEATURE_UNLIMITED_STORAGE = 'unlimited-storage';
 const FEATURE_COMMUNITY_SUPPORT = 'community-support';
-const FEATURE_EMAIL_SUPPORT = 'email-support';
-const FEATURE_EMAIL_LIVE_CHAT_SUPPORT = 'email-live-chat-support';
-const FEATURE_EMAIL_LIVE_CHAT_SUPPORT_BUSINESS_DAYS = 'email-live-chat-support-business-days';
-const FEATURE_EMAIL_LIVE_CHAT_SUPPORT_ALL_DAYS = 'email-live-chat-support-all-days';
-const FEATURE_LIVE_CHAT_SUPPORT_ALL_DAYS = 'live-chat-support-all-days';
-const FEATURE_LIVE_CHAT_SUPPORT_BUSINESS_DAYS = 'live-chat-support-business-days';
 const EXPERT_SUPPORT_ALL_DAYS = 'expert-support-all-days';
 const FEATURE_EMAIL_FORWARDING_EXTENDED_LIMIT = 'email-forwarding-extended-limit';
 const FEATURE_PREMIUM_SUPPORT = 'priority-support';
@@ -51295,7 +51216,6 @@ const FEATURE_ADVANCED_DESIGN_CUSTOMIZATION = 'advanced-design-customization';
 const FEATURE_UPLOAD_THEMES_PLUGINS = 'upload-themes-and-plugins';
 const FEATURE_FREE_DOMAIN = 'free-custom-domain';
 const FEATURE_FREE_BLOG_DOMAIN = 'free-blog-domain';
-const FEATURE_EMAIL_SUPPORT_SIGNUP = 'email-support-signup';
 const FEATURE_MONETISE = 'monetise-your-site';
 const FEATURE_EARN_AD = 'earn-ad-revenue';
 const FEATURE_WP_SUBDOMAIN_SIGNUP = 'wordpress-subdomain-signup';
@@ -51559,7 +51479,6 @@ const FEATURE_SMART_REDIRECTS = 'smart-redirects';
 const FEATURE_ALWAYS_ONLINE = 'always-online';
 const FEATURE_FAST_DNS = 'fast-dns';
 const FEATURE_STYLE_CUSTOMIZATION = 'style-customization';
-const FEATURE_SUPPORT_EMAIL = 'support-email-v1';
 const FEATURE_DESIGN_TOOLS = 'design-tools';
 const FEATURE_WORDADS = 'wordads-v2';
 const FEATURE_PLUGINS_THEMES = 'plugins-themes-v1';
@@ -53600,7 +53519,7 @@ const getJetpackCommonPlanDetails = () => ({
 });
 const getDotcomPlanDetails = () => ({
   // Features only available for annual plans
-  getAnnualPlansOnlyFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_DOMAIN */ .BAE, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_LIVE_CHAT_SUPPORT_ALL_DAYS */ .Moq, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_LIVE_CHAT_SUPPORT_BUSINESS_DAYS */ .Fv5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Dml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_BUSINESS_DAYS */ ._c8, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_ALL_DAYS */ .XAi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRIORITY_24_7_SUPPORT */ .bMh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_SUPPORT_FROM_EXPERTS */ .JZF]
+  getAnnualPlansOnlyFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_DOMAIN */ .BAE, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Dml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRIORITY_24_7_SUPPORT */ .bMh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_SUPPORT_FROM_EXPERTS */ .JZF]
 });
 
 /* eslint-disable wpcalypso/jsx-classname-namespace */
@@ -53682,10 +53601,10 @@ const getPlanBloggerDetails = () => ({
   // }}}
   getPlanCompareFeatures: () => [
   // pay attention to ordering, shared features should align on /plan page
-  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BLOG_DOMAIN */ .pbK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ESSENTIAL */ .BfV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT */ .u7c, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_THEMES */ .vCo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_6GB_STORAGE */ .TEv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .MZU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MEMBERSHIPS */ .JLP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_BLOCK */ .Tgp],
-  getSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .RZD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BLOG_DOMAIN */ .pbK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_FREE_FEATURES */ .wIu],
-  getBlogSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_BLOG_DOMAIN */ .MaQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .RZD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_FREE_FEATURES */ .wIu],
-  getPortfolioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_BLOG_DOMAIN */ .MaQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .RZD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_FREE_FEATURES */ .wIu],
+  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BLOG_DOMAIN */ .pbK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ESSENTIAL */ .BfV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_SUPPORT_FROM_EXPERTS */ .JZF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_THEMES */ .vCo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_6GB_STORAGE */ .TEv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .MZU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MEMBERSHIPS */ .JLP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_BLOCK */ .Tgp],
+  getSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_SUPPORT_FROM_EXPERTS */ .JZF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BLOG_DOMAIN */ .pbK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_FREE_FEATURES */ .wIu],
+  getBlogSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_BLOG_DOMAIN */ .MaQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_SUPPORT_FROM_EXPERTS */ .JZF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_FREE_FEATURES */ .wIu],
+  getPortfolioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_BLOG_DOMAIN */ .MaQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_SUPPORT_FROM_EXPERTS */ .JZF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_FREE_FEATURES */ .wIu],
   // Features not displayed but used for checking plan abilities
   getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUDIO_UPLOADS */ .R_9],
   getInferiorFeatures: () => []
@@ -53707,11 +53626,11 @@ const getPlanPersonalDetails = () => ({
   getShortDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Boost your website with a custom domain name, and remove all WordPress.com advertising. ' + 'Unlock unlimited, expert customer support via email.'),
   getPlanCompareFeatures: () => compact([
   // pay attention to ordering, shared features should align on /plan page
-  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ ._22, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ESSENTIAL */ .BfV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT */ .u7c, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_THEMES */ .vCo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_6GB_STORAGE */ .TEv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .MZU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MEMBERSHIPS */ .JLP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_BLOCK */ .Tgp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_8 */ .Ymf]),
-  getSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_DOMAIN */ .BAE, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .RZD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_THEMES */ .vCo],
-  getBlogSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_DOMAIN */ .BAE, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .RZD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_FREE_FEATURES */ .wIu],
-  getPortfolioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_DOMAIN */ .BAE, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .RZD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_FREE_FEATURES */ .wIu],
-  getSignupCompareAvailableFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ ._22, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .MZU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_V2 */ .R7Q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .RZD],
+  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ ._22, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ESSENTIAL */ .BfV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_SUPPORT_FROM_EXPERTS */ .JZF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_THEMES */ .vCo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_6GB_STORAGE */ .TEv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .MZU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MEMBERSHIPS */ .JLP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_BLOCK */ .Tgp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_8 */ .Ymf]),
+  getSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_DOMAIN */ .BAE, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_SUPPORT_FROM_EXPERTS */ .JZF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_THEMES */ .vCo],
+  getBlogSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_DOMAIN */ .BAE, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_SUPPORT_FROM_EXPERTS */ .JZF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_FREE_FEATURES */ .wIu],
+  getPortfolioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_DOMAIN */ .BAE, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_SUPPORT_FROM_EXPERTS */ .JZF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_FREE_FEATURES */ .wIu],
+  getSignupCompareAvailableFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ ._22, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .MZU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_V2 */ .R7Q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_SUPPORT_FROM_EXPERTS */ .JZF],
   get2023PricingGridSignupWpcomFeatures: () => {
     if ((0,_experiments__WEBPACK_IMPORTED_MODULE_8__/* .getTrailMapExperiment */ .Qy)() === 'treatment_copy') {
       return [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_20_PREMIUM_THEMES */ .Hti, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .dBh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_8 */ .Ymf];
@@ -53740,10 +53659,8 @@ const getPlanPersonalDetails = () => ({
     }];
   },
   get2023PlanComparisonConditionalFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES */ .CFg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHARES_SOCIAL_MEDIA_JP */ .K5c, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_STANDARD_FEATURES */ .Uqd],
-  getNewsletterDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Jumpstart your Newsletter with a custom domain, ad-free experience, and the ability to sell subscriptions, take payments, and collect donations from day one. Backed with email support to help get everything just right.'),
   getNewsletterSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_SUBSCRIBERS */ .H$K, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .dBh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_8 */ .Ymf],
   getNewsletterHighlightedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_EMAILS */ .Zvm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .dBh],
-  getLinkInBioDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Stand out and unlock earnings with an ad-free site, custom domain, and the ability to sell subscriptions, take payments, and collect donations. Backed with email support to help get your site just right.'),
   getLinkInBioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .dBh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_LINK_IN_BIO */ .WtV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAID_SUBSCRIBERS_JP */ .N3t],
   getLinkInBioHighlightedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl],
   getBlogOnboardingSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .dBh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_DNS */ .uoN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_8 */ .Ymf],
@@ -53779,12 +53696,12 @@ const getPlanEcommerceDetails = () => ({
     isLoggedInMonthlyPricing
   } = {}) => compact([
   // pay attention to ordering, shared features should align on /plan page
-  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ ._22, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ADVANCED */ .xt, isLoggedInMonthlyPricing && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT */ .u7c, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .Ol)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_200GB_STORAGE */ .JZR, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .MZU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MEMBERSHIPS */ .JLP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_BLOCK */ .Tgp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .$lI, isLoggedInMonthlyPricing && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_ALL_DAYS */ .XAi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ .irI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .AOP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .whx, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .oIC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS */ .M$n, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .W5X, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_PLUGINS */ .e00, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES */ .Mo5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SFTP_DATABASE */ .bnw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_BRANDING */ .jPE, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS */ .gH7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .mEY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_PRODUCTS_SERVICES */ .vkJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ECOMMERCE_MARKETING */ .d4e, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CUSTOMIZABE_THEMES */ .BoU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_0 */ .kSO]),
+  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ ._22, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ADVANCED */ .xt, isLoggedInMonthlyPricing && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_SUPPORT_FROM_EXPERTS */ .JZF, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .Ol)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_200GB_STORAGE */ .JZR, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .MZU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MEMBERSHIPS */ .JLP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_BLOCK */ .Tgp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .$lI, isLoggedInMonthlyPricing && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Dml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ .irI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .AOP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .whx, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .oIC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS */ .M$n, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .W5X, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_PLUGINS */ .e00, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES */ .Mo5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SFTP_DATABASE */ .bnw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_BRANDING */ .jPE, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS */ .gH7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .mEY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_PRODUCTS_SERVICES */ .vkJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ECOMMERCE_MARKETING */ .d4e, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CUSTOMIZABE_THEMES */ .BoU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_0 */ .kSO]),
   getPromotedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_200GB_STORAGE */ .JZR, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .MZU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .$lI],
   getSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS */ .gH7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .mEY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_BUSINESS_FEATURES */ .adL],
   getBlogSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS */ .gH7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .mEY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_BUSINESS_FEATURES */ .adL],
   getPortfolioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS */ .gH7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .mEY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_BUSINESS_FEATURES */ .adL],
-  getSignupCompareAvailableFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ ._22, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .MZU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_V2 */ .R7Q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .RZD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_ALL_DAYS */ .XAi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EARN_AD */ .eYY, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .Ol)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .AOP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INSTALL_PLUGINS */ .m51, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_EXPANDED_ABBR */ .kPp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_BACKUPS_AND_RESTORE */ ._vw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SFTP_DATABASE */ .bnw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS */ .gH7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .mEY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .PREMIUM_DESIGN_FOR_STORES */ .kbH].filter(isValueTruthy),
+  getSignupCompareAvailableFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ ._22, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .MZU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_V2 */ .R7Q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_SUPPORT_FROM_EXPERTS */ .JZF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Dml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EARN_AD */ .eYY, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .Ol)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .AOP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INSTALL_PLUGINS */ .m51, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_EXPANDED_ABBR */ .kPp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_BACKUPS_AND_RESTORE */ ._vw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SFTP_DATABASE */ .bnw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS */ .gH7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .mEY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .PREMIUM_DESIGN_FOR_STORES */ .kbH].filter(isValueTruthy),
   get2023PricingGridSignupWpcomFeatures: () => {
     if ((0,_experiments__WEBPACK_IMPORTED_MODULE_8__/* .getTrailMapExperiment */ .Qy)() === 'treatment_copy') {
       return [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_0 */ .kSO, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STORE_DESIGN */ .CTo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRE_INSTALLED_ECOMMERCE_PLUGINS */ .KtL];
@@ -53837,8 +53754,8 @@ const getPlanEcommerceDetails = () => ({
   getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUDIO_UPLOADS */ .R_9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_MY_BUSINESS */ .hVU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CLOUDFLARE_ANALYTICS */ .swD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_INSTALL_PURCHASED_PLUGINS */ .Qqh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES_PLUGINS */ .hQm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_FORWARDING_EXTENDED_LIMIT */ .eAf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .emy, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ATOMIC */ .DF1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .Jgn, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .Rs_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .ZzH],
   getInferiorFeatures: () => []
 });
-const getWooExpressMediumPlanCompareFeatures = () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WOOCOMMERCE_STORE */ .WI4, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WOOCOMMERCE_MOBILE_APP */ .fZL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDPRESS_CMS */ .nYV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDPRESS_MOBILE_APP */ .u_9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_SSL_CERTIFICATE */ .p0N, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_BACKUPS_SECURITY_SCAN */ .lu6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .dBh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_ADMINS */ .uVr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Dml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT */ .u7c, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SALES_REPORTS */ .GNY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS_V3 */ .S4e, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIST_UNLIMITED_PRODUCTS */ .Nno, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GIFT_CARDS */ .KAl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MIN_MAX_ORDER_QUANTITY */ .QvK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_BUNDLES */ .jwP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIST_PRODUCTS_BY_BRAND */ .Doi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_RECOMMENDATIONS */ .ceT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTEGRATED_PAYMENTS */ .hXr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTERNATIONAL_PAYMENTS */ .Ckc, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_SALES_TAXES */ .H7I, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_LOCAL_PAYMENTS */ .M7I, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_RECURRING_PAYMENTS */ .xEy, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MIN_MAX_ORDER_QUANTITY */ .QvK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PROMOTE_ON_TIKTOK */ .BGp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SYNC_WITH_PINTEREST */ .l58, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CONNECT_WITH_FACEBOOK */ .e7z, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACK_IN_STOCK_NOTIFICATIONS */ .LUJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MARKETING_AUTOMATION */ .KUL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ABANDONED_CART_RECOVERY */ .fPv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_TOOLS */ .gQ2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVERTISE_ON_GOOGLE */ .Ncs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_ORDER_EMAILS */ .qRK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTEGRATED_SHIPMENT_TRACKING */ .YQh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_SHIPPING_RATES */ .fgV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DISCOUNTED_SHIPPING */ .XuE, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRINT_SHIPPING_LABELS */ .gmv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AI_ASSISTED_PRODUCT_DESCRIPTION */ .y$v];
-const getWooExpressSmallPlanCompareFeatures = () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WOOCOMMERCE_STORE */ .WI4, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WOOCOMMERCE_MOBILE_APP */ .fZL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDPRESS_CMS */ .nYV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDPRESS_MOBILE_APP */ .u_9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_SSL_CERTIFICATE */ .p0N, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_BACKUPS_SECURITY_SCAN */ .lu6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .dBh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_ADMINS */ .uVr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Dml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT */ .u7c, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SALES_REPORTS */ .GNY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS_V3 */ .S4e, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIST_UNLIMITED_PRODUCTS */ .Nno, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GIFT_CARDS */ .KAl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIST_PRODUCTS_BY_BRAND */ .Doi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTEGRATED_PAYMENTS */ .hXr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTERNATIONAL_PAYMENTS */ .Ckc, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_SALES_TAXES */ .H7I, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_LOCAL_PAYMENTS */ .M7I, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_RECURRING_PAYMENTS */ .xEy, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PROMOTE_ON_TIKTOK */ .BGp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SYNC_WITH_PINTEREST */ .l58, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CONNECT_WITH_FACEBOOK */ .e7z, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_TOOLS */ .gQ2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVERTISE_ON_GOOGLE */ .Ncs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_ORDER_EMAILS */ .qRK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTEGRATED_SHIPMENT_TRACKING */ .YQh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_SHIPPING_RATES */ .fgV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRINT_SHIPPING_LABELS */ .gmv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AI_ASSISTED_PRODUCT_DESCRIPTION */ .y$v];
+const getWooExpressMediumPlanCompareFeatures = () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WOOCOMMERCE_STORE */ .WI4, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WOOCOMMERCE_MOBILE_APP */ .fZL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDPRESS_CMS */ .nYV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDPRESS_MOBILE_APP */ .u_9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_SSL_CERTIFICATE */ .p0N, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_BACKUPS_SECURITY_SCAN */ .lu6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .dBh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_ADMINS */ .uVr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Dml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_SUPPORT_FROM_EXPERTS */ .JZF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SALES_REPORTS */ .GNY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS_V3 */ .S4e, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIST_UNLIMITED_PRODUCTS */ .Nno, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GIFT_CARDS */ .KAl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MIN_MAX_ORDER_QUANTITY */ .QvK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_BUNDLES */ .jwP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIST_PRODUCTS_BY_BRAND */ .Doi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_RECOMMENDATIONS */ .ceT, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTEGRATED_PAYMENTS */ .hXr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTERNATIONAL_PAYMENTS */ .Ckc, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_SALES_TAXES */ .H7I, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_LOCAL_PAYMENTS */ .M7I, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_RECURRING_PAYMENTS */ .xEy, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MIN_MAX_ORDER_QUANTITY */ .QvK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PROMOTE_ON_TIKTOK */ .BGp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SYNC_WITH_PINTEREST */ .l58, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CONNECT_WITH_FACEBOOK */ .e7z, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BACK_IN_STOCK_NOTIFICATIONS */ .LUJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MARKETING_AUTOMATION */ .KUL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ABANDONED_CART_RECOVERY */ .fPv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_TOOLS */ .gQ2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVERTISE_ON_GOOGLE */ .Ncs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_ORDER_EMAILS */ .qRK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTEGRATED_SHIPMENT_TRACKING */ .YQh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_SHIPPING_RATES */ .fgV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DISCOUNTED_SHIPPING */ .XuE, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRINT_SHIPPING_LABELS */ .gmv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AI_ASSISTED_PRODUCT_DESCRIPTION */ .y$v];
+const getWooExpressSmallPlanCompareFeatures = () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WOOCOMMERCE_STORE */ .WI4, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WOOCOMMERCE_MOBILE_APP */ .fZL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDPRESS_CMS */ .nYV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDPRESS_MOBILE_APP */ .u_9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_SSL_CERTIFICATE */ .p0N, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_BACKUPS_SECURITY_SCAN */ .lu6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .dBh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_ADMINS */ .uVr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Dml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_SUPPORT_FROM_EXPERTS */ .JZF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SALES_REPORTS */ .GNY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS_V3 */ .S4e, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIST_UNLIMITED_PRODUCTS */ .Nno, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GIFT_CARDS */ .KAl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIST_PRODUCTS_BY_BRAND */ .Doi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTEGRATED_PAYMENTS */ .hXr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTERNATIONAL_PAYMENTS */ .Ckc, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_SALES_TAXES */ .H7I, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_LOCAL_PAYMENTS */ .M7I, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_RECURRING_PAYMENTS */ .xEy, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PROMOTE_ON_TIKTOK */ .BGp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SYNC_WITH_PINTEREST */ .l58, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CONNECT_WITH_FACEBOOK */ .e7z, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_TOOLS */ .gQ2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVERTISE_ON_GOOGLE */ .Ncs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_ORDER_EMAILS */ .qRK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTEGRATED_SHIPMENT_TRACKING */ .YQh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_SHIPPING_RATES */ .fgV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRINT_SHIPPING_LABELS */ .gmv, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AI_ASSISTED_PRODUCT_DESCRIPTION */ .y$v];
 const getWooExpressPlanCompareFeatures = () => [...getWooExpressSmallPlanCompareFeatures(), ...getWooExpressMediumPlanCompareFeatures()];
 const getPlanWooExpressMediumDetails = () => ({
   ...getPlanEcommerceDetails(),
@@ -53857,7 +53774,7 @@ const getPlanWooExpressMediumDetails = () => ({
 });
 const getPlanWooExpressSmallDetails = () => ({
   ...getPlanEcommerceDetails(),
-  get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_LIVE_CHAT_SUPPORT */ .EVF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_ADMINS */ .uVr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_50GB_STORAGE */ .KGH, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_PRODUCTS_SERVICES */ .vkJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SELL_INTERNATIONALLY */ .yT6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATIC_SALES_TAX */ .gbu, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_BACKUPS_SECURITY_SCAN */ .lu6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTEGRATED_SHIPMENT_TRACKING */ .YQh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REAL_TIME_ANALYTICS */ .Fim, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SELL_EGIFTS_AND_VOUCHERS */ .Xil, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_MARKETING */ .LhS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MARKETPLACE_SYNC_SOCIAL_MEDIA_INTEGRATION */ .bUN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_TOOLS */ .gQ2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AI_ASSISTED_PRODUCT_DESCRIPTION */ .y$v],
+  get2023PricingGridSignupWpcomFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRIORITY_24_7_SUPPORT */ .bMh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_ADMINS */ .uVr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_50GB_STORAGE */ .KGH, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_PRODUCTS_SERVICES */ .vkJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SELL_INTERNATIONALLY */ .yT6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATIC_SALES_TAX */ .gbu, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_BACKUPS_SECURITY_SCAN */ .lu6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INTEGRATED_SHIPMENT_TRACKING */ .YQh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REAL_TIME_ANALYTICS */ .Fim, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SELL_EGIFTS_AND_VOUCHERS */ .Xil, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_MARKETING */ .LhS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MARKETPLACE_SYNC_SOCIAL_MEDIA_INTEGRATION */ .bUN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_TOOLS */ .gQ2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AI_ASSISTED_PRODUCT_DESCRIPTION */ .y$v],
   getPlanCompareFeatures: () => getWooExpressPlanCompareFeatures(),
   get2023PlanComparisonFeatureOverride: () => getWooExpressSmallPlanCompareFeatures(),
   get2023PricingGridSignupStorageOptions: () => {
@@ -53889,9 +53806,9 @@ const getPlanPremiumDetails = () => ({
     isLoggedInMonthlyPricing
   } = {}) => compact([
   // pay attention to ordering, shared features should align on /plan page
-  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ ._22, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ESSENTIAL */ .BfV, isLoggedInMonthlyPricing && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT */ .u7c, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .Ol)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_13GB_STORAGE */ .xoQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .MZU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MEMBERSHIPS */ .JLP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_BLOCK */ .Tgp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .$lI, isLoggedInMonthlyPricing && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_BUSINESS_DAYS */ ._c8, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ .irI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .AOP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .whx, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .oIC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS */ .M$n, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_4 */ .kYS]),
+  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ ._22, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ESSENTIAL */ .BfV, isLoggedInMonthlyPricing && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_SUPPORT_FROM_EXPERTS */ .JZF, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .Ol)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_13GB_STORAGE */ .xoQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .MZU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MEMBERSHIPS */ .JLP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_BLOCK */ .Tgp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .$lI, isLoggedInMonthlyPricing && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Dml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ .irI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .AOP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .whx, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .oIC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS */ .M$n, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_4 */ .kYS]),
   getPromotedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .MZU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .$lI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_13GB_STORAGE */ .xoQ],
-  getSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_BUSINESS_DAYS */ ._c8, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .$lI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_PERSONAL_FEATURES */ .ItL],
+  getSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Dml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .$lI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_PERSONAL_FEATURES */ .ItL],
   getTagline: function () {
     return i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Take your Newsletter further, faster. Get everything included in %(planName)s, plus premium design themes, baked-in video uploads, ad monetization, deep visitor insights from Google Analytics, and 24/7 expert support.', {
       args: {
@@ -53901,13 +53818,6 @@ const getPlanPremiumDetails = () => ({
   },
   getNewsletterSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_SUPPORT_FROM_EXPERTS */ .JZF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STYLE_CUSTOMIZATION */ .RkI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLTD_SOCIAL_MEDIA_JP */ .jiF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEOPRESS_JP */ .HKK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_PAID */ .iQ_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_4 */ .kYS],
   getNewsletterHighlightedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_EMAILS */ .Zvm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .dBh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_SUPPORT_FROM_EXPERTS */ .JZF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REAL_TIME_ANALYTICS */ .Fim, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw],
-  getLinkInBioDescription: function () {
-    return i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Take your site further, faster. Get everything included in %(planName)s, plus premium design themes, baked-in video uploads, ad monetization, deep visitor insights from Google Analytics and 24/7 expert support.', {
-      args: {
-        planName: this.getTitle()
-      }
-    });
-  },
   getLinkInBioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_SUPPORT_FROM_EXPERTS */ .JZF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STYLE_CUSTOMIZATION */ .RkI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEOPRESS_JP */ .HKK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLTD_SOCIAL_MEDIA_JP */ .jiF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS */ .yks, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_PAID */ .iQ_],
   getLinkInBioHighlightedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl],
   getBlogOnboardingSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STYLE_CUSTOMIZATION */ .RkI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_SUPPORT_FROM_EXPERTS */ .JZF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS */ .yks, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_4 */ .kYS],
@@ -53915,7 +53825,7 @@ const getPlanPremiumDetails = () => ({
   getBlogOnboardingSignupJetpackFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEOPRESS_JP */ .HKK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLTD_SOCIAL_MEDIA_JP */ .jiF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_ACTIVITY_LOG_JP */ .LHt, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_PAID */ .iQ_],
   getBlogSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MONETISE */ .aC2, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .Ol)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_PERSONAL_FEATURES */ .ItL].filter(isValueTruthy),
   getPortfolioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .$lI, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .Ol)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_PERSONAL_FEATURES */ .ItL].filter(isValueTruthy),
-  getSignupCompareAvailableFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ ._22, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .MZU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_V2 */ .R7Q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .RZD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_BUSINESS_DAYS */ ._c8, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EARN_AD */ .eYY, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .Ol)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .AOP].filter(isValueTruthy),
+  getSignupCompareAvailableFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ ._22, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .MZU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_V2 */ .R7Q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_SUPPORT_FROM_EXPERTS */ .JZF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Dml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EARN_AD */ .eYY, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .Ol)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .AOP].filter(isValueTruthy),
   get2023PricingGridSignupWpcomFeatures: () => {
     if ((0,_experiments__WEBPACK_IMPORTED_MODULE_8__/* .getTrailMapExperiment */ .Qy)() === 'treatment_copy') {
       return [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_48_PREMIUM_THEMES */ .Fh3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REAL_TIME_STATS */ .Ik1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STYLE_CUSTOMIZATION */ .RkI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEOPRESS_JP */ .HKK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_4 */ .kYS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_SUPPORT_FROM_EXPERTS */ .JZF];
@@ -53984,12 +53894,12 @@ const getPlanBusinessDetails = () => ({
     isLoggedInMonthlyPricing
   } = {}) => compact([
   // pay attention to ordering, shared features should align on /plan page
-  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ ._22, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ADVANCED */ .xt, isLoggedInMonthlyPricing && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT */ .u7c, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .Ol)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_50GB_STORAGE */ .KGH, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .MZU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MEMBERSHIPS */ .JLP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_BLOCK */ .Tgp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .$lI, isLoggedInMonthlyPricing && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_ALL_DAYS */ .XAi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ .irI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .AOP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .whx, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .oIC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS */ .M$n, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .W5X, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_PLUGINS */ .e00, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES */ .Mo5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SFTP_DATABASE */ .bnw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_BRANDING */ .jPE, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_2 */ .kb1]),
+  _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ ._22, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_ADVANCED */ .xt, isLoggedInMonthlyPricing && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_SUPPORT_FROM_EXPERTS */ .JZF, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .Ol)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_50GB_STORAGE */ .KGH, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .MZU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MEMBERSHIPS */ .JLP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_BLOCK */ .Tgp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .$lI, isLoggedInMonthlyPricing && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Dml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SIMPLE_PAYMENTS */ .irI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .AOP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REPUBLICIZE */ .whx, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS_INSTANT */ .oIC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS */ .M$n, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO */ .W5X, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_PLUGINS */ .e00, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES */ .Mo5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SFTP_DATABASE */ .bnw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_BRANDING */ .jPE, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_2 */ .kb1]),
   getPromotedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_200GB_STORAGE */ .JZR, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .MZU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_DESIGN_CUSTOMIZATION */ .$lI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEO_UPLOADS */ .M$n],
   getSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES_PLUGINS */ .hQm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_TOOLS */ .gQ2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_PREMIUM_FEATURES */ .NrG],
   getBlogSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES_PLUGINS */ .hQm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_TOOLS */ .gQ2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_PREMIUM_FEATURES */ .NrG],
   getPortfolioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES_PLUGINS */ .hQm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_200GB_STORAGE */ .JZR, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_PREMIUM_FEATURES */ .NrG],
-  getSignupCompareAvailableFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ ._22, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .MZU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_V2 */ .R7Q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .RZD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT_ALL_DAYS */ .XAi, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EARN_AD */ .eYY, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .Ol)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .AOP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INSTALL_PLUGINS */ .m51, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_EXPANDED_ABBR */ .kPp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_BACKUPS_AND_RESTORE */ ._vw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SFTP_DATABASE */ .bnw].filter(isValueTruthy),
+  getSignupCompareAvailableFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ ._22, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .MZU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_V2 */ .R7Q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_SUPPORT_FROM_EXPERTS */ .JZF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LIVE_CHAT_SUPPORT */ .Dml, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EARN_AD */ .eYY, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .Ol)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .AOP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INSTALL_PLUGINS */ .m51, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_EXPANDED_ABBR */ .kPp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_BACKUPS_AND_RESTORE */ ._vw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SFTP_DATABASE */ .bnw].filter(isValueTruthy),
   get2023PricingGridSignupWpcomFeatures: () => {
     if ((0,_experiments__WEBPACK_IMPORTED_MODULE_8__/* .getTrailMapExperiment */ .Qy)() === 'treatment_copy') {
       return [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INSTALL_PLUGINS */ .m51, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRE_INSTALLED_SECURITY_PERF_PLUGINS */ .McC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REAL_TIME_SECURITY_SCANS */ .O2$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_BACKUPS_AND_RESTORE */ ._vw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_MIGRATIONS */ .S84, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_BURST_SCALING */ .Hmc, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WAF_V2 */ .$5r, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_DDOS */ .HU_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FULL_DATA_CENTER_REDUNDANCIES */ .Mak, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REAL_TIME_SECURITY_SCANS */ .O2$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_STAGING_SITES */ .KmN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LOCAL_DEVELOPMENT_ENVIRONMENT */ .$DC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GITHUB_DEPLOYMENTS */ .qj9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DEV_TOOLS */ .lW1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DATABASE_ACCESS */ .yxk, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WEB_SERVER_SETTINGS */ .QcA, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_2 */ .kb1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRIORITY_24_7_SUPPORT */ .bMh];
@@ -54777,7 +54687,7 @@ const PLANS_LIST = {
     // pay attention to ordering, shared features should align on /plan page
     _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_13GB_STORAGE */ .YgQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_ADVANCED_SEARCH */ .MtP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_VIDEO_SHARING */ .FHf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_MORE_FILE_TYPES */ .fls, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_PRIORITY_CHAT_EMAIL_SUPPORT */ .Z1x, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_P2_ACTIVITY_OVERVIEW */ .ow],
     // TODO: update this once we put P2+ in the signup.
-    getSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_SUPPORT_SIGNUP */ .RZD],
+    getSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_SUPPORT_FROM_EXPERTS */ .JZF],
     // TODO: no idea about this, copied from the WP.com Premium plan.
     // Features not displayed but used for checking plan abilities
     getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUDIO_UPLOADS */ .R_9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SEARCH_BI_YEARLY */ .siL, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SEARCH */ .xsQ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_JETPACK_SEARCH_MONTHLY */ .Dw1],
@@ -54870,8 +54780,8 @@ PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_TRIAL_MONTH
   term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .he,
   getBillingTimeFrame: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('free trial'),
   getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_ECOMMERCE_TRIAL_MONTHLY */ .E$,
-  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Entrepreneur free trial'),
-  getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Entrepreneur free trial'),
+  getTitle: _plans__WEBPACK_IMPORTED_MODULE_9__/* .getPlanCommerceTrialTitle */ .p8,
+  getDescription: _plans__WEBPACK_IMPORTED_MODULE_9__/* .getPlanCommerceTrialTitle */ .p8,
   getTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Get a taste of the world’s most popular eCommerce software.')
 };
 if ((0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .Ol)('plans/migration-trial')) {
@@ -54884,12 +54794,12 @@ if ((0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .
     term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .he,
     getBillingTimeFrame: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('free trial'),
     getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_MIGRATION_TRIAL_MONTHLY */ .uQ,
-    getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Creator Trial')
+    getTitle: _plans__WEBPACK_IMPORTED_MODULE_9__/* .getPlanBusinessTrialTitle */ .eg
   };
 }
 PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY */ .Ey] = {
   ...getPlanBusinessDetails(),
-  getPlanTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Try all the features of our Creator plan.'),
+  getPlanTagline: _plans__WEBPACK_IMPORTED_MODULE_9__/* .getPlanBusinessTrialTagline */ .k7,
   type: _constants__WEBPACK_IMPORTED_MODULE_7__/* .TYPE_BUSINESS */ .e8,
   group: _constants__WEBPACK_IMPORTED_MODULE_6__/* .GROUP_WPCOM */ .hz,
   getProductId: () => 1058,
@@ -54897,7 +54807,7 @@ PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY
   term: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .he,
   getBillingTimeFrame: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Try it for 3 days'),
   getStoreSlug: () => _constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY */ .Ey,
-  getTitle: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Creator Trial'),
+  getTitle: _plans__WEBPACK_IMPORTED_MODULE_9__/* .getPlanBusinessTrialTitle */ .eg,
   getDescription: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Hosting free trial'),
   getTagline: () => i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Get a taste of unlimited performance and unbeatable uptime')
 };
@@ -54911,8 +54821,11 @@ PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   $h: () => (/* binding */ getPlanPremiumTitle),
 /* harmony export */   Sr: () => (/* binding */ getPlanPersonalTitle),
+/* harmony export */   eg: () => (/* binding */ getPlanBusinessTrialTitle),
 /* harmony export */   gL: () => (/* binding */ getPlanBusinessTitle),
-/* harmony export */   iP: () => (/* binding */ getPlanEcommerceTitle)
+/* harmony export */   iP: () => (/* binding */ getPlanEcommerceTitle),
+/* harmony export */   k7: () => (/* binding */ getPlanBusinessTrialTagline),
+/* harmony export */   p8: () => (/* binding */ getPlanCommerceTrialTitle)
 /* harmony export */ });
 /* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(85744);
 /* harmony import */ var _experiments__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(25678);
@@ -54944,6 +54857,21 @@ const getPlanEcommerceTitle = () => (0,_experiments__WEBPACK_IMPORTED_MODULE_0__
 i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Commerce') :
 // translators: Entrepreneur is a plan name
 i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Entrepreneur');
+const getPlanBusinessTrialTitle = () => (0,_experiments__WEBPACK_IMPORTED_MODULE_0__/* .getPlansListExperiment */ .cw)('wpcom_plan_name_change_personal_premium_v1') === 'treatment' ?
+// translators: Business Trial is a plan name
+i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Business Trial') :
+// translators: Creator Trial is a plan name
+i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Creator Trial');
+const getPlanBusinessTrialTagline = () => (0,_experiments__WEBPACK_IMPORTED_MODULE_0__/* .getPlansListExperiment */ .cw)('wpcom_plan_name_change_personal_premium_v1') === 'treatment' ?
+// translators: Business is a plan name
+i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Try all the features of our Business plan.') :
+// translators: Creator is a plan name
+i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Try all the features of our Creator plan.');
+const getPlanCommerceTrialTitle = () => (0,_experiments__WEBPACK_IMPORTED_MODULE_0__/* .getPlansListExperiment */ .cw)('wpcom_plan_name_change_personal_premium_v1') === 'treatment' ?
+// translators: Commerce Trial is a plan name
+i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Commerce Trial') :
+// translators: Entrepreneur Trial is a plan name
+i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Entrepreneur Trial');
 
 /***/ }),
 
@@ -56397,11 +56325,10 @@ function determineUrlType(url) {
 /* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(89575);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(46764);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(54357);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(51609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(46764);
 
 
 
@@ -56445,7 +56372,7 @@ const cleanButtonProps = ({
   type
 });
 const Button = (props, ref) => {
-  const classes = props.plain ? classnames__WEBPACK_IMPORTED_MODULE_1___default()('button-plain', props.className) : classnames__WEBPACK_IMPORTED_MODULE_1___default()('button', props.className, {
+  const classes = props.plain ? (0,clsx__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)('button-plain', props.className) : (0,clsx__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)('button', props.className, {
     'is-compact': props.compact,
     'is-primary': props.primary,
     'is-scary': props.scary,
@@ -56469,7 +56396,7 @@ const Button = (props, ref) => {
     ref: ref
   }));
 };
-const ButtonWithForwardedRef = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_2__.forwardRef)(Button);
+const ButtonWithForwardedRef = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(Button);
 ButtonWithForwardedRef.defaultProps = {
   type: 'button'
 };
@@ -56511,12 +56438,11 @@ CompactCard.displayName = 'CompactCard';
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(89575);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(54357);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(51609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _gridicon__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(79812);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(25034);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(25034);
 
 
 
@@ -56537,32 +56463,32 @@ const Card = ({
   showLinkIcon = true,
   ...props
 }, forwardedRef) => {
-  const elementClass = classnames__WEBPACK_IMPORTED_MODULE_0___default()('card', className, {
+  const elementClass = (0,clsx__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)('card', className, {
     'is-card-link': displayAsLink || href,
     'is-clickable': props.onClick,
     'is-compact': compact,
     'is-highlight': highlight
   }, highlight ? 'is-' + highlight : false);
-  return href ? /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.createElement)("a", (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)({}, props, {
+  return href ? /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)({}, props, {
     href: href,
     target: target,
     className: elementClass,
     ref: forwardedRef
-  }), showLinkIcon && /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.createElement)(_gridicon__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+  }), showLinkIcon && /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_gridicon__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
     className: "card__link-indicator",
     icon: target ? 'external' : 'chevron-right'
-  }), children) : ( /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.createElement)(tagName, {
+  }), children) : ( /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(tagName, {
     ...props,
     className: elementClass,
     ref: forwardedRef
-  }, displayAsLink && /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.createElement)(_gridicon__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+  }, displayAsLink && /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_gridicon__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
     className: "card__link-indicator",
     icon: target ? 'external' : 'chevron-right'
   }), children));
 };
-const ForwardedRefCard = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(Card);
+const ForwardedRefCard = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.forwardRef)(Card);
 ForwardedRefCard.displayName = 'Card';
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (/*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.memo)(ForwardedRefCard));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (/*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.memo)(ForwardedRefCard));
 
 /***/ }),
 
@@ -56575,9 +56501,8 @@ ForwardedRefCard.displayName = 'Card';
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(35007);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(54357);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(35007);
 
 
 
@@ -56597,7 +56522,7 @@ const CircularProgressBar = ({
   }
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     role: "progressbar",
-    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()('circular__progress-bar', {
+    className: (0,clsx__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)('circular__progress-bar', {
       'desktop-scaling': enableDesktopScaling
     }),
     style: {
@@ -56649,18 +56574,17 @@ const CircularProgressBar = ({
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(355);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(54357);
 /* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(85744);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(66087);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(66087);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(39067);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(51609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var ___WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(79812);
 /* harmony import */ var ___WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(15471);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(14082);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(14082);
 
 
 
@@ -56671,14 +56595,14 @@ const CircularProgressBar = ({
 
 
 
-class ExternalLink extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
+class ExternalLink extends react__WEBPACK_IMPORTED_MODULE_2__.Component {
   render() {
-    const classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()('external-link', this.props.className, {
+    const classes = (0,clsx__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)('external-link', this.props.className, {
       'icon-first': this.props.showIconFirst,
       'has-icon': this.props.icon
     });
     const props = {
-      ...(0,lodash__WEBPACK_IMPORTED_MODULE_2__.omit)(this.props, 'icon', 'iconSize', 'showIconFirst', 'iconClassName', 'iconComponent'),
+      ...(0,lodash__WEBPACK_IMPORTED_MODULE_1__.omit)(this.props, 'icon', 'iconSize', 'showIconFirst', 'iconClassName', 'iconComponent'),
       className: classes,
       rel: 'external'
     };
@@ -56733,10 +56657,9 @@ class ExternalLink extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(79428);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(43854);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(64446);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(54357);
 /* harmony import */ var ___WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(79812);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(40149);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(40149);
 
 
 
@@ -56750,16 +56673,18 @@ const FormInputValidation = ({
   className,
   ariaLabel = '',
   text,
+  hasIcon = true,
   icon,
   id,
   children
 }) => {
-  const classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()(className, {
+  const classes = (0,clsx__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)(className, {
     'form-input-validation': true,
     'is-warning': isWarning,
     'is-error': isError,
     'is-hidden': isHidden,
-    'is-muted': isMuted
+    'is-muted': isMuted,
+    'has-icon': hasIcon
   });
   const defaultIcon = isError || isWarning ? _wordpress_icons__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A : _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A;
   return /* eslint-disable wpcalypso/jsx-gridicon-size */(
@@ -56769,13 +56694,13 @@ const FormInputValidation = ({
       role: "alert"
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
       id: id
-    }, icon ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(___WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    }, hasIcon && (icon ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(___WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
       size: 20,
       icon: icon
     }) : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       size: 20,
       icon: defaultIcon
-    }), text, children))
+    })), text, children))
   );
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FormInputValidation);
@@ -56863,31 +56788,30 @@ function GMClosureNotice({
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   R: () => (/* binding */ Gravatar)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(24586);
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(24586);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _automattic_calypso_url__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(33957);
-/* harmony import */ var _automattic_calypso_url__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(96407);
-/* harmony import */ var _automattic_calypso_url__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(11922);
-/* harmony import */ var _automattic_calypso_url__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(12991);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(24524);
+/* harmony import */ var _automattic_calypso_url__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(33957);
+/* harmony import */ var _automattic_calypso_url__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(96407);
+/* harmony import */ var _automattic_calypso_url__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(11922);
+/* harmony import */ var _automattic_calypso_url__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(12991);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(54357);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(51609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(24524);
 
 
 
 
 
 
-class Gravatar extends react__WEBPACK_IMPORTED_MODULE_2__.Component {
+class Gravatar extends react__WEBPACK_IMPORTED_MODULE_1__.Component {
   constructor(...args) {
     super(...args);
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)(this, "state", {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)(this, "state", {
       failedToLoad: false
     });
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)(this, "onError", () => this.setState({
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)(this, "onError", () => this.setState({
       failedToLoad: true
     }));
   }
@@ -56897,8 +56821,8 @@ class Gravatar extends react__WEBPACK_IMPORTED_MODULE_2__.Component {
     } = this.props;
     const defaultUrl = 'https://www.gravatar.com/avatar/0';
     imageURL = imageURL || defaultUrl;
-    const urlType = (0,_automattic_calypso_url__WEBPACK_IMPORTED_MODULE_5__/* .determineUrlType */ .n)(imageURL);
-    if (urlType === _automattic_calypso_url__WEBPACK_IMPORTED_MODULE_5__/* .URL_TYPE */ .P.INVALID || urlType === _automattic_calypso_url__WEBPACK_IMPORTED_MODULE_5__/* .URL_TYPE */ .P.PATH_RELATIVE) {
+    const urlType = (0,_automattic_calypso_url__WEBPACK_IMPORTED_MODULE_4__/* .determineUrlType */ .n)(imageURL);
+    if (urlType === _automattic_calypso_url__WEBPACK_IMPORTED_MODULE_4__/* .URL_TYPE */ .P.INVALID || urlType === _automattic_calypso_url__WEBPACK_IMPORTED_MODULE_4__/* .URL_TYPE */ .P.PATH_RELATIVE) {
       return defaultUrl;
     }
     const {
@@ -56906,7 +56830,7 @@ class Gravatar extends react__WEBPACK_IMPORTED_MODULE_2__.Component {
       origin,
       host,
       ...parsedURL
-    } = (0,_automattic_calypso_url__WEBPACK_IMPORTED_MODULE_6__/* .getUrlParts */ .O)(imageURL);
+    } = (0,_automattic_calypso_url__WEBPACK_IMPORTED_MODULE_5__/* .getUrlParts */ .O)(imageURL);
     if (/^([-a-zA-Z0-9_]+\.)*(gravatar.com)$/.test(parsedURL.hostname)) {
       parsedURL.searchParams.set('s', imgSize?.toString() ?? '32');
       parsedURL.searchParams.set('d', 'mm');
@@ -56919,7 +56843,7 @@ class Gravatar extends react__WEBPACK_IMPORTED_MODULE_2__.Component {
     // formatUrl will remove it away, to match the previous url type.
     parsedURL.protocol = parsedURL.protocol || 'https:';
     parsedURL.hostname = parsedURL.hostname || '__domain__.invalid';
-    return (0,_automattic_calypso_url__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A)((0,_automattic_calypso_url__WEBPACK_IMPORTED_MODULE_6__/* .getUrlFromParts */ ._)(parsedURL), urlType);
+    return (0,_automattic_calypso_url__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)((0,_automattic_calypso_url__WEBPACK_IMPORTED_MODULE_5__/* .getUrlFromParts */ ._)(parsedURL), urlType);
   }
   render() {
     const {
@@ -56944,8 +56868,8 @@ class Gravatar extends react__WEBPACK_IMPORTED_MODULE_2__.Component {
       });
     }
     const altText = alt || user.display_name || user.name;
-    const avatarURL = tempImage || this.getResizedImageURL((0,_automattic_calypso_url__WEBPACK_IMPORTED_MODULE_8__/* .safeImageUrl */ .e)(user.avatar_URL));
-    const classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()('gravatar', this.props.className);
+    const avatarURL = tempImage || this.getResizedImageURL((0,_automattic_calypso_url__WEBPACK_IMPORTED_MODULE_7__/* .safeImageUrl */ .e)(user.avatar_URL));
+    const classes = (0,clsx__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A)('gravatar', this.props.className);
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
       alt: altText,
       title: title,
@@ -56957,7 +56881,7 @@ class Gravatar extends react__WEBPACK_IMPORTED_MODULE_2__.Component {
     });
   }
 }
-(0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)(Gravatar, "defaultProps", {
+(0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)(Gravatar, "defaultProps", {
   // The REST-API returns s=96 by default, so that is most likely to be cached
   imgSize: 96,
   size: 32
@@ -56975,20 +56899,19 @@ class Gravatar extends react__WEBPACK_IMPORTED_MODULE_2__.Component {
 /* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(89575);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var gridicons_dist_util_icons_offset__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(48532);
-/* harmony import */ var gridicons_dist_util_icons_offset__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(gridicons_dist_util_icons_offset__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var gridicons_svg_sprite_gridicons_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(84025);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(54357);
+/* harmony import */ var gridicons_dist_util_icons_offset__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(48532);
+/* harmony import */ var gridicons_dist_util_icons_offset__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(gridicons_dist_util_icons_offset__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var gridicons_svg_sprite_gridicons_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(84025);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(51609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
 
 
 
 
 
 
-const Gridicon = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4__.memo( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4__.forwardRef((props, ref) => {
+const Gridicon = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.memo( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.forwardRef((props, ref) => {
   const {
     size = 24,
     icon,
@@ -57001,10 +56924,10 @@ const Gridicon = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4__.memo( /*#__PURE
   // Using a missing icon doesn't produce any errors, just a blank icon, which is the exact intended behaviour.
   // This means we don't need to perform any checks on the icon name.
   const iconName = `gridicons-${icon}`;
-  const iconClass = classnames__WEBPACK_IMPORTED_MODULE_1___default()('gridicon', iconName, className, {
-    'needs-offset': isModulo18 && gridicons_dist_util_icons_offset__WEBPACK_IMPORTED_MODULE_2__.iconsThatNeedOffset.includes(iconName),
-    'needs-offset-x': isModulo18 && gridicons_dist_util_icons_offset__WEBPACK_IMPORTED_MODULE_2__.iconsThatNeedOffsetX.includes(iconName),
-    'needs-offset-y': isModulo18 && gridicons_dist_util_icons_offset__WEBPACK_IMPORTED_MODULE_2__.iconsThatNeedOffsetY.includes(iconName)
+  const iconClass = (0,clsx__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)('gridicon', iconName, className, {
+    'needs-offset': isModulo18 && gridicons_dist_util_icons_offset__WEBPACK_IMPORTED_MODULE_1__.iconsThatNeedOffset.includes(iconName),
+    'needs-offset-x': isModulo18 && gridicons_dist_util_icons_offset__WEBPACK_IMPORTED_MODULE_1__.iconsThatNeedOffsetX.includes(iconName),
+    'needs-offset-y': isModulo18 && gridicons_dist_util_icons_offset__WEBPACK_IMPORTED_MODULE_1__.iconsThatNeedOffsetY.includes(iconName)
   });
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)({
     xmlns: "http://www.w3.org/2000/svg",
@@ -57014,7 +56937,7 @@ const Gridicon = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4__.memo( /*#__PURE
     width: size,
     ref: ref
   }, otherProps), title && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("title", null, title), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("use", {
-    xlinkHref: `${gridicons_svg_sprite_gridicons_svg__WEBPACK_IMPORTED_MODULE_3__}#${iconName}`
+    xlinkHref: `${gridicons_svg_sprite_gridicons_svg__WEBPACK_IMPORTED_MODULE_2__}#${iconName}`
   }));
 }));
 Gridicon.displayName = 'Gridicon';
@@ -57067,11 +56990,10 @@ const LoadingPlaceholder = /*#__PURE__*/(0,_emotion_styled_base__WEBPACK_IMPORTE
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(27723);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(66087);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(35888);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(54357);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(66087);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(35888);
 
 
 const __ = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__;
@@ -57085,15 +57007,15 @@ const PaginationControl = ({
   classNames,
   children
 }) => {
-  const classes = classnames__WEBPACK_IMPORTED_MODULE_2___default()('pagination-control', classNames);
+  const classes = (0,clsx__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)('pagination-control', classNames);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", {
     className: classes,
     "aria-label": __('Pagination control')
-  }, (0,lodash__WEBPACK_IMPORTED_MODULE_3__.times)(numberOfPages, index => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
+  }, (0,lodash__WEBPACK_IMPORTED_MODULE_2__.times)(numberOfPages, index => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
     key: `${numberOfPages}-${index}`,
     "aria-current": index === activePageIndex ? 'page' : undefined
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_2___default()('pagination-control__page', {
+    className: (0,clsx__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)('pagination-control__page', {
       'is-current': index === activePageIndex
     }),
     disabled: index === activePageIndex,
@@ -57116,23 +57038,22 @@ const PaginationControl = ({
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(89575);
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(24586);
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(24586);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(54357);
 /* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(87526);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(66087);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(66087);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(39067);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(75795);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(51609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(75795);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _root_child__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(19574);
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(68998);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(13141);
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(68998);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(13141);
 
 
 
@@ -57146,7 +57067,7 @@ const PaginationControl = ({
 
 
 const noop = () => {};
-class PopoverInner extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
+class PopoverInner extends react__WEBPACK_IMPORTED_MODULE_2__.Component {
   constructor(...args) {
     super(...args);
     /**
@@ -57154,15 +57075,15 @@ class PopoverInner extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
      * cancel the task.
      * @type {number|null} `setTimeout` handle or null
      */
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "scheduledPositionUpdate", null);
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(this, "scheduledPositionUpdate", null);
     /**
      * Timeout ID for the scheduled focus. Lets us cancel the task when hiding/unmounting.
      * @type {number|null} `setTimeout` handle or null
      */
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "scheduledFocus", null);
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "popoverNodeRef", /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_3__.createRef)());
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "popoverInnerNodeRef", /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_3__.createRef)());
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "state", {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(this, "scheduledFocus", null);
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(this, "popoverNodeRef", /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_2__.createRef)());
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(this, "popoverInnerNodeRef", /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_2__.createRef)());
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(this, "state", {
       left: -99999,
       top: -99999,
       positionClass: this.getPositionClass(this.props.position)
@@ -57171,17 +57092,17 @@ class PopoverInner extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
      * Used to prevent inifinite repositioning when autoReposition is enabled.
      * @type {number} Number of times the position has not changed after this.setPosition()
      */
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "autoRepositionStability", 0);
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "onKeydown", event => {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(this, "autoRepositionStability", 0);
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(this, "onKeydown", event => {
       if (event.keyCode === 27) {
-        const domContext = react_dom__WEBPACK_IMPORTED_MODULE_4___default().findDOMNode(this.props.context);
+        const domContext = react_dom__WEBPACK_IMPORTED_MODULE_3___default().findDOMNode(this.props.context);
         if (domContext) {
           domContext.focus();
         }
         this.close(true);
       }
     });
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "getTouchEvent", () => {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(this, "getTouchEvent", () => {
       if ('onpointerdown' in document) {
         return 'pointerdown';
       }
@@ -57190,25 +57111,25 @@ class PopoverInner extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
       }
       return 'click';
     });
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "onClickout", event => {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(this, "onClickout", event => {
       const popoverContext = this.popoverInnerNodeRef.current;
       let shouldClose = popoverContext && !popoverContext.contains(event.target);
       if (shouldClose && this.props.context) {
-        const domContext = react_dom__WEBPACK_IMPORTED_MODULE_4___default().findDOMNode(this.props.context);
+        const domContext = react_dom__WEBPACK_IMPORTED_MODULE_3___default().findDOMNode(this.props.context);
         shouldClose = domContext && !domContext.contains(event.target);
       }
       if (shouldClose && this.props.ignoreContext) {
-        const ignoreContext = react_dom__WEBPACK_IMPORTED_MODULE_4___default().findDOMNode(this.props.ignoreContext);
+        const ignoreContext = react_dom__WEBPACK_IMPORTED_MODULE_3___default().findDOMNode(this.props.ignoreContext);
         shouldClose = ignoreContext && !ignoreContext.contains(event.target);
       }
       if (shouldClose) {
         this.close();
       }
     });
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "onWindowChange", () => {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(this, "onWindowChange", () => {
       this.setPosition();
     });
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "setPosition", () => {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(this, "setPosition", () => {
       let position;
 
       // Do we have a custom position provided?
@@ -57233,7 +57154,7 @@ class PopoverInner extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
      * This results in the popover to be rendered in the wrong position, so we need to reposition it.
      * @returns {void}
      */
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "autoRepositionOnInitialLoad", () => {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(this, "autoRepositionOnInitialLoad", () => {
       if (this.props.autoRepositionOnInitialLoad) {
         this.autoRepositionOnInitialLoadInterval = setInterval(() => {
           const lastPosition = this.state;
@@ -57251,18 +57172,18 @@ class PopoverInner extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
         }, 500);
       }
     });
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "clearAutoRepositionOnInitialLoad", () => {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(this, "clearAutoRepositionOnInitialLoad", () => {
       if (this.autoRepositionOnInitialLoadInterval) {
         clearInterval(this.autoRepositionOnInitialLoadInterval);
       }
     });
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "handleOnMouseEnter", () => {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(this, "handleOnMouseEnter", () => {
       const {
         onMouseEnter
       } = this.props;
       onMouseEnter?.();
     });
-    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(this, "handleOnMouseLeave", () => {
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(this, "handleOnMouseLeave", () => {
       const {
         onMouseLeave
       } = this.props;
@@ -57272,7 +57193,7 @@ class PopoverInner extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
   componentDidMount() {
     // make sure to set the viewport when mounting, because it might have been changed between two mounts of this
     // component, e.g. when the viewport is changed while the popover is hidden
-    (0,_util__WEBPACK_IMPORTED_MODULE_7__/* .onViewportChange */ ._n)();
+    (0,_util__WEBPACK_IMPORTED_MODULE_6__/* .onViewportChange */ ._n)();
     this.bindListeners();
     this.setPosition();
     this.show();
@@ -57284,7 +57205,7 @@ class PopoverInner extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
     // setting and checking `this.scheduledPositionUpdate`.
     // See https://github.com/Automattic/wp-calypso/commit/38e779cfebf6dd42bb30d8be7127951b0c531ae2
     if (this.scheduledPositionUpdate == null) {
-      this.scheduledPositionUpdate = (0,lodash__WEBPACK_IMPORTED_MODULE_2__.defer)(() => {
+      this.scheduledPositionUpdate = (0,lodash__WEBPACK_IMPORTED_MODULE_1__.defer)(() => {
         this.setPosition();
         this.scheduledPositionUpdate = null;
       });
@@ -57298,13 +57219,13 @@ class PopoverInner extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
     this.bindClickoutHandler();
     this.bindEscKeyListener();
     this.bindReposition();
-    (0,_util__WEBPACK_IMPORTED_MODULE_7__/* .bindWindowListeners */ .jQ)();
+    (0,_util__WEBPACK_IMPORTED_MODULE_6__/* .bindWindowListeners */ .jQ)();
   }
   unbindListeners() {
     this.unbindClickoutHandler();
     this.unbindEscKeyListener();
     this.unbindReposition();
-    (0,_util__WEBPACK_IMPORTED_MODULE_7__/* .unbindWindowListeners */ .Yc)();
+    (0,_util__WEBPACK_IMPORTED_MODULE_6__/* .unbindWindowListeners */ .Yc)();
 
     // cancel the scheduled reposition when the Popover is being removed from DOM
     if (this.scheduledPositionUpdate != null) {
@@ -57357,7 +57278,7 @@ class PopoverInner extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
     // { top: -9999, left: -9999 } where it already has dimensions. These dimensions are measured
     // and used to calculate the final position.
     // Focusing the element while it's off the screen would cause unwanted scrolling.
-    this.scheduledFocus = (0,lodash__WEBPACK_IMPORTED_MODULE_2__.defer)(() => {
+    this.scheduledFocus = (0,lodash__WEBPACK_IMPORTED_MODULE_1__.defer)(() => {
       if (this.popoverNodeRef.current) {
         this.popoverNodeRef.current.focus();
       }
@@ -57409,7 +57330,7 @@ class PopoverInner extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
       relativePosition
     } = this.props;
     const domContainer = this.popoverInnerNodeRef.current;
-    const domContext = react_dom__WEBPACK_IMPORTED_MODULE_4___default().findDOMNode(this.props.context);
+    const domContext = react_dom__WEBPACK_IMPORTED_MODULE_3___default().findDOMNode(this.props.context);
     if (!domContext) {
       return null;
     }
@@ -57418,9 +57339,9 @@ class PopoverInner extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
       suggestedPosition = this.adjustRtlPosition(suggestedPosition);
     }
     if (this.props.autoPosition) {
-      suggestedPosition = (0,_util__WEBPACK_IMPORTED_MODULE_7__/* .suggested */ .Mf)(suggestedPosition, domContainer, domContext);
+      suggestedPosition = (0,_util__WEBPACK_IMPORTED_MODULE_6__/* .suggested */ .Mf)(suggestedPosition, domContainer, domContext);
     }
-    const reposition = Object.assign({}, (0,_util__WEBPACK_IMPORTED_MODULE_7__/* .constrainLeft */ .B3)((0,_util__WEBPACK_IMPORTED_MODULE_7__/* .offset */ .cY)(suggestedPosition, domContainer, domContext, relativePosition), domContainer), {
+    const reposition = Object.assign({}, (0,_util__WEBPACK_IMPORTED_MODULE_6__/* .constrainLeft */ .B3)((0,_util__WEBPACK_IMPORTED_MODULE_6__/* .offset */ .cY)(suggestedPosition, domContainer, domContext, relativePosition), domContainer), {
       positionClass: this.getPositionClass(suggestedPosition)
     });
     return reposition;
@@ -57448,7 +57369,7 @@ class PopoverInner extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
     if (!this.props.context) {
       return null;
     }
-    const classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()('popover', this.props.className, this.state.positionClass);
+    const classes = (0,clsx__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A)('popover', this.props.className, this.state.positionClass);
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       ref: this.popoverNodeRef,
       "aria-label": this.props['aria-label'],
@@ -57477,7 +57398,7 @@ class PopoverInner extends react__WEBPACK_IMPORTED_MODULE_3__.Component {
 // the outer `isVisible` prop by the `showDelay` timeout. One consequence is that the `RootChild`
 // is created on show and destroyed on hide, making sure that the last shown popover will be
 // also the last DOM element inside `document.body`, ensuring that it has a higher z-index.
-(0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(PopoverInner, "defaultProps", {
+(0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(PopoverInner, "defaultProps", {
   autoPosition: true,
   autoRtl: true,
   className: '',
@@ -57499,11 +57420,11 @@ function Popover({
   ...props
 }) {
   const isRtl = (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_8__/* .useRtl */ .I)();
-  const [show, setShow] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(isVisible);
+  const [show, setShow] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(isVisible);
 
   // If `showDelay` is non-zero, the hide -> show transition will be delayed and will not
   // happen immediately after the new value of `isVisible` is received.
-  (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(() => {
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
     if (showDelay > 0 && show !== isVisible && isVisible) {
       const showDelayTimer = setTimeout(() => {
         setShow(true);
@@ -57531,7 +57452,7 @@ function Popover({
 
 // We accept DOM elements and React component instances as the `context` prop.
 // In case of a React component instance, we'll find the DOM element with `findDOMNode`.
-const PropTypeElement = prop_types__WEBPACK_IMPORTED_MODULE_11___default().oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_11___default().instanceOf(react__WEBPACK_IMPORTED_MODULE_3__.Component), prop_types__WEBPACK_IMPORTED_MODULE_11___default().instanceOf( true ? window.Element : 0)]);
+const PropTypeElement = prop_types__WEBPACK_IMPORTED_MODULE_11___default().oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_11___default().instanceOf(react__WEBPACK_IMPORTED_MODULE_2__.Component), prop_types__WEBPACK_IMPORTED_MODULE_11___default().instanceOf( true ? window.Element : 0)]);
 Popover.propTypes = {
   hideArrow: (prop_types__WEBPACK_IMPORTED_MODULE_11___default().bool),
   autoPosition: (prop_types__WEBPACK_IMPORTED_MODULE_11___default().bool),
@@ -57960,19 +57881,18 @@ const useScrollToTop = ({
 /* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(24586);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(49637);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(54357);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(51609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(49637);
 
 
 
 
 
-class Spinner extends react__WEBPACK_IMPORTED_MODULE_2__.PureComponent {
+class Spinner extends react__WEBPACK_IMPORTED_MODULE_1__.PureComponent {
   render() {
-    const className = classnames__WEBPACK_IMPORTED_MODULE_1___default()(this.props.baseClassName, this.props.className);
+    const className = (0,clsx__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)(this.props.baseClassName, this.props.className);
     const style = {
       width: this.props.size,
       height: this.props.size,
@@ -61381,11 +61301,10 @@ const controls = {
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(64446);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(63499);
-/* harmony import */ var _wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(23634);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(18690);
-/* harmony import */ var _styles_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(369);
+/* harmony import */ var _wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(23634);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(54357);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(18690);
+/* harmony import */ var _styles_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(369);
 
 
 
@@ -61400,10 +61319,10 @@ const BackButton = ({
 }) => {
   const {
     __
-  } = (0,_wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_4__/* .useI18n */ .s9)();
-  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__/* .useLocation */ .zy)();
-  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__/* .useNavigate */ .Zp)();
-  const buttonClassName = classnames__WEBPACK_IMPORTED_MODULE_2___default()('back-button__help-center', className);
+  } = (0,_wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_3__/* .useI18n */ .s9)();
+  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__/* .useLocation */ .zy)();
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__/* .useNavigate */ .Zp)();
+  const buttonClassName = (0,clsx__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)('back-button__help-center', className);
   function defaultOnClick() {
     if (backToRoot) {
       navigate('/');
@@ -61416,7 +61335,9 @@ const BackButton = ({
     }
   }
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
-    className: buttonClassName,
+    className: buttonClassName
+    /* eslint-disable-next-line jsx-a11y/no-autofocus */,
+    autoFocus: true,
     onClick: onClick || defaultOnClick
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A,
@@ -61435,15 +61356,14 @@ const BackButton = ({
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(21137);
+/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(21137);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(56427);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(64446);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(59573);
-/* harmony import */ var _wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(23634);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _back_to_top_button_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(44980);
+/* harmony import */ var _wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(23634);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(54357);
+/* harmony import */ var _back_to_top_button_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(44980);
 
 
 
@@ -61456,7 +61376,7 @@ const BackToTopButton = () => {
   const elementRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
   const {
     __
-  } = (0,_wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_4__/* .useI18n */ .s9)();
+  } = (0,_wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_3__/* .useI18n */ .s9)();
   const isBelowThreshold = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useCallback)(containerNode => {
     const SCROLL_THRESHOLD = 400;
     return containerNode.scrollTop > SCROLL_THRESHOLD;
@@ -61464,7 +61384,7 @@ const BackToTopButton = () => {
   const {
     isButtonVisible,
     scrollToTop
-  } = (0,_automattic_components__WEBPACK_IMPORTED_MODULE_5__/* .useScrollToTop */ .b)({
+  } = (0,_automattic_components__WEBPACK_IMPORTED_MODULE_4__/* .useScrollToTop */ .b)({
     scrollTargetRef: elementRef,
     isBelowThreshold,
     smoothScrolling: false
@@ -61473,7 +61393,7 @@ const BackToTopButton = () => {
     ref: element => {
       elementRef.current = element?.parentElement ?? null;
     },
-    className: classnames__WEBPACK_IMPORTED_MODULE_2___default()('back-to-top-button__help-center', {
+    className: (0,clsx__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)('back-to-top-button__help-center', {
       'is-visible': isButtonVisible
     }),
     onClick: scrollToTop
@@ -62263,35 +62183,34 @@ const HelpCenterContactForm = props => {
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(98948);
 /* harmony import */ var _automattic_calypso_config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(70696);
-/* harmony import */ var _automattic_calypso_products__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(76277);
-/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(64682);
-/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(36250);
+/* harmony import */ var _automattic_calypso_products__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(76277);
+/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(64682);
+/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(36250);
 /* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(20609);
-/* harmony import */ var _automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(16706);
-/* harmony import */ var _automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(57033);
-/* harmony import */ var _automattic_odie_client__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(14366);
+/* harmony import */ var _automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(16706);
+/* harmony import */ var _automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(57033);
+/* harmony import */ var _automattic_odie_client__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(14366);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(47143);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(27723);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(64446);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(24955);
-/* harmony import */ var _wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(23634);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(20759);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(73657);
-/* harmony import */ var calypso_state_ui_selectors__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(65284);
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(64446);
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(24955);
+/* harmony import */ var _wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(23634);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(54357);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(51609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(20759);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(73657);
+/* harmony import */ var calypso_state_ui_selectors__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(65284);
 /* harmony import */ var ___WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(8652);
-/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(63119);
-/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(34655);
-/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(51653);
-/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(23617);
+/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(63119);
+/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(34655);
+/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(51653);
+/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(23617);
 /* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(34237);
 /* harmony import */ var _icons__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(52927);
-/* harmony import */ var _stores__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(29575);
+/* harmony import */ var _stores__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(29575);
 /* harmony import */ var _help_center_notice__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(89858);
 
 /* eslint-disable no-restricted-imports */
@@ -62349,29 +62268,29 @@ const HelpCenterContactPage = ({
 }) => {
   const {
     __
-  } = (0,_wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_8__/* .useI18n */ .s9)();
-  const locale = (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_9__/* .useLocale */ .Ym)();
-  const isEnglishLocale = (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_9__/* .useIsEnglishLocale */ .SL)();
-  const renderEmail = (0,_hooks__WEBPACK_IMPORTED_MODULE_10__/* .useShouldRenderEmailOption */ .s)();
+  } = (0,_wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_7__/* .useI18n */ .s9)();
+  const locale = (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_8__/* .useLocale */ .Ym)();
+  const isEnglishLocale = (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_8__/* .useIsEnglishLocale */ .SL)();
+  const renderEmail = (0,_hooks__WEBPACK_IMPORTED_MODULE_9__/* .useShouldRenderEmailOption */ .s)();
   const {
     hasActiveChats,
     isEligibleForChat,
     isLoading: isLoadingChatStatus,
     supportActivity
-  } = (0,_hooks__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A)();
-  (0,_hooks__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A)('zendesk_support_chat_key', isEligibleForChat || hasActiveChats, isEligibleForChat || hasActiveChats);
-  const [hasSubmittingError, setHasSubmittingError] = (0,react__WEBPACK_IMPORTED_MODULE_6__.useState)(false);
-  const sectionName = (0,react_redux__WEBPACK_IMPORTED_MODULE_7__/* .useSelector */ .d4)(calypso_state_ui_selectors__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A);
+  } = (0,_hooks__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A)();
+  (0,_hooks__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A)('zendesk_support_chat_key', isEligibleForChat || hasActiveChats, isEligibleForChat || hasActiveChats);
+  const [hasSubmittingError, setHasSubmittingError] = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(false);
+  const sectionName = (0,react_redux__WEBPACK_IMPORTED_MODULE_6__/* .useSelector */ .d4)(calypso_state_ui_selectors__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A);
   const currentSite = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => {
-    const helpCenterSelect = select(_stores__WEBPACK_IMPORTED_MODULE_14__/* .HELP_CENTER_STORE */ .qO);
+    const helpCenterSelect = select(_stores__WEBPACK_IMPORTED_MODULE_13__/* .HELP_CENTER_STORE */ .qO);
     return helpCenterSelect.getSite();
   }, []);
-  const wapuuChatId = (0,_automattic_odie_client__WEBPACK_IMPORTED_MODULE_15__/* .useGetOdieStorage */ .US)('chat_id');
-  const setWapuuChatId = (0,_automattic_odie_client__WEBPACK_IMPORTED_MODULE_15__/* .useSetOdieStorage */ .sS)('chat_id');
+  const wapuuChatId = (0,_automattic_odie_client__WEBPACK_IMPORTED_MODULE_14__/* .useGetOdieStorage */ .US)('chat_id');
+  const setWapuuChatId = (0,_automattic_odie_client__WEBPACK_IMPORTED_MODULE_14__/* .useSetOdieStorage */ .sS)('chat_id');
   const {
     isOpeningChatWidget,
     openChatWidget
-  } = (0,_hooks__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A)('zendesk_support_chat_key', isEligibleForChat || hasActiveChats);
+  } = (0,_hooks__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A)('zendesk_support_chat_key', isEligibleForChat || hasActiveChats);
   const isLoading = renderEmail.isLoading || isLoadingChatStatus;
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (isLoading) {
@@ -62396,7 +62315,7 @@ const HelpCenterContactPage = ({
     }
     const isLanguageSupported = (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Ay)('upwork_support_locales').includes(locale);
     if (isLanguageSupported) {
-      const language = (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_17__/* .getLanguage */ .Z0)(locale)?.name;
+      const language = (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_16__/* .getLanguage */ .Z0)(locale)?.name;
       return language && (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.hasTranslation)('Email (%s)') ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)(
       // translators: %s is the language name
       __('Email (%s)', "full-site-editing"), language) : __('Email', "full-site-editing");
@@ -62409,7 +62328,7 @@ const HelpCenterContactPage = ({
   if (isLoading) {
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "help-center-contact-page__loading"
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_components__WEBPACK_IMPORTED_MODULE_18__/* .Spinner */ .y, {
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_components__WEBPACK_IMPORTED_MODULE_17__/* .Spinner */ .y, {
       baseClassName: ""
     }));
   }
@@ -62428,7 +62347,7 @@ const HelpCenterContactPage = ({
   };
   const renderChatOption = () => {
     const productSlug = currentSite?.plan?.product_slug;
-    const plan = (0,_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_19__/* .getPlan */ .U7)(productSlug);
+    const plan = (0,_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_18__/* .getPlan */ .U7)(productSlug);
     const productId = plan?.getProductId();
     const handleOnClick = () => {
       contactOptionsEventMap.chat();
@@ -62465,24 +62384,24 @@ const HelpCenterContactPage = ({
       tabIndex: 0
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "help-center-contact-page__box-icon"
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
-      icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A
-    })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, liveChatHeaderText), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, __('Our Happiness team will get back to you soon', "full-site-editing"))))), hasSubmittingError && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_components__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+      icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A
+    })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, liveChatHeaderText), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, __('Our Happiness team will get back to you soon', "full-site-editing"))))), hasSubmittingError && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_components__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
       isError: true,
       text: __('Something went wrong, please try again later.', "full-site-editing")
     }));
   };
   const renderEmailOption = () => {
-    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_23__/* .Link */ .N_, {
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_22__/* .Link */ .N_, {
       to: emailUrl,
       onClick: contactOptionsEventMap['email']
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-      className: classnames__WEBPACK_IMPORTED_MODULE_5___default()('help-center-contact-page__box', 'email'),
+      className: (0,clsx__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A)('help-center-contact-page__box', 'email'),
       role: "button",
       tabIndex: 0
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "help-center-contact-page__box-icon"
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
       icon: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, null)
     })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, emailHeaderText), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, __('An expert will get back to you soon', "full-site-editing")))));
   };
@@ -62498,18 +62417,18 @@ const HelpCenterContactPage = ({
     reopensAt: "2024-01-02 07:00Z",
     enabled: !renderEmail.render
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_5___default()('help-center-contact-page__boxes')
+    className: (0,clsx__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A)('help-center-contact-page__boxes')
   }, renderEmail.render ? renderEmailOption() : renderChatOption())));
 };
 const HelpCenterContactButton = () => {
   const {
     __
-  } = (0,_wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_8__/* .useI18n */ .s9)();
+  } = (0,_wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_7__/* .useI18n */ .s9)();
   const {
     url,
     isLoading
   } = (0,_hooks__WEBPACK_IMPORTED_MODULE_28__/* .useStillNeedHelpURL */ .i)();
-  const sectionName = (0,react_redux__WEBPACK_IMPORTED_MODULE_7__/* .useSelector */ .d4)(calypso_state_ui_selectors__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A);
+  const sectionName = (0,react_redux__WEBPACK_IMPORTED_MODULE_6__/* .useSelector */ .d4)(calypso_state_ui_selectors__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A);
   const redirectToWpcom = url === 'https://wordpress.com/help/contact';
   const trackContactButtonClicked = () => {
     (0,_automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__/* .recordTracksEvent */ .Oy)('calypso_inlinehelp_morehelp_click', {
@@ -62524,13 +62443,13 @@ const HelpCenterContactButton = () => {
   if (isLoading) {
     to = '';
   }
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_23__/* .Link */ .N_, {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_22__/* .Link */ .N_, {
     to: to,
     target: redirectToWpcom ? '_blank' : '_self',
     onClick: trackContactButtonClicked,
     className: "button help-center-contact-page__button"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, __('Still need help?', "full-site-editing")));
 };
 
@@ -62543,32 +62462,34 @@ const HelpCenterContactButton = () => {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(89575);
+/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(89575);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(98948);
 /* harmony import */ var _automattic_viewport_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(44638);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(56427);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(47143);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(29491);
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(47143);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(54357);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(51609);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var react_draggable__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(89463);
 /* harmony import */ var react_draggable__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_draggable__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(18690);
-/* harmony import */ var _contexts_FeatureFlagContext__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(2213);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(18690);
+/* harmony import */ var _contexts_FeatureFlagContext__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(2213);
 /* harmony import */ var _stores__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(29575);
-/* harmony import */ var _help_center_content__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(69539);
-/* harmony import */ var _help_center_footer__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(20431);
-/* harmony import */ var _help_center_header__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(32805);
+/* harmony import */ var _help_center_content__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(69539);
+/* harmony import */ var _help_center_footer__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(20431);
+/* harmony import */ var _help_center_header__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(32805);
 
 
 /**
  * External Dependencies
  */
+
 
 
 
@@ -62603,7 +62524,7 @@ const HelpCenterContainer = ({
     show,
     isMinimized,
     initialRoute
-  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => {
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => {
     const store = select(_stores__WEBPACK_IMPORTED_MODULE_7__/* .HELP_CENTER_STORE */ .qO);
     return {
       show: store.isHelpCenterShown(),
@@ -62613,10 +62534,10 @@ const HelpCenterContainer = ({
   }, []);
   const {
     setIsMinimized
-  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useDispatch)(_stores__WEBPACK_IMPORTED_MODULE_7__/* .HELP_CENTER_STORE */ .qO);
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useDispatch)(_stores__WEBPACK_IMPORTED_MODULE_7__/* .HELP_CENTER_STORE */ .qO);
   const [isVisible, setIsVisible] = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(true);
   const isMobile = (0,_automattic_viewport_react__WEBPACK_IMPORTED_MODULE_8__/* .useMobileBreakpoint */ .lC)();
-  const classNames = classnames__WEBPACK_IMPORTED_MODULE_4___default()('help-center__container', isMobile ? 'is-mobile' : 'is-desktop', {
+  const classNames = (0,clsx__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A)('help-center__container', isMobile ? 'is-mobile' : 'is-desktop', {
     'is-minimized': isMinimized
   });
   const onDismiss = (0,react__WEBPACK_IMPORTED_MODULE_5__.useCallback)(() => {
@@ -62639,6 +62560,8 @@ const HelpCenterContainer = ({
   // This is a workaround for an issue with Draggable in StrictMode
   // https://github.com/react-grid-layout/react-draggable/blob/781ef77c86be9486400da9837f43b96186166e38/README.md
   const nodeRef = (0,react__WEBPACK_IMPORTED_MODULE_5__.useRef)(null);
+  const focusReturnRef = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__.useFocusReturn)();
+  const cardMergeRefs = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__.useMergeRefs)([nodeRef, focusReturnRef]);
   const shouldCloseOnEscapeRef = (0,react__WEBPACK_IMPORTED_MODULE_5__.useRef)(false);
   shouldCloseOnEscapeRef.current = !!show && !hidden && !isMinimized;
   (0,react__WEBPACK_IMPORTED_MODULE_5__.useEffect)(() => {
@@ -62655,25 +62578,25 @@ const HelpCenterContainer = ({
   if (!show || hidden) {
     return null;
   }
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__/* .MemoryRouter */ .fS, {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__/* .MemoryRouter */ .fS, {
     initialEntries: initialRoute ? [initialRoute] : undefined
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_contexts_FeatureFlagContext__WEBPACK_IMPORTED_MODULE_10__/* .FeatureFlagProvider */ .s, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(OptionalDraggable, {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_contexts_FeatureFlagContext__WEBPACK_IMPORTED_MODULE_11__/* .FeatureFlagProvider */ .s, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(OptionalDraggable, {
     draggable: !isMobile && !isMinimized,
     nodeRef: nodeRef,
     handle: ".help-center__container-header",
     bounds: "body"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Card, (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A)({
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Card, (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A)({
     className: classNames
   }, animationProps, {
-    ref: nodeRef
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_header__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    ref: cardMergeRefs
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_header__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
     isMinimized: isMinimized,
     onMinimize: () => setIsMinimized(true),
     onMaximize: () => setIsMinimized(false),
     onDismiss: onDismiss
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_content__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_content__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     currentRoute: currentRoute
-  }), !isMinimized && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_footer__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, null)))));
+  }), !isMinimized && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_footer__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, null)))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (HelpCenterContainer);
 
@@ -62786,6 +62709,8 @@ const HelpCenterContent = ({
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CardBody, {
     ref: containerRef,
     className: "help-center__container-content"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Disabled, {
+    isDisabled: isMinimized
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__/* .Routes */ .BV, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__/* .Route */ .qh, {
     path: "/",
     element: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_search__WEBPACK_IMPORTED_MODULE_12__/* .HelpCenterSearch */ .j, {
@@ -62822,7 +62747,7 @@ const HelpCenterContent = ({
         trackEventName: "calypso_odie_extra_contact_option"
       })
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_odie__WEBPACK_IMPORTED_MODULE_18__/* .HelpCenterOdie */ .s, null))
-  })));
+  }))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (HelpCenterContent);
 
@@ -63240,19 +63165,18 @@ function HelpCenterGPT({
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(47143);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(64446);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(16671);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(59547);
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(64446);
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(16671);
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(59547);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(16091);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(4808);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(82096);
-/* harmony import */ var _wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(23634);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(18690);
-/* harmony import */ var _stores__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(29575);
+/* harmony import */ var _wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(23634);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(54357);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(51609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(18690);
+/* harmony import */ var _stores__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(29575);
 
 
 
@@ -63263,14 +63187,14 @@ function HelpCenterGPT({
 
 
 function ArticleTitle() {
-  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__/* .useLocation */ .zy)();
+  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__/* .useLocation */ .zy)();
   const {
     search
-  } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__/* .useLocation */ .zy)();
+  } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__/* .useLocation */ .zy)();
   const params = new URLSearchParams(search);
   const title = location.state?.title || params.get('title') || '';
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "help-center-header__article-title"
   }, title));
@@ -63278,16 +63202,16 @@ function ArticleTitle() {
 const SupportModeTitle = () => {
   const {
     __
-  } = (0,_wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_8__/* .useI18n */ .s9)();
+  } = (0,_wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_7__/* .useI18n */ .s9)();
   const {
     search
-  } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__/* .useLocation */ .zy)();
+  } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__/* .useLocation */ .zy)();
   const params = new URLSearchParams(search);
   const mode = params.get('mode');
   switch (mode) {
     case 'CHAT':
-      return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
-        icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A
+      return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+        icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A
       }), __('Contact WordPress.com Support', "full-site-editing"));
     case 'EMAIL':
       {
@@ -63309,13 +63233,13 @@ const HelpCenterHeader = ({
   onMaximize,
   onDismiss
 }) => {
-  const unreadCount = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useSelect)(select => select(_stores__WEBPACK_IMPORTED_MODULE_10__/* .HELP_CENTER_STORE */ .qO).getUnreadCount(), []);
-  const classNames = classnames__WEBPACK_IMPORTED_MODULE_3___default()('help-center__container-header');
+  const unreadCount = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useSelect)(select => select(_stores__WEBPACK_IMPORTED_MODULE_9__/* .HELP_CENTER_STORE */ .qO).getUnreadCount(), []);
+  const classNames = (0,clsx__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A)('help-center__container-header');
   const {
     __
-  } = (0,_wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_8__/* .useI18n */ .s9)();
+  } = (0,_wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_7__/* .useI18n */ .s9)();
   const formattedUnreadCount = unreadCount > 9 ? '9+' : unreadCount;
-  const handleClick = (0,react__WEBPACK_IMPORTED_MODULE_4__.useCallback)(event => {
+  const handleClick = (0,react__WEBPACK_IMPORTED_MODULE_3__.useCallback)(event => {
     if (isMinimized && event.target === event.currentTarget) {
       onMaximize?.();
     }
@@ -63330,25 +63254,25 @@ const HelpCenterHeader = ({
     onClick: handleClick,
     onKeyUp: handleClick,
     role: "presentation"
-  }, isMinimized ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__/* .Routes */ .BV, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__/* .Route */ .qh, {
+  }, isMinimized ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__/* .Routes */ .BV, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__/* .Route */ .qh, {
     path: "/",
     element: __('Help Center', "full-site-editing")
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__/* .Route */ .qh, {
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__/* .Route */ .qh, {
     path: "/contact-options",
     element: __('Contact Options', "full-site-editing")
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__/* .Route */ .qh, {
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__/* .Route */ .qh, {
     path: "/inline-chat",
     element: __('Live Chat', "full-site-editing")
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__/* .Route */ .qh, {
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__/* .Route */ .qh, {
     path: "/contact-form",
     element: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(SupportModeTitle, null)
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__/* .Route */ .qh, {
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__/* .Route */ .qh, {
     path: "/post",
     element: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ArticleTitle, null)
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__/* .Route */ .qh, {
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__/* .Route */ .qh, {
     path: "/success",
     element: __('Message Submitted', "full-site-editing")
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__/* .Route */ .qh, {
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__/* .Route */ .qh, {
     path: "/odie",
     element: __('Wapuu', "full-site-editing")
   })) : __('Help Center', "full-site-editing"), isMinimized && unreadCount > 0 && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
@@ -63498,24 +63422,25 @@ const HelpCenterLaunchpad = () => {
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(98948);
 /* harmony import */ var _automattic_calypso_products__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(76277);
-/* harmony import */ var _automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(355);
-/* harmony import */ var _automattic_whats_new__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(59718);
+/* harmony import */ var _automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(355);
+/* harmony import */ var _automattic_whats_new__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(59192);
+/* harmony import */ var _automattic_whats_new__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(59718);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(56427);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(47143);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(64446);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(88065);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(98735);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(71042);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(97636);
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(64446);
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(88065);
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(98735);
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(71042);
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(97636);
 /* harmony import */ var _wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(23634);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(20759);
 /* harmony import */ var calypso_state_purchases_selectors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(32703);
 /* harmony import */ var calypso_state_ui_selectors__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(65284);
 /* harmony import */ var calypso_state_ui_selectors__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(62542);
-/* harmony import */ var _icons__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(66867);
-/* harmony import */ var _stores__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(29575);
+/* harmony import */ var _icons__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(66867);
+/* harmony import */ var _stores__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(29575);
 
 /* eslint-disable no-restricted-imports */
 /* eslint-disable wpcalypso/jsx-classname-namespace */
@@ -63550,15 +63475,19 @@ const HelpCenterMoreResources = () => {
   const purchaseSlugs = purchases && purchases.map(purchase => purchase.productSlug);
   const isBusinessOrEcomPlanUser = !!(purchaseSlugs && (purchaseSlugs.some(_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_9__/* .isWpComBusinessPlan */ .cA) || purchaseSlugs.some(_automattic_calypso_products__WEBPACK_IMPORTED_MODULE_9__/* .isWpComEcommercePlan */ .kE)));
   const {
+    data
+  } = (0,_automattic_whats_new__WEBPACK_IMPORTED_MODULE_10__/* .useWhatsNewAnnouncementsQuery */ .f)(siteId?.toString());
+  const showWhatsNewItem = data && data.length > 0;
+  const {
     hasSeenWhatsNewModal,
     doneLoading
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => ({
-    hasSeenWhatsNewModal: select(_stores__WEBPACK_IMPORTED_MODULE_10__/* .HELP_CENTER_STORE */ .qO).getHasSeenWhatsNewModal(),
-    doneLoading: select('core/data').hasFinishedResolution(_stores__WEBPACK_IMPORTED_MODULE_10__/* .HELP_CENTER_STORE */ .qO, 'getHasSeenWhatsNewModal', [])
+    hasSeenWhatsNewModal: select(_stores__WEBPACK_IMPORTED_MODULE_11__/* .HELP_CENTER_STORE */ .qO).getHasSeenWhatsNewModal(),
+    doneLoading: select('core/data').hasFinishedResolution(_stores__WEBPACK_IMPORTED_MODULE_11__/* .HELP_CENTER_STORE */ .qO, 'getHasSeenWhatsNewModal', [])
   }), []);
   const {
     setHasSeenWhatsNewModal
-  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useDispatch)(_stores__WEBPACK_IMPORTED_MODULE_10__/* .HELP_CENTER_STORE */ .qO);
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useDispatch)(_stores__WEBPACK_IMPORTED_MODULE_11__/* .HELP_CENTER_STORE */ .qO);
   const showWhatsNewDot = doneLoading && !hasSeenWhatsNewModal;
   const [showGuide, setShowGuide] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const trackMoreResourcesButtonClick = resource => {
@@ -63596,50 +63525,50 @@ const HelpCenterMoreResources = () => {
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "inline-help__resource-cell"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
-    href: (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_11__/* .localizeUrl */ .rm)('https://wordpress.com/support'),
+    href: (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_12__/* .localizeUrl */ .rm)('https://wordpress.com/support'),
     rel: "noreferrer",
     target: "_blank",
     className: "inline-help__format-list-numbered",
     onClick: () => trackMoreResourcesButtonClick('support-documentation')
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A,
-    size: 24
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, __('Support Guides', "full-site-editing")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
     icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A,
+    size: 24
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, __('Support Guides', "full-site-editing")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A,
     size: 20
   })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
     className: "inline-help__resource-item"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "inline-help__resource-cell"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
-    href: (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_11__/* .localizeUrl */ .rm)('https://wordpress.com/webinars/'),
+    href: (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_12__/* .localizeUrl */ .rm)('https://wordpress.com/webinars/'),
     rel: "noreferrer",
     target: "_blank",
     onClick: () => trackLearnButtonClick('webinairs'),
     className: "inline-help__capture-video"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A,
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A,
     size: 24
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, __('Webinars', "full-site-editing")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A,
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, __('Webinars', "full-site-editing")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A,
     size: 20
   })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
     className: "inline-help__resource-item"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "inline-help__resource-cell"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
-    href: (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_11__/* .localizeUrl */ .rm)('https://wordpress.com/courses/'),
+    href: (0,_automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_12__/* .localizeUrl */ .rm)('https://wordpress.com/courses/'),
     rel: "noreferrer",
     target: "_blank",
     onClick: () => trackLearnButtonClick('courses'),
     className: "inline-help__institution"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A,
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A,
     size: 24
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, __('Courses', "full-site-editing")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A,
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, __('Courses', "full-site-editing")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A,
     size: 20
-  })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
+  })))), showWhatsNewItem && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
     className: "inline-help__resource-item"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "inline-help__resource-cell"
@@ -63647,14 +63576,14 @@ const HelpCenterMoreResources = () => {
     variant: "link",
     onClick: handleWhatsNewClick,
     className: "inline-help__new-releases"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
-    icon: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null),
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+    icon: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null),
     size: 24
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, __("What's New", "full-site-editing")), showWhatsNewDot && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, __("What's New", "full-site-editing")), showWhatsNewDot && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_icons__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
     className: "inline-help__new-releases_dot",
     icon: circle,
     size: 16
-  }))))), showGuide && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_whats_new__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+  }))))), showGuide && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_whats_new__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     onClose: () => setShowGuide(false),
     siteId: siteId?.toString() || ''
   }));
@@ -67835,16 +67764,15 @@ function loadjQueryDependentScript(url, callback, args) {
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(68962);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(54357);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(51609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(68962);
 
 
 
 
-const Button = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_2__.forwardRef)(({
+const Button = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(({
   compact,
   borderless,
   onClick,
@@ -67852,7 +67780,7 @@ const Button = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_2__.forwardRef)(({
   children,
   disabled
 }, ref) => {
-  const className = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-button-default', externalClassName, {
+  const className = (0,clsx__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)('odie-button-default', externalClassName, {
     'odie-button-compact': compact,
     'odie-button-borderless': borderless
   });
@@ -67877,13 +67805,12 @@ const Button = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_2__.forwardRef)(({
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(79812);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var calypso_components_popover_menu__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(83475);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(54357);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(51609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var calypso_components_popover_menu__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(83475);
 /* harmony import */ var _button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(77901);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(82903);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(82903);
 
 
 
@@ -67897,18 +67824,18 @@ const EllipsisMenu = ({
   children,
   popoverClassName
 }) => {
-  const [isMenuVisible, setMenuVisible] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
-  const popoverContext = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)(null);
+  const [isMenuVisible, setMenuVisible] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+  const popoverContext = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
   const handleClick = () => {
     setMenuVisible(!isMenuVisible);
   };
   const hideMenu = () => {
     setMenuVisible(false);
   };
-  const classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()('ellipsis-menu', {
+  const classes = (0,clsx__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)('ellipsis-menu', {
     'is-menu-visible': isMenuVisible
   });
-  const popoverClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()('ellipsis-menu__menu', 'popover', popoverClassName);
+  const popoverClasses = (0,clsx__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)('ellipsis-menu__menu', 'popover', popoverClassName);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: classes
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_button__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
@@ -67919,7 +67846,7 @@ const EllipsisMenu = ({
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_components__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     icon: "ellipsis",
     className: "ellipsis-menu__toggle-icon"
-  })), isMenuVisible && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_popover_menu__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+  })), isMenuVisible && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_popover_menu__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     isVisible: true,
     onClose: hideMenu,
     position: position,
@@ -67939,15 +67866,14 @@ const EllipsisMenu = ({
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(15471);
-/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(79812);
-/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(54338);
-/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(25109);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(18997);
+/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(15471);
+/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(79812);
+/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(54338);
+/* harmony import */ var _automattic_components__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(25109);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(54357);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(51609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(18997);
 
 
 
@@ -67977,11 +67903,11 @@ const FoldableCard = ({
   className,
   children
 }) => {
-  const [isExpanded, setIsExpanded] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(expanded);
-  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
+  const [isExpanded, setIsExpanded] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(expanded);
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
     setIsExpanded(expanded);
   }, [expanded]);
-  const handleClick = (0,react__WEBPACK_IMPORTED_MODULE_2__.useCallback)(() => {
+  const handleClick = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)(() => {
     if (children) {
       setIsExpanded(!isExpanded);
     }
@@ -68018,7 +67944,7 @@ const FoldableCard = ({
         className: "foldable-card__action foldable-card__expand",
         "aria-expanded": isExpanded,
         onClick: clickAction
-      }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_components__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, null, screenReaderTextContent), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_components__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+      }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_components__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, null, screenReaderTextContent), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_components__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
         icon: icon,
         size: iconSize
       }));
@@ -68031,8 +67957,8 @@ const FoldableCard = ({
       style: additionalStyle
     }, children);
   };
-  const Container = compact ? _automattic_components__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A : _automattic_components__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A;
-  const itemSiteClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()('foldable-card', className, {
+  const Container = compact ? _automattic_components__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A : _automattic_components__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A;
+  const itemSiteClasses = (0,clsx__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A)('foldable-card', className, {
     'is-disabled': disabled,
     'is-expanded': isExpanded,
     'has-expanded-summary': !!expandedSummary,
@@ -68062,11 +67988,10 @@ const FoldableCard = ({
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(39631);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(54357);
+/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(39631);
 /* harmony import */ var _uri_transformer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(25254);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(87117);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(87117);
 
 
 
@@ -68086,8 +68011,8 @@ const CustomALink = ({
 }) => {
   const {
     trackEvent
-  } = (0,_context__WEBPACK_IMPORTED_MODULE_3__/* .useOdieAssistantContext */ .mf)();
-  const classNames = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-sources', {
+  } = (0,_context__WEBPACK_IMPORTED_MODULE_2__/* .useOdieAssistantContext */ .mf)();
+  const classNames = (0,clsx__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)('odie-sources', {
     'odie-sources-inline': inline
   });
   const transformedHref = (0,_uri_transformer__WEBPACK_IMPORTED_MODULE_4__/* .uriTransformer */ .Q)(href ?? '');
@@ -68121,29 +68046,28 @@ const CustomALink = ({
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(56427);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(59944);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(75795);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(54357);
+/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(59944);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(51609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(75795);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var react_markdown__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(76352);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(20759);
-/* harmony import */ var calypso_components_gravatar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(61330);
-/* harmony import */ var calypso_state_current_user_selectors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(13034);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(20759);
+/* harmony import */ var calypso_components_gravatar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(61330);
+/* harmony import */ var calypso_state_current_user_selectors__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(13034);
 /* harmony import */ var _assets_maximize_icon_svg__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(75951);
 /* harmony import */ var _assets_minimize_icon_svg__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(63693);
 /* harmony import */ var _assets_wapuu_squared_avatar_svg__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(77697);
 /* harmony import */ var _assets_wapuu_thinking_svg__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(60906);
-/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(39631);
-/* harmony import */ var _utils_user_typer__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(4047);
+/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(39631);
+/* harmony import */ var _utils_user_typer__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(4047);
 /* harmony import */ var _button__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(77901);
 /* harmony import */ var _foldable__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(33608);
 /* harmony import */ var _custom_a_link__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(94850);
 /* harmony import */ var _uri_transformer__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(25254);
 /* harmony import */ var _was_this_helpful_buttons__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(2185);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(87117);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(87117);
 
 /* eslint-disable no-restricted-imports */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -68179,14 +68103,14 @@ const ChatMessage = ({
     extraContactOptions,
     addMessage,
     trackEvent
-  } = (0,_context__WEBPACK_IMPORTED_MODULE_9__/* .useOdieAssistantContext */ .mf)();
-  const [scrolledToBottom, setScrolledToBottom] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
-  const [isFullscreen, setIsFullscreen] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
-  const currentUser = (0,react_redux__WEBPACK_IMPORTED_MODULE_5__/* .useSelector */ .d4)(calypso_state_current_user_selectors__WEBPACK_IMPORTED_MODULE_7__/* .getCurrentUser */ .HW) ?? {
+  } = (0,_context__WEBPACK_IMPORTED_MODULE_8__/* .useOdieAssistantContext */ .mf)();
+  const [scrolledToBottom, setScrolledToBottom] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
+  const [isFullscreen, setIsFullscreen] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
+  const currentUser = (0,react_redux__WEBPACK_IMPORTED_MODULE_4__/* .useSelector */ .d4)(calypso_state_current_user_selectors__WEBPACK_IMPORTED_MODULE_6__/* .getCurrentUser */ .HW) ?? {
     display_name: window?.odieUserData?.displayName ?? 'Me'
   };
-  const translate = (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A)();
-  const realTimeMessage = (0,_utils_user_typer__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A)(message.content, !isUser && message.type === 'message', {
+  const translate = (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A)();
+  const realTimeMessage = (0,_utils_user_typer__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A)(message.content, !isUser && message.type === 'message', {
     delayBetweenCharacters: 66,
     randomDelayBetweenCharacters: true,
     charactersPerInterval: 5
@@ -68203,7 +68127,7 @@ const ChatMessage = ({
   const isTypeMessageOrEmpty = !message.type || message.type === 'message';
   const isSimulatedTypingFinished = message.simulateTyping && message.content === realTimeMessage;
   const isRequestingHumanSupport = message.context?.flags?.forward_to_human_support;
-  const fullscreenRef = (0,react__WEBPACK_IMPORTED_MODULE_3__.useRef)(null);
+  const fullscreenRef = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)(null);
   const messageFullyTyped = isTypeMessageOrEmpty && (!message.simulateTyping || isSimulatedTypingFinished);
   const handleBackdropClick = () => {
     setIsFullscreen(false);
@@ -68211,11 +68135,11 @@ const ChatMessage = ({
   const handleContentClick = event => {
     event.stopPropagation();
   };
-  const messageClasses = classnames__WEBPACK_IMPORTED_MODULE_2___default()('odie-chatbox-message', isUser ? 'odie-chatbox-message-user' : 'odie-chatbox-message-wapuu');
+  const messageClasses = (0,clsx__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A)('odie-chatbox-message', isUser ? 'odie-chatbox-message-user' : 'odie-chatbox-message-wapuu');
   const handleFullscreenToggle = () => {
     setIsFullscreen(!isFullscreen);
   };
-  const handleWheel = (0,react__WEBPACK_IMPORTED_MODULE_3__.useCallback)(event => {
+  const handleWheel = (0,react__WEBPACK_IMPORTED_MODULE_2__.useCallback)(event => {
     if (!isFullscreen) {
       return;
     }
@@ -68237,7 +68161,7 @@ const ChatMessage = ({
       }
     }
   }, [isFullscreen]);
-  (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(() => {
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
     const fullscreenElement = fullscreenRef.current;
     if (fullscreenElement) {
       fullscreenElement.addEventListener('wheel', handleWheel, {
@@ -68250,12 +68174,12 @@ const ChatMessage = ({
       }
     };
   }, [handleWheel]);
-  (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(() => {
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
     if (message.content !== realTimeMessage && message.simulateTyping) {
       scrollToBottom();
     }
   }, [message, realTimeMessage, scrollToBottom]);
-  (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(() => {
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
     if (messageFullyTyped && !scrolledToBottom) {
       scrollToBottom();
       setScrolledToBottom(true);
@@ -68266,10 +68190,10 @@ const ChatMessage = ({
       ref: ref
     });
   }
-  const wapuuAvatarClasses = classnames__WEBPACK_IMPORTED_MODULE_2___default()('odie-chatbox-message-avatar', {
+  const wapuuAvatarClasses = (0,clsx__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A)('odie-chatbox-message-avatar', {
     'odie-chatbox-message-avatar-wapuu-liked': message.liked
   });
-  const messageAvatarHeader = isUser ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_gravatar__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  const messageAvatarHeader = isUser ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(calypso_components_gravatar__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     user: currentUser,
     size: 32,
     alt: translate('User profile display picture', {
@@ -68332,7 +68256,7 @@ const ChatMessage = ({
       });
     }, 1200);
   };
-  const odieChatBoxMessageSourcesContainerClass = classnames__WEBPACK_IMPORTED_MODULE_2___default()('odie-chatbox-message-sources-container', {
+  const odieChatBoxMessageSourcesContainerClass = (0,clsx__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A)('odie-chatbox-message-sources-container', {
     'odie-chatbox-message-sources-container-fullscreen': isFullscreen
   });
   const messageContent = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -68400,7 +68324,7 @@ const ChatMessage = ({
     onClick: handleContentClick
   }, messageContent));
   if (isFullscreen) {
-    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, messageContent, /*#__PURE__*/react_dom__WEBPACK_IMPORTED_MODULE_4___default().createPortal(fullscreenContent, document.body));
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, messageContent, /*#__PURE__*/react_dom__WEBPACK_IMPORTED_MODULE_3___default().createPortal(fullscreenContent, document.body));
   }
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: odieChatBoxMessageSourcesContainerClass,
@@ -68422,10 +68346,9 @@ const ChatMessage = ({
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(64446);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(47906);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(59944);
-/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(39631);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(54357);
+/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(59944);
+/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(39631);
 
 
 
@@ -68446,8 +68369,8 @@ const JumpToRecent = ({
   const {
     trackEvent,
     isMinimized
-  } = (0,_context__WEBPACK_IMPORTED_MODULE_2__/* .useOdieAssistantContext */ .mf)();
-  const translate = (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)();
+  } = (0,_context__WEBPACK_IMPORTED_MODULE_1__/* .useOdieAssistantContext */ .mf)();
+  const translate = (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)();
   const jumpToRecent = () => {
     scrollToBottom();
     trackEvent('chat_jump_to_recent_click');
@@ -68455,7 +68378,7 @@ const JumpToRecent = ({
   if (isMinimized) {
     return null;
   }
-  const className = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-gradient-to-white', {
+  const className = (0,clsx__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)('odie-gradient-to-white', {
     'is-visible': enableJumpToRecent,
     'is-hidden': !enableJumpToRecent
   });
@@ -68466,6 +68389,7 @@ const JumpToRecent = ({
     }
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     className: "odie-jump-to-recent-message-button",
+    disabled: !enableJumpToRecent,
     onClick: jumpToRecent
   }, translate('Jump to recent', {
     context: 'A dynamic button that appears on a chatbox, when the last message is not vissible'
@@ -68584,14 +68508,13 @@ function uriTransformer(uri) {
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(59944);
-/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(93283);
-/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(39631);
-/* harmony import */ var _query__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(73874);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(54357);
+/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(59944);
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(93283);
+/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(39631);
+/* harmony import */ var _query__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(73874);
 /* harmony import */ var _thumbs_icons__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(62910);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(87117);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(87117);
 
 
 
@@ -68602,23 +68525,23 @@ function uriTransformer(uri) {
 
 const WasThisHelpfulButtons = ({
   message,
-  onDislike = _context__WEBPACK_IMPORTED_MODULE_3__/* .noop */ .lQ
+  onDislike = _context__WEBPACK_IMPORTED_MODULE_2__/* .noop */ .lQ
 }) => {
-  const translate = (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)();
+  const translate = (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)();
   const {
     setMessageLikedStatus,
     trackEvent
-  } = (0,_context__WEBPACK_IMPORTED_MODULE_3__/* .useOdieAssistantContext */ .mf)();
+  } = (0,_context__WEBPACK_IMPORTED_MODULE_2__/* .useOdieAssistantContext */ .mf)();
   const {
     mutateAsync: sendOdieMessageFeedback
-  } = (0,_query__WEBPACK_IMPORTED_MODULE_5__/* .useOdieSendMessageFeedback */ .nB)();
+  } = (0,_query__WEBPACK_IMPORTED_MODULE_4__/* .useOdieSendMessageFeedback */ .nB)();
   const liked = message.liked === true;
   const disliked = message.liked === false;
   const rated = message.liked !== null && message.liked !== undefined;
   const handleIsHelpful = isHelpful => {
     sendOdieMessageFeedback({
       message,
-      rating_value: isHelpful ? ___WEBPACK_IMPORTED_MODULE_6__/* .ODIE_THUMBS_UP_RATING_VALUE */ .U : ___WEBPACK_IMPORTED_MODULE_6__/* .ODIE_THUMBS_DOWN_RATING_VALUE */ .PN
+      rating_value: isHelpful ? ___WEBPACK_IMPORTED_MODULE_5__/* .ODIE_THUMBS_UP_RATING_VALUE */ .U : ___WEBPACK_IMPORTED_MODULE_5__/* .ODIE_THUMBS_DOWN_RATING_VALUE */ .PN
     });
     setMessageLikedStatus(message, isHelpful);
     if (!isHelpful) {
@@ -68630,31 +68553,31 @@ const WasThisHelpfulButtons = ({
       message_id: message.message_id
     });
   };
-  const thumbsUpClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()({
+  const thumbsUpClasses = (0,clsx__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)({
     'odie-feedback-component-button-icon-disabled': rated && disliked,
     'odie-feedback-component-button-icon-pressed': rated && liked
   });
-  const thumbsDownClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()({
+  const thumbsDownClasses = (0,clsx__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)({
     'odie-feedback-component-button-icon-disabled': rated && liked,
     'odie-feedback-component-button-icon-pressed': rated && disliked
   });
-  const questionClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-feedback-component-question', {
+  const questionClasses = (0,clsx__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)('odie-feedback-component-question', {
     'odie-question-out': rated,
     'odie-question-hidden': rated
   });
-  const thanksClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-feedback-component-thanks', {
+  const thanksClasses = (0,clsx__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)('odie-feedback-component-thanks', {
     'odie-thanks-in': rated,
     'odie-thanks-hidden': !rated
   });
-  const buttonLikedClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-feedback-component-button', {
+  const buttonLikedClasses = (0,clsx__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)('odie-feedback-component-button', {
     'odie-feedback-component-button-liked-pressed': rated && liked,
     'odie-feedback-component-button-liked-disabled': rated && disliked
   });
-  const buttonDislikedClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-feedback-component-button', {
+  const buttonDislikedClasses = (0,clsx__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)('odie-feedback-component-button', {
     'odie-feedback-component-button-disliked-pressed': rated && disliked,
     'odie-feedback-component-button-disliked-disabled': rated && liked
   });
-  const containerClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()('odie-feedback-component-container', {
+  const containerClasses = (0,clsx__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)('odie-feedback-component-container', {
     'odie-question-collapse': rated
   });
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -69880,16 +69803,15 @@ const useArrowNavigation = (enabled, element, open, onOpen) => {
 /* harmony import */ var _automattic_tour_kit__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(4248);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(27723);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(46263);
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(46263);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(64446);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(16091);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(47906);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(54357);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(51609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(92070);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(48763);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(48763);
 
 /* eslint-disable wpcalypso/jsx-classname-namespace */
 
@@ -69911,7 +69833,7 @@ const SiteLogo = ({
       src: logo?.url
     });
   }
-  return _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A;
+  return _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A;
 };
 const SitePickerItem = ({
   host,
@@ -69925,7 +69847,7 @@ const SitePickerItem = ({
   enabled = true
 }) => {
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_2___default()('site-picker__site-item', {
+    className: (0,clsx__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)('site-picker__site-item', {
       'main-item': mainItem,
       selected,
       enabled
@@ -69957,8 +69879,8 @@ const SitePickerDropDown = ({
   onPickSite,
   enabled
 }) => {
-  const [ref, setRef] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(null);
-  const [open, setOpen] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
+  const [ref, setRef] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(null);
+  const [open, setOpen] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
   (0,_automattic_tour_kit__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A)({
     current: ref
   });
@@ -69966,7 +69888,7 @@ const SitePickerDropDown = ({
   const selectedSite = options.find(s => s?.ID === siteId) || options[0];
 
   // close on clicking outside
-  (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(() => {
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
     function onClickOutside(event) {
       if (ref && !ref.contains(event.target)) {
         setOpen(false);
@@ -69983,7 +69905,7 @@ const SitePickerDropDown = ({
     className: "site-picker__label",
     htmlFor: "site-picker-button"
   }, enabled ? __('Select a site', "full-site-editing") : __('Site', "full-site-editing")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_2___default()('site-picker__site-dropdown', {
+    className: (0,clsx__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)('site-picker__site-dropdown', {
       open
     })
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(SitePickerItem, {
@@ -70757,10 +70679,9 @@ function resolveDeviceTypeByViewPort() {
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_keycodes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(48558);
 /* harmony import */ var _wordpress_keycodes__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_keycodes__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(99870);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(51609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(54357);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(51609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_4__);
 
 /**
  * WordPress dependencies
@@ -70803,8 +70724,8 @@ const Guide = ({
     return null;
   }
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Modal, {
-    className: classnames__WEBPACK_IMPORTED_MODULE_4___default()('components-guide', className),
-    overlayClassName: classnames__WEBPACK_IMPORTED_MODULE_4___default()('components-guide-overlay', className),
+    className: (0,clsx__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)('components-guide', className),
+    overlayClassName: (0,clsx__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)('components-guide-overlay', className),
     onRequestClose: onFinish,
     onKeyDown: event => {
       if (event.keyCode === _wordpress_keycodes__WEBPACK_IMPORTED_MODULE_3__.LEFT) {
@@ -86879,6 +86800,18 @@ const characterEntities = {
   zwnj: '‌'
 }
 
+
+/***/ }),
+
+/***/ 54357:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* unused harmony export clsx */
+function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else if("object"==typeof e)if(Array.isArray(e)){var o=e.length;for(t=0;t<o;t++)e[t]&&(f=r(e[t]))&&(n&&(n+=" "),n+=f)}else for(f in e)e[f]&&(n&&(n+=" "),n+=f);return n}function clsx(){for(var e,t,f=0,n="",o=arguments.length;f<o;f++)(e=arguments[f])&&(t=r(e))&&(n&&(n+=" "),n+=t);return n}/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (clsx);
 
 /***/ }),
 
