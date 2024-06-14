@@ -28668,6 +28668,21 @@ function useSupportArticleAlternatesQuery(blogId, postId, locale, queryOptions =
 
 /***/ }),
 
+/***/ 72824:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _automattic_calypso_config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(70696);
+
+const a4aEnvironments = ['a8c-for-agencies-development', 'a8c-for-agencies-stage', 'a8c-for-agencies-horizon', 'a8c-for-agencies-production'];
+const isA8CForAgencies = () => a4aEnvironments.includes((0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Ay)('env_id'));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (isA8CForAgencies);
+
+/***/ }),
+
 /***/ 86361:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -28780,6 +28795,7 @@ const TRACKING_IDS = {
   akismetGoogleTagManagerId: 'GTM-NLFBXG5',
   akismetGoogleAdsGtagPurchase: 'AW-10778599042/U-01CImL14MDEIK90ZMo',
   // "Akismet.com Purchase Gtag"
+  a8cForAgenciesGA4Gtag: 'G-8V8PCRJ142',
   jetpackLinkedinId: '4537722',
   jetpackTwitterPixelId: 'odlje',
   wooGoogleTagManagerId: 'GTM-W64W8Q',
@@ -28926,10 +28942,12 @@ function recordPageViewInFloodlight(urlPath) {
 /* harmony export */   mj: () => (/* binding */ setup)
 /* harmony export */ });
 /* unused harmony exports ga4Properties, fireEcommercePurchase, fireEcommerceAddToCart */
-/* harmony import */ var calypso_lib_akismet_is_akismet_checkout__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(86361);
-/* harmony import */ var calypso_lib_jetpack_is_jetpack_cloud__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(76516);
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(10228);
-/* harmony import */ var _setup__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(84488);
+/* harmony import */ var calypso_lib_a8c_for_agencies_is_a8c_for_agencies__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(72824);
+/* harmony import */ var calypso_lib_akismet_is_akismet_checkout__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(86361);
+/* harmony import */ var calypso_lib_jetpack_is_jetpack_cloud__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(76516);
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(10228);
+/* harmony import */ var _setup__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(84488);
+
 
 
 
@@ -28940,20 +28958,25 @@ let Ga4PropertyGtag = /*#__PURE__*/function (Ga4PropertyGtag) {
   Ga4PropertyGtag[Ga4PropertyGtag["JETPACK"] = 0] = "JETPACK";
   Ga4PropertyGtag[Ga4PropertyGtag["WPCOM"] = 1] = "WPCOM";
   Ga4PropertyGtag[Ga4PropertyGtag["AKISMET"] = 2] = "AKISMET";
+  Ga4PropertyGtag[Ga4PropertyGtag["A8C_FOR_AGENCIES"] = 3] = "A8C_FOR_AGENCIES";
   return Ga4PropertyGtag;
 }({});
 const ga4Properties = {
-  [Ga4PropertyGtag.WPCOM]: _constants__WEBPACK_IMPORTED_MODULE_2__/* .TRACKING_IDS */ .Zw.wpcomGoogleGA4Gtag,
-  [Ga4PropertyGtag.JETPACK]: _constants__WEBPACK_IMPORTED_MODULE_2__/* .TRACKING_IDS */ .Zw.jetpackGoogleGA4Gtag,
-  [Ga4PropertyGtag.AKISMET]: _constants__WEBPACK_IMPORTED_MODULE_2__/* .TRACKING_IDS */ .Zw.akismetGoogleGA4Gtag
+  [Ga4PropertyGtag.WPCOM]: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TRACKING_IDS */ .Zw.wpcomGoogleGA4Gtag,
+  [Ga4PropertyGtag.JETPACK]: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TRACKING_IDS */ .Zw.jetpackGoogleGA4Gtag,
+  [Ga4PropertyGtag.AKISMET]: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TRACKING_IDS */ .Zw.akismetGoogleGA4Gtag,
+  [Ga4PropertyGtag.A8C_FOR_AGENCIES]: _constants__WEBPACK_IMPORTED_MODULE_3__/* .TRACKING_IDS */ .Zw.a8cForAgenciesGA4Gtag
 };
 function setup(params) {
-  window.gtag('config', _constants__WEBPACK_IMPORTED_MODULE_2__/* .TRACKING_IDS */ .Zw.wpcomGoogleGA4Gtag, params);
-  if ((0,calypso_lib_jetpack_is_jetpack_cloud__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)()) {
-    window.gtag('config', _constants__WEBPACK_IMPORTED_MODULE_2__/* .TRACKING_IDS */ .Zw.jetpackGoogleGA4Gtag, params);
+  window.gtag('config', _constants__WEBPACK_IMPORTED_MODULE_3__/* .TRACKING_IDS */ .Zw.wpcomGoogleGA4Gtag, params);
+  if ((0,calypso_lib_jetpack_is_jetpack_cloud__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)()) {
+    window.gtag('config', _constants__WEBPACK_IMPORTED_MODULE_3__/* .TRACKING_IDS */ .Zw.jetpackGoogleGA4Gtag, params);
   }
-  if ((0,calypso_lib_akismet_is_akismet_checkout__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)()) {
-    window.gtag('config', _constants__WEBPACK_IMPORTED_MODULE_2__/* .TRACKING_IDS */ .Zw.akismetGoogleGA4Gtag, params);
+  if ((0,calypso_lib_akismet_is_akismet_checkout__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)()) {
+    window.gtag('config', _constants__WEBPACK_IMPORTED_MODULE_3__/* .TRACKING_IDS */ .Zw.akismetGoogleGA4Gtag, params);
+  }
+  if ((0,calypso_lib_a8c_for_agencies_is_a8c_for_agencies__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)()) {
+    window.gtag('config', _constants__WEBPACK_IMPORTED_MODULE_3__/* .TRACKING_IDS */ .Zw.a8cForAgenciesGA4Gtag, params);
   }
 }
 function fireEcommercePurchase(purchase, ga4PropertyGtag) {
@@ -29031,13 +29054,16 @@ function getGoogleAnalyticsDefaultConfig() {
  * @param {boolean} useJetpackGoogleAnalytics send the page view to Jetpack Google Analytics
  * @param {boolean} useAkismetGoogleAnalytics send the page view to Akismet Google Analytics
  */
-function fireGoogleAnalyticsPageView(urlPath, pageTitle, useJetpackGoogleAnalytics = false, useAkismetGoogleAnalytics = false) {
+function fireGoogleAnalyticsPageView(urlPath, pageTitle, useJetpackGoogleAnalytics = false, useAkismetGoogleAnalytics = false, useA8CForAgenciesGoogleAnalytics = false) {
   const getGa4PropertyGtag = () => {
     if (useJetpackGoogleAnalytics) {
       return _google_analytics_4__WEBPACK_IMPORTED_MODULE_2__/* .Ga4PropertyGtag */ .jv.JETPACK;
     }
     if (useAkismetGoogleAnalytics) {
       return _google_analytics_4__WEBPACK_IMPORTED_MODULE_2__/* .Ga4PropertyGtag */ .jv.AKISMET;
+    }
+    if (useA8CForAgenciesGoogleAnalytics) {
+      return _google_analytics_4__WEBPACK_IMPORTED_MODULE_2__/* .Ga4PropertyGtag */ .jv.A8C_FOR_AGENCIES;
     }
     return _google_analytics_4__WEBPACK_IMPORTED_MODULE_2__/* .Ga4PropertyGtag */ .jv.WPCOM;
   };
@@ -29793,9 +29819,9 @@ function initialize() {
     initialized = true;
   }
 }
-const gaRecordPageView = makeGoogleAnalyticsTrackingFunction(function recordPageView(urlPath, pageTitle, useJetpackGoogleAnalytics = false, useAkismetGoogleAnalytics = false) {
-  gaDebug('Recording Page View ~ [URL: ' + urlPath + '] [Title: ' + pageTitle + '] [useJetpackGoogleAnalytics: ' + useJetpackGoogleAnalytics + '] [useAksiemtGoogleAnalytics: ' + useAkismetGoogleAnalytics + ']');
-  (0,calypso_lib_analytics_ad_tracking__WEBPACK_IMPORTED_MODULE_3__/* .fireGoogleAnalyticsPageView */ .oT)(urlPath, pageTitle, useJetpackGoogleAnalytics, useAkismetGoogleAnalytics);
+const gaRecordPageView = makeGoogleAnalyticsTrackingFunction(function recordPageView(urlPath, pageTitle, useJetpackGoogleAnalytics = false, useAkismetGoogleAnalytics = false, useA8CForAgenciesGoogleAnalytics = false) {
+  gaDebug('Recording Page View ~ [URL: ' + urlPath + '] [Title: ' + pageTitle + '] [useJetpackGoogleAnalytics: ' + useJetpackGoogleAnalytics + '] [useAksiemtGoogleAnalytics: ' + useAkismetGoogleAnalytics + '] [useA8CForAgenciesGoogleAnalytics: ' + useA8CForAgenciesGoogleAnalytics + ']');
+  (0,calypso_lib_analytics_ad_tracking__WEBPACK_IMPORTED_MODULE_3__/* .fireGoogleAnalyticsPageView */ .oT)(urlPath, pageTitle, useJetpackGoogleAnalytics, useAkismetGoogleAnalytics, useA8CForAgenciesGoogleAnalytics);
 });
 
 /**
@@ -30176,7 +30202,7 @@ function recordPageView(urlPath, pageTitle, params = {}, options = {}) {
 
     // Tracks, Google Analytics, Refer platform.
     (0,_automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_0__/* .recordTracksPageViewWithPageParams */ .Fr)(urlPath, params);
-    safeGoogleAnalyticsPageView(urlPath, pageTitle, options?.useJetpackGoogleAnalytics, options?.useAkismetGoogleAnalytics);
+    safeGoogleAnalyticsPageView(urlPath, pageTitle, options?.useJetpackGoogleAnalytics, options?.useAkismetGoogleAnalytics, options?.useA8CForAgenciesGoogleAnalytics);
     (0,_refer__WEBPACK_IMPORTED_MODULE_5__/* .referRecordPageView */ .a)();
     (0,calypso_lib_analytics_impact_affiliate__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)();
 
@@ -30189,9 +30215,9 @@ function recordPageView(urlPath, pageTitle, params = {}, options = {}) {
     (0,_queue__WEBPACK_IMPORTED_MODULE_4__/* .processQueue */ .z)();
   }, 0);
 }
-async function safeGoogleAnalyticsPageView(urlPath, pageTitle, useJetpackGoogleAnalytics = false, useAkismetGoogleAnalytics = false) {
+async function safeGoogleAnalyticsPageView(urlPath, pageTitle, useJetpackGoogleAnalytics = false, useAkismetGoogleAnalytics = false, useA8CForAgenciesGoogleAnalytics = false) {
   await (0,calypso_lib_analytics_utils__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A)();
-  (0,_ga__WEBPACK_IMPORTED_MODULE_3__/* .gaRecordPageView */ .Y2)(urlPath, pageTitle, useJetpackGoogleAnalytics, useAkismetGoogleAnalytics);
+  (0,_ga__WEBPACK_IMPORTED_MODULE_3__/* .gaRecordPageView */ .Y2)(urlPath, pageTitle, useJetpackGoogleAnalytics, useAkismetGoogleAnalytics, useA8CForAgenciesGoogleAnalytics);
 }
 
 /***/ }),
@@ -32226,6 +32252,43 @@ function addImageWrapperElement(post, dom) {
       imageBorder.setAttributeNode(borderStyle);
       imageWrapper.appendChild(imageBorder);
     }
+  });
+  return post;
+}
+
+/***/ }),
+
+/***/ 96547:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ convertVideoPressBlocks)
+/* harmony export */ });
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(66087);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var calypso_reader_lib_content_width__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(95373);
+
+
+function convertVideoPressBlocks(post, dom) {
+  const videoPresses = dom.querySelectorAll('.wp-block-video.wp-block-embed.is-type-video.is-provider-videopress');
+  const contentWidth = (0,calypso_reader_lib_content_width__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)();
+  const videoAspectRatio = 0.5625; // 16:9 aspect ratio
+
+  //Loop through each VideoPress block and replace it with an iframe
+  (0,lodash__WEBPACK_IMPORTED_MODULE_0__.forEach)(videoPresses, videoPress => {
+    const src = videoPress.querySelector('.wp-block-embed__wrapper')?.textContent?.trim();
+    // Check URL to video is valid before creating iframe
+    if (!src || !src.startsWith('https://videopress.com/v/')) {
+      return;
+    }
+    const iframe = document.createElement('iframe');
+    iframe.src = src;
+    iframe.width = contentWidth;
+    iframe.height = contentWidth * videoAspectRatio;
+    iframe.frameborder = '0';
+    iframe.allowfullscreen = true;
+    videoPress.parentNode.replaceChild(iframe, videoPress);
   });
   return post;
 }
@@ -35472,7 +35535,7 @@ function resolveRelativePath(basePath, relativePath) {
 /* harmony import */ var _get_computed_attributes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(32852);
 
 
-const allowedKeys = ['ID', 'display_name', 'username', 'avatar_URL', 'site_count', 'jetpack_site_count', 'atomic_site_count', 'visible_site_count', 'jetpack_visible_site_count', 'atomic_visible_site_count', 'date', 'has_unseen_notes', 'newest_note_type', 'phone_account', 'email', 'email_verified', 'is_valid_google_apps_country', 'user_ip_country_code', 'logout_URL', 'primary_blog', 'primary_blog_is_jetpack', 'has_jetpack_partner_access', 'jetpack_partner_types', 'primary_blog_url', 'meta', 'is_new_reader', 'social_login_connections', 'abtests', 'lasagna_jwt', 'i18n_empathy_mode', 'use_fallback_for_incomplete_languages', 'is_google_domain_owner', 'had_hosting_trial'];
+const allowedKeys = ['ID', 'display_name', 'username', 'avatar_URL', 'site_count', 'jetpack_site_count', 'atomic_site_count', 'visible_site_count', 'jetpack_visible_site_count', 'atomic_visible_site_count', 'date', 'has_unseen_notes', 'newest_note_type', 'phone_account', 'email', 'email_verified', 'is_valid_google_apps_country', 'user_ip_country_code', 'logout_URL', 'primary_blog', 'primary_blog_is_jetpack', 'has_jetpack_partner_access', 'jetpack_partner_types', 'primary_blog_url', 'meta', 'is_new_reader', 'social_login_connections', 'abtests', 'lasagna_jwt', 'i18n_empathy_mode', 'use_fallback_for_incomplete_languages', 'is_google_domain_owner', 'had_hosting_trial', 'is_subscription_only'];
 const requiredKeys = ['ID'];
 const decodedKeys = ['display_name', 'description', 'user_URL'];
 function filterUserObject(obj) {
@@ -35906,7 +35969,7 @@ function wpcomSupport(wpcom) {
 
 
 // For Calypso in Jetpack, these API namespaces are accessed from the site, not from wp.com.
-const DIRECT_API_NAMESPACES = ['jetpack/v4', 'my-jetpack/v1', 'jetpack/v4/blaze-app'];
+const LOCAL_API_NAMESPACES = ['jetpack/v4', 'my-jetpack/v1', 'jetpack/v4/blaze-app'];
 /* harmony default export */ async function __WEBPACK_DEFAULT_EXPORT__(params, callback) {
   const xhr = (await __webpack_require__.e(/* import() | wpcom-xhr-request */ 568).then(__webpack_require__.bind(__webpack_require__, 86703))).default;
   return xhr(params, async function (error, response, headers) {
@@ -35926,7 +35989,7 @@ async function jetpack_site_xhr_wrapper(params, callback) {
       'X-WP-Nonce': (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Ay)('nonce')
     },
     isRestAPI: false,
-    apiNamespace: DIRECT_API_NAMESPACES.includes(params.apiNamespace) ? params.apiNamespace : 'jetpack/v4/stats-app'
+    apiNamespace: LOCAL_API_NAMESPACES.includes(params.apiNamespace) || params.isLocalApiCall ? params.apiNamespace : 'jetpack/v4/stats-app'
   };
   return xhr(params, async function (error, response, headers) {
     if (error && error.name === 'InvalidTokenError') {
@@ -44355,32 +44418,34 @@ const markPostSeen = (post, site) => (dispatch, getState) => {
 /* unused harmony exports imageIsBigEnoughForGallery, imageWithCorrectRatio, getImagesFromPostToDisplay, classifyPost */
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(66087);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var calypso_lib_post_normalizer_rule_add_image_wrapper_element__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(44934);
-/* harmony import */ var calypso_lib_post_normalizer_rule_content_detect_media__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(15202);
-/* harmony import */ var calypso_lib_post_normalizer_rule_content_detect_polls__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(52612);
-/* harmony import */ var calypso_lib_post_normalizer_rule_content_detect_surveys__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(53466);
-/* harmony import */ var calypso_lib_post_normalizer_rule_content_disable_autoplay__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(63730);
-/* harmony import */ var calypso_lib_post_normalizer_rule_content_link_jetpack_carousels__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(40697);
-/* harmony import */ var calypso_lib_post_normalizer_rule_content_make_embeds_safe__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(27319);
-/* harmony import */ var calypso_lib_post_normalizer_rule_content_make_images_safe__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(78591);
-/* harmony import */ var calypso_lib_post_normalizer_rule_content_make_links_safe__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(87898);
-/* harmony import */ var calypso_lib_post_normalizer_rule_content_remove_elements_by_selector__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(33892);
-/* harmony import */ var calypso_lib_post_normalizer_rule_content_remove_styles__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(72971);
-/* harmony import */ var calypso_lib_post_normalizer_rule_create_better_excerpt__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(87899);
+/* harmony import */ var calypso_lib_post_normalizer_rule_add_image_wrapper_element__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(44934);
+/* harmony import */ var calypso_lib_post_normalizer_rule_content_convert_videopress_blocks__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(96547);
+/* harmony import */ var calypso_lib_post_normalizer_rule_content_detect_media__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(15202);
+/* harmony import */ var calypso_lib_post_normalizer_rule_content_detect_polls__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(52612);
+/* harmony import */ var calypso_lib_post_normalizer_rule_content_detect_surveys__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(53466);
+/* harmony import */ var calypso_lib_post_normalizer_rule_content_disable_autoplay__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(63730);
+/* harmony import */ var calypso_lib_post_normalizer_rule_content_link_jetpack_carousels__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(40697);
+/* harmony import */ var calypso_lib_post_normalizer_rule_content_make_embeds_safe__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(27319);
+/* harmony import */ var calypso_lib_post_normalizer_rule_content_make_images_safe__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(78591);
+/* harmony import */ var calypso_lib_post_normalizer_rule_content_make_links_safe__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(87898);
+/* harmony import */ var calypso_lib_post_normalizer_rule_content_remove_elements_by_selector__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(33892);
+/* harmony import */ var calypso_lib_post_normalizer_rule_content_remove_styles__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(72971);
+/* harmony import */ var calypso_lib_post_normalizer_rule_create_better_excerpt__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(87899);
 /* harmony import */ var calypso_lib_post_normalizer_rule_decode_entities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(11060);
-/* harmony import */ var calypso_lib_post_normalizer_rule_keep_valid_images__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(47605);
+/* harmony import */ var calypso_lib_post_normalizer_rule_keep_valid_images__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(47605);
 /* harmony import */ var calypso_lib_post_normalizer_rule_make_links_safe__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(84706);
 /* harmony import */ var calypso_lib_post_normalizer_rule_make_site_id_safe_for_api__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(8651);
-/* harmony import */ var calypso_lib_post_normalizer_rule_pick_canonical_image__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(43278);
-/* harmony import */ var calypso_lib_post_normalizer_rule_pick_canonical_media__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(9051);
+/* harmony import */ var calypso_lib_post_normalizer_rule_pick_canonical_image__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(43278);
+/* harmony import */ var calypso_lib_post_normalizer_rule_pick_canonical_media__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(9051);
 /* harmony import */ var calypso_lib_post_normalizer_rule_pick_primary_tag__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(32803);
 /* harmony import */ var calypso_lib_post_normalizer_rule_prevent_widows__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(28686);
 /* harmony import */ var calypso_lib_post_normalizer_rule_safe_image_properties__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(66347);
 /* harmony import */ var calypso_lib_post_normalizer_rule_strip_html__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(26920);
-/* harmony import */ var calypso_lib_post_normalizer_rule_wait_for_images_to_load__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(87019);
+/* harmony import */ var calypso_lib_post_normalizer_rule_wait_for_images_to_load__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(87019);
 /* harmony import */ var calypso_lib_post_normalizer_rule_with_content_dom__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(45445);
 /* harmony import */ var _display_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(20502);
 /* harmony import */ var _sizes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(37858);
+
 
 
 
@@ -44453,7 +44518,7 @@ function classifyPost(post) {
   post.display_type = displayType;
   return post;
 }
-const fastPostNormalizationRules = (0,lodash__WEBPACK_IMPORTED_MODULE_0__.flow)([calypso_lib_post_normalizer_rule_decode_entities__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_strip_html__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_prevent_widows__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_make_site_id_safe_for_api__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_pick_primary_tag__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, (0,calypso_lib_post_normalizer_rule_safe_image_properties__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A)(_sizes__WEBPACK_IMPORTED_MODULE_1__/* .READER_CONTENT_WIDTH */ .f2), calypso_lib_post_normalizer_rule_make_links_safe__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, (0,calypso_lib_post_normalizer_rule_with_content_dom__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A)([calypso_lib_post_normalizer_rule_content_remove_styles__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_content_remove_elements_by_selector__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, (0,calypso_lib_post_normalizer_rule_content_make_images_safe__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A)(), calypso_lib_post_normalizer_rule_content_make_embeds_safe__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_content_make_links_safe__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_content_disable_autoplay__WEBPACK_IMPORTED_MODULE_16__/* .disableAutoPlayOnEmbeds */ .p, calypso_lib_post_normalizer_rule_content_disable_autoplay__WEBPACK_IMPORTED_MODULE_16__/* .disableAutoPlayOnMedia */ .d, calypso_lib_post_normalizer_rule_content_detect_media__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_content_detect_polls__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_content_detect_surveys__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_content_link_jetpack_carousels__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_add_image_wrapper_element__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A]), calypso_lib_post_normalizer_rule_create_better_excerpt__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_pick_canonical_image__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_pick_canonical_media__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, classifyPost]);
+const fastPostNormalizationRules = (0,lodash__WEBPACK_IMPORTED_MODULE_0__.flow)([calypso_lib_post_normalizer_rule_decode_entities__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_strip_html__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_prevent_widows__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_make_site_id_safe_for_api__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_pick_primary_tag__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, (0,calypso_lib_post_normalizer_rule_safe_image_properties__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A)(_sizes__WEBPACK_IMPORTED_MODULE_1__/* .READER_CONTENT_WIDTH */ .f2), calypso_lib_post_normalizer_rule_make_links_safe__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, (0,calypso_lib_post_normalizer_rule_with_content_dom__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A)([calypso_lib_post_normalizer_rule_content_convert_videopress_blocks__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_content_remove_styles__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_content_remove_elements_by_selector__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, (0,calypso_lib_post_normalizer_rule_content_make_images_safe__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A)(), calypso_lib_post_normalizer_rule_content_make_embeds_safe__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_content_make_links_safe__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_content_disable_autoplay__WEBPACK_IMPORTED_MODULE_17__/* .disableAutoPlayOnEmbeds */ .p, calypso_lib_post_normalizer_rule_content_disable_autoplay__WEBPACK_IMPORTED_MODULE_17__/* .disableAutoPlayOnMedia */ .d, calypso_lib_post_normalizer_rule_content_detect_media__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_content_detect_polls__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_content_detect_surveys__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_content_link_jetpack_carousels__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_add_image_wrapper_element__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A]), calypso_lib_post_normalizer_rule_create_better_excerpt__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_pick_canonical_image__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_pick_canonical_media__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, classifyPost]);
 function runFastRules(post) {
   if (!post) {
     return post;
@@ -44462,10 +44527,10 @@ function runFastRules(post) {
   fastPostNormalizationRules(post);
   return post;
 }
-const slowSyncRules = (0,lodash__WEBPACK_IMPORTED_MODULE_0__.flow)([(0,calypso_lib_post_normalizer_rule_keep_valid_images__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A)(_sizes__WEBPACK_IMPORTED_MODULE_1__/* .MIN_IMAGE_WIDTH */ .af, _sizes__WEBPACK_IMPORTED_MODULE_1__/* .MIN_IMAGE_HEIGHT */ .jP), calypso_lib_post_normalizer_rule_pick_canonical_image__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_pick_canonical_media__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, classifyPost]);
+const slowSyncRules = (0,lodash__WEBPACK_IMPORTED_MODULE_0__.flow)([(0,calypso_lib_post_normalizer_rule_keep_valid_images__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A)(_sizes__WEBPACK_IMPORTED_MODULE_1__/* .MIN_IMAGE_WIDTH */ .af, _sizes__WEBPACK_IMPORTED_MODULE_1__/* .MIN_IMAGE_HEIGHT */ .jP), calypso_lib_post_normalizer_rule_pick_canonical_image__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, calypso_lib_post_normalizer_rule_pick_canonical_media__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, classifyPost]);
 function runSlowRules(post) {
   post = Object.assign({}, post);
-  return (0,calypso_lib_post_normalizer_rule_wait_for_images_to_load__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A)(post).then(slowSyncRules);
+  return (0,calypso_lib_post_normalizer_rule_wait_for_images_to_load__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A)(post).then(slowSyncRules);
 }
 
 /***/ }),
@@ -46257,15 +46322,10 @@ function requestSites() {
       filters: siteFilter.length > 0 ? siteFilter.join(',') : undefined
     }).then(response => {
       const jetpackCloudSites = response.sites.filter(site => {
-        // Filter Jetpack Cloud sites to exclude P2 sites by default.
+        // Filter Jetpack Cloud sites to exclude P2 and Simple non-Classic sites by default.
         const isP2 = site?.options?.is_wpforteams_site;
-        let filterCondition = !isP2;
-        // Filter out simple sites if feature flag is not enabled.
-        if (!(0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_0__/* .isEnabled */ .Ol)('jetpack/manage-simple-sites')) {
-          const isSimple = !site?.jetpack && !site?.is_wpcom_atomic;
-          filterCondition = !isP2 && !isSimple;
-        }
-        return filterCondition;
+        const isSimpleClassic = !site?.jetpack && !site?.is_wpcom_atomic && site?.options?.wpcom_admin_interface !== 'wp-admin';
+        return !isP2 && !isSimpleClassic;
       });
       dispatch(receiveSites((0,calypso_lib_jetpack_is_jetpack_cloud__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)() ? jetpackCloudSites : response.sites));
       dispatch({
@@ -53510,12 +53570,12 @@ const getPlanFreeDetails = () => ({
   },
   get2023PlanComparisonFeatureOverride: () => {
     if ((0,_experiments__WEBPACK_IMPORTED_MODULE_8__/* .isTrailMapCopyVariant */ .D_)()) {
-      return [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_USERS */ .e5F, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_1_WEBSITE */ .hJ3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_TRAFFIC */ .l5Q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BANDWIDTH */ .Tuf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_SSL_CERTIFICATE */ .p0N, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CDN */ .xq9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_POST_EDITS_HISTORY */ .b9l, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HELP_CENTER_SUPPORT */ .lZS];
+      return [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_USERS */ .e5F, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_1_WEBSITE */ .hJ3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_TRAFFIC */ .l5Q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BANDWIDTH */ .Tuf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_SSL_CERTIFICATE */ .p0N, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CDN */ .xq9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_POST_EDITS_HISTORY */ .b9l, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HELP_CENTER_SUPPORT */ .lZS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_STANDARD_FEATURES */ .Uqd];
     }
     if ((0,_experiments__WEBPACK_IMPORTED_MODULE_8__/* .getTrailMapExperiment */ .Qy)() === 'treatment_structure') {
-      return [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BEAUTIFUL_THEMES */ .EPC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_USERS */ .e5F, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAGES */ .ko5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_POST_EDITS_HISTORY */ .b9l, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NEWSLETTERS_RSS */ .jdY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_BRUTE_FORCE */ .LKS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SMART_REDIRECTS */ .lIm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALWAYS_ONLINE */ .P25];
+      return [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BEAUTIFUL_THEMES */ .EPC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_USERS */ .e5F, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAGES */ .ko5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_POST_EDITS_HISTORY */ .b9l, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NEWSLETTERS_RSS */ .jdY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_BRUTE_FORCE */ .LKS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SMART_REDIRECTS */ .lIm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALWAYS_ONLINE */ .P25, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_STANDARD_FEATURES */ .Uqd];
     }
-    return [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BEAUTIFUL_THEMES */ .EPC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAGES */ .ko5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_USERS */ .e5F, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_POST_EDITS_HISTORY */ .b9l, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NEWSLETTERS_RSS */ .jdY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_BRUTE_FORCE */ .LKS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SMART_REDIRECTS */ .lIm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALWAYS_ONLINE */ .P25, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BANDWIDTH */ .Tuf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_DNS */ .uoN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GLOBAL_EDGE_CACHING */ .vz3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CDN */ .xq9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DATACENTRE_FAILOVER */ .qot, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WP_UPDATES */ .SIm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MULTI_SITE */ .bW1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_MALWARE */ .QXs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_DDOS */ .HU_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_10 */ .vQx, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GROUP_PAYMENT_TRANSACTION_FEES */ .Faw];
+    return [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BEAUTIFUL_THEMES */ .EPC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAGES */ .ko5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_USERS */ .e5F, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_POST_EDITS_HISTORY */ .b9l, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NEWSLETTERS_RSS */ .jdY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_BRUTE_FORCE */ .LKS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SMART_REDIRECTS */ .lIm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALWAYS_ONLINE */ .P25, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BANDWIDTH */ .Tuf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_DNS */ .uoN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GLOBAL_EDGE_CACHING */ .vz3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CDN */ .xq9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DATACENTRE_FAILOVER */ .qot, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WP_UPDATES */ .SIm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MULTI_SITE */ .bW1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_MALWARE */ .QXs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_DDOS */ .HU_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_10 */ .vQx, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_STANDARD_FEATURES */ .Uqd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GROUP_PAYMENT_TRANSACTION_FEES */ .Faw];
   },
   get2023PricingGridSignupJetpackFeatures: () => (0,_experiments__WEBPACK_IMPORTED_MODULE_8__/* .getTrailMapExperiment */ .Qy)() === 'control' ? [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAID_SUBSCRIBERS_JP */ .N3t, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_JP */ .ch3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DONATIONS_AND_TIPS_JP */ .ZIK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_BUTTONS_JP */ .b1C, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_JP */ .WoS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LTD_SOCIAL_MEDIA_JP */ .yD$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CONTACT_FORM_JP */ .qCV] : [],
   get2023PlanComparisonJetpackFeatureOverride: () => (0,_experiments__WEBPACK_IMPORTED_MODULE_8__/* .isTrailMapCopyVariant */ .D_)() ? [] : [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAID_SUBSCRIBERS_JP */ .N3t, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DONATIONS_AND_TIPS_JP */ .ZIK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_JP */ .ch3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_BUTTONS_JP */ .b1C, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_JP */ .WoS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SPAM_JP */ .y33, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CONTACT_FORM_JP */ .qCV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_ACTIVITY_LOG_JP */ .LHt, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHARES_SOCIAL_MEDIA_JP */ .K5c],
@@ -53525,7 +53585,12 @@ const getPlanFreeDetails = () => ({
       isAddOn: false
     }];
   },
-  get2023PlanComparisonConditionalFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES */ .CFg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHARES_SOCIAL_MEDIA_JP */ .K5c, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_STANDARD_FEATURES */ .Uqd],
+  getPlanComparisonFeatureLabels: () => ({
+    [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHARES_SOCIAL_MEDIA_JP */ .K5c]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('%d shares per month', {
+      args: [30]
+    }),
+    [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_STANDARD_FEATURES */ .Uqd]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('10%')
+  }),
   getNewsletterSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NEWSLETTER_IMPORT_SUBSCRIBERS_FREE */ .GRF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_CONTENT_JP */ .ch3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NEWSLETTERS_RSS */ .jdY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_EMAILS */ .Zvm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_JP */ .WoS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BANDWIDTH */ .Tuf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LTD_SOCIAL_MEDIA_JP */ .yD$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_10 */ .vQx],
   getLinkInBioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BEAUTIFUL_THEMES */ .EPC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAGES */ .ko5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADD_UNLIMITED_LINKS */ .r_P, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_JP */ .WoS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALWAYS_ONLINE */ .P25, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CONTACT_FORM_JP */ .qCV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LTD_SOCIAL_MEDIA_JP */ .yD$],
   getBlogOnboardingSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BEAUTIFUL_THEMES */ .EPC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAGES */ .ko5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_USERS */ .e5F, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_POST_EDITS_HISTORY */ .b9l, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_BRUTE_FORCE */ .LKS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALWAYS_ONLINE */ .P25, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_THE_READER */ .vbh],
@@ -53592,12 +53657,12 @@ const getPlanPersonalDetails = () => ({
   },
   get2023PlanComparisonFeatureOverride: () => {
     if ((0,_experiments__WEBPACK_IMPORTED_MODULE_8__/* .isTrailMapCopyVariant */ .D_)()) {
-      return [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .dBh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HELP_CENTER_SUPPORT */ .lZS];
+      return [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .dBh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HELP_CENTER_SUPPORT */ .lZS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES */ .CFg];
     }
     if ((0,_experiments__WEBPACK_IMPORTED_MODULE_8__/* .getTrailMapExperiment */ .Qy)() === 'treatment_structure') {
-      return [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_LIMITED */ .NI9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_USERS */ .e5F, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAGES */ .ko5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_POST_EDITS_HISTORY */ .b9l, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NEWSLETTERS_RSS */ .jdY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .dBh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_BRUTE_FORCE */ .LKS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SMART_REDIRECTS */ .lIm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALWAYS_ONLINE */ .P25, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_DNS */ .uoN];
+      return [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_LIMITED */ .NI9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_USERS */ .e5F, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAGES */ .ko5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_POST_EDITS_HISTORY */ .b9l, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NEWSLETTERS_RSS */ .jdY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .dBh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_BRUTE_FORCE */ .LKS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SMART_REDIRECTS */ .lIm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALWAYS_ONLINE */ .P25, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_DNS */ .uoN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES */ .CFg];
     }
-    return [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .dBh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_DNS */ .uoN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_8 */ .Ymf];
+    return [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .dBh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_DNS */ .uoN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_8 */ .Ymf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES */ .CFg];
   },
   get2023PricingGridSignupStorageOptions: () => {
     return [{
@@ -53605,7 +53670,13 @@ const getPlanPersonalDetails = () => ({
       isAddOn: false
     }];
   },
-  get2023PlanComparisonConditionalFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES */ .CFg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHARES_SOCIAL_MEDIA_JP */ .K5c, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_STANDARD_FEATURES */ .Uqd],
+  getPlanComparisonFeatureLabels: () => ({
+    [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES */ .CFg]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Dozens of premium themes'),
+    [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHARES_SOCIAL_MEDIA_JP */ .K5c]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('%d shares per month', {
+      args: [30]
+    }),
+    [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_STANDARD_FEATURES */ .Uqd]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('8%')
+  }),
   getNewsletterSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_SUBSCRIBERS */ .H$K, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .dBh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_8 */ .Ymf],
   getNewsletterHighlightedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_EMAILS */ .Zvm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .dBh],
   getLinkInBioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .dBh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_LINK_IN_BIO */ .WtV, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAID_SUBSCRIBERS_JP */ .N3t],
@@ -53695,7 +53766,12 @@ const getPlanEcommerceDetails = () => ({
       };
     });
   },
-  get2023PlanComparisonConditionalFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES */ .CFg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHARES_SOCIAL_MEDIA_JP */ .K5c, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_STANDARD_FEATURES */ .Uqd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_WOO_FEATURES */ .QuL],
+  getPlanComparisonFeatureLabels: () => ({
+    [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES */ .CFg]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Unlimited premium themes'),
+    [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHARES_SOCIAL_MEDIA_JP */ .K5c]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Unlimited shares'),
+    [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_STANDARD_FEATURES */ .Uqd]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('0%'),
+    [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_WOO_FEATURES */ .QuL]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('0%')
+  }),
   getHostingSignupFeatures: term => () => compact([term !== _constants__WEBPACK_IMPORTED_MODULE_3__/* .TERM_MONTHLY */ .he && _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SELL_SHIP */ .Jmr, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_STORE */ .j6z, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INVENTORY */ .Y_U, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CHECKOUT */ .iPI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS_V2 */ .LVB, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SALES_REPORTS */ .GNY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .mEY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EXTENSIONS */ .AR4, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BANDWIDTH */ .Tuf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GLOBAL_EDGE_CACHING */ .vz3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BURST */ .eCG, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WAF_V2 */ .$5r, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CDN */ .xq9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CPUS */ .lS7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DATACENTRE_FAILOVER */ .qot, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_MALWARE */ .QXs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_DDOS */ .HU_]),
   // Features not displayed but used for checking plan abilities
   getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUDIO_UPLOADS */ .R_9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_MY_BUSINESS */ .hVU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CLOUDFLARE_ANALYTICS */ .swD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_INSTALL_PURCHASED_PLUGINS */ .Qqh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPLOAD_THEMES_PLUGINS */ .hQm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EMAIL_FORWARDING_EXTENDED_LIMIT */ .eAf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_PREVIEW_TOOLS */ .emy, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ATOMIC */ .DF1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .Jgn, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .Rs_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .ZzH],
@@ -53802,7 +53878,11 @@ const getPlanPremiumDetails = () => ({
       isAddOn: false
     }];
   },
-  get2023PlanComparisonConditionalFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES */ .CFg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHARES_SOCIAL_MEDIA_JP */ .K5c, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_STANDARD_FEATURES */ .Uqd],
+  getPlanComparisonFeatureLabels: () => ({
+    [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES */ .CFg]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Unlimited premium themes'),
+    [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHARES_SOCIAL_MEDIA_JP */ .K5c]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Unlimited shares'),
+    [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_STANDARD_FEATURES */ .Uqd]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('4%')
+  }),
   get2023PlanComparisonJetpackFeatureOverride: () => (0,_experiments__WEBPACK_IMPORTED_MODULE_8__/* .isTrailMapCopyVariant */ .D_)() ? [] : [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYPAL_JP */ .O6g, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_VIDEOPRESS_JP */ .HKK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STATS_PAID */ .iQ_],
   // Features not displayed but used for checking plan abilities
   getIncludedFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUDIO_UPLOADS */ .R_9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CLOUDFLARE_ANALYTICS */ .swD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_SCAN */ .Jgn, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_ANTISPAM */ .Rs_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_BACKUPS */ .ZzH],
@@ -53869,20 +53949,46 @@ const getPlanBusinessDetails = () => ({
   },
   get2023PlanComparisonFeatureOverride: () => {
     if ((0,_experiments__WEBPACK_IMPORTED_MODULE_8__/* .isTrailMapCopyVariant */ .D_)()) {
-      return [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INSTALL_PLUGINS */ .m51, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRE_INSTALLED_SECURITY_PERF_PLUGINS */ .McC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REAL_TIME_SECURITY_SCANS */ .O2$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_BACKUPS_AND_RESTORE */ ._vw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_MIGRATIONS */ .S84, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_BURST_SCALING */ .Hmc, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WAF_V2 */ .$5r, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_DDOS */ .HU_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FULL_DATA_CENTER_REDUNDANCIES */ .Mak, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REAL_TIME_SECURITY_SCANS */ .O2$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_STAGING_SITES */ .KmN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LOCAL_DEVELOPMENT_ENVIRONMENT */ .$DC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GITHUB_DEPLOYMENTS */ .qj9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DEV_TOOLS */ .lW1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DATABASE_ACCESS */ .yxk, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WEB_SERVER_SETTINGS */ .QcA, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRIORITY_24_7_SUPPORT */ .bMh];
+      return [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INSTALL_PLUGINS */ .m51, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRE_INSTALLED_SECURITY_PERF_PLUGINS */ .McC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REAL_TIME_SECURITY_SCANS */ .O2$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_BACKUPS_AND_RESTORE */ ._vw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FREE_MIGRATIONS */ .S84, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AUTOMATED_BURST_SCALING */ .Hmc, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WAF_V2 */ .$5r, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_DDOS */ .HU_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FULL_DATA_CENTER_REDUNDANCIES */ .Mak, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REAL_TIME_SECURITY_SCANS */ .O2$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_STAGING_SITES */ .KmN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LOCAL_DEVELOPMENT_ENVIRONMENT */ .$DC, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GITHUB_DEPLOYMENTS */ .qj9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DEV_TOOLS */ .lW1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DATABASE_ACCESS */ .yxk, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WEB_SERVER_SETTINGS */ .QcA, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRIORITY_24_7_SUPPORT */ .bMh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_WOO_FEATURES */ .QuL];
     }
     if ((0,_experiments__WEBPACK_IMPORTED_MODULE_8__/* .getTrailMapExperiment */ .Qy)() === 'treatment_structure') {
       return [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLUGINS_THEMES */ .j58, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_USERS */ .e5F, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAGES */ .ko5, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_POST_EDITS_HISTORY */ .b9l, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NEWSLETTERS_RSS */ .jdY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_AD_FREE_EXPERIENCE */ .dBh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STYLE_CUSTOMIZATION */ .RkI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WORDADS */ .yks, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_TRAFFIC */ .l5Q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_BRUTE_FORCE */ .LKS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SMART_REDIRECTS */ .lIm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALWAYS_ONLINE */ .P25, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_DNS */ .uoN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BANDWIDTH */ .Tuf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GLOBAL_EDGE_CACHING */ .vz3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BURST */ .eCG, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WAF_V2 */ .$5r, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CDN */ .xq9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CPUS */ .lS7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DATACENTRE_FAILOVER */ .qot, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ISOLATED_INFRA */ .iAz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_MALWARE */ .QXs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_TIERED_STORAGE_PLANS_AVAILABLE */ .OvS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REAL_TIME_SECURITY_SCANS */ .O2$,
       /***
        * Probably should be moved to Jetpack Features
        */
-      _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SPAM_JP */ .y33, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_DDOS */ .HU_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DEV_TOOLS */ .lW1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_STAGING_SITES */ .KmN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEAMLESS_STAGING_PRODUCTION_SYNCING */ .XNd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WP_UPDATES */ .SIm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MULTI_SITE */ .bW1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_VULNERABILITY_NOTIFICATIONS */ .Cf7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRIORITY_24_7_SUPPORT */ .bMh];
+      _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SPAM_JP */ .y33, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_DDOS */ .HU_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DEV_TOOLS */ .lW1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_STAGING_SITES */ .KmN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEAMLESS_STAGING_PRODUCTION_SYNCING */ .XNd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WP_UPDATES */ .SIm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MULTI_SITE */ .bW1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_VULNERABILITY_NOTIFICATIONS */ .Cf7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRIORITY_24_7_SUPPORT */ .bMh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_WOO_FEATURES */ .QuL];
     }
-    return [];
+    return [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRIORITY_24_7_SUPPORT */ .bMh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLUGINS_THEMES */ .j58, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BANDWIDTH */ .Tuf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_TRAFFIC */ .l5Q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GLOBAL_EDGE_CACHING */ .vz3, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BURST */ .eCG, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WAF_V2 */ .$5r, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CDN */ .xq9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CPUS */ .lS7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DATACENTRE_FAILOVER */ .qot, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ISOLATED_INFRA */ .iAz, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_MALWARE */ .QXs, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_TIERED_STORAGE_PLANS_AVAILABLE */ .OvS, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REAL_TIME_SECURITY_SCANS */ .O2$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SPAM_JP */ .y33, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_DDOS */ .HU_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DEV_TOOLS */ .lW1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_STAGING_SITES */ .KmN, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEAMLESS_STAGING_PRODUCTION_SYNCING */ .XNd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WP_UPDATES */ .SIm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MULTI_SITE */ .bW1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_VULNERABILITY_NOTIFICATIONS */ .Cf7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_0_WOO */ .WT$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_2_REGULAR */ .jM, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_WOO_FEATURES */ .QuL];
   },
   getCheckoutFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLUGINS_THEMES */ .j58, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BANDWIDTH */ .Tuf, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CDN */ .xq9, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_TOOLS */ .gQ2, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRIORITY_24_7_SUPPORT */ .bMh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DEV_TOOLS */ .lW1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REALTIME_BACKUPS_JP */ .e7t, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_ACTIVITY_LOG_JP */ .LHt, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SECURITY_DDOS */ .HU_, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_STAGING_SITES */ .KmN],
   get2023PricingGridSignupJetpackFeatures: () => (0,_experiments__WEBPACK_IMPORTED_MODULE_8__/* .getTrailMapExperiment */ .Qy)() === 'control' ? [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_REALTIME_BACKUPS_JP */ .e7t, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ONE_CLICK_RESTORE_V2 */ .RAq, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UPTIME_MONITOR_JP */ .Qcp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ES_SEARCH_JP */ .GlD, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLUGIN_AUTOUPDATE_JP */ .NBm, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SEO_JP */ .ur7] : [],
-  get2023PlanComparisonConditionalFeatures: () => (0,_experiments__WEBPACK_IMPORTED_MODULE_8__/* .isTrailMapCopyVariant */ .D_)() ? [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES */ .CFg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_STANDARD_FEATURES */ .Uqd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_WOO_FEATURES */ .QuL] : [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES */ .CFg, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_STORE_THEMES */ .SQX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STORE_DESIGN */ .CTo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_PRODUCTS */ .CN1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DISPLAY_PRODUCTS_BRAND */ .bA6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_ADD_ONS */ .ozR, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ASSEMBLED_KITS */ .uXB, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MIN_MAX_ORDER_QUANTITY */ .QvK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STOCK_NOTIFS */ .m38, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DYNAMIC_UPSELLS */ .Czl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LOYALTY_PROG */ .rxl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_MARKETING_AUTOMATION */ .yqq, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BULK_DISCOUNTS */ .Xlo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INVENTORY_MGMT */ .MaF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STREAMLINED_CHECKOUT */ .D9A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SELL_60_COUNTRIES */ .kbI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_INTEGRATIONS */ .mT$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHARES_SOCIAL_MEDIA_JP */ .K5c, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_STANDARD_FEATURES */ .Uqd, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_WOO_FEATURES */ .QuL],
+  getPlanComparisonFeatureLabels: () => {
+    const featureLabels = {
+      [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_THEMES */ .CFg]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Unlimited premium themes'),
+      [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_STORE_THEMES */ .SQX]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Available with plugins'),
+      [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_PRODUCTS */ .CN1]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Available with plugins'),
+      [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DISPLAY_PRODUCTS_BRAND */ .bA6]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Available with paid plugins'),
+      [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_ADD_ONS */ .ozR]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Available with paid plugins'),
+      [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ASSEMBLED_KITS */ .uXB]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Available with paid plugins'),
+      [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MIN_MAX_ORDER_QUANTITY */ .QvK]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Available with paid plugins'),
+      [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STOCK_NOTIFS */ .m38]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Available with paid plugins'),
+      [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DYNAMIC_UPSELLS */ .Czl]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Available with paid plugins'),
+      [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LOYALTY_PROG */ .rxl]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Available with paid plugins'),
+      [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_MARKETING_AUTOMATION */ .yqq]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Available with paid plugins'),
+      [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BULK_DISCOUNTS */ .Xlo]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Available with paid plugins'),
+      [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INVENTORY_MGMT */ .MaF]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Available with plugins'),
+      [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STREAMLINED_CHECKOUT */ .D9A]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Available with plugins'),
+      [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SELL_60_COUNTRIES */ .kbI]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Available with plugins'),
+      [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_INTEGRATIONS */ .mT$]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Available with paid plugins'),
+      [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHARES_SOCIAL_MEDIA_JP */ .K5c]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Unlimited shares'),
+      [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_STANDARD_FEATURES */ .Uqd]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('2%'),
+      [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COMMISSION_FEE_WOO_FEATURES */ .QuL]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('0%')
+    };
+    if (!(0,_experiments__WEBPACK_IMPORTED_MODULE_8__/* .isTrailMapCopyVariant */ .D_)()) {
+      featureLabels[_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STORE_DESIGN */ .CTo] = i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Available with plugins');
+    }
+    return featureLabels;
+  },
   get2023PricingGridSignupStorageOptions: (showLegacyStorageFeature, isCurrentPlan) => {
     let storageOptionSlugs = [];
     const storageAddOns = [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_50GB_STORAGE_ADD_ON */ .CQZ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_100GB_STORAGE_ADD_ON */ .Isz];
@@ -61321,9 +61427,15 @@ const BackButton = ({
 
 const BackToTopButton = () => {
   const elementRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  const scrollParentRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
   const {
     __
   } = (0,_wordpress_react_i18n__WEBPACK_IMPORTED_MODULE_3__/* .useI18n */ .s9)();
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (elementRef.current) {
+      scrollParentRef.current = elementRef.current?.closest('.help-center__container-content');
+    }
+  }, [elementRef]);
   const isBelowThreshold = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useCallback)(containerNode => {
     const SCROLL_THRESHOLD = 400;
     return containerNode.scrollTop > SCROLL_THRESHOLD;
@@ -61332,14 +61444,12 @@ const BackToTopButton = () => {
     isButtonVisible,
     scrollToTop
   } = (0,_automattic_components__WEBPACK_IMPORTED_MODULE_4__/* .useScrollToTop */ .b)({
-    scrollTargetRef: elementRef,
+    scrollTargetRef: scrollParentRef,
     isBelowThreshold,
     smoothScrolling: false
   });
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
-    ref: element => {
-      elementRef.current = element?.parentElement ?? null;
-    },
+    ref: elementRef,
     className: (0,clsx__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)('back-to-top-button__help-center', {
       'is-visible': isButtonVisible
     }),
@@ -61996,7 +62106,7 @@ const HelpCenterContactForm = props => {
       return __('Gathering quick response.', "full-site-editing");
     }
     if (mode === 'CHAT' && showingHelpOrGPTResults) {
-      return __('Still chat with us', "full-site-editing");
+      return __('Still contact us', "full-site-editing");
     }
     if (mode === 'EMAIL' && showingHelpOrGPTResults) {
       return __('Still email us', "full-site-editing");
@@ -62610,6 +62720,22 @@ const HelpCenterContainer = ({
 
 
 
+// Disabled component only applies the class if isDisabled is true, we want it always.
+function Wrapper({
+  isDisabled,
+  className,
+  children
+}) {
+  if (isDisabled) {
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Disabled, {
+      isDisabled: isDisabled,
+      className: className
+    }, children);
+  }
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: className
+  }, children);
+}
 const HelpCenterContent = ({
   currentRoute
 }) => {
@@ -62662,8 +62788,9 @@ const HelpCenterContent = ({
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CardBody, {
     ref: containerRef,
     className: "help-center__container-content"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Disabled, {
-    isDisabled: isMinimized
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Wrapper, {
+    isDisabled: isMinimized,
+    className: "help-center__container-content-wrapper"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__/* .Routes */ .BV, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__/* .Route */ .qh, {
     path: "/",
     element: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_center_search__WEBPACK_IMPORTED_MODULE_12__/* .HelpCenterSearch */ .j, {
@@ -65278,7 +65405,7 @@ const useContactFormTitle = mode => {
     CHAT: {
       formTitle: __('Contact WordPress.com Support', "full-site-editing"),
       trayText: __('Our WordPress experts will be with you right away', "full-site-editing"),
-      buttonLabel: __('Chat with us', "full-site-editing"),
+      buttonLabel: __('Contact us', "full-site-editing"),
       buttonSubmittingLabel: __('Connecting to chat', "full-site-editing")
     },
     EMAIL: {
@@ -68307,17 +68434,9 @@ const ChatMessage = ({
 
 
 
-
-/**
- * This might be synced with CSS in client/odie/message/style.scss, which is half of the height for the gradient.
- * Used to calculate the bottom offset for the jump to recent button, so it doesn't overlap with the last message.
- * Also, making it twice as big, will prevent the gradient to be not visible when the input grows/shrinks in height.
- */
-const heightOffset = 48;
 const JumpToRecent = ({
   scrollToBottom,
-  enableJumpToRecent,
-  bottomOffset
+  enableJumpToRecent
 }) => {
   const {
     trackEvent,
@@ -68336,10 +68455,7 @@ const JumpToRecent = ({
     'is-hidden': !enableJumpToRecent
   });
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: className,
-    style: {
-      bottom: bottomOffset - heightOffset
-    }
+    className: className
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     className: "odie-jump-to-recent-message-button",
     disabled: !enableJumpToRecent,
@@ -68658,13 +68774,11 @@ const OdieSendMessageButton = ({
     event.preventDefault();
     await sendMessageIfNotEmpty();
   };
-  const divContainerHeight = divContainerRef?.current?.clientHeight;
   const userHasAskedToContactHE = chat.messages.some(message => message.context?.flags?.forward_to_human_support === true);
   const userHasNegativeFeedback = chat.messages.some(message => message.liked === false);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_message_jump_to_recent__WEBPACK_IMPORTED_MODULE_7__/* .JumpToRecent */ .r, {
     scrollToBottom: scrollToRecent,
-    enableJumpToRecent: enableJumpToRecent,
-    bottomOffset: divContainerHeight ?? 0
+    enableJumpToRecent: enableJumpToRecent
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "odie-chat-message-input-container",
     ref: divContainerRef
@@ -69145,7 +69259,7 @@ const OdieAssistant = () => {
         if (lastMessageElement?.target) {
           lastMessageElement.target.scrollIntoView({
             behavior: 'auto',
-            block: 'start',
+            block: 'end',
             inline: 'nearest'
           });
         }
