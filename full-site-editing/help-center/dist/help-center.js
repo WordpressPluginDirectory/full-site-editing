@@ -63827,7 +63827,7 @@ function HelpCenterOdie() {
     className: "help-center__container-header-menu-item"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_components__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     icon: "comment"
-  }), __('Start a New Chat')))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_odie_client__WEBPACK_IMPORTED_MODULE_7__/* .OdieAssistant */ .Ar, null));
+  }), __('Clear Conversation')))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_automattic_odie_client__WEBPACK_IMPORTED_MODULE_7__/* .OdieAssistant */ .Ar, null));
 }
 
 /***/ }),
