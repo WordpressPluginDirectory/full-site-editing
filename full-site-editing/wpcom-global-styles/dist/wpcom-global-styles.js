@@ -8092,7 +8092,16 @@ const config = data => key => {
  * @param data the json environment configuration to use for getting config values
  * @returns A function that takes a feature name and returns true when the feature is enabled.
  */
-const isEnabled = data => feature => data.features && !!data.features[feature] || false;
+const isEnabled = data => feature => {
+  // Feature flags activated from environment variables.
+  if (process.env.ACTIVE_FEATURE_FLAGS && typeof process.env.ACTIVE_FEATURE_FLAGS === 'string') {
+    const env_active_feature_flags = process.env.ACTIVE_FEATURE_FLAGS?.split(',');
+    if (env_active_feature_flags.includes(feature)) {
+      return true;
+    }
+  }
+  return data.features && !!data.features[feature] || false;
+};
 
 /**
  * Gets a list of all enabled features.
