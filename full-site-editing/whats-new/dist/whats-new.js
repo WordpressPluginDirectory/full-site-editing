@@ -3344,6 +3344,7 @@ const useWhatsNewAnnouncementsQuery = siteId => {
       global: true,
       path: `/wpcom/v2/block-editor/whats-new-list?_locale=${locale}&site_id=${siteId}`
     }),
+    enabled: !!siteId,
     refetchOnWindowFocus: false
   });
 };
