@@ -2727,7 +2727,7 @@ const PaginationControl = ({
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Ym: () => (/* binding */ useLocale)
 /* harmony export */ });
-/* unused harmony exports localeContext, LocaleProvider, withLocale, useIsEnglishLocale, useHasEnTranslation */
+/* unused harmony exports localeContext, LocaleProvider, getWpI18nLocaleSlug, withLocale, useIsEnglishLocale, useHasEnTranslation */
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6087);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9491);
@@ -2766,10 +2766,20 @@ function mapWpI18nLangToLocaleSlug(locale = '') {
 }
 
 /**
- * Get the current locale slug from the @wordpress/i18n locale data
+ * Get the lang from the @wordpress/i18n locale data
+ * @returns lang e.g. "en_US"
+ */
+function getWpI18nLocaleLang() {
+  const localeData = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.getLocaleData() || {};
+  return localeData['']?.lang || localeData['']?.language || '';
+}
+
+/**
+ * Get the lang from the @wordpress/i18n locale data and map the value to the locale slug
+ * @returns lang e.g. "en", "pt-br", "zh-tw"
  */
 function getWpI18nLocaleSlug() {
-  const language = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.getLocaleData ? _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.getLocaleData()?.['']?.language : '';
+  const language = getWpI18nLocaleLang();
   return mapWpI18nLangToLocaleSlug(language);
 }
 

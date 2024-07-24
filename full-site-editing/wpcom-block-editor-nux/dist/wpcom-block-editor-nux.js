@@ -6337,7 +6337,7 @@ const useShouldShowVideoCelebrationModal = isEditorSaving => {
  */
 let unlock;
 try {
-  unlock = (0,_wordpress_private_apis__WEBPACK_IMPORTED_MODULE_6__.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I know using unstable features means my theme or plugin will inevitably break in the next version of WordPress.', '@wordpress/edit-site').unlock;
+  unlock = (0,_wordpress_private_apis__WEBPACK_IMPORTED_MODULE_6__.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/edit-site').unlock;
 } catch (error) {
   // eslint-disable-next-line no-console
   console.error('Error: Unable to get the unlock api. Reason: %s', error);
@@ -9896,6 +9896,10 @@ const Button = (props, ref) => {
     ref: ref
   }));
 };
+/**
+ * @deprecated This button has been deprecated in favor of the `Button` component from `@wordpress/components`.
+ * Please use the `Button` component from `@wordpress/components` instead. This button has aggressive and generic CSS that breaks many other buttons when imported.
+ */
 const ButtonWithForwardedRef = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(Button);
 ButtonWithForwardedRef.defaultProps = {
   type: 'button'
@@ -10417,46 +10421,6 @@ I18N.prototype.registerTranslateHook = function (callback) {
 
 /***/ }),
 
-/***/ 5744:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   yb: () => (/* binding */ getLocaleSlug)
-/* harmony export */ });
-/* unused harmony exports numberFormat, translate, configure, setLocale, getLocale, getLocaleVariant, isRtl, addTranslations, reRenderTranslations, registerComponentUpdateHook, registerTranslateHook, state, stateObserver, on, off, emit */
-/* harmony import */ var _default_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5118);
-
-
-
-
-
-
-
-/* unused harmony default export */ var __WEBPACK_DEFAULT_EXPORT__ = ((/* unused pure expression or super */ null && (i18n)));
-
-// Export the default instance's properties and bound methods for convenience
-// These should be deprecated eventually, exposing only the default `i18n` instance
-const numberFormat = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.numberFormat.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-const translate = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.translate.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-const configure = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.configure.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-const setLocale = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.setLocale.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-const getLocale = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.getLocale.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-const getLocaleSlug = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.getLocaleSlug.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-const getLocaleVariant = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.getLocaleVariant.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-const isRtl = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.isRtl.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-const addTranslations = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.addTranslations.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-const reRenderTranslations = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.reRenderTranslations.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-const registerComponentUpdateHook = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.registerComponentUpdateHook.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-const registerTranslateHook = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.registerTranslateHook.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-const state = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.state;
-const stateObserver = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.stateObserver;
-const on = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.on.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-const off = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.off.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-const emit = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.emit.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-
-/***/ }),
-
 /***/ 4015:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -10534,7 +10498,8 @@ function useTranslate() {
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   YO: () => (/* binding */ LocaleProvider),
-/* harmony export */   Ym: () => (/* binding */ useLocale)
+/* harmony export */   Ym: () => (/* binding */ useLocale),
+/* harmony export */   t: () => (/* binding */ getWpI18nLocaleSlug)
 /* harmony export */ });
 /* unused harmony exports localeContext, withLocale, useIsEnglishLocale, useHasEnTranslation */
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6087);
@@ -10575,10 +10540,20 @@ function mapWpI18nLangToLocaleSlug(locale = '') {
 }
 
 /**
- * Get the current locale slug from the @wordpress/i18n locale data
+ * Get the lang from the @wordpress/i18n locale data
+ * @returns lang e.g. "en_US"
+ */
+function getWpI18nLocaleLang() {
+  const localeData = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.getLocaleData() || {};
+  return localeData['']?.lang || localeData['']?.language || '';
+}
+
+/**
+ * Get the lang from the @wordpress/i18n locale data and map the value to the locale slug
+ * @returns lang e.g. "en", "pt-br", "zh-tw"
  */
 function getWpI18nLocaleSlug() {
-  const language = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.getLocaleData ? _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.getLocaleData()?.['']?.language : '';
+  const language = getWpI18nLocaleLang();
   return mapWpI18nLangToLocaleSlug(language);
 }
 
@@ -10730,12 +10705,10 @@ const jetpackComLocales = ['en', 'ar', 'de', 'es', 'fr', 'he', 'id', 'it', 'ja',
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9491);
 /* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5744);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1609);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _locale_context__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6706);
+/* harmony import */ var _locale_context__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6706);
 /* harmony import */ var _locales__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3903);
-
 
 
 
@@ -10743,7 +10716,7 @@ const jetpackComLocales = ['en', 'ar', 'de', 'es', 'fr', 'he', 'id', 'it', 'ja',
 
 const INVALID_URL = `http://__domain__.invalid`;
 function getDefaultLocale() {
-  return (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_3__/* .getLocaleSlug */ .yb)?.() ?? 'en';
+  return (0,_locale_context__WEBPACK_IMPORTED_MODULE_3__/* .getWpI18nLocaleSlug */ .t)() ?? 'en';
 }
 const setLocalizedUrlHost = (hostname, validLocales = []) => (url, locale) => {
   if (validLocales.includes(locale) && locale !== 'en') {
@@ -10930,7 +10903,7 @@ function localizeUrl(fullUrl, locale = getDefaultLocale(), isLoggedIn = true, pr
   return fullUrl;
 }
 function useLocalizeUrl() {
-  const providerLocale = (0,_locale_context__WEBPACK_IMPORTED_MODULE_5__/* .useLocale */ .Ym)();
+  const providerLocale = (0,_locale_context__WEBPACK_IMPORTED_MODULE_3__/* .useLocale */ .Ym)();
   return (0,react__WEBPACK_IMPORTED_MODULE_2__.useCallback)((fullUrl, locale, isLoggedIn, preserveTrailingSlashVariation) => {
     if (locale) {
       return localizeUrl(fullUrl, locale, isLoggedIn, preserveTrailingSlashVariation);

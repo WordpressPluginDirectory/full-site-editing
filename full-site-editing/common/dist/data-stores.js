@@ -4598,7 +4598,7 @@ var GetIntrinsic = __webpack_require__(528);
 var callBound = __webpack_require__(9818);
 var inspect = __webpack_require__(8660);
 
-var $TypeError = GetIntrinsic('%TypeError%');
+var $TypeError = __webpack_require__(3468);
 var $WeakMap = GetIntrinsic('%WeakMap%', true);
 var $Map = GetIntrinsic('%Map%', true);
 
@@ -4610,49 +4610,58 @@ var $mapSet = callBound('Map.prototype.set', true);
 var $mapHas = callBound('Map.prototype.has', true);
 
 /*
- * This function traverses the list returning the node corresponding to the
- * given key.
- *
- * That node is also moved to the head of the list, so that if it's accessed
- * again we don't need to traverse the whole list. By doing so, all the recently
- * used nodes can be accessed relatively quickly.
- */
+* This function traverses the list returning the node corresponding to the given key.
+*
+* That node is also moved to the head of the list, so that if it's accessed again we don't need to traverse the whole list. By doing so, all the recently used nodes can be accessed relatively quickly.
+*/
+/** @type {import('.').listGetNode} */
 var listGetNode = function (list, key) { // eslint-disable-line consistent-return
-	for (var prev = list, curr; (curr = prev.next) !== null; prev = curr) {
+	/** @type {typeof list | NonNullable<(typeof list)['next']>} */
+	var prev = list;
+	/** @type {(typeof list)['next']} */
+	var curr;
+	for (; (curr = prev.next) !== null; prev = curr) {
 		if (curr.key === key) {
 			prev.next = curr.next;
-			curr.next = list.next;
+			// eslint-disable-next-line no-extra-parens
+			curr.next = /** @type {NonNullable<typeof list.next>} */ (list.next);
 			list.next = curr; // eslint-disable-line no-param-reassign
 			return curr;
 		}
 	}
 };
 
+/** @type {import('.').listGet} */
 var listGet = function (objects, key) {
 	var node = listGetNode(objects, key);
 	return node && node.value;
 };
+/** @type {import('.').listSet} */
 var listSet = function (objects, key, value) {
 	var node = listGetNode(objects, key);
 	if (node) {
 		node.value = value;
 	} else {
 		// Prepend the new node to the beginning of the list
-		objects.next = { // eslint-disable-line no-param-reassign
+		objects.next = /** @type {import('.').ListNode<typeof value>} */ ({ // eslint-disable-line no-param-reassign, no-extra-parens
 			key: key,
 			next: objects.next,
 			value: value
-		};
+		});
 	}
 };
+/** @type {import('.').listHas} */
 var listHas = function (objects, key) {
 	return !!listGetNode(objects, key);
 };
 
+/** @type {import('.')} */
 module.exports = function getSideChannel() {
-	var $wm;
-	var $m;
-	var $o;
+	/** @type {WeakMap<object, unknown>} */ var $wm;
+	/** @type {Map<object, unknown>} */ var $m;
+	/** @type {import('.').RootNode<unknown>} */ var $o;
+
+	/** @type {import('.').Channel} */
 	var channel = {
 		assert: function (key) {
 			if (!channel.has(key)) {
@@ -4703,11 +4712,7 @@ module.exports = function getSideChannel() {
 				$mapSet($m, key, value);
 			} else {
 				if (!$o) {
-					/*
-					 * Initialize the linked list as an empty node, so that we don't have
-					 * to special-case handling of the first node: we can always refer to
-					 * it as (previous node).next, instead of something like (list).head
-					 */
+					// Initialize the linked list as an empty node, so that we don't have to special-case handling of the first node: we can always refer to it as (previous node).next, instead of something like (list).head
 					$o = { key: {}, next: null };
 				}
 				listSet($o, key, value);
@@ -5681,7 +5686,7 @@ const resetPlan = () => ({
 /* harmony export */   rI: () => (/* binding */ TIMELESS_PLAN_PREMIUM),
 /* harmony export */   ut: () => (/* binding */ annualSlugs)
 /* harmony export */ });
-/* unused harmony exports TIMELESS_PLAN_PERSONAL, TIMELESS_PLAN_BUSINESS, plansSlugs, PLAN_FREE, PLAN_PERSONAL, PLAN_PREMIUM, PLAN_BUSINESS, PLAN_ECOMMERCE, PLAN_PERSONAL_MONTHLY, PLAN_PREMIUM_MONTHLY, PLAN_BUSINESS_MONTHLY, PLAN_ECOMMERCE_MONTHLY, PLAN_ECOMMERCE_TRIAL_MONTHLY, PLAN_MIGRATION_TRIAL_MONTHLY, PLAN_MONTHLY_PERIOD, PLAN_ANNUAL_PERIOD, PLAN_BIENNIAL_PERIOD, PLAN_TRIENNIAL_PERIOD, PERIOD_LIST */
+/* unused harmony exports TIMELESS_PLAN_PERSONAL, TIMELESS_PLAN_BUSINESS, plansSlugs, PLAN_FREE, PLAN_PERSONAL, PLAN_PREMIUM, PLAN_BUSINESS, PLAN_ECOMMERCE, PLAN_PERSONAL_MONTHLY, PLAN_PREMIUM_MONTHLY, PLAN_BUSINESS_MONTHLY, PLAN_ECOMMERCE_MONTHLY, PLAN_ECOMMERCE_TRIAL_MONTHLY, PLAN_MIGRATION_TRIAL_MONTHLY, PLAN_MONTHLY_PERIOD, PLAN_ANNUAL_PERIOD, PLAN_BIENNIAL_PERIOD, PLAN_TRIENNIAL_PERIOD, PERIOD_LIST, COST_OVERRIDE_REASONS */
 const STORE_KEY = 'automattic/onboard/plans';
 const FREE_PLAN_PRODUCT_ID = 1;
 
@@ -5717,6 +5722,9 @@ const PLAN_ANNUAL_PERIOD = 365;
 const PLAN_BIENNIAL_PERIOD = 730;
 const PLAN_TRIENNIAL_PERIOD = 1095;
 const PERIOD_LIST = [PLAN_MONTHLY_PERIOD, PLAN_ANNUAL_PERIOD, PLAN_BIENNIAL_PERIOD, PLAN_TRIENNIAL_PERIOD];
+const COST_OVERRIDE_REASONS = {
+  RECENT_PLAN_PRORATION: 'recent-plan-proration'
+};
 
 /***/ }),
 

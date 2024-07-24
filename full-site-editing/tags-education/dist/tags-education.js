@@ -1,479 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 8620:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   A: () => (/* binding */ compile)
-/* harmony export */ });
-/* harmony import */ var _tannin_postfix__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3412);
-/* harmony import */ var _tannin_evaluate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7336);
-
-
-
-/**
- * Given a C expression, returns a function which can be called to evaluate its
- * result.
- *
- * @example
- *
- * ```js
- * import compile from '@tannin/compile';
- *
- * const evaluate = compile( 'n > 1' );
- *
- * evaluate( { n: 2 } );
- * // ⇒ true
- * ```
- *
- * @param {string} expression C expression.
- *
- * @return {(variables?:{[variable:string]:*})=>*} Compiled evaluator.
- */
-function compile( expression ) {
-	var terms = (0,_tannin_postfix__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( expression );
-
-	return function( variables ) {
-		return (0,_tannin_evaluate__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)( terms, variables );
-	};
-}
-
-
-/***/ }),
-
-/***/ 7336:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   A: () => (/* binding */ evaluate)
-/* harmony export */ });
-/**
- * Operator callback functions.
- *
- * @type {Object}
- */
-var OPERATORS = {
-	'!': function( a ) {
-		return ! a;
-	},
-	'*': function( a, b ) {
-		return a * b;
-	},
-	'/': function( a, b ) {
-		return a / b;
-	},
-	'%': function( a, b ) {
-		return a % b;
-	},
-	'+': function( a, b ) {
-		return a + b;
-	},
-	'-': function( a, b ) {
-		return a - b;
-	},
-	'<': function( a, b ) {
-		return a < b;
-	},
-	'<=': function( a, b ) {
-		return a <= b;
-	},
-	'>': function( a, b ) {
-		return a > b;
-	},
-	'>=': function( a, b ) {
-		return a >= b;
-	},
-	'==': function( a, b ) {
-		return a === b;
-	},
-	'!=': function( a, b ) {
-		return a !== b;
-	},
-	'&&': function( a, b ) {
-		return a && b;
-	},
-	'||': function( a, b ) {
-		return a || b;
-	},
-	'?:': function( a, b, c ) {
-		if ( a ) {
-			throw b;
-		}
-
-		return c;
-	},
-};
-
-/**
- * Given an array of postfix terms and operand variables, returns the result of
- * the postfix evaluation.
- *
- * @example
- *
- * ```js
- * import evaluate from '@tannin/evaluate';
- *
- * // 3 + 4 * 5 / 6 ⇒ '3 4 5 * 6 / +'
- * const terms = [ '3', '4', '5', '*', '6', '/', '+' ];
- *
- * evaluate( terms, {} );
- * // ⇒ 6.333333333333334
- * ```
- *
- * @param {string[]} postfix   Postfix terms.
- * @param {Object}   variables Operand variables.
- *
- * @return {*} Result of evaluation.
- */
-function evaluate( postfix, variables ) {
-	var stack = [],
-		i, j, args, getOperatorResult, term, value;
-
-	for ( i = 0; i < postfix.length; i++ ) {
-		term = postfix[ i ];
-
-		getOperatorResult = OPERATORS[ term ];
-		if ( getOperatorResult ) {
-			// Pop from stack by number of function arguments.
-			j = getOperatorResult.length;
-			args = Array( j );
-			while ( j-- ) {
-				args[ j ] = stack.pop();
-			}
-
-			try {
-				value = getOperatorResult.apply( null, args );
-			} catch ( earlyReturn ) {
-				return earlyReturn;
-			}
-		} else if ( variables.hasOwnProperty( term ) ) {
-			value = variables[ term ];
-		} else {
-			value = +term;
-		}
-
-		stack.push( value );
-	}
-
-	return stack[ 0 ];
-}
-
-
-/***/ }),
-
-/***/ 4043:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   A: () => (/* binding */ pluralForms)
-/* harmony export */ });
-/* harmony import */ var _tannin_compile__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8620);
-
-
-/**
- * Given a C expression, returns a function which, when called with a value,
- * evaluates the result with the value assumed to be the "n" variable of the
- * expression. The result will be coerced to its numeric equivalent.
- *
- * @param {string} expression C expression.
- *
- * @return {Function} Evaluator function.
- */
-function pluralForms( expression ) {
-	var evaluate = (0,_tannin_compile__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( expression );
-
-	return function( n ) {
-		return +evaluate( { n: n } );
-	};
-}
-
-
-/***/ }),
-
-/***/ 3412:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   A: () => (/* binding */ postfix)
-/* harmony export */ });
-var PRECEDENCE, OPENERS, TERMINATORS, PATTERN;
-
-/**
- * Operator precedence mapping.
- *
- * @type {Object}
- */
-PRECEDENCE = {
-	'(': 9,
-	'!': 8,
-	'*': 7,
-	'/': 7,
-	'%': 7,
-	'+': 6,
-	'-': 6,
-	'<': 5,
-	'<=': 5,
-	'>': 5,
-	'>=': 5,
-	'==': 4,
-	'!=': 4,
-	'&&': 3,
-	'||': 2,
-	'?': 1,
-	'?:': 1,
-};
-
-/**
- * Characters which signal pair opening, to be terminated by terminators.
- *
- * @type {string[]}
- */
-OPENERS = [ '(', '?' ];
-
-/**
- * Characters which signal pair termination, the value an array with the
- * opener as its first member. The second member is an optional operator
- * replacement to push to the stack.
- *
- * @type {string[]}
- */
-TERMINATORS = {
-	')': [ '(' ],
-	':': [ '?', '?:' ],
-};
-
-/**
- * Pattern matching operators and openers.
- *
- * @type {RegExp}
- */
-PATTERN = /<=|>=|==|!=|&&|\|\||\?:|\(|!|\*|\/|%|\+|-|<|>|\?|\)|:/;
-
-/**
- * Given a C expression, returns the equivalent postfix (Reverse Polish)
- * notation terms as an array.
- *
- * If a postfix string is desired, simply `.join( ' ' )` the result.
- *
- * @example
- *
- * ```js
- * import postfix from '@tannin/postfix';
- *
- * postfix( 'n > 1' );
- * // ⇒ [ 'n', '1', '>' ]
- * ```
- *
- * @param {string} expression C expression.
- *
- * @return {string[]} Postfix terms.
- */
-function postfix( expression ) {
-	var terms = [],
-		stack = [],
-		match, operator, term, element;
-
-	while ( ( match = expression.match( PATTERN ) ) ) {
-		operator = match[ 0 ];
-
-		// Term is the string preceding the operator match. It may contain
-		// whitespace, and may be empty (if operator is at beginning).
-		term = expression.substr( 0, match.index ).trim();
-		if ( term ) {
-			terms.push( term );
-		}
-
-		while ( ( element = stack.pop() ) ) {
-			if ( TERMINATORS[ operator ] ) {
-				if ( TERMINATORS[ operator ][ 0 ] === element ) {
-					// Substitution works here under assumption that because
-					// the assigned operator will no longer be a terminator, it
-					// will be pushed to the stack during the condition below.
-					operator = TERMINATORS[ operator ][ 1 ] || operator;
-					break;
-				}
-			} else if ( OPENERS.indexOf( element ) >= 0 || PRECEDENCE[ element ] < PRECEDENCE[ operator ] ) {
-				// Push to stack if either an opener or when pop reveals an
-				// element of lower precedence.
-				stack.push( element );
-				break;
-			}
-
-			// For each popped from stack, push to terms.
-			terms.push( element );
-		}
-
-		if ( ! TERMINATORS[ operator ] ) {
-			stack.push( operator );
-		}
-
-		// Slice matched fragment from expression to continue match.
-		expression = expression.substr( match.index + operator.length );
-	}
-
-	// Push remainder of operand, if exists, to terms.
-	expression = expression.trim();
-	if ( expression ) {
-		terms.push( expression );
-	}
-
-	// Pop remaining items from stack into terms.
-	return terms.concat( stack.reverse() );
-}
-
-
-/***/ }),
-
-/***/ 7315:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   A: () => (/* binding */ sprintf)
-/* harmony export */ });
-/**
- * Regular expression matching format placeholder syntax.
- *
- * The pattern for matching named arguments is a naive and incomplete matcher
- * against valid JavaScript identifier names.
- *
- * via Mathias Bynens:
- *
- * >An identifier must start with $, _, or any character in the Unicode
- * >categories “Uppercase letter (Lu)”, “Lowercase letter (Ll)”, “Titlecase
- * >letter (Lt)”, “Modifier letter (Lm)”, “Other letter (Lo)”, or “Letter
- * >number (Nl)”.
- * >
- * >The rest of the string can contain the same characters, plus any U+200C zero
- * >width non-joiner characters, U+200D zero width joiner characters, and
- * >characters in the Unicode categories “Non-spacing mark (Mn)”, “Spacing
- * >combining mark (Mc)”, “Decimal digit number (Nd)”, or “Connector
- * >punctuation (Pc)”.
- *
- * If browser support is constrained to those supporting ES2015, this could be
- * made more accurate using the `u` flag:
- *
- * ```
- * /^[$_\p{L}\p{Nl}][$_\p{L}\p{Nl}\u200C\u200D\p{Mn}\p{Mc}\p{Nd}\p{Pc}]*$/u;
- * ```
- *
- * @see http://www.pixelbeat.org/programming/gcc/format_specs.html
- * @see https://mathiasbynens.be/notes/javascript-identifiers#valid-identifier-names
- *
- * @type {RegExp}
- */
-var PATTERN = /%(((\d+)\$)|(\(([$_a-zA-Z][$_a-zA-Z0-9]*)\)))?[ +0#-]*\d*(\.(\d+|\*))?(ll|[lhqL])?([cduxXefgsp%])/g;
-//               ▲         ▲                    ▲       ▲  ▲            ▲           ▲ type
-//               │         │                    │       │  │            └ Length (unsupported)
-//               │         │                    │       │  └ Precision / max width
-//               │         │                    │       └ Min width (unsupported)
-//               │         │                    └ Flags (unsupported)
-//               └ Index   └ Name (for named arguments)
-
-/**
- * Given a format string, returns string with arguments interpolatation.
- * Arguments can either be provided directly via function arguments spread, or
- * with an array as the second argument.
- *
- * @see https://en.wikipedia.org/wiki/Printf_format_string
- *
- * @example
- *
- * ```js
- * import sprintf from '@tannin/sprintf';
- *
- * sprintf( 'Hello %s!', 'world' );
- * // ⇒ 'Hello world!'
- * ```
- *
- * @param {string} string printf format string
- * @param {Array}  [args] String arguments.
- *
- * @return {string} Formatted string.
- */
-function sprintf( string, args ) {
-	var i;
-
-	if ( ! Array.isArray( args ) ) {
-		// Construct a copy of arguments from index one, used for replace
-		// function placeholder substitution.
-		args = new Array( arguments.length - 1 );
-		for ( i = 1; i < arguments.length; i++ ) {
-			args[ i - 1 ] = arguments[ i ];
-		}
-	}
-
-	i = 1;
-
-	return string.replace( PATTERN, function() {
-		var index, name, precision, type, value;
-
-		index = arguments[ 3 ];
-		name = arguments[ 5 ];
-		precision = arguments[ 7 ];
-		type = arguments[ 9 ];
-
-		// There's no placeholder substitution in the explicit "%", meaning it
-		// is not necessary to increment argument index.
-		if ( type === '%' ) {
-			return '%';
-		}
-
-		// Asterisk precision determined by peeking / shifting next argument.
-		if ( precision === '*' ) {
-			precision = args[ i - 1 ];
-			i++;
-		}
-
-		if ( name !== undefined ) {
-			// If it's a named argument, use name.
-			if ( args[ 0 ] && typeof args[ 0 ] === 'object' &&
-					args[ 0 ].hasOwnProperty( name ) ) {
-				value = args[ 0 ][ name ];
-			}
-		} else {
-			// If not a positional argument, use counter value.
-			if ( index === undefined ) {
-				index = i;
-			}
-
-			i++;
-
-			// Positional argument.
-			value = args[ index - 1 ];
-		}
-
-		// Parse as type.
-		if ( type === 'f' ) {
-			value = parseFloat( value ) || 0;
-		} else if ( type === 'd' ) {
-			value = parseInt( value ) || 0;
-		}
-
-		// Apply precision.
-		if ( precision !== undefined ) {
-			if ( type === 'f' ) {
-				value = value.toFixed( precision );
-			} else if ( type === 's' ) {
-				value = value.substr( 0, precision );
-			}
-		}
-
-		// To avoid "undefined" concatenation, return empty string if no
-		// placeholder substitution can be performed.
-		return value !== undefined && value !== null ? value : '';
-	} );
-}
-
-
-/***/ }),
-
-/***/ 3284:
+/***/ 284:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -683,7 +211,7 @@ function tryDecode(str, decode) {
 
 /***/ }),
 
-/***/ 8437:
+/***/ 437:
 /***/ ((module) => {
 
 /**
@@ -1357,14 +885,14 @@ function eventTargetAgnosticAddListener(emitter, name, listener, flags) {
 
 /***/ }),
 
-/***/ 2191:
+/***/ 191:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 
 var utils = __webpack_require__(461);
-var assert = __webpack_require__(7784);
+var assert = __webpack_require__(784);
 
 function BlockHash() {
   this.pending = null;
@@ -1457,88 +985,6 @@ BlockHash.prototype._pad = function pad() {
 
 /***/ }),
 
-/***/ 2986:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var utils = __webpack_require__(461);
-var common = __webpack_require__(2191);
-var shaCommon = __webpack_require__(600);
-
-var rotl32 = utils.rotl32;
-var sum32 = utils.sum32;
-var sum32_5 = utils.sum32_5;
-var ft_1 = shaCommon.ft_1;
-var BlockHash = common.BlockHash;
-
-var sha1_K = [
-  0x5A827999, 0x6ED9EBA1,
-  0x8F1BBCDC, 0xCA62C1D6
-];
-
-function SHA1() {
-  if (!(this instanceof SHA1))
-    return new SHA1();
-
-  BlockHash.call(this);
-  this.h = [
-    0x67452301, 0xefcdab89, 0x98badcfe,
-    0x10325476, 0xc3d2e1f0 ];
-  this.W = new Array(80);
-}
-
-utils.inherits(SHA1, BlockHash);
-module.exports = SHA1;
-
-SHA1.blockSize = 512;
-SHA1.outSize = 160;
-SHA1.hmacStrength = 80;
-SHA1.padLength = 64;
-
-SHA1.prototype._update = function _update(msg, start) {
-  var W = this.W;
-
-  for (var i = 0; i < 16; i++)
-    W[i] = msg[start + i];
-
-  for(; i < W.length; i++)
-    W[i] = rotl32(W[i - 3] ^ W[i - 8] ^ W[i - 14] ^ W[i - 16], 1);
-
-  var a = this.h[0];
-  var b = this.h[1];
-  var c = this.h[2];
-  var d = this.h[3];
-  var e = this.h[4];
-
-  for (i = 0; i < W.length; i++) {
-    var s = ~~(i / 20);
-    var t = sum32_5(rotl32(a, 5), ft_1(s, b, c, d), e, W[i], sha1_K[s]);
-    e = d;
-    d = c;
-    c = rotl32(b, 30);
-    b = a;
-    a = t;
-  }
-
-  this.h[0] = sum32(this.h[0], a);
-  this.h[1] = sum32(this.h[1], b);
-  this.h[2] = sum32(this.h[2], c);
-  this.h[3] = sum32(this.h[3], d);
-  this.h[4] = sum32(this.h[4], e);
-};
-
-SHA1.prototype._digest = function digest(enc) {
-  if (enc === 'hex')
-    return utils.toHex32(this.h, 'big');
-  else
-    return utils.split32(this.h, 'big');
-};
-
-
-/***/ }),
-
 /***/ 536:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -1546,9 +992,9 @@ SHA1.prototype._digest = function digest(enc) {
 
 
 var utils = __webpack_require__(461);
-var common = __webpack_require__(2191);
+var common = __webpack_require__(191);
 var shaCommon = __webpack_require__(600);
-var assert = __webpack_require__(7784);
+var assert = __webpack_require__(784);
 
 var sum32 = utils.sum32;
 var sum32_4 = utils.sum32_4;
@@ -1715,8 +1161,8 @@ exports.g1_256 = g1_256;
 "use strict";
 
 
-var assert = __webpack_require__(7784);
-var inherits = __webpack_require__(5615);
+var assert = __webpack_require__(784);
+var inherits = __webpack_require__(615);
 
 exports.inherits = inherits;
 
@@ -1995,7 +1441,7 @@ exports.shr64_lo = shr64_lo;
 
 /***/ }),
 
-/***/ 5615:
+/***/ 615:
 /***/ ((module) => {
 
 if (typeof Object.create === 'function') {
@@ -2029,159 +1475,7 @@ if (typeof Object.create === 'function') {
 
 /***/ }),
 
-/***/ 2327:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var events = __webpack_require__(46)
-var inherits = __webpack_require__(5615)
-
-module.exports = LRU
-
-function LRU (opts) {
-  if (!(this instanceof LRU)) return new LRU(opts)
-  if (typeof opts === 'number') opts = {max: opts}
-  if (!opts) opts = {}
-  events.EventEmitter.call(this)
-  this.cache = {}
-  this.head = this.tail = null
-  this.length = 0
-  this.max = opts.max || 1000
-  this.maxAge = opts.maxAge || 0
-}
-
-inherits(LRU, events.EventEmitter)
-
-Object.defineProperty(LRU.prototype, 'keys', {
-  get: function () { return Object.keys(this.cache) }
-})
-
-LRU.prototype.clear = function () {
-  this.cache = {}
-  this.head = this.tail = null
-  this.length = 0
-}
-
-LRU.prototype.remove = function (key) {
-  if (typeof key !== 'string') key = '' + key
-  if (!this.cache.hasOwnProperty(key)) return
-
-  var element = this.cache[key]
-  delete this.cache[key]
-  this._unlink(key, element.prev, element.next)
-  return element.value
-}
-
-LRU.prototype._unlink = function (key, prev, next) {
-  this.length--
-
-  if (this.length === 0) {
-    this.head = this.tail = null
-  } else {
-    if (this.head === key) {
-      this.head = prev
-      this.cache[this.head].next = null
-    } else if (this.tail === key) {
-      this.tail = next
-      this.cache[this.tail].prev = null
-    } else {
-      this.cache[prev].next = next
-      this.cache[next].prev = prev
-    }
-  }
-}
-
-LRU.prototype.peek = function (key) {
-  if (!this.cache.hasOwnProperty(key)) return
-
-  var element = this.cache[key]
-
-  if (!this._checkAge(key, element)) return
-  return element.value
-}
-
-LRU.prototype.set = function (key, value) {
-  if (typeof key !== 'string') key = '' + key
-
-  var element
-
-  if (this.cache.hasOwnProperty(key)) {
-    element = this.cache[key]
-    element.value = value
-    if (this.maxAge) element.modified = Date.now()
-
-    // If it's already the head, there's nothing more to do:
-    if (key === this.head) return value
-    this._unlink(key, element.prev, element.next)
-  } else {
-    element = {value: value, modified: 0, next: null, prev: null}
-    if (this.maxAge) element.modified = Date.now()
-    this.cache[key] = element
-
-    // Eviction is only possible if the key didn't already exist:
-    if (this.length === this.max) this.evict()
-  }
-
-  this.length++
-  element.next = null
-  element.prev = this.head
-
-  if (this.head) this.cache[this.head].next = key
-  this.head = key
-
-  if (!this.tail) this.tail = key
-  return value
-}
-
-LRU.prototype._checkAge = function (key, element) {
-  if (this.maxAge && (Date.now() - element.modified) > this.maxAge) {
-    this.remove(key)
-    this.emit('evict', {key: key, value: element.value})
-    return false
-  }
-  return true
-}
-
-LRU.prototype.get = function (key) {
-  if (typeof key !== 'string') key = '' + key
-  if (!this.cache.hasOwnProperty(key)) return
-
-  var element = this.cache[key]
-
-  if (!this._checkAge(key, element)) return
-
-  if (this.head !== key) {
-    if (key === this.tail) {
-      this.tail = element.next
-      this.cache[this.tail].prev = null
-    } else {
-      // Set prev.next -> element.next:
-      this.cache[element.prev].next = element.next
-    }
-
-    // Set element.next.prev -> element.prev:
-    this.cache[element.next].prev = element.prev
-
-    // Element is the new head
-    this.cache[this.head].next = key
-    element.prev = this.head
-    element.next = null
-    this.head = key
-  }
-
-  return element.value
-}
-
-LRU.prototype.evict = function () {
-  if (!this.tail) return
-  var key = this.tail
-  var value = this.remove(this.tail)
-  this.emit('evict', {key: key, value: value})
-}
-
-
-/***/ }),
-
-/***/ 7784:
+/***/ 784:
 /***/ ((module) => {
 
 module.exports = assert;
@@ -2199,246 +1493,21 @@ assert.equal = function assertEqual(l, r, msg) {
 
 /***/ }),
 
-/***/ 2714:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   A: () => (/* binding */ Tannin)
-/* harmony export */ });
-/* harmony import */ var _tannin_plural_forms__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4043);
-
-
-/**
- * Tannin constructor options.
- *
- * @typedef {Object} TanninOptions
- *
- * @property {string}   [contextDelimiter] Joiner in string lookup with context.
- * @property {Function} [onMissingKey]     Callback to invoke when key missing.
- */
-
-/**
- * Domain metadata.
- *
- * @typedef {Object} TanninDomainMetadata
- *
- * @property {string}            [domain]       Domain name.
- * @property {string}            [lang]         Language code.
- * @property {(string|Function)} [plural_forms] Plural forms expression or
- *                                              function evaluator.
- */
-
-/**
- * Domain translation pair respectively representing the singular and plural
- * translation.
- *
- * @typedef {[string,string]} TanninTranslation
- */
-
-/**
- * Locale data domain. The key is used as reference for lookup, the value an
- * array of two string entries respectively representing the singular and plural
- * translation.
- *
- * @typedef {{[key:string]:TanninDomainMetadata|TanninTranslation,'':TanninDomainMetadata|TanninTranslation}} TanninLocaleDomain
- */
-
-/**
- * Jed-formatted locale data.
- *
- * @see http://messageformat.github.io/Jed/
- *
- * @typedef {{[domain:string]:TanninLocaleDomain}} TanninLocaleData
- */
-
-/**
- * Default Tannin constructor options.
- *
- * @type {TanninOptions}
- */
-var DEFAULT_OPTIONS = {
-	contextDelimiter: '\u0004',
-	onMissingKey: null,
-};
-
-/**
- * Given a specific locale data's config `plural_forms` value, returns the
- * expression.
- *
- * @example
- *
- * ```
- * getPluralExpression( 'nplurals=2; plural=(n != 1);' ) === '(n != 1)'
- * ```
- *
- * @param {string} pf Locale data plural forms.
- *
- * @return {string} Plural forms expression.
- */
-function getPluralExpression( pf ) {
-	var parts, i, part;
-
-	parts = pf.split( ';' );
-
-	for ( i = 0; i < parts.length; i++ ) {
-		part = parts[ i ].trim();
-		if ( part.indexOf( 'plural=' ) === 0 ) {
-			return part.substr( 7 );
-		}
-	}
-}
-
-/**
- * Tannin constructor.
- *
- * @class
- *
- * @param {TanninLocaleData} data      Jed-formatted locale data.
- * @param {TanninOptions}    [options] Tannin options.
- */
-function Tannin( data, options ) {
-	var key;
-
-	/**
-	 * Jed-formatted locale data.
-	 *
-	 * @name Tannin#data
-	 * @type {TanninLocaleData}
-	 */
-	this.data = data;
-
-	/**
-	 * Plural forms function cache, keyed by plural forms string.
-	 *
-	 * @name Tannin#pluralForms
-	 * @type {Object<string,Function>}
-	 */
-	this.pluralForms = {};
-
-	/**
-	 * Effective options for instance, including defaults.
-	 *
-	 * @name Tannin#options
-	 * @type {TanninOptions}
-	 */
-	this.options = {};
-
-	for ( key in DEFAULT_OPTIONS ) {
-		this.options[ key ] = options !== undefined && key in options
-			? options[ key ]
-			: DEFAULT_OPTIONS[ key ];
-	}
-}
-
-/**
- * Returns the plural form index for the given domain and value.
- *
- * @param {string} domain Domain on which to calculate plural form.
- * @param {number} n      Value for which plural form is to be calculated.
- *
- * @return {number} Plural form index.
- */
-Tannin.prototype.getPluralForm = function( domain, n ) {
-	var getPluralForm = this.pluralForms[ domain ],
-		config, plural, pf;
-
-	if ( ! getPluralForm ) {
-		config = this.data[ domain ][ '' ];
-
-		pf = (
-			config[ 'Plural-Forms' ] ||
-			config[ 'plural-forms' ] ||
-			// Ignore reason: As known, there's no way to document the empty
-			// string property on a key to guarantee this as metadata.
-			// @ts-ignore
-			config.plural_forms
-		);
-
-		if ( typeof pf !== 'function' ) {
-			plural = getPluralExpression(
-				config[ 'Plural-Forms' ] ||
-				config[ 'plural-forms' ] ||
-				// Ignore reason: As known, there's no way to document the empty
-				// string property on a key to guarantee this as metadata.
-				// @ts-ignore
-				config.plural_forms
-			);
-
-			pf = (0,_tannin_plural_forms__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( plural );
-		}
-
-		getPluralForm = this.pluralForms[ domain ] = pf;
-	}
-
-	return getPluralForm( n );
-};
-
-/**
- * Translate a string.
- *
- * @param {string}      domain   Translation domain.
- * @param {string|void} context  Context distinguishing terms of the same name.
- * @param {string}      singular Primary key for translation lookup.
- * @param {string=}     plural   Fallback value used for non-zero plural
- *                               form index.
- * @param {number=}     n        Value to use in calculating plural form.
- *
- * @return {string} Translated string.
- */
-Tannin.prototype.dcnpgettext = function( domain, context, singular, plural, n ) {
-	var index, key, entry;
-
-	if ( n === undefined ) {
-		// Default to singular.
-		index = 0;
-	} else {
-		// Find index by evaluating plural form for value.
-		index = this.getPluralForm( domain, n );
-	}
-
-	key = singular;
-
-	// If provided, context is prepended to key with delimiter.
-	if ( context ) {
-		key = context + this.options.contextDelimiter + singular;
-	}
-
-	entry = this.data[ domain ][ key ];
-
-	// Verify not only that entry exists, but that the intended index is within
-	// range and non-empty.
-	if ( entry && entry[ index ] ) {
-		return entry[ index ];
-	}
-
-	if ( this.options.onMissingKey ) {
-		this.options.onMissingKey( singular, domain );
-	}
-
-	// If entry not found, fall back to singular vs. plural with zero index
-	// representing the singular value.
-	return index === 0 ? singular : plural;
-};
-
-
-/***/ }),
-
-/***/ 5944:
+/***/ 944:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6087);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(87);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8948);
+/* harmony import */ var _automattic_calypso_analytics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(948);
 /* harmony import */ var _automattic_i18n_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(355);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6427);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(427);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9491);
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(491);
 /* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(2619);
+/* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(619);
 /* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7723);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(723);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__);
 
 
@@ -2472,7 +1541,7 @@ const addTagsEducationLink = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__.
 
 /***/ }),
 
-/***/ 8948:
+/***/ 948:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -2480,15 +1549,15 @@ const addTagsEducationLink = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__.
 /* harmony export */   Oy: () => (/* reexport safe */ _tracks__WEBPACK_IMPORTED_MODULE_8__.Oy)
 /* harmony export */ });
 /* harmony import */ var _utils_do_not_track__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(595);
-/* harmony import */ var _utils_current_user__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1379);
-/* harmony import */ var _page_view_params__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8910);
-/* harmony import */ var _utils_get_tracking_prefs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2189);
-/* harmony import */ var _utils_set_tracking_prefs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4121);
-/* harmony import */ var _utils_is_country_in_gdpr_zone__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6472);
+/* harmony import */ var _utils_current_user__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(379);
+/* harmony import */ var _page_view_params__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(910);
+/* harmony import */ var _utils_get_tracking_prefs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(189);
+/* harmony import */ var _utils_set_tracking_prefs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(121);
+/* harmony import */ var _utils_is_country_in_gdpr_zone__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(472);
 /* harmony import */ var _utils_is_region_in_ccpa_zone__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(750);
-/* harmony import */ var _utils_is_region_in_sts_zone__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(8739);
-/* harmony import */ var _tracks__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(4342);
-/* harmony import */ var _train_tracks__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(7067);
+/* harmony import */ var _utils_is_region_in_sts_zone__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(739);
+/* harmony import */ var _tracks__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(342);
+/* harmony import */ var _train_tracks__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(67);
 /**
  * Re-export
  */
@@ -2505,7 +1574,7 @@ const addTagsEducationLink = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__.
 
 /***/ }),
 
-/***/ 8910:
+/***/ 910:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -2543,7 +1612,7 @@ function getMostRecentUrlPath() {
 
 /***/ }),
 
-/***/ 4342:
+/***/ 342:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -2553,13 +1622,13 @@ function getMostRecentUrlPath() {
 /* unused harmony exports getTracksLoadPromise, pushEventToTracksQueue, analyticsEvents, getTracksAnonymousUserId, initializeAnalytics, identifyUser, signalUserFromAnotherProduct, recordTracksPageView, recordTracksPageViewWithPageParams, getGenericSuperPropsGetter */
 /* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(46);
 /* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(events__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _automattic_load_script__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7944);
-/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3284);
-/* harmony import */ var _page_view_params__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8910);
-/* harmony import */ var _utils_current_user__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1379);
-/* harmony import */ var _utils_debug__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2193);
+/* harmony import */ var _automattic_load_script__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(563);
+/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(284);
+/* harmony import */ var _page_view_params__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(910);
+/* harmony import */ var _utils_current_user__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(379);
+/* harmony import */ var _utils_debug__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(193);
 /* harmony import */ var _utils_do_not_track__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(595);
-/* harmony import */ var _utils_get_tracking_prefs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(2189);
+/* harmony import */ var _utils_get_tracking_prefs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(189);
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 
@@ -2807,12 +1876,12 @@ function getGenericSuperPropsGetter(config) {
 
 /***/ }),
 
-/***/ 7067:
+/***/ 67:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* unused harmony exports recordTrainTracksRender, recordTrainTracksInteract, getNewRailcarId */
-/* harmony import */ var _tracks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4342);
+/* harmony import */ var _tracks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(342);
 
 
 function recordTrainTracksRender({
@@ -2861,12 +1930,12 @@ function getNewRailcarId(suffix = 'recommendation') {
 
 /***/ }),
 
-/***/ 1379:
+/***/ 379:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* unused harmony exports getCurrentUser, setCurrentUser */
-/* harmony import */ var _hash_pii__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7523);
+/* harmony import */ var _hash_pii__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(523);
 
 
 /**
@@ -2906,14 +1975,14 @@ function setCurrentUser(currentUser) {
 
 /***/ }),
 
-/***/ 2193:
+/***/ 193:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2090);
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(90);
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_0__);
 
 
@@ -2929,7 +1998,7 @@ function setCurrentUser(currentUser) {
 
 "use strict";
 /* unused harmony export default */
-/* harmony import */ var _debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2193);
+/* harmony import */ var _debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(193);
 
 
 /**
@@ -2948,7 +2017,7 @@ function getDoNotTrack() {
 
 /***/ }),
 
-/***/ 2189:
+/***/ 189:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -2956,8 +2025,8 @@ function getDoNotTrack() {
 /* harmony export */   Ay: () => (/* binding */ getTrackingPrefs)
 /* harmony export */ });
 /* unused harmony exports TRACKING_PREFS_COOKIE_V1, TRACKING_PREFS_COOKIE_V2, parseTrackingPrefs */
-/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3284);
-/* harmony import */ var _is_country_in_gdpr_zone__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6472);
+/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(284);
+/* harmony import */ var _is_country_in_gdpr_zone__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(472);
 /* harmony import */ var _is_region_in_ccpa_zone__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(750);
 
 
@@ -3058,7 +2127,7 @@ function getTrackingPrefs() {
 
 /***/ }),
 
-/***/ 7523:
+/***/ 523:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3079,7 +2148,7 @@ function hashPii(data) {
 
 /***/ }),
 
-/***/ 6472:
+/***/ 472:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3222,7 +2291,7 @@ function isRegionInCcpaZone(countryCode, region) {
 
 /***/ }),
 
-/***/ 8739:
+/***/ 739:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3264,12 +2333,12 @@ function isRegionInStsZone(countryCode, region) {
 
 /***/ }),
 
-/***/ 4121:
+/***/ 121:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
-/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3284);
-/* harmony import */ var _get_tracking_prefs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2189);
+/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(284);
+/* harmony import */ var _get_tracking_prefs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(189);
 
 
 const COOKIE_MAX_AGE = (/* unused pure expression or super */ null && (60 * 60 * 24 * (365.25 / 2))); /* six months; 365.25 -> avg days in year */
@@ -3296,503 +2365,22 @@ const setTrackingPrefs = newPrefs => {
 
 /***/ }),
 
-/***/ 5118:
+/***/ 706:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2434);
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new _i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A());
-
-/***/ }),
-
-/***/ 2434:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(46);
-/* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(events__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _automattic_interpolate_components__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(2540);
-/* harmony import */ var _tannin_sprintf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7315);
-/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2090);
-/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var hash_js_lib_hash_sha_1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2986);
-/* harmony import */ var hash_js_lib_hash_sha_1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(hash_js_lib_hash_sha_1__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var lru__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2327);
-/* harmony import */ var lru__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lru__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var tannin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(2714);
-/* harmony import */ var _number_format__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(4015);
-
-
-
-
-
-
-
-
-
-/**
- * Module variables
- */
-const debug = debug__WEBPACK_IMPORTED_MODULE_1___default()('i18n-calypso');
-
-/**
- * Constants
- */
-const decimal_point_translation_key = 'number_format_decimals';
-const thousands_sep_translation_key = 'number_format_thousands_sep';
-const domain_key = 'messages';
-const translationLookup = [
-// By default don't modify the options when looking up translations.
-function (options) {
-  return options;
-}];
-const hashCache = {};
-
-// raise a console warning
-function warn() {
-  if (!I18N.throwErrors) {
-    return;
-  }
-  if ( true && window.console && window.console.warn) {
-    window.console.warn.apply(window.console, arguments);
-  }
-}
-
-// turns Function.arguments into an array
-function simpleArguments(args) {
-  return Array.prototype.slice.call(args);
-}
-
-/**
- * Coerce the possible arguments and normalize to a single object.
- * @param   {any} args - arguments passed in from `translate()`
- * @returns {Object}         - a single object describing translation needs
- */
-function normalizeTranslateArguments(args) {
-  const original = args[0];
-
-  // warn about older deprecated syntax
-  if (typeof original !== 'string' || args.length > 3 || args.length > 2 && typeof args[1] === 'object' && typeof args[2] === 'object') {
-    warn('Deprecated Invocation: `translate()` accepts ( string, [string], [object] ). These arguments passed:', simpleArguments(args), '. See https://github.com/Automattic/i18n-calypso#translate-method');
-  }
-  if (args.length === 2 && typeof original === 'string' && typeof args[1] === 'string') {
-    warn('Invalid Invocation: `translate()` requires an options object for plural translations, but passed:', simpleArguments(args));
-  }
-
-  // options could be in position 0, 1, or 2
-  // sending options as the first object is deprecated and will raise a warning
-  let options = {};
-  for (let i = 0; i < args.length; i++) {
-    if (typeof args[i] === 'object') {
-      options = args[i];
-    }
-  }
-
-  // `original` can be passed as first parameter or as part of the options object
-  // though passing original as part of the options is a deprecated approach and will be removed
-  if (typeof original === 'string') {
-    options.original = original;
-  } else if (typeof options.original === 'object') {
-    options.plural = options.original.plural;
-    options.count = options.original.count;
-    options.original = options.original.single;
-  }
-  if (typeof args[1] === 'string') {
-    options.plural = args[1];
-  }
-  if (typeof options.original === 'undefined') {
-    throw new Error('Translate called without a `string` value as first argument.');
-  }
-  return options;
-}
-
-/**
- * Takes translate options object and coerces to a Tannin request to retrieve translation.
- * @param   {Object} tannin  - tannin data object
- * @param   {Object} options - object describing translation
- * @returns {string}         - the returned translation from Tannin
- */
-function getTranslationFromTannin(tannin, options) {
-  return tannin.dcnpgettext(domain_key, options.context, options.original, options.plural, options.count);
-}
-function getTranslation(i18n, options) {
-  for (let i = translationLookup.length - 1; i >= 0; i--) {
-    const lookup = translationLookup[i](Object.assign({}, options));
-    const key = lookup.context ? lookup.context + '\u0004' + lookup.original : lookup.original;
-
-    // Only get the translation from tannin if it exists.
-    if (i18n.state.locale[key]) {
-      return getTranslationFromTannin(i18n.state.tannin, lookup);
-    }
-  }
-  return null;
-}
-function I18N() {
-  if (!(this instanceof I18N)) {
-    return new I18N();
-  }
-  this.defaultLocaleSlug = 'en';
-  // Tannin always needs a plural form definition, or it fails when dealing with plurals.
-  this.defaultPluralForms = n => n === 1 ? 0 : 1;
-  this.state = {
-    numberFormatSettings: {},
-    tannin: undefined,
-    locale: undefined,
-    localeSlug: undefined,
-    localeVariant: undefined,
-    textDirection: undefined,
-    translations: lru__WEBPACK_IMPORTED_MODULE_3___default()({
-      max: 100
-    })
-  };
-  this.componentUpdateHooks = [];
-  this.translateHooks = [];
-  this.stateObserver = new events__WEBPACK_IMPORTED_MODULE_0__.EventEmitter();
-  // Because the higher-order component can wrap a ton of React components,
-  // we need to bump the number of listeners to infinity and beyond
-  // FIXME: still valid?
-  this.stateObserver.setMaxListeners(0);
-  // default configuration
-  this.configure();
-}
-I18N.throwErrors = false;
-I18N.prototype.on = function (...args) {
-  this.stateObserver.on(...args);
-};
-I18N.prototype.off = function (...args) {
-  this.stateObserver.off(...args);
-};
-I18N.prototype.emit = function (...args) {
-  this.stateObserver.emit(...args);
-};
-
-/**
- * Formats numbers using locale settings and/or passed options.
- * @param   {string|number}  number to format (required)
- * @param   {number | Object}  options  Number of decimal places or options object (optional)
- * @returns {string}         Formatted number as string
- */
-I18N.prototype.numberFormat = function (number, options = {}) {
-  const decimals = typeof options === 'number' ? options : options.decimals || 0;
-  const decPoint = options.decPoint || this.state.numberFormatSettings.decimal_point || '.';
-  const thousandsSep = options.thousandsSep || this.state.numberFormatSettings.thousands_sep || ',';
-  return (0,_number_format__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A)(number, decimals, decPoint, thousandsSep);
-};
-I18N.prototype.configure = function (options) {
-  Object.assign(this, options || {});
-  this.setLocale();
-};
-I18N.prototype.setLocale = function (localeData) {
-  if (localeData && localeData[''] && localeData['']['key-hash']) {
-    const keyHash = localeData['']['key-hash'];
-    const transform = function (string, hashLength) {
-      const lookupPrefix = hashLength === false ? '' : String(hashLength);
-      if (typeof hashCache[lookupPrefix + string] !== 'undefined') {
-        return hashCache[lookupPrefix + string];
-      }
-      const hash = hash_js_lib_hash_sha_1__WEBPACK_IMPORTED_MODULE_2___default()().update(string).digest('hex');
-      if (hashLength) {
-        return hashCache[lookupPrefix + string] = hash.substr(0, hashLength);
-      }
-      return hashCache[lookupPrefix + string] = hash;
-    };
-    const generateLookup = function (hashLength) {
-      return function (options) {
-        if (options.context) {
-          options.original = transform(options.context + String.fromCharCode(4) + options.original, hashLength);
-          delete options.context;
-        } else {
-          options.original = transform(options.original, hashLength);
-        }
-        return options;
-      };
-    };
-    if (keyHash.substr(0, 4) === 'sha1') {
-      if (keyHash.length === 4) {
-        translationLookup.push(generateLookup(false));
-      } else {
-        const variableHashLengthPos = keyHash.substr(5).indexOf('-');
-        if (variableHashLengthPos < 0) {
-          const hashLength = Number(keyHash.substr(5));
-          translationLookup.push(generateLookup(hashLength));
-        } else {
-          const minHashLength = Number(keyHash.substr(5, variableHashLengthPos));
-          const maxHashLength = Number(keyHash.substr(6 + variableHashLengthPos));
-          for (let hashLength = minHashLength; hashLength <= maxHashLength; hashLength++) {
-            translationLookup.push(generateLookup(hashLength));
-          }
-        }
-      }
-    }
-  }
-
-  // if localeData is not given, assumes default locale and reset
-  if (!localeData || !localeData[''].localeSlug) {
-    this.state.locale = {
-      '': {
-        localeSlug: this.defaultLocaleSlug,
-        plural_forms: this.defaultPluralForms
-      }
-    };
-  } else if (localeData[''].localeSlug === this.state.localeSlug) {
-    // Exit if same data as current (comparing references only)
-    if (localeData === this.state.locale) {
-      return;
-    }
-
-    // merge new data into existing one
-    Object.assign(this.state.locale, localeData);
-  } else {
-    this.state.locale = Object.assign({}, localeData);
-  }
-  this.state.localeSlug = this.state.locale[''].localeSlug;
-  this.state.localeVariant = this.state.locale[''].localeVariant;
-
-  // extract the `textDirection` info (LTR or RTL) from either:
-  // - the translation for the special string "ltr" (standard in Core, not present in Calypso)
-  // - or the `momentjs_locale.textDirection` property present in Calypso translation files
-  this.state.textDirection = this.state.locale['text direction\u0004ltr']?.[0] || this.state.locale['']?.momentjs_locale?.textDirection;
-  this.state.tannin = new tannin__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A({
-    [domain_key]: this.state.locale
-  });
-
-  // Updates numberFormat preferences with settings from translations
-  this.state.numberFormatSettings.decimal_point = getTranslationFromTannin(this.state.tannin, normalizeTranslateArguments([decimal_point_translation_key]));
-  this.state.numberFormatSettings.thousands_sep = getTranslationFromTannin(this.state.tannin, normalizeTranslateArguments([thousands_sep_translation_key]));
-
-  // If translation isn't set, define defaults.
-  if (this.state.numberFormatSettings.decimal_point === decimal_point_translation_key) {
-    this.state.numberFormatSettings.decimal_point = '.';
-  }
-  if (this.state.numberFormatSettings.thousands_sep === thousands_sep_translation_key) {
-    this.state.numberFormatSettings.thousands_sep = ',';
-  }
-  this.stateObserver.emit('change');
-};
-I18N.prototype.getLocale = function () {
-  return this.state.locale;
-};
-
-/**
- * Get the current locale slug.
- * @returns {string} The string representing the currently loaded locale
- */
-I18N.prototype.getLocaleSlug = function () {
-  return this.state.localeSlug;
-};
-
-/**
- * Get the current locale variant. That's set for some special locales that don't have a
- * standard ISO code, like `de_formal` or `sr_latin`.
- * @returns {string|undefined} The string representing the currently loaded locale's variant
- */
-I18N.prototype.getLocaleVariant = function () {
-  return this.state.localeVariant;
-};
-
-/**
- * Get the current text direction, left-to-right (LTR) or right-to-left (RTL).
- * @returns {boolean} `true` in case the current locale has RTL text direction
- */
-I18N.prototype.isRtl = function () {
-  return this.state.textDirection === 'rtl';
-};
-
-/**
- * Adds new translations to the locale data, overwriting any existing translations with a matching key.
- * @param {Object} localeData Locale data
- */
-I18N.prototype.addTranslations = function (localeData) {
-  for (const prop in localeData) {
-    if (prop !== '') {
-      this.state.tannin.data.messages[prop] = localeData[prop];
-    }
-  }
-  this.stateObserver.emit('change');
-};
-
-/**
- * Checks whether the given original has a translation.
- * @returns {boolean} whether a translation exists
- */
-I18N.prototype.hasTranslation = function () {
-  return !!getTranslation(this, normalizeTranslateArguments(arguments));
-};
-
-/**
- * Exposes single translation method.
- * See sibling README
- * @returns {string | Object | undefined} translated text or an object containing React children that can be inserted into a parent component
- */
-I18N.prototype.translate = function () {
-  const options = normalizeTranslateArguments(arguments);
-  let translation = getTranslation(this, options);
-  if (!translation) {
-    // This purposefully calls tannin for a case where there is no translation,
-    // so that tannin gives us the expected object with English text.
-    translation = getTranslationFromTannin(this.state.tannin, options);
-  }
-
-  // handle any string substitution
-  if (options.args) {
-    const sprintfArgs = Array.isArray(options.args) ? options.args.slice(0) : [options.args];
-    sprintfArgs.unshift(translation);
-    try {
-      translation = (0,_tannin_sprintf__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A)(...sprintfArgs);
-    } catch (error) {
-      if (!window || !window.console) {
-        return;
-      }
-      const errorMethod = this.throwErrors ? 'error' : 'warn';
-      if (typeof error !== 'string') {
-        window.console[errorMethod](error);
-      } else {
-        window.console[errorMethod]('i18n sprintf error:', sprintfArgs);
-      }
-    }
-  }
-
-  // interpolate any components
-  if (options.components) {
-    translation = (0,_automattic_interpolate_components__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A)({
-      mixedString: translation,
-      components: options.components,
-      throwErrors: this.throwErrors
-    });
-  }
-
-  // run any necessary hooks
-  this.translateHooks.forEach(function (hook) {
-    translation = hook(translation, options);
-  });
-  return translation;
-};
-
-/**
- * Causes i18n to re-render all translations.
- *
- * This can be necessary if an extension makes changes that i18n is unaware of
- * and needs those changes manifested immediately (e.g. adding an important
- * translation hook, or modifying the behaviour of an existing hook).
- *
- * If at all possible, react components should try to use the more local
- * updateTranslation() function inherited from the mixin.
- */
-I18N.prototype.reRenderTranslations = function () {
-  debug('Re-rendering all translations due to external request');
-  this.stateObserver.emit('change');
-};
-I18N.prototype.registerComponentUpdateHook = function (callback) {
-  this.componentUpdateHooks.push(callback);
-};
-I18N.prototype.registerTranslateHook = function (callback) {
-  this.translateHooks.push(callback);
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (I18N);
-
-/***/ }),
-
-/***/ 5744:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   yb: () => (/* binding */ getLocaleSlug)
-/* harmony export */ });
-/* unused harmony exports numberFormat, translate, configure, setLocale, getLocale, getLocaleVariant, isRtl, addTranslations, reRenderTranslations, registerComponentUpdateHook, registerTranslateHook, state, stateObserver, on, off, emit */
-/* harmony import */ var _default_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5118);
-
-
-
-
-
-
-
-/* unused harmony default export */ var __WEBPACK_DEFAULT_EXPORT__ = ((/* unused pure expression or super */ null && (i18n)));
-
-// Export the default instance's properties and bound methods for convenience
-// These should be deprecated eventually, exposing only the default `i18n` instance
-const numberFormat = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.numberFormat.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-const translate = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.translate.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-const configure = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.configure.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-const setLocale = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.setLocale.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-const getLocale = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.getLocale.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-const getLocaleSlug = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.getLocaleSlug.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-const getLocaleVariant = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.getLocaleVariant.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-const isRtl = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.isRtl.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-const addTranslations = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.addTranslations.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-const reRenderTranslations = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.reRenderTranslations.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-const registerComponentUpdateHook = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.registerComponentUpdateHook.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-const registerTranslateHook = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.registerTranslateHook.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-const state = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.state;
-const stateObserver = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.stateObserver;
-const on = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.on.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-const off = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.off.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-const emit = _default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A.emit.bind(_default_i18n__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A);
-
-/***/ }),
-
-/***/ 4015:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   A: () => (/* binding */ number_format)
-/* harmony export */ });
-/*
- * Exposes number format capability
- *
- * @copyright Copyright (c) 2013 Kevin van Zonneveld (http://kvz.io) and Contributors (http://phpjs.org/authors).
- * @license See CREDITS.md
- * @see https://github.com/kvz/phpjs/blob/ffe1356af23a6f2512c84c954dd4e828e92579fa/functions/strings/number_format.js
- */
-function toFixedFix(n, prec) {
-  const k = Math.pow(10, prec);
-  return '' + (Math.round(n * k) / k).toFixed(prec);
-}
-function number_format(number, decimals, dec_point, thousands_sep) {
-  number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
-  const n = !isFinite(+number) ? 0 : +number;
-  const prec = !isFinite(+decimals) ? 0 : Math.abs(decimals);
-  const sep = typeof thousands_sep === 'undefined' ? ',' : thousands_sep;
-  const dec = typeof dec_point === 'undefined' ? '.' : dec_point;
-  let s = '';
-  // Fix for IE parseFloat(0.55).toFixed(0) = 0;
-  s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
-  if (s[0].length > 3) {
-    s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
-  }
-  if ((s[1] || '').length < prec) {
-    s[1] = s[1] || '';
-    s[1] += new Array(prec - s[1].length + 1).join('0');
-  }
-  return s.join(dec);
-}
-
-/***/ }),
-
-/***/ 6706:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Ym: () => (/* binding */ useLocale)
+/* harmony export */   Ym: () => (/* binding */ useLocale),
+/* harmony export */   t: () => (/* binding */ getWpI18nLocaleSlug)
 /* harmony export */ });
 /* unused harmony exports localeContext, LocaleProvider, withLocale, useIsEnglishLocale, useHasEnTranslation */
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6087);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(87);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9491);
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(491);
 /* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7723);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(723);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(609);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
 
 
@@ -3824,10 +2412,20 @@ function mapWpI18nLangToLocaleSlug(locale = '') {
 }
 
 /**
- * Get the current locale slug from the @wordpress/i18n locale data
+ * Get the lang from the @wordpress/i18n locale data
+ * @returns lang e.g. "en_US"
+ */
+function getWpI18nLocaleLang() {
+  const localeData = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.getLocaleData() || {};
+  return localeData['']?.lang || localeData['']?.language || '';
+}
+
+/**
+ * Get the lang from the @wordpress/i18n locale data and map the value to the locale slug
+ * @returns lang e.g. "en", "pt-br", "zh-tw"
  */
 function getWpI18nLocaleSlug() {
-  const language = _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.getLocaleData ? _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.getLocaleData()?.['']?.language : '';
+  const language = getWpI18nLocaleLang();
   return mapWpI18nLangToLocaleSlug(language);
 }
 
@@ -3905,7 +2503,7 @@ function useHasEnTranslation() {
 
 /***/ }),
 
-/***/ 3903:
+/***/ 903:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3974,16 +2572,14 @@ const jetpackComLocales = ['en', 'ar', 'de', 'es', 'fr', 'he', 'id', 'it', 'ja',
 /* harmony export */   _Y: () => (/* binding */ useLocalizeUrl)
 /* harmony export */ });
 /* unused harmony exports urlLocalizationMapping, localizeUrl, withLocalizeUrl */
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6087);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(87);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9491);
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(491);
 /* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5744);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1609);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(609);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _locale_context__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6706);
-/* harmony import */ var _locales__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3903);
-
+/* harmony import */ var _locale_context__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(706);
+/* harmony import */ var _locales__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(903);
 
 
 
@@ -3991,7 +2587,7 @@ const jetpackComLocales = ['en', 'ar', 'de', 'es', 'fr', 'he', 'id', 'it', 'ja',
 
 const INVALID_URL = `http://__domain__.invalid`;
 function getDefaultLocale() {
-  return (0,i18n_calypso__WEBPACK_IMPORTED_MODULE_3__/* .getLocaleSlug */ .yb)?.() ?? 'en';
+  return (0,_locale_context__WEBPACK_IMPORTED_MODULE_3__/* .getWpI18nLocaleSlug */ .t)() ?? 'en';
 }
 const setLocalizedUrlHost = (hostname, validLocales = []) => (url, locale) => {
   if (validLocales.includes(locale) && locale !== 'en') {
@@ -4178,7 +2774,7 @@ function localizeUrl(fullUrl, locale = getDefaultLocale(), isLoggedIn = true, pr
   return fullUrl;
 }
 function useLocalizeUrl() {
-  const providerLocale = (0,_locale_context__WEBPACK_IMPORTED_MODULE_5__/* .useLocale */ .Ym)();
+  const providerLocale = (0,_locale_context__WEBPACK_IMPORTED_MODULE_3__/* .useLocale */ .Ym)();
   return (0,react__WEBPACK_IMPORTED_MODULE_2__.useCallback)((fullUrl, locale, isLoggedIn, preserveTrailingSlashVariation) => {
     if (locale) {
       return localizeUrl(fullUrl, locale, isLoggedIn, preserveTrailingSlashVariation);
@@ -4199,161 +2795,7 @@ const withLocalizeUrl = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_1__.creat
 
 /***/ }),
 
-/***/ 2540:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   A: () => (/* binding */ interpolate)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1609);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _tokenize__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3935);
-
-
-function getCloseIndex(openIndex, tokens) {
-  const openToken = tokens[openIndex];
-  let nestLevel = 0;
-  for (let i = openIndex + 1; i < tokens.length; i++) {
-    const token = tokens[i];
-    if (token.value === openToken.value) {
-      if (token.type === 'componentOpen') {
-        nestLevel++;
-        continue;
-      }
-      if (token.type === 'componentClose') {
-        if (nestLevel === 0) {
-          return i;
-        }
-        nestLevel--;
-      }
-    }
-  }
-  // if we get this far, there was no matching close token
-  throw new Error('Missing closing component token `' + openToken.value + '`');
-}
-function buildChildren(tokens, components) {
-  let children = [];
-  let openComponent;
-  let openIndex;
-  for (let i = 0; i < tokens.length; i++) {
-    const token = tokens[i];
-    if (token.type === 'string') {
-      children.push(token.value);
-      continue;
-    }
-    // component node should at least be set
-    if (components[token.value] === undefined) {
-      throw new Error(`Invalid interpolation, missing component node: \`${token.value}\``);
-    }
-    // should be either ReactElement or null (both type "object"), all other types deprecated
-    if (typeof components[token.value] !== 'object') {
-      throw new Error(`Invalid interpolation, component node must be a ReactElement or null: \`${token.value}\``);
-    }
-    // we should never see a componentClose token in this loop
-    if (token.type === 'componentClose') {
-      throw new Error(`Missing opening component token: \`${token.value}\``);
-    }
-    if (token.type === 'componentOpen') {
-      openComponent = components[token.value];
-      openIndex = i;
-      break;
-    }
-    // componentSelfClosing token
-    children.push(components[token.value]);
-    continue;
-  }
-  if (openComponent) {
-    const closeIndex = getCloseIndex(openIndex, tokens);
-    const grandChildTokens = tokens.slice(openIndex + 1, closeIndex);
-    const grandChildren = buildChildren(grandChildTokens, components);
-    const clonedOpenComponent = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.cloneElement)(openComponent, {}, grandChildren);
-    children.push(clonedOpenComponent);
-    if (closeIndex < tokens.length - 1) {
-      const siblingTokens = tokens.slice(closeIndex + 1);
-      const siblings = buildChildren(siblingTokens, components);
-      children = children.concat(siblings);
-    }
-  }
-  children = children.filter(Boolean);
-  if (children.length === 0) {
-    return null;
-  }
-  if (children.length === 1) {
-    return children[0];
-  }
-  return /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, ...children);
-}
-function interpolate(options) {
-  const {
-    mixedString,
-    components,
-    throwErrors
-  } = options;
-  if (!components) {
-    return mixedString;
-  }
-  if (typeof components !== 'object') {
-    if (throwErrors) {
-      throw new Error(`Interpolation Error: unable to process \`${mixedString}\` because components is not an object`);
-    }
-    return mixedString;
-  }
-  const tokens = (0,_tokenize__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(mixedString);
-  try {
-    return buildChildren(tokens, components);
-  } catch (error) {
-    if (throwErrors) {
-      throw new Error(`Interpolation Error: unable to process \`${mixedString}\` because of error \`${error.message}\``);
-    }
-    return mixedString;
-  }
-}
-
-/***/ }),
-
-/***/ 3935:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   A: () => (/* binding */ tokenize)
-/* harmony export */ });
-function identifyToken(item) {
-  // {{/example}}
-  if (item.startsWith('{{/')) {
-    return {
-      type: 'componentClose',
-      value: item.replace(/\W/g, '')
-    };
-  }
-  // {{example /}}
-  if (item.endsWith('/}}')) {
-    return {
-      type: 'componentSelfClosing',
-      value: item.replace(/\W/g, '')
-    };
-  }
-  // {{example}}
-  if (item.startsWith('{{')) {
-    return {
-      type: 'componentOpen',
-      value: item.replace(/\W/g, '')
-    };
-  }
-  return {
-    type: 'string',
-    value: item
-  };
-}
-function tokenize(mixedString) {
-  const tokenStrings = mixedString.split(/(\{\{\/?\s*\w+\s*\/?\}\})/g); // split to components and strings
-  return tokenStrings.map(identifyToken);
-}
-
-/***/ }),
-
-/***/ 6772:
+/***/ 772:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -4364,7 +2806,7 @@ function tokenize(mixedString) {
 /* harmony export */   ss: () => (/* binding */ handleRequestError)
 /* harmony export */ });
 /* unused harmony exports getCallbacksMap, removeScriptCallback, removeScriptCallbacks, removeAllScriptCallbacks, executeCallbacks */
-/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2090);
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(90);
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_0__);
 
 const debug = debug__WEBPACK_IMPORTED_MODULE_0___default()('lib/load-script/callback-handler');
@@ -4446,9 +2888,9 @@ function handleRequestError() {
 /* harmony export */   H: () => (/* binding */ attachToHead),
 /* harmony export */   u: () => (/* binding */ createScriptElement)
 /* harmony export */ });
-/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2090);
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(90);
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _callback_handler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6772);
+/* harmony import */ var _callback_handler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(772);
 
 
 const debug = debug__WEBPACK_IMPORTED_MODULE_0___default()('lib/load-script/dom-operations');
@@ -4472,7 +2914,7 @@ function attachToHead(element) {
 
 /***/ }),
 
-/***/ 7944:
+/***/ 563:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -4480,9 +2922,9 @@ function attachToHead(element) {
 /* harmony export */   k0: () => (/* binding */ loadScript)
 /* harmony export */ });
 /* unused harmony exports JQUERY_URL, loadjQueryDependentScript */
-/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2090);
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(90);
 /* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _callback_handler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6772);
+/* harmony import */ var _callback_handler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(772);
 /* harmony import */ var _dom_operations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(371);
 /**
  * A little module for loading a external script
@@ -4552,7 +2994,7 @@ function loadjQueryDependentScript(url, callback, args) {
 
 /***/ }),
 
-/***/ 2090:
+/***/ 90:
 /***/ ((module, exports, __webpack_require__) => {
 
 /* eslint-env browser */
@@ -4755,7 +3197,7 @@ function setup(env) {
   createDebug.disable = disable;
   createDebug.enable = enable;
   createDebug.enabled = enabled;
-  createDebug.humanize = __webpack_require__(8437);
+  createDebug.humanize = __webpack_require__(437);
   createDebug.destroy = destroy;
   Object.keys(env).forEach(key => {
     createDebug[key] = env[key];
@@ -4990,7 +3432,7 @@ module.exports = setup;
 
 /***/ }),
 
-/***/ 1609:
+/***/ 609:
 /***/ ((module) => {
 
 "use strict";
@@ -4998,7 +3440,7 @@ module.exports = window["React"];
 
 /***/ }),
 
-/***/ 6427:
+/***/ 427:
 /***/ ((module) => {
 
 "use strict";
@@ -5006,7 +3448,7 @@ module.exports = window["wp"]["components"];
 
 /***/ }),
 
-/***/ 9491:
+/***/ 491:
 /***/ ((module) => {
 
 "use strict";
@@ -5014,7 +3456,7 @@ module.exports = window["wp"]["compose"];
 
 /***/ }),
 
-/***/ 6087:
+/***/ 87:
 /***/ ((module) => {
 
 "use strict";
@@ -5022,7 +3464,7 @@ module.exports = window["wp"]["element"];
 
 /***/ }),
 
-/***/ 2619:
+/***/ 619:
 /***/ ((module) => {
 
 "use strict";
@@ -5030,7 +3472,7 @@ module.exports = window["wp"]["hooks"];
 
 /***/ }),
 
-/***/ 7723:
+/***/ 723:
 /***/ ((module) => {
 
 "use strict";
@@ -5111,7 +3553,7 @@ var __webpack_exports__ = {};
 (() => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _src_add_tags_education_link__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5944);
+/* harmony import */ var _src_add_tags_education_link__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(944);
 
 })();
 
