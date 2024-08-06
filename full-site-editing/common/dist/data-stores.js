@@ -5692,13 +5692,13 @@ const FREE_PLAN_PRODUCT_ID = 1;
 
 // plans constants
 const TIMELESS_PLAN_FREE = 'free';
-const TIMELESS_PLAN_PERSONAL = 'starter';
-const TIMELESS_PLAN_PREMIUM = 'explorer';
-const TIMELESS_PLAN_BUSINESS = 'creator';
-const TIMELESS_PLAN_ECOMMERCE = 'entrepreneur';
+const TIMELESS_PLAN_PERSONAL = 'personal';
+const TIMELESS_PLAN_PREMIUM = 'premium';
+const TIMELESS_PLAN_BUSINESS = 'business';
+const TIMELESS_PLAN_ECOMMERCE = 'ecommerce';
 const plansSlugs = [TIMELESS_PLAN_FREE, TIMELESS_PLAN_PERSONAL, TIMELESS_PLAN_PREMIUM, TIMELESS_PLAN_BUSINESS, TIMELESS_PLAN_ECOMMERCE,
 // Keeping the old slugs for backwards compatibility.
-'personal', 'premium', 'business', 'ecommerce'];
+'starter', 'explorer', 'creator', 'entrepreneur'];
 const DEFAULT_PAID_PLAN = TIMELESS_PLAN_PREMIUM;
 
 // plan products constants
@@ -5757,6 +5757,7 @@ const COST_OVERRIDE_REASONS = {
 
 
 /** Hooks/Selectors */
+
 
 
 
@@ -6898,6 +6899,7 @@ function register(clientCreds) {
 
 
 
+
 /***/ }),
 
 /***/ 1355:
@@ -7683,8 +7685,8 @@ const createCustomHomeTemplateContent = (stylesheet, hasHeader, hasFooter, hasSe
   if (hasSections) {
     // blockGap":"0" removes the theme blockGap from the main group while allowing users to change it from the editor
     content.push(`
-<!-- wp:group {"tagName":"main","style":{"spacing":{"blockGap":"0"}}} -->
-	<main class="wp-block-group">
+<!-- wp:group {"tagName":"main","style":{"spacing":{"blockGap":"0","margin":{"top":"0","bottom":"0"}}}} -->
+	<main class="wp-block-group" style="margin-top:0;margin-bottom:0">
 		${mainHtml}
 	</main>
 <!-- /wp:group -->`);

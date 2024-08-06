@@ -4275,7 +4275,6 @@ const disable = configApi.disable;
 /* harmony export */   qot: () => (/* binding */ FEATURE_DATACENTRE_FAILOVER),
 /* harmony export */   r_P: () => (/* binding */ FEATURE_ADD_UNLIMITED_LINKS),
 /* harmony export */   rag: () => (/* binding */ FEATURE_JETPACK_VIDEOPRESS),
-/* harmony export */   rxl: () => (/* binding */ FEATURE_LOYALTY_PROG),
 /* harmony export */   sPj: () => (/* binding */ FEATURE_AUTOMATIC_SECURITY_FIXES),
 /* harmony export */   sWw: () => (/* binding */ FEATURE_WOOCOMMERCE),
 /* harmony export */   sgf: () => (/* binding */ FEATURE_1GB_STORAGE),
@@ -4705,7 +4704,6 @@ const FEATURE_PRODUCT_ADD_ONS = 'product-add-ons';
 const FEATURE_ASSEMBLED_KITS = 'assembled-kits';
 const FEATURE_STOCK_NOTIFS = 'stock-notifs';
 const FEATURE_DYNAMIC_UPSELLS = 'dynamic-upsells';
-const FEATURE_LOYALTY_PROG = 'loyalty-prog';
 const FEATURE_CUSTOM_MARKETING_AUTOMATION = 'custom-marketing-automation';
 const FEATURE_BULK_DISCOUNTS = 'bulk-discounts';
 const FEATURE_INVENTORY_MGMT = 'inventory-mgmt';
@@ -5670,34 +5668,6 @@ const WPCOM_PREMIUM_PLANS = [PLAN_PREMIUM_MONTHLY, PLAN_PREMIUM, PLAN_PREMIUM_2_
 const WPCOM_DIFM_LITE = 'wp_difm_lite';
 const PLAN_BUSINESS_ONBOARDING_EXPIRE = '2021-07-31T00:00:00+00:00';
 const PLAN_BUSINESS_2Y_ONBOARDING_EXPIRE = '2022-07-31T00:00:00+00:00';
-
-/***/ }),
-
-/***/ 5678:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   c: () => (/* binding */ getPlansListExperiment)
-/* harmony export */ });
-/* unused harmony export setPlansListExperiment */
-const experiments = {};
-const PLANS_LIST_NAMESPACE = 'plans-list';
-const setExperiment = (namespace, experimentName, variation) => {
-  if (!experiments[namespace]) {
-    experiments[namespace] = {};
-  }
-  experiments[namespace][experimentName] = variation;
-};
-const getExperiment = (namespace, experimentName) => {
-  return experiments[namespace]?.[experimentName];
-};
-const setPlansListExperiment = (experimentName, variation) => {
-  setExperiment(PLANS_LIST_NAMESPACE, experimentName, variation);
-};
-const getPlansListExperiment = experimentName => {
-  return getExperiment(PLANS_LIST_NAMESPACE, experimentName);
-};
 
 /***/ }),
 
@@ -6735,12 +6705,12 @@ const getPlanEcommerceDetails = () => ({
   getPortfolioSignupFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS */ .gH7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .mEY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ALL_BUSINESS_FEATURES */ .adL],
   getSignupCompareAvailableFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_HOSTING */ ._22, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_NO_ADS */ .MZU, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_COLLECT_PAYMENTS_V2 */ .R7Q, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_FAST_SUPPORT_FROM_EXPERTS */ .JZF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRIORITY_24_7_SUPPORT */ .bMh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_EARN_AD */ .eYY, (0,_automattic_calypso_config__WEBPACK_IMPORTED_MODULE_1__/* .isEnabled */ .Ol)('themes/premium') ? _constants__WEBPACK_IMPORTED_MODULE_5__/* .WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED */ .uGw : null, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_GOOGLE_ANALYTICS */ .AOP, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INSTALL_PLUGINS */ .m51, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ADVANCED_SEO_EXPANDED_ABBR */ .kPp, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SITE_BACKUPS_AND_RESTORE */ ._vw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SFTP_DATABASE */ .bnw, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS */ .gH7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .mEY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .PREMIUM_DESIGN_FOR_STORES */ .kbH].filter(isValueTruthy),
   get2023PricingGridSignupWpcomFeatures: () => {
-    return [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WOOCOMMERCE_HOSTING */ .ZLu, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_STORE_THEMES */ .SQX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STORE_DESIGN */ .CTo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_PRODUCTS */ .CN1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DISPLAY_PRODUCTS_BRAND */ .bA6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_ADD_ONS */ .ozR, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ASSEMBLED_KITS */ .uXB, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MIN_MAX_ORDER_QUANTITY */ .QvK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STOCK_NOTIFS */ .m38, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DYNAMIC_UPSELLS */ .Czl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LOYALTY_PROG */ .rxl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_MARKETING_AUTOMATION */ .yqq, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BULK_DISCOUNTS */ .Xlo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INVENTORY_MGMT */ .MaF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STREAMLINED_CHECKOUT */ .D9A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SELL_60_COUNTRIES */ .kbI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_INTEGRATIONS */ .mT$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_0_ALL */ .aNF];
+    return [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_WOOCOMMERCE_HOSTING */ .ZLu, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PREMIUM_STORE_THEMES */ .SQX, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STORE_DESIGN */ .CTo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_PRODUCTS */ .CN1, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DISPLAY_PRODUCTS_BRAND */ .bA6, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRODUCT_ADD_ONS */ .ozR, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ASSEMBLED_KITS */ .uXB, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MIN_MAX_ORDER_QUANTITY */ .QvK, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STOCK_NOTIFS */ .m38, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DYNAMIC_UPSELLS */ .Czl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_MARKETING_AUTOMATION */ .yqq, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BULK_DISCOUNTS */ .Xlo, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INVENTORY_MGMT */ .MaF, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STREAMLINED_CHECKOUT */ .D9A, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SELL_60_COUNTRIES */ .kbI, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_INTEGRATIONS */ .mT$, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PAYMENT_TRANSACTION_FEES_0_ALL */ .aNF];
   },
   get2023PlanComparisonFeatureOverride: () => {
     return [];
   },
-  getCheckoutFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRIORITY_24_7_SUPPORT */ .bMh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLUGINS_THEMES */ .j58, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS */ .gH7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .mEY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_PRODUCTS_SERVICES */ .vkJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LOYALTY_PROG */ .rxl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INVENTORY */ .Y_U, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_MARKETING_AUTOMATION */ .yqq],
+  getCheckoutFeatures: () => [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_DOMAIN */ .kgl, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PRIORITY_24_7_SUPPORT */ .bMh, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_PLUGINS_THEMES */ .j58, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_ACCEPT_PAYMENTS */ .gH7, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_SHIPPING_CARRIERS */ .mEY, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_UNLIMITED_PRODUCTS_SERVICES */ .vkJ, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INVENTORY */ .Y_U, _constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_MARKETING_AUTOMATION */ .yqq],
   get2023PricingGridSignupJetpackFeatures: () => [],
   getStorageFeature: (showLegacyStorageFeature, isCurrentPlan) => {
     if (showLegacyStorageFeature && isCurrentPlan) {
@@ -6902,7 +6872,6 @@ const getPlanBusinessDetails = () => ({
       [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_MIN_MAX_ORDER_QUANTITY */ .QvK]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Available with paid plugins'),
       [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_STOCK_NOTIFS */ .m38]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Available with paid plugins'),
       [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_DYNAMIC_UPSELLS */ .Czl]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Available with paid plugins'),
-      [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_LOYALTY_PROG */ .rxl]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Available with paid plugins'),
       [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_CUSTOM_MARKETING_AUTOMATION */ .yqq]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Available with paid plugins'),
       [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_BULK_DISCOUNTS */ .Xlo]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Available with paid plugins'),
       [_constants__WEBPACK_IMPORTED_MODULE_5__/* .FEATURE_INVENTORY_MGMT */ .MaF]: i18n_calypso__WEBPACK_IMPORTED_MODULE_2__/* ["default"].translate */ .Ay.translate('Available with plugins'),
@@ -7786,9 +7755,7 @@ PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY
 /* harmony export */   k7: () => (/* binding */ getPlanBusinessTrialTagline),
 /* harmony export */   p8: () => (/* binding */ getPlanCommerceTrialTitle)
 /* harmony export */ });
-/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5744);
-/* harmony import */ var _experiments__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5678);
-
+/* harmony import */ var i18n_calypso__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5744);
 
 
 /**
@@ -7796,41 +7763,27 @@ PLANS_LIST[_constants__WEBPACK_IMPORTED_MODULE_6__/* .PLAN_HOSTING_TRIAL_MONTHLY
  * See: p7H4VZ-4S4-p2
  */
 
-const getPlanPersonalTitle = () => (0,_experiments__WEBPACK_IMPORTED_MODULE_0__/* .getPlansListExperiment */ .c)('wpcom_plan_name_change_personal_premium_v1') === 'treatment' ?
+const getPlanPersonalTitle = () =>
 // translators: Personal is a plan name
-i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Personal') :
-// translators: Starter is a plan name
-i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Starter');
-const getPlanPremiumTitle = () => (0,_experiments__WEBPACK_IMPORTED_MODULE_0__/* .getPlansListExperiment */ .c)('wpcom_plan_name_change_personal_premium_v1') === 'treatment' ?
+i18n_calypso__WEBPACK_IMPORTED_MODULE_0__/* ["default"].translate */ .Ay.translate('Personal');
+const getPlanPremiumTitle = () =>
 // translators: Premium is a plan name
-i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Premium') :
-// translators: Explorer is a plan name
-i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Explorer');
-const getPlanBusinessTitle = () => (0,_experiments__WEBPACK_IMPORTED_MODULE_0__/* .getPlansListExperiment */ .c)('wpcom_plan_name_change_personal_premium_v1') === 'treatment' ?
+i18n_calypso__WEBPACK_IMPORTED_MODULE_0__/* ["default"].translate */ .Ay.translate('Premium');
+const getPlanBusinessTitle = () =>
 // translators: Business is a plan name
-i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Business') :
-// translators: Creator is a plan name
-i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Creator');
-const getPlanEcommerceTitle = () => (0,_experiments__WEBPACK_IMPORTED_MODULE_0__/* .getPlansListExperiment */ .c)('wpcom_plan_name_change_personal_premium_v1') === 'treatment' ?
+i18n_calypso__WEBPACK_IMPORTED_MODULE_0__/* ["default"].translate */ .Ay.translate('Business');
+const getPlanEcommerceTitle = () =>
 // translators: Commerce is a plan name
-i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Commerce') :
-// translators: Entrepreneur is a plan name
-i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Entrepreneur');
-const getPlanBusinessTrialTitle = () => (0,_experiments__WEBPACK_IMPORTED_MODULE_0__/* .getPlansListExperiment */ .c)('wpcom_plan_name_change_personal_premium_v1') === 'treatment' ?
+i18n_calypso__WEBPACK_IMPORTED_MODULE_0__/* ["default"].translate */ .Ay.translate('Commerce');
+const getPlanBusinessTrialTitle = () =>
 // translators: Business Trial is a plan name
-i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Business Trial') :
-// translators: Creator Trial is a plan name
-i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Creator Trial');
-const getPlanBusinessTrialTagline = () => (0,_experiments__WEBPACK_IMPORTED_MODULE_0__/* .getPlansListExperiment */ .c)('wpcom_plan_name_change_personal_premium_v1') === 'treatment' ?
+i18n_calypso__WEBPACK_IMPORTED_MODULE_0__/* ["default"].translate */ .Ay.translate('Business Trial');
+const getPlanBusinessTrialTagline = () =>
 // translators: Business is a plan name
-i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Try all the features of our Business plan.') :
-// translators: Creator is a plan name
-i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Try all the features of our Creator plan.');
-const getPlanCommerceTrialTitle = () => (0,_experiments__WEBPACK_IMPORTED_MODULE_0__/* .getPlansListExperiment */ .c)('wpcom_plan_name_change_personal_premium_v1') === 'treatment' ?
+i18n_calypso__WEBPACK_IMPORTED_MODULE_0__/* ["default"].translate */ .Ay.translate('Try all the features of our Business plan.');
+const getPlanCommerceTrialTitle = () =>
 // translators: Commerce Trial is a plan name
-i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Commerce Trial') :
-// translators: Entrepreneur Trial is a plan name
-i18n_calypso__WEBPACK_IMPORTED_MODULE_1__/* ["default"].translate */ .Ay.translate('Entrepreneur Trial');
+i18n_calypso__WEBPACK_IMPORTED_MODULE_0__/* ["default"].translate */ .Ay.translate('Commerce Trial');
 
 /***/ }),
 
